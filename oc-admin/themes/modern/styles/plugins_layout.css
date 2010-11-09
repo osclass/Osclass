@@ -1,0 +1,26 @@
+#new_plugin_label {
+	margin-bottom: 5px;
+	width: 180px; 
+	float:left;
+}
+
+#new_plugin_input {
+	margin-bottom: 5px;
+	width: 300px; 
+	float:left;
+}
+#new_plugin_input input {
+	width: 200px;
+	height: 18px;
+}
+#new_plugin_input textarea {
+	margin-left: 2px;
+	width: 200px;
+	height: 60px;
+}
+
+#flash_message {
+	border: 1px solid black;
+	background-color: pink;
+	padding: 10px;
+}

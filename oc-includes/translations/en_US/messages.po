@@ -1,0 +1,3172 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass 1.0 RC\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-26 10:55+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
+"Language-Team: OSClass <info@osclass.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /Users/juanramon/htdocs/osclass-svn\n"
+
+#: /Users/juanramon/htdocs/osclass-svn/index.php:50
+msgid "Latest items added"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/index.php:52
+msgid "Latest items added in"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/index.php:97
+msgid "Contact form"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/index.php:99
+msgid "Administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/index.php:109
+msgid "Your message has been sent and will be answered soon, thank you."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:52
+msgid "Thanks! That helps us."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:94
+msgid "We just send your message to "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:96
+msgid "We are very sorry but we could not deliver your message to your friend. Try again later."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:136
+msgid "We've just sent an e-mail to the seller."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:214
+msgid "We are very sorry but could not save your comment. Try again later."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:228
+#: /Users/juanramon/htdocs/osclass-svn/user.php:247
+msgid "You need to log-in in order to post a new item."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:251
+msgid "Publish your item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:265
+msgid "You new to log-in in order to post a new item."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:284
+#: /Users/juanramon/htdocs/osclass-svn/user.php:50
+msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:453
+msgid "Great! You'll receive an e-mail to activate your item."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/item.php:455
+msgid "Great! We've just published your item."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/page.php:30
+msgid "The page you are looking for does not exist."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/search.php:104
+msgid "Newly listed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/search.php:105
+msgid "Lower price first"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/search.php:106
+msgid "Higher price first"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/search.php:107
+msgid "Best match"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/search.php:112
+#, php-format
+msgid "Search results for %s"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:33
+#: /Users/juanramon/htdocs/osclass-svn/user.php:185
+#: /Users/juanramon/htdocs/osclass-svn/user.php:217
+msgid "Create your account"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:100
+msgid "Your account has been created. An activation email has been sent to your email address."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:102
+msgid "Sorry, but that username is already in use."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:106
+msgid "The user could not be registered, sorry."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:137
+msgid "We resend you the validation email. If you don't recive it after a few minutes, please check your SPAM folder."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:139
+msgid "The email couldn't be sent, sorry."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:173
+msgid "Your account is correctly validated. Thanks."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:175
+msgid "Your account has been activated before."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:178
+msgid "The link is not longer valid, sorry."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:189
+msgid "You need to login first."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:200
+msgid "Passwords don't match."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:211
+msgid "Your profile has been updated correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:414
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:140
+msgid "Great! We've just update your item."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:429
+msgid "Access to your account"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:457
+msgid "You have not validated your account yet.<br/> Should we resend you the validation email?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:457
+msgid "Yes, resend me the validation email."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/user.php:460
+msgid "Wrong username or password."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:49
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:99
+msgid "Administrators"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:37
+msgid "Add"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:37
+msgid "The item has been added."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:39
+msgid "The administrator could not be created."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:49
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:63
+msgid "Edit"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:63
+msgid "Password didn't update. Passwords don't match."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:67
+msgid "Password didn't update. \"Old password\" didn't match with our records in the database."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:76
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:90
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:56
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:83
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:97
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:117
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:132
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:147
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:44
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:62
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:80
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:110
+msgid "Error: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/admins.php:85
+msgid "The operation was not completed. You were trying to remove yourself!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/appearance.php:28
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/appearance.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/appearance.php:50
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/appearance.php:74
+msgid "Appearance"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/appearance.php:28
+msgid "Upload"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/appearance.php:39
+#, php-format
+msgid "Directory \"%s\" could not be removed."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:37
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:166
+msgid "Categories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:54
+msgid "The category has been added."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:81
+msgid "The item has been updated."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:95
+msgid "The items have been deleted."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:108
+msgid "The category has been enabled."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:110
+msgid "The category has been disabled."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:113
+msgid "There was a problem with this page. The ID for the category is not set."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:130
+msgid "The categories have been enabled."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/categories.php:145
+msgid "Selected categories have been disabled."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:42
+msgid "The comments have been deleted."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:60
+msgid "The comments have been activated."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:78
+msgid "The comments have been deactivated."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:108
+msgid "The comment has been activate."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:124
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/comments.php:153
+msgid "Comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/common.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/common.php:52
+msgid "Plugins"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/common.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/common.php:52
+msgid "Configuration"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/index.php:51
+#, php-format
+msgid "Your new password is \"%s\"."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/index.php:59
+msgid "OSClass application"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/index.php:60
+msgid "Recover your password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/index.php:62
+msgid "OSClass administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/index.php:68
+msgid "A new password has been sent to your account."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/index.php:70
+msgid "The email you have entered does not belong to a valid administrator."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:46
+msgid "The items have been activated."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:66
+msgid "The items have been deactivated."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:84
+msgid "The items have been made premium."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:103
+msgid "The chages have been made."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:163
+msgid "The item has been activate."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:190
+msgid "Changes have been made."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/items.php:366
+msgid "Items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:39
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:134
+msgid "Languages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:61
+msgid "The language has been enabled for the public website."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:61
+msgid "The language has been disabled for the public website."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:64
+msgid "The language has been enabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:64
+msgid "The language has been disabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:72
+msgid "There was a problem updating the language. The ID of the language was lost."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:88
+msgid "Selected languages have been enabled for the website."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:91
+msgid "Selected languages have been disabled for the website."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:94
+msgid "Selected languages have been enabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:97
+msgid "Selected languages have been disabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:108
+msgid "There was a problem updating the languages. The IDs of the languages were lost."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/languages.php:125
+#, php-format
+msgid "Directory \"%s\" could not be removed, it' the default language. Set another language as default first and try again."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/location.php:49
+msgid "Countries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/location.php:55
+msgid "Regions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/location.php:62
+msgid "Cities"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/location.php:169
+msgid "Location management"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:31
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:26
+msgid "OSClass Admin Panel Login"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:43
+msgid "Username"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:49
+msgid "Password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:55
+msgid "Language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:68
+msgid "Theme"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:76
+msgid "Remember me"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:80
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:50
+msgid "Log in"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:85
+msgid "Lost your password?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:88
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:54
+msgid "Have you lost?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/login.php:88
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:54
+msgid "Back to"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/main.php:33
+msgid "Dashboard"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/media.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/media.php:49
+msgid "Media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/media.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:32
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:59
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:66
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:181
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:198
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:201
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:204
+msgid "Settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/pages.php:32
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/pages.php:90
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/pages.php:133
+msgid "Pages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/pages.php:63
+msgid "The page has been updated."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/pages.php:77
+msgid "Error, this page can not be deleted."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/pages.php:124
+msgid "Ops! That internal name is already in use. We couldn't made the changes."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/plugins.php:100
+msgid "No plugin selected"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/plugins.php:103
+msgid "Configuration was saved"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:36
+msgid "Please enter your username or e-mail address."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:37
+msgid "You will receive a new password via e-mail."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:43
+msgid "E-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/recover.php:46
+msgid "Get new password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:89
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:147
+msgid "Functionalities"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:120
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:178
+msgid "Notifications"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/settings.php:266
+msgid "General settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:28
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:40
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:70
+msgid "Tools"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:52
+msgid "Backup made correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:74
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:74
+msgid "Archiving is sucessful!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/tools.php:65
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:76
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:76
+msgid "Error, can't create a zip file!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:43
+msgid "File downloaded correctly."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:45
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:45
+msgid "Missing filename."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:88
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:88
+msgid "OK"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:90
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:90
+msgid "Unzip failed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:94
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:94
+msgid "Filename incorrect."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:105
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:105
+msgid "Error removing file: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:108
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:108
+msgid "Files removed ;)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:111
+msgid "No files to remove ;)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:130
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:138
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:130
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:138
+msgid "Nothing to copy."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:132
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:132
+msgid "There were problems copying files."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:134
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:134
+msgid "Files copied."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:147
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:147
+msgid "upgrade.sql executed."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:149
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:149
+msgid "No SQL to execute."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:157
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:157
+msgid "Custom actions executed."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:159
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:159
+msgid "No action to execute."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade-plugin.php:167
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:165
+msgid "Update"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/upgrade.php:111
+msgid "No files to remohttp://localhost/~conejo/osclass_svn/webapp/oc-admin/update.php?action=zip-osclassve ;)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/users.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/users.php:44
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/users.php:70
+msgid "Users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:93
+msgid "View comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:94
+msgid "View media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:96
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:70
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:122
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:122
+msgid "Deactivate"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:98
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:79
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:72
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:121
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:121
+msgid "Activate"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:101
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:124
+msgid "Demake Premium"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:103
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:123
+msgid "Make Premium"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:106
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:70
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:81
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:73
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:91
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/ajax/items_processing.php:107
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:70
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:113
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:81
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/widgets.php:58
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:77
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:132
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:73
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:120
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:120
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:91
+msgid "Delete"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/footer.php:29
+msgid "Thank you for using"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/footer.php:29
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/footer.php:34
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/header.php:208
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:67
+msgid "OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/footer.php:30
+msgid "Documentation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/footer.php:31
+msgid "Feedback"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/header.php:48
+msgid "OSClass Admin Panel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/header.php:213
+msgid "Visit website"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/header.php:214
+msgid "Howdy"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/header.php:214
+msgid "Your profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/header.php:214
+msgid "Log Out"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add_widget.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/widgets.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:22
+msgid "Invalid OSClass request."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:38
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:38
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:113
+msgid "Add new administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:53
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:54
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:86
+msgid "Real name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:53
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:68
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:75
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:54
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:69
+msgid "required"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:68
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:69
+msgid "User name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/add.php:81
+msgid "Create administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:76
+msgid "Old password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:78
+msgid "New password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:80
+msgid "Re-type new password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:83
+msgid "Leave it blank if you do not want to change your password now"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/edit.php:87
+msgid "Update administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:37
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:49
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:36
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:48
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:51
+msgid "Search"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:42
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:41
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:40
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:44
+msgid "Processing"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:42
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:41
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:45
+msgid "Show _MENU_ entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:44
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:42
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:46
+msgid "No matching records found"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:45
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:44
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:47
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:46
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:45
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:44
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:48
+msgid "Showing 0 to 0 of 0 entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:46
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:45
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:49
+msgid "filtered from _MAX_ total entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:52
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:51
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:50
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:54
+msgid "First"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:53
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:52
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:51
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:55
+msgid "Previous"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:54
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:53
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:52
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:56
+msgid "Next"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:55
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:54
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:53
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:57
+msgid "Last"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:57
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:56
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:55
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:59
+msgid "Show"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:62
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:61
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:64
+msgid "entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:112
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:129
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:119
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:119
+msgid "Bulk Actions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/admins/index.php:115
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:134
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:124
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:126
+msgid "Apply"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:38
+msgid "Add New Page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:55
+msgid "Theme package"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:59
+msgid "Upload theme"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:67
+msgid "The themes folder "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:67
+msgid " is not writable on your server, "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:67
+msgid " can't upload themes from the administration panel. Please copy the theme package using another technique (FTP, SSH) or make the mentioned themes folder writable."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add.php:70
+msgid "To make a directory writable under UNIX execute this command from the shell:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add_widget.php:44
+msgid "Dashboard - Add New Widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add_widget.php:70
+msgid "Create widget on "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add_widget.php:84
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:94
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:79
+msgid "Description"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add_widget.php:89
+msgid "Content"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/add_widget.php:93
+msgid "Publish widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:27
+msgid "Are you sure you want to cancel?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:45
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:69
+msgid "Add a new theme"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:55
+msgid "Current theme"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:87
+msgid "Author"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:65
+msgid "Available themes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/index.php:80
+msgid "Preview"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/widgets.php:37
+msgid "Widgets"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/appearance/widgets.php:53
+msgid "Add HTML widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:66
+msgid "Parent category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:68
+msgid "- No parent -"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:72
+msgid "Expirations days"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:72
+msgid "(0 = no expiration)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:78
+msgid "Position (order in relation to other categories)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:87
+msgid "Enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:101
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:127
+msgid "Cancel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/frm.php:102
+msgid "Save"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:77
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:131
+msgid "Disable"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:77
+msgid "View subcategories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:77
+msgid "WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:90
+msgid "Name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:93
+msgid "Parent"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:121
+msgid "Add New Category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/categories/index.php:130
+msgid "Enable"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:68
+msgid "on"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:90
+msgid "Comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:91
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:90
+msgid "Date"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/comments/index.php:109
+msgid "Manage Comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:108
+msgid "Manage items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:36
+msgid "Add new item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:38
+msgid "Manage media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:43
+msgid "Manage categories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:44
+msgid "Add a new category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:49
+msgid "Manage pages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:50
+msgid "Create page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:56
+msgid "Manage plugins"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:57
+msgid "Add new plugin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:62
+msgid "Manage languages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:63
+msgid "Add a language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:68
+msgid "Manage themes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:70
+msgid "Add or remove widgets"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:78
+msgid "Permalinks"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:79
+msgid "Spam and bots"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:80
+msgid "Currencies"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:81
+msgid "Mail Server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:83
+msgid "Cron system"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:86
+msgid "Manage locations"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:88
+msgid "Manage countries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:89
+msgid "Manage regions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:90
+msgid "Manage cities"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:95
+msgid "Import data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:96
+msgid "Backup data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:97
+msgid "Upgrade OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:106
+msgid "Manage users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:107
+msgid "Add new user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:112
+msgid "List administrators"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/include/backoffice_menu.php:114
+msgid "Edit Your Profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:76
+msgid "Title"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:80
+msgid "Category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/index.php:109
+msgid "Add New Item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:13
+msgid "Update your item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:24
+msgid "General Information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:32
+msgid "Price"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:58
+msgid "Remove"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:87
+msgid "Photos"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:95
+msgid "optional"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:98
+msgid "Add new photo"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:106
+msgid "Location"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:108
+msgid "Country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:110
+msgid "Region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:112
+msgid "City"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:114
+msgid "City area"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/items/item-edit.php:116
+msgid "Address"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/add.php:55
+msgid "Language package"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/add.php:59
+msgid "Upload translation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/add.php:66
+msgid "The translations folder "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/add.php:66
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/add.php:67
+msgid " is not writable on your server, this"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/add.php:66
+msgid "can't upload translations from the administration panel. Please copy the translation package using another technique (FTP, SSH) or make the mentioned translations folder writable."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:44
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:56
+msgid "Edit language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:79
+msgid "Short name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:71
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:91
+msgid "Currency format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:75
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:97
+msgid "Date format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:79
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:103
+msgid "Stop words"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:85
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:111
+msgid "Enabled for the public website"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/edit.php:91
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/frm.php:117
+msgid "Enabled for the backoffice (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:72
+msgid "Disable (website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:72
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:121
+msgid "Disable (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:75
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:76
+msgid "Yes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:75
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:76
+msgid "No"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:88
+msgid "Short Name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:90
+msgid "Enabled (website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:91
+msgid "Enabled (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:118
+msgid "Enable (Website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:119
+msgid "Disable (Website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/languages/index.php:120
+msgid "Enable (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:42
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:53
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/regions.php:42
+msgid "Locations"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:58
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/regions.php:58
+msgid "Select a country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:64
+msgid "Select a region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:84
+msgid "Add new city"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:91
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:122
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/regions.php:81
+msgid "Add new"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:93
+msgid "Select a region first."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/cities.php:96
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/regions.php:83
+msgid "Select a country first."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:98
+msgid "Add new Country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:113
+msgid "Country name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:119
+msgid "Country code"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:120
+msgid "(i.e. US)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/countries.php:135
+msgid "Warning"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/location/regions.php:76
+msgid "Add new region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:101
+msgid "Which of the following content do you want to see on your dashboard"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:103
+msgid "Last Items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:106
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:143
+msgid "Statistics"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:109
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:157
+msgid "Last Comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:112
+msgid "Last News from OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:124
+msgid "Items by Category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:137
+msgid "There aren't any uploaded items yet"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:145
+msgid "Number of items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:146
+msgid "Number of public users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:147
+msgid "Number of administrators"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:160
+msgid "Commented"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:160
+msgid "Item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:166
+msgid "Latest News from OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:178
+msgid "Unable to fetch news from"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/main/index.php:178
+msgid "Please try again later"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:40
+msgid "Configure Media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:50
+msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:56
+msgid "Restrictions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:58
+msgid "Maximum size in KB"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:63
+msgid "Allowed format extensions (eg: png, jpg, gif)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:69
+msgid "Path and URI"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:72
+msgid "Store uploads in this folder"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:77
+msgid "Full URL path to files"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:84
+msgid "Dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:86
+msgid "Thumbnail dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:91
+msgid "Preview dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:96
+msgid "Normal dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/config.php:101
+msgid "Update configuration"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/index.php:82
+msgid "File"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/media/index.php:85
+msgid "Attached to"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/pages/frm.php:110
+msgid "Internal Name (Short name to easily identify this page)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/add.php:38
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/configuration.php:51
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/index.php:115
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/view.php:32
+msgid "Add a new plugin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/add.php:55
+msgid "Plugin package"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/add.php:59
+msgid "Upload plugin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/add.php:67
+msgid "The plugins folder "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/add.php:67
+msgid "can't upload plugins from the administration panel. Please copy the plugin package using another technique (FTP, SSH) or make the mentioned plugins folder writable."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/configuration.php:81
+msgid "Select the categories you want to apply those attributes:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/index.php:74
+msgid "Configure"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/index.php:74
+msgid "There's a new version. You should update!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/index.php:74
+msgid "Uninstall"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/plugins/index.php:74
+msgid "Install"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/addCurrency.php:52
+msgid "Create"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/addCurrency.php:57
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/currencies.php:84
+msgid "Code"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/addCurrency.php:73
+msgid "Create currency"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/comments.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:93
+msgid "Comments enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/comments.php:72
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:102
+msgid "Moderate comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/comments.php:83
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/notifications.php:99
+msgid "Notify new comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/cron.php:58
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:107
+msgid "Cron System"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/cron.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:113
+msgid "Auto-cron"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/cron.php:67
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:116
+msgid "Some functionalities os OSClass requires a cron system to work. Check this if you don't know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:63
+msgid "Enabled recaptcha"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:72
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:72
+msgid "Enabled item validation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/functionalities.php:81
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:81
+msgid "Only allow registered users post items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:58
+msgid "Page title"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:65
+msgid "Page description"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:74
+msgid "Administrator E-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:81
+msgid "Default language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:115
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:168
+msgid "Custom"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:122
+msgid "Week starts on"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:124
+msgid "Sunday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:125
+msgid "Monday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:126
+msgid "Tuesday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:127
+msgid "Wednesday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:128
+msgid "Thursday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:129
+msgid "Friday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:130
+msgid "Saturday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:135
+msgid "Number of items in the RSS"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:152
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/index.php:153
+msgid "Time format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:93
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/notifications.php:63
+msgid "Notify new item to admin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:101
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/notifications.php:71
+msgid "Notify contact item to admin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:109
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/notifications.php:79
+msgid "Notify contact friends to admin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/items.php:117
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/notifications.php:87
+msgid "Enable item validation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:77
+msgid "Type of server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:79
+msgid "Custom Server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:80
+msgid "GMail Server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:85
+msgid "Host Name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:88
+msgid "Server Port"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:103
+msgid "Enable SMTP authentication"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:109
+msgid "Help"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/mailserver.php:110
+msgid "Enter your email server configuration."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/permalinks.php:54
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/permalinks.php:58
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/permalinks.php:60
+msgid "Enable nice urls"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/permalinks.php:64
+msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:40
+msgid "Registry"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:51
+msgid "The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:57
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:73
+msgid "Section"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:59
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:75
+msgid "Value"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/registry.php:76
+msgid "Type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:52
+msgid "Akismet"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:54
+msgid "Akismet key (same as Wordpress.com)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "If the field is empty it is because the Akismet service is disabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "Get your free key at"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:61
+msgid "Re-captcha"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "If the field is empty it is because the reCAPTCHA service is disabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "Get your free keys at"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:66
+msgid "Re-captcha private key"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:71
+msgid "Re-captcha public key"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/settings/spamNbots.php:76
+msgid "Update spam and bots configuration"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:53
+msgid "Backing up data... please wait"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:84
+msgid "From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:90
+msgid "Backup Folder"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:92
+msgid "This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass' documentation."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:96
+msgid "Backup Database"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:97
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:103
+msgid "backup"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/backup.php:102
+msgid "Backup OSClass installation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/export.php:25
+msgid "Export"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/export.php:27
+msgid "Export now"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/import.php:48
+msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/import.php:54
+msgid "Data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:48
+msgid "Checking for update (installed version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:52
+msgid "HORRAY! Your plugin installation is up to date! (current version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:54
+msgid "current version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:55
+msgid "Downloading update file: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:62
+msgid "Unzipping file: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:67
+msgid "Removing old files: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:72
+msgid "Copying new files: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:77
+msgid "Executing SQL: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:82
+msgid "Executing additional actions: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:87
+msgid "Cleanning all the mesh: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade-plugins.php:93
+msgid "Satisfaying user with awesome and easy auto-upgrade: Done!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/tools/upgrade.php:52
+msgid "HORRAY! Your OSClass installation is up to date! (current version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/add.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/index.php:104
+msgid "Add a new user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/add.php:74
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/edit.php:76
+msgid "Web site"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/add.php:87
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/edit.php:89
+msgid "Mobile phone"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/add.php:92
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/edit.php:94
+msgid "Land phone"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/add.php:99
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/edit.php:101
+msgid "Additional information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/add.php:105
+msgid "Create user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/edit.php:35
+msgid "Edit user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/edit.php:107
+msgid "Update user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-admin/themes/modern/users/index.php:89
+msgid "Info"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:123
+msgid "Makes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:144
+msgid "Add new make"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:166
+msgid "Models"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:169
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:59
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:56
+msgid "Select a make"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:201
+msgid "Add new model"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:227
+msgid "Vehicle types"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/conf.php:261
+msgid "Add new car type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:17
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:25
+msgid "Select a model..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:22
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:34
+msgid "No results"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:56
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:6
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:53
+msgid "Make"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:67
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:10
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/search_form.php:10
+msgid "Model"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:78
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:92
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:18
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:29
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:78
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:93
+msgid "Car type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:106
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:39
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:107
+msgid "Year"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:110
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:111
+msgid "Doors"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:120
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:121
+msgid "Seats"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:130
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:51
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:131
+msgid "Mileage"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:135
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:56
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:136
+msgid "Engine size (cc)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:139
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:140
+msgid "Num. Airbags"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:149
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:150
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/search_form.php:24
+msgid "Transmission"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:151
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:152
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/search_form.php:26
+msgid "Manual"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:152
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:153
+msgid "Auto"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:156
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:68
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:157
+msgid "Fuel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:158
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:159
+msgid "Diesel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:159
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:160
+msgid "Gasoline"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:160
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:161
+msgid "Electric-hibrid"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:161
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:162
+msgid "Other"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:165
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:72
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:166
+msgid "Seller"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:167
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:168
+msgid "Dealer"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:168
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:169
+msgid "Owner"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:173
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:77
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:174
+msgid "Warranty"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:174
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:78
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:175
+msgid "New"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:178
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:82
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:179
+msgid "Power"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:180
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:181
+msgid "Kw"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:181
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:182
+msgid "Cv"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:182
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:183
+msgid "Ch"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:183
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:184
+msgid "Km"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:184
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:185
+msgid "Hp"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:185
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:186
+msgid "Ps"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:186
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:187
+msgid "Pk"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:187
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:188
+msgid "Cp"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/form.php:191
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_detail.php:86
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/item_edit.php:192
+msgid "Gears"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/index.php:244
+msgid "Configure plugin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/index.php:245
+msgid "Manage makes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/index.php:246
+msgid "Manage models"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/index.php:247
+msgid "Manage vehicle types"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/search_form.php:14
+msgid "Num. of airbags"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/cars_attributes/search_form.php:27
+msgid "Automatic"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:6
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:6
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:6
+msgid "You are:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:8
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:16
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:8
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:16
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:8
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:16
+msgid "Man"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:9
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:17
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:9
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:17
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:9
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:17
+msgid "Woman"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:10
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:18
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:10
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:18
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:10
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:18
+msgid "Not informed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:14
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:14
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:14
+msgid "Looking for:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:22
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:22
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:22
+msgid "Relation type:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:24
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:24
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:24
+msgid "Friendship"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:25
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:25
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:25
+msgid "Formal relation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/form.php:26
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/item_edit.php:26
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/dating_attributes/search_form.php:26
+msgid "Informal relation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/google_maps/admin.php:30
+msgid "You can freely obtain a developer key after signing up on this URL:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:6
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:11
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:5
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:6
+msgid "Relation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:8
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:7
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:8
+msgid "Hire someone"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:9
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:8
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:9
+msgid "Looking for a job"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:13
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:15
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:12
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:13
+msgid "Company name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:17
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:19
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:16
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:17
+msgid "Position type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:20
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:19
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:20
+msgid "Undefined"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:21
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:20
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:21
+msgid "Part time"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:22
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:21
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:22
+msgid "Full-time"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:27
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:26
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:27
+msgid "Salary range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:31
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:31
+msgid "Hour"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:32
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:31
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:32
+msgid "Week"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:33
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:32
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/search_form.php:33
+msgid "Month"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:74
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:62
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:76
+msgid "Desired experience"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:78
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:34
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:66
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:80
+msgid "Studies"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:52
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:83
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:39
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:71
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:52
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:85
+msgid "Minimum requirements"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:56
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:87
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:75
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:56
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:89
+msgid "Desired requirements"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:91
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:47
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:79
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:93
+msgid "Contract"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/form.php:95
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:51
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_detail.php:83
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/jobs_attributes/item_edit.php:97
+msgid "Company description"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/products_attributes/admin.php:90
+msgid "Return to plugins's page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/conf.php:74
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/index.php:428
+msgid "Property types"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/conf.php:112
+msgid "Add new property types"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:10
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:9
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:79
+msgid "For rent"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:11
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:10
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:80
+msgid "For sale"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:20
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:14
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:24
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:18
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:33
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:90
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:104
+msgid "Property type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:49
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:47
+msgid "Num. of rooms"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:59
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:57
+msgid "Num. of bathrooms"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:69
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:42
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:67
+msgid "Status"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:72
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:70
+msgid "New construction"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:73
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:71
+msgid "To renovate"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:74
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:72
+msgid "Good condition"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:79
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:77
+msgid "Square meters"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:83
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:58
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:81
+msgid "Construction Year"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:87
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:85
+msgid "Square meters (total)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:91
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:89
+msgid "Num. of floors"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:101
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:99
+msgid "Num. of garages (place for a car = one garage)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:111
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:86
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:109
+msgid "Condition"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:115
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:90
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:113
+msgid "Agency"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:119
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:94
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:117
+msgid "Floor Number"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:123
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:121
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:166
+msgid "Other characteristics"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:125
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:62
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:123
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:168
+msgid "Heating"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:126
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:124
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:169
+msgid "Air condition"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:127
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:68
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:125
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:170
+msgid "Elevator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:128
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:71
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:126
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:171
+msgid "Terrace"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:129
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:74
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:127
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:172
+msgid "Parking"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:130
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:77
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:128
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:173
+msgid "Furnished"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:132
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:130
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:175
+msgid "By owner"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:144
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:160
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:101
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:117
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:139
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:154
+msgid "Transport"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:149
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/form.php:165
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:106
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:122
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:144
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_edit.php:159
+msgid "Zone"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:34
+msgid "Num. Rooms"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:38
+msgid "Num. Bathrooms"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:46
+msgid "Square Meters"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:50
+msgid "Square Meters (total)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:54
+msgid "Num. Floors"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:65
+msgid "Air Condition"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/item_detail.php:83
+msgid "By Owner"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:122
+msgid "Num. Floors Range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:132
+msgid "Rooms Range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:139
+msgid "Bathrooms Range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:146
+msgid "Garages Range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:153
+msgid "Construction year Range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/plugins/realstate_attributes/search_form.php:160
+msgid "Square Meters Range"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/admin.php:5
+msgid "Font size"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:59
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:63
+msgid "Hello"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:60
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:64
+msgid "Manage from here your"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:61
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:65
+msgid "items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:62
+msgid "and "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:63
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:67
+msgid "profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:68
+msgid "Logout"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:66
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:70
+msgid "Register a free account"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:66
+msgid "or"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/header.php:66
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:70
+msgid "login"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/home.php:23
+#, php-format
+msgid "%d items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/default/home.php:35
+msgid "Latest published items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/category.php:7
+msgid "There are no results in this category yet."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/footer.php:5
+msgid "This web is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/header.php:66
+msgid "and"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:1
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:7
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:1
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:7
+msgid "Contact seller"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:11
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:11
+msgid "To (seller)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:19
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:19
+msgid "Your name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:19
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:27
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:19
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:27
+msgid "(optional)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:23
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:23
+msgid "Your email address"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:27
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:27
+msgid "Phone number"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:31
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:31
+msgid "Message"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-contact.php:36
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-contact.php:36
+msgid "Send message"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-post.php:5
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:95
+msgid "Post your item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-post.php:58
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:274
+msgid "Seller information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item-post.php:75
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:298
+msgid "Publish"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:8
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:8
+msgid "Send to a friend"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:18
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:18
+msgid "Images"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:24
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:24
+msgid "no pictures"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:34
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:34
+msgid "Mark as "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:35
+msgid "spam"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:36
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:36
+msgid "bad category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:37
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:37
+msgid "repeated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:38
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:38
+msgid "expired"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:39
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:39
+msgid "offensive"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:96
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:94
+msgid "Be the first to comment on this item!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:100
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:98
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:103
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:101
+msgid "Your name:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:104
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:102
+msgid "Your email:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:108
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:106
+msgid "Title:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:109
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:107
+msgid "Comment:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:112
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:110
+msgid "Send comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:117
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:115
+msgid "Comments are not enabled."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:125
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:123
+msgid "Helpful information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:128
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:126
+msgid "Avoid scams by dealing locally or paying with PayPal."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:129
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:127
+msgid "Never pay with Western Union, Moneygram or other anonymous payment services."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:130
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:128
+msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern/item.php:131
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item.php:129
+msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\"."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/category.php:30
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/home.php:94
+msgid "no description."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/header.php:116
+msgid "Login"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/home.php:48
+msgid "No Latest Items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/home.php:50
+msgid "Latest Items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/home.php:68
+msgid "Contact"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:17
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:233
+msgid "Select a region..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:22
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:42
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:69
+msgid "none"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:37
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:64
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:251
+msgid "Select a city..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:89
+msgid "You have to select a region."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:90
+msgid "You have to select a city."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:211
+msgid "Item Location"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:217
+msgid "Select a country..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:263
+msgid "City Area"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-content/themes/modern_vertical/item-post.php:284
+msgid "Show email publically within the item page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/db.php:94
+msgid "The required mysql extension is not loaded"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:30
+msgid "New item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:34
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:77
+msgid "Contact Name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:35
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:78
+msgid "Contact E-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:57
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:103
+msgid "Url"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:68
+msgid "Validate your ad"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:75
+msgid "Dear "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:76
+msgid "You're receiving this email because an Ad is being placed at "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/notifications.php:104
+msgid "You can validate your ad in this url"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:77
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:103
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:105
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:130
+msgid "Plugin "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:77
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:105
+msgid " is missing the index.php file."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:103
+msgid " is missing the function "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/plugins.php:130
+msgid " is missing the plugin's main file."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/session.php:23
+msgid "defined session"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/themes.php:43
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/themes.php:51
+msgid "Consult"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/themes.php:46
+msgid "Free"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/frm/Item.form.class.php:87
+msgid "Select one country..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/frm/Item.form.class.php:106
+msgid "Select one region..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/frm/Item.form.class.php:124
+msgid "Select one city..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/frm/Page.form.class.php:48
+msgid "Body"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/contact.php:29
+msgid "Subject"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/contact.php:45
+msgid "Send"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item-send-friend.php:104
+msgid "Your friend's name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item-send-friend.php:108
+msgid "Your friend's email address"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item.php:28
+msgid "Price:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item.php:29
+msgid "Publication date:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item.php:58
+msgid "Mark as"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item.php:101
+msgid "Your email"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/item.php:127
+msgid "Don't buy or sell outside of your country. Don't accept cashier check from outside your country."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:50
+msgid "Search results"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:53
+msgid "Page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:67
+msgid "Show as:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:67
+msgid "List"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:67
+msgid "image gallery"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:70
+msgid "Sort by:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:111
+msgid "Minimum"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:113
+msgid "Maximum"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:117
+msgid "Pictures"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:124
+msgid "Show only items with pictures"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/search.php:163
+#, php-format
+msgid "There are no results matching \"%s\"."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-items.php:22
+msgid "Your items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-items.php:25
+msgid "You do not have any items yet."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-items.php:32
+msgid "Publication date"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-profile.php:1
+msgid "Update your profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-profile.php:20
+msgid "Leave it empty if you don't want to change it now."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-profile.php:24
+msgid "Retype the password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-profile.php:54
+msgid "Update profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-register.php:3
+msgid "Register an account (free)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-includes/osclass/gui/user-register.php:24
+msgid "Re-type password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-installer/index.php:361
+msgid "OSClass Installation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-svn/oc-installer/index.php:687
+msgid "OSClass successfully installed!"
+msgstr ""
+

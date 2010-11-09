@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+#Pages: contact, feed, sitemap
+RewriteRule ^contact(.html)?$ index.php?action=contact [NC,L]
+RewriteRule ^feed.xml$ index.php?action=feed [NC,L]
+RewriteRule ^sitemap.xml$ index.php?action=sitemap [NC,L]
+
+#Advertisements
+RewriteRule -(\d+)$ item.php?id=$1 [NC,L]
+
+#Static pages
+RewriteRule -p(\d+)$ page.php?id=$1 [NC,L]
+
+#Redirect 301 of first page of category
+RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-content)|(oc-includes)|(oc-installer)).*
+RewriteRule ^([a-zA-Z\_\-]+/([a-zA-Z\_\-]*/)?)1/?$ $1 [R=301,L]
+
+#Categories
+RewriteRule ^([a-zA-Z\_\-]+/([a-zA-Z\_\-]*/)?)(\d+)/?$ category.php?slug=$1&page=$3 [NC,L]
+RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-content)|(oc-includes)|(oc-installer)).*
+RewriteRule ^([a-zA-Z\_\-\s\%]+)$ $1/
+RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-includes)|(oc-content)|(oc-installer)).*
+RewriteRule ^([a-zA-Z\_\-]+/[a-zA-Z\_\-]*?)/?$ category.php?slug=$1&page=1 [NC,L]
+
+ErrorDocument 404 /index.php?action=errorPage&code=404
+ErrorDocument 500 /index.php?action=errorPage&code=500
+</IfModule>

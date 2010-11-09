@@ -1,0 +1,1638 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-23 18:10+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Max P <max.podumal@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /var/www/osclass\n"
+
+#: /var/www/osclass/user.php:25
+#: /var/www/osclass/user.php:125
+#: /var/www/osclass/user.php:141
+msgid "Create your account"
+msgstr "Регистрация"
+
+#: /var/www/osclass/user.php:78
+#: /var/www/osclass/user.php:109
+#: /var/www/osclass/item.php:62
+msgid "OSClass application"
+msgstr "Приложение OSClass"
+
+#: /var/www/osclass/user.php:79
+msgid "Email validation"
+msgstr "Валидация эл. почты"
+
+#: /var/www/osclass/user.php:87
+msgid "Your account has been created."
+msgstr "Ваша учетная запись была создана."
+
+#: /var/www/osclass/user.php:89
+msgid "The user could not be registered, sorry."
+msgstr "Извините, но пользователь не может быть зарегестрирован."
+
+#: /var/www/osclass/user.php:110
+msgid "Successful registration"
+msgstr "Регистрация прошла успешно"
+
+#: /var/www/osclass/user.php:117
+msgid "Your account is correctly validated. Thanks."
+msgstr "Ваша учетная запись подтверждена. Спасибо."
+
+#: /var/www/osclass/user.php:119
+msgid "The link is not longer valid, sorry."
+msgstr ""
+
+#: /var/www/osclass/user.php:154
+msgid "Access to your account"
+msgstr "Вход в учетную запись"
+
+#: /var/www/osclass/user.php:182
+msgid "Wrong username or password."
+msgstr "Неверное имя пользователя или пароль."
+
+#: /var/www/osclass/index.php:88
+msgid "Contact form"
+msgstr "Контактная форма"
+
+#: /var/www/osclass/index.php:89
+msgid "Administrator"
+msgstr "Администратор"
+
+#: /var/www/osclass/index.php:93
+msgid "Your message has been sent and will be answered soon, thank you."
+msgstr "Ваше сообщение было отправлени и скоро Вы получите ответ, спасибо."
+
+#: /var/www/osclass/index.php:95
+msgid "The message could not been sent, try again later."
+msgstr "Сообщение отправлено небыло. Пожалуйста попробуйте позже."
+
+#: /var/www/osclass/page.php:22
+msgid "The page you are looking for does not exist."
+msgstr "Страница которую Вы ищите не существует"
+
+#: /var/www/osclass/item.php:63
+msgid "Item inquiry"
+msgstr ""
+
+#: /var/www/osclass/search.php:74
+msgid "Newly listed"
+msgstr "Новые поступления"
+
+#: /var/www/osclass/search.php:75
+msgid "Lower pricer first"
+msgstr ""
+
+#: /var/www/osclass/search.php:76
+msgid "Higher price first"
+msgstr ""
+
+#: /var/www/osclass/search.php:77
+msgid "Best match"
+msgstr ""
+
+#: /var/www/osclass/search.php:82
+#, php-format
+msgid "Search results for %s"
+msgstr "Результаты поиска: %s"
+
+#: /var/www/osclass/oc-installer/step3_logic.php:71
+msgid "Succesful installation!"
+msgstr "Установка прошла успешно!"
+
+#: /var/www/osclass/oc-installer/step3_logic.php:72
+msgid "OSClass administrator"
+msgstr "Администратор OSClass"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-login.php:22
+#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:29
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:13
+msgid "User name"
+msgstr "Пользователь"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-login.php:27
+#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:34
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:18
+msgid "Password"
+msgstr "Пароль"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-login.php:32
+msgid "Remember me"
+msgstr "Запомнить"
+
+#: /var/www/osclass/oc-includes/osclass/gui/contact.php:9
+msgid "Subject"
+msgstr "Тема"
+
+#: /var/www/osclass/oc-includes/osclass/gui/contact.php:13
+msgid "Message"
+msgstr "Сообщение"
+
+#: /var/www/osclass/oc-includes/osclass/gui/contact.php:17
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:61
+#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:22
+msgid "Your name"
+msgstr "Ваше имя"
+
+#: /var/www/osclass/oc-includes/osclass/gui/contact.php:21
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:62
+msgid "Your email"
+msgstr "Ваш электронный адрес"
+
+#: /var/www/osclass/oc-includes/osclass/gui/contact.php:25
+msgid "Send"
+msgstr "Отправить"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:19
+msgid "Post your item"
+msgstr "Добавить объявление"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:27
+msgid "Category"
+msgstr "Категория"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:39
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:66
+msgid "Title"
+msgstr "Название"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:44
+msgid "Description"
+msgstr "Описание"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:49
+#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:13
+msgid "Price"
+msgstr "Цена"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:84
+msgid "Remove"
+msgstr "Удалить"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:96
+msgid "Photos"
+msgstr "Фото"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:99
+msgid "optional"
+msgstr "по желанию"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:102
+msgid "Add new photo"
+msgstr "Добавить новое фото"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:104
+msgid "Item location"
+msgstr "Местоположение"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:107
+msgid "Country"
+msgstr "Страна"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:116
+msgid "City"
+msgstr "Город"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:121
+msgid "Region"
+msgstr "Регион"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:126
+msgid "Address"
+msgstr "Адрес"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:130
+msgid "Seller information"
+msgstr "Информация о продавце"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:133
+#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:24
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:8
+msgid "Name"
+msgstr "Название"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:138
+#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:39
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:24
+msgid "E-mail"
+msgstr "Электронная почта"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:140
+msgid "Show email publicaly within the item page"
+msgstr "Показывать адрес электронной почты на странице с объявлением"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:155
+msgid "Publish"
+msgstr "Опубликовать"
+
+#: /var/www/osclass/oc-includes/osclass/gui/category.php:6
+msgid "Publish your item"
+msgstr "Опубликовать Ваше объявление"
+
+#: /var/www/osclass/oc-includes/osclass/gui/category.php:16
+msgid "There is no results in this category yet."
+msgstr "Нет результатов в данной категории."
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:6
+msgid "Price:"
+msgstr "Цена:"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:7
+msgid "Publication date:"
+msgstr "Дата публикации:"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:14
+msgid "Contact seller"
+msgstr "Обратная связь"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:35
+msgid "Images"
+msgstr "Фотографии"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:47
+msgid "Comments"
+msgstr "Комментарии"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:54
+msgid "Be the first to comment on this item!"
+msgstr "Нет комментариев. Будьте первым! "
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:67
+msgid "Comment"
+msgstr "Комментарий"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:70
+msgid "Send comment"
+msgstr "Отослать"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item.php:77
+msgid "Helpful information"
+msgstr "Полезная информация"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:10
+msgid "To (seller)"
+msgstr "Кому (продавец)"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:14
+msgid "Item"
+msgstr "Объявление"
+
+#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:18
+msgid "Your email address"
+msgstr "Ваш электронный адрес"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:18
+msgid "Register an account (free)"
+msgstr "Зарегистрироваться (бесплатно)"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:51
+msgid "Create user"
+msgstr "Создать пользователя"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:2
+msgid "Update your profile"
+msgstr "Обновить ваш профиль"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:29
+msgid "Web site"
+msgstr "Сайт"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:34
+msgid "Additional information"
+msgstr "Дополнительная информация"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:39
+msgid "Mobile phone"
+msgstr "Мобильный номер телефона"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:44
+msgid "Land phone"
+msgstr "Стационарный номер телефона"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:49
+msgid "Update profile"
+msgstr "Обновить профиль"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:2
+msgid "Your items"
+msgstr "Ваши объявления"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:5
+msgid "You do not have any items yet."
+msgstr "У Вас нет объявлений."
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:12
+msgid "Publication date"
+msgstr "Дата публикации"
+
+#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:16
+msgid "Delete"
+msgstr "Удалить"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:2
+msgid "Search results"
+msgstr "Результаты поиска"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:5
+msgid "Page"
+msgstr "Страница"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:19
+msgid "Show as:"
+msgstr "Показать как:"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:19
+msgid "List"
+msgstr "Список"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:19
+msgid "image gallery"
+msgstr "Галерея"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:22
+msgid "Sort by:"
+msgstr "Сортировать по:"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:82
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:91
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:112
+msgid "Apply"
+msgstr "Применить"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:87
+msgid "Minimum"
+msgstr "Минимум"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:89
+msgid "Maximum"
+msgstr "Максимум"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:94
+msgid "Pictures"
+msgstr "Фото"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:101
+msgid "Show only items with picture"
+msgstr "Показывать только с фото"
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:124
+#, php-format
+msgid "There are no results matching \"%s\"."
+msgstr "\"%s\" поиск не дал результатов."
+
+#: /var/www/osclass/oc-includes/osclass/gui/search.php:130
+msgid "Search"
+msgstr "Поиск"
+
+#: /var/www/osclass/oc-content/themes/default/admin.php:11
+msgid "Save"
+msgstr "Сохранить"
+
+#: /var/www/osclass/oc-content/themes/default/home.php:21
+msgid "Categories"
+msgstr "Категории"
+
+#: /var/www/osclass/oc-content/themes/default/home.php:25
+#, fuzzy, php-format
+msgid "%d items"
+msgstr "объявления"
+
+#: /var/www/osclass/oc-content/themes/default/home.php:37
+#, fuzzy
+msgid "Latest published items"
+msgstr "Последние добавления"
+
+#: /var/www/osclass/oc-content/themes/default/header.php:20
+msgid "Latest items added"
+msgstr "Последние поступления"
+
+#: /var/www/osclass/oc-content/themes/default/header.php:60
+#: /var/www/osclass/oc-content/themes/modern/header.php:84
+msgid "items"
+msgstr "объявления"
+
+#: /var/www/osclass/oc-content/themes/default/header.php:62
+#: /var/www/osclass/oc-content/themes/modern/header.php:86
+msgid "profile"
+msgstr "профиль"
+
+#: /var/www/osclass/oc-content/themes/default/header.php:63
+#: /var/www/osclass/oc-content/themes/modern/header.php:87
+msgid "Logout"
+msgstr "Выход"
+
+#: /var/www/osclass/oc-content/themes/default/header.php:65
+#: /var/www/osclass/oc-content/themes/modern/header.php:89
+msgid "Register a free account"
+msgstr "Зарегистрироваться"
+
+#: /var/www/osclass/oc-content/themes/default/header.php:65
+#: /var/www/osclass/oc-content/themes/modern/header.php:89
+msgid "login"
+msgstr "вход"
+
+#: /var/www/osclass/oc-content/themes/modern/item-post.php:15
+msgid "General Information"
+msgstr "Общая информация"
+
+#: /var/www/osclass/oc-content/themes/modern/item-post.php:102
+msgid "Item Location"
+msgstr "Местоположение"
+
+#: /var/www/osclass/oc-content/themes/modern/header.php:130
+msgid "Login"
+msgstr "Вход"
+
+#: /var/www/osclass/oc-content/themes/large/home.php:16
+msgid "Pages"
+msgstr "Страницы"
+
+#: /var/www/osclass/oc-content/themes/large/category.php:3
+msgid "Publish an item"
+msgstr "Опубликуйте Ваше объявление"
+
+#: /var/www/osclass/oc-content/themes/modern_vertical/home.php:48
+msgid "No Latest Items"
+msgstr "Нет последних добавлений"
+
+#: /var/www/osclass/oc-content/themes/modern_vertical/home.php:50
+msgid "Latest Items"
+msgstr "Последние добавления"
+
+#: /var/www/osclass/oc-content/themes/modern_vertical/home.php:68
+msgid "Contact"
+msgstr "Контактная информация"
+
+#: /var/www/osclass/oc-content/plugins/google_maps/admin.php:15
+msgid "You can freely obtain a developer key after signing up on this URL:"
+msgstr "Вы можете свободно получить ключ разработчика после подписки по этому URL:"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/admin.php:21
+msgid "Cancel"
+msgstr "Отменить"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:6
+msgid "Model"
+msgstr "Модель"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:10
+msgid "Num. of airbags"
+msgstr "Кол-во подушек безопасности"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:14
+msgid "Transmission"
+msgstr "Коробка передач"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:15
+msgid "Automatic"
+msgstr "Автоматическая"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:15
+msgid "Manual"
+msgstr "Мануальная"
+
+#: /var/www/osclass/oc-content/plugins/cars_attributes/form.php:6
+msgid "Type"
+msgstr "Тип"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:6
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:6
+msgid "Num. of floors"
+msgstr "Кол-во этажей"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:10
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:16
+msgid "Num. of bathrooms"
+msgstr "Кол-во ванн"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:14
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:26
+msgid "Num. of garages (place for a car = one garage)"
+msgstr "Кол-во гаражей (место для машины = один гараж)"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:18
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:36
+msgid "Construction date"
+msgstr "Дата постройки"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:22
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:40
+msgid "Square meters"
+msgstr "Квадратных метров"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:29
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:44
+msgid "Other characteristics"
+msgstr "Другие характеристики"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:32
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:46
+msgid "Heating"
+msgstr "Обогрев"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:33
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:47
+msgid "Air condition"
+msgstr "Кондиционер"
+
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:34
+#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:48
+msgid "Elevator"
+msgstr "Лифт"
+
+#: /var/www/osclass/oc-content/plugins/disqus_comments/admin.php:15
+#: /var/www/osclass/oc-content/plugins/paypal_integration/admin.php:15
+msgid "You can freely obtain a key after signing up on this URL:"
+msgstr "Вы можете свободно получить ключ разработчика после подписки по этому URL:"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:6
+msgid "You are:"
+msgstr "Вы:"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:8
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:16
+msgid "Man"
+msgstr "Мужчина"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:9
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:17
+msgid "Woman"
+msgstr "Женщина"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:10
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:18
+msgid "Not informed"
+msgstr "Не оповещен"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:14
+msgid "Looking for:"
+msgstr "Ишу:"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:22
+msgid "Relation type:"
+msgstr "Тип отношений"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:24
+msgid "Friendship"
+msgstr "Дружба"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:25
+msgid "Formal relation"
+msgstr "Формальные"
+
+#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:26
+msgid "Informal relation"
+msgstr "Неформальные"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:11
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:6
+msgid "Relation"
+msgstr "Связь"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:15
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:13
+msgid "Company name"
+msgstr "Название фирмы"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:19
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:17
+msgid "Position type"
+msgstr "Вакансия"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:23
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:27
+msgid "Desired experience"
+msgstr "Желаемый опыт"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:27
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:38
+msgid "Salary range"
+msgstr "Зарплата"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:8
+msgid "Hire someone"
+msgstr "Нанять"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:9
+msgid "Looking for a job"
+msgstr "Ищу работу"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:20
+msgid "Undefined"
+msgstr "Неопределено"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:21
+msgid "Part time"
+msgstr "Неполный рабочий день"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:22
+msgid "Full-time"
+msgstr "Полный рабочий день"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:30
+msgid "Less than a year"
+msgstr "Меньше года"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:31
+msgid "Between 1 and 3 years"
+msgstr "От 1 года до 3 лет"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:32
+msgid "Between 3 and 6 years"
+msgstr "От 3 лет до 6-ти"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:33
+msgid "More than 6 years"
+msgstr "Больше 6-ти лет"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:42
+msgid "Hour"
+msgstr "Час"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:43
+msgid "Week"
+msgstr "Неделя"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:44
+msgid "Month"
+msgstr "Месяц"
+
+#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:45
+msgid "Year"
+msgstr "Год"
+
+#: /var/www/osclass/oc-admin/tools.php:22
+#: /var/www/osclass/oc-admin/tools.php:34
+msgid "Tools"
+msgstr "Инструментарий"
+
+#: /var/www/osclass/oc-admin/index.php:31
+#, php-format
+msgid "Your new password is \"%s\"."
+msgstr "Ваш новый пароль:  \"%s\"."
+
+#: /var/www/osclass/oc-admin/index.php:43
+msgid "Recover your password"
+msgstr "Восстановить пароль"
+
+#: /var/www/osclass/oc-admin/index.php:50
+msgid "A new password has been sent to your account."
+msgstr "Новый пароль был выслан Вам на электронный адресс."
+
+#: /var/www/osclass/oc-admin/index.php:52
+msgid "The email you have entered does not belong to a valid administrator."
+msgstr "Электронная почта которую вы ввели не относится к действительному администратору."
+
+#: /var/www/osclass/oc-admin/main.php:30
+msgid "Dashboard"
+msgstr "Панель"
+
+#: /var/www/osclass/oc-admin/pages.php:28
+#: /var/www/osclass/oc-admin/users.php:38
+#: /var/www/osclass/oc-admin/admins.php:43
+#: /var/www/osclass/oc-admin/languages.php:37
+msgid "Edit"
+msgstr "Редактировать"
+
+#: /var/www/osclass/oc-admin/pages.php:40
+#: /var/www/osclass/oc-admin/admins.php:55
+#, fuzzy
+msgid "The item has been updated."
+msgstr "Ваша учетная запись была создана."
+
+#: /var/www/osclass/oc-admin/pages.php:51
+msgid "The items have been deleted."
+msgstr ""
+
+#: /var/www/osclass/oc-admin/pages.php:60
+#: /var/www/osclass/oc-admin/users.php:24
+#: /var/www/osclass/oc-admin/admins.php:24
+msgid "Add"
+msgstr "Добавить"
+
+#: /var/www/osclass/oc-admin/pages.php:66
+#: /var/www/osclass/oc-admin/users.php:30
+#: /var/www/osclass/oc-admin/admins.php:31
+#, fuzzy
+msgid "The item has been added."
+msgstr "Последние поступления"
+
+#: /var/www/osclass/oc-admin/plugins.php:23
+#: /var/www/osclass/oc-admin/plugins.php:52
+#: /var/www/osclass/oc-admin/plugins.php:60
+msgid "Plugins"
+msgstr "Плагины"
+
+#: /var/www/osclass/oc-admin/plugins.php:23
+#: /var/www/osclass/oc-admin/languages.php:25
+msgid "Upload"
+msgstr "Загрузить"
+
+#: /var/www/osclass/oc-admin/plugins.php:52
+msgid "Configuration"
+msgstr "Конфигурация"
+
+#: /var/www/osclass/oc-admin/media.php:25
+#: /var/www/osclass/oc-admin/media.php:44
+msgid "Media"
+msgstr "Медиа"
+
+#: /var/www/osclass/oc-admin/media.php:25
+#: /var/www/osclass/oc-admin/settings.php:26
+#: /var/www/osclass/oc-admin/settings.php:53
+#: /var/www/osclass/oc-admin/settings.php:58
+#: /var/www/osclass/oc-admin/settings.php:61
+#: /var/www/osclass/oc-admin/settings.php:86
+msgid "Settings"
+msgstr "Настройки"
+
+#: /var/www/osclass/oc-admin/users.php:24
+#: /var/www/osclass/oc-admin/users.php:38
+#: /var/www/osclass/oc-admin/users.php:64
+msgid "Users"
+msgstr "Пользователи"
+
+#: /var/www/osclass/oc-admin/users.php:50
+msgid "Them item has been updated."
+msgstr ""
+
+#: /var/www/osclass/oc-admin/settings.php:105
+msgid "General settings"
+msgstr "Общие настройки"
+
+#: /var/www/osclass/oc-admin/admins.php:24
+#: /var/www/osclass/oc-admin/admins.php:43
+#: /var/www/osclass/oc-admin/admins.php:80
+msgid "Administrators"
+msgstr "Администраторы"
+
+#: /var/www/osclass/oc-admin/languages.php:25
+#: /var/www/osclass/oc-admin/languages.php:37
+#: /var/www/osclass/oc-admin/languages.php:91
+msgid "Languages"
+msgstr "Языки"
+
+#: /var/www/osclass/oc-admin/items.php:43
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:13
+msgid "Items"
+msgstr "Объявления"
+
+#: /var/www/osclass/oc-admin/appearance.php:24
+#: /var/www/osclass/oc-admin/appearance.php:43
+#: /var/www/osclass/oc-admin/appearance.php:46
+#: /var/www/osclass/oc-admin/appearance.php:70
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:51
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:19
+msgid "Add a new category"
+msgstr "Добавить категорию"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:23
+msgid "Add page"
+msgstr "Добавить страницу"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:34
+msgid "Add a new plugin"
+msgstr "Добавить плагин"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:41
+msgid "Permalinks"
+msgstr "Постоянные ссылки"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:42
+msgid "Performance"
+msgstr "Производительность"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:43
+#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:3
+msgid "Spam and bots"
+msgstr "Спам и боты"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:44
+#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:3
+msgid "Registry"
+msgstr "Регистр"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:45
+msgid "Currencies"
+msgstr "Валюты"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:49
+msgid "Add a new language"
+msgstr "Добавить язык"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:53
+msgid "Add a new theme"
+msgstr "Добавить тему"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:54
+msgid "Add or remove widgets"
+msgstr "Добавить или удалить элементы"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:58
+msgid "Import data"
+msgstr "Импортировать дату"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:59
+msgid "Upgrade OSClass"
+msgstr "Обновить OSClass"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:66
+msgid "Add a new user"
+msgstr "Добавить пользователя"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:70
+msgid "Add new administrator"
+msgstr "Добавить администратора"
+
+#: /var/www/osclass/oc-admin/themes/default/sidebar.php:71
+#: /var/www/osclass/oc-admin/themes/default/header.php:30
+msgid "Your profile"
+msgstr "Ваш профиль"
+
+#: /var/www/osclass/oc-admin/themes/default/header.php:27
+msgid "Visit website"
+msgstr "Посетить сайт"
+
+#: /var/www/osclass/oc-admin/themes/default/header.php:30
+msgid "Howdy"
+msgstr "С возвращением"
+
+#: /var/www/osclass/oc-admin/themes/default/header.php:36
+msgid "Back to the web"
+msgstr "Назад"
+
+#: /var/www/osclass/oc-admin/themes/default/comments/index.php:14
+#: /var/www/osclass/oc-admin/themes/default/comments/index.php:34
+#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:22
+#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:42
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:19
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:41
+#: /var/www/osclass/oc-admin/themes/default/media/index.php:18
+#: /var/www/osclass/oc-admin/themes/default/media/index.php:38
+msgid "Options"
+msgstr "Опции"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:11
+msgid "Language"
+msgstr "Язык"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:24
+msgid "Page title"
+msgstr "Название страницы"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:29
+msgid "Page description"
+msgstr "Описание страницы"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:34
+msgid "Date format"
+msgstr "Формат даты"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:51
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:71
+msgid "Custom"
+msgstr "Выберите формат"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:56
+msgid "Time format"
+msgstr "Формат времени"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:76
+msgid "Week starts on"
+msgstr "Начало недели"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:89
+msgid "Update"
+msgstr "Обновить"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/index.php:90
+msgid "Cancel and back"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:12
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:9
+#: /var/www/osclass/oc-admin/themes/default/media/index.php:9
+msgid "Delete selected"
+msgstr "Удалить выделенные"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:19
+#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:39
+#: /var/www/osclass/oc-admin/themes/default/settings/addCurrency.php:9
+msgid "Code"
+msgstr "Код"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:11
+#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:27
+msgid "Section"
+msgstr "Раздел"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:13
+#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:29
+msgid "Value"
+msgstr "Значение"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/addCurrency.php:3
+msgid "Create"
+msgstr "Создать"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/addCurrency.php:24
+msgid "Create currency"
+msgstr "Добавить валюту"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:9
+msgid "Akismet key (same as Wordpress.com)"
+msgstr "Ключ Akismet (такой же как на Wordpress.com)"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:19
+msgid "Re-captcha private key"
+msgstr "Приватный ключ Re-captcha"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:24
+msgid "Re-captcha public key"
+msgstr "Публичный ключ Re-captcha"
+
+#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:29
+msgid "Update spam and bots configuration"
+msgstr "Обвновить конфигурацию"
+
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:9
+msgid "Are you sure you want to delete the selected items?"
+msgstr "Вы уверены, что хотите удалить выбранные позиции?"
+
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:17
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:39
+msgid "Excerpt"
+msgstr "Выдержка"
+
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:30
+msgid "View comments"
+msgstr "Посмотреть комментарии"
+
+#: /var/www/osclass/oc-admin/themes/default/items/index.php:31
+msgid "View media"
+msgstr "Посмотреть медиа контент"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:8
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:64
+msgid "Update configuration"
+msgstr "Обновить конфигурацию"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:11
+msgid "Restrictions"
+msgstr "Ограничения"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:14
+msgid "Maximum size in KB"
+msgstr "Максимальный размер в KB"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:19
+msgid "Allowed format extensions (eg: png, jpg, gif)"
+msgstr "Разрешенные форматы (например: png, jpg, gif)"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:28
+msgid "Path and URI"
+msgstr "Путь и URI"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:31
+msgid "Store uploads in this folder"
+msgstr "Сохранять загрузки в эту директорию"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:36
+msgid "Full URL path to files"
+msgstr "Полный URL к файлам"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:45
+msgid "Dimensions"
+msgstr "Размеры"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:48
+msgid "Thumbnail dimensions"
+msgstr "Размер мини-копии"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:53
+msgid "Preview dimensions"
+msgstr "Размер предварительного просмотра"
+
+#: /var/www/osclass/oc-admin/themes/default/media/config.php:58
+msgid "Normal dimensions"
+msgstr "Нормальный размер"
+
+#: /var/www/osclass/oc-admin/themes/default/plugins/index.php:25
+#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:47
+msgid "Configure"
+msgstr "Настройка"
+
+#: /var/www/osclass/oc-admin/themes/default/plugins/index.php:28
+msgid "Uninstall"
+msgstr "Удалить"
+
+#: /var/www/osclass/oc-admin/themes/default/plugins/index.php:31
+msgid "Install"
+msgstr "Установить"
+
+#: /var/www/osclass/oc-admin/themes/default/plugins/add.php:9
+msgid "Plugin package"
+msgstr "Архив с плагином"
+
+#: /var/www/osclass/oc-admin/themes/default/plugins/add.php:13
+msgid "Upload plugin"
+msgstr "Загрузить плагин"
+
+#: /var/www/osclass/oc-admin/themes/default/tools/upgrade.php:11
+msgid "Upgrade file"
+msgstr "Загрузить файл"
+
+#: /var/www/osclass/oc-admin/themes/default/tools/import.php:11
+msgid "Data"
+msgstr "Дата"
+
+#: /var/www/osclass/oc-admin/themes/default/tools/export.php:3
+msgid "Export"
+msgstr "Экспорт"
+
+#: /var/www/osclass/oc-admin/themes/default/tools/export.php:5
+msgid "Export now"
+msgstr "Экспортировать"
+
+#: /var/www/osclass/oc-admin/themes/default/index/index.php:14
+msgid "Username"
+msgstr "Пользователь"
+
+#: /var/www/osclass/oc-admin/themes/default/index/index.php:32
+msgid "Theme"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/default/index/index.php:50
+#: /var/www/osclass/oc-admin/themes/default/index/recover.php:31
+msgid "Log in"
+msgstr "Вход"
+
+#: /var/www/osclass/oc-admin/themes/default/index/index.php:59
+msgid "Lost your password?"
+msgstr "Потеряли пароль?"
+
+#: /var/www/osclass/oc-admin/themes/default/index/recover.php:24
+msgid "Get new password"
+msgstr "Получить новый пароль"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/index.php:22
+#: /var/www/osclass/oc-admin/themes/default/categories/index.php:50
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:9
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:8
+msgid "Parent category"
+msgstr "Исходная категория"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/index.php:40
+msgid "View subcategories"
+msgstr "Просмотреть подкатегории"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:23
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:22
+#: /var/www/osclass/oc-admin/themes/default/pages/index.php:19
+#: /var/www/osclass/oc-admin/themes/default/pages/index.php:42
+msgid "Locale"
+msgstr "Локаль"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:50
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:45
+msgid "Expirations days"
+msgstr "Окончание действия"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:51
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:46
+msgid "(0 = no expiration)"
+msgstr "(0 = постоянный)"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:59
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:54
+msgid "Position"
+msgstr "Позиция"
+
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:60
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:55
+msgid "(order in relation to other categories)"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:74
+#: /var/www/osclass/oc-admin/themes/default/categories/add.php:64
+msgid "Enabled"
+msgstr "Включена"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:3
+msgid "Current theme"
+msgstr "Текущая тема"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:11
+msgid "Available themes"
+msgstr "Доступные темы"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:27
+msgid "Thumbnail"
+msgstr "Мини-копия"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:48
+msgid "Activate"
+msgstr "Активировать"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:49
+msgid "Preview"
+msgstr "Макет"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/add_widget.php:17
+msgid "Create widget on "
+msgstr "Создать элемент в "
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/add_widget.php:29
+msgid "Content"
+msgstr "Содержание"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/add_widget.php:34
+msgid "Publish widget"
+msgstr "Опубликовать элемент"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/add.php:9
+msgid "Theme package"
+msgstr "Архив с темой"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/add.php:13
+msgid "Upload theme"
+msgstr "Загрузить тему"
+
+#: /var/www/osclass/oc-admin/themes/default/appearance/widgets.php:3
+msgid "Widgets"
+msgstr "Элементы"
+
+#: /var/www/osclass/oc-admin/themes/default/pages/edit.php:31
+#: /var/www/osclass/oc-admin/themes/default/pages/add.php:26
+msgid "Body"
+msgstr "Текст"
+
+#: /var/www/osclass/oc-admin/themes/default/users/index.php:21
+#: /var/www/osclass/oc-admin/themes/default/users/index.php:46
+msgid "Info"
+msgstr "Инфо"
+
+#: /var/www/osclass/oc-admin/themes/default/languages/index.php:18
+#: /var/www/osclass/oc-admin/themes/default/languages/index.php:42
+#: /var/www/osclass/oc-admin/themes/default/languages/edit.php:22
+msgid "Short name"
+msgstr "Короткое название"
+
+#: /var/www/osclass/oc-admin/themes/default/languages/edit.php:34
+#, fuzzy
+msgid "Money format"
+msgstr "Формат даты"
+
+#: /var/www/osclass/oc-admin/themes/default/languages/edit.php:40
+msgid "Stop words"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/default/languages/add.php:9
+msgid "Language package"
+msgstr "Архив с переводом"
+
+#: /var/www/osclass/oc-admin/themes/default/languages/add.php:13
+msgid "Upload translation"
+msgstr "Загрузить перевод"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:9
+msgid "Statistics"
+msgstr "Статистика"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:11
+msgid "Number of items"
+msgstr "Кол-во объявлений"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:12
+msgid "Number of public users"
+msgstr "Кол-во публичных пользователей"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:13
+msgid "Number of administrators"
+msgstr "Кол-во администраторов"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:18
+msgid "Items by category"
+msgstr "Позиции по категориям"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:27
+msgid "News from OSClass' blog"
+msgstr "Новости с блога OSClass"
+
+#: /var/www/osclass/oc-admin/themes/default/main/index.php:29
+msgid "Unable to fetch the news."
+msgstr "Не удалось получить новости"
+
+#: /var/www/osclass/oc-admin/themes/modern/footer.php:11
+msgid "Thank you for using"
+msgstr "Спасибо что используете"
+
+#: /var/www/osclass/oc-admin/themes/modern/footer.php:12
+msgid "Documentation"
+msgstr "Документация"
+
+#: /var/www/osclass/oc-admin/themes/modern/footer.php:13
+msgid "Feedback"
+msgstr "Обратная связь"
+
+#: /var/www/osclass/oc-admin/themes/modern/header.php:31
+#, fuzzy
+msgid "OSClass Admin Panel Login"
+msgstr "Админ панель OSClass"
+
+#: /var/www/osclass/oc-admin/themes/modern/header.php:44
+msgid "OSClass Admin Panel"
+msgstr "Админ панель OSClass"
+
+#: /var/www/osclass/oc-admin/themes/modern/header.php:183
+msgid "Log Out"
+msgstr "Выход"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:18
+msgid "Processing"
+msgstr "Подождите"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:19
+msgid "Show _MENU_ entries"
+msgstr "Показать _MENU_ записей"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:20
+msgid "No matching records found"
+msgstr "Записи отсутствуют."
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:21
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr "Записи с _START_ до _END_ из _TOTAL_ записей"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:22
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Записи с 0 до 0 из 0 записей"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:23
+msgid "filtered from _MAX_ total entries"
+msgstr "отфильтровано из _MAX_ записей"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:28
+msgid "First"
+msgstr "Первая"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:29
+msgid "Previous"
+msgstr "Предыдущая"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:30
+msgid "Next"
+msgstr "Следующая"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:31
+msgid "Last"
+msgstr "Последняя"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:33
+msgid "Show"
+msgstr "Показать"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:38
+msgid "entries"
+msgstr "записей"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:46
+msgid "on"
+msgstr "на"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:60
+msgid "Author"
+msgstr "Автор"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:64
+msgid "Date"
+msgstr "Дата"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:82
+msgid "Manage Comments"
+msgstr "Управление комментариями"
+
+#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:91
+msgid "Bulk Actions"
+msgstr "Массовые действия"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:68
+msgid "Sunday"
+msgstr "Воскресенье"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:69
+msgid "Monday"
+msgstr "Понедельник"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:70
+msgid "Tuesday"
+msgstr "Вторник"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:71
+msgid "Wednesday"
+msgstr "Среда"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:72
+msgid "Thursday"
+msgstr "Четверг"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:73
+msgid "Friday"
+msgstr "Пятница"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:74
+msgid "Saturday"
+msgstr "Суббота"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:30
+msgid "Akismet"
+msgstr "Akismet"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:34
+msgid "Empty means Akismet service is disabled"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:34
+msgid "Get your free key at"
+msgstr "Получите Ваш бесплатный ключ на"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:39
+msgid "Re-captcha"
+msgstr "Re-captcha"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:41
+msgid "Same here, empty values mean Re-captcha service is disabled"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:41
+msgid "Get your free keys at"
+msgstr "Получите Ваш бесплатные ключи на"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:32
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:36
+#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:38
+msgid "Enable nice urls"
+msgstr "Включить красивые URL"
+
+#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:42
+msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/items/index.php:93
+msgid "Manage items"
+msgstr "Управление объявлениями"
+
+#: /var/www/osclass/oc-admin/themes/modern/media/index.php:60
+msgid "File"
+msgstr "Файл"
+
+#: /var/www/osclass/oc-admin/themes/modern/media/index.php:63
+msgid "Attached to"
+msgstr "Прикреплен к"
+
+#: /var/www/osclass/oc-admin/themes/modern/media/config.php:18
+msgid "Configure Media"
+msgstr "Настройка медии"
+
+#: /var/www/osclass/oc-admin/themes/modern/media/config.php:28
+msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/tools/upgrade.php:26
+msgid "From here you can upgrade OSClass to a newer, always better, version. Be careful and follow all the instructions for each specific upgrade"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/tools/import.php:26
+msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/categories/index.php:48
+#: /var/www/osclass/oc-admin/themes/modern/languages/index.php:49
+msgid "Disable"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/categories/index.php:64
+#, fuzzy
+msgid "Parent"
+msgstr "Страница"
+
+#: /var/www/osclass/oc-admin/themes/modern/categories/index.php:92
+#: /var/www/osclass/oc-admin/themes/modern/languages/index.php:92
+#, fuzzy
+msgid "Enable"
+msgstr "Включена"
+
+#: /var/www/osclass/oc-admin/themes/modern/categories/edit.php:15
+msgid "Edit category"
+msgstr "Редактировать категорию"
+
+#: /var/www/osclass/oc-admin/themes/modern/categories/edit.php:102
+msgid "Save category"
+msgstr "Сохранить категорию"
+
+#: /var/www/osclass/oc-admin/themes/modern/categories/add.php:88
+msgid "Add category"
+msgstr "Добавить категорию"
+
+#: /var/www/osclass/oc-admin/themes/modern/appearance/add.php:16
+#: /var/www/osclass/oc-admin/themes/modern/pages/add.php:31
+msgid "Add New Page"
+msgstr "Добавить страницу"
+
+#: /var/www/osclass/oc-admin/themes/modern/appearance/widgets.php:31
+msgid "Add HTML widget"
+msgstr "Добавить HTML элемент"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:14
+msgid "Add new item"
+msgstr "Добавить объявлелние"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:16
+msgid "Manage media"
+msgstr "Управление медиа файлами"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:21
+msgid "Manage categories"
+msgstr "Управление категориями"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:27
+msgid "Manage pages"
+msgstr "Управление страницами"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:28
+msgid "Create page"
+msgstr "Создать страницу"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:34
+msgid "Manage plugins"
+msgstr "Управление плагинами"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:35
+msgid "Add new plugin"
+msgstr "Добавить плагин"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:40
+#, fuzzy
+msgid "Manage languages"
+msgstr "Управление страницами"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:41
+#, fuzzy
+msgid "Add a language"
+msgstr "Добавить язык"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:46
+msgid "Manage themes"
+msgstr "Управление темами"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:71
+msgid "Manage users"
+msgstr "Управление пользователями"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:72
+msgid "Add new user"
+msgstr "Добавить пользователя"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:77
+msgid "List administrators"
+msgstr "Администраторы"
+
+#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:79
+msgid "Edit Your Profile"
+msgstr "Редактировать ваш профиль"
+
+#: /var/www/osclass/oc-admin/themes/modern/pages/edit.php:34
+msgid "Edit page"
+msgstr "Редактировать страницу"
+
+#: /var/www/osclass/oc-admin/themes/modern/pages/edit.php:77
+#: /var/www/osclass/oc-admin/themes/modern/pages/add.php:69
+msgid "Publish page"
+msgstr "Опубликовать страницу"
+
+#: /var/www/osclass/oc-admin/themes/modern/users/index.php:66
+#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:62
+#: /var/www/osclass/oc-admin/themes/modern/users/add.php:61
+msgid "Real name"
+msgstr "Настоящее имя"
+
+#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:14
+msgid "Edit user"
+msgstr "Редактировать пользователя"
+
+#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:31
+#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:38
+#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:62
+#: /var/www/osclass/oc-admin/themes/modern/users/add.php:30
+#: /var/www/osclass/oc-admin/themes/modern/users/add.php:37
+#: /var/www/osclass/oc-admin/themes/modern/users/add.php:61
+msgid "required"
+msgstr "обязательно"
+
+#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:85
+msgid "Update user"
+msgstr "Обновить пользователя"
+
+#: /var/www/osclass/oc-admin/themes/modern/languages/index.php:64
+#, fuzzy
+msgid "Short Name"
+msgstr "Короткое название"
+
+#: /var/www/osclass/oc-admin/themes/modern/languages/edit.php:21
+#, fuzzy
+msgid "Edit language"
+msgstr "Редактировать страницу"
+
+#: /var/www/osclass/oc-admin/themes/modern/admins/edit.php:57
+msgid "Leave it blank if you do not want to change your password now"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/admins/edit.php:61
+msgid "Update administrator"
+msgstr "Обновить администратора"
+
+#: /var/www/osclass/oc-admin/themes/modern/admins/add.php:59
+msgid "Create administrator"
+msgstr "Создать администратора"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:79
+msgid "Which of the following content you want to see on your dashboard"
+msgstr ""
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:81
+msgid "Last Items"
+msgstr "Последние добавления"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:87
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:128
+msgid "Last Comments"
+msgstr "Последние комментарии"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:90
+msgid "Last News from OSClass"
+msgstr "Новости с блога OSClass"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:102
+msgid "Items by Category"
+msgstr "Позиции по категориям"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:137
+msgid "Latest News from OSClass"
+msgstr "Новости с блога OSClass"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:149
+#, fuzzy
+msgid "Unable to fetch news from"
+msgstr "Не удалось получить новости"
+
+#: /var/www/osclass/oc-admin/themes/modern/main/index.php:149
+msgid "Please try again later"
+msgstr ""
+
+#~ msgid "Commented"
+#~ msgstr "прокомментировал"
+#~ msgid "Move to Trash"
+#~ msgstr "Переместить в корзину"
+#~ msgid "Expirations days (0 = no expiration)"
+#~ msgstr "Окончание действия в днях (0 = без окончания)"
+#~ msgid "Update category"
+#~ msgstr "Обновить категорию"
+#~ msgid "First Name"
+#~ msgstr "Имя"
+#~ msgid "Last Name"
+#~ msgstr "Фамилия"
+#~ msgid "twice"
+#~ msgstr "дважды"
+#~ msgid "Add New Category"
+#~ msgstr "Добавить Категорию"
+
+#, fuzzy
+#~ msgid "Category Slug"
+#~ msgstr "Категория"
+#~ msgid "Category Parent"
+#~ msgstr "Категория"
+#~ msgid "Add Category"
+#~ msgstr "Добавить категорию"
+#~ msgid "Web Site"
+#~ msgstr "Сайт"
+#~ msgid "Mobile Phone"
+#~ msgstr "Мобильный номер"
+#~ msgid "Land Phone"
+#~ msgstr "Стационарный номер"
+#~ msgid "Additional Information"
+#~ msgstr "Дополнительная информация"
+

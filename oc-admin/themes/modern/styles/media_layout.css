@@ -1,0 +1,48 @@
+#new_cat_label {
+	width: 20%;
+	max-width: 160px; 
+	float:left;
+}
+
+#new_cat_input {
+	width: 79%; 
+	float:left;
+}
+
+#new_cat_input textarea, 
+#new_cat_input input, 
+#new_cat_input select {
+	width: 200px;
+}
+
+#media_list_pic {
+	float: left; 
+	width: 60px; 
+	height: 60px; 
+}
+
+#media_list_filename {
+	margin-left: 4px; 
+	float: left;
+}
+
+fieldset {
+	margin: 10px;
+	background-color: #efefef;
+	border: 1px solid #bbb;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+legend {
+	padding-left: 6px;
+	padding-right: 6px;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #454545;
+}
+
+#button_save {
+	margin-left: 10px;
+}

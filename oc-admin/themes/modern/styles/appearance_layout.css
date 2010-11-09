@@ -1,0 +1,153 @@
+#new_theme_row {
+	padding: 5px;
+}
+
+#new_theme_label {
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size: 14px;
+	width: 20%;
+	max-width: 160px; 
+	float:left;
+}
+
+#new_theme_input {
+	width: 79%; 
+	float:left;
+}
+
+#new_theme_row input, 
+#new_theme_row select, 
+#new_theme_row textarea {
+	border: 1px solid #ccc;
+	width: 300px;
+	height: 20px;
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;;
+	font-size: 14px;
+}
+
+#new_theme_row #item_date {
+	width: 100px;
+}
+
+#new_theme_row #item_description {
+	height: 100px;
+}
+
+#new_theme_div input {
+	border: 1px solid #ccc;
+	margin: 2px;
+}
+
+#flash_message {
+	border: 1px solid black;
+	background-color: pink;
+	padding: 10px;
+}
+
+#current_theme {
+	border-bottom: 1px dotted #555;
+	font-family: Georgia; 
+	font-size: 18px; 
+	font-weight: bold; 
+	margin-bottom: 15px;
+}
+
+#current_theme_desc {
+	padding-top: 5px;
+	font-family: Georgia; 
+	font-size: 12px;	
+}
+
+#current_theme_info {
+	padding-top: 10px;
+	font-family: Georgia; 
+	font-size: 14px;
+	font-style: italic;
+}
+
+#current_theme_pic {
+	padding: 8px;
+	border: 1px solid #ccc;
+	background-color: white;
+	-moz-border-radius: 4px;
+	width: 288px;
+	height: auto;
+	text-align: center;
+}
+
+#available_theme {
+	border-bottom: 1px dotted #555;
+	font-family: Georgia; 
+	font-size: 18px; 
+	font-weight: bold; 
+	margin-bottom: 15px;
+}
+
+#available_theme_desc {
+	padding-top: 5px;
+	font-family: Georgia; 
+	font-size: 12px;	
+}
+
+#available_theme_info {
+	padding-top: 10px;
+	font-family: Georgia; 
+	font-size: 14px;
+	font-style: italic;
+}
+
+#available_theme_pic {
+	padding: 8px;
+	border: 1px solid #ccc;
+	background-color: white;
+	-moz-border-radius: 4px;
+	width: 288px;
+	height: auto;
+	text-align: center;
+	min-height: 180px;
+}
+
+#available_theme_actions {
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 284px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	font-family: Georgia; 
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;	
+}
+
+#available_theme_actions a,
+#available_theme_actions a:visited  {
+	color:#555;	
+}
+
+#available_theme_actions a:hover,
+#available_theme_actions #theme_delete:hover {
+	color: black;	
+}
+
+#available_theme_actions #theme_delete,
+#available_theme_actions #theme_delete:visited  {
+	color: red;
+}
+
+fieldset {
+	margin: 10px;
+	background-color: #efefef;
+	border: 1px solid #bbb;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+legend {
+	padding-left: 6px;
+	padding-right: 6px;
+	font-family: Verdana;
+	font-size: 12px;
+	font-weight: bold;
+	color: #454545;
+}

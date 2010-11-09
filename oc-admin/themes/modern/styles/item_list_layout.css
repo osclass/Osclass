@@ -1,0 +1,80 @@
+#add_item_form {
+    width: 900px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.left {
+    float:left;
+}
+
+.right {
+    float:right;
+}
+
+.column {
+    width: 420px;
+    padding: 10px;
+}
+
+.column h2 {
+    border-bottom:1px solid #AAAAAA;
+    color:black;
+    font-size:18px;
+    padding-bottom:2px;
+    width:100%;
+}
+
+.column select {
+    font-size: 13px;
+    padding: 1px;
+}
+
+.column input {
+    font-size: 12px;
+}
+
+.column textarea {
+    font-size: 13px;
+}
+
+.tabbertab label {
+    margin-left: 5px;
+}
+
+.tabbertab .title input {
+    margin: 5px;
+    width: 70%;
+}
+
+.tabbertab .description textarea {
+    margin: 5px;
+    width: 95%;
+}
+
+.location-post dl,
+.contact-post dl {
+    margin-left: 10px;
+}
+
+.location-post dl dt,
+.contact-post dl dt{
+    border-bottom: 1px solid #AAAAAA;
+    width: 72%;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.location-post dl dd,
+.contact-post dl dd {
+    margin-left: 10px;
+}
+
+.location-post dl dd select,
+.location-post dl dd input,
+.contact-post dl dd select,
+.contact-post dl dd input {
+    width: 70%;
+}
