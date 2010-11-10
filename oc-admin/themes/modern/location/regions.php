@@ -34,7 +34,6 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 <div id="content">
     <div id="separator"></div>
     <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
-
     <div id="right_column">
         <div id="content_header" class="content_header">
             <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
@@ -45,6 +44,7 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
         <div id="content_separator"></div>
         <?php osc_showFlashMessages(); ?>
         <!-- settings form -->
+
         <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
             <div style="padding: 20px;">
                 <div style="float: left; width: 50%;">

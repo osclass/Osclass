@@ -64,8 +64,40 @@
         <div id="content_separator"></div>
         <?php osc_showFlashMessages() ; ?>
         <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-            <div style="padding: 20px;">
+        
+        
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
+            <!-- Country -->
+            <div style="float:left; width: 33%; ">
+                <h3 style="border-bottom: 1px dashed black; padding: 4px; width: 90%; ">
+                    <?php _e('Countries'); ?>
+                </h3>
+                <div id="i_countries">
+                    
+                </div>
+            </div>
+            <!-- End country -->
+            <!-- Region -->
+            <div style="float:left; width: 33%; ">
+                <h3 style="border-bottom: 1px dashed black; padding: 4px; width: 90%; ">
+                    <?php _e('Regions'); ?>
+                </h3>
+                <div id="i_regions">
+                    
+                </div>
+            </div>
+            <!-- End region -->
+            <!-- City -->
+            <div style="float:left; width: 33%; ">
+                <h3 style="border-bottom: 1px dashed black; padding: 4px; width: 90%; ">
+                    <?php _e('Cities'); ?>
+                </h3>
+                <div id="i_cities">
+                    
+                </div>
+            </div>
+            <!-- End city -->
+            <!--<div style="padding: 20px;">
                 <div style="float: left; width: 50%;">
                     <fieldset>
                         <legend><?php _e('Countries'); ?></legend>
@@ -96,7 +128,7 @@
                 <div style="clear: both;"></div>										
             </div>
         </div>
-        <!--
+        
         <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
             <div style="padding: 20px;">
                 <div style="float: left; width: 100%;">
@@ -108,8 +140,7 @@
                     </fieldset>
                 </div>
                 <div style="clear: both;"></div>
-            </div>
+            </div>-->
         </div>
-        -->
     </div>
 </div>
