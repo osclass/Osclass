@@ -65,6 +65,19 @@ switch ($action) {
     case 'addCurrency':
         osc_renderAdminSection('settings/addCurrency.php', __('Settings'));
         break;
+    case 'locations':
+        $type_action = $_POST['type'] ;
+        switch ($type_action) {
+            case 'add_country':
+                
+                break;
+            default:
+                $mCountries = new Country();
+                $aCountries = $mCountries->listAll();
+                break;
+        }
+        osc_renderAdminSection('settings/locations.php', __('Location'));
+        break;
     case 'addCurrency_post':
         try {
             Currency::newInstance()->insert($_POST);
@@ -275,7 +288,6 @@ switch ($action) {
             );
         }
         $preferences = $prefManager->toArray();
-
     default:
         $languages = Locale::newInstance()->listAllEnabled();
 

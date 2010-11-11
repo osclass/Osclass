@@ -112,21 +112,6 @@
         </ul>
 
         <h3>
-            <a href="#"><?php _e('Locations'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="location.php?action=countries">&raquo; <?php _e('Manage countries'); ?></a>
-            </li>
-            <li>
-                <a href="location.php?action=regions">&raquo; <?php _e('Manage regions'); ?></a>
-            </li>
-            <li>
-                <a href="location.php?action=cities">&raquo; <?php _e('Manage cities'); ?></a>
-            </li>
-        </ul>
-
-        <h3>
             <a href="#"><?php _e('General settings'); ?></a>
         </h3>
         <ul>
@@ -138,6 +123,9 @@
             </li>
             <li>
                 <a href="settings.php?action=comments">&raquo; <?php _e('Comments'); ?></a>
+            </li>
+            <li>
+                <a href="settings.php?action=locations">&raquo; <?php _e('Locations'); ?></a>
             </li>
             <li>
                 <a href="settings.php?action=permalinks">&raquo; <?php _e('Permalinks'); ?></a>

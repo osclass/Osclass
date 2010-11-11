@@ -27,7 +27,14 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#i_country").autocomplete({
+        $("#country").keyup(function(){
+            console.log($('#country').val());
+           if($('#country').val().length == 0) {
+               $('input[name=manual]').val('0');
+           } 
+        });
+        
+        $("#country").autocomplete({
             source: function( text, add ) {
                 $.ajax({
                     "url": "http://geo.osclass.org/geo.services.php?callback=?&action=country&max=5",
@@ -38,9 +45,11 @@
                         if( json.length > 0 ) {
                             $.each(json, function(i, val){
                                 suggestions.push(val.name);
+                                $('input[name=manual]').val('1');
                             });
                         } else {
-                            suggestions.push('No matches found');
+                            suggestions.push(text.term);
+                            $('input[name=manual]').val('0');
                         }
                         add(suggestions);
                     }
@@ -72,8 +81,23 @@
                 <h3 style="border-bottom: 1px dashed black; padding: 4px; width: 90%; ">
                     <?php _e('Countries'); ?>
                 </h3>
+                <div id="l_countries" style="margin: 10px 0;">
+                    <?php foreach( $aCountries as $country ) { ?>
+                    <div>
+                        <?php echo $country['s_name']; ?>
+                    </div>
+                    <?php } ?>
+                </div>
+                <div style="border-bottom: 1px dashed black; width: 90%;">
+                </div>
                 <div id="i_countries">
-                    
+                    <h4 style="padding: 4px; margin: 0;"><?php _e('Add a new country') ; ?></h4>
+                    <form action="location.php" method="POST" accept-charset="utf-8">
+                        <input type="hidden" name="action" value="add_country" />
+                        <input type="hidden" name="manual" value="1" />
+                        <input type="text" id="country" name="country" value="" />
+                        <input type="submit" value="Add" />
+                    </form>
                 </div>
             </div>
             <!-- End country -->
@@ -97,6 +121,7 @@
                 </div>
             </div>
             <!-- End city -->
+            
             <!--<div style="padding: 20px;">
                 <div style="float: left; width: 50%;">
                     <fieldset>
