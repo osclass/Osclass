@@ -78,7 +78,13 @@ function osc_pageInfo($property) {
 
 function osc_themeResource($fileName) {
     global $preferences;
-    echo WEB_PATH . '/oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
+    //echo WEB_PATH . '/oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
+    $themePath = THEMES_PATH . $preferences['theme'] . '/' . $fileName;
+    if (file_exists($themePath)) {
+        echo WEB_PATH . '/oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
+    } else {
+        echo WEB_PATH . '/oc-includes/osclass/gui/' . $fileName;
+    }
 }
 
 function osc_showWidgets($location) {
@@ -124,7 +130,7 @@ function osc_createThumbnailURL($resource) {
     if(isset($resource['pk_i_id'])) {
         return sprintf(WEB_PATH . '/oc-content/uploads/%d_thumbnail.png', $resource['pk_i_id']);
     } else {
-        return '#';
+        return osc_themeResource('images/no-image.png');
     }
 }
 
