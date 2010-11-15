@@ -103,7 +103,11 @@ function realstate_search_conditions($params) {
                         $has_conditions = true;
                         break;
                     case 'p_type':
-                        $conditions[] = sprintf("%st_item_house_property_type_attr.pk_i_id = %d ", DB_TABLE_PREFIX, $value);
+                        if(is_int($value)) {
+                            $conditions[] = sprintf("%st_item_house_property_type_attr.pk_i_id = %d ", DB_TABLE_PREFIX, $value);
+                        } else {
+                            $conditions[] = sprintf("%st_item_house_property_type_attr.s_name LIKE '%%%s%%'  ", DB_TABLE_PREFIX, $value);
+                        }
                         $has_conditions = true;
                         break;
                     default:

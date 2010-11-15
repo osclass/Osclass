@@ -35,7 +35,11 @@ if(GBrowserIsCompatible()) {
     }
 }
 <?php 
-    $address = sprintf('%s, %s %s, %s', $item['s_address'], $item['s_region'], $item['s_city'], $item['s_country']);
+    if(isset($item['s_address'])) {
+        $address = sprintf('%s, %s %s, %s', $item['s_address'], $item['s_region'], $item['s_city'], $item['s_country']);
+    } else {
+        $address = sprintf('%s %s, %s', $item['s_region'], $item['s_city'], $item['s_country']);
+    }
     echo 'showAddress(\''.$address.'\', \''.$item['s_region'].', '.$item['s_country'].'\');';
 ?>
 </script>

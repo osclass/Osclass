@@ -248,13 +248,14 @@ class Search {
             $this->addConditions("( ".implode(' || ', $this->categories)." )");
         }
 
-        if($count) {
-            //$this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %s WHERE %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), implode(' AND ', $this->conditions));
-            //$this->sql = sprintf("SELECT DISTINCT %st_item.pk_i_id, COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions));
-            $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions));
-        } else {
-            $this->sql = sprintf("SELECT DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s ORDER BY %st_item.%s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+        if($count) {//===true) {
+            $this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions));
+            //$this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions));
+        } else { //if($count===false){
+            $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s ORDER BY %st_item.%s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
 
+        /*} else {
+            $this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions));*/
         }
         return $this->sql;
     }
@@ -265,7 +266,7 @@ class Search {
 
         $this->addTable(sprintf("%st_item_location", DB_TABLE_PREFIX));
 
-        $this->sql = sprintf("SELECT %st_item_location.s_country, %st_item_location.fk_i_city_id, %st_item_location.fk_c_country_code, %st_item_location.s_region, %st_item_location.fk_i_region_id, %st_item_location.s_city,COUNT( DISTINCT %st_item_location.fk_i_item_id) as items FROM %st_item, %s WHERE %s GROUP BY %st_item_location.%s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), implode(' AND ', $this->conditions), DB_TABLE_PREFIX, $location);
+        $this->sql = sprintf("SELECT %st_item_location.s_country as country_name, %st_item_location.fk_i_city_id as city_id, %st_item_location.fk_c_country_code, %st_item_location.s_region as region_name, %st_item_location.fk_i_region_id as region_id, %st_item_location.s_city as city_name,COUNT( DISTINCT %st_item_location.fk_i_item_id) as items FROM %st_item, %s WHERE %s GROUP BY %st_item_location.%s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), implode(' AND ', $this->conditions), DB_TABLE_PREFIX, $location);
 
         return $this->sql;
     }
@@ -278,7 +279,7 @@ class Search {
         } else {
             return 0;
         }*/
-        $this->conn->osc_dbFetchResults($this->makeSQL(true));
+        $this->conn->osc_dbFetchResults($this->makeSQL(false));
         $sql = "SELECT FOUND_ROWS() as totalItems";
         $data = $this->conn->osc_dbFetchResult($sql);
         if(isset($data['totalItems'])) {
@@ -297,8 +298,8 @@ class Search {
         } 
     }
 
-    public function searchCities($cities = null) {
-        $this->addRegion($cities);
+    public function searchCities($regions = null) {
+        $this->addRegion($regions);
         return $this->conn->osc_dbFetchResults($this->makeSQLLocation('s_city'));
     }
 
@@ -312,39 +313,38 @@ class Search {
     }
 
     public function listCountries() {
-        $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
+        //$this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
         $this->addConditions(sprintf('%st_item_location.fk_c_country_code = cc.pk_c_code', DB_TABLE_PREFIX));
         $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-        $sql = sprintf("SELECT cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".$this->makeSQL(true).") as items FROM %st_country as cc GROUP BY cc.pk_c_code", DB_TABLE_PREFIX);
+        $sql = sprintf("SELECT cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_country as cc GROUP BY cc.pk_c_code HAVING items > 0", DB_TABLE_PREFIX);
         return $this->conn->osc_dbFetchResults($sql);
     }
     
     public function listRegions($country = '%%%%') {
-        $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
+        //$this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
         $this->addConditions(sprintf('%st_item_location.fk_i_region_id = rr.pk_i_id', DB_TABLE_PREFIX));
         $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-        $sql = sprintf("SELECT rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".$this->makeSQL(true).") as items FROM %st_region as rr, %st_country as cc WHERE rr.fk_c_country_code LIKE '%s' GROUP BY rr.s_name", DB_TABLE_PREFIX, DB_TABLE_PREFIX, strtolower($country));
+        $sql = sprintf("SELECT rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc WHERE rr.fk_c_country_code LIKE '%s' GROUP BY rr.s_name HAVING items > 0", DB_TABLE_PREFIX, DB_TABLE_PREFIX, strtolower($country));
         return $this->conn->osc_dbFetchResults($sql);
     }
     
     public function listCities($region = null) {
         $region_int = (int)$region;
         if(is_int($region_int) && $region_int!=0) {
-            $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
+            //$this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_location.fk_i_city_id = ct.pk_i_id', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-            $sql = sprintf("SELECT ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".$this->makeSQL(true).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct WHERE ct.fk_i_region_id = %d GROUP BY ct.s_name", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $region_int);
+            $sql = sprintf("SELECT ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct WHERE ct.fk_i_region_id = %d GROUP BY ct.s_name HAVING items > 0", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $region_int);
             return $this->conn->osc_dbFetchResults($sql);
         } else {
-            $this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
+            //$this->addTable(sprintf('%st_item_location', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_location.fk_i_city_id = ct.pk_i_id', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-            $sql = sprintf("SELECT ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".$this->makeSQL(true).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct WHERE rr.s_name LIKE '%s' AND ct.fk_i_region_id = rr.pk_i_id GROUP BY ct.s_name", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $region);
+            $sql = sprintf("SELECT ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct WHERE rr.s_name LIKE '%s' AND ct.fk_i_region_id = rr.pk_i_id GROUP BY ct.s_name HAVING items > 0", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $region);
             return $this->conn->osc_dbFetchResults($sql);
         }
     }
-    
-    
+        
     public function makeCompatible() {
         // COMPATIBILITY (DEPRECATED)
         global $conditions;
