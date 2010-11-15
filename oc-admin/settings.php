@@ -67,15 +67,83 @@ switch ($action) {
         break;
     case 'locations':
         $type_action = $_POST['type'] ;
+        $mCountries = new Country();
+        $mRegions = new Region();
+        $mCities = new City();
         switch ($type_action) {
             case 'add_country':
-                
+                // check if is from geo or by the user
+                if ( !$_POST['c_manual'] ) {
+                    install_location_by_country();
+                } else {
+                    $c_code = $_POST['c_country'] ;
+                    $s_name = $_POST['country'] ;
+                    $c_language = $preferences['language'] ;
+
+                    $data = array(
+                        'pk_c_code' => $c_code,
+                        'fk_c_locale_code' => $c_language,
+                        's_name' => $s_name
+                    );
+
+                    $mCountries->insert($data);
+                }
+                break;
+            case 'edit_country':
+                $new_s_country = $_POST['e_country'];
+                $old_s_country = $_POST['country_old'];
+                $mCountries->update(
+                        array('s_name' => $new_s_country),
+                        array('s_name' => $old_s_country)
+                    );
+                break;
+            case 'add_region':
+                if ( !$_POST['r_manual'] ) {
+                    install_location_by_region();
+                } else {
+                    $s_name = $_POST['region'];
+                    $c_country_code = $_POST['country_c_parent'];
+
+                    $data = array(
+                        'fk_c_country_code' => $c_country_code,
+                        's_name' => $s_name
+                    );
+
+                    $mRegions->insert($data);
+                }
+                break;
+            case 'edit_region':
+                $new_s_region = $_POST['e_region'];
+                $region_id = $_POST['region_id'];
+                $mRegions->update(
+                        array('s_name' => $new_s_region),
+                        array('pk_i_id' => $region_id)
+                    );
+                break;
+            case 'add_city':
+                $region_id = $_POST['region_parent'];
+                $c_country_code = $_POST['country_c_parent'];
+                $new_s_city = $_POST['city'];
+
+                $data = array(
+                    'fk_i_region_id' => $region_id,
+                    's_name' => $new_s_city,
+                    'fk_c_country_code' => $c_country_code
+                );
+                $mCities->insert($data);
+                break;
+            case'edit_city':
+                $new_s_city = $_POST['e_city'];
+                $city_id = $_POST['city_id'];
+                $mCities->update(
+                        array('s_name' => $new_s_city),
+                        array('pk_i_id' => $city_id)
+                    );
                 break;
             default:
-                $mCountries = new Country();
-                $aCountries = $mCountries->listAll();
                 break;
         }
+        $aCountries = $mCountries->listAll();
         osc_renderAdminSection('settings/locations.php', __('Location'));
         break;
     case 'addCurrency_post':
@@ -294,4 +362,99 @@ switch ($action) {
         osc_renderAdminSection('settings/index.php', __('General settings'));
 }
 
+
+function install_location_by_country() {
+    $country[] = trim($_POST['country']);
+
+    $manager_country = new Country();
+    $countries_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) );
+    $countries = json_decode($countries_json);
+    foreach($countries as $c) {
+        $manager_country->insert(array(
+            "pk_c_code" => addslashes($c->id),
+            "fk_c_locale_code" => addslashes($c->locale_code),
+            "s_name" => addslashes($c->name)
+        ));
+    }
+
+    $manager_region = new Region();
+    $regions_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=all');
+    $regions = json_decode($regions_json);
+    foreach($regions as $r) {
+        $manager_region->insert(array(
+            "fk_c_country_code" => addslashes($r->country_code),
+            "s_name" => addslashes($r->name)
+        ));
+    }
+    unset($regions);
+    unset($regions_json);
+
+    $manager_city = new City();
+    foreach($countries as $c) {
+        $regions = $manager_region->findByConditions( array('fk_c_country_code' => $c->id) );
+        foreach($regions as $region) {
+            $cities_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all');
+            $cities = json_decode($cities_json);
+            if(!isset($cities->error)) {
+                foreach($cities as $ci) {
+                    $manager_city->insert(array(
+                        "fk_i_region_id" => addslashes($region['pk_i_id']),
+                        "s_name" => addslashes($ci->name),
+                        "fk_c_country_code" => addslashes($ci->country_code)
+                    ));
+                }
+            }
+            unset($cities);
+            unset($cities_json);
+        }
+    }
+}
+
+function install_location_by_region() {
+    if(!isset($_POST['country_c_parent']))
+        return false;
+
+    if(!isset($_POST['region']))
+        return false;
+
+    $manager_country = new Country();
+
+    $aCountry = $manager_country->findByCode($_POST['country_c_parent']);
+
+    $country = array();
+    $region = array();
+
+    $country[] = $aCountry['s_name'];
+    $region[] = $_POST['region'];
+
+    $manager_region = new Region();
+    $regions_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=' . implode(',', $region));
+    $regions = json_decode($regions_json);
+    foreach($regions as $r) {
+        $manager_region->insert(array(
+            "fk_c_country_code" => addslashes($r->country_code),
+            "s_name" => addslashes($r->name)
+        ));
+    }
+    unset($regions);
+    unset($regions_json);
+
+    $manager_city = new City();
+    foreach($country as $c) {
+        $regions = $manager_region->findByConditions( array('fk_c_country_code' => $aCountry['pk_c_code'], 's_name' => $_POST['region']) );
+        $cities_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c . '&region=' .$regions['s_name'] . '&term=all');
+        $cities = json_decode($cities_json);
+        if(!isset($cities->error)) {
+            foreach($cities as $ci) {
+                $manager_city->insert(array(
+                    "fk_i_region_id" => addslashes($regions['pk_i_id']),
+                    "s_name" => addslashes($ci->name),
+                    "fk_c_country_code" => addslashes($ci->country_code)
+                ));
+            }
+        }
+        unset($cities);
+        unset($cities_json);
+    }
+}
 ?>
