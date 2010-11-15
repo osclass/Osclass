@@ -66,7 +66,7 @@ switch ($action) {
         osc_renderAdminSection('settings/addCurrency.php', __('Settings'));
         break;
     case 'locations':
-        $type_action = $_REQUEST['type'] ;
+        $type_action = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
         $mCountries = new Country();
         $mRegions = new Region();
         $mCities = new City();
