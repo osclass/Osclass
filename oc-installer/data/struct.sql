@@ -38,9 +38,10 @@ CREATE TABLE /*TABLE_PREFIX*/t_currency (
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_region (
-    pk_i_id INT UNSIGNED NOT NULL,
+    pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_c_country_code CHAR(2) NOT NULL,
     s_name VARCHAR(60) NOT NULL,
+    b_active BOOLEAN NOT NULL DEFAULT TRUE,
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_c_country_code),
@@ -49,10 +50,11 @@ CREATE TABLE /*TABLE_PREFIX*/t_region (
 
 
 CREATE TABLE /*TABLE_PREFIX*/t_city (
-    pk_i_id INT UNSIGNED NOT NULL,
+    pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_region_id INT UNSIGNED NOT NULL,
     s_name VARCHAR(60) NOT NULL,
     fk_c_country_code CHAR(2) NULL,
+    b_active BOOLEAN NOT NULL DEFAULT TRUE,
 
         PRIMARY KEY (pk_i_id),
         INDEX (fk_i_region_id),

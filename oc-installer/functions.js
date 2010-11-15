@@ -56,13 +56,13 @@ function validate_form() {
     error = document.getElementById('email-error');
     var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
     var num_error = 0;
-    if(!pattern.test(email.value)){
+    if( !pattern.test(email.value) ) {
         email.setAttribute('style', 'color:red;');
         error.setAttribute('style', 'display:block;');
         num_error = num_error + 1;
     }
 
-    if($('#skip-location-h').val() == 0) {
+    if( $('#skip-location-h').val() == 0 ) {
         if($("#d_country span").length < 1) {
             $("#d_country").css('border', '2px solid red');
             num_error = num_error + 1;
