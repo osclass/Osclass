@@ -66,7 +66,7 @@ switch ($action) {
         osc_renderAdminSection('settings/addCurrency.php', __('Settings'));
         break;
     case 'locations':
-        $type_action = $_POST['type'] ;
+        $type_action = $_REQUEST['type'] ;
         $mCountries = new Country();
         $mRegions = new Region();
         $mCities = new City();
@@ -97,6 +97,18 @@ switch ($action) {
                         array('s_name' => $old_s_country)
                     );
                 break;
+            case 'delete_country':
+                $code = $_GET['id'];
+                $aCountries = $mCountries->findByCode($code);
+                $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
+                foreach($aRegions as $region) {
+                    $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                    $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                }
+                $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+
+                osc_redirectTo('settings.php?action=locations');
+                break;
             case 'add_region':
                 if ( !$_POST['r_manual'] ) {
                     install_location_by_region();
@@ -120,6 +132,14 @@ switch ($action) {
                         array('pk_i_id' => $region_id)
                     );
                 break;
+            case 'delete_region':
+                $code = $_GET['id'];
+
+                $mCities->delete(array('fk_i_region_id' => $code));
+                $mRegions->delete(array('pk_i_id' => $code));
+                
+                osc_redirectTo('settings.php?action=locations');
+                break;
             case 'add_city':
                 $region_id = $_POST['region_parent'];
                 $c_country_code = $_POST['country_c_parent'];
@@ -139,6 +159,13 @@ switch ($action) {
                         array('s_name' => $new_s_city),
                         array('pk_i_id' => $city_id)
                     );
+                break;
+            case 'delete_city':
+                $code = $_GET['id'];
+
+                $mCities->delete(array('pk_i_id' => $code));
+
+                osc_redirectTo('settings.php?action=locations');
                 break;
             default:
                 break;
@@ -391,7 +418,7 @@ function install_location_by_country() {
 
     $manager_city = new City();
     foreach($countries as $c) {
-        $regions = $manager_region->findByConditions( array('fk_c_country_code' => $c->id) );
+        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'');
         foreach($regions as $region) {
             $cities_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all');
             $cities = json_decode($cities_json);

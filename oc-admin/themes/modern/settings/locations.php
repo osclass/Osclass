@@ -93,6 +93,7 @@
                     var more_region = $('<div>').css('float','right');
                     var link = $('<a>');
 
+                    s_country.append('<a class="close" href="<?php echo ABS_WEB_URL; ?>/oc-admin/settings.php?action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="<?php echo ABS_WEB_URL ?>/oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
                     s_country.append('<a href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
                     link.attr('href', 'javascript:void(0)').attr('onclick','show_city(' + val.pk_i_id + ')');
                     link.append('<?php _e('View more'); ?>  &raquo;');
@@ -103,7 +104,6 @@
                 });
             }
         });
-        
         $('input[name=country_c_parent]').val(c_code);
         $('input[name=country_parent]').val(s_country);
         $('#b_new_region').css('display','block');
@@ -120,10 +120,11 @@
                 $.each(json, function(i, val){
                     var clear = $('<div>').css('clear','both');
                     var container = $('<div>').css('padding','4px').css('width','90%');
-                    var s_country = $('<div>').css('float','left');
+                    var s_region = $('<div>').css('float','left');
 
-                    s_country.append('<a href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
-                    container.append(s_country);
+                    s_region.append('<a class="close" href="<?php echo ABS_WEB_URL; ?>/oc-admin/settings.php?action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="<?php echo ABS_WEB_URL ?>/oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
+                    s_region.append('<a href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
+                    container.append(s_region);
                     div_regions.append(container);
                     div_regions.append(clear);
                 });
@@ -338,6 +339,7 @@
                     <div style="padding: 4px; width: 90%;">
                         <div style="float:left;">
                             <div>
+                                <a class="close" href="<?php echo ABS_WEB_URL; ?>/oc-admin/settings.php?action=locations&type=delete_country&id=<?php echo $country['pk_c_code']; ?>"><img src="<?php echo ABS_WEB_URL ?>/oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>
                                 <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));"><?php echo $country['s_name']; ?></a>
                             </div>
                         </div>
