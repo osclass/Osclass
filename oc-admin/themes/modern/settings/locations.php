@@ -95,7 +95,10 @@
 
                     s_country.append('<a class="close" href="<?php echo ABS_WEB_URL; ?>/oc-admin/settings.php?action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="<?php echo ABS_WEB_URL ?>/oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
                     s_country.append('<a href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
-                    link.attr('href', 'javascript:void(0)').attr('onclick','show_city(' + val.pk_i_id + ')');
+                    link.attr('href', 'javascript:void(0)');
+                    link.click(function(){
+                        show_city(val.pk_i_id);
+                    });
                     link.append('<?php _e('View more'); ?>  &raquo;');
                     more_region.append(link);
                     container.append(s_country).append(more_region);
