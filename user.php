@@ -57,11 +57,16 @@ switch ($action) {
         $validations = array(
             's_username' => array(
                 'filter' => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => '/^[a-zA-Z0-9_\.\-]+$/i') // User Registration complete RegExp support with _, - and .
+                'options' => array('regexp' => '') // User Registration complete RegExp support with _, - and .
             )
         );
 
-        $input = filter_input_array(INPUT_POST, $validations);
+        $input = $_POST;
+
+        if( !preg_match('/^[a-zA-Z0-9_\.\-]+$/i',$input['s_username']) ) {
+            osc_addFlashMessage(__('Sorry, but the username can only contain alphanumeric characters.'));
+            osc_redirectTo('user.php?action=register');
+        }
 
         $input['s_name'] = $_POST['s_name'];
         $input['s_username'] = $input['s_username'];
