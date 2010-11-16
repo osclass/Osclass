@@ -376,6 +376,7 @@ switch ($action) {
         osc_redirectTo('settings.php?action=items');
         break;
     case 'update':
+        $required = array();
         foreach ($_POST as $key => $value) {
             $prefManager->update(
                     array('s_value' => $value),
@@ -385,7 +386,8 @@ switch ($action) {
         $preferences = $prefManager->toArray();
     default:
         $languages = Locale::newInstance()->listAllEnabled();
-
+        $mCurrencies = new Currency();
+        $aCurrencies = $mCurrencies->listAll();
         osc_renderAdminSection('settings/index.php', __('General settings'));
 }
 

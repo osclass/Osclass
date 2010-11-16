@@ -42,9 +42,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'mailserver_username', '', 'STRING'),
     ('osclass', 'mailserver_password', '', 'STRING'),
     ('osclass', 'mailserver_type', 'custom', 'STRING'),
-    ('osclass', 'mailserver_auth', '', 'BOOLEAN');
-
-
+    ('osclass', 'mailserver_auth', '', 'BOOLEAN'),
+    ('osclass', 'currency', '','STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
 ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

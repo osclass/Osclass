@@ -75,6 +75,11 @@ class ItemForm extends Form {
 
     static public function currency_select($currencies, $item = null) {
         if(count($currencies) > 1 ) {
+            $default_key = null;
+            $mPreference = new Preference();
+
+            if ( isset($item['fk_c_currency_code']) ) $default_key = $item['fk_c_currency_code'];
+            
             parent::generic_select('currency', $currencies, 'pk_c_code', 's_description', null, (isset($item['fk_c_currency_code'])) ? $item['fk_c_currency_code'] : null) ;
         } else if (count($currencies) == 1) {
             echo $currencies[0]['s_description'];
