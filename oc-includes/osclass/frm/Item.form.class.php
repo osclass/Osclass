@@ -77,10 +77,16 @@ class ItemForm extends Form {
         if(count($currencies) > 1 ) {
             $default_key = null;
             $mPreference = new Preference();
-
-            if ( isset($item['fk_c_currency_code']) ) $default_key = $item['fk_c_currency_code'];
+            $currency = $mPreference->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency'));
+            if ( isset($item['fk_c_currency_code']) ) {
+                $default_key = $item['fk_c_currency_code'];
+            } else if ( is_array($currency) ) {
+                if ( isset($currency['s_value']) ) {
+                    $default_key = $currency['s_value'];
+                }
+            }
             
-            parent::generic_select('currency', $currencies, 'pk_c_code', 's_description', null, (isset($item['fk_c_currency_code'])) ? $item['fk_c_currency_code'] : null) ;
+            parent::generic_select('currency', $currencies, 'pk_c_code', 's_description', null, $default_key) ;
         } else if (count($currencies) == 1) {
             echo $currencies[0]['s_description'];
         }
