@@ -61,19 +61,17 @@ switch ($action) {
             )
         );
 
-        $input = $_POST;
-
-        if( !preg_match('/^[a-zA-Z0-9_\.\-]+$/i',$input['s_username']) ) {
+        if( !preg_match('/^[a-zA-Z0-9_\.\-]+$/i',$_POST['s_username']) ) {
             osc_addFlashMessage(__('Sorry, but the username can only contain alphanumeric characters.'));
             osc_redirectTo('user.php?action=register');
         }
 
         $input['s_name'] = $_POST['s_name'];
-        $input['s_username'] = $input['s_username'];
+        $input['s_username'] = $_POST['s_username'];
         $input['s_email'] = $_POST['s_email'];
         $input['s_password'] = sha1($_POST['s_password']);
         $input['dt_reg_date'] = DB_FUNC_NOW;
-
+        
         $code = osc_genRandomPassword();
         $input['s_secret'] = $code;
         try {
@@ -217,7 +215,6 @@ switch ($action) {
         osc_redirectTo($_SERVER['HTTP_REFERER']);
         break;
     case 'items':
-        //require_once 'osclass/model/Item.php';
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);
         osc_renderHeader(array('pageTitle' => __('Create your account')));
         osc_renderView('user-items.php');
