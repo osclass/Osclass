@@ -215,19 +215,20 @@ function osc_doRequest($url, $_data) {
 function osc_sendMail($params) {
     require_once 'phpmailer/class.phpmailer.php';
 
-    $prefManager = Preference::newInstance();
-    $preferences = $prefManager->toArray();
+    $mPreferences = new Preference();
+    $preferences = $mPreferences->toArray();
 
-    $mail = new PHPMailer;
+    $mail = new PHPMailer();
     $mail->CharSet = "utf-8";
 
-    if (isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
+    if ( isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
         $mail->IsSMTP();
         $mail->SMTPAuth = true;
-        $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
-        $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
     }
 
+    $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : $preferences['mailserver_ssl'];
+    $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
+    $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
     $mail->Host = ( isset($params['host']) ) ? $params['host'] : $preferences['mailserver_host'];
     $mail->Port = ( isset($params['port']) ) ? $params['port'] : $preferences['mailserver_port'];
     $mail->From = ( isset($params['from']) ) ? $params['from'] : $preferences['contactEmail'];
@@ -237,18 +238,16 @@ function osc_sendMail($params) {
     $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
     $to = ( isset($params['to']) ) ? $params['to'] : '' ;
     $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-    if ( isset($params['add_bbc']) )
-        $mail->AddBCC($params['add_bbc']);
+    if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
 
     $mail->IsHTML(true);
     $mail->AddAddress($to, $to_name);
 
     if (!$mail->Send()) {
-        //echo $mail->ErrorInfo;
-		return false;
+        return false;
     } else {
-		return true;
-	}
+        return true;
+    }
 }
 
 

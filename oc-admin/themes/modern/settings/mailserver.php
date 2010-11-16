@@ -26,98 +26,90 @@
 $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
 $timeFormats = array('g:i a', 'g:i A', 'H:i');
 ?>
-<script>
-	$(function() {
-		// Here we include specific jQuery, jQuery UI and Datatables functions.
-	});
-
-function changeServer(box) {
-	if(box.value=='gmail') {
-		document.getElementById("mailserver_host").value="smtp.gmail.com";
-		document.getElementById("mailserver_host").readOnly = true;
-		document.getElementById("mailserver_port").value="465";
-		document.getElementById("mailserver_port").readOnly = true;
-		document.getElementById("mailserver_auth").checked="true";
-		document.getElementById("mailserver_auth").disabled = true;
-	} else {
-		document.getElementById("mailserver_host").value="";
-		document.getElementById("mailserver_host").readOnly = false;
-		document.getElementById("mailserver_port").value="";
-		document.getElementById("mailserver_port").readOnly = false;
-		document.getElementById("mailserver_auth").disabled = false;
+<script type="text/javascript">
+    function changeServer( box ) {
+	if( box.value == 'gmail' ) {
+            document.getElementById("mailserver_host").value = 'smtp.gmail.com';
+            document.getElementById("mailserver_host").readOnly = true;
+            document.getElementById("mailserver_port").readOnly = true;
+            document.getElementById("mailserver_port").value = '465';
+            document.getElementById("mailserver_auth").checked = 'true';
+            document.getElementById("mailserver_ssl").value = 'ssl';
 	}
-}
+    }
 </script>
+<div id="content">
+    <div id="separator"></div>
 
-</script>
-		<div id="content">
-                    <div id="separator"></div>
+    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <div id="right_column">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
+            <div style="clear: both;"></div>
+        </div>
 
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Functionalities'); ?></div>
-					<div style="clear: both;"></div>
-				</div>
-				
-				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
-				<!-- settings form -->
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px;">
+        <div id="content_separator"></div>
+        <?php osc_showFlashMessages(); ?>
+        <!-- settings form -->
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+            <div style="padding: 20px;">
 
-						<form id="mailserver_form" action="settings.php" method="post">
-						<input type="hidden" name="action" value="mailserver_post" />
+                <form id="mailserver_form" action="settings.php" method="post">
+                <input type="hidden" name="action" value="mailserver_post" />
 
-                                                <div style="float: left; width: 50%;">
-							<fieldset>
-								<legend><?php echo __('Configuration'); ?></legend>
-										<label><?php echo __('Type of server'); ?></label>
-                                                                <select name="mailserver_type" id="mailserver_type" onChange="changeServer(this)">
-																	<option value="custom" <?php if(isset($preferences['mailserver_type']) && $preferences['mailserver_type']=="custom") { echo 'selected=true'; }; ?>><?php echo __('Custom Server'); ?></option>
-																	<option value="gmail" <?php if(isset($preferences['mailserver_type']) && $preferences['mailserver_type']=="gmail") { echo 'selected=true'; }; ?>><?php echo __('GMail Server'); ?></option>
-																</select>
-                                                                <br/>
-                                                                <br/>
+                <div style="float: left; width: 50%;">
+                    <fieldset>
+                        <legend><?php _e('Configuration'); ?></legend>
+                        <label><?php _e('Type of server'); ?></label>
+                        <select name="mailserver_type" id="mailserver_type" onChange="changeServer(this)">
+                            <option value="custom" <?php if(isset($preferences['mailserver_type']) && $preferences['mailserver_type']=="custom") { echo 'selected=true'; }; ?>><?php _e('Custom Server'); ?></option>
+                            <option value="gmail" <?php if(isset($preferences['mailserver_type']) && $preferences['mailserver_type']=="gmail") { echo 'selected=true'; }; ?>><?php _e('GMail Server'); ?></option>
+                        </select>
+                        <br/>
+                        <br/>
 
-                                                                <label><?php echo __('Host Name'); ?></label>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo $preferences['mailserver_host']; ?>"/>
-                                                                <br/>
-                                                                <label><?php echo __('Server Port'); ?></label>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo $preferences['mailserver_port']; ?>"/>
-                                                                <br/>
-                                                                <label><?php echo __('Username'); ?></label>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_username" id="mailserver_username" value="<?php echo $preferences['mailserver_username']; ?>"/>
-                                                                <br/>
-                                                                <label><?php echo __('Password'); ?></label>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="password"  name="mailserver_password" id="mailserver_password" value="<?php echo $preferences['mailserver_password']; ?>"/>
-                                                                <br/>
+                        <label><?php _e('Host Name'); ?></label>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo $preferences['mailserver_host']; ?>"/>
+                        <br/>
+                        <label><?php _e('Server Port'); ?></label>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo $preferences['mailserver_port']; ?>"/>
+                        <br/>
+                        <label><?php _e('Username'); ?></label>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_username" id="mailserver_username" value="<?php echo $preferences['mailserver_username']; ?>"/>
+                        <br/>
+                        <label><?php _e('Password'); ?></label>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="password"  name="mailserver_password" id="mailserver_password" value="<?php echo $preferences['mailserver_password']; ?>"/>
+                        <br/>
+                        <label><?php _e('Encryption'); ?></label>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_ssl" id="mailserver_ssl" value="<?php echo $preferences['mailserver_ssl']; ?>"/>
+                        <br/>
+                        <small><?php _e('leave it empty if there isn\'t encryption, ssl or tls'); ?></small>
+                        <br/>
+                        <?php if(isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) { ?>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="mailserver_auth" id="mailserver_auth"/>
+                        <?php } else { ?>
+                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="mailserver_auth" id="mailserver_auth"/>
+                        <?php } ?>
+                        <label><?php _e('Enable SMTP authentication'); ?></label>
+                    </fieldset>
+                </div>
 
-                                                                <?php if(isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']): ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="mailserver_auth" id="mailserver_auth"/>
-                                                                <?php else: ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="mailserver_auth" id="mailserver_auth"/>
-                                                                <?php endif; ?>
-                                                                <label><?php echo __('Enable SMTP authentication'); ?></label>
-                                                        </fieldset>
-						</div>
+                <div style="float: left; width: 50%;">
+                    <fieldset>
+                        <legend><?php _e('Help'); ?></legend>
+                        <label><?php _e('Enter your email server configuration.'); ?></label>
+                    </fieldset>
+                </div>
 
-						<div style="float: left; width: 50%;">
-							<fieldset>
-								<legend><?php echo __('Help'); ?></legend>
-                                                               <label><?php echo __('Enter your email server configuration.'); ?></label>
-                                                        </fieldset>
+                <div style="clear: both;"></div>
 
-						</div>
+                <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
 
-						<div style="clear: both;"></div>
-												
-						<input id="button_save" type="submit" value="<?php echo __('Update'); ?>" />
-						
-						</form>
+                </form>
 
-					</div>
-				</div>
-			</div> <!-- end of right column -->
+            </div>
+        </div>
+    </div> <!-- end of right column -->
+</div>

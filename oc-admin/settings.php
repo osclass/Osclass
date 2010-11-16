@@ -295,6 +295,10 @@ switch ($action) {
                 array('s_value' => isset($_POST['mailserver_password']) ? $_POST['mailserver_password'] : ''),
                 array('s_name' => 'mailserver_password')
         );
+        $prefManager->update(
+                array('s_value' => isset($_POST['mailserver_ssl']) ? $_POST['mailserver_ssl'] : ''),
+                array('s_name' => 'mailserver_ssl')
+        );
         $preferences = $prefManager->toArray();
         osc_redirectTo('settings.php?action=mailserver');
         break;
