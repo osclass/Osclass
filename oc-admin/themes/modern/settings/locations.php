@@ -99,7 +99,7 @@
                     link.click(function(){
                         show_city(val.pk_i_id);
                     });
-                    link.append('<?php _e('View more'); ?>  &raquo;');
+                    link.append('<?php _e('View more'); ?> &raquo;');
                     more_region.append(link);
                     container.append(s_country).append(more_region);
                     div_regions.append(container);
