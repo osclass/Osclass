@@ -166,7 +166,7 @@
 							<h3 class="ui-state-default"><?php echo __('Latest News from OSClass') ?></h3>
 							<div id="last_news_body">
 							<?php
-								$xml = @file_get_contents('http://osclass.org/feed');
+								$xml = @osc_file_get_contents('http://osclass.org/feed');
 								if($xml) {
 	 								$xml = simplexml_load_string($xml);
 									echo '<ul>';

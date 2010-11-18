@@ -83,7 +83,7 @@ switch ($action) {
         if (isset($preferences['google_maps_key']) && !empty($preferences['google_maps_key'])) {
             $key = $preferences['google_maps_key'];
             $address = sprintf('%s, %s %s', $_POST['address'], $regionName, $cityName);
-            $temp = file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
+            $temp = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
             $temp = json_decode($temp);
             if (isset($temp->Placemark) && count($temp->Placemark[0]) > 0) {
                 $coord = $temp->Placemark[0]->Point->coordinates;

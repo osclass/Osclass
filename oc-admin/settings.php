@@ -400,7 +400,7 @@ function install_location_by_country() {
     $country[] = trim($_POST['country']);
 
     $manager_country = new Country();
-    $countries_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) );
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) );
     $countries = json_decode($countries_json);
     foreach($countries as $c) {
         $manager_country->insert(array(
@@ -411,7 +411,7 @@ function install_location_by_country() {
     }
 
     $manager_region = new Region();
-    $regions_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=all');
+    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=all');
     $regions = json_decode($regions_json);
     foreach($regions as $r) {
         $manager_region->insert(array(
@@ -426,7 +426,7 @@ function install_location_by_country() {
     foreach($countries as $c) {
         $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'');
         foreach($regions as $region) {
-            $cities_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all');
+            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all');
             $cities = json_decode($cities_json);
             if(!isset($cities->error)) {
                 foreach($cities as $ci) {
@@ -461,7 +461,7 @@ function install_location_by_region() {
     $region[] = $_POST['region'];
 
     $manager_region = new Region();
-    $regions_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=' . implode(',', $region));
+    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=' . implode(',', $region));
     $regions = json_decode($regions_json);
     foreach($regions as $r) {
         $manager_region->insert(array(
@@ -475,7 +475,7 @@ function install_location_by_region() {
     $manager_city = new City();
     foreach($country as $c) {
         $regions = $manager_region->findByConditions( array('fk_c_country_code' => $aCountry['pk_c_code'], 's_name' => $_POST['region']) );
-        $cities_json = file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c . '&region=' .$regions['s_name'] . '&term=all');
+        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c . '&region=' .$regions['s_name'] . '&term=all');
         $cities = json_decode($cities_json);
         if(!isset($cities->error)) {
             foreach($cities as $ci) {

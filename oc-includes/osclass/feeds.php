@@ -32,7 +32,7 @@ function osc_listNews() {
 	} else {
 		$list = array();
 
-		$content = @file_get_contents('http://osclass.org/feed');
+		$content = @osc_file_get_contents('http://osclass.org/feed');
 		if($content) {
 			$xml = simplexml_load_string($content);
 			foreach($xml->channel->item as $item) {
