@@ -67,7 +67,7 @@ $last = end($users); $last_id = $last['pk_i_id']; ?>
 				<?php foreach($users as $u): ?>
 					[
 						"<input type='checkbox'  name='id[]' value='<?php echo $u['pk_i_id']; ?>' />",
-						"<?php echo $u['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><a href='users.php?action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php echo __('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='users.php?action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Delete'); ?></a></div>", 
+						"<?php echo $u['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><?php if($u['b_enabled']==0) {?><a href='users.php?action=activate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Activate user'); ?></a><?php } else {?><a href='users.php?action=deactivate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Deactivate user'); ?></a><?php }; ?> | <a href='users.php?action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php echo __('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='users.php?action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Delete'); ?></a></div>", 
 						"<?php echo $u['s_name']; ?>", 
 						"<?php echo $u['s_email']; ?>",
 						"<?php echo $u['s_info']; ?>"
@@ -108,17 +108,18 @@ $last = end($users); $last_id = $last['pk_i_id']; ?>
 				<div id="content_separator"></div>
 				<?php osc_showFlashMessages(); ?>
 				
+				<form id="datatablesForm" action="users.php" method="post">
 				<div id="TableToolsToolbar">
-				<select id="bulk_actions" class="display">
+				<select name="action" id="action" class="display">
 					<option value=""><?php echo __('Bulk Actions'); ?></option>
-					<option value="delete_all"><?php echo __('Delete') ?></option>
+					<option value="delete"><?php echo __('Delete') ?></option>
+					<option value="activate"><?php echo __('Activate') ?></option>
+					<option value="deactivate"><?php echo __('Deactivate') ?></option>
 				</select>
 				&nbsp;<button id="bulk_apply" class="display"><?php echo __('Apply') ?></button>
 				</div>
 						
 				
-				<form id="datatablesForm" action="users.php" method="post">
-				<input type="hidden" name="action" value="delete" />
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
 					<br />
 				</form>
