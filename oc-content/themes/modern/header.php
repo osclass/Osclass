@@ -6,6 +6,7 @@ $catId = osc_pageInfo('category');
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title><?php echo osc_pageInfo('pageTitle'); ?></title>
+        <meta name="generator" content="<?php echo OSCLASS_VERSION; ?>" />
 	<link href="<?php echo osc_themeResource('style.css'); ?>" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
 	<script src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
