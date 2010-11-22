@@ -63,12 +63,12 @@ $locales = Locale::newInstance()->listAllEnabled();
                             <?php if(osc_isUserLoggedIn()): ?>
                             <?php _e('Hello ' . osc_userInfo('s_name') . "!") ; ?>
                             <?php _e('Manage from here your'); ?>
-                            <a href="<?php echo WEB_PATH; ?>/user.php?action=items"><?php _e('items'); ?></a>
+                            <a href="<?php echo osc_createUserItemsURL(); ?>"><?php _e('items'); ?></a>
                             <?php _e('and'); ?>
-                            <a href="<?php echo WEB_PATH; ?>/user.php?action=profile"><?php _e('profile'); ?></a> |
-                            <a href="<?php echo WEB_PATH; ?>/user.php?action=logout"><?php _e('Logout'); ?></a>
+                            <a href="<?php echo osc_createProfileURL(); ?>"><?php _e('profile'); ?></a> |
+                            <a href="<?php echo osc_createLogoutURL(); ?>"><?php _e('Logout'); ?></a>
                             <?php else: ?>
-                            <a href="<?php echo WEB_PATH; ?>/user.php?action=register"><?php _e('Register a free account'); ?></a> or <a id="login_open" href="<?php echo WEB_PATH; ?>/user.php?action=login"><?php _e('login'); ?></a>
+                            <a href="<?php echo osc_createRegisterURL(); ?>"><?php _e('Register a free account'); ?></a> or <a id="login_open" href="<?php echo osc_createLoginURL(); ?>"><?php _e('login'); ?></a>
                             <?php endif; ?>
                         </div>
                         <div id="header_lang_menu">

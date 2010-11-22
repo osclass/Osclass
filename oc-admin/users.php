@@ -47,17 +47,47 @@ switch($action) {
 		$conditions = array('pk_i_id' => $_POST['id']);
 		unset($_POST['id']);
 
+        if(!isset($_POST['b_enabled']) || $_POST['b_enabled']!=1) {
+            $_POST['b_enabled'] = 0;
+        }
+
 		if(empty($_POST['s_password']))
 			unset($_POST['s_password']);
 		else
 			$_POST['s_password'] = sha1($_POST['s_password']);
 		try {
 			$userManager->update($_POST, $conditions);
-			osc_addFlashMessage(__('The item has been updated.'));
+			osc_addFlashMessage(__('The user has been updated.'));
 		} catch (DatabaseException $e) {
 			osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		}
 		osc_redirectTo('users.php');
+		break;
+	case 'activate':
+        foreach($_REQUEST['id'] as $id) {
+		    $conditions = array('pk_i_id' => $id);
+            $values = array('b_enabled' => 1);
+		    try {
+			    $userManager->update($values, $conditions);
+			    osc_addFlashMessage(__('The user has been deactivated.'));
+		    } catch (DatabaseException $e) {
+			    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+		    }
+        }
+        osc_redirectTo('users.php');
+		break;
+	case 'deactivate':
+        foreach($_REQUEST['id'] as $id) {
+		    $conditions = array('pk_i_id' => $id);
+            $values = array('b_enabled' => 0);
+		    try {
+			    $userManager->update($values, $conditions);
+			    osc_addFlashMessage(__('The user has been deactivated.'));
+		    } catch (DatabaseException $e) {
+			    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+		    }
+        }
+        osc_redirectTo('users.php');
 		break;
 	case 'delete':
 		foreach($_REQUEST['id'] as $id)

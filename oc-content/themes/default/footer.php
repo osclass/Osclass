@@ -17,7 +17,7 @@ $numPages = count($pages);
 <div id="footer" class="footer" >
 	This web is proudly using the <a title="OSClass' web" href="http://osclass.org">open source classifieds</a> software <strong>OSClass</strong>.
 </div>
-
+<?php bm_show_campaign('test');?>
 <?php osc_runHooks('footer'); ?>
 
 </body>

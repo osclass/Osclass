@@ -386,7 +386,7 @@ function osc_getPluginInfo($plugin) {
 function osc_checkUpdate($plugin) {
 	$info = osc_getPluginInfo($plugin);
 	if($info['plugin_update_uri']!="") {
-        if(false===($str=@file_get_contents($info['plugin_update_uri']))) {
+        if(false===($str=@osc_file_get_contents($info['plugin_update_uri']))) {
             return false;
         } else {
 		    if(preg_match('|\?\(([^\)]+)|', preg_replace('/,\s*([\]}])/m', '$1', $str), $data)) {
