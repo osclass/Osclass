@@ -187,7 +187,14 @@ class Category extends DAO {
     public function findByPrimaryKey($pk, $lang = true) {
         if($pk!=null) {
             $data = $this->listWhere('a.pk_i_id = '.$pk);
-            return $data[0];
+            $data = $data[0];
+            $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
+            $row = array();
+            foreach ($sub_rows as $sub_row) {
+                $row[$sub_row['fk_c_locale_code']] = $sub_row;
+            }
+            $data['locale'] = $row;
+            return $data;
         } else {
             return null;
         }
