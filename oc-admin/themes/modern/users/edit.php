@@ -102,6 +102,13 @@
 								<textarea style="height: 147px; width: 100%; border: 1px solid #ccc;" name="s_info" id="s_info" ><?php echo $user['s_info']; ?></textarea>								
 							</fieldset>
 						</div>
+
+						<div style="float: left; width: 50%;">
+							<fieldset>
+								<legend><?php echo __('Activation'); ?></legend>
+								<input type="checkbox" name="b_enabled" id="b_enabled" value="1" <?php if($user['b_enabled']==1) { echo 'checked'; };?>/> <label for="b_enabled"><?php _e('Active user'); ?></label>						
+							</fieldset>
+						</div>
 						<div style="clear: both;"></div>
 						
 						<input id="button_save" type="submit" value="<?php echo __('Update user'); ?>" />

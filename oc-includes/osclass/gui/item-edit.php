@@ -28,6 +28,7 @@
                     <div class="itemFormContent">
                         <?php ItemForm::photos_javascript($item); ?>
                         <h2><?php _e('Photos'); ?></h2>
+                        <?php ItemForm::photos($resources); ?>
                         <div id="photos">
                             <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
                         </div>

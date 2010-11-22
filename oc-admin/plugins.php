@@ -41,6 +41,7 @@ switch($action) {
 		//run this after installing the plugin
 		osc_runHooks('install_'.$pn);
 
+        osc_addFlashMessage(__('Plugin installed.'));
 		osc_redirectTo('plugins.php');
 		break;
 	case 'uninstall':
@@ -51,6 +52,7 @@ switch($action) {
 		//Re-load the plugins
 		osc_loadActivePlugins();
 
+        osc_addFlashMessage(__('Plugin uninstalled.'));
 		osc_redirectTo('plugins.php');
 		break;
 	case 'admin':

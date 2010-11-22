@@ -270,6 +270,17 @@ class ItemForm extends Form {
 <?php
     }
 
+    static public function photos($resources = null) {
+
+        if($resources!=null && is_array($resources) && count($resources)>0) {
+            foreach($resources as $_r) { ?>
+                <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
+                    <img src="<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php echo __('Delete'); ?></a>
+                </div>						
+            <?php }
+        }
+    }
+
     static public function photos_javascript() {
 ?>
 <script type="text/javascript">

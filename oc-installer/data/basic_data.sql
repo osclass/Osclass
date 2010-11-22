@@ -43,6 +43,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'mailserver_password', '', 'STRING'),
     ('osclass', 'mailserver_type', 'custom', 'STRING'),
     ('osclass', 'mailserver_auth', '', 'BOOLEAN'),
+    ('osclass', 'mailserver_ssl', '', 'STRING'),
     ('osclass', 'currency', 'USD','STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
