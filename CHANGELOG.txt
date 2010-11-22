@@ -1,0 +1,7 @@
+OSClass 1.1 RC 2010-11-22
+-------------------------
+- Fixed installation and locations (in oc-admin) problems. Now, even though allow_url_fopen is disabled, it works well.
+- Now if you activate a new language and you haven't translated categories yet, it shows in other language that is available. 
+- SMTP is working well now.
+- Added default currency feature
+- Small bugs fixed
