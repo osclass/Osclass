@@ -63,7 +63,7 @@ switch ($action) {
 
         if( !preg_match('/^[a-zA-Z0-9_\.\-]+$/i',$_POST['s_username']) ) {
             osc_addFlashMessage(__('Sorry, but the username can only contain alphanumeric characters.'));
-            osc_redirectTo('user.php?action=register');
+            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
         }
 
         $input['s_name'] = $_POST['s_name'];
@@ -103,7 +103,7 @@ switch ($action) {
                 osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
             } else {
                 osc_addFlashMessage(__('Sorry, but that username is already in use.'));
-                osc_redirectTo('user.php?action=register');
+                osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
             }
         } catch (DatabaseException $e) {
             osc_addFlashMessage(__('The user could not be registered, sorry.'));
@@ -190,7 +190,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
-            osc_redirectTo('user.php?action=login');
+            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
         }
         break;
     case 'profile_post':
@@ -230,12 +230,12 @@ switch ($action) {
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
             osc_addFlashMessage(__('You could register and access every time to your items.'));
-            die;osc_redirectTo('user.php?action=register');
+            die;osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
         } else {
             Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
-            osc_redirectTo('user.php?action=items');
+            osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         }
-        osc_redirectTo('user.php?action=items');
+        osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         break;
     case 'item_edit':
     case 'editItem':
@@ -270,7 +270,7 @@ switch ($action) {
             osc_renderView('item-edit.php');
             osc_renderFooter();
         } else {
-            osc_redirectTo('user.php?action=items');
+            osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         }
         break;
 
@@ -284,9 +284,9 @@ switch ($action) {
         $userId = intval(osc_paramSession('userId', 0));
         if($userId==0) {
             osc_addFlashMessage(__('You could register and access every time to your items.'));
-            osc_redirectTo('user.php?action=register');
+            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
         } else {
-            osc_redirectTo('user.php?action=items');
+            osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         }
         break;
 
@@ -296,7 +296,7 @@ switch ($action) {
         $fkid = osc_paramGet('fkid', -1);
 
         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
-        osc_redirectTo('user.php?action=items');
+        osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         break;
 
     case 'login':

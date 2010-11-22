@@ -149,7 +149,7 @@ switch ($action) {
         osc_runHook('item_edit_post');
 
         osc_addFlashMessage(__('Great! We\'ve just update your item.'));
-        //osc_redirectTo('user.php?action=items');
+        //osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         break;
 
     case 'post_item':
@@ -160,7 +160,7 @@ switch ($action) {
             if ($preferences['reg_user_post']) {
                 if ($userId == null) {
                     osc_addFlashMessage(__('You new to log-in in order to post a new item.'));
-                    osc_redirectTo('user.php?action=login');
+                    osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
                     break;
                 }
             }

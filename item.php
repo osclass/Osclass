@@ -228,7 +228,7 @@ switch ($action) {
                 } else {
                     // NOT OK
                     osc_addFlashMessage(__('You need to log-in in order to post a new item.'));
-                    osc_redirectTo('user.php?action=login');
+                    osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
                     break;
                 }
             } else {

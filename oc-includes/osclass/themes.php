@@ -110,6 +110,38 @@ function osc_createLoginURL() {
         return WEB_PATH . '/user.php?action=login';
 }
 
+function osc_createLogoutURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH . '/user.php?action=logout';
+    } else
+        return WEB_PATH . '/user.php?action=logout';
+}
+
+function osc_createProfileURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH . '/user.php?action=profile';
+    } else
+        return WEB_PATH . '/user.php?action=profile';
+}
+
+function osc_createRegisterURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH . '/user.php?action=register';
+    } else
+        return WEB_PATH . '/user.php?action=register';
+}
+
+function osc_createUserItemsURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH . '/user.php?action=items';
+    } else
+        return WEB_PATH . '/user.php?action=items';
+}
+
 function osc_createURL($params = array()) {
     global $preferences;
     if (count($params) > 0 && isset($params['file']) && $params['file'] != "") {
