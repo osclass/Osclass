@@ -295,6 +295,11 @@ switch ($action) {
         $name = osc_paramGet('name', '');
         $fkid = osc_paramGet('fkid', -1);
 
+        $item = ItemResource::newInstance()->findByConditions(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
+        if(isset($item['s_path'])) {
+            unlink(APP_PATH."/".$item['s_path']);
+            unlink(APP_PATH."/".str_replace("_thumbnail", "", $item['s_path']));
+        }
         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
         osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         break;
