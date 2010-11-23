@@ -213,6 +213,10 @@ class Search {
 
     public function addCategory($category = null) {
         if($category!=null) {
+            if(!is_int($category)) {
+                $category = Category::newInstance()->find_by_slug($category);
+                $category = $category['pk_i_id'];
+            }
             $tree = Category::newInstance()->toSubTree($category);
             if(!in_array($category, $this->categories)) {
                 $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category);
