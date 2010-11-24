@@ -363,8 +363,90 @@ switch ($action) {
 
             // send an e-mail to the admin with the data of the new item
             if(!isset($admin) || $admin!=TRUE) {
-                alert_new_item($preferences, $item);
-                mail_validation($preferences, $item);
+                if (isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
+                    $content = Page::newInstance()->findByInternalName('email_item_validation');
+
+                    $item_url = osc_createItemURL($item, true);
+
+                    $all = '';
+
+                    if (isset($item['locale'])) {
+                        foreach ($item['locale'] as $locale => $data) {
+                            $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                            $all .= '<br/>';
+                            if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
+                                $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
+                            } else {
+                                $all .= __('Language') . ': ' . $locale . '<br/>';
+                            }
+                            $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
+                            $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
+                            $all .= '<br/>';
+                        }
+                    } else {
+                        $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
+                        $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
+                    }
+
+                    $words = array();
+                    $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
+                    $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+
+                    $params = array(
+                        'subject' => $title,
+                        'to' => $PcontactEmail,
+                        'to_name' => $PcontactName,
+                        'body' => $body,
+                        'alt_body' => $body
+                    );
+                    osc_sendMail($params);
+                }
+
+
+                if (isset($preferences['notify_new_item']) && $preferences['notify_new_item']) {
+                    $content = Page::newInstance()->findByInternalName('email_admin_new_item');
+
+                    $item_url = osc_createItemURL($item, true);
+
+                    $all = '';
+
+                    if (isset($item['locale'])) {
+                        foreach ($item['locale'] as $locale => $data) {
+                            $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                            $all .= '<br/>';
+                            if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
+                                $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
+                            } else {
+                                $all .= __('Language') . ': ' . $locale . '<br/>';
+                            }
+                            $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
+                            $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
+                            $all .= '<br/>';
+                        }
+                    } else {
+                        $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
+                        $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
+                    }
+
+
+                    $words = array();
+                    $words[] = array('{EDIT_LINK}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
+                    $words[] = array('<a href="' . ABS_WEB_URL . '/oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '" >' . ABS_WEB_URL . '/oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+
+                    $params = array(
+                        'subject' => $title,
+                        'to' => $preferences['contactEmail'],
+                        'to_name' => 'admin',
+                        'body' => $body,
+                        'alt_body' => $body
+                    );
+                    osc_sendMail($params);
+                }
+
             }
 
             osc_runHook('after_item_post');
