@@ -218,36 +218,40 @@ function osc_sendMail($params) {
     $mPreferences = new Preference();
     $preferences = $mPreferences->toArray();
 
-    $mail = new PHPMailer();
-    $mail->CharSet = "utf-8";
+    $mail = new PHPMailer(true);
+    try {
+        $mail->CharSet = "utf-8";
 
-    if ( isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
-        $mail->IsSMTP();
-        $mail->SMTPAuth = true;
-    }
+        if ( isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true;
+        }
 
-    $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : $preferences['mailserver_ssl'];
-    $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
-    $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
-    $mail->Host = ( isset($params['host']) ) ? $params['host'] : $preferences['mailserver_host'];
-    $mail->Port = ( isset($params['port']) ) ? $params['port'] : $preferences['mailserver_port'];
-    $mail->From = ( isset($params['from']) ) ? $params['from'] : $preferences['contactEmail'];
-    $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : $preferences['pageTitle'] ;
-    $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
-    $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
-    $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
-    $to = ( isset($params['to']) ) ? $params['to'] : '' ;
-    $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-    if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
+        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : $preferences['mailserver_ssl'];
+        $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
+        $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
+        $mail->Host = ( isset($params['host']) ) ? $params['host'] : $preferences['mailserver_host'];
+        $mail->Port = ( isset($params['port']) ) ? $params['port'] : $preferences['mailserver_port'];
+        $mail->From = ( isset($params['from']) ) ? $params['from'] : $preferences['contactEmail'];
+        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : $preferences['pageTitle'] ;
+        $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
+        $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
+        $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
+        $to = ( isset($params['to']) ) ? $params['to'] : '' ;
+        $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
+        if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
 
-    $mail->IsHTML(true);
-    $mail->AddAddress($to, $to_name);
-
-    if (!$mail->Send()) {
-        return false;
-    } else {
+        $mail->IsHTML(true);
+        $mail->AddAddress($to, $to_name);
+        $mail->Send();
         return true;
+
+    } catch (phpmailerException $e) {
+        return false;
+    } catch (Exception $e) {
+        return false;
     }
+    return false;
 }
 
 

@@ -262,6 +262,7 @@ switch ($action) {
 
         if($success) {
             if(!isset($_SESSION['userId'])) {
+
                 $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
 
                 $item_url = osc_createItemURL($item, true);
@@ -269,8 +270,8 @@ switch ($action) {
                 $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
 
                 $words = array();
-                $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
-                $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $_POST['message'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
+                $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+                $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
                 $title = osc_mailBeauty($content['s_title'], $words);
                 $body = osc_mailBeauty($content['s_text'], $words);
 
