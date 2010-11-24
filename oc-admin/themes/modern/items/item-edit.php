@@ -10,13 +10,17 @@
     <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
-        <div id="home_header" style="margin-left: 40px;"><h2><?php _e('Update your item'); ?></h2></div>
+        <div id="home_header" style="margin-left: 40px;"><h2><?php if(isset($new_item) && $new_item==TRUE) { _e('New item');} else { _e('Update your item');}; ?></h2></div>
         <div align="center">
             <div id="add_item_form">
                 <form action="items.php" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="action" value="item_edit_post" />
-                    <input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
-                    <input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
+                    <?php if(isset($new_item) && $new_item==TRUE) { ?>
+                        <input type="hidden" name="action" value="post_item" />
+                    <?php } else { ?>
+                        <input type="hidden" name="action" value="item_edit_post" />
+                        <input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
+                        <input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
+                    <?php }; ?>
 
                     <!-- left -->
                     <div class="left column">
@@ -118,14 +122,17 @@
                             </dl>
                         </div>
 
-                        <?php
-                            osc_runHook('item_edit', $item);
+                        <?php if(isset($new_item) && $new_item==TRUE) {
+                                ItemForm::plugin_post_item($categories);
+                            } else {
+                                osc_runHook('item_edit', $item);
+                            };
                         ?>
                     </div>
                     <div class="clear"></div>
                     <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
                         <button style="background-color: orange; color: white;" type="button" onclick="window.location='items.php';" ><?php echo __('Cancel'); ?></button>
-                        <button style="background-color: orange; color: white;" type="submit"><?php echo __('Update'); ?></button>
+                        <button style="background-color: orange; color: white;" type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
                     </div>
                 </div>
             </form>

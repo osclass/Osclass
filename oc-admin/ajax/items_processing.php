@@ -151,7 +151,6 @@ require_once '../oc-load.php';
     }
     /* END - dump results */
  }
-
 if(!isset($_SESSION['adminId'])) { return false; }
 
 /* YES! it's PHP! */

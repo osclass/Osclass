@@ -154,33 +154,47 @@ switch ($action) {
 
     case 'post_item':
 
-        $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
 
-        if (isset($preferences['reg_user_post'])) {
-            if ($preferences['reg_user_post']) {
-                if ($userId == null) {
-                    osc_addFlashMessage(__('You new to log-in in order to post a new item.'));
-                    osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
-                    break;
-                }
-            }
-        }
+
         import_request_variables('p', 'P');
-        
-        if (isset($preferences['recaptchaPrivKey'])) {
-            require_once 'recaptchalib.php';
-            if (!empty($_POST["recaptcha_challenge_field"])) {
-                $resp = recaptcha_check_answer(
-                    $preferences['recaptchaPrivKey'],
-                    $_SERVER["REMOTE_ADDR"],
-                    $_POST["recaptcha_challenge_field"],
-                    $_POST["recaptcha_response_field"]
-                );
-                if (!$resp->is_valid) {
-                    die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
+
+
+        if(isset($admin) && $admin==TRUE) {
+            $userId = $_SESSION['adminId'];
+        } else {
+            $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
+
+            if (isset($preferences['reg_user_post'])) {
+                if ($preferences['reg_user_post']) {
+                    if ($userId == null) {
+                        osc_addFlashMessage(__('You new to log-in in order to post a new item.'));
+                        osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+                        break;
+                    }
                 }
             }
+
+            if (isset($preferences['recaptchaPrivKey'])) {
+                require_once 'recaptchalib.php';
+                if (!empty($_POST["recaptcha_challenge_field"])) {
+                    $resp = recaptcha_check_answer(
+                        $preferences['recaptchaPrivKey'],
+                        $_SERVER["REMOTE_ADDR"],
+                        $_POST["recaptcha_challenge_field"],
+                        $_POST["recaptcha_response_field"]
+                    );
+                    if (!$resp->is_valid) {
+                        die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
+                    }
+                }
+            }
+
+
+
         }
+
+
+        
 
         // first of all, insert the item
 
@@ -190,7 +204,11 @@ switch ($action) {
         $show_email = isset($_POST['showEmail']) ? $_POST['showEmail'] : '0';
 
         if ($userId != null) {
-            $data = User::newInstance()->findByPrimaryKey($userId);
+            if(isset($admin) && $admin==TRUE) {
+                $data = Admin::newInstance()->findByPrimaryKey($userId);
+            } else {
+                $data = User::newInstance()->findByPrimaryKey($userId);
+            }
             $PcontactName = $data['s_name'];
             $PcontactEmail = $data['s_email'];
         }
@@ -340,8 +358,10 @@ switch ($action) {
         $item = $manager->findByPrimaryKey($itemId);
 
         // send an e-mail to the admin with the data of the new item
-        alert_new_item($preferences, $item);
-        mail_validation($preferences, $item);
+        if(!isset($admin) || $admin!=TRUE) {
+            alert_new_item($preferences, $item);
+            mail_validation($preferences, $item);
+        }
 
         osc_runHook('after_item_post');
         // This should be called via HTTP so the user will not notice the lag

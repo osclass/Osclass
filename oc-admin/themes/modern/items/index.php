@@ -26,6 +26,7 @@
  *  XXX: move this to items.php
  *
  */
+$stat = FALSE;
 if(isset($_GET)) {
     if(isset($_GET['stat'])) {
         $stat = $_GET['stat'];
