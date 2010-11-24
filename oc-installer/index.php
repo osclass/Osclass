@@ -246,7 +246,7 @@ CONFIG;
             else $sql .= file_get_contents('data/' . $file);
         }
         
-        $conn->osc_dbImportSQL($sql);
+        $conn->osc_dbImportSQL($sql, ')');
     } catch (DBException $e) {
         $error_num = $e->getErrno();
         if ( $error_num == 1471 ) {

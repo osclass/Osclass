@@ -237,14 +237,14 @@ class DB
     /**
      * Import (executes) the SQL passed as parameter making some proper adaptations.
      */
-    function osc_dbImportSQL($sql) 
+    function osc_dbImportSQL($sql, $needle = '')
     {
     	$sql = str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
-    	$sentences = explode(';', $sql);
+    	$sentences = explode( $needle . ';', $sql);
     	foreach($sentences as $s) {
-    		$s = trim($s);
-    		if(!empty($s)) {
-                if($this->db->query($s)) {
+            $s = trim($s) . $needle;
+            if( !empty($s) ) {
+                if( $this->db->query($s) ) {
                     $this->debug($s) ;
                 } else {
                     $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
