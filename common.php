@@ -1,4 +1,4 @@
-f<?php
+<?php
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
