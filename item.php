@@ -260,31 +260,35 @@ switch ($action) {
     case 'post_item':
         require_once LIB_PATH.'/osclass/items.php';
 
-        if(!isset($_SESSION['userId'])) {
-            $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
+        if($success) {
+            if(!isset($_SESSION['userId'])) {
+                $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
 
-            $item_url = osc_createItemURL($item, true);
-            $edit_link = ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
-            $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $item_url = osc_createItemURL($item, true);
+                $edit_link = ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
 
-            $words = array();
-            $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
-            $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $_POST['message'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
-            $title = osc_mailBeauty($content['s_title'], $words);
-            $body = osc_mailBeauty($content['s_text'], $words);
+                $words = array();
+                $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+                $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $_POST['message'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
+                $title = osc_mailBeauty($content['s_title'], $words);
+                $body = osc_mailBeauty($content['s_text'], $words);
 
-            $params = array(
-                'subject' => $title,
-                'to' => $PcontactEmail,
-                'to_name' => $PcontactName,
-                'body' => $body,
-                'alt_body' => $body
-            );
-            osc_sendMail($params);
+                $params = array(
+                    'subject' => $title,
+                    'to' => $PcontactEmail,
+                    'to_name' => $PcontactName,
+                    'body' => $body,
+                    'alt_body' => $body
+                );
+                osc_sendMail($params);
+            }
+
+            $category = Category::newInstance()->findByPrimaryKey($PcatId);
+            osc_redirectTo(osc_createCategoryURL($category));
+        } else {
+            osc_redirectTo('item.php?action=post');
         }
-
-        $category = Category::newInstance()->findByPrimaryKey($PcatId);
-        osc_redirectTo(osc_createCategoryURL($category));
         break;
     case 'activate':
         if (isset($_GET['secret']) && isset($_GET['id'])) {

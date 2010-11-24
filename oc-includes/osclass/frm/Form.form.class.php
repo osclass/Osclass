@@ -59,6 +59,7 @@ class Form {
         echo '<textarea id="' . $name . '" name="' . $name . '" rows="10"/>' . $value . '</textarea>' ;
     }
 
+
 }
 
 ?>

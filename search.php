@@ -77,13 +77,17 @@ if(isset($_REQUEST['orderDirection']) && !empty($_REQUEST['orderDirection']))
 $search->order($orderColumn, $orderDirection);
 // END OF ORDER
 
-if(isset($_REQUEST['feed'])) {
-    $itemsPerPage = (isset($preferences['num_rss_items'])) ? (int) $preferences['num_rss_items'] : 50 ;
+if(!isset($_REQUEST['pagesize'])) {
+    if(isset($_REQUEST['feed'])) {
+        $itemsPerPage = (isset($preferences['num_rss_items'])) ? (int) $preferences['num_rss_items'] : 50 ;
+    } else {
+        $itemsPerPage = 10;
+    }
 } else {
-    $itemsPerPage = 10;
+    $itemsPerPage = (is_int((int)($_REQUEST['pagesize'])))?$_REQUEST['pagesize']:10;
 }
-$start = $page * $itemsPerPage;
-$search->limit($start, $itemsPerPage);
+
+$search->page($page, $itemsPerPage);
 
 // COMPABILITY ISSUES (DEPRECATED)
 global $conditions;
@@ -128,6 +132,7 @@ if(!isset($_REQUEST['feed'])) {
 
     // NORMAL SEARCH
     // FANCYNESS
+    $start = $page * $itemsPerPage;
     $end = min(($page+1) * $itemsPerPage, $totalItems);
 
     $orders = array(
