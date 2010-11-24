@@ -346,6 +346,8 @@ switch ($action) {
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);
+        $manager->update(array('i_num_views' => ($item['i_num_views']+1)),
+                        array('pk_i_id' => $item['pk_i_id']));
         if ($item['e_status'] == 'ACTIVE') {
             $resources = $manager->findResourcesByID($_GET['id']);
             $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
