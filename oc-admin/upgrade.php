@@ -52,7 +52,9 @@ switch($action) {
 		$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
 		for ($dir->rewind(); $dir->valid(); $dir->next()) {
 			if ($dir->isDir()) {
-				rmdir($dir->getPathname());
+                if($dir->getFilename()!='.' && $dir->getFilename()!='..') {
+    				rmdir($dir->getPathname());
+                }
 			} else {
 				unlink($dir->getPathname());
 			}
@@ -108,7 +110,7 @@ switch($action) {
 				$message = __('Files removed ;)');
 			}
 		} else {
-			$message = __('No files to remohttp://localhost/~conejo/osclass_svn/webapp/oc-admin/update.php?action=zip-osclassve ;)');
+			$message = __('No files to remove ;)');
 		}
 		
 		break;
