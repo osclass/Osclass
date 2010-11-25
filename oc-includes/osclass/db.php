@@ -250,8 +250,9 @@ class DB
     	$sql = str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
     	$sentences = explode( $needle . ';', $sql);
     	foreach($sentences as $s) {
-            $s = trim($s) . $needle;
+            $s = trim($s);
             if( !empty($s) ) {
+                $s = trim($s) . $needle;
                 if( $this->db->query($s) ) {
                     $this->debug($s) ;
                 } else {
