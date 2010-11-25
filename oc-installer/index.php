@@ -75,7 +75,7 @@ function oc_install()
         
         return array('error' => 'Cannot connect to database. Unknown error.');
     }
-    die();
+
     $abs_url = osc_getAbsoluteWebURL();
     $rel_url = osc_getRelativeWebURL();
 

@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '1.1 RC');
+define('OSCLASS_VERSION', '1.1');
 
 define('APP_PATH', dirname(__FILE__));
 
