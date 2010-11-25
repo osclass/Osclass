@@ -64,14 +64,14 @@
 					$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/plugins-update.php?action=unzip-file&file='+fileToUnzip, function(data) {
 					
 						steps.innerHTML += data+"<br/>";
-						steps.innerHTML += "<?php echo __('Removing old files: '); ?>";
+						steps.innerHTML += "<?php echo __('Copying old files: '); ?>";
 
-						$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/plugins-update.php?action=remove-files', function(data) {
+						$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/plugins-update.php?action=copy-files', function(data) {
 						
 							steps.innerHTML += data+"<br/>";
-							steps.innerHTML += "<?php echo __('Copying new files: '); ?>";
+							steps.innerHTML += "<?php echo __('Removing new files: '); ?>";
 
-							$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/plugins-update.php?action=copy-files', function(data) {
+							$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/plugins-update.php?action=remove-files', function(data) {
 							
 								steps.innerHTML += data+"<br/>";
 								steps.innerHTML += "<?php echo __('Executing SQL: '); ?>";
