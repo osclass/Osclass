@@ -20,6 +20,8 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once LIB_PATH.'/libcurlemu/libcurlemu.inc.php';
+
 /**
  * Converts a string to lowercase respecting the charset.
  */
@@ -541,39 +543,39 @@ function osc_file_get_contents($url){
 
 // If JSON ext is not present
 if ( !function_exists('json_encode') ) {
-	function json_encode( $string ) {
-		global $osc_json;
+    function json_encode( $string ) {
+        global $osc_json;
 
-        //Reuse the $osc_json object
-		if ( !is_a($osc_json, 'Services_JSON') ) {
-			require_once( LIB_PATH.'/json/JSON.php' );
-			$osc_json = new Services_JSON();
-		}
+        if ( !is_a($osc_json, 'Services_JSON') ) {
+            require_once( LIB_PATH.'/json/JSON.php' );
+            $osc_json = new Services_JSON();
+        }
 
-		return $osc_json->encodeUnsafe( $string );
-	}
+        return $osc_json->encode( $string );
+    }
 }
 
 if ( !function_exists('json_decode') ) {
-	function json_decode( $string, $assoc_array = false ) {
-		global $osc_json;
+    function json_decode( $string, $assoc_array = false ) {
+        global $osc_json;
 
-		if ( !is_a($osc_json, 'Services_JSON') ) {
-			require_once( LIB_PATH.'/json/JSON.php' );
-			$osc_json = new Services_JSON();
-		}
+        if ( !is_a($osc_json, 'Services_JSON') ) {
+            require_once( LIB_PATH.'/json/JSON.php' );
+            $osc_json = new Services_JSON();
+        }
 
-		$res = $osc_json->decode( $string );
-		if ( $assoc_array )
-			$res = _json_decode_object_helper( $res );
-		return $res;
-	}
-	function _json_decode_object_helper($data) {
-		if ( is_object($data) )
-			$data = get_object_vars($data);
-		return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
-	}
+        $res = $osc_json->decode( $string );
+        if ( $assoc_array ) $res = _json_decode_object_helper( $res );
+
+        return $res;
+    }
+
+    function _json_decode_object_helper($data) {
+        if ( is_object($data) )
+            $data = get_object_vars($data);
+
+        return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
+    }
 }
-
 
 ?>

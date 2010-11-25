@@ -84,9 +84,6 @@ require_once LIB_PATH.'/osclass/frm/Language.form.class.php' ;
 require_once LIB_PATH.'/osclass/frm/Contact.form.class.php' ;
 require_once LIB_PATH.'/osclass/frm/User.form.class.php' ;
 
-require_once LIB_PATH.'/libcurlemu/libcurlemu.inc.php';
-
-
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);
 $_COOKIE = add_slashes_extended($_COOKIE);
