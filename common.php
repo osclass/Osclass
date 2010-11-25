@@ -37,5 +37,3 @@ define('LOG_COMMENT', 2);
 define('DEBUG_LEVEL', LOG_NONE) ;
 
 set_include_path(APP_PATH . DIRECTORY_SEPARATOR . '/oc-includes' . PATH_SEPARATOR . get_include_path());
-
-date_default_timezone_set('Europe/Madrid');
