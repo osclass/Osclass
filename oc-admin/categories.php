@@ -52,7 +52,7 @@ switch ($action)
             $categoryManager->insert($fields, $aFieldsDescription);
 
             osc_addFlashMessage(__('The category has been added.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
@@ -79,7 +79,7 @@ switch ($action)
         try {
             $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
             osc_addFlashMessage(__('The item has been updated.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         if( !is_null( $fields['fk_i_parent_id'] ) ) {
@@ -97,7 +97,7 @@ switch ($action)
                 }
             }
             osc_addFlashMessage(__('The items have been deleted.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
@@ -117,7 +117,7 @@ switch ($action)
                 $msg = __('There was a problem with this page. The ID for the category is not set.') ;
             }
             osc_addFlashMessage($msg) ;
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
@@ -132,7 +132,7 @@ switch ($action)
                 }
             }
             osc_addFlashMessage(__('The categories have been enabled.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
@@ -147,7 +147,7 @@ switch ($action)
                 }
             }
             osc_addFlashMessage(__('Selected categories have been disabled.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');

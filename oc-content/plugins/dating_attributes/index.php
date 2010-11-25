@@ -59,7 +59,7 @@ function dating_call_after_install() {
         $sql = file_get_contents($path);
         $conn->osc_dbImportSQL($sql);
         $conn->commit();
-    } catch (DatabaseException $e) {
+    } catch (Exception $e) {
         $conn->rollback();
         echo $e->getMessage();
     }
@@ -77,7 +77,7 @@ function dating_call_after_uninstall() {
         $conn->osc_dbExec("DELETE FROM %st_plugin_category WHERE s_plugin_name = 'dating_plugin'", DB_TABLE_PREFIX);
         $conn->osc_dbExec('DROP TABLE %st_item_dating_attr', DB_TABLE_PREFIX);
         $conn->commit();
-    } catch (DatabaseException $e) {
+    } catch (Exception $e) {
         $conn->rollback();
         echo $e->getMessage();
     }

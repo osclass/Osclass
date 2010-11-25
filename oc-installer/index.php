@@ -57,7 +57,7 @@ function oc_install()
     	    $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
             $master_conn->osc_dbExec(sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname)) ;
     	} catch (Exception $e) {
-            $error_num = $e->getErrno();
+            $error_num = $e->getMessage();
             if($error_num == 1006 || $error_num == 1044 || $error_num == 1045) {
                 return array('error' => 'Cannot create the database. Check if the admin username and password are correct.');
             }
@@ -68,14 +68,14 @@ function oc_install()
     try {
         $conn = getConnection($dbhost, $username, $password, $dbname, DEBUG_LEVEL) ;
     } catch (Exception $e) {
-        $error_num = $e->getErrno();
+        $error_num = $e->getMessage();
         if( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
         if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
         if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
         
         return array('error' => 'Cannot connect to database. Unknown error.');
     }
-
+    die();
     $abs_url = osc_getAbsoluteWebURL();
     $rel_url = osc_getRelativeWebURL();
 
@@ -204,7 +204,7 @@ CONFIG;
         $sql = file_get_contents('data/struct.sql');
         $conn->osc_dbImportSQL($sql);
     } catch (Exception $e) {
-        $error_num = $e->getErrno();
+        $error_num = $e->getMessage();
         if ( $error_num == 1050 ) {
             return array('error' => 'There are tables with the same name in the database. Change the table prefix or the database and try again.');
         }
@@ -248,7 +248,7 @@ CONFIG;
         
         $conn->osc_dbImportSQL($sql, ')');
     } catch (Exception $e) {
-        $error_num = $e->getErrno();
+        $error_num = $e->getMessage();
         if ( $error_num == 1471 ) {
             return array('error' => 'Cannot insert basic configuration. This user has no privileges to \'INSERT\' into the database.');
         }

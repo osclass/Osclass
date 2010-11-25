@@ -212,7 +212,7 @@ switch ($action) {
                 );
                 osc_sendMail($params);
             }
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.'));
         }
 

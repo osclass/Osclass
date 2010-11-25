@@ -105,7 +105,7 @@ switch ($action) {
                 osc_addFlashMessage(__('Sorry, but that username is already in use.'));
                 osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
             }
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('The user could not be registered, sorry.'));
         }
         osc_redirectTo('index.php');
@@ -138,7 +138,7 @@ switch ($action) {
             }
 
             osc_addFlashMessage(__('We resend you the validation email. If you don\'t recive it after a few minutes, please check your SPAM folder.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('The email couldn\'t be sent, sorry.'));
         }
 		}

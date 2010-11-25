@@ -139,7 +139,7 @@ function realstate_call_after_install() {
         $sql = file_get_contents($path);
         $conn->osc_dbImportSQL($sql);
         $conn->commit();
-    } catch (DatabaseException $e) {
+    } catch (Exception $e) {
         $conn->rollback();
         echo $e->getMessage();
     }
@@ -158,7 +158,7 @@ function realstate_call_after_uninstall() {
         $conn->osc_dbExec('DROP TABLE %st_item_house_description_attr', DB_TABLE_PREFIX);
         $conn->osc_dbExec('DROP TABLE %st_item_house_property_type_attr', DB_TABLE_PREFIX);
         $conn->commit();
-    } catch (DatabaseException $e) {
+    } catch (Exception $e) {
         $conn->rollback();
         echo $e->getMessage();
     }
