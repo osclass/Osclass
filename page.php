@@ -21,35 +21,50 @@
 
 require_once 'oc-load.php';
 
-
 $preferences = Preference::newInstance()->toArray();
 
 $pageId = intval(osc_paramGet('id', 0));
 $page = Page::newInstance()->findByPrimaryKey($pageId);
-if(is_null($page)) {
-	osc_renderError(404, __('The page you are looking for does not exist.'));
+
+if( count($page) == 0 )  {
+    $headerConf = array(
+        'pageTitle' => __('Page not found') . ' - '.$preferences['pageTitle'],
+    );
+    osc_renderHeader($headerConf);
+    osc_renderView('errorPage.php');
+    osc_renderFooter();
 } else {
     if(isset($_SESSION['locale'])) {
         $locale = $_SESSION['locale'];
     } else {
-		$locale = Preference::newInstance()->findValueByName('language');
-	}
-	if(isset($page['locale'][$locale])) {
-		$page['s_title'] = $page['locale'][$locale]['s_title'];
-		$page['s_text'] = $page['locale'][$locale]['s_text'];
-	} else {
-		$data = current($page['locale']);
-		$page['s_title'] = $data['s_title'];
-		$page['s_text'] = $data['s_text'];
-		unset($data);
-	}
-	$headerConf = array(
+        $locale = Preference::newInstance()->findValueByName('language');
+    }
+    
+    if(isset($page['locale'][$locale])) {
+        $page['s_title'] = $page['locale'][$locale]['s_title'];
+        $page['s_text'] = $page['locale'][$locale]['s_text'];
+    } else {
+        $data = current($page['locale']);
+        $page['s_title'] = $data['s_title'];
+        $page['s_text'] = $data['s_text'];
+        unset($data);
+    }
+
+    if( !$page['b_indelible'] ) {
+        $headerConf = array(
             'pageTitle' => $page['s_title'] . ' - '.$preferences['pageTitle'],
-            'pageDescription' => $page['s_title'].','.substr(stripslashes(trim(strip_tags($page['s_text']))),0,139).','.$page['s_title'] ,
         );
-	osc_renderHeader($headerConf);
-	osc_renderView('page.php');
-	osc_renderFooter();
+        osc_renderHeader($headerConf);
+        osc_renderView('page.php');
+        osc_renderFooter();
+    } else {
+        $headerConf = array(
+            'pageTitle' => __('Page not found') . ' - '.$preferences['pageTitle'],
+        );
+        osc_renderHeader($headerConf);
+        osc_renderView('errorPage.php');
+        osc_renderFooter();
+    }
 }
 
 ?>
