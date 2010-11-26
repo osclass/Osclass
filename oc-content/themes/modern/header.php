@@ -52,7 +52,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                     <!-- left -->
                     <div id="header_left">
                         <div id="header_title_shadow">
-                            <div id="header_title"><a href="<?php echo WEB_PATH; ?>/"><?php echo osc_pageInfo('pageTitle'); ?></a></div>
+                            <div id="header_title"><a href="<?php echo WEB_PATH; ?>/"><?php echo $preferences['pageTitle']; ?></a></div>
                         </div>
                     </div>
 
