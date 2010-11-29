@@ -76,7 +76,7 @@ switch ($action) {
                 osc_addFlashMessage(__('There was a problem updating the language. The ID of the language was lost.'));
             }
             
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('languages.php');
@@ -112,7 +112,7 @@ switch ($action) {
                 osc_addFlashMessage(__('There was a problem updating the languages. The IDs of the languages were lost.'));
             }
             
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('languages.php');

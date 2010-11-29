@@ -62,7 +62,7 @@ switch($action) {
                 $pageManager->deleteDraft($_REQUEST['id']);
 			    osc_addFlashMessage( __('The page has been updated.') );
             }
-		} catch (DatabaseException $e) {
+		} catch (Exception $e) {
 			osc_addFlashMessage( __('Error: ') . $e->getMessage() );
 		}
 		osc_redirectTo('pages.php');
@@ -79,7 +79,7 @@ switch($action) {
 				}
 			}
 			osc_addFlashMessage(__('The items have been deleted.'));
-		} catch (DatabaseException $e) {
+		} catch (Exception $e) {
 			osc_addFlashMessage( __('Error: ') . $e->getMessage());
 		}
 		osc_redirectTo('pages.php');
@@ -124,7 +124,7 @@ switch($action) {
                     osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'));
                 }
             }
-		} catch (DatabaseException $e) {
+		} catch (Exception $e) {
 			osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		}
 	default:

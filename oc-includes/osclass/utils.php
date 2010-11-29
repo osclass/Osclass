@@ -20,6 +20,8 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once LIB_PATH.'/libcurlemu/libcurlemu.inc.php';
+
 /**
  * Converts a string to lowercase respecting the charset.
  */
@@ -218,36 +220,40 @@ function osc_sendMail($params) {
     $mPreferences = new Preference();
     $preferences = $mPreferences->toArray();
 
-    $mail = new PHPMailer();
-    $mail->CharSet = "utf-8";
+    $mail = new PHPMailer(true);
+    try {
+        $mail->CharSet = "utf-8";
 
-    if ( isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
-        $mail->IsSMTP();
-        $mail->SMTPAuth = true;
-    }
+        if ( isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true;
+        }
 
-    $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : $preferences['mailserver_ssl'];
-    $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
-    $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
-    $mail->Host = ( isset($params['host']) ) ? $params['host'] : $preferences['mailserver_host'];
-    $mail->Port = ( isset($params['port']) ) ? $params['port'] : $preferences['mailserver_port'];
-    $mail->From = ( isset($params['from']) ) ? $params['from'] : $preferences['contactEmail'];
-    $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : $preferences['pageTitle'] ;
-    $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
-    $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
-    $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
-    $to = ( isset($params['to']) ) ? $params['to'] : '' ;
-    $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-    if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
+        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : $preferences['mailserver_ssl'];
+        $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
+        $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
+        $mail->Host = ( isset($params['host']) ) ? $params['host'] : $preferences['mailserver_host'];
+        $mail->Port = ( isset($params['port']) ) ? $params['port'] : $preferences['mailserver_port'];
+        $mail->From = ( isset($params['from']) ) ? $params['from'] : $preferences['contactEmail'];
+        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : $preferences['pageTitle'] ;
+        $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
+        $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
+        $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
+        $to = ( isset($params['to']) ) ? $params['to'] : '' ;
+        $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
+        if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
 
-    $mail->IsHTML(true);
-    $mail->AddAddress($to, $to_name);
-
-    if (!$mail->Send()) {
-        return false;
-    } else {
+        $mail->IsHTML(true);
+        $mail->AddAddress($to, $to_name);
+        $mail->Send();
         return true;
+
+    } catch (phpmailerException $e) {
+        return false;
+    } catch (Exception $e) {
+        return false;
     }
+    return false;
 }
 
 
@@ -283,7 +289,7 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 		} else {
 			$result=osc_copyemz($source, $__dest);
 		}
-		chmod($__dest,$options['filePermission']);
+		@chmod($__dest,$options['filePermission']);
 
 	} elseif(is_dir($source)) {
 		if ($dest[strlen($dest)-1]=='/') {
@@ -293,17 +299,17 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 				//Change parent itself and its contents
 				$dest=$dest.basename($source);
 				@mkdir($dest);
-				chmod($dest,$options['filePermission']);
+				@chmod($dest,$options['filePermission']);
 			}
 		} else {
 			if ($source[strlen($source)-1]=='/') {
 				//Copy parent directory with new name and all its content
 				@mkdir($dest,$options['folderPermission']);
-				chmod($dest,$options['filePermission']);
+				@chmod($dest,$options['filePermission']);
 			} else {
 				//Copy parent directory with new name and all its content
 				@mkdir($dest,$options['folderPermission']);
-				chmod($dest,$options['filePermission']);
+				@chmod($dest,$options['filePermission']);
 			}
 		}
 
@@ -533,5 +539,43 @@ function osc_file_get_contents($url){
     return $data;
 }
 
+
+
+// If JSON ext is not present
+if ( !function_exists('json_encode') ) {
+    function json_encode( $string ) {
+        global $osc_json;
+
+        if ( !is_a($osc_json, 'Services_JSON') ) {
+            require_once( LIB_PATH.'/json/JSON.php' );
+            $osc_json = new Services_JSON();
+        }
+
+        return $osc_json->encode( $string );
+    }
+}
+
+if ( !function_exists('json_decode') ) {
+    function json_decode( $string, $assoc_array = false ) {
+        global $osc_json;
+
+        if ( !is_a($osc_json, 'Services_JSON') ) {
+            require_once( LIB_PATH.'/json/JSON.php' );
+            $osc_json = new Services_JSON();
+        }
+
+        $res = $osc_json->decode( $string );
+        if ( $assoc_array ) $res = _json_decode_object_helper( $res );
+
+        return $res;
+    }
+
+    function _json_decode_object_helper($data) {
+        if ( is_object($data) )
+            $data = get_object_vars($data);
+
+        return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
+    }
+}
 
 ?>

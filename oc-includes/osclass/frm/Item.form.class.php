@@ -168,6 +168,17 @@ class ItemForm extends Form {
         return true ;
     }
 
+    static public function user_data_hidden() {
+        if(isset($_SESSION['userId']) && $_SESSION['userId']!=null) {
+            $user = User::newInstance()->findByPrimaryKey($_SESSION['userId']);
+            parent::generic_input_hidden('contactName', $user['s_name']);
+            parent::generic_input_hidden('contactEmail', $user['s_email']);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     static public function show_email_checkbox($item = null) {
         echo '<label for="showEmail">';
         parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );
@@ -263,6 +274,21 @@ class ItemForm extends Form {
             alert("<?php  _e('You have to select a city.');?>");
             return false;
         }
+
+        if(typeof(document.getElementById('contactName'))!='undefined') {
+            if(document.getElementById('contactName').value == "") {
+                alert("<?php  _e('You have to write a name.');?>");
+                return false;
+            }
+        }
+        
+        if(typeof(document.getElementById('contactEmail'))!='undefined') {
+            if(document.getElementById('contactEmail').value == "") {
+                alert("<?php  _e('You have to write an e-mail.');?>");
+                return false;
+            }
+        }
+        
 
         return true;
     }

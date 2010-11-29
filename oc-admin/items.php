@@ -44,7 +44,7 @@ switch ($action) {
                         }
                     }
                     osc_addFlashMessage(__('The items have been activated.'));
-                } catch (DatabaseException $e) {
+                } catch (Exception $e) {
                     osc_addFlashMessage(__('Error: ') . $e->getMessage());
                 }
                 break;
@@ -64,7 +64,7 @@ switch ($action) {
                         }
                     }
                     osc_addFlashMessage(__('The items have been deactivated.'));
-                } catch (DatabaseException $e) {
+                } catch (Exception $e) {
                     osc_addFlashMessage(__('Error: ') . $e->getMessage());
                 }
                 break;
@@ -82,7 +82,7 @@ switch ($action) {
                         }
                     }
                     osc_addFlashMessage(__('The items have been made premium.'));
-                } catch (DatabaseException $e) {
+                } catch (Exception $e) {
                     osc_addFlashMessage(__('Error: ') . $e->getMessage());
                 }
                 break;
@@ -101,7 +101,7 @@ switch ($action) {
                         }
                     }
                     osc_addFlashMessage(__('The chages have been made.'));
-                } catch (DatabaseException $e) {
+                } catch (Exception $e) {
                     osc_addFlashMessage(__('Error: ') . $e->getMessage());
                 }
                 break;
@@ -122,7 +122,7 @@ switch ($action) {
                 }
             }
             osc_addFlashMessage(__('The items have been deleted.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('items.php');
@@ -161,7 +161,7 @@ switch ($action) {
             }
 
             osc_addFlashMessage(__('The item has been activate.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('items.php');
@@ -188,7 +188,7 @@ switch ($action) {
                     array('pk_i_id' => $id)
             );
             osc_addFlashMessage(__('Changes have been made.'));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('items.php');
@@ -238,6 +238,44 @@ switch ($action) {
         osc_redirectTo('items.php?action=items');
         break;
 
+    case 'post':
+
+        $categories = Category::newInstance()->toTree();
+        $countries = Country::newInstance()->listAll();
+        $regions = array();
+        if( count($countries) > 0 ) {
+            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+        }
+        $cities = array();
+        if( count($regions) > 0 ) {
+            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+        }
+        $currencies = Currency::newInstance()->listAll();
+
+        $locales = Locale::newInstance()->listAllEnabled();
+        $item = array();
+        $resources = array();
+        
+        osc_renderHeader(
+                array(
+                    'pageTitle' => __('Publish your item') . ' - ' . $preferences['pageTitle'],
+                    'noindex' => 'true'
+                )
+        );
+        $new_item = TRUE;
+        osc_renderAdminSection('items/item-edit.php');
+        //osc_renderView('item-post.php');
+        osc_renderFooter();
+    break;
+    case 'post_item':
+
+        $admin = TRUE;
+        $manager = Item::newInstance();
+
+        require_once LIB_PATH.'/osclass/items.php';
+
+        osc_redirectTo('items.php');
+        break;
 
 
     default:

@@ -101,15 +101,38 @@ switch ($action) {
         osc_redirectTo($item_url);
     break;
     case 'contact':
-        $item = $manager->findByPrimaryKey($_GET['id']);
+        $item = $manager->findByPrimaryKey($_REQUEST['id']);
+        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+        if($category['i_expiration_days']>0) {
+            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
+            $date = time();
+            if($item_date<$date) {
+                // The item is expired, we can not contact the seller
+                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.'));
+                osc_redirectTo(osc_createItemURL($item));
+            }
+        }
+
 
         osc_renderHeader();
         osc_renderView('item-contact.php');
         osc_renderFooter();
     break;
     case 'contact_post':
+
+        $item = $manager->findByPrimaryKey($_REQUEST['id']);
+        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+        if($category['i_expiration_days']>0) {
+            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
+            $date = time();
+            if($item_date<$date) {
+                // The item is expired, we can not contact the seller
+                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.'));
+                osc_redirectTo(osc_createItemURL($item));
+            }
+        }
+
         $content = Page::newInstance()->findByInternalName('email_item_inquiry');
-        $item = $manager->findByPrimaryKey($_POST['id']);
 		$words = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}');
         $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'], $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], $_POST['message']);
@@ -212,7 +235,7 @@ switch ($action) {
                 );
                 osc_sendMail($params);
             }
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.'));
         }
 
@@ -260,31 +283,36 @@ switch ($action) {
     case 'post_item':
         require_once LIB_PATH.'/osclass/items.php';
 
-        if(!isset($_SESSION['userId'])) {
-            $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
+        if($success) {
+            if(!isset($_SESSION['userId'])) {
 
-            $item_url = osc_createItemURL($item, true);
-            $edit_link = ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
-            $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
 
-            $words = array();
-            $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
-            $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $_POST['message'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
-            $title = osc_mailBeauty($content['s_title'], $words);
-            $body = osc_mailBeauty($content['s_text'], $words);
+                $item_url = osc_createItemURL($item, true);
+                $edit_link = ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
 
-            $params = array(
-                'subject' => $title,
-                'to' => $PcontactEmail,
-                'to_name' => $PcontactName,
-                'body' => $body,
-                'alt_body' => $body
-            );
-            osc_sendMail($params);
+                $words = array();
+                $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+                $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
+                $title = osc_mailBeauty($content['s_title'], $words);
+                $body = osc_mailBeauty($content['s_text'], $words);
+
+                $params = array(
+                    'subject' => $title,
+                    'to' => $PcontactEmail,
+                    'to_name' => $PcontactName,
+                    'body' => $body,
+                    'alt_body' => $body
+                );
+                osc_sendMail($params);
+            }
+
+            $category = Category::newInstance()->findByPrimaryKey($PcatId);
+            osc_redirectTo(osc_createCategoryURL($category));
+        } else {
+            osc_redirectTo('item.php?action=post');
         }
-
-        $category = Category::newInstance()->findByPrimaryKey($PcatId);
-        osc_redirectTo(osc_createCategoryURL($category));
         break;
     case 'activate':
         if (isset($_GET['secret']) && isset($_GET['id'])) {
@@ -336,12 +364,16 @@ switch ($action) {
 
     break;
     default:
-        if (!isset($_GET['id'])) {
-            osc_redirectTo('index.php');
+        if ( !isset($_GET['id']) ) {
+            osc_redirectTo(ABS_WEB_URL);
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);
+
         if ($item['e_status'] == 'ACTIVE') {
+            $mStats = new ItemStats();
+            $mStats->increase('i_num_views', $item['pk_i_id']);
+            
             $resources = $manager->findResourcesByID($_GET['id']);
             $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 

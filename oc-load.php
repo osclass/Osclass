@@ -29,7 +29,6 @@ require_once  LIB_PATH.'/osclass/session.php';
 require_once  LIB_PATH.'/osclass/plugins.php';
 require_once  LIB_PATH.'/osclass/themes.php';
 require_once  LIB_PATH.'/osclass/utils.php';
-require_once  LIB_PATH.'/osclass/notifications.php';
 require_once  LIB_PATH.'/osclass/locale.php';
 require_once  LIB_PATH.'/osclass/formatting.php';
 require_once  LIB_PATH.'/osclass/AdminThemes.php';
@@ -77,8 +76,6 @@ require_once  LIB_PATH.'/osclass/frm/Category.form.class.php';
 require_once  LIB_PATH.'/osclass/frm/Item.form.class.php';
 require_once  LIB_PATH.'/osclass/frm/Contact.form.class.php';
 require_once  LIB_PATH.'/osclass/frm/User.form.class.php';
-
-require_once  LIB_PATH.'/libcurlemu/libcurlemu.inc.php';
 
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);

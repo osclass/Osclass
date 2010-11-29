@@ -37,7 +37,7 @@
             <li>
                 <a href="items.php">&raquo; <?php _e('Manage items'); ?></a>
             </li>
-            <!-- <li><a href="new_item.php">&raquo; <?php _e('Add new item'); ?></a></li> -->
+            <li><a href="items.php?action=post">&raquo; <?php _e('Add new item'); ?></a></li>
             <li>
                 <a href="comments.php">&raquo; <?php _e('Comments'); ?></a>
             </li>

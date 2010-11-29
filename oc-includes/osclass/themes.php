@@ -188,7 +188,7 @@ function osc_createCategoryURL($cat, $absolute = false) {
         }
         return sprintf($prefix . '/%s', $sanitized_category);
     } else
-        return sprintf(WEB_PATH . '/category.php?id=%d', $cat['pk_i_id']);
+        return sprintf(WEB_PATH . '/search.php?catId=%d', $cat['pk_i_id']);
 }
 
 function osc_createItemURL($item, $absolute = false) {

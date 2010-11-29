@@ -76,7 +76,7 @@ function job_call_after_install() {
         $sql = file_get_contents($path);
         $conn->osc_dbImportSQL($sql);
         $conn->commit();
-    } catch (DatabaseException $e) {
+    } catch (Exception $e) {
         $conn->rollback();
         echo $e->getMessage();
     }
@@ -95,7 +95,7 @@ function job_call_after_uninstall() {
         $conn->osc_dbExec('DROP TABLE %st_item_job_description_attr', DB_TABLE_PREFIX);
         $conn->osc_dbExec('DROP TABLE %st_item_job_attr', DB_TABLE_PREFIX);
         $conn->commit();
-    } catch (DatabaseException $e) {
+    } catch (Exception $e) {
         $conn->rollback();
         echo $e->getMessage();
     }

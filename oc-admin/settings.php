@@ -176,7 +176,7 @@ switch ($action) {
     case 'addCurrency_post':
         try {
             Currency::newInstance()->insert($_POST);
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage($e->getMessage());
         }
         osc_redirectTo('settings.php?action=currencies');
@@ -192,7 +192,7 @@ switch ($action) {
     case 'editCurrency_post':
         try {
             Currency::newInstance()->update(array('s_name' => $_POST['s_name'], 's_description' => $_POST['s_description']), array('pk_c_code' => $_POST['pk_c_code']));
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage($e->getMessage());
         }
         osc_redirectTo('settings.php?action=currencies');

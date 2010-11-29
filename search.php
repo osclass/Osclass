@@ -21,10 +21,9 @@
 
 require_once 'oc-load.php';
 
-
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
-	$merged = array_merge($_REQUEST, $params);
-	return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
+    $merged = array_merge($_REQUEST, $params);
+    return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
 }
 
 $categories = Category::newInstance()->findRootCategories();
@@ -38,15 +37,19 @@ $search = Search::newInstance();
 
 // NOT SURE WHAT DOES THIS 
 $cats = array();
-foreach($categories as $cat)
-	$cats[] = $cat['pk_i_id'];
-if(isset($_REQUEST['cats']))
-	$cats = $_REQUEST['cats'];
-// UNKNOW CODE ENDS
-
+foreach($categories as $cat) $cats[] = $cat['pk_i_id'];
+if( isset($_REQUEST['cats']) ) $cats = $_REQUEST['cats'];
 
 if(isset($_REQUEST['catId'])) {
-    $search->addCategory($_REQUEST['catId']);
+    $search->addCategory((int)($_REQUEST['catId']));
+}
+
+if(isset($_REQUEST['category'])) {
+    $s_categories = $_REQUEST['category'];
+    $s_categories = preg_replace('|/$|','',$s_categories);
+    $slug_categories = explode('/', $s_categories);
+
+    $search->addCategory($slug_categories[count($slug_categories) - 1]);
 }
 
 $onlyPic = false;
@@ -69,13 +72,17 @@ if(isset($_REQUEST['orderDirection']) && !empty($_REQUEST['orderDirection']))
 $search->order($orderColumn, $orderDirection);
 // END OF ORDER
 
-if(isset($_REQUEST['feed'])) {
-    $itemsPerPage = (isset($preferences['num_rss_items'])) ? (int) $preferences['num_rss_items'] : 50 ;
+if(!isset($_REQUEST['pagesize'])) {
+    if(isset($_REQUEST['feed'])) {
+        $itemsPerPage = (isset($preferences['num_rss_items'])) ? (int) $preferences['num_rss_items'] : 50 ;
+    } else {
+        $itemsPerPage = 10;
+    }
 } else {
-    $itemsPerPage = 10;
+    $itemsPerPage = (is_int((int)($_REQUEST['pagesize'])))?$_REQUEST['pagesize']:10;
 }
-$start = $page * $itemsPerPage;
-$search->limit($start, $itemsPerPage);
+
+$search->page($page, $itemsPerPage);
 
 // COMPABILITY ISSUES (DEPRECATED)
 global $conditions;
@@ -120,6 +127,7 @@ if(!isset($_REQUEST['feed'])) {
 
     // NORMAL SEARCH
     // FANCYNESS
+    $start = $page * $itemsPerPage;
     $end = min(($page+1) * $itemsPerPage, $totalItems);
 
     $orders = array(

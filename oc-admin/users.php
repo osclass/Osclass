@@ -34,7 +34,7 @@ switch($action) {
 		try {
 			$userManager->insert($_POST);
 			osc_addFlashMessage(__('The item has been added.'));
-		} catch (DatabaseException $e) {
+		} catch (Exception $e) {
 			osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		}
 		osc_redirectTo('users.php');
@@ -58,7 +58,7 @@ switch($action) {
 		try {
 			$userManager->update($_POST, $conditions);
 			osc_addFlashMessage(__('The user has been updated.'));
-		} catch (DatabaseException $e) {
+		} catch (Exception $e) {
 			osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		}
 		osc_redirectTo('users.php');
@@ -70,7 +70,7 @@ switch($action) {
 		    try {
 			    $userManager->update($values, $conditions);
 			    osc_addFlashMessage(__('The user has been deactivated.'));
-		    } catch (DatabaseException $e) {
+		    } catch (Exception $e) {
 			    osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		    }
         }
@@ -83,7 +83,7 @@ switch($action) {
 		    try {
 			    $userManager->update($values, $conditions);
 			    osc_addFlashMessage(__('The user has been deactivated.'));
-		    } catch (DatabaseException $e) {
+		    } catch (Exception $e) {
 			    osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		    }
         }

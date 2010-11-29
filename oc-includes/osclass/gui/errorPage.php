@@ -18,3 +18,7 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+?>
+<div style="text-align: center;">
+    <h1><?php _e('Page not found'); ?></h1>
+</div>
