@@ -159,7 +159,7 @@ foreach($_REQUEST as $k => $v) {
 			$('#search_no_result').animate({ color: "blue"}, 100);
 		});
 	</script>
-        <div id="search_no_result" class="searchResults" style="width: 75%;"><?php printf(__('There are no results matching "%s".'), $pattern); ?></div>
+        <div id="search_no_result" class="searchResults" style="width: 75%;"><?php printf(__('There are no results.'), $pattern); ?></div>
 
 	<div>
 	<script type="text/javascript">
