@@ -1,3 +1,16 @@
+OSClass 1.1 2010-11-29
+----------------------
+- Add item from backoffice
+- User can not be contacted if the item is expired
+- Feed plugin
+- Banner management plugin
+- JSON works even if is not loaded with php (using a JSON class)
+- Indelible pages are not shown
+- Sort categories by position (this position is set in oc-admin)
+- Search and pagination bugs fixed
+- Mail bugs fixed
+- Small bugs fixed
+
 OSClass 1.1 RC 2010-11-22
 -------------------------
 - Fixed installation and locations (in oc-admin) problems. Now, even though allow_url_fopen is disabled, it works well.
