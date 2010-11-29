@@ -21,10 +21,9 @@
 
 require_once 'oc-load.php';
 
-
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
-	$merged = array_merge($_REQUEST, $params);
-	return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
+    $merged = array_merge($_REQUEST, $params);
+    return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
 }
 
 $categories = Category::newInstance()->findRootCategories();
@@ -38,12 +37,8 @@ $search = Search::newInstance();
 
 // NOT SURE WHAT DOES THIS 
 $cats = array();
-foreach($categories as $cat)
-	$cats[] = $cat['pk_i_id'];
-if(isset($_REQUEST['cats']))
-	$cats = $_REQUEST['cats'];
-// UNKNOW CODE ENDS
-
+foreach($categories as $cat) $cats[] = $cat['pk_i_id'];
+if( isset($_REQUEST['cats']) ) $cats = $_REQUEST['cats'];
 
 if(isset($_REQUEST['catId'])) {
     $search->addCategory((int)($_REQUEST['catId']));

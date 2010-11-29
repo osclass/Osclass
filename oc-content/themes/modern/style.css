@@ -600,10 +600,6 @@ a, a:hover, a:link, a:visited, a:active {
     width:auto;
 }
 
-
-
-
-
 .itemFormHolder { align: center; height: auto; }
 .itemForm {
 	width: 900px;
@@ -636,4 +632,10 @@ a, a:hover, a:link, a:visited, a:active {
 
 #password-error {
     color:red;
+}
+
+#search-error {
+    color: red;
+    font-size: 0.9em;
+    padding-left: 10px;
 }

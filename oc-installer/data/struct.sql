@@ -155,7 +155,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     dt_mod_date DATETIME NULL,
     f_price FLOAT(9, 3) NULL,
     fk_c_currency_code CHAR(3) NOT NULL,
-    i_num_views INT UNSIGNED NOT NULL DEFAULT 0,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
     b_premium BOOLEAN NULL,

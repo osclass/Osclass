@@ -293,7 +293,7 @@ switch ($action) {
                 $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
 
                 $words = array();
-                $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+                $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
                 $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
                 $title = osc_mailBeauty($content['s_title'], $words);
                 $body = osc_mailBeauty($content['s_text'], $words);
@@ -364,14 +364,16 @@ switch ($action) {
 
     break;
     default:
-        if (!isset($_GET['id'])) {
-            osc_redirectTo('index.php');
+        if ( !isset($_GET['id']) ) {
+            osc_redirectTo(ABS_WEB_URL);
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);
-        $manager->update(array('i_num_views' => ($item['i_num_views']+1)),
-                        array('pk_i_id' => $item['pk_i_id']));
+
         if ($item['e_status'] == 'ACTIVE') {
+            $mStats = new ItemStats();
+            $mStats->increase('i_num_views', $item['pk_i_id']);
+            
             $resources = $manager->findResourcesByID($_GET['id']);
             $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 
