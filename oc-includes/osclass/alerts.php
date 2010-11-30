@@ -91,7 +91,7 @@ function osc_runAlert($type = null) {
 
 				foreach($users as $user) {
 
-                    $unsub_link = ABS_WEB_URL.'/user.php?email='.$user['s_email'].'&alert='.$s_search['s_search'];
+                    $unsub_link = ABS_WEB_URL.'/user.php?action=unsub_alert&email='.$user['s_email'].'&alert='.$s_search['s_search'];
 
 					$words = array();
 					$words = array( '{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}' );

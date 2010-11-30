@@ -351,6 +351,16 @@ switch ($action) {
         unset($_COOKIE['oc_userSecret']);
         osc_redirectTo('index.php');
         break;
+
+    case 'unsub_alert':
+        if(isset($_REQUEST['email']) && isset($_REQUEST['alert']) && $_REQUEST['email']!='' && $_REQUEST['alert']!='') {
+            Alerts::newInstance()->delete(array('s_email' => $_REQUEST['email'], 's_search' => $_REQUEST['alert']));
+            osc_addFlashMessage(__('Unsubscribed correctly.'));
+        } else {
+            osc_addFlashMessage(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+        }
+        osc_redirectTo('index.php');
+        break;
 }
 
 ?>
