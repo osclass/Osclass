@@ -38,7 +38,7 @@ if(!defined('__OSC_LOADED__')) {
 		$now = strtotime($now_text);
 		$next = strtotime($cron['d_next_exec']);
 
-		if(($now-$next)>=3590)) {
+		if(($now-$next)>=-10) {//3590) {
 			// executing HOURLY crons
 			include_once "cron.hourly.php";
 
@@ -63,14 +63,12 @@ if(!defined('__OSC_LOADED__')) {
 		$cron = $crons[0];
 		unset($crons);
 
-		$now_text = date('Y-m-d H:i:s');
-		$now = strtotime($now_text);
+		//$now_text = date('Y-m-d H:i:s');
+		$now = time();//strtotime($now_text);
 		$next = strtotime($cron['d_next_exec']);
-
-		if(($now-$next)>=(24*3600-10)) {
+		if(($now-$next)>=-10) {//(24*3600-10)) {
 			// executing HOURLY crons
 			include_once "cron.daily.php";
-
 			// update the database
 			while($next<=$now) {
 				$next += (24*3600);
@@ -95,7 +93,7 @@ if(!defined('__OSC_LOADED__')) {
 		$now = strtotime($now_text);
 		$next = strtotime($cron['d_next_exec']);
 
-		if(($now-$next)>=(7*24*3600-10)) {
+		if(($now-$next)>=-10) {//(7*24*3600-10)) {
 			// executing HOURLY crons
 			include_once "cron.weekly.php";
 

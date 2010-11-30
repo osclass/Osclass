@@ -150,7 +150,7 @@ function osc_loadActivePlugins() {
 			}
 		}
 
-	} catch (DatabaseException $e) {
+	} catch (Exception $e) {
 		echo $e->getMessage();
 	}
 }
@@ -169,7 +169,7 @@ function osc_listInstalledPlugins() {
 			}
 		}
 
-	} catch (DatabaseException $e) {
+	} catch (Exception $e) {
 		echo $e->getMessage();
 	}
 
@@ -214,7 +214,7 @@ function osc_activatePlugin($path) {
 		} else {
 			echo "Error: Plugin already installed." ;
 		}
-	} catch (DatabaseException $e) {
+	} catch (Exception $e) {
 		$conn->rollback();
 		echo $e->getMessage();
 	}
@@ -263,7 +263,7 @@ function osc_activatePluginHook($path) {
 		} else {
 			echo "Error: Plugin already installed.";
 		}
-	} catch (DatabaseException $e) {
+	} catch (Exception $e) {
 		$conn->rollback();
 		echo $e->getMessage();
 	}
@@ -299,7 +299,7 @@ function osc_deactivatePlugin($path)
 			unset($data);
 			$conn->commit();
 		}
-	} catch (DatabaseException $e) {
+	} catch (Exception $e) {
 		$conn->rollback();
 		echo $e->getMessage();
 	}

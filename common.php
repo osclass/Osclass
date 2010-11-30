@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '1.1 RC');
+define('OSCLASS_VERSION', '1.1');
 
 define('APP_PATH', dirname(__FILE__));
 
@@ -37,5 +37,3 @@ define('LOG_COMMENT', 2);
 define('DEBUG_LEVEL', LOG_NONE) ;
 
 set_include_path(APP_PATH . DIRECTORY_SEPARATOR . '/oc-includes' . PATH_SEPARATOR . get_include_path());
-
-date_default_timezone_set('Europe/Madrid');

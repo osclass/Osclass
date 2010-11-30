@@ -174,7 +174,7 @@ foreach($_REQUEST as $k => $v) {
 </div>
 <?php endif; ?>
 
-
+<?php $search->alertForm(); ?>
 
 <div style="clear: both;"></div>
 

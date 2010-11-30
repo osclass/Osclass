@@ -101,15 +101,38 @@ switch ($action) {
         osc_redirectTo($item_url);
     break;
     case 'contact':
-        $item = $manager->findByPrimaryKey($_GET['id']);
+        $item = $manager->findByPrimaryKey($_REQUEST['id']);
+        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+        if($category['i_expiration_days']>0) {
+            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
+            $date = time();
+            if($item_date<$date) {
+                // The item is expired, we can not contact the seller
+                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.'));
+                osc_redirectTo(osc_createItemURL($item));
+            }
+        }
+
 
         osc_renderHeader();
         osc_renderView('item-contact.php');
         osc_renderFooter();
     break;
     case 'contact_post':
+
+        $item = $manager->findByPrimaryKey($_REQUEST['id']);
+        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+        if($category['i_expiration_days']>0) {
+            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
+            $date = time();
+            if($item_date<$date) {
+                // The item is expired, we can not contact the seller
+                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.'));
+                osc_redirectTo(osc_createItemURL($item));
+            }
+        }
+
         $content = Page::newInstance()->findByInternalName('email_item_inquiry');
-        $item = $manager->findByPrimaryKey($_POST['id']);
 		$words = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}');
         $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'], $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], $_POST['message']);
@@ -212,7 +235,7 @@ switch ($action) {
                 );
                 osc_sendMail($params);
             }
-        } catch (DatabaseException $e) {
+        } catch (Exception $e) {
             osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.'));
         }
 

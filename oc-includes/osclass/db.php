@@ -22,6 +22,8 @@
 class DB
 {
     private $db = null ;
+    private $db_errno = 0;
+    private $db_error = 0;
     private $dbHost = null ;
     private $dbUser = null ;
     private $dbPassword = null ;
@@ -80,6 +82,7 @@ class DB
     	$this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
         if ($this->db->connect_error) {
             $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
+            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->connect_errno  );
         }
         
         $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser . ' | [DBPWD] = ' . $this->dbPassword) ;
@@ -121,6 +124,7 @@ class DB
     	$result = $this->db->query($sql);
     	if(!$result) {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	} else {
     	    $this->debug($sql) ;
     	}
@@ -149,6 +153,7 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	
     	return $result;
@@ -178,6 +183,7 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	return $results;
     }
@@ -203,6 +209,7 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	
     	return $result;
@@ -229,6 +236,7 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	
     	return $results;
@@ -242,12 +250,14 @@ class DB
     	$sql = str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
     	$sentences = explode( $needle . ';', $sql);
     	foreach($sentences as $s) {
-            $s = trim($s) . $needle;
+            $s = trim($s);
             if( !empty($s) ) {
+                $s = trim($s) . $needle;
                 if( $this->db->query($s) ) {
                     $this->debug($s) ;
                 } else {
                     $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
+                    if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
                 }
             }
     	}
