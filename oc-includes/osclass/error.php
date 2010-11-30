@@ -20,7 +20,7 @@
  */
 
 function osc_renderError($code, $message = null) {
-	header('HTTP/1.0 404 Not Found');
-	!is_null($message) && print($message);
+    header('HTTP/1.0 404 Not Found');
+    !is_null($message) && print($message);
 }
-
+?>
