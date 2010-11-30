@@ -20,6 +20,11 @@
  */
 
 require_once 'oc-load.php';
+<<<<<<< HEAD
+=======
+global $search;
+$search = Search::newInstance();
+>>>>>>> features
 
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
     $merged = array_merge($_REQUEST, $params);
@@ -32,8 +37,6 @@ $preferences = Preference::newInstance()->toArray();
 $pattern = strip_tags(osc_paramRequest('pattern', ''));
 $page = intval(osc_paramRequest('page', 0));
 
-global $search;
-$search = Search::newInstance();
 
 // NOT SURE WHAT DOES THIS 
 $cats = array();
