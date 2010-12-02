@@ -112,20 +112,24 @@ function products_form_post($data = null) {
 // Self-explanatory
 function products_item_detail($_item) {
     $item = $_item[0];
-    $conn = getConnection() ;
-    $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_products_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
-    if(isset($detail['fk_i_item_id'])) {
-        include_once 'item_detail.php';
+    if(osc_isThisCategory('products_plugin', $catId[0])) {
+        $conn = getConnection() ;
+        $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_products_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
+        if(isset($detail['fk_i_item_id'])) {
+            include_once 'item_detail.php';
+        }
     }
 }
 
 // Self-explanatory
 function products_item_edit($_item) {
     $item = $_item[0];
-    $conn = getConnection() ;
-    $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_products_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
-    if(isset($detail['fk_i_item_id'])) {
-        include_once 'item_edit.php';
+    if(osc_isThisCategory('products_plugin', $catId[0])) {
+        $conn = getConnection() ;
+        $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_products_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
+        if(isset($detail['fk_i_item_id'])) {
+            include_once 'item_edit.php';
+        }
     }
 }
 

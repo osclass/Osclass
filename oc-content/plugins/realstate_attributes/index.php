@@ -259,7 +259,7 @@ function realstate_form_post($data = null) {
 // Self-explanatory
 function realstate_item_detail($_item) {
     $item = $_item[0];
-   // if (osc_isThisCategory('realstate_plugin', $item['fk_i_category_id'])) {
+    if (osc_isThisCategory('realstate_plugin', $item['fk_i_category_id'])) {
         $conn = getConnection() ;
         $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_house_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
 
@@ -273,7 +273,7 @@ function realstate_item_detail($_item) {
             $detail['locale'][$type['fk_c_locale_code']]['s_name'] = $type['s_name'];
         }
         require_once 'item_detail.php';
-    //}
+    }
 }
 
 // Self-explanatory

@@ -159,18 +159,19 @@ function cars_form_post($data = null)
 function cars_item_detail($_item) {
     $conn = getConnection() ;
 	$item = $_item[0];
-	$detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_car_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
-    $make = $conn->osc_dbFetchResult('SELECT * FROM %st_item_car_make_attr WHERE pk_i_id = %d', DB_TABLE_PREFIX, $detail['fk_i_make_id']);
-    $model = $conn->osc_dbFetchResult('SELECT * FROM %st_item_car_model_attr WHERE pk_i_id = %d', DB_TABLE_PREFIX, $detail['fk_i_model_id']);
-    $car_type = $conn->osc_dbFetchResults('SELECT * FROM %st_item_car_vehicle_type_attr WHERE pk_i_id = %d', DB_TABLE_PREFIX, $detail['fk_vehicle_type_id']);
-    $detail['s_make'] = $make['s_name'];
-    $detail['s_model'] = $make['s_name'];
-    $detail['locale'] = array();
-    foreach ($car_type as $c) {
-        $detail['locale'][$c['fk_c_locale_code']]['s_car_type'] = $c['s_name'];
+    if(osc_isThisCategory('cars_plugin', $item['fk_i_category_id'])) {
+	    $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_car_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
+        $make = $conn->osc_dbFetchResult('SELECT * FROM %st_item_car_make_attr WHERE pk_i_id = %d', DB_TABLE_PREFIX, $detail['fk_i_make_id']);
+        $model = $conn->osc_dbFetchResult('SELECT * FROM %st_item_car_model_attr WHERE pk_i_id = %d', DB_TABLE_PREFIX, $detail['fk_i_model_id']);
+        $car_type = $conn->osc_dbFetchResults('SELECT * FROM %st_item_car_vehicle_type_attr WHERE pk_i_id = %d', DB_TABLE_PREFIX, $detail['fk_vehicle_type_id']);
+        $detail['s_make'] = $make['s_name'];
+        $detail['s_model'] = $make['s_name'];
+        $detail['locale'] = array();
+        foreach ($car_type as $c) {
+            $detail['locale'][$c['fk_c_locale_code']]['s_car_type'] = $c['s_name'];
+        }
+	    require_once 'item_detail.php';
     }
-	require_once 'item_detail.php';
-
 }
 
 
