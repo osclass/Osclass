@@ -105,6 +105,28 @@ switch ($action) {
                     osc_addFlashMessage(__('Error: ') . $e->getMessage());
                 }
                 break;
+
+            case 'delete_all':
+                $id = osc_paramRequest('id', false);
+                try {
+                    foreach($id as $i) {
+                        if ($i) {
+                            $item = $itemManager->findByPrimaryKey($i);
+                            if( $item['e_status'] == 'ACTIVE' ) {
+                                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                            }
+                            $itemManager->deleteByID($i);
+                        }
+                    }
+                    osc_addFlashMessage(__('The items have been deleted.'));
+                } catch (Exception $e) {
+                    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                }
+                osc_redirectTo('items.php');
+                break;
+
+
+
         }
         osc_redirectTo('items.php');
         break;

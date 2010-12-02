@@ -150,7 +150,7 @@ if(isset($_GET)) {
                     <div id="TableToolsToolbar">
                         <select id="bulk_actions" name="bulk_actions" class="display">
                                 <option value=""><?php echo __('Bulk Actions'); ?></option>
-                                <option value="delete"><?php echo __('Delete') ?></option>
+                                <option value="delete_all"><?php echo __('Delete') ?></option>
                                 <option value="activate_all"><?php echo __('Activate') ?></option>
                                 <option value="deactivate_all"><?php echo __('Deactivate') ?></option>
                                 <option value="premium_all"><?php echo __('Make Premium') ?></option>

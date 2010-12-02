@@ -68,20 +68,34 @@ switch($action) {
 		osc_redirectTo('pages.php');
 	case 'delete':
 		$id = osc_paramRequest('id', false);
-		try {
-			if($id) {
-				if($pageManager->deleteByID($id)) {
-					osc_addFlashMessage(__('The items have been deleted.'));
-					osc_redirectTo('pages.php');
-				} else {
-					osc_addFlashMessage( __('Error, this page can not be deleted.'));
-					osc_redirectTo('pages.php');
-				}
-			}
-			osc_addFlashMessage(__('The items have been deleted.'));
-		} catch (Exception $e) {
-			osc_addFlashMessage( __('Error: ') . $e->getMessage());
-		}
+        if(!is_array($id)) {
+		    try {
+			    if($id) {
+				    if($pageManager->deleteByID($id)) {
+					    osc_addFlashMessage(__('The item have been deleted.'));
+					    osc_redirectTo('pages.php');
+				    } else {
+					    osc_addFlashMessage( __('Error, this page can not be deleted.'));
+					    osc_redirectTo('pages.php');
+				    }
+			    }
+			    osc_addFlashMessage(__('The item have been deleted.'));
+		    } catch (Exception $e) {
+			    osc_addFlashMessage( __('Error: ') . $e->getMessage());
+		    }
+        } else {
+					    
+
+			    foreach($id as $_id) {
+					    osc_addFlashMessage(print_r($_id));
+				    if($pageManager->deleteByID($_id)) {
+					    osc_addFlashMessage(__('The item have been deleted.'));
+				    } else {
+					    osc_addFlashMessage( __('Error, this page can not be deleted.'));
+				    }
+    			    osc_addFlashMessage(__('The item have been deleted.'));
+                }
+        }
 		osc_redirectTo('pages.php');
 		break;
 	case 'add':
