@@ -101,6 +101,7 @@ foreach($_REQUEST as $k => $v) {
 
 
 <div class="searchForm" >
+    <?php $search->alertForm(); ?>
 	<div class="hh"><label for="city"><?php _e('City'); ?></label></div>
 	<div id="d_city" name="d_city" >
 	<input type="text" id="city" name="city" value="<?php echo $city; ?>" />
@@ -173,8 +174,6 @@ foreach($_REQUEST as $k => $v) {
 <?php osc_renderView($showAs == 'list' ? 'search_list.php' : 'search_gallery.php'); ?>
 </div>
 <?php endif; ?>
-
-<?php $search->alertForm(); ?>
 
 <div style="clear: both;"></div>
 
