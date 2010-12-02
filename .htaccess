@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /~conejo/osclass/OSClass_uso/
+RewriteBase /
 
 #Pages: contact, feed, sitemap
 RewriteRule ^contact(.html)?$ index.php?action=contact [NC,L]
@@ -22,7 +22,7 @@ RewriteRule ^([^\/]+/([.]*/)?)(\d+)/?$ search.php?category=$1&page=$3 [NC,L]
 RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-content)|(oc-includes)|(oc-installer)).*
 RewriteRule ^([.]+)$ $1/
 RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-includes)|(oc-content)|(oc-installer)).*
-RewriteRule ^([^\/]+/([.]*)?)/?$ search.php?category=$1&page=0 [NC,L]
+RewriteRule ^(.+)/$ search.php?category=$1&page=0 [NC,L]
 
 ErrorDocument 404 /index.php?action=errorPage&code=404
 ErrorDocument 500 /index.php?action=errorPage&code=500
