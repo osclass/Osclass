@@ -8,10 +8,10 @@ RewriteRule ^feed.xml$ index.php?action=feed [NC,L]
 RewriteRule ^sitemap.xml$ index.php?action=sitemap [NC,L]
 
 #Advertisements
-RewriteRule -(\d+)$ item.php?id=$1 [NC,L]
+RewriteRule \-([0-9]+)$ item.php?id=$1 [NC,L]
 
 #Static pages
-RewriteRule -p(\d+)$ page.php?id=$1 [NC,L]
+RewriteRule \-p([0-9]+)$ page.php?id=$1 [NC,L]
 
 #Redirect 301 of first page of category
 RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-content)|(oc-includes)|(oc-installer)).*
