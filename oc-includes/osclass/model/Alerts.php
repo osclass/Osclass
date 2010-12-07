@@ -30,6 +30,10 @@ class Alerts extends DAO {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $user);
     }
 
+    public function getAlertsFromEmail($email) {
+        return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_email LIKE \'%s\'', DB_TABLE_PREFIX, $email);
+    }
+
     public function getAlertsByType($type) {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type =\'%s\'', DB_TABLE_PREFIX, $type);
     }
@@ -48,6 +52,10 @@ class Alerts extends DAO {
 
     public function getAlertsFromUserByType($user, $type) {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND fk_i_user_id = %d', DB_TABLE_PREFIX, $type, $user);
+    }
+
+    public function getAlertsFromEmailByType($email, $type) {
+        return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $type, $email);
     }
 
 

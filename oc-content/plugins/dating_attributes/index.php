@@ -122,19 +122,22 @@ function dating_form_post($data = null) {
 // Self-explanatory
 function dating_item_detail($_item) {
     $item = $_item[0];
-    $conn = getConnection();
-    $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_dating_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
-    require_once 'item_detail.php';
-
+    if(osc_isThisCategory('dating_plugin', $item['fk_i_category_id'])) {
+        $conn = getConnection();
+        $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_dating_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
+        require_once 'item_detail.php';
+    }
 }
 
 // Self-explanatory
 function dating_item_edit($_item) {
     $item = $_item[0];
-    $conn = getConnection();
-    $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_dating_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
-    if( isset($detail['fk_i_item_id']) ) {
-        include_once 'item_edit.php';
+    if(osc_isThisCategory('dating_plugin', $item['fk_i_category_id'])) {
+        $conn = getConnection();
+        $detail = $conn->osc_dbFetchResult("SELECT * FROM %st_item_dating_attr WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $item['pk_i_id']);
+        if( isset($detail['fk_i_item_id']) ) {
+            include_once 'item_edit.php';
+        }
     }
 }
 

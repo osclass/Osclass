@@ -19,6 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 require_once 'osclass/model/PluginCategory.php';
 
 ?>
@@ -100,6 +101,7 @@ foreach($_REQUEST as $k => $v) {
 
 
 <div class="searchForm" >
+    <?php $search->alertForm(); ?>
 	<div class="hh"><label for="city"><?php _e('City'); ?></label></div>
 	<div id="d_city" name="d_city" >
 	<input type="text" id="city" name="city" value="<?php echo $city; ?>" />
@@ -159,7 +161,7 @@ foreach($_REQUEST as $k => $v) {
 			$('#search_no_result').animate({ color: "blue"}, 100);
 		});
 	</script>
-        <div id="search_no_result" class="searchResults" style="width: 75%;"><?php printf(__('There are no results.'), $pattern); ?></div>
+	<div id="search_no_result" class="searchResults" ><?php printf(__('There are no results matching "%s".'), $pattern); ?></div>
 
 	<div>
 	<script type="text/javascript">
@@ -172,8 +174,6 @@ foreach($_REQUEST as $k => $v) {
 <?php osc_renderView($showAs == 'list' ? 'search_list.php' : 'search_gallery.php'); ?>
 </div>
 <?php endif; ?>
-
-
 
 <div style="clear: both;"></div>
 

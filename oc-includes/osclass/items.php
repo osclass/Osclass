@@ -97,6 +97,14 @@ switch ($action) {
             }
         }
 
+        // Update category numbers
+        $old_item = Item::newInstance()->findByPrimaryKey($Pid);
+        if($old_item['fk_i_category_id']!=$PcatId) {
+            CategoryStats::newInstance()->increaseNumItems($PcatId);
+            CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']);
+        }
+        unset($old_item);
+        
 
         Item::newInstance()->update(array(
             'dt_pub_date' => DB_FUNC_NOW,

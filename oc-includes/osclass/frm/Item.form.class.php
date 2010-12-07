@@ -33,7 +33,7 @@ class ItemForm extends Form {
             foreach($categories as $c) {
                 echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
-                    CategoryForm::subcategory_select($c['categories'], $category, $default_item, 1);
+                    CategoryForm::subcategory_select($c['categories'], $item['fk_i_category_id'], $default_item, 1);
                 }
             }
         echo '</select>' ;

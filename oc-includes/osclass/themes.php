@@ -110,6 +110,22 @@ function osc_createLoginURL() {
         return WEB_PATH . '/user.php?action=login';
 }
 
+function osc_createUserAccountURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH . '/user.php?action=account';
+    } else
+        return WEB_PATH . '/user.php?action=account';
+}
+
+function osc_createUserAlertsURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH . '/user.php?action=alerts';
+    } else
+        return WEB_PATH . '/user.php?action=alerts';
+}
+
 function osc_createLogoutURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {

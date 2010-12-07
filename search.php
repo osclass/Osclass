@@ -20,10 +20,12 @@
  */
 
 require_once 'oc-load.php';
+global $search;
+$search = Search::newInstance();
 
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
-    $merged = array_merge($_REQUEST, $params);
-    return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
+	$merged = array_merge($_REQUEST, $params);
+	return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
 }
 
 $categories = Category::newInstance()->findRootCategories();
@@ -32,23 +34,25 @@ $preferences = Preference::newInstance()->toArray();
 $pattern = strip_tags(osc_paramRequest('pattern', ''));
 $page = intval(osc_paramRequest('page', 0));
 
-global $search;
-$search = Search::newInstance();
 
 // NOT SURE WHAT DOES THIS 
 $cats = array();
-foreach($categories as $cat) $cats[] = $cat['pk_i_id'];
-if( isset($_REQUEST['cats']) ) $cats = $_REQUEST['cats'];
+foreach($categories as $cat)
+	$cats[] = $cat['pk_i_id'];
+if(isset($_REQUEST['cats']))
+	$cats = $_REQUEST['cats'];
+// UNKNOW CODE ENDS
+
 
 if(isset($_REQUEST['catId'])) {
     $search->addCategory((int)($_REQUEST['catId']));
 }
 
+
 if(isset($_REQUEST['category'])) {
     $s_categories = $_REQUEST['category'];
     $s_categories = preg_replace('|/$|','',$s_categories);
     $slug_categories = explode('/', $s_categories);
-
     $search->addCategory($slug_categories[count($slug_categories) - 1]);
 }
 

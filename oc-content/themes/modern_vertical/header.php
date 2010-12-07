@@ -71,9 +71,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                             <?php if(osc_isUserLoggedIn()): ?>
                             <?php _e('Hello ' . osc_userInfo('s_name') . '!') ; ?>
                             <?php _e('Manage from here your'); ?>
-                            <a href="<?php echo osc_createUserItemsURL(); ?>"><?php _e('items'); ?></a>
-                            <?php _e('and'); ?>
-                            <a href="<?php echo osc_createprofileURL(); ?>"><?php _e('profile'); ?></a> |
+                            <a href="<?php echo osc_createUserAccountURL(); ?>"><?php _e('account'); ?></a> |
                             <a href="<?php echo osc_createLogoutURL(); ?>"><?php _e('Logout'); ?></a>
                             <?php else: ?>
                             <a href="<?php echo osc_createRegisterURL(); ?>"><?php _e('Register a free account'); ?></a> or <a id="login_open" href="<?php echo osc_createLoginURL(); ?>"><?php _e('login'); ?></a>

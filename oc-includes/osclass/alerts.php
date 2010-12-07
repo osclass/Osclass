@@ -51,13 +51,11 @@ function osc_runAlert($type = null) {
 
 	$searches = Alerts::newInstance()->getAlertsByTypeGroup($type);
 
-	foreach($searches as $search) {
+	foreach($searches as $s_search) {
 
+        $a_search = Search::newInstance();
 		// Get if there're new ads on this search
-		$data = osc_unserialize($search['s_search']);
-		$conditions = $data['conditions'];
-		$plugins_tables = $data['tables'];
-		unset($data);
+		$a_search = osc_unserialize(base64_decode($s_search['s_search']));
 
 		$crons = Cron::newInstance()->getCronByType($type);
 		if(isset($crons[0])) {
@@ -66,11 +64,12 @@ function osc_runAlert($type = null) {
 			$last_exec = '0000-00-00 00:00:00';
 		}
 
-		//We show a max of 10 ads
-		$sql = sprintf("SELECT DISTINCT %st_item.* FROM %st_item%s WHERE %s AND %st_item.dt_pub_date > '%s' ORDER BY %st_item.dt_pub_date DESC LIMIT 0, 10", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $plugins_tables, str_replace("%", "%%", implode(' AND ', $conditions)), DB_TABLE_PREFIX, $last_exec, DB_TABLE_PREFIX);
-		$conn = getConnection() ;
-		$items = $conn->osc_dbFetchResults($sql) ;
-		
+        $a_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec));
+
+        $totalItems = $a_search->count();
+        $items = $a_search->search();
+
+	
 		if(count($items)>0) {
 			//If we have new items from last check
 			// Catch the user subscribed to this search
@@ -92,9 +91,11 @@ function osc_runAlert($type = null) {
 
 				foreach($users as $user) {
 
+                    $unsub_link = ABS_WEB_URL.'/user.php?action=unsub_alert&email='.$user['s_email'].'&alert='.$s_search['s_search'];
+
 					$words = array();
-					$words = array( '{USER_NAME}', '{USER_EMAIL}', '{ADS}' );
-					$words = array( $user['s_name'], $user['s_email'], $ads );
+					$words = array( '{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}' );
+					$words = array( $user['s_name'], $user['s_email'], $ads, $unsub_link );
 					$title = osc_mailBeauty($page['s_title'], $words);
 					$body = osc_mailBeauty($page['s_body'], $words);
 
@@ -118,6 +119,8 @@ function osc_runAlert($type = null) {
 
 
 }
+
+
 
 
 ?>

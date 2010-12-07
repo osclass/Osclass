@@ -186,6 +186,7 @@ switch ($action) {
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
             osc_renderHeader(array('pageTitle' => __('Create your account')));
+            osc_renderView('user-menu.php');
             osc_renderView('user-profile.php');
             osc_renderFooter();
         } else {
@@ -217,9 +218,48 @@ switch ($action) {
     case 'items':
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);
         osc_renderHeader(array('pageTitle' => __('Create your account')));
+        osc_renderView('user-menu.php');
         osc_renderView('user-items.php');
         osc_renderFooter();
         break;
+
+    case 'alerts':
+
+        if(isset($_SESSION['userId'])) {
+
+            $alerts = Alerts::newInstance()->getAlertsFromUser($_SESSION['userId']);
+            foreach($alerts as $k => $a) {
+                $search = osc_unserialize(base64_decode($a['s_search']));
+                $search->limit(0,3);
+                $alerts[$k]['items'] = $search->search();
+            }
+            osc_renderHeader(array('pageTitle' => __('Manage your alerts')));
+            osc_renderView('user-menu.php');
+            osc_renderView('user-alerts.php');
+            osc_renderFooter();
+
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }
+
+        break;
+
+    case 'account':
+
+        if(isset($_SESSION['userId'])) {
+            $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            osc_renderHeader(array('pageTitle' => __('Manage your account')));
+            osc_renderView('user-menu.php');
+            osc_renderView('user-account.php');
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }
+        break;
+
+
     case 'deleteItem':
     case 'item_delete':
         $id = intval(osc_paramGet('id', 0));
@@ -351,6 +391,22 @@ switch ($action) {
         unset($_COOKIE['oc_userSecret']);
         osc_redirectTo('index.php');
         break;
+
+    case 'unsub_alert':
+        if(isset($_REQUEST['email']) && isset($_REQUEST['alert']) && $_REQUEST['email']!='' && $_REQUEST['alert']!='') {
+            Alerts::newInstance()->delete(array('s_email' => $_REQUEST['email'], 's_search' => $_REQUEST['alert']));
+            osc_addFlashMessage(__('Unsubscribed correctly.'));
+        } else {
+            osc_addFlashMessage(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+        }
+        osc_redirectTo('index.php');
+        break;
+
+
+    default : 
+        osc_redirectTo('index.php');
+        break;
+    
 }
 
 ?>

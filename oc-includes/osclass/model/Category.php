@@ -131,7 +131,10 @@ class Category extends DAO {
     //#DANI: NOT CHANGED YET
     public function find_by_slug($slug) {
         $results = $this->listWhere("b.s_slug = '" . $slug . "'");
-        return $results[0];
+        if(isset($results[0])) {
+            return $results[0];
+        }
+        return null;
     }
 
     public function hierarchy($category_id) {

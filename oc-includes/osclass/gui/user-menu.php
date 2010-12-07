@@ -18,9 +18,5 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-function osc_renderError($code, $message = null) {
-    header('HTTP/1.0 404 Not Found');
-    !is_null($message) && print($message);
-}
 ?>
+<div class="user_menu" ><a href="<?php echo osc_createUserAccountURL(); ?>" ><?php _e('Menu'); ?></a> | <a href="<?php echo osc_createProfileURL(); ?>" ><?php _e('Manage your profile'); ?></a> | <a href="<?php echo osc_createUserItemsURL(); ?>" ><?php _e('Manage your items'); ?></a> | <a href="<?php echo osc_createUserAlertsURL(); ?>" ><?php _e('Manage your alerts'); ?></a> | <a href="<?php echo osc_createLogoutURL(); ?>" ><?php _e('Log-out'); ?></a></div>
