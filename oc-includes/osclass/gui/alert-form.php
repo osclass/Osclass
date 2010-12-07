@@ -8,17 +8,20 @@ $(document).ready(function(){
 });
 </script>
 
-<form  method="post" name="sub_alert" id="sub_alert">
-    <input type="hidden" id="alert" name="alert" value="<?php echo $search_alert; ?>" >
-    <?php if(osc_isUserLoggedIn()) {
-        $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
-        $user = User::newInstance()->findByPrimaryKey($userId);
-    ?>
-        <input type="hidden" id="userId" name="userId" value="<?php echo $userId; ?>" />
-        <input type="hidden" id="email" name="email" value="<?php echo $user['s_email']; ?>" />
-    <?php } else { ?>
-        <input type="hidden" id="userId" name="userId" value="" />
-        <input type="text" id="email" name="email" value="" />
-    <?php }; ?>
-    <button type="submit" class="sub_button" ><?php _e('Subscribe');?></button>
-</form>
+<div name="alert-form">
+    <?php echo __('Subscribe to this search'); ?><br />
+    <form  method="post" name="sub_alert" id="sub_alert">
+        <input type="hidden" id="alert" name="alert" value="<?php echo $search_alert; ?>" >
+        <?php if(osc_isUserLoggedIn()) {
+            $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
+            $user = User::newInstance()->findByPrimaryKey($userId);
+        ?>
+            <input type="hidden" id="userId" name="userId" value="<?php echo $userId; ?>" />
+            <input type="hidden" id="email" name="email" value="<?php echo $user['s_email']; ?>" />
+        <?php } else { ?>
+            <input type="hidden" id="userId" name="userId" value="" />
+            <input type="text" id="email" name="email" value="<?php echo __('Enter your e-mail'); ?>" />
+        <?php }; ?>
+        <button type="submit" class="sub_button" ><?php _e('Subscribe');?></button>
+    </form>
+</div>
