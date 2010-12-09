@@ -269,5 +269,4 @@ function install_locations ( ) {
     else
         location_international ();
 }
-
 ?>

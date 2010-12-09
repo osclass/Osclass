@@ -363,6 +363,16 @@ function change_to_country(input) {
     }
 }
 
+
+function js_gotoStep2() {
+    alert($("#save_stats").is(':checked'));
+    if($("#save_stats").is(':checked')==true) {
+        window.location = 'index.php?step=2&save_stats=1';
+    } else {
+        window.location = 'index.php?step=2';
+    }
+}
+
 $(document).ready(function(){
     $("#email").focus(function() {
         $("#email").attr('style', '');

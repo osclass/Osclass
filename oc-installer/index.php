@@ -35,6 +35,10 @@ function __($k) {
     return $k;
 }
 
+function save_stats() {
+    return (isset($_COOKIE['osclass_save_stats']) && $_COOKIE['osclass_save_stats']==1)?true:false;
+}
+
 function oc_install() 
 {
     $config_file = '../config.php';
@@ -315,6 +319,10 @@ if($step == 1) {
             $checks['Root direcotry is writable'] = true;
         }
     }
+} else if($step == 2) {
+    if(isset($_REQUEST['save_stats']) && $_REQUEST['save_stats']==1) {
+        setcookie('osclass_save_stats', 1);
+    }
 } else if($step == 3) {
     if( isset($_POST['dbname']) )
         $error = oc_install();
@@ -384,11 +392,12 @@ if($step == 1) {
                             <li><?php echo $req; ?> <img src="images/<?php echo $satisfied ? 'tick.png' : 'cross.png'; ?>" /></li>
                     <?php endforeach; ?>
                     </ul>
+                    <input type="checkbox" name="save_stats" id="save_stats" checked/><?php echo 'Record some stats. (Check this is you want to help us improving our installation process. We\'ll only record data such as which version are you installing or if the process returned some error.)';?>
                     <div class="clear">&nbsp;</div>
                 <?php if($error) : ?>
                     <p><a class="button" href="index.php?step=1">Try again</a></p>
                 <?php else: ?>
-                    <p><a class="button" href="index.php?step=2">Next</a></p>
+                    <p><a class="button" onclick="js_gotoStep2();">Next</a></p>
                 <?php
                     endif;
                     elseif($step == 2) :
