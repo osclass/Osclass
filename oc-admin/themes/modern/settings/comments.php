@@ -39,7 +39,7 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Notifications'); ?></div>
+					<div id="content_header_arrow">&raquo; <?php echo __('Comments'); ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				
