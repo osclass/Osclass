@@ -326,7 +326,7 @@ if($step == 1) {
 } else if($step == 3) {
     if( isset($_POST['dbname']) )
         $error = oc_install();
-} else if($step == 5) {
+} else if($step == 6) {
     require_once '../config.php';
     require_once 'osclass/classes/DAO.php';
     require_once 'osclass/model/Category.php';
@@ -355,6 +355,7 @@ if($step == 1) {
             <title><?php echo __( 'OSClass Installation' ); ?></title>
             <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
             <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
+            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery.strengthy.js" type="text/javascript"></script>
             <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/vtip/vtip.js" type="text/javascript"></script>
             <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/jquery.jsonp.js" type="text/javascript"></script>
             <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/functions.js" type="text/javascript"></script>
@@ -374,7 +375,8 @@ if($step == 1) {
                         <li class="<?php if($step == 2) { ?>actual<?php } elseif($step < 2) { ?>next<?php } else { ?>past<?php }?>">2 - Database</li>
                         <li class="<?php if($step == 3) { ?>actual<?php } elseif($step < 3) { ?>next<?php } else { ?>past<?php }?>">3 - Target</li>
                         <li class="<?php if($step == 4) { ?>actual<?php } elseif($step < 4) { ?>next<?php } else { ?>past<?php }?>">4 - Categories</li>
-                        <li class="<?php if($step == 5) { ?>actual<?php } elseif($step < 5) { ?>next<?php } else { ?>past<?php }?>">5 - Congratulations!</li>
+                        <li class="<?php if($step == 5) { ?>actual<?php } elseif($step < 5) { ?>next<?php } else { ?>past<?php }?>">5 - Admin information</li>
+                        <li class="<?php if($step == 6) { ?>actual<?php } elseif($step < 6) { ?>next<?php } else { ?>past<?php }?>">6 - Congratulations!</li>
                     </ul>
                     <div class="clear"></div>
                     <?php endif; ?>
@@ -410,6 +412,8 @@ if($step == 1) {
                     elseif($step == 4) :
                         display_categories();
                     elseif($step == 5) :
+                        display_admin_info();
+                    elseif($step == 6) :
                         display_finish();
                     endif;
                 ?>  
@@ -648,10 +652,11 @@ if($step == 1) {
         require_once 'osclass/model/Admin.php';
         require_once 'osclass/model/Preference.php';
         
-        $password = osc_genRandomPassword();
+        $password = $_REQUEST['password'];
+        $admin_user = $_REQUEST['admin_user'];
         $admin = Admin::newInstance()->update(
             array('s_password' => sha1($password)),
-            array('s_username' => 'admin')
+            array('s_username' => $admin_user)
         );
         $admin = Admin::newInstance()->findByPrimaryKey(1);
 
@@ -660,7 +665,7 @@ if($step == 1) {
         $body = 'Welcome ' . $preferences['pageTitle'] . ',<br/><br/>';
         $body .= 'Your OSClass installation at ' . ABS_WEB_URL . ' is up and running. You can access to the administration panel with this data access:<br/>';
         $body .= '<ul>';
-        $body .= '<li>username: ' . 'admin' . '</li>';
+        $body .= '<li>username: ' . $admin_user . '</li>';
         $body .= '<li>password: ' . $password . '</li>';
         $body .= '</ul>';
         $body .= 'Regards,<br/>';
@@ -691,7 +696,7 @@ if($step == 1) {
         <tbody>
             <tr>
                 <th><label>Username</label></th>
-                <td>admin</td>
+                <td><?php echo $admin_user?></td>
             </tr>
             <tr>
                 <th><label>Password</label></th>
@@ -712,3 +717,54 @@ if($step == 1) {
 <?php
     }
 ?>
+
+
+<?php
+    function display_admin_info() {
+
+?>
+    <script> 
+    jQuery(document).ready(function () {
+      jQuery('#password').strengthy();
+    });
+    </script> 
+<script type="text/javascript">
+    function checkAdminForm() {
+        if(document.getElementById('admin_user').value == "") {
+            alert("You have to select an admin username.");
+            return false;
+        }
+
+        if(document.getElementById('password').value == "") {
+            return false;
+        }
+
+        return true;
+    }
+</script>
+<form id="admin_form" action="index.php?step=6" method="POST" onSubmit="return checkAdminForm()">
+    <h2 class="target">Admin Information</h2>
+    <p class="space-left-10">Select your admin's username and password</p>
+    <div class="form-table finish">
+        <table>
+            <tbody>
+                <tr>
+                    <th><label>Username</label></th>
+                    <td><input type="text" name="admin_user" id="admin_user" value="" /></td>
+                </tr>
+                <tr>
+                    <th><label>Password</label></th>
+                    <td><input type="password" name="password" id="password" value=""/></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    </div>
+    <div class="clear"></div>
+    <p><input type="submit" class="button" name="submit" value="Next"/></p>
+    <div class="clear"></div>
+</form>
+<?php
+    }
+?>
+

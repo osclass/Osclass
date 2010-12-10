@@ -55,7 +55,7 @@ ul#nav {
 
 ul#nav li {
     float:left;
-    padding: 10px 20px;
+    padding: 10px 5px;
 }
 
 /* PRINT */
@@ -102,7 +102,7 @@ a:hover {
 }
 
 ul#nav {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .strong {
@@ -471,4 +471,43 @@ table.list-categories td {
 
 #skip-location-d input {
     margin-right: 8px;
+}
+
+/**
+ * Example styles for jQuery.strengthy() plugin.
+ */
+
+.strengthy-valid {
+    background: rgba(0, 200, 0, 0.7);
+}
+
+label.error,
+.strengthy-error,
+.strengthy-valid {
+    display: inline-block;
+    padding: 0 2px;
+    margin: 0 0 0 5px;
+    color: white;
+}
+
+.strengthy-error,
+.error {
+    background: rgba(200, 0, 0, 0.7);
+}
+
+.strengthy-errorr {
+    background: rgba(200, 100, 0, 0.7);
+}
+
+.strengthy-errorrr {
+    background: rgba(200, 200, 0, 0.7);
+}
+
+.strengthy-errorrrr {
+    background: rgba(100, 200, 0, 0.7);
+}
+
+.strengthy-show-toggle {
+    padding: 0;
+    margin: 0;
 }
