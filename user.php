@@ -410,6 +410,93 @@ switch ($action) {
         osc_redirectTo('index.php');
         break;
 
+    case 'forgot':
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            osc_renderView('user-forgot.php');
+            osc_renderFooter();
+        break;
+
+    case 'forgot_post':
+            if(isset($_REQUEST['s_email']) && $_REQUEST['s_email']!='') {
+                $user = $manager->findByEmail($_REQUEST['s_email']);
+                if($user!=null) {
+                    $code = osc_genRandomPassword(50);
+                    $date = date('Y-m-d H:i:s');
+                    $date2 = date('Y-m-d H:i:').'00';
+                    $manager->update(
+                        array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
+                        array('pk_i_id' => $user['pk_i_id'])
+                    );
+
+                    $password_link = sprintf('%s/user.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+
+                    $content = Page::newInstance()->findByInternalName('email_user_forgot_password');
+                    if (!is_null($content)) {
+					    $words = array();
+                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}', '{PASSWORD_LINK}', '{DATE_TIME}');
+                        $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'], $_SERVER['REMOTE_ADDR'], $password_link, $date2);
+                        $title = osc_mailBeauty($content['s_title'], $words);
+                        $body = osc_mailBeauty($content['s_text'], $words);
+
+                        $params = array(
+                            'subject' => $title,
+                            'to' => $user['s_email'],
+                            'to_name' => $user['s_name'],
+                            'body' => $body,
+                            'alt_body' => $body
+                        );
+                        osc_sendMail($params);
+                    }
+
+
+                }
+            }
+            osc_addFlashMessage(__('Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive.'));
+            osc_redirectToReferer('index.php');
+        break;
+
+    case 'forgot_change':
+            if(isset($_REQUEST['id']) && isset($_REQUEST['code']) && $_REQUEST['id']!='' && $_REQUEST['code']!='') {
+                $user = $manager->findByIdPasswordSecret($_REQUEST['id'], $_REQUEST['code']);
+                if($user!=null) {
+                    osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+                    osc_renderView('user-forgot-change.php');
+                    osc_renderFooter();
+                } else {
+                    osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                    osc_redirectTo('index.php');
+                }
+            } else {
+                osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                osc_redirectTo('index.php');
+            }
+        break;
+
+    case 'forgot_change_post':
+            if(isset($_REQUEST['id']) && isset($_REQUEST['code']) && $_REQUEST['id']!='' && $_REQUEST['code']!='') {
+                if(isset($_REQUEST['profile_password']) && isset($_REQUEST['profile_password2']) && $_REQUEST['profile_password']!='' && $_REQUEST['profile_password']==$_REQUEST['profile_password2']) { 
+                    $user = $manager->findByIdPasswordSecret($_REQUEST['id'], $_REQUEST['code']);
+                    if($user!=null) {
+                        $manager->update(
+                            array('s_pass_code' => osc_genRandomPassword(50), 's_pass_date' => date('Y-m-d H:i:s', 0), 's_pass_ip' => $_SERVER['REMOTE_ADDR'], 's_password' => $_REQUEST['profile_password'] ),
+                            array('pk_i_id' => $user['pk_i_id'])
+                        );
+                        osc_addFlashMessage(__('The password has been changed.'));
+                        osc_redirectTo(osc_createLoginURL());
+                    } else {
+                        osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                        osc_redirectTo('index.php');
+                    }
+                } else {
+                    osc_addFlashMessage(__('Error: Passwords don\'t match.'));
+                    osc_redirectTo('user.php?action=forgot_change&id='.$_REQUEST['id'].'&code='.$_REQUEST['code']);
+                }
+            } else {
+                osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                osc_redirectTo('index.php');
+            }
+        break;
+
 
     default : 
         osc_redirectTo('index.php');

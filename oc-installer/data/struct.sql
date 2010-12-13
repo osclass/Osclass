@@ -108,6 +108,11 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_phone_land VARCHAR(45),
     s_phone_mobile VARCHAR(45),
     b_enabled BOOLEAN NOT NULL DEFAULT FALSE,
+    s_pass_code VARCHAR(100) NULL ,
+    s_pass_date DATETIME NULL ,
+    s_pass_question VARCHAR(100) NULL ,
+    s_pass_answer VARCHAR(100) NULL,
+    s_pass_ip VARCHAR(15) NULL,
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_username)
