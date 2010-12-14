@@ -1,9 +1,12 @@
+OSClass 1.2 beta 2010-12-14
+---------------------------
+- Users can register without confirmation
+- Small changes in installer
+
 OSClass 1.2 alpha 2010-12-07
 ----------------------------
 - Add alerts system (users could subscribe to search results, and we'll be notified in case there're new ads)
 - Several small bugs fixed
-
-
 
 OSClass 1.1 2010-11-29
 ----------------------

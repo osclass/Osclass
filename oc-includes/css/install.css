@@ -50,12 +50,12 @@ img {
 ul#nav {
     list-style-type: none;
     text-align: center;
-    margin-left: 12px;
+    margin-left: 150px;
 }
 
 ul#nav li {
     float:left;
-    padding: 10px 20px;
+    padding: 10px 30px;
 }
 
 /* PRINT */
@@ -98,7 +98,7 @@ a:hover {
 .installation {
     text-align: center;
     /*border-bottom:1px solid grey;*/
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 
 ul#nav {
@@ -107,6 +107,10 @@ ul#nav {
 
 .strong {
     font-weight: bold;
+}
+
+.more-stats {
+    font-size: 12px;
 }
 
 .past {
@@ -153,7 +157,7 @@ ul#nav {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     text-decoration: none;
-    color: #666;
+    color: #444444;
     cursor: pointer;
     text-decoration: none
 }
@@ -171,6 +175,7 @@ ul#nav {
     font-weight: normal;
     color: #666666;
     border-bottom: 1px solid grey;
+    margin-top: 0;
 }
 
 .welcome {
@@ -471,4 +476,43 @@ table.list-categories td {
 
 #skip-location-d input {
     margin-right: 8px;
+}
+
+/**
+ * Example styles for jQuery.strengthy() plugin.
+ */
+
+.strengthy-valid {
+    background: rgba(0, 200, 0, 0.7);
+}
+
+label.error,
+.strengthy-error,
+.strengthy-valid {
+    display: inline-block;
+    padding: 0 2px;
+    margin: 0 0 0 5px;
+    color: white;
+}
+
+.strengthy-error,
+.error {
+    background: rgba(200, 0, 0, 0.7);
+}
+
+.strengthy-errorr {
+    background: rgba(200, 100, 0, 0.7);
+}
+
+.strengthy-errorrr {
+    background: rgba(200, 200, 0, 0.7);
+}
+
+.strengthy-errorrrr {
+    background: rgba(100, 200, 0, 0.7);
+}
+
+.strengthy-show-toggle {
+    padding: 0;
+    margin: 0;
 }

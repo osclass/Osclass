@@ -36,6 +36,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'notify_new_comment', 'true', 'BOOLEAN'),
     ('osclass', 'enabled_recaptcha_items', 'false', 'BOOLEAN'),
     ('osclass', 'enabled_item_validation', 'false', 'BOOLEAN'),
+    ('osclass', 'enabled_user_validation', 'true', 'BOOLEAN'),
     ('osclass', 'enabled_comments', 'true', 'BOOLEAN'),
     ('osclass', 'mailserver_host', 'localhost', 'STRING'),
     ('osclass', 'mailserver_port', '', 'INTEGER'),

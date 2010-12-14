@@ -44,5 +44,11 @@ class User extends DAO {
 	public function findByIdSecret($id, $secret) {
 		return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_secret = '%s'", $this->getTableName(), $id, $secret);
 	}
+
+	public function findByIdPasswordSecret($id, $secret) {
+        if($secret=='') { return null; }
+        $date = date("Y-m-d H:i:s", (time()-(24*3600)));//mktime(date('H'), date('i'), date('s'), date('m'), date('d')-1, date('Y')));
+		return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
+	}
 }
 

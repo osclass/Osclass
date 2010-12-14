@@ -125,6 +125,9 @@
                 <a href="settings.php?action=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
+                <a href="settings.php?action=users">&raquo; <?php _e('Users'); ?></a>
+            </li>
+            <li>
                 <a href="settings.php?action=locations">&raquo; <?php _e('Locations'); ?></a>
             </li>
             <li>

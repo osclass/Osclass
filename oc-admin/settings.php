@@ -240,6 +240,17 @@ switch ($action) {
         $preferences = $prefManager->toArray();
         osc_redirectTo('settings.php?action=functionalities');
         break;
+    case 'users':
+        osc_renderAdminSection('settings/users.php', __('Functionalities'));
+        break;
+    case 'users_post':
+        $prefManager->update(
+                array('s_value' => isset($_POST['enabled_user_validation']) ? true : false),
+                array('s_name' => 'enabled_user_validation')
+        );
+        $preferences = $prefManager->toArray();
+        osc_redirectTo('settings.php?action=users');
+        break;
     case 'notifications':
         osc_renderAdminSection('settings/notifications.php', __('Notifications'));
         break;
