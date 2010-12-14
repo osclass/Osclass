@@ -50,12 +50,12 @@ img {
 ul#nav {
     list-style-type: none;
     text-align: center;
-    margin-left: 12px;
+    margin-left: 150px;
 }
 
 ul#nav li {
     float:left;
-    padding: 10px 5px;
+    padding: 10px 30px;
 }
 
 /* PRINT */
@@ -98,15 +98,19 @@ a:hover {
 .installation {
     text-align: center;
     /*border-bottom:1px solid grey;*/
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
 }
 
 ul#nav {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .strong {
     font-weight: bold;
+}
+
+.more-stats {
+    font-size: 12px;
 }
 
 .past {
@@ -153,7 +157,7 @@ ul#nav {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     text-decoration: none;
-    color: #666;
+    color: #444444;
     cursor: pointer;
     text-decoration: none
 }
@@ -171,6 +175,7 @@ ul#nav {
     font-weight: normal;
     color: #666666;
     border-bottom: 1px solid grey;
+    margin-top: 0;
 }
 
 .welcome {

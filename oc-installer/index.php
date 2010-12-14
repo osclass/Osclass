@@ -31,10 +31,6 @@ function osc_getAbsoluteWebURL() {
     return $protocol . '://' . $_SERVER['HTTP_HOST'] . osc_getRelativeWebURL();
 }
 
-function __($k) {
-    return $k;
-}
-
 function save_stats() {
     return (isset($_COOKIE['osclass_save_stats']) && $_COOKIE['osclass_save_stats']==1)?true:false;
 }
@@ -322,11 +318,12 @@ if($step == 1) {
 } else if($step == 2) {
     if(isset($_REQUEST['save_stats']) && $_REQUEST['save_stats']==1) {
         setcookie('osclass_save_stats', 1);
+        header('Location: '. osc_getAbsoluteWebURL() . '/oc-installer/index.php?step=2' );
     }
 } else if($step == 3) {
     if( isset($_POST['dbname']) )
         $error = oc_install();
-} else if($step == 6) {
+} else if($step == 5) {
     require_once '../config.php';
     require_once 'osclass/classes/DAO.php';
     require_once 'osclass/model/Category.php';
@@ -351,16 +348,16 @@ if($step == 1) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
     <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-            <title><?php echo __( 'OSClass Installation' ); ?></title>
-            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
-            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
-            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery.strengthy.js" type="text/javascript"></script>
-            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/vtip/vtip.js" type="text/javascript"></script>
-            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/jquery.jsonp.js" type="text/javascript"></script>
-            <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/functions.js" type="text/javascript"></script>
-            <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/css/install.css" />
-            <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/vtip/css/vtip.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>OSClass Installation</title>
+        <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
+        <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
+        <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/js/jquery.strengthy.js" type="text/javascript"></script>
+        <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/vtip/vtip.js" type="text/javascript"></script>
+        <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/jquery.jsonp.js" type="text/javascript"></script>
+        <script src="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/functions.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_getAbsoluteWebURL(); ?>/oc-includes/css/install.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_getAbsoluteWebURL(); ?>/oc-installer/vtip/css/vtip.css" />
     </head>
     <body>
         <div id="wrapper">
@@ -369,60 +366,72 @@ if($step == 1) {
                     <h1 id="logo">
                         <img src="images/osclass-logo.png" alt="OSClass" title="OSClass"/>
                     </h1>
-                    <?php if($step > 0) : ?>
+                    <?php if(in_array($step, array(2,3,4))) { ?>
                     <ul id="nav">
-                        <li class="<?php if($step == 1) { ?>actual<?php } else { ?>past<?php }?>">1 - Welcome</li>
-                        <li class="<?php if($step == 2) { ?>actual<?php } elseif($step < 2) { ?>next<?php } else { ?>past<?php }?>">2 - Database</li>
-                        <li class="<?php if($step == 3) { ?>actual<?php } elseif($step < 3) { ?>next<?php } else { ?>past<?php }?>">3 - Target</li>
-                        <li class="<?php if($step == 4) { ?>actual<?php } elseif($step < 4) { ?>next<?php } else { ?>past<?php }?>">4 - Categories</li>
-                        <li class="<?php if($step == 5) { ?>actual<?php } elseif($step < 5) { ?>next<?php } else { ?>past<?php }?>">5 - Admin information</li>
-                        <li class="<?php if($step == 6) { ?>actual<?php } elseif($step < 6) { ?>next<?php } else { ?>past<?php }?>">6 - Congratulations!</li>
+                        <li class="<?php if($step == 2) { ?>actual<?php } elseif($step < 2) { ?>next<?php } else { ?>past<?php }?>">1 - Database</li>
+                        <li class="<?php if($step == 3) { ?>actual<?php } elseif($step < 3) { ?>next<?php } else { ?>past<?php }?>">2 - Target</li>
+                        <li class="<?php if($step == 4) { ?>actual<?php } elseif($step < 4) { ?>next<?php } else { ?>past<?php }?>">3 - Categories</li>
                     </ul>
                     <div class="clear"></div>
-                    <?php endif; ?>
+                    <?php } ?>
                 </div>
                 <div id="content">
-                <?php if($step == 1) : ?>
-                <h2 class="welcome">Welcome</h2>
-                <?php if($error) : ?>
-                    <p>Check the next requirements:</p>
-                <?php else: ?>
-                    <p>All right! All the requirements have met:</p>
-                <?php endif; ?>
-                    <ul>
-                    <?php foreach($checks as $req => $satisfied): ?>
-                            <li><?php echo $req; ?> <img src="images/<?php echo $satisfied ? 'tick.png' : 'cross.png'; ?>" /></li>
-                    <?php endforeach; ?>
-                    </ul>
-                    <input type="checkbox" name="save_stats" id="save_stats" checked/><?php echo 'Record some stats. (Check this is you want to help us improving our installation process. We\'ll only record data such as which version are you installing or if the process returned some error.)';?>
-                    <div class="clear">&nbsp;</div>
-                <?php if($error) : ?>
-                    <p><a class="button" href="index.php?step=1">Try again</a></p>
-                <?php else: ?>
-                    <p><a class="button" onclick="js_gotoStep2();">Next</a></p>
-                <?php
-                    endif;
-                    elseif($step == 2) :
+                <?php if($step == 1) { ?>
+                    <h2 class="target">Welcome</h2>
+                    <div class="form-table">
+                    <?php if($error) { ?>
+                        <p>Check the next requirements:</p>
+                    <?php } else { ?>
+                        <p>All right! All the requirements have met:</p>
+                    <?php } ?>
+                        <ul>
+                        <?php foreach($checks as $req => $satisfied) { ?>
+                            <li><?php echo $req; ?> <img src="images/<?php echo $satisfied ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
+                        <?php } ?>
+                        </ul>
+                        <div class="more-stats">
+                            <input type="checkbox" name="save_stats" id="save_stats" checked="checked"/>
+                            <label for="save_stats">
+                                <b>Optional:</b> Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.
+                            </label>
+                        </div>
+                    <?php if($error) { ?>
+                        <p>
+                            <a class="button" href="index.php?step=1">Try again</a>
+                        </p>
+                    <?php } ?>
+                    </div>
+                    <p>
+                        <input type="button" class="button" onclick="step2();" value="Run the install" />
+                    </p>
+                <?php } elseif($step == 2) {
                          display_database_config();
-                    elseif($step == 3) :
-                        if(!isset($error["error"]))
+                    } elseif($step == 3) {
+                        if(!isset($error["error"])) {
                             display_target();
-                        else
+                        } else {
                             display_database_error($error, ($step - 1));
-                    elseif($step == 4) :
+                        }
+                    } elseif($step == 4) {
                         display_categories();
-                    elseif($step == 5) :
-                        display_admin_info();
-                    elseif($step == 6) :
+                    } /*elseif($step == 5) {
+                         display_admin_info();
+                    } */elseif($step == 5) {
                         display_finish();
-                    endif;
+                    }
                 ?>  
                 </div>
                 <div id="footer">
                     <ul>
-                        <li><a href="<?php echo osc_getAbsoluteWebURL(); ?>/readme.php" target="_blank">Readme</a></li>
-                        <li><a href="http://osclass.org/contact/" target="_blank">Feedback</a></li>
-                        <li><a href="http://forums.osclass.org/index.php" target="_blank">Forums</a></li>
+                        <li>
+                            <a href="<?php echo osc_getAbsoluteWebURL(); ?>/readme.php" target="_blank">Readme</a>
+                        </li>
+                        <li>
+                            <a href="http://osclass.org/contact/" target="_blank">Feedback</a>
+                        </li>
+                        <li>
+                            <a href="http://forums.osclass.org/index.php" target="_blank">Forums</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -622,14 +631,14 @@ if($step == 1) {
                                 </label>
                             </div>
                             <div id="cat<?php echo $categories[$i]['pk_i_id'];?>" class="sub-cat-title">
-                                <?php foreach($categories[$i]['categories'] as $sc): ?>
+                                <?php foreach($categories[$i]['categories'] as $sc) { ?>
                                 <div id="category" class="space">
                                     <label for="category-<?php echo $sc['pk_i_id']?>" class="space">
                                         <input id="category-<?php echo $sc['pk_i_id']?>" type="checkbox" name="categories[]" value="<?php echo $sc['pk_i_id']?>" onclick="javascript:check('category-<?php echo $categories[$i]['pk_i_id']?>')"/>
                                         <?php echo $sc['s_name']; ?>
                                     </label>
                                 </div>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </div>
                             <?php } ?>
                         <?php } ?>
@@ -652,8 +661,10 @@ if($step == 1) {
         require_once 'osclass/model/Admin.php';
         require_once 'osclass/model/Preference.php';
         
-        $password = $_REQUEST['password'];
-        $admin_user = $_REQUEST['admin_user'];
+//        $password = $_REQUEST['password'];
+//        $admin_user = $_REQUEST['admin_user'];
+        $password = osc_genRandomPassword();
+        $admin_user = 'admin';
         $admin = Admin::newInstance()->update(
             array('s_password' => sha1($password)),
             array('s_username' => $admin_user)
@@ -680,9 +691,9 @@ if($step == 1) {
         $mail->CharSet="utf-8";
         $mail->Host = "localhost";
         $mail->From = 'osclass@' . $sitename;
-        $mail->FromName = __('OSClass');
-        $mail->Subject = __('OSClass successfully installed!');
-        $mail->AddAddress($admin['s_email'], __('OSClass administrator'));
+        $mail->FromName = 'OSClass';
+        $mail->Subject = 'OSClass successfully installed!';
+        $mail->AddAddress($admin['s_email'], 'OSClass administrator');
         $mail->Body = $body;
         $mail->AltBody = $body;
         if (!$mail->Send())
@@ -723,7 +734,7 @@ if($step == 1) {
     function display_admin_info() {
 
 ?>
-    <script> 
+    <script type="text/javascript">
     jQuery(document).ready(function () {
       jQuery('#password').strengthy();
     });
@@ -758,7 +769,6 @@ if($step == 1) {
                 </tr>
             </tbody>
         </table>
-    </form>
     </div>
     <div class="clear"></div>
     <p><input type="submit" class="button" name="submit" value="Next"/></p>
@@ -767,4 +777,3 @@ if($step == 1) {
 <?php
     }
 ?>
-

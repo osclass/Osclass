@@ -364,8 +364,7 @@ function change_to_country(input) {
 }
 
 
-function js_gotoStep2() {
-    alert($("#save_stats").is(':checked'));
+function step2() {
     if($("#save_stats").is(':checked')==true) {
         window.location = 'index.php?step=2&save_stats=1';
     } else {
