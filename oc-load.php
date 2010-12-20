@@ -62,6 +62,7 @@ require_once  LIB_PATH.'/osclass/model/User.php';
 require_once  LIB_PATH.'/osclass/model/ItemLocation.php';
 require_once  LIB_PATH.'/osclass/model/Widget.php';
 require_once  LIB_PATH.'/osclass/model/Search.php';
+require_once  LIB_PATH.'/osclass/model/Rewrite.php';
 require_once  LIB_PATH.'/osclass/classes/Cache.php';
 require_once  LIB_PATH.'/osclass/classes/DAOEntity.php';
 require_once  LIB_PATH.'/osclass/classes/HTML.php';
