@@ -1,9 +1,9 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /~conejo/osclass/OSClass_uso/
+RewriteBase /
 RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /~conejo/osclass/OSClass_uso/index.php [L]
+RewriteRule . /index.php [L]
 </IfModule>
 
