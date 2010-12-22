@@ -71,6 +71,7 @@ class Rewrite {
 
     public function doRedirect() {
 
+        $redirected = null;
         if(isset($_SERVER['REQUEST_URI'])) {
             //$rules = Permalink::newInstance()->getRules();
             $request_uri = str_replace(REL_WEB_URL, "", $_SERVER['REQUEST_URI']);
@@ -78,16 +79,21 @@ class Rewrite {
                 if(preg_match('#'.$match.'#', $request_uri, $m)) {
                     $uri = preg_replace('#'.$match.'#', $uri, $request_uri);
                     $this->extractParams($uri);
-                    include $this->extractURL($uri);
+                    $redirected = $this->extractURL($uri);
                     break;
-                } //END IF PREG MATCH
+                }
             }
         }
+        return $redirected;
     }
 
     public function extractURL($uri = '') {
         $uri_array = explode('?', $uri);
-        return substr($uri_array[0], 1);        
+        if(substr($uri_array[0], 0, 1)=="/") {
+            return substr($uri_array[0], 1);
+        } else {
+            return $uri_array[0];
+        }
     }
 
     public function extractParams($uri = '') {

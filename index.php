@@ -110,18 +110,19 @@ try {
 			//require_once 'osclass/utils.php';
 			osc_redirectToReferer(ABS_WEB_URL);
 			break;
+
 		default:
 
-            Rewrite::newInstance()->doRedirect();
+            $redirected = Rewrite::newInstance()->doRedirect();
 
-            die();
-    
-            
+            if($redirected==null) {
+    			osc_renderHeader();
+    			osc_renderView('home.php');
+    			osc_renderFooter();
+            } else {
+                include_once $redirected;
+            }
 
-
-			osc_renderHeader();
-			osc_renderView('home.php');
-			osc_renderFooter();
 	}
 	
 } catch (Exception $e) {

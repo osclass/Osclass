@@ -105,7 +105,7 @@ function osc_createPageURL($page) {
 function osc_createLoginURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=login';
+        return WEB_PATH . '/user/login';
     } else
         return WEB_PATH . '/user.php?action=login';
 }
@@ -113,7 +113,7 @@ function osc_createLoginURL() {
 function osc_createUserAccountURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=account';
+        return WEB_PATH . '/user/account';
     } else
         return WEB_PATH . '/user.php?action=account';
 }
@@ -121,7 +121,7 @@ function osc_createUserAccountURL() {
 function osc_createUserAlertsURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=alerts';
+        return WEB_PATH . '/user/alerts';
     } else
         return WEB_PATH . '/user.php?action=alerts';
 }
@@ -129,7 +129,7 @@ function osc_createUserAlertsURL() {
 function osc_createLogoutURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=logout';
+        return WEB_PATH . '/user/logout';
     } else
         return WEB_PATH . '/user.php?action=logout';
 }
@@ -137,7 +137,7 @@ function osc_createLogoutURL() {
 function osc_createProfileURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=profile';
+        return WEB_PATH . '/user/profile';
     } else
         return WEB_PATH . '/user.php?action=profile';
 }
@@ -145,7 +145,7 @@ function osc_createProfileURL() {
 function osc_createRegisterURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=register';
+        return WEB_PATH . '/user/register';
     } else
         return WEB_PATH . '/user.php?action=register';
 }
@@ -153,7 +153,7 @@ function osc_createRegisterURL() {
 function osc_createUserItemsURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH . '/user.php?action=items';
+        return WEB_PATH . '/user/items';
     } else
         return WEB_PATH . '/user.php?action=items';
 }
