@@ -42,14 +42,13 @@ if(isset($_REQUEST['cats']))
 	$cats = $_REQUEST['cats'];
 // UNKNOW CODE ENDS
 
-
 if(isset($_REQUEST['catId'])) {
     $search->addCategory((int)($_REQUEST['catId']));
 }
 
 
 if(isset($_REQUEST['category'])) {
-    $s_categories = $_REQUEST['category'];
+    $s_categories = urldecode($_REQUEST['category']);
     $s_categories = preg_replace('|/$|','',$s_categories);
     $slug_categories = explode('/', $s_categories);
     $search->addCategory($slug_categories[count($slug_categories) - 1]);
@@ -125,7 +124,7 @@ $search->addConditions(sprintf("%st_item.e_status = 'ACTIVE' ", DB_TABLE_PREFIX)
 // RETRIEVE ITEMS AND TOTAL
 $totalItems = $search->count();
 $items = $search->search();
-
+//print_r($search);
 if(!isset($_REQUEST['feed'])) {
 
     // NORMAL SEARCH
