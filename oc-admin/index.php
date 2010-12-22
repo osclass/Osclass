@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)));
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'config.php';
 require_once ABS_PATH . 'common.php';
@@ -33,6 +33,7 @@ require_once LIB_PATH . 'osclass/session.php';
 require_once LIB_PATH . 'osclass/locale.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
+require_once ABS_PATH . 'oc-admin/common.php';
 
 $login = true;
 
