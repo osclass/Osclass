@@ -2,5 +2,3 @@
 *.diff
 *.patch
 dist
-
-/oc-installer/data/struct.sql
