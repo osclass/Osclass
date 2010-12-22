@@ -227,7 +227,7 @@ function osc_createItemURL($item, $absolute = false) {
  */
 function osc_listThemes() {
     $themes = array();
-    $dir = opendir(APP_PATH . '/oc-content/themes');
+    $dir = opendir(ABS_PATH . 'oc-content/themes');
     while ($file = readdir($dir)) {
         if (preg_match('/^[a-z0-9_]+$/i', $file))
             $themes[] = $file;
@@ -237,7 +237,7 @@ function osc_listThemes() {
 }
 
 function osc_loadThemeInfo($theme) {
-    $path = APP_PATH . '/oc-content/themes/' . $theme . '/index.php';
+    $path = ABS_PATH . 'oc-content/themes/' . $theme . '/index.php';
     if (!file_exists($path))
         return false;
     require_once $path;
@@ -282,7 +282,7 @@ function osc_renderView($name) {
     if (file_exists($themePath)) {
         require_once $themePath;
     } else {
-        $defaultPath = LIB_PATH . '/osclass/gui/' . $name;
+        $defaultPath = LIB_PATH . 'osclass/gui/' . $name;
         if (file_exists($defaultPath))
             require_once $defaultPath;
         else

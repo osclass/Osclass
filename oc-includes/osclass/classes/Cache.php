@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('CACHE_PATH', APP_PATH . '/oc-content/uploads');
+define('CACHE_PATH', ABS_PATH . '/oc-content/uploads/');
 
 /**
  * This is the simplest cache service on earth.
@@ -75,7 +75,7 @@ class Cache {
 	 * Constructs the path to object in filesystem.
 	 */
 	private function preparePath() {
-		return CACHE_PATH . '/' . $this->objectKey . '.cache';
+		return CACHE_PATH . $this->objectKey . '.cache';
 	}
 }
 

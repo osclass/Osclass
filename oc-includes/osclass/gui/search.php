@@ -20,7 +20,7 @@
  */
 
 
-require_once 'osclass/model/PluginCategory.php';
+require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 
 ?>
 <link href="<?php echo WEB_PATH; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />

@@ -1,5 +1,4 @@
 <?php
-require_once 'oc-load.php';
 $pages = Page::newInstance()->listNotIndelibles();
 $numPages = count($pages);
 ?>

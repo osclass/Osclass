@@ -33,7 +33,7 @@
             </p>
             <?php
 		if(isset($preferences['recaptchaPubKey'])) {
-                    require_once 'recaptchalib.php';
+                    require_once LIB_PATH . 'recaptchalib.php';
                     echo recaptcha_get_html($preferences['recaptchaPubKey']);
 		}
             ?>

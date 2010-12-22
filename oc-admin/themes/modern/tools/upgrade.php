@@ -103,7 +103,7 @@
 	});
 </script>
 
-<?php defined('APP_PATH') or die(__('Invalid OSClass request.')); ?>
+<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <script>
 	$(function() {

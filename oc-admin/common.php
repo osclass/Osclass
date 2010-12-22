@@ -39,7 +39,7 @@ function osc_renderAdminSection($file, $title = null, $subTitle = null) {
 }
 
 function osc_renderPluginSection($file) {
-	$file = '../../..'.str_replace(APP_PATH , '', $file);
+	$file = '../../..'.str_replace(ABS_PATH , '', $file);
 	osc_renderAdminSection($file, __('Plugins'), __('Configuration'));
 }
 

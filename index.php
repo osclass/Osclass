@@ -30,9 +30,7 @@ try {
 	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 	switch($action) {
 		case 'sitemap':
-			//require_once 'osclass/classes/Sitemap.php';
 			$sm = new Sitemap;
-			//require_once 'osclass/model/Page.php';
 			$pages = Page::newInstance()->listAll();
 			foreach($pages as $p)
 				$sm->addURL(ABS_WEB_URL . osc_createPageURL($p), 'weekly', 0.8);
@@ -45,13 +43,11 @@ try {
 		case 'feed':
 			header('Content-type: text/xml; charset=utf-8');
 
-                        //require_once 'osclass/classes/RSSFeed.php';
 			$feed = new RSSFeed;
 			$feed->setTitle(__('Latest items added') . ' - ' . $preferences["pageTitle"]);
 			$feed->setLink(ABS_WEB_URL);
 			$feed->setDescription(__('Latest items added in') . ' ' . $preferences["pageTitle"]);
 
-			//require_once 'osclass/model/Item.php';
                         $num_items = (isset($preferences['num_rss_items'])) ? (int) $preferences['num_rss_items'] : 50 ;
                         $items = Item::newInstance()->list_items(null, 0, $num_items, 'ACTIVE');
                         $items = $items['items'];
@@ -71,7 +67,6 @@ try {
 			osc_renderFooter();
 			break;
 		case 'setlanguage':
-			//require_once 'osclass/utils.php';
 			$languageCodes = osc_listLanguageCodes();
 			if(isset($_GET['value']) && in_array($_GET['value'], $languageCodes)) {
 				$_SESSION['locale'] = $_GET['value'];
@@ -108,7 +103,6 @@ try {
 
 			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
 
-			//require_once 'osclass/utils.php';
 			osc_redirectToReferer(ABS_WEB_URL);
 			break;
 		default:

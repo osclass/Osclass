@@ -19,7 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
 global $search;
 $search = Search::newInstance();
 

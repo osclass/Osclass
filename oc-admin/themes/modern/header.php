@@ -19,15 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-    require_once '../config.php';
-    require_once '../common.php';
-    require_once 'osclass/utils.php';
-    require_once 'osclass/locale.php';
-    require_once 'osclass/session.php';
-
-    require_once 'osclass/model/Admin.php';
-    require_once 'osclass/AdminThemes.php';
-
     $adminId = osc_paramSession('adminId', 0);
     $admin = Admin::newInstance()->findByPrimaryKey($adminId);
     $preferences = Preference::newInstance()->toArray();

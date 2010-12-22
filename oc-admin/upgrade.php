@@ -19,8 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
+require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $action = osc_readAction();
 $message = "";
@@ -48,7 +49,7 @@ switch($action) {
 
 	case 'empty-temp':
 		$message = "Removing temp-directory.";
-		$path = APP_PATH.'/oc-temp';
+		$path = ABS_PATH . 'oc-temp';
 		$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
 		for ($dir->rewind(); $dir->valid(); $dir->next()) {
 			if ($dir->isDir()) {
@@ -69,8 +70,8 @@ switch($action) {
 		break;
 
 	case 'zip-osclass':
-		$archive_name = APP_PATH."/OSClass_backup.".date('YmdHis').".zip";
-		$archive_folder = APP_PATH;
+		$archive_name = ABS_PATH . "OSClass_backup.".date('YmdHis').".zip";
+		$archive_folder = ABS_PATH;
 
 		if (osc_zipFolder($archive_folder, $archive_name)) {
 			$message = __('Archiving is sucessful!');
@@ -82,10 +83,10 @@ switch($action) {
 	case 'unzip-file':
 		if(isset($_REQUEST['file'])) {
 			$zip = new ZipArchive;
-			$res = $zip->open(APP_PATH.'/oc-content/downloads/'.$_REQUEST['file']);
+			$res = $zip->open(ABS_PATH.'oc-content/downloads/'.$_REQUEST['file']);
 			if ($res === TRUE) {
-				@mkdir(APP_PATH.'/oc-temp', 0777);
-				$zip->extractTo(APP_PATH.'/oc-temp/');
+				@mkdir(ABS_PATH.'oc-temp', 0777);
+				$zip->extractTo(ABS_PATH.'oc-temp/');
 				$zip->close();
 				$message = __('OK');
 			} else {
@@ -99,11 +100,11 @@ switch($action) {
 		break;
 
 	case 'remove-files':
-		if(file_exists(APP_PATH.'/oc-temp/remove.list')) {
-			$lines = file(APP_PATH.'/oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		if(file_exists(ABS_PATH.'oc-temp/remove.list')) {
+			$lines = file(ABS_PATH.'oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 			$message = "";
 			foreach ($lines as $line_num => $r_file) {
-				$unlink = @unlink(APP_PATH."/".$r_file);
+				$unlink = @unlink(ABS_PATH.$r_file);
 				if(!$unlink) { $message .= __('Error removing file: ').$r_file."<br/>"; }
 			}
 			if($message=="") {
@@ -117,12 +118,12 @@ switch($action) {
 
 	case 'copy-files':
 		$fail = -1;
-		if ($handle = opendir(APP_PATH.'/oc-temp')) {
+		if ($handle = opendir(ABS_PATH.'oc-temp')) {
 
 			$fail = 0;
 			while (false !== ($_file = readdir($handle))) {
 				if($_file!='.' && $_file!='..' && $_file!='remove.list' && $_file!='upgrade.sql' && $_file!='customs.actions') {
-					$fail += osc_copy(APP_PATH."/oc-temp/".$_file, APP_PATH.'/'.$_file);
+					$fail += osc_copy(ABS_PATH."oc-temp/".$_file, ABS_PATH.$_file);
 				}
 			}
 
@@ -143,8 +144,8 @@ switch($action) {
 		break;
 
 	case 'execute-sql':
-		if(file_exists(APP_PATH.'/oc-temp/upgrade.sql')) {
-			$sql = file_get_contents(APP_PATH.'/oc-temp/upgrade.sql') ;
+		if(file_exists(ABS_PATH.'oc-temp/upgrade.sql')) {
+			$sql = file_get_contents(ABS_PATH.'oc-temp/upgrade.sql') ;
 			$conn = getConnection() ;
 	        $conn->osc_dbImportSQL($sql) ;
 			$message = __('upgrade.sql executed.') ;
@@ -155,8 +156,8 @@ switch($action) {
 		break ;
 
 	case 'execute-actions':
-		if(file_exists(APP_PATH.'/oc-temp/custom.actions')) {
-			require_once APP_PATH.'/oc-temp/custom.actions' ;
+		if(file_exists(ABS_PATH.'oc-temp/custom.actions')) {
+			require_once ABS_PATH . 'oc-temp/custom.actions' ;
 			$message = __('Custom actions executed.') ;
 		} else {
 			$message = __('No action to execute.') ;

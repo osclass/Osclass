@@ -19,16 +19,16 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '1.2 Beta');
+define('OSCLASS_VERSION', '1.2 Gamma');
 
-define('APP_PATH', dirname(__FILE__));
+if( !defined('ABS_PATH') ) {
+    define( 'ABS_PATH', dirname(__FILE__) . '/' );
+}
 
-define('LIB_PATH', APP_PATH . '/oc-includes');
-define('THEMES_PATH', APP_PATH . '/oc-content/themes/');
-define('PLUGINS_PATH', APP_PATH . '/oc-content/plugins/');
-define('TRANSLATIONS_PATH', APP_PATH . '/oc-includes/translations/');
-
-define('INST_FOLDER_NAME', '/oc-installer');
+define('LIB_PATH', ABS_PATH . 'oc-includes/');
+define('THEMES_PATH', ABS_PATH . 'oc-content/themes/');
+define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/');
+define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/');
 
 /** Defines for error reporting */
 define('LOG_NONE', 0);
@@ -36,4 +36,4 @@ define('LOG_WEB', 1);
 define('LOG_COMMENT', 2);
 define('DEBUG_LEVEL', LOG_NONE) ;
 
-set_include_path(APP_PATH . DIRECTORY_SEPARATOR . '/oc-includes' . PATH_SEPARATOR . get_include_path());
+?>

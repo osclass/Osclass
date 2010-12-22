@@ -19,8 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
+require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $action = osc_readAction();
 switch($action) 
@@ -40,7 +41,7 @@ switch($action)
     case 'backup-sql':      if(isset($_REQUEST['bck_dir'])) {
                             	$sql_name = $_REQUEST['bck_dir']."/OSClass_mysqlbackup.".date('YmdHis').".sql";
                             } else {
-                            	$sql_name = APP_PATH."/OSClass_mysqlbackup.".date('YmdHis').".sql";
+                            	$sql_name = ABS_PATH . "OSClass_mysqlbackup.".date('YmdHis').".sql";
                             }
                             osc_dbdump($sql_name);
                             echo __('Backup made correctly') ;
@@ -48,9 +49,9 @@ switch($action)
     case 'backup-zip':      if(isset($_REQUEST['bck_dir'])) {
                             	$archive_name = $_REQUEST['bck_dir'] . "/OSClass_backup." . date('YmdHis') . ".zip" ;
                             } else {
-                            	$archive_name = APP_PATH . "/OSClass_backup." . date('YmdHis') . ".zip" ;
+                            	$archive_name = ABS_PATH . "OSClass_backup." . date('YmdHis') . ".zip" ;
                             }
-                            $archive_folder = APP_PATH ;
+                            $archive_folder = ABS_PATH ;
                             
                             if (osc_zipFolder($archive_folder, $archive_name)) echo __('Archiving is sucessful!') ;
                             else echo __('Error, can\'t create a zip file!') ;

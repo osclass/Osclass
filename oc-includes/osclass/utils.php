@@ -20,7 +20,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once LIB_PATH.'/libcurlemu/libcurlemu.inc.php';
+require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
 /**
  * Converts a string to lowercase respecting the charset.
@@ -215,7 +215,7 @@ function osc_doRequest($url, $_data) {
 }
 
 function osc_sendMail($params) {
-    require_once 'phpmailer/class.phpmailer.php';
+    require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php';
 
     $mPreferences = new Preference();
     $preferences = $mPreferences->toArray();
@@ -356,7 +356,7 @@ function osc_dbdump($db_filename = null) {
 
 	global $db_file;
 	if($db_filename==null) {
-		$db_file = APP_PATH."/OSClass.mysqlbackup".date('YmdHis').".sql";
+		$db_file = ABS_PATH."OSClass.mysqlbackup".date('YmdHis').".sql";
 	} else {
 		$db_file = $db_filename;
 	}
@@ -482,7 +482,7 @@ function osc_downloadFile($sourceFile, $downloadedFile) {
 	set_time_limit(0);
 	ini_set('display_errors',true);
 			
-	$fp = fopen (APP_PATH.'/oc-content/downloads/'.$downloadedFile, 'w+');
+	$fp = fopen (ABS_PATH.'oc-content/downloads/'.$downloadedFile, 'w+');
 	$ch = curl_init($sourceFile);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
 	curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -502,14 +502,14 @@ function osc_zipFolder($archive_folder, $archive_name) {
 		$dirs = array($dir);
 		while (count($dirs)) {
 			$dir = current($dirs);
-			$zip -> addEmptyDir(str_replace(APP_PATH.'/', '', $dir));
+			$zip -> addEmptyDir(str_replace(ABS_PATH, '', $dir));
       
 			$dh = opendir($dir);
 			while (false !== ($_file = readdir($dh))) {
 				
 				if ($_file != '.' && $_file != '..') {
 					if (is_file($dir.$_file)) {
-						$zip -> addFile($dir.$_file, str_replace(APP_PATH.'/', '', $dir.$_file));
+						$zip -> addFile($dir.$_file, str_replace(ABS_PATH, '', $dir.$_file));
 					} elseif (is_dir($dir.$_file)) {
 						$dirs[] = $dir.$_file."/";
 					}
@@ -547,7 +547,7 @@ if ( !function_exists('json_encode') ) {
         global $osc_json;
 
         if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once( LIB_PATH.'/json/JSON.php' );
+            require_once LIB_PATH . 'json/JSON.php';
             $osc_json = new Services_JSON();
         }
 
@@ -560,7 +560,7 @@ if ( !function_exists('json_decode') ) {
         global $osc_json;
 
         if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once( LIB_PATH.'/json/JSON.php' );
+            require_once LIB_PATH . '/json/JSON.php';
             $osc_json = new Services_JSON();
         }
 

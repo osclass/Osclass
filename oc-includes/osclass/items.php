@@ -138,10 +138,10 @@ switch ($action) {
                 ));
                 $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
 
-                $thumbnailPath = APP_PATH . '/oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
                 ImageResizer::fromFile($tmpName)->resizeToMax(100)->saveToFile($thumbnailPath);
 
-                $path = APP_PATH . '/oc-content/uploads/' . $resourceId.'.png';
+                $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'.png';
                 move_uploaded_file($tmpName, $path);
 
                 $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
@@ -183,7 +183,7 @@ switch ($action) {
             }
 
             if (isset($preferences['recaptchaPrivKey'])) {
-                require_once 'recaptchalib.php';
+                require_once LIB_PATH . 'recaptchalib.php';
                 if (!empty($_POST["recaptcha_challenge_field"])) {
                     $resp = recaptcha_check_answer(
                         $preferences['recaptchaPrivKey'],
@@ -347,10 +347,10 @@ switch ($action) {
                     ));
                     $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
-                    $thumbnailPath = APP_PATH . '/oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
                     ImageResizer::fromFile($tmpName)->resizeToMax(100)->saveToFile($thumbnailPath);
 
-                    $path = APP_PATH . '/oc-content/uploads/' . $resourceId.'.png';
+                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'.png';
                     move_uploaded_file($tmpName, $path);
 
                     $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';

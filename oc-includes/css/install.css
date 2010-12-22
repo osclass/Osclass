@@ -59,7 +59,7 @@ ul#nav li {
 }
 
 /* PRINT */
-body {
+html {
     background: #f7f7f7;
 }
 
@@ -110,7 +110,12 @@ ul#nav {
 }
 
 .more-stats {
+    margin-bottom: 10px;
     font-size: 12px;
+}
+
+.margin20 {
+    margin: 20px 0;
 }
 
 .past {
@@ -134,8 +139,11 @@ ul#nav {
     -khtml-border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    border-spacing: 10px;
     font-size: 14px;
+}
+
+.form-table table {
+    border-spacing: 10px;
 }
 
 .form-table th {
@@ -148,9 +156,9 @@ ul#nav {
 }
 
 .button {
-    padding: 5px 10px;
+    padding: 8px 14px;
     background-color: #F7F7F7;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid #DFDFDF;
     -khtml-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -476,6 +484,23 @@ table.list-categories td {
 
 #skip-location-d input {
     margin-right: 8px;
+}
+
+.page-error {
+    background: #FFFFFF;
+    border: 1px solid #DFDFDF;
+    width: 600px;
+    margin: 50px auto;
+    padding: 10px 40px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.page-error p {
+    font-size: 13px;
+    margin: 30px 0 25px;
 }
 
 /**

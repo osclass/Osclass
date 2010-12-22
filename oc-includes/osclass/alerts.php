@@ -19,11 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*define('__FROM_CRON__', true);
-if(!defined('__OSC_LOADED__')) {
-	require_once '../../oc-load.php';
-}*/
-
 function osc_runAlert($type = null) {
 
 	if($type==null) { return; };

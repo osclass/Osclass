@@ -19,8 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
-
 $preferences = Preference::newInstance()->toArray();
 
 $pageId = intval(osc_paramGet('id', 0));

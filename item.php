@@ -20,8 +20,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
-
 $preferences = Preference::newInstance()->toArray();
 $manager = Item::newInstance();
 $theme = $preferences['theme'];
@@ -178,7 +176,7 @@ switch ($action) {
             $status = 'ACTIVE';
         }
         if (isset($preferences['akismetKey']) && !empty($preferences['akismetKey'])) {
-            require_once 'Akismet.class.php';
+            require_once LIB_PATH . 'Akismet.class.php';
             $akismet = new Akismet(ABS_WEB_URL, $preferences['akismetKey']);
             $akismet->setCommentAuthor($authorName);
             $akismet->setCommentAuthorEmail($authorEmail);
@@ -281,7 +279,7 @@ switch ($action) {
         osc_renderFooter();
     break;
     case 'post_item':
-        require_once LIB_PATH.'/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
 
         if($success) {
             if(!isset($_SESSION['userId'])) {

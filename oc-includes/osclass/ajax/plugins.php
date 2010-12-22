@@ -19,7 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once '../../../oc-load.php';
+define('ABS_PATH',dirname(dirname(dirname(dirname(__FILE__)))));
+
+require_once ABS_PATH . 'oc-load.php';
 
 if(!isset($_POST['action']))
     return false;

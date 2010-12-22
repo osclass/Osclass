@@ -19,11 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'osclass/classes/DAO.php';
-require_once 'osclass/model/Preference.php';
-require_once 'osclass/utils.php';
-
-
+require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
+require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
+require_once ABS_PATH . 'oc-includes/osclass/utils.php';
 
 function osc_runHook($hook) {
 
@@ -82,7 +80,7 @@ function osc_isPluginInstalled($plugin) {
 function osc_listAllPlugins() {
 	$plugins = array();
 
-	$pluginsPath = APP_PATH . '/oc-content/plugins';
+	$pluginsPath = ABS_PATH . 'oc-content/plugins';
 	$dir = opendir($pluginsPath);
 	while($file = readdir($dir)) {
 
@@ -105,7 +103,7 @@ function osc_listAllPlugins() {
 function osc_listPlugins() {
 	$plugins = array();
 
-	$pluginsPath = APP_PATH . '/oc-content/plugins';
+	$pluginsPath = ABS_PATH . 'oc-content/plugins';
 	$dir = opendir($pluginsPath);
 	while($file = readdir($dir)) {
 
@@ -140,7 +138,7 @@ function osc_loadActivePlugins() {
 
 		if(is_array($plugins_list)) {
 			foreach($plugins_list as $plugin_name) {
-				$pluginPath = APP_PATH . '/oc-content/plugins/'.$plugin_name;
+				$pluginPath = ABS_PATH . 'oc-content/plugins/'.$plugin_name;
 				if(file_exists($pluginPath)) {
 					//This should include the file and adds the hooks
 					include_once $pluginPath;
@@ -178,7 +176,7 @@ function osc_listInstalledPlugins() {
 
 
 function osc_pluginResource($path) {
-	$fullPath = APP_PATH . '/oc-content/plugins/' . $path;
+	$fullPath = ABS_PATH . 'oc-content/plugins/' . $path;
 	return file_exists($fullPath) ? $fullPath : false;
 }
 
@@ -225,7 +223,7 @@ function osc_activatePlugin($path) {
 
 function osc_registerPlugin($path, $function) {
 
-	$path = str_replace(APP_PATH . '/oc-content/plugins/', '', $path);
+	$path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 	osc_addHook('install_'.$path, $function);
 
 }
@@ -240,7 +238,7 @@ function osc_activatePluginHook($path) {
 		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
 		$plugins_list = osc_unserialize($data['s_value']);
 
-		$path = str_replace(APP_PATH . '/oc-content/plugins/', '', $path);
+		$path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 		$found_it = false;
 		if(is_array($plugins_list)) {
 			foreach($plugins_list as $plugin_name) {
@@ -283,7 +281,7 @@ function osc_deactivatePlugin($path)
 		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
 		$plugins_list = osc_unserialize($data['s_value']);
 
-		$path = str_replace(APP_PATH . '/oc-content/plugins/', '', $path);
+		$path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 		if(is_array($plugins_list)) {
 			foreach($plugins_list as $key=>$value){
 				if($value==$path){
@@ -313,7 +311,7 @@ function osc_addHook($hook, $function, $priority = 5) {
 	//$args = func_get_args();
 
 	global $active_plugins;
-	$hook = str_replace(APP_PATH . '/oc-content/plugins/', '', $hook);
+	$hook = str_replace(ABS_PATH . 'oc-content/plugins/', '', $hook);
 	$found_plugin = false;
 	if(isset($active_plugins[$hook])) {
 		if(is_array($active_plugins[$hook])) {
@@ -342,7 +340,7 @@ function osc_isThisCategory($name, $id) {
 }
 
 function osc_getPluginInfo($plugin) {
-	$s_info = file_get_contents(APP_PATH . '/oc-content/plugins/' . $plugin);
+	$s_info = file_get_contents(ABS_PATH . 'oc-content/plugins/' . $plugin);
 	$info = array();
 	if(preg_match('|Plugin Name:([^\\r\\t\\n]*)|i', $s_info, $match)) {
 		$info['plugin_name'] = trim($match[1]);
@@ -403,7 +401,7 @@ function osc_checkUpdate($plugin) {
 
 function osc_configurePlugin($path) {
 
-	$plugin = str_replace(APP_PATH . '/oc-content/plugins/', '', $path);
+	$plugin = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 	if(stripos($plugin, ".php")===FALSE) {
 		$data = Preference::newInstance()->findValueByName('active_plugins');
 		$plugins_list = osc_unserialize($data);
@@ -461,7 +459,7 @@ function osc_addFilter($hook, $function, $priority = 5) {
 	//$args = func_get_args();
 
 	global $active_plugins;
-	$hook = str_replace(APP_PATH . '/oc-content/plugins/', '', $hook);
+	$hook = str_replace(ABS_PATH . 'oc-content/plugins/', '', $hook);
 	$found_plugin = false;
 	if(isset($active_plugins[$hook])) {
 		if(is_array($active_plugins[$hook])) {

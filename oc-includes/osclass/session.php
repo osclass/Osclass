@@ -97,7 +97,7 @@ function osc_isUserLoggedIn() {
 function osc_userInfo($property) {
 	static $user = null;
 	if(is_null($user)) {
-		require_once 'osclass/model/User.php';
+		require_once LIB_PATH . 'osclass/model/User.php';
 		$manager = User::newInstance();
 		$user = $manager->findByPrimaryKey($_SESSION['userId']);
 	}

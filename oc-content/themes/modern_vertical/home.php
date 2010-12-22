@@ -1,5 +1,4 @@
 <?php
-require_once 'oc-load.php';
 $latestItems = Item::newInstance()->listLatest(10);
 
 // for sites that has only one parent category and NO children categories e.g. vertical

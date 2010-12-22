@@ -21,7 +21,7 @@
 
     function alert_new_item($preferences, $item) {
         if (isset($preferences['notify_new_item']) && $preferences['notify_new_item']) {
-            require_once 'phpmailer/class.phpmailer.php';
+            require_once LIB_PATH . 'phpmailer/class.phpmailer.php';
             $mail = new PHPMailer;
             $mail->CharSet = "utf-8";
             $mail->Host = 'localhost';

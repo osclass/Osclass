@@ -22,7 +22,7 @@
 
 <?php 
     
-    defined('APP_PATH') or die(__('Invalid OSClass request')) ;
+    defined('ABS_PATH') or die(__('Invalid OSClass request')) ;
     
     $dao_preference = new Preference() ;
     if(isset($_GET['value'])) $dao_preference->update( array("s_value" => $_GET['value'] ? true : false), array("s_name" => "rewriteEnabled") ) ;

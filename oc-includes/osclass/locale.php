@@ -20,11 +20,11 @@
  */
 
 
-require_once APP_PATH . '/oc-includes/php-gettext/streams.php';
-require_once APP_PATH . '/oc-includes/php-gettext/gettext.php';
+require_once ABS_PATH . 'oc-includes/php-gettext/streams.php';
+require_once ABS_PATH . 'oc-includes/php-gettext/gettext.php';
 
-require_once 'locales.php';
-require_once 'osclass/session.php';
+require_once ABS_PATH . 'oc-includes/osclass/locales.php';
+require_once ABS_PATH . 'oc-includes/osclass/session.php';
 
 $locale = osc_getDefaultLanguage();
 if(defined('OC_ADMIN')) {
@@ -35,14 +35,14 @@ if(defined('OC_ADMIN')) {
 		$locale = $_SESSION['locale'];
 }
 
-$streamer = new FileReader(APP_PATH . '/oc-includes/translations/' . $locale . '/messages.mo');
+$streamer = new FileReader(ABS_PATH . 'oc-includes/translations/' . $locale . '/messages.mo');
 $gt = new gettext_reader($streamer);
 
 /**
  * @return string the default application language
  */
 function osc_getDefaultLanguage() {
-	require_once 'osclass/model/Preference.php';
+	require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 	return Preference::newInstance()->findValueByName('language');
 }
 

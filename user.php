@@ -20,8 +20,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
-
 $preferences = Preference::newInstance()->toArray();
 $manager = User::newInstance();
 $theme = $preferences['theme'];
@@ -41,7 +39,7 @@ switch ($action) {
         unset($_POST['action']);
 
         if (isset($preferences['recaptchaPrivKey'])) {
-            require_once 'recaptchalib.php';
+            require_once LIB_PATH . 'recaptchalib.php';
             $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
                             $_SERVER["REMOTE_ADDR"],
                             $_POST["recaptcha_challenge_field"],
@@ -273,7 +271,6 @@ switch ($action) {
         $id = intval(osc_paramGet('id', 0));
         $secret = osc_paramGet('secret', '');
         $userId = intval(osc_paramSession('userId', 0));
-        //require_once 'osclass/model/Item.php';
         osc_addFlashMessage(__('Your item has been deleted.'));
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
@@ -327,7 +324,7 @@ switch ($action) {
     case 'editItemPost':
 
         // The magic code
-        require_once LIB_PATH.'/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
 
         $userId = intval(osc_paramSession('userId', 0));
         if($userId==0) {
@@ -340,13 +337,13 @@ switch ($action) {
 
     case 'deleteResource':
         $id = osc_paramGet('id', -1);
-        $name = osc_paramGet('name', '');
+        $name = osc_paramGet('name', '');   
         $fkid = osc_paramGet('fkid', -1);
 
         $item = ItemResource::newInstance()->findByConditions(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
         if(isset($item['s_path'])) {
-            unlink(APP_PATH."/".$item['s_path']);
-            unlink(APP_PATH."/".str_replace("_thumbnail", "", $item['s_path']));
+            unlink(ABS_PATH.$item['s_path']);
+            unlink(ABS_PATH.str_replace("_thumbnail", "", $item['s_path']));
         }
         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
         osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
@@ -363,7 +360,6 @@ switch ($action) {
         break;
     case 'login_post':
         define('COOKIE_LIFE', 86400);
-        //require_once 'osclass/security.php';
         $user = $manager->findByCredentials($_POST['userName'], $_POST['password']);
         if ($user && $user['b_enabled'] == '1') {
             if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 1) {

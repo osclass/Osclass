@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php defined('APP_PATH') or die( __('Invalid OSClass request.') ); ?>
+<?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 
 <?php 
 

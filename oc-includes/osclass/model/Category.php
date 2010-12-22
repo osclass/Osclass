@@ -19,7 +19,7 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once  LIB_PATH.'/osclass/model/Preference.php';
+require_once  LIB_PATH . 'osclass/model/Preference.php';
 class Category extends DAO {
 
     private $language;

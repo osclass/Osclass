@@ -20,7 +20,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+
+require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $itemManager = Item::newInstance();
 
@@ -218,7 +220,7 @@ switch ($action) {
 
     case 'item_edit':
     case 'editItem':
-        require_once '../oc-includes/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
         $id = osc_paramGet('id', -1);
 
         $item = Item::newInstance()->findByPrimaryKey($id);
@@ -247,7 +249,7 @@ switch ($action) {
     case 'item_edit_post':
     case 'editItemPost':
 
-        require_once LIB_PATH.'/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
 
         osc_redirectTo('items.php');
         break;
@@ -294,7 +296,7 @@ switch ($action) {
         $admin = TRUE;
         $manager = Item::newInstance();
 
-        require_once LIB_PATH.'/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
 
         osc_redirectTo('items.php');
         break;

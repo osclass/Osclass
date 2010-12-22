@@ -30,7 +30,7 @@ function osc_listLocales() {
 
 	$codes = osc_listLanguageCodes();
 	foreach($codes as $code) {
-		$path = sprintf('%s/oc-includes/translations/%s/index.php', APP_PATH, $code);
+		$path = sprintf('%soc-includes/translations/%s/index.php', ABS_PATH, $code);
 		if(file_exists($path)) {
 			require $path;
 			$fxName = sprintf('locale_%s_info', $code);
@@ -72,7 +72,7 @@ function osc_checkLocales() {
 function osc_listLanguageCodes() {
 	$codes = array();
 	
-	$dir = opendir(APP_PATH . '/oc-includes/translations');
+	$dir = opendir(ABS_PATH . 'oc-includes/translations');
 	while($file = readdir($dir)) {
 		if(preg_match('/^[a-z_]+$/i', $file))
 			$codes[] = $file;

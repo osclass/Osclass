@@ -20,7 +20,7 @@
  */
 ?>
 
-<?php defined('APP_PATH') or die(__('Invalid OSClass request.')); ?>
+<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <h2><?php echo __('Export'); ?></h2>
 

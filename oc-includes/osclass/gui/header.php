@@ -1,6 +1,4 @@
 <?php
-require_once 'oc-load.php';
-
 $javaScripts = array(
     '/oc-includes/js/tiny_mce/tiny_mce.js',
     '/oc-includes/js/jquery-1.4.2.js',
