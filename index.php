@@ -18,7 +18,6 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 try {
 	require_once 'oc-load.php';
 
@@ -111,10 +110,19 @@ try {
 			//require_once 'osclass/utils.php';
 			osc_redirectToReferer(ABS_WEB_URL);
 			break;
+
 		default:
-			osc_renderHeader();
-			osc_renderView('home.php');
-			osc_renderFooter();
+
+            $redirected = Rewrite::newInstance()->doRedirect();
+
+            if($redirected==null) {
+    			osc_renderHeader();
+    			osc_renderView('home.php');
+    			osc_renderFooter();
+            } else {
+                include_once $redirected;
+            }
+
 	}
 	
 } catch (Exception $e) {

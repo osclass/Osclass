@@ -277,6 +277,7 @@ switch ($action) {
                     'noindex' => 'true'
                 )
         );
+        $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
         osc_renderView('item-post.php');
         osc_renderFooter();
     break;

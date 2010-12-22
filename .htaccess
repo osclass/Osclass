@@ -1,29 +1,9 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
-
-#Pages: contact, feed, sitemap
-RewriteRule ^contact(.html)?$ index.php?action=contact [NC,L]
-RewriteRule ^feed.xml$ index.php?action=feed [NC,L]
-RewriteRule ^sitemap.xml$ index.php?action=sitemap [NC,L]
-
-#Advertisements
-RewriteRule \-([0-9]+)$ item.php?id=$1 [NC,L]
-
-#Static pages
-RewriteRule \-p([0-9]+)$ page.php?id=$1 [NC,L]
-
-#Redirect 301 of first page of category
-RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-content)|(oc-includes)|(oc-installer)).*
-RewriteRule ^([^\/]+/([.]*/)?)1/?$ $1 [R=301,L]
-
-#Categories
-RewriteRule ^([^\/]+/([.]*/)?)(\d+)/?$ search.php?category=$1&page=$3 [NC,L]
-RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-content)|(oc-includes)|(oc-installer)).*
-RewriteRule ^([.]+)$ $1/
-RewriteCond %{REQUEST_URI} !((oc-admin)|(oc-includes)|(oc-content)|(oc-installer)).*
-RewriteRule ^(.+)/$ search.php?category=$1&page=0 [NC,L]
-
-ErrorDocument 404 /index.php?action=errorPage&code=404
-ErrorDocument 500 /index.php?action=errorPage&code=500
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
 </IfModule>
+

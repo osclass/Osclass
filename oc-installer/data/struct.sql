@@ -326,3 +326,13 @@ CREATE TABLE /*TABLE_PREFIX*/t_keywords (
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_permalinks (
+  s_section VARCHAR(100) DEFAULT NULL,
+  s_permalink VARCHAR(100) DEFAULT NULL,
+
+    PRIMARY KEY (s_section),
+    UNIQUE KEY (s_section)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+
