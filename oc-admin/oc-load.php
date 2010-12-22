@@ -39,7 +39,6 @@ require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/error.php';
 require_once LIB_PATH . 'osclass/feeds.php';
-require_once LIB_PATH . 'osclass/install.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/security.php';
 require_once LIB_PATH . 'osclass/validations.php';
@@ -81,6 +80,7 @@ require_once LIB_PATH . 'osclass/frm/Page.form.class.php' ;
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php' ;
 require_once LIB_PATH . 'osclass/frm/Contact.form.class.php' ;
 require_once LIB_PATH . 'osclass/frm/User.form.class.php' ;
+require_once ABS_PATH . 'oc-admin/common.php';
 
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);
