@@ -64,7 +64,7 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 
 																<br/>
 
-                                                                <?php echo _('Users need to validation their account. After registering on the website, they will be sent an email with a validation link.'); ?>
+                                                                <?php _e('Users need to validation their account. After registering on the website, they will be sent an email with a validation link.'); ?>
                                                         </fieldset>
 						</div>
 						<div style="clear: both;"></div>

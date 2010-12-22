@@ -19,7 +19,7 @@
     <tr>
         <td><?php _e('Relation type:'); ?></td>
         <td>
-            <label for="grm"><input type="radio" name="relation" id="grm" value="FRIENDSHIP" <?php if( $detail['relation']=="FRIENDSHIP" ) { echo "checked"; }; ?>/><?php _('Friendship'); ?></label><br />
+            <label for="grm"><input type="radio" name="relation" id="grm" value="FRIENDSHIP" <?php if( $detail['relation']=="FRIENDSHIP" ) { echo "checked"; }; ?>/><?php _e('Friendship'); ?></label><br />
             <label for="grw"><input type="radio" name="relation" id="grw" value="FORMAL" <?php if( $detail['relation']=="FORMAL" ) { echo "checked"; }; ?>/><?php _e('Formal relation'); ?></label><br />
             <label for="grn"><input type="radio" name="relation" id="grn" value="INFORMAL" <?php if( $detail['relation']=="INFORMAL" ) { echo "checked"; }; ?>/><?php _e('Informal relation'); ?></label><br />
         </td>
