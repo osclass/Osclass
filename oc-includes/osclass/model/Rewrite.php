@@ -88,7 +88,7 @@ class Rewrite {
     }
 
     public function extractURL($uri = '') {
-        $uri_array = explode('?', $uri);
+        $uri_array = explode('?', str_replace('index.php', '', $uri));
         if(substr($uri_array[0], 0, 1)=="/") {
             return substr($uri_array[0], 1);
         } else {
