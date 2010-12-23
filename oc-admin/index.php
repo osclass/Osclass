@@ -43,7 +43,7 @@ switch($action) {
 		require_once 'recover.php';
 		break;
 	case 'recover_post':
-		require_once 'osclass/security.php';
+		require_once LIB_PATH . 'osclass/security.php';
 		$user = Admin::newInstance()->findByEmail($_POST['email']);
 
 		if($user) {
@@ -74,7 +74,7 @@ switch($action) {
 		break;
 	case 'login_post':
 		define('COOKIE_LIFE', 86400);
-		require_once 'osclass/security.php';
+		require_once LIB_PATH . 'osclass/security.php';
 		$admin = Admin::newInstance()->findByCredentials($_POST['userName'], $_POST['password']);
 		if($admin) {
 			if(isset($_POST['rememberMe']) && $_POST['rememberMe'] == 1) {
@@ -124,7 +124,7 @@ switch($action) {
 			}
 		}
 
-		require_once 'osclass/model/Locale.php';
+		require_once LIB_PATH . 'osclass/model/Locale.php';
 		$locales = Locale::newInstance()->listAllEnabled(true);
 
 		require_once 'login.php';

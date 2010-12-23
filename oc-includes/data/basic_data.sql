@@ -9,7 +9,6 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'theme', 'modern', 'STRING'),
     ('osclass', 'admin_language', 'en_US', 'STRING'),
     ('osclass', 'language', 'en_US', 'STRING'),
-    ('osclass', 'rewriteEnabled', '0', 'BOOLEAN'),
     ('osclass', 'pageDesc', 'open source classifieds', 'STRING'),
 
     ('osclass', 'maxSizeKb', 1000000, 'INTEGER'),
@@ -45,7 +44,11 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'mailserver_type', 'custom', 'STRING'),
     ('osclass', 'mailserver_auth', '', 'BOOLEAN'),
     ('osclass', 'mailserver_ssl', '', 'STRING'),
-    ('osclass', 'currency', 'USD','STRING');
+    ('osclass', 'currency', 'USD','STRING'),
+
+    ('osclass', 'rewriteEnabled', '0', 'BOOLEAN'),
+    ('osclass', 'mod_rewrite_loaded', '0', 'BOOLEAN'),
+    ('osclass', 'rewrite_rules', '', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
 ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
