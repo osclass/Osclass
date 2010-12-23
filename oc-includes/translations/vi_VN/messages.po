@@ -2,23 +2,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-23 20:18+0100\n"
+"POT-Creation-Date: 2010-12-23 23:16+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
-"Language-Team: \n"
+"Language-Team: B2BVIET <admin@b2bviet.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
+"X-Poedit-Language: Vietnamese\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
+"X-Poedit-Country: VIETNAM\n"
 "X-Poedit-SearchPath-0: \n"
 
 #: index.php:46
 #: search.php:163
 msgid "Latest items added"
-msgstr "Последние поступления"
+msgstr "Tin mới thêm"
 
 #: index.php:48
 #: search.php:165
@@ -27,15 +28,15 @@ msgstr ""
 
 #: index.php:91
 msgid "Contact form"
-msgstr "Контактная форма"
+msgstr ""
 
 #: index.php:93
 msgid "Administrator"
-msgstr "Администратор"
+msgstr ""
 
 #: index.php:103
 msgid "Your message has been sent and will be answered soon, thank you."
-msgstr "Ваше сообщение было отправлени и скоро Вы получите ответ, спасибо."
+msgstr "Tin của bạn đã được gửi, và sẽ có trả lời sớm"
 
 #: item.php:52
 msgid "Thanks! That helps us."
@@ -68,7 +69,7 @@ msgstr ""
 
 #: item.php:274
 msgid "Publish your item"
-msgstr "Опубликовать Ваше объявление"
+msgstr "Đăng tin của bạn"
 
 #: page.php:29
 #: page.php:60
@@ -77,7 +78,7 @@ msgstr ""
 
 #: search.php:136
 msgid "Newly listed"
-msgstr "Новые поступления"
+msgstr "Mới nhất"
 
 #: search.php:137
 msgid "Lower price first"
@@ -85,22 +86,22 @@ msgstr ""
 
 #: search.php:138
 msgid "Higher price first"
-msgstr ""
+msgstr "Giá Cao trước"
 
 #: search.php:139
 msgid "Best match"
-msgstr ""
+msgstr "Giống nhất"
 
 #: search.php:152
 #, php-format
 msgid "Search results for %s"
-msgstr "Результаты поиска: %s"
+msgstr "Kết quả trong khoảng %s"
 
 #: user.php:31
 #: user.php:194
 #: user.php:226
 msgid "Create your account"
-msgstr "Регистрация"
+msgstr "Tạo Tài Khoản"
 
 #: user.php:48
 msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
@@ -124,7 +125,7 @@ msgstr ""
 
 #: user.php:115
 msgid "The user could not be registered, sorry."
-msgstr "Извините, но пользователь не может быть зарегестрирован."
+msgstr "Xin lỗi, bạn không thể đăng ký"
 
 #: user.php:146
 msgid "We resend you the validation email. If you don't recive it after a few minutes, please check your SPAM folder."
@@ -136,7 +137,7 @@ msgstr ""
 
 #: user.php:182
 msgid "Your account is correctly validated. Thanks."
-msgstr "Ваша учетная запись подтверждена. Спасибо."
+msgstr "Tài khoản đúng, cám ơn."
 
 #: user.php:184
 msgid "Your account has been activated before."
@@ -144,7 +145,7 @@ msgstr ""
 
 #: user.php:187
 msgid "The link is not longer valid, sorry."
-msgstr ""
+msgstr "Liên kết hết hạn"
 
 #: user.php:199
 #: user.php:248
@@ -179,7 +180,7 @@ msgstr ""
 
 #: user.php:354
 msgid "Access to your account"
-msgstr "Вход в учетную запись"
+msgstr ""
 
 #: user.php:381
 msgid "You have not validated your account yet.<br/> Should we resend you the validation email?"
@@ -192,7 +193,7 @@ msgstr ""
 #: user.php:384
 #: oc-admin/index.php:107
 msgid "Wrong username or password."
-msgstr "Неверное имя пользователя или пароль."
+msgstr ""
 
 #: user.php:402
 msgid "Unsubscribed correctly."
@@ -230,16 +231,16 @@ msgstr ""
 #: oc-admin/admins.php:50
 #: oc-admin/admins.php:100
 msgid "Administrators"
-msgstr "Администраторы"
+msgstr "Admin"
 
 #: oc-admin/admins.php:31
 #: oc-admin/categories.php:39
 msgid "Add"
-msgstr "Добавить"
+msgstr ""
 
 #: oc-admin/admins.php:38
 msgid "The item has been added."
-msgstr ""
+msgstr "Mục đã thêm"
 
 #: oc-admin/admins.php:40
 msgid "The administrator could not be created."
@@ -248,7 +249,7 @@ msgstr ""
 #: oc-admin/admins.php:50
 #: oc-admin/categories.php:65
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Sửa"
 
 #: oc-admin/admins.php:64
 msgid "Password didn't update. Passwords don't match."
@@ -282,11 +283,11 @@ msgstr ""
 #: oc-admin/appearance.php:56
 #: oc-admin/appearance.php:80
 msgid "Appearance"
-msgstr "Внешний вид"
+msgstr "Hiển thị"
 
 #: oc-admin/appearance.php:29
 msgid "Upload"
-msgstr "Загрузить"
+msgstr ""
 
 #: oc-admin/appearance.php:40
 #: oc-admin/appearance.php:44
@@ -302,7 +303,7 @@ msgstr ""
 #: oc-admin/categories.php:65
 #: oc-admin/categories.php:172
 msgid "Categories"
-msgstr "Категории"
+msgstr "Các Danh Mục"
 
 #: oc-admin/categories.php:56
 msgid "The category has been added."
@@ -310,11 +311,11 @@ msgstr ""
 
 #: oc-admin/categories.php:83
 msgid "The item has been updated."
-msgstr ""
+msgstr "Mục đã cập nhật"
 
 #: oc-admin/categories.php:101
 msgid "The items have been deleted."
-msgstr ""
+msgstr "Mục đã xóa"
 
 #: oc-admin/categories.php:114
 msgid "The category has been enabled."
@@ -355,7 +356,7 @@ msgstr ""
 #: oc-admin/comments.php:112
 #: oc-admin/comments.php:135
 msgid "Comments"
-msgstr "Комментарии"
+msgstr "Ý kiến"
 
 #: oc-admin/comments.php:125
 msgid "Great! We've just update your item."
@@ -364,37 +365,37 @@ msgstr ""
 #: oc-admin/common.php:43
 #: oc-admin/common.php:52
 msgid "Plugins"
-msgstr "Плагины"
+msgstr "Plugins"
 
 #: oc-admin/common.php:43
 #: oc-admin/common.php:52
 msgid "Configuration"
-msgstr "Конфигурация"
+msgstr ""
 
 #: oc-admin/index.php:51
 #, php-format
 msgid "Your new password is \"%s\"."
-msgstr "Ваш новый пароль:  \"%s\"."
+msgstr ""
 
 #: oc-admin/index.php:59
 msgid "OSClass application"
-msgstr "Приложение OSClass"
+msgstr "Ứng dụng OSClass"
 
 #: oc-admin/index.php:60
 msgid "Recover your password"
-msgstr "Восстановить пароль"
+msgstr "Phục hồi Password"
 
 #: oc-admin/index.php:62
 msgid "OSClass administrator"
-msgstr "Администратор OSClass"
+msgstr "Quản trị OSClass"
 
 #: oc-admin/index.php:68
 msgid "A new password has been sent to your account."
-msgstr "Новый пароль был выслан Вам на электронный адресс."
+msgstr "1 Password mới đã được gửi"
 
 #: oc-admin/index.php:70
 msgid "The email you have entered does not belong to a valid administrator."
-msgstr "Электронная почта которую вы ввели не относится к действительному администратору."
+msgstr "Email không đúng"
 
 #: oc-admin/items.php:48
 msgid "The items have been activated."
@@ -422,13 +423,13 @@ msgstr ""
 
 #: oc-admin/items.php:311
 msgid "Items"
-msgstr "Объявления"
+msgstr "Mục"
 
 #: oc-admin/languages.php:31
 #: oc-admin/languages.php:44
 #: oc-admin/languages.php:139
 msgid "Languages"
-msgstr "Языки"
+msgstr "Ngôn Ngữ"
 
 #: oc-admin/languages.php:36
 msgid "The language has been installed correctly."
@@ -506,32 +507,32 @@ msgstr ""
 
 #: oc-admin/login.php:43
 msgid "Username"
-msgstr "Пользователь"
+msgstr "Nickname"
 
 #: oc-admin/login.php:49
 msgid "Password"
-msgstr "Пароль"
+msgstr "Password"
 
 #: oc-admin/login.php:55
 msgid "Language"
-msgstr "Язык"
+msgstr "Ngôn Ngữ"
 
 #: oc-admin/login.php:68
 msgid "Theme"
-msgstr ""
+msgstr "Theme"
 
 #: oc-admin/login.php:76
 msgid "Remember me"
-msgstr "Запомнить"
+msgstr "Ghi nhớ"
 
 #: oc-admin/login.php:80
 #: oc-admin/recover.php:50
 msgid "Log in"
-msgstr "Вход"
+msgstr "Đăng nhập"
 
 #: oc-admin/login.php:85
 msgid "Lost your password?"
-msgstr "Потеряли пароль?"
+msgstr "Mất password?"
 
 #: oc-admin/login.php:88
 #: oc-admin/recover.php:54
@@ -545,12 +546,12 @@ msgstr ""
 
 #: oc-admin/main.php:34
 msgid "Dashboard"
-msgstr "Панель"
+msgstr "Bảng chính"
 
 #: oc-admin/media.php:32
 #: oc-admin/media.php:51
 msgid "Media"
-msgstr "Медиа"
+msgstr "Media"
 
 #: oc-admin/media.php:32
 #: oc-admin/settings.php:34
@@ -563,13 +564,13 @@ msgstr "Медиа"
 #: oc-admin/settings.php:334
 #: oc-admin/settings.php:337
 msgid "Settings"
-msgstr "Настройки"
+msgstr "Cài đặt"
 
 #: oc-admin/pages.php:33
 #: oc-admin/pages.php:105
 #: oc-admin/pages.php:148
 msgid "Pages"
-msgstr "Страницы"
+msgstr "Trang"
 
 #: oc-admin/pages.php:64
 msgid "The page has been updated."
@@ -617,11 +618,11 @@ msgstr ""
 
 #: oc-admin/recover.php:43
 msgid "E-mail"
-msgstr "Электронная почта"
+msgstr "E-mail"
 
 #: oc-admin/recover.php:46
 msgid "Get new password"
-msgstr "Получить новый пароль"
+msgstr "Lấy password mới"
 
 #: oc-admin/settings.php:176
 msgid "Location"
@@ -640,14 +641,14 @@ msgstr ""
 
 #: oc-admin/settings.php:408
 msgid "General settings"
-msgstr "Общие настройки"
+msgstr "Cài đặt tổng hợp"
 
 #: oc-admin/tools.php:29
 #: oc-admin/tools.php:37
 #: oc-admin/tools.php:39
 #: oc-admin/tools.php:60
 msgid "Tools"
-msgstr "Инструментарий"
+msgstr "Công Cụ"
 
 #: oc-admin/tools.php:47
 msgid "Backup made correctly"
@@ -745,13 +746,13 @@ msgstr ""
 #: oc-admin/upgrade-plugin.php:169
 #: oc-admin/upgrade.php:169
 msgid "Update"
-msgstr "Обновить"
+msgstr ""
 
 #: oc-admin/users.php:31
 #: oc-admin/users.php:45
 #: oc-admin/users.php:101
 msgid "Users"
-msgstr "Пользователи"
+msgstr "Users"
 
 #: oc-admin/users.php:61
 msgid "The user has been updated."
@@ -764,11 +765,11 @@ msgstr ""
 
 #: oc-admin/ajax/items_processing.php:105
 msgid "View comments"
-msgstr "Посмотреть комментарии"
+msgstr "Xem ý kiến"
 
 #: oc-admin/ajax/items_processing.php:106
 msgid "View media"
-msgstr "Посмотреть медиа контент"
+msgstr "Xem Media"
 
 #: oc-admin/ajax/items_processing.php:108
 msgid "Deactivate"
@@ -776,7 +777,7 @@ msgstr ""
 
 #: oc-admin/ajax/items_processing.php:110
 msgid "Activate"
-msgstr "Активировать"
+msgstr "Kích hoạt"
 
 #: oc-admin/ajax/items_processing.php:113
 msgid "Demake Premium"
@@ -792,11 +793,11 @@ msgstr ""
 
 #: oc-admin/ajax/items_processing.php:119
 msgid "Delete"
-msgstr "Удалить"
+msgstr "Xóa"
 
 #: oc-admin/themes/modern/footer.php:29
 msgid "Thank you for using"
-msgstr "Спасибо что используете"
+msgstr "Cám ơn"
 
 #: oc-admin/themes/modern/footer.php:29
 #: oc-admin/themes/modern/footer.php:34
@@ -808,31 +809,31 @@ msgstr ""
 
 #: oc-admin/themes/modern/footer.php:30
 msgid "Documentation"
-msgstr "Документация"
+msgstr "Văn bản"
 
 #: oc-admin/themes/modern/footer.php:31
 msgid "Feedback"
-msgstr "Обратная связь"
+msgstr "Feedback"
 
 #: oc-admin/themes/modern/header.php:38
 msgid "OSClass Admin Panel"
-msgstr "Админ панель OSClass"
+msgstr ""
 
 #: oc-admin/themes/modern/header.php:203
 msgid "Visit website"
-msgstr "Посетить сайт"
+msgstr "Thăm website"
 
 #: oc-admin/themes/modern/header.php:204
 msgid "Howdy"
-msgstr "С возвращением"
+msgstr ""
 
 #: oc-admin/themes/modern/header.php:204
 msgid "Your profile"
-msgstr "Ваш профиль"
+msgstr "Profile của bạn"
 
 #: oc-admin/themes/modern/header.php:204
 msgid "Log Out"
-msgstr "Выход"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/add.php:23
 #: oc-admin/themes/modern/admins/edit.php:23
@@ -848,13 +849,13 @@ msgstr ""
 #: oc-admin/themes/modern/admins/edit.php:38
 #: oc-admin/themes/modern/include/backoffice_menu.php:194
 msgid "Add new administrator"
-msgstr "Добавить администратора"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/add.php:53
 #: oc-admin/themes/modern/admins/edit.php:54
 #: oc-admin/themes/modern/admins/index.php:86
 msgid "Real name"
-msgstr "Настоящее имя"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/add.php:53
 #: oc-admin/themes/modern/admins/add.php:68
@@ -862,16 +863,16 @@ msgstr "Настоящее имя"
 #: oc-admin/themes/modern/admins/edit.php:54
 #: oc-admin/themes/modern/admins/edit.php:69
 msgid "required"
-msgstr "обязательно"
+msgstr "Yêu cầu"
 
 #: oc-admin/themes/modern/admins/add.php:68
 #: oc-admin/themes/modern/admins/edit.php:69
 msgid "User name"
-msgstr "Пользователь"
+msgstr "Nickname"
 
 #: oc-admin/themes/modern/admins/add.php:81
 msgid "Create administrator"
-msgstr "Создать администратора"
+msgstr "Tạo Admin"
 
 #: oc-admin/themes/modern/admins/edit.php:76
 msgid "Old password"
@@ -891,7 +892,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/admins/edit.php:87
 msgid "Update administrator"
-msgstr "Обновить администратора"
+msgstr "Update Admin"
 
 #: oc-admin/themes/modern/admins/index.php:37
 #: oc-admin/themes/modern/admins/index.php:49
@@ -902,117 +903,117 @@ msgstr "Обновить администратора"
 #: oc-admin/themes/modern/items/index.php:48
 #: oc-admin/themes/modern/items/index.php:74
 msgid "Search"
-msgstr "Поиск"
+msgstr "Tìm"
 
 #: oc-admin/themes/modern/admins/index.php:42
 #: oc-admin/themes/modern/categories/index.php:41
 #: oc-admin/themes/modern/comments/index.php:40
 #: oc-admin/themes/modern/items/index.php:67
 msgid "Processing"
-msgstr "Подождите"
+msgstr "Xử lý"
 
 #: oc-admin/themes/modern/admins/index.php:43
 #: oc-admin/themes/modern/categories/index.php:42
 #: oc-admin/themes/modern/comments/index.php:41
 #: oc-admin/themes/modern/items/index.php:68
 msgid "Show _MENU_ entries"
-msgstr "Показать _MENU_ записей"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:44
 #: oc-admin/themes/modern/categories/index.php:43
 #: oc-admin/themes/modern/comments/index.php:42
 #: oc-admin/themes/modern/items/index.php:69
 msgid "No matching records found"
-msgstr "Записи отсутствуют."
+msgstr "Không tìm thấy"
 
 #: oc-admin/themes/modern/admins/index.php:45
 #: oc-admin/themes/modern/categories/index.php:44
 #: oc-admin/themes/modern/comments/index.php:43
 #: oc-admin/themes/modern/items/index.php:70
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr "Записи с _START_ до _END_ из _TOTAL_ записей"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:46
 #: oc-admin/themes/modern/categories/index.php:45
 #: oc-admin/themes/modern/comments/index.php:44
 #: oc-admin/themes/modern/items/index.php:71
 msgid "Showing 0 to 0 of 0 entries"
-msgstr "Записи с 0 до 0 из 0 записей"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:47
 #: oc-admin/themes/modern/categories/index.php:46
 #: oc-admin/themes/modern/comments/index.php:45
 #: oc-admin/themes/modern/items/index.php:72
 msgid "filtered from _MAX_ total entries"
-msgstr "отфильтровано из _MAX_ записей"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:52
 #: oc-admin/themes/modern/categories/index.php:51
 #: oc-admin/themes/modern/comments/index.php:50
 #: oc-admin/themes/modern/items/index.php:77
 msgid "First"
-msgstr "Первая"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:53
 #: oc-admin/themes/modern/categories/index.php:52
 #: oc-admin/themes/modern/comments/index.php:51
 #: oc-admin/themes/modern/items/index.php:78
 msgid "Previous"
-msgstr "Предыдущая"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:54
 #: oc-admin/themes/modern/categories/index.php:53
 #: oc-admin/themes/modern/comments/index.php:52
 #: oc-admin/themes/modern/items/index.php:79
 msgid "Next"
-msgstr "Следующая"
+msgstr "Kế"
 
 #: oc-admin/themes/modern/admins/index.php:55
 #: oc-admin/themes/modern/categories/index.php:54
 #: oc-admin/themes/modern/comments/index.php:53
 #: oc-admin/themes/modern/items/index.php:80
 msgid "Last"
-msgstr "Последняя"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:57
 #: oc-admin/themes/modern/categories/index.php:56
 #: oc-admin/themes/modern/comments/index.php:55
 #: oc-admin/themes/modern/items/index.php:82
 msgid "Show"
-msgstr "Показать"
+msgstr "Hiện"
 
 #: oc-admin/themes/modern/admins/index.php:62
 #: oc-admin/themes/modern/categories/index.php:61
 #: oc-admin/themes/modern/comments/index.php:60
 #: oc-admin/themes/modern/items/index.php:87
 msgid "entries"
-msgstr "записей"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:112
 #: oc-admin/themes/modern/categories/index.php:129
 #: oc-admin/themes/modern/comments/index.php:119
 #: oc-admin/themes/modern/items/index.php:152
 msgid "Bulk Actions"
-msgstr "Массовые действия"
+msgstr ""
 
 #: oc-admin/themes/modern/admins/index.php:115
 #: oc-admin/themes/modern/categories/index.php:134
 #: oc-admin/themes/modern/comments/index.php:124
 #: oc-admin/themes/modern/items/index.php:159
 msgid "Apply"
-msgstr "Применить"
+msgstr "Apply"
 
 #: oc-admin/themes/modern/appearance/add.php:38
 msgid "Add New Page"
-msgstr "Добавить страницу"
+msgstr ""
 
 #: oc-admin/themes/modern/appearance/add.php:55
 msgid "Theme package"
-msgstr "Архив с темой"
+msgstr "Gói theme"
 
 #: oc-admin/themes/modern/appearance/add.php:59
 msgid "Upload theme"
-msgstr "Загрузить тему"
+msgstr "Upload theme"
 
 #: oc-admin/themes/modern/appearance/add.php:67
 msgid "The themes folder "
@@ -1037,21 +1038,21 @@ msgstr ""
 
 #: oc-admin/themes/modern/appearance/add_widget.php:70
 msgid "Create widget on "
-msgstr "Создать элемент в "
+msgstr "Tạo widget trên"
 
 #: oc-admin/themes/modern/appearance/add_widget.php:84
 #: oc-admin/themes/modern/categories/index.php:94
 #: oc-admin/themes/modern/items/index.php:108
 msgid "Description"
-msgstr "Описание"
+msgstr "Mô tả"
 
 #: oc-admin/themes/modern/appearance/add_widget.php:89
 msgid "Content"
-msgstr "Содержание"
+msgstr "Nội dung"
 
 #: oc-admin/themes/modern/appearance/add_widget.php:93
 msgid "Publish widget"
-msgstr "Опубликовать элемент"
+msgstr "Publish widget"
 
 #: oc-admin/themes/modern/appearance/index.php:27
 msgid "Are you sure you want to cancel?"
@@ -1060,36 +1061,36 @@ msgstr ""
 #: oc-admin/themes/modern/appearance/index.php:45
 #: oc-admin/themes/modern/include/backoffice_menu.php:83
 msgid "Add a new theme"
-msgstr "Добавить тему"
+msgstr "Thêm theme"
 
 #: oc-admin/themes/modern/appearance/index.php:55
 msgid "Current theme"
-msgstr "Текущая тема"
+msgstr "Theme hiện thời"
 
 #: oc-admin/themes/modern/appearance/index.php:60
 #: oc-admin/themes/modern/comments/index.php:87
 msgid "Author"
-msgstr "Автор"
+msgstr "Tác giả"
 
 #: oc-admin/themes/modern/appearance/index.php:65
 msgid "Available themes"
-msgstr "Доступные темы"
+msgstr "Themes đang có"
 
 #: oc-admin/themes/modern/appearance/index.php:80
 msgid "Preview"
-msgstr "Макет"
+msgstr "Preview"
 
 #: oc-admin/themes/modern/appearance/widgets.php:37
 msgid "Widgets"
-msgstr "Элементы"
+msgstr "Widgets"
 
 #: oc-admin/themes/modern/appearance/widgets.php:53
 msgid "Add HTML widget"
-msgstr "Добавить HTML элемент"
+msgstr ""
 
 #: oc-admin/themes/modern/categories/frm.php:66
 msgid "Parent category"
-msgstr "Исходная категория"
+msgstr "Danh mục cha"
 
 #: oc-admin/themes/modern/categories/frm.php:68
 msgid "- No parent -"
@@ -1097,11 +1098,11 @@ msgstr ""
 
 #: oc-admin/themes/modern/categories/frm.php:72
 msgid "Expirations days"
-msgstr "Окончание действия"
+msgstr ""
 
 #: oc-admin/themes/modern/categories/frm.php:72
 msgid "(0 = no expiration)"
-msgstr "(0 = постоянный)"
+msgstr ""
 
 #: oc-admin/themes/modern/categories/frm.php:78
 msgid "Position (order in relation to other categories)"
@@ -1109,25 +1110,25 @@ msgstr ""
 
 #: oc-admin/themes/modern/categories/frm.php:87
 msgid "Enabled"
-msgstr "Включена"
+msgstr "Bật"
 
 #: oc-admin/themes/modern/categories/frm.php:101
 #: oc-admin/themes/modern/items/item-edit.php:134
 msgid "Cancel"
-msgstr "Отменить"
+msgstr "Loại bỏ"
 
 #: oc-admin/themes/modern/categories/frm.php:102
 msgid "Save"
-msgstr "Сохранить"
+msgstr "Lưu"
 
 #: oc-admin/themes/modern/categories/index.php:77
 #: oc-admin/themes/modern/categories/index.php:131
 msgid "Disable"
-msgstr ""
+msgstr "Bỏ"
 
 #: oc-admin/themes/modern/categories/index.php:77
 msgid "View subcategories"
-msgstr "Просмотреть подкатегории"
+msgstr "Xem danh mục con"
 
 #: oc-admin/themes/modern/categories/index.php:77
 msgid "WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?"
@@ -1135,81 +1136,81 @@ msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:90
 msgid "Name"
-msgstr "Название"
+msgstr "Tên"
 
 #: oc-admin/themes/modern/categories/index.php:93
 msgid "Parent"
-msgstr ""
+msgstr "Cha"
 
 #: oc-admin/themes/modern/categories/index.php:121
 msgid "Add New Category"
-msgstr "Добавить Категорию"
+msgstr ""
 
 #: oc-admin/themes/modern/categories/index.php:130
 msgid "Enable"
-msgstr ""
+msgstr "Bật"
 
 #: oc-admin/themes/modern/comments/index.php:68
 msgid "on"
-msgstr "на"
+msgstr "bật"
 
 #: oc-admin/themes/modern/comments/index.php:90
 msgid "Comment"
-msgstr "Комментарий"
+msgstr ""
 
 #: oc-admin/themes/modern/comments/index.php:91
 #: oc-admin/themes/modern/items/index.php:122
 msgid "Date"
-msgstr "Дата"
+msgstr ""
 
 #: oc-admin/themes/modern/comments/index.php:109
 msgid "Manage Comments"
-msgstr "Управление комментариями"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:38
 #: oc-admin/themes/modern/items/index.php:141
 msgid "Manage items"
-msgstr "Управление объявлениями"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:40
 msgid "Add new item"
-msgstr "Добавить объявлелние"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:45
 msgid "Manage media"
-msgstr "Управление медиа файлами"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:54
 msgid "Manage categories"
-msgstr "Управление категориями"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:57
 msgid "Add a new category"
-msgstr "Добавить категорию"
+msgstr "Thêm danh mục"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:66
 msgid "Manage pages"
-msgstr "Управление страницами"
+msgstr "Quản lý Trang"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:69
 msgid "Create page"
-msgstr "Создать страницу"
+msgstr "Tạo trang"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:80
 msgid "Manage themes"
-msgstr "Управление темами"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:86
 msgid "Add or remove widgets"
-msgstr "Добавить или удалить элементы"
+msgstr "Thêm hoặc bỏ widgets"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:95
 msgid "Manage plugins"
-msgstr "Управление плагинами"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:98
 msgid "Add new plugin"
-msgstr "Добавить плагин"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:107
 msgid "Manage languages"
@@ -1226,15 +1227,15 @@ msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:134
 msgid "Permalinks"
-msgstr "Постоянные ссылки"
+msgstr "Permalinks"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:137
 msgid "Spam and bots"
-msgstr "Спам и боты"
+msgstr "Spam và bots"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:140
 msgid "Currencies"
-msgstr "Валюты"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:143
 msgid "Mail Server"
@@ -1246,7 +1247,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:158
 msgid "Import data"
-msgstr "Импортировать дату"
+msgstr "Nhập data"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:161
 msgid "Backup data"
@@ -1254,27 +1255,27 @@ msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:164
 msgid "Upgrade OSClass"
-msgstr "Обновить OSClass"
+msgstr "Upgrade OSClass"
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:179
 msgid "Manage users"
-msgstr "Управление пользователями"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:182
 msgid "Add new user"
-msgstr "Добавить пользователя"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:191
 msgid "List administrators"
-msgstr "Администраторы"
+msgstr ""
 
 #: oc-admin/themes/modern/include/backoffice_menu.php:197
 msgid "Edit Your Profile"
-msgstr "Редактировать ваш профиль"
+msgstr ""
 
 #: oc-admin/themes/modern/items/index.php:99
 msgid "Title"
-msgstr "Название"
+msgstr "Tiêu đề"
 
 #: oc-admin/themes/modern/items/index.php:104
 msgid "Count"
@@ -1282,7 +1283,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/items/index.php:112
 msgid "Category"
-msgstr "Категория"
+msgstr "Danh Mục"
 
 #: oc-admin/themes/modern/items/index.php:142
 msgid "Add New Item"
@@ -1330,39 +1331,39 @@ msgstr ""
 
 #: oc-admin/themes/modern/items/item-edit.php:28
 msgid "General Information"
-msgstr "Общая информация"
+msgstr "Thông tin chung"
 
 #: oc-admin/themes/modern/items/item-edit.php:36
 msgid "Price"
-msgstr "Цена"
+msgstr "Giá cả"
 
 #: oc-admin/themes/modern/items/item-edit.php:62
 msgid "Remove"
-msgstr "Удалить"
+msgstr "Loại bỏ"
 
 #: oc-admin/themes/modern/items/item-edit.php:91
 msgid "Photos"
-msgstr "Фото"
+msgstr "Hình"
 
 #: oc-admin/themes/modern/items/item-edit.php:99
 msgid "optional"
-msgstr "по желанию"
+msgstr "Tùy chọn"
 
 #: oc-admin/themes/modern/items/item-edit.php:102
 msgid "Add new photo"
-msgstr "Добавить новое фото"
+msgstr "Thêm hình"
 
 #: oc-admin/themes/modern/items/item-edit.php:112
 msgid "Country"
-msgstr "Страна"
+msgstr "Quốc gia"
 
 #: oc-admin/themes/modern/items/item-edit.php:114
 msgid "Region"
-msgstr "Регион"
+msgstr "Vùng"
 
 #: oc-admin/themes/modern/items/item-edit.php:116
 msgid "City"
-msgstr "Город"
+msgstr "Thành phố"
 
 #: oc-admin/themes/modern/items/item-edit.php:118
 msgid "City area"
@@ -1370,7 +1371,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/items/item-edit.php:120
 msgid "Address"
-msgstr "Адрес"
+msgstr "Địa chỉ"
 
 #: oc-admin/themes/modern/items/item-edit.php:135
 msgid "Add item"
@@ -1378,11 +1379,11 @@ msgstr ""
 
 #: oc-admin/themes/modern/languages/add.php:55
 msgid "Language package"
-msgstr "Архив с переводом"
+msgstr ""
 
 #: oc-admin/themes/modern/languages/add.php:59
 msgid "Upload translation"
-msgstr "Загрузить перевод"
+msgstr ""
 
 #: oc-admin/themes/modern/languages/add.php:66
 msgid "The translations folder "
@@ -1404,7 +1405,7 @@ msgstr ""
 #: oc-admin/themes/modern/languages/edit.php:63
 #: oc-admin/themes/modern/languages/frm.php:79
 msgid "Short name"
-msgstr "Короткое название"
+msgstr "Tên tắt"
 
 #: oc-admin/themes/modern/languages/edit.php:71
 #: oc-admin/themes/modern/languages/frm.php:91
@@ -1414,12 +1415,12 @@ msgstr ""
 #: oc-admin/themes/modern/languages/edit.php:75
 #: oc-admin/themes/modern/languages/frm.php:97
 msgid "Date format"
-msgstr "Формат даты"
+msgstr "Dạng ngày"
 
 #: oc-admin/themes/modern/languages/edit.php:79
 #: oc-admin/themes/modern/languages/frm.php:103
 msgid "Stop words"
-msgstr ""
+msgstr "Stop words"
 
 #: oc-admin/themes/modern/languages/edit.php:85
 #: oc-admin/themes/modern/languages/frm.php:111
@@ -1480,25 +1481,25 @@ msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:103
 msgid "Last Items"
-msgstr "Последние добавления"
+msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:106
 #: oc-admin/themes/modern/main/index.php:143
 msgid "Statistics"
-msgstr "Статистика"
+msgstr "Thống kê"
 
 #: oc-admin/themes/modern/main/index.php:109
 #: oc-admin/themes/modern/main/index.php:157
 msgid "Last Comments"
-msgstr "Последние комментарии"
+msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:112
 msgid "Last News from OSClass"
-msgstr "Новости с блога OSClass"
+msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:124
 msgid "Items by Category"
-msgstr "Позиции по категориям"
+msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:137
 msgid "There aren't any uploaded items yet"
@@ -1506,27 +1507,27 @@ msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:145
 msgid "Number of items"
-msgstr "Кол-во объявлений"
+msgstr "Số mục"
 
 #: oc-admin/themes/modern/main/index.php:146
 msgid "Number of public users"
-msgstr "Кол-во публичных пользователей"
+msgstr "Số User"
 
 #: oc-admin/themes/modern/main/index.php:147
 msgid "Number of administrators"
-msgstr "Кол-во администраторов"
+msgstr "Số Admin"
 
 #: oc-admin/themes/modern/main/index.php:160
 msgid "Commented"
-msgstr "прокомментировал"
+msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:160
 msgid "Item"
-msgstr "Объявление"
+msgstr "Mục"
 
 #: oc-admin/themes/modern/main/index.php:166
 msgid "Latest News from OSClass"
-msgstr "Новости с блога OSClass"
+msgstr ""
 
 #: oc-admin/themes/modern/main/index.php:178
 msgid "Unable to fetch news from"
@@ -1538,7 +1539,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:40
 msgid "Configure Media"
-msgstr "Настройка медии"
+msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:50
 msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
@@ -1546,55 +1547,55 @@ msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:56
 msgid "Restrictions"
-msgstr "Ограничения"
+msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:58
 msgid "Maximum size in KB"
-msgstr "Максимальный размер в KB"
+msgstr "KB tối đa"
 
 #: oc-admin/themes/modern/media/config.php:63
 msgid "Allowed format extensions (eg: png, jpg, gif)"
-msgstr "Разрешенные форматы (например: png, jpg, gif)"
+msgstr "Cho phép file hình dạng(exemple: png, jpg, gif)"
 
 #: oc-admin/themes/modern/media/config.php:69
 msgid "Path and URI"
-msgstr "Путь и URI"
+msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:72
 msgid "Store uploads in this folder"
-msgstr "Сохранять загрузки в эту директорию"
+msgstr "Lưu trữ trong folder"
 
 #: oc-admin/themes/modern/media/config.php:77
 msgid "Full URL path to files"
-msgstr "Полный URL к файлам"
+msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:84
 msgid "Dimensions"
-msgstr "Размеры"
+msgstr ""
 
 #: oc-admin/themes/modern/media/config.php:86
 msgid "Thumbnail dimensions"
-msgstr "Размер мини-копии"
+msgstr "Kích cỡ Thumbnail"
 
 #: oc-admin/themes/modern/media/config.php:91
 msgid "Preview dimensions"
-msgstr "Размер предварительного просмотра"
+msgstr "Kích cỡ preview"
 
 #: oc-admin/themes/modern/media/config.php:96
 msgid "Normal dimensions"
-msgstr "Нормальный размер"
+msgstr "Kích cỡ bình thường"
 
 #: oc-admin/themes/modern/media/config.php:101
 msgid "Update configuration"
-msgstr "Обновить конфигурацию"
+msgstr "Sửa Cấu hình"
 
 #: oc-admin/themes/modern/media/index.php:82
 msgid "File"
-msgstr "Файл"
+msgstr ""
 
 #: oc-admin/themes/modern/media/index.php:85
 msgid "Attached to"
-msgstr "Прикреплен к"
+msgstr "Attach to"
 
 #: oc-admin/themes/modern/pages/frm.php:112
 msgid "Internal Name (Short name to easily identify this page)"
@@ -1605,15 +1606,15 @@ msgstr ""
 #: oc-admin/themes/modern/plugins/index.php:115
 #: oc-admin/themes/modern/plugins/view.php:32
 msgid "Add a new plugin"
-msgstr "Добавить плагин"
+msgstr "Thêm plugin"
 
 #: oc-admin/themes/modern/plugins/add.php:55
 msgid "Plugin package"
-msgstr "Архив с плагином"
+msgstr "Gói Plugin"
 
 #: oc-admin/themes/modern/plugins/add.php:59
 msgid "Upload plugin"
-msgstr "Загрузить плагин"
+msgstr "Upload plugin"
 
 #: oc-admin/themes/modern/plugins/add.php:67
 msgid "The plugins folder "
@@ -1629,7 +1630,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:74
 msgid "Configure"
-msgstr "Настройка"
+msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:74
 msgid "There's a new version. You should update!"
@@ -1637,24 +1638,24 @@ msgstr ""
 
 #: oc-admin/themes/modern/plugins/index.php:74
 msgid "Uninstall"
-msgstr "Удалить"
+msgstr "Uninstall"
 
 #: oc-admin/themes/modern/plugins/index.php:74
 msgid "Install"
-msgstr "Установить"
+msgstr "Install"
 
 #: oc-admin/themes/modern/settings/addCurrency.php:52
 msgid "Create"
-msgstr "Создать"
+msgstr "Tạo"
 
 #: oc-admin/themes/modern/settings/addCurrency.php:57
 #: oc-admin/themes/modern/settings/currencies.php:84
 msgid "Code"
-msgstr "Код"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/addCurrency.php:74
 msgid "Create currency"
-msgstr "Добавить валюту"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/comments.php:63
 msgid "Comments enabled"
@@ -1701,11 +1702,11 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:56
 msgid "Page title"
-msgstr "Название страницы"
+msgstr "Tiêu đề trang"
 
 #: oc-admin/themes/modern/settings/index.php:63
 msgid "Page description"
-msgstr "Описание страницы"
+msgstr "Mô tả trang"
 
 #: oc-admin/themes/modern/settings/index.php:72
 msgid "Administrator E-mail"
@@ -1718,7 +1719,7 @@ msgstr ""
 #: oc-admin/themes/modern/settings/index.php:113
 #: oc-admin/themes/modern/settings/index.php:162
 msgid "Custom"
-msgstr "Выберите формат"
+msgstr "Tùy chỉnh"
 
 #: oc-admin/themes/modern/settings/index.php:120
 msgid "Default currency"
@@ -1726,44 +1727,44 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:129
 msgid "Week starts on"
-msgstr "Начало недели"
+msgstr "Tuần bắt đầu từ"
 
 #: oc-admin/themes/modern/settings/index.php:131
 msgid "Sunday"
-msgstr "Воскресенье"
+msgstr "Chủ nhật"
 
 #: oc-admin/themes/modern/settings/index.php:132
 msgid "Monday"
-msgstr "Понедельник"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/index.php:133
 msgid "Tuesday"
-msgstr "Вторник"
+msgstr "Thứ Ba"
 
 #: oc-admin/themes/modern/settings/index.php:134
 msgid "Wednesday"
-msgstr "Среда"
+msgstr "Thứ Tư"
 
 #: oc-admin/themes/modern/settings/index.php:135
 msgid "Thursday"
-msgstr "Четверг"
+msgstr "Thứ năm"
 
 #: oc-admin/themes/modern/settings/index.php:136
 msgid "Friday"
-msgstr "Пятница"
+msgstr "Thứ Sáu"
 
 #: oc-admin/themes/modern/settings/index.php:137
 msgid "Saturday"
-msgstr "Суббота"
+msgstr "Thứ bảy"
 
 #: oc-admin/themes/modern/settings/index.php:146
 #: oc-admin/themes/modern/settings/index.php:147
 msgid "Time format"
-msgstr "Формат времени"
+msgstr "Dạng giờ"
 
 #: oc-admin/themes/modern/settings/index.php:169
 msgid "Number of items in the RSS"
-msgstr ""
+msgstr " "
 
 #: oc-admin/themes/modern/settings/items.php:93
 #: oc-admin/themes/modern/settings/notifications.php:63
@@ -1795,7 +1796,7 @@ msgstr ""
 #: oc-admin/themes/modern/settings/locations.php:367
 #: oc-admin/themes/modern/settings/locations.php:385
 msgid "Add new"
-msgstr ""
+msgstr "Ajouter un nouveau"
 
 #: oc-admin/themes/modern/settings/locations.php:401
 msgid "Add new country"
@@ -1833,7 +1834,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/locations.php:507
 msgid "Add new city"
-msgstr ""
+msgstr " "
 
 #: oc-admin/themes/modern/settings/locations.php:519
 #: oc-admin/themes/modern/settings/locations.php:543
@@ -1899,7 +1900,7 @@ msgstr ""
 #: oc-admin/themes/modern/settings/permalinks.php:64
 #: oc-admin/themes/modern/settings/permalinks.php:66
 msgid "Enable nice urls"
-msgstr "Включить красивые URL"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/permalinks.php:70
 msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
@@ -1907,7 +1908,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/registry.php:40
 msgid "Registry"
-msgstr "Регистр"
+msgstr "Đăng ký"
 
 #: oc-admin/themes/modern/settings/registry.php:51
 msgid "The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table."
@@ -1916,25 +1917,25 @@ msgstr ""
 #: oc-admin/themes/modern/settings/registry.php:57
 #: oc-admin/themes/modern/settings/registry.php:73
 msgid "Section"
-msgstr "Раздел"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/registry.php:59
 #: oc-admin/themes/modern/settings/registry.php:75
 msgid "Value"
-msgstr "Значение"
+msgstr "Giá trị"
 
 #: oc-admin/themes/modern/settings/registry.php:60
 #: oc-admin/themes/modern/settings/registry.php:76
 msgid "Type"
-msgstr "Тип"
+msgstr "Loại"
 
 #: oc-admin/themes/modern/settings/spamNbots.php:52
 msgid "Akismet"
-msgstr "Akismet"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:54
 msgid "Akismet key (same as Wordpress.com)"
-msgstr "Ключ Akismet (такой же как на Wordpress.com)"
+msgstr "Khóa Akismet (như Wordpress.com)"
 
 #: oc-admin/themes/modern/settings/spamNbots.php:56
 msgid "If the field is empty it is because the Akismet service is disabled"
@@ -1942,11 +1943,11 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:56
 msgid "Get your free key at"
-msgstr "Получите Ваш бесплатный ключ на"
+msgstr "Lấy key free"
 
 #: oc-admin/themes/modern/settings/spamNbots.php:61
 msgid "Re-captcha"
-msgstr "Re-captcha"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:63
 msgid "If the field is empty it is because the reCAPTCHA service is disabled"
@@ -1954,19 +1955,19 @@ msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:63
 msgid "Get your free keys at"
-msgstr "Получите Ваш бесплатные ключи на"
+msgstr ""
 
 #: oc-admin/themes/modern/settings/spamNbots.php:66
 msgid "Re-captcha private key"
-msgstr "Приватный ключ Re-captcha"
+msgstr "Re-captcha key riêng"
 
 #: oc-admin/themes/modern/settings/spamNbots.php:71
 msgid "Re-captcha public key"
-msgstr "Публичный ключ Re-captcha"
+msgstr "Re-captcha public key"
 
 #: oc-admin/themes/modern/settings/spamNbots.php:76
 msgid "Update spam and bots configuration"
-msgstr "Обвновить конфигурацию"
+msgstr "Sửa cấu hình spam và bots"
 
 #: oc-admin/themes/modern/settings/users.php:63
 msgid "User validation"
@@ -2007,11 +2008,11 @@ msgstr ""
 
 #: oc-admin/themes/modern/tools/export.php:25
 msgid "Export"
-msgstr "Экспорт"
+msgstr "Export"
 
 #: oc-admin/themes/modern/tools/export.php:27
 msgid "Export now"
-msgstr "Экспортировать"
+msgstr "Export now"
 
 #: oc-admin/themes/modern/tools/import.php:48
 msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
@@ -2019,7 +2020,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/tools/import.php:54
 msgid "Data"
-msgstr "Дата"
+msgstr "Dữ liệu"
 
 #: oc-admin/themes/modern/tools/upgrade-plugins.php:48
 #: oc-admin/themes/modern/tools/upgrade.php:48
@@ -2088,35 +2089,35 @@ msgstr ""
 #: oc-admin/themes/modern/users/add.php:35
 #: oc-admin/themes/modern/users/index.php:104
 msgid "Add a new user"
-msgstr "Добавить пользователя"
+msgstr "Thêm User"
 
 #: oc-admin/themes/modern/users/add.php:74
 #: oc-admin/themes/modern/users/edit.php:76
 msgid "Web site"
-msgstr "Сайт"
+msgstr "Web site"
 
 #: oc-admin/themes/modern/users/add.php:87
 #: oc-admin/themes/modern/users/edit.php:89
 msgid "Mobile phone"
-msgstr "Мобильный номер телефона"
+msgstr "Mobile"
 
 #: oc-admin/themes/modern/users/add.php:92
 #: oc-admin/themes/modern/users/edit.php:94
 msgid "Land phone"
-msgstr "Стационарный номер телефона"
+msgstr "Phone"
 
 #: oc-admin/themes/modern/users/add.php:99
 #: oc-admin/themes/modern/users/edit.php:101
 msgid "Additional information"
-msgstr "Дополнительная информация"
+msgstr "Thêm thông tin"
 
 #: oc-admin/themes/modern/users/add.php:105
 msgid "Create user"
-msgstr "Создать пользователя"
+msgstr "Tạo User"
 
 #: oc-admin/themes/modern/users/edit.php:35
 msgid "Edit user"
-msgstr "Редактировать пользователя"
+msgstr ""
 
 #: oc-admin/themes/modern/users/edit.php:108
 msgid "Activation"
@@ -2128,7 +2129,7 @@ msgstr ""
 
 #: oc-admin/themes/modern/users/edit.php:114
 msgid "Update user"
-msgstr "Обновить пользователя"
+msgstr "Sửa User"
 
 #: oc-admin/themes/modern/users/index.php:70
 msgid "Activate user"
@@ -2140,16 +2141,15 @@ msgstr ""
 
 #: oc-admin/themes/modern/users/index.php:89
 msgid "Info"
-msgstr "Инфо"
+msgstr "Thông tin"
 
 #: oc-content/plugins/banner_management/conf.php:110
 msgid "Banners"
 msgstr ""
 
 #: oc-content/plugins/banner_management/conf.php:125
-#, fuzzy
 msgid "Edit banner"
-msgstr "Редактировать страницу"
+msgstr ""
 
 #: oc-content/plugins/banner_management/conf.php:133
 #: oc-content/plugins/banner_management/conf.php:155
@@ -2168,9 +2168,8 @@ msgid "[On/Off] HTML editor"
 msgstr ""
 
 #: oc-content/plugins/banner_management/conf.php:147
-#, fuzzy
 msgid "Add new banner"
-msgstr "Добавить пользователя"
+msgstr ""
 
 #: oc-content/plugins/banner_management/conf.php:159
 msgid "Insert your image / media here. You could use the HTML button to edit directly the HTML code of this banner."
@@ -2193,9 +2192,8 @@ msgid "Select a campaign to ad/remove banners, first."
 msgstr ""
 
 #: oc-content/plugins/banner_management/conf.php:237
-#, fuzzy
 msgid "Create new campaign"
-msgstr "Создать страницу"
+msgstr ""
 
 #: oc-content/plugins/banner_management/conf.php:244
 msgid "Write a name for your campaign"
@@ -2210,29 +2208,24 @@ msgid "Example of banner inserting. <ul><li>[banner#example]</li><li>[banner]</l
 msgstr ""
 
 #: oc-content/plugins/banner_management/index.php:95
-#, fuzzy
 msgid "Manage banners"
-msgstr "Управление страницами"
+msgstr ""
 
 #: oc-content/plugins/banner_management/index.php:96
-#, fuzzy
 msgid "Manage Campaigns"
-msgstr "Управление страницами"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:91
-#, fuzzy
 msgid "Makes"
-msgstr "Страницы"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:112
-#, fuzzy
 msgid "Add new make"
-msgstr "Добавить страницу"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:136
-#, fuzzy
 msgid "Models"
-msgstr "Модель"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:139
 #: oc-content/plugins/cars_attributes/form.php:59
@@ -2241,18 +2234,16 @@ msgid "Select a make"
 msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:171
-#, fuzzy
 msgid "Add new model"
-msgstr "Добавить объявлелние"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:197
 msgid "Vehicle types"
 msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:231
-#, fuzzy
 msgid "Add new car type"
-msgstr "Добавить объявлелние"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/conf.php:272
 msgid "Warning"
@@ -2265,9 +2256,8 @@ msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:22
 #: oc-content/plugins/cars_attributes/item_edit.php:34
-#, fuzzy
 msgid "No results"
-msgstr "Результаты поиска"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:52
 #: oc-content/plugins/cars_attributes/item_detail.php:2
@@ -2287,7 +2277,7 @@ msgstr ""
 #: oc-content/plugins/cars_attributes/item_edit.php:64
 #: oc-content/plugins/cars_attributes/search_form.php:10
 msgid "Model"
-msgstr "Модель"
+msgstr "Model"
 
 #: oc-content/plugins/cars_attributes/form.php:78
 #: oc-content/plugins/cars_attributes/form.php:92
@@ -2302,28 +2292,25 @@ msgstr ""
 #: oc-content/plugins/cars_attributes/item_detail.php:39
 #: oc-content/plugins/cars_attributes/item_edit.php:107
 msgid "Year"
-msgstr "Год"
+msgstr "Năm"
 
 #: oc-content/plugins/cars_attributes/form.php:110
 #: oc-content/plugins/cars_attributes/item_detail.php:43
 #: oc-content/plugins/cars_attributes/item_edit.php:111
-#, fuzzy
 msgid "Doors"
-msgstr "Инструментарий"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:120
 #: oc-content/plugins/cars_attributes/item_detail.php:47
 #: oc-content/plugins/cars_attributes/item_edit.php:121
-#, fuzzy
 msgid "Seats"
-msgstr "Настройки"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:130
 #: oc-content/plugins/cars_attributes/item_detail.php:51
 #: oc-content/plugins/cars_attributes/item_edit.php:131
-#, fuzzy
 msgid "Mileage"
-msgstr "Сообщение"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:135
 #: oc-content/plugins/cars_attributes/item_detail.php:56
@@ -2334,28 +2321,26 @@ msgstr ""
 #: oc-content/plugins/cars_attributes/form.php:139
 #: oc-content/plugins/cars_attributes/item_detail.php:60
 #: oc-content/plugins/cars_attributes/item_edit.php:140
-#, fuzzy
 msgid "Num. Airbags"
-msgstr "Кол-во подушек безопасности"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:149
 #: oc-content/plugins/cars_attributes/item_detail.php:64
 #: oc-content/plugins/cars_attributes/item_edit.php:150
 #: oc-content/plugins/cars_attributes/search_form.php:24
 msgid "Transmission"
-msgstr "Коробка передач"
+msgstr "Transmission"
 
 #: oc-content/plugins/cars_attributes/form.php:151
 #: oc-content/plugins/cars_attributes/item_edit.php:152
 #: oc-content/plugins/cars_attributes/search_form.php:26
 msgid "Manual"
-msgstr "Мануальная"
+msgstr "Tùy chỉnh"
 
 #: oc-content/plugins/cars_attributes/form.php:152
 #: oc-content/plugins/cars_attributes/item_edit.php:153
-#, fuzzy
 msgid "Auto"
-msgstr "Автор"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:156
 #: oc-content/plugins/cars_attributes/item_detail.php:68
@@ -2391,9 +2376,8 @@ msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:167
 #: oc-content/plugins/cars_attributes/item_edit.php:168
-#, fuzzy
 msgid "Dealer"
-msgstr "Удалить"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/form.php:168
 #: oc-content/plugins/cars_attributes/item_edit.php:169
@@ -2461,37 +2445,32 @@ msgstr ""
 #: oc-content/plugins/cars_attributes/form.php:191
 #: oc-content/plugins/cars_attributes/item_detail.php:86
 #: oc-content/plugins/cars_attributes/item_edit.php:192
-#, fuzzy
 msgid "Gears"
-msgstr "Год"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/index.php:236
-#, fuzzy
 msgid "Configure plugin"
-msgstr "Настройка"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/index.php:237
-#, fuzzy
 msgid "Manage makes"
-msgstr "Управление страницами"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/index.php:238
-#, fuzzy
 msgid "Manage models"
-msgstr "Управление темами"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/index.php:239
-#, fuzzy
 msgid "Manage vehicle types"
-msgstr "Управление объявлениями"
+msgstr ""
 
 #: oc-content/plugins/cars_attributes/search_form.php:14
 msgid "Num. of airbags"
-msgstr "Кол-во подушек безопасности"
+msgstr "Số airbags"
 
 #: oc-content/plugins/cars_attributes/search_form.php:27
 msgid "Automatic"
-msgstr "Автоматическая"
+msgstr "Tự động"
 
 #: oc-content/plugins/dating_attributes/form.php:1
 #: oc-content/plugins/dating_attributes/item_detail.php:1
@@ -2500,121 +2479,121 @@ msgstr ""
 
 #: oc-content/plugins/dating_attributes/form.php:4
 msgid "You are:"
-msgstr "Вы:"
+msgstr ""
 
 #: oc-content/plugins/dating_attributes/form.php:6
 #: oc-content/plugins/dating_attributes/form.php:14
 msgid "Man"
-msgstr "Мужчина"
+msgstr ""
 
 #: oc-content/plugins/dating_attributes/form.php:7
 #: oc-content/plugins/dating_attributes/form.php:15
 msgid "Woman"
-msgstr "Женщина"
+msgstr "Nữ"
 
 #: oc-content/plugins/dating_attributes/form.php:8
 #: oc-content/plugins/dating_attributes/form.php:16
 msgid "Not informed"
-msgstr "Не оповещен"
+msgstr "Không thông báo"
 
 #: oc-content/plugins/dating_attributes/form.php:12
 msgid "Looking for:"
-msgstr "Ишу:"
+msgstr ""
 
 #: oc-content/plugins/dating_attributes/form.php:20
 msgid "Relation type:"
-msgstr "Тип отношений"
+msgstr ""
 
 #: oc-content/plugins/dating_attributes/form.php:22
 msgid "Friendship"
-msgstr "Дружба"
+msgstr "Bạn bè"
 
 #: oc-content/plugins/dating_attributes/form.php:23
 msgid "Formal relation"
-msgstr "Формальные"
+msgstr ""
 
 #: oc-content/plugins/dating_attributes/form.php:24
 msgid "Informal relation"
-msgstr "Неформальные"
+msgstr ""
 
 #: oc-content/plugins/google_maps/admin.php:30
 msgid "You can freely obtain a developer key after signing up on this URL:"
-msgstr "Вы можете свободно получить ключ разработчика после подписки по этому URL:"
+msgstr ""
 
 #: oc-content/plugins/jobs_attributes/form.php:4
 #: oc-content/plugins/jobs_attributes/item_detail.php:11
 #: oc-content/plugins/jobs_attributes/item_edit.php:4
 #: oc-content/plugins/jobs_attributes/search_form.php:4
 msgid "Relation"
-msgstr "Связь"
+msgstr "Quan hệ"
 
 #: oc-content/plugins/jobs_attributes/form.php:6
 #: oc-content/plugins/jobs_attributes/item_edit.php:6
 #: oc-content/plugins/jobs_attributes/search_form.php:6
 msgid "Hire someone"
-msgstr "Нанять"
+msgstr "Cần thuê"
 
 #: oc-content/plugins/jobs_attributes/form.php:7
 #: oc-content/plugins/jobs_attributes/item_edit.php:7
 #: oc-content/plugins/jobs_attributes/search_form.php:7
 msgid "Looking for a job"
-msgstr "Ищу работу"
+msgstr "Tìm việc làm"
 
 #: oc-content/plugins/jobs_attributes/form.php:11
 #: oc-content/plugins/jobs_attributes/item_detail.php:15
 #: oc-content/plugins/jobs_attributes/item_edit.php:11
 #: oc-content/plugins/jobs_attributes/search_form.php:11
 msgid "Company name"
-msgstr "Название фирмы"
+msgstr "Tên Công Ty"
 
 #: oc-content/plugins/jobs_attributes/form.php:15
 #: oc-content/plugins/jobs_attributes/item_detail.php:19
 #: oc-content/plugins/jobs_attributes/item_edit.php:15
 #: oc-content/plugins/jobs_attributes/search_form.php:15
 msgid "Position type"
-msgstr "Вакансия"
+msgstr "Vị trí"
 
 #: oc-content/plugins/jobs_attributes/form.php:18
 #: oc-content/plugins/jobs_attributes/item_edit.php:18
 #: oc-content/plugins/jobs_attributes/search_form.php:18
 msgid "Undefined"
-msgstr "Неопределено"
+msgstr "Không xác định"
 
 #: oc-content/plugins/jobs_attributes/form.php:19
 #: oc-content/plugins/jobs_attributes/item_edit.php:19
 #: oc-content/plugins/jobs_attributes/search_form.php:20
 msgid "Part time"
-msgstr "Неполный рабочий день"
+msgstr "Bán thời gian"
 
 #: oc-content/plugins/jobs_attributes/form.php:20
 #: oc-content/plugins/jobs_attributes/search_form.php:19
 msgid "Full-time"
-msgstr "Полный рабочий день"
+msgstr "Toàn thời gian"
 
 #: oc-content/plugins/jobs_attributes/form.php:25
 #: oc-content/plugins/jobs_attributes/item_detail.php:23
 #: oc-content/plugins/jobs_attributes/item_edit.php:25
 #: oc-content/plugins/jobs_attributes/search_form.php:25
 msgid "Salary range"
-msgstr "Зарплата"
+msgstr "Mức Lương"
 
 #: oc-content/plugins/jobs_attributes/form.php:29
 #: oc-content/plugins/jobs_attributes/item_edit.php:29
 #: oc-content/plugins/jobs_attributes/search_form.php:29
 msgid "Hour"
-msgstr "Час"
+msgstr "Giờ"
 
 #: oc-content/plugins/jobs_attributes/form.php:30
 #: oc-content/plugins/jobs_attributes/item_edit.php:30
 #: oc-content/plugins/jobs_attributes/search_form.php:30
 msgid "Week"
-msgstr "Неделя"
+msgstr "Tuần"
 
 #: oc-content/plugins/jobs_attributes/form.php:31
 #: oc-content/plugins/jobs_attributes/item_edit.php:31
 #: oc-content/plugins/jobs_attributes/search_form.php:31
 msgid "Month"
-msgstr "Месяц"
+msgstr "Tháng"
 
 #: oc-content/plugins/jobs_attributes/form.php:43
 #: oc-content/plugins/jobs_attributes/form.php:72
@@ -2623,7 +2602,7 @@ msgstr "Месяц"
 #: oc-content/plugins/jobs_attributes/item_edit.php:42
 #: oc-content/plugins/jobs_attributes/item_edit.php:71
 msgid "Desired experience"
-msgstr "Желаемый опыт"
+msgstr "Yêu cầu Kinh nghiệm"
 
 #: oc-content/plugins/jobs_attributes/form.php:47
 #: oc-content/plugins/jobs_attributes/form.php:76
@@ -2649,9 +2628,8 @@ msgstr ""
 #: oc-content/plugins/jobs_attributes/item_detail.php:71
 #: oc-content/plugins/jobs_attributes/item_edit.php:54
 #: oc-content/plugins/jobs_attributes/item_edit.php:83
-#, fuzzy
 msgid "Desired requirements"
-msgstr "Желаемый опыт"
+msgstr ""
 
 #: oc-content/plugins/jobs_attributes/form.php:59
 #: oc-content/plugins/jobs_attributes/form.php:88
@@ -2659,9 +2637,8 @@ msgstr "Желаемый опыт"
 #: oc-content/plugins/jobs_attributes/item_detail.php:75
 #: oc-content/plugins/jobs_attributes/item_edit.php:58
 #: oc-content/plugins/jobs_attributes/item_edit.php:87
-#, fuzzy
 msgid "Contract"
-msgstr "Контактная информация"
+msgstr ""
 
 #: oc-content/plugins/jobs_attributes/form.php:63
 #: oc-content/plugins/jobs_attributes/form.php:92
@@ -2669,9 +2646,8 @@ msgstr "Контактная информация"
 #: oc-content/plugins/jobs_attributes/item_detail.php:79
 #: oc-content/plugins/jobs_attributes/item_edit.php:62
 #: oc-content/plugins/jobs_attributes/item_edit.php:91
-#, fuzzy
 msgid "Company description"
-msgstr "Описание страницы"
+msgstr ""
 
 #: oc-content/plugins/jobs_attributes/item_detail.php:8
 msgid "Job attributes"
@@ -2682,9 +2658,8 @@ msgid "The plugin <strong>Products attributes</strong> adds a set of attributes 
 msgstr ""
 
 #: oc-content/plugins/products_attributes/admin.php:44
-#, fuzzy
 msgid "Presets categories"
-msgstr "Исходная категория"
+msgstr ""
 
 #: oc-content/plugins/products_attributes/admin.php:45
 msgid "Check all"
@@ -2720,9 +2695,8 @@ msgid "Property types"
 msgstr ""
 
 #: oc-content/plugins/realstate_attributes/conf.php:95
-#, fuzzy
 msgid "Add new property types"
-msgstr "Добавить новое фото"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/conf.php:129
 msgid "Deleting property types may end in errors. Some of those property types could be attached to some actual items."
@@ -2731,9 +2705,8 @@ msgstr ""
 #: oc-content/plugins/realstate_attributes/form.php:8
 #: oc-content/plugins/realstate_attributes/item_edit.php:8
 #: oc-content/plugins/realstate_attributes/search_form.php:75
-#, fuzzy
 msgid "For rent"
-msgstr "Формальные"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:9
 #: oc-content/plugins/realstate_attributes/item_edit.php:9
@@ -2749,33 +2722,29 @@ msgstr ""
 #: oc-content/plugins/realstate_attributes/item_edit.php:32
 #: oc-content/plugins/realstate_attributes/search_form.php:87
 #: oc-content/plugins/realstate_attributes/search_form.php:100
-#, fuzzy
 msgid "Property type"
-msgstr "Вакансия"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:47
 #: oc-content/plugins/realstate_attributes/item_edit.php:45
-#, fuzzy
 msgid "Num. of rooms"
-msgstr "Кол-во ванн"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:54
 #: oc-content/plugins/realstate_attributes/item_edit.php:55
 msgid "Num. of bathrooms"
-msgstr "Кол-во ванн"
+msgstr "Số phòng tắm"
 
 #: oc-content/plugins/realstate_attributes/form.php:61
 #: oc-content/plugins/realstate_attributes/item_detail.php:45
 #: oc-content/plugins/realstate_attributes/item_edit.php:65
-#, fuzzy
 msgid "Status"
-msgstr "Статистика"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:64
 #: oc-content/plugins/realstate_attributes/item_edit.php:68
-#, fuzzy
 msgid "New construction"
-msgstr "Дата постройки"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:65
 #: oc-content/plugins/realstate_attributes/item_edit.php:69
@@ -2784,44 +2753,40 @@ msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:66
 #: oc-content/plugins/realstate_attributes/item_edit.php:70
-#, fuzzy
 msgid "Good condition"
-msgstr "Кондиционер"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:71
 #: oc-content/plugins/realstate_attributes/item_edit.php:75
 msgid "Square meters"
-msgstr "Квадратных метров"
+msgstr "số m2"
 
 #: oc-content/plugins/realstate_attributes/form.php:75
 #: oc-content/plugins/realstate_attributes/item_detail.php:61
 #: oc-content/plugins/realstate_attributes/item_edit.php:79
-#, fuzzy
 msgid "Construction Year"
-msgstr "Дата постройки"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:79
 #: oc-content/plugins/realstate_attributes/item_edit.php:83
-#, fuzzy
 msgid "Square meters (total)"
-msgstr "Квадратных метров"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:83
 #: oc-content/plugins/realstate_attributes/item_edit.php:87
 msgid "Num. of floors"
-msgstr "Кол-во этажей"
+msgstr "Số tầng"
 
 #: oc-content/plugins/realstate_attributes/form.php:93
 #: oc-content/plugins/realstate_attributes/item_edit.php:97
 msgid "Num. of garages (place for a car = one garage)"
-msgstr "Кол-во гаражей (место для машины = один гараж)"
+msgstr "số xe trong Gara"
 
 #: oc-content/plugins/realstate_attributes/form.php:101
 #: oc-content/plugins/realstate_attributes/item_detail.php:89
 #: oc-content/plugins/realstate_attributes/item_edit.php:107
-#, fuzzy
 msgid "Condition"
-msgstr "Кондиционер"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:105
 #: oc-content/plugins/realstate_attributes/item_detail.php:93
@@ -2839,43 +2804,41 @@ msgstr ""
 #: oc-content/plugins/realstate_attributes/item_edit.php:119
 #: oc-content/plugins/realstate_attributes/search_form.php:167
 msgid "Other characteristics"
-msgstr "Другие характеристики"
+msgstr "Các chi tiết khác"
 
 #: oc-content/plugins/realstate_attributes/form.php:116
 #: oc-content/plugins/realstate_attributes/item_detail.php:65
 #: oc-content/plugins/realstate_attributes/item_edit.php:121
 #: oc-content/plugins/realstate_attributes/search_form.php:169
 msgid "Heating"
-msgstr "Обогрев"
+msgstr "Lò Sưởi"
 
 #: oc-content/plugins/realstate_attributes/form.php:117
 #: oc-content/plugins/realstate_attributes/item_edit.php:122
 #: oc-content/plugins/realstate_attributes/search_form.php:170
 msgid "Air condition"
-msgstr "Кондиционер"
+msgstr "Máy điều hòa"
 
 #: oc-content/plugins/realstate_attributes/form.php:118
 #: oc-content/plugins/realstate_attributes/item_detail.php:71
 #: oc-content/plugins/realstate_attributes/item_edit.php:123
 #: oc-content/plugins/realstate_attributes/search_form.php:171
 msgid "Elevator"
-msgstr "Лифт"
+msgstr "Thang máy"
 
 #: oc-content/plugins/realstate_attributes/form.php:119
 #: oc-content/plugins/realstate_attributes/item_detail.php:74
 #: oc-content/plugins/realstate_attributes/item_edit.php:124
 #: oc-content/plugins/realstate_attributes/search_form.php:172
-#, fuzzy
 msgid "Terrace"
-msgstr "Производительность"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:120
 #: oc-content/plugins/realstate_attributes/item_detail.php:77
 #: oc-content/plugins/realstate_attributes/item_edit.php:125
 #: oc-content/plugins/realstate_attributes/search_form.php:173
-#, fuzzy
 msgid "Parking"
-msgstr "Страница"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/form.php:121
 #: oc-content/plugins/realstate_attributes/item_detail.php:80
@@ -2905,14 +2868,12 @@ msgstr ""
 #: oc-content/plugins/realstate_attributes/item_detail.php:123
 #: oc-content/plugins/realstate_attributes/item_edit.php:138
 #: oc-content/plugins/realstate_attributes/item_edit.php:151
-#, fuzzy
 msgid "Zone"
-msgstr "на"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/item_detail.php:37
-#, fuzzy
 msgid "Num. Rooms"
-msgstr "Кол-во этажей"
+msgstr ""
 
 #: oc-content/plugins/realstate_attributes/item_detail.php:41
 msgid "Num. Bathrooms"
@@ -2984,11 +2945,11 @@ msgstr ""
 
 #: oc-content/themes/modern/header.php:81
 msgid "Logout"
-msgstr "Выход"
+msgstr "Logout"
 
 #: oc-content/themes/modern/header.php:83
 msgid "Register a free account"
-msgstr "Зарегистрироваться"
+msgstr "Đăng ký miễn phí"
 
 #: oc-content/themes/modern/header.php:83
 msgid "or"
@@ -2996,7 +2957,7 @@ msgstr ""
 
 #: oc-content/themes/modern/header.php:83
 msgid "login"
-msgstr "вход"
+msgstr "login"
 
 #: oc-content/themes/modern/header.php:111
 msgid "Your search must be at least two characters long"
@@ -3007,17 +2968,17 @@ msgstr ""
 #: oc-content/themes/modern_vertical/item-contact.php:1
 #: oc-content/themes/modern_vertical/item.php:7
 msgid "Contact seller"
-msgstr "Обратная связь"
+msgstr ""
 
 #: oc-content/themes/modern/item-contact.php:11
 #: oc-content/themes/modern_vertical/item-contact.php:11
 msgid "To (seller)"
-msgstr "Кому (продавец)"
+msgstr "Tới (Người bán)"
 
 #: oc-content/themes/modern/item-contact.php:19
 #: oc-content/themes/modern_vertical/item-contact.php:19
 msgid "Your name"
-msgstr "Ваше имя"
+msgstr "Tên bạn"
 
 #: oc-content/themes/modern/item-contact.php:19
 #: oc-content/themes/modern/item-contact.php:27
@@ -3029,7 +2990,7 @@ msgstr ""
 #: oc-content/themes/modern/item-contact.php:23
 #: oc-content/themes/modern_vertical/item-contact.php:23
 msgid "Your email address"
-msgstr "Ваш электронный адрес"
+msgstr "Địa chỉ Email"
 
 #: oc-content/themes/modern/item-contact.php:27
 #: oc-content/themes/modern_vertical/item-contact.php:27
@@ -3039,7 +3000,7 @@ msgstr ""
 #: oc-content/themes/modern/item-contact.php:31
 #: oc-content/themes/modern_vertical/item-contact.php:31
 msgid "Message"
-msgstr "Сообщение"
+msgstr "Tin nhắn"
 
 #: oc-content/themes/modern/item-contact.php:36
 #: oc-content/themes/modern_vertical/item-contact.php:36
@@ -3049,17 +3010,17 @@ msgstr ""
 #: oc-content/themes/modern/item-post.php:5
 #: oc-content/themes/modern_vertical/item-post.php:95
 msgid "Post your item"
-msgstr "Добавить объявление"
+msgstr "Đăng tin"
 
 #: oc-content/themes/modern/item-post.php:58
 #: oc-content/themes/modern_vertical/item-post.php:274
 msgid "Seller information"
-msgstr "Информация о продавце"
+msgstr "Thông tin người bán"
 
 #: oc-content/themes/modern/item-post.php:75
 #: oc-content/themes/modern_vertical/item-post.php:298
 msgid "Publish"
-msgstr "Опубликовать"
+msgstr "Đăng tin"
 
 #: oc-content/themes/modern/item.php:8
 #: oc-content/themes/modern_vertical/item.php:8
@@ -3069,7 +3030,7 @@ msgstr ""
 #: oc-content/themes/modern/item.php:18
 #: oc-content/themes/modern_vertical/item.php:18
 msgid "Images"
-msgstr "Фотографии"
+msgstr "Hình ảnh"
 
 #: oc-content/themes/modern/item.php:24
 #: oc-content/themes/modern_vertical/item.php:24
@@ -3109,7 +3070,7 @@ msgstr ""
 #: oc-content/themes/modern/item.php:96
 #: oc-content/themes/modern_vertical/item.php:94
 msgid "Be the first to comment on this item!"
-msgstr "Нет комментариев. Будьте первым! "
+msgstr "Ý kiến về mục đăng"
 
 #: oc-content/themes/modern/item.php:100
 #: oc-content/themes/modern_vertical/item.php:98
@@ -3139,7 +3100,7 @@ msgstr ""
 #: oc-content/themes/modern/item.php:112
 #: oc-content/themes/modern_vertical/item.php:110
 msgid "Send comment"
-msgstr "Отослать"
+msgstr ""
 
 #: oc-content/themes/modern/item.php:117
 #: oc-content/themes/modern_vertical/item.php:115
@@ -3149,7 +3110,7 @@ msgstr ""
 #: oc-content/themes/modern/item.php:125
 #: oc-content/themes/modern_vertical/item.php:123
 msgid "Helpful information"
-msgstr "Полезная информация"
+msgstr "Thông tin hữu ích"
 
 #: oc-content/themes/modern/item.php:128
 #: oc-content/themes/modern_vertical/item.php:126
@@ -3182,19 +3143,19 @@ msgstr ""
 
 #: oc-content/themes/modern_vertical/header.php:113
 msgid "Login"
-msgstr "Вход"
+msgstr ""
 
 #: oc-content/themes/modern_vertical/home.php:47
 msgid "No Latest Items"
-msgstr "Нет последних добавлений"
+msgstr "Không có tin mới"
 
 #: oc-content/themes/modern_vertical/home.php:49
 msgid "Latest Items"
-msgstr "Последние добавления"
+msgstr "Tin mới nhất"
 
 #: oc-content/themes/modern_vertical/home.php:67
 msgid "Contact"
-msgstr "Контактная информация"
+msgstr ""
 
 #: oc-content/themes/modern_vertical/item-post.php:17
 #: oc-content/themes/modern_vertical/item-post.php:233
@@ -3223,7 +3184,7 @@ msgstr ""
 
 #: oc-content/themes/modern_vertical/item-post.php:211
 msgid "Item Location"
-msgstr "Местоположение"
+msgstr "Khu vực tin"
 
 #: oc-content/themes/modern_vertical/item-post.php:217
 msgid "Select a country..."
@@ -3235,7 +3196,7 @@ msgstr ""
 
 #: oc-content/themes/modern_vertical/item-post.php:284
 msgid "Show email publically within the item page"
-msgstr ""
+msgstr "  "
 
 #: oc-includes/osclass/items.php:178
 msgid "You new to log-in in order to post a new item."
@@ -3256,7 +3217,7 @@ msgstr ""
 #: oc-includes/osclass/notifications.php:34
 #: oc-includes/osclass/notifications.php:77
 msgid "Contact Name"
-msgstr ""
+msgstr " "
 
 #: oc-includes/osclass/notifications.php:35
 #: oc-includes/osclass/notifications.php:78
@@ -3339,7 +3300,7 @@ msgstr ""
 
 #: oc-includes/osclass/frm/Page.form.class.php:48
 msgid "Body"
-msgstr "Текст"
+msgstr "Phần Chính"
 
 #: oc-includes/osclass/gui/alert-form.php:5
 msgid "You have been subscribe correctly to the alert"
@@ -3363,15 +3324,15 @@ msgstr ""
 
 #: oc-includes/osclass/gui/contact.php:29
 msgid "Subject"
-msgstr "Тема"
+msgstr "Chủ đề"
 
 #: oc-includes/osclass/gui/contact.php:45
 msgid "Send"
-msgstr "Отправить"
+msgstr "Gửi"
 
 #: oc-includes/osclass/gui/header.php:58
 msgid "items"
-msgstr "объявления"
+msgstr "Tin"
 
 #: oc-includes/osclass/gui/header.php:59
 msgid "and "
@@ -3379,7 +3340,7 @@ msgstr ""
 
 #: oc-includes/osclass/gui/header.php:60
 msgid "profile"
-msgstr "профиль"
+msgstr "Profile"
 
 #: oc-includes/osclass/gui/home.php:22
 #, php-format
@@ -3388,7 +3349,7 @@ msgstr ""
 
 #: oc-includes/osclass/gui/home.php:34
 msgid "Latest published items"
-msgstr ""
+msgstr "Tin mới đăng"
 
 #: oc-includes/osclass/gui/item-send-friend.php:104
 msgid "Your friend's name"
@@ -3400,11 +3361,11 @@ msgstr ""
 
 #: oc-includes/osclass/gui/item.php:28
 msgid "Price:"
-msgstr "Цена:"
+msgstr "Giá cả"
 
 #: oc-includes/osclass/gui/item.php:29
 msgid "Publication date:"
-msgstr "Дата публикации:"
+msgstr ""
 
 #: oc-includes/osclass/gui/item.php:58
 msgid "Mark as"
@@ -3412,7 +3373,7 @@ msgstr ""
 
 #: oc-includes/osclass/gui/item.php:101
 msgid "Your email"
-msgstr "Ваш электронный адрес"
+msgstr ""
 
 #: oc-includes/osclass/gui/item.php:127
 msgid "Don't buy or sell outside of your country. Don't accept cashier check from outside your country."
@@ -3420,39 +3381,39 @@ msgstr ""
 
 #: oc-includes/osclass/gui/search.php:50
 msgid "Search results"
-msgstr "Результаты поиска"
+msgstr ""
 
 #: oc-includes/osclass/gui/search.php:53
 msgid "Page"
-msgstr "Страница"
+msgstr ""
 
 #: oc-includes/osclass/gui/search.php:67
 msgid "Show as:"
-msgstr "Показать как:"
+msgstr "Trình bày"
 
 #: oc-includes/osclass/gui/search.php:67
 msgid "List"
-msgstr "Список"
+msgstr "Danh sách"
 
 #: oc-includes/osclass/gui/search.php:67
 msgid "image gallery"
-msgstr "Галерея"
+msgstr "Album"
 
 #: oc-includes/osclass/gui/search.php:70
 msgid "Sort by:"
-msgstr "Сортировать по:"
+msgstr "Sắp bởi"
 
 #: oc-includes/osclass/gui/search.php:112
 msgid "Minimum"
-msgstr "Минимум"
+msgstr "Tối thiểu"
 
 #: oc-includes/osclass/gui/search.php:114
 msgid "Maximum"
-msgstr "Максимум"
+msgstr "Tối đa"
 
 #: oc-includes/osclass/gui/search.php:118
 msgid "Pictures"
-msgstr "Фото"
+msgstr ""
 
 #: oc-includes/osclass/gui/search.php:125
 msgid "Show only items with pictures"
@@ -3461,7 +3422,7 @@ msgstr ""
 #: oc-includes/osclass/gui/search.php:164
 #, php-format
 msgid "There are no results matching \"%s\"."
-msgstr "\"%s\" поиск не дал результатов."
+msgstr "Không tìm thấy mục nào  \"%s\"."
 
 #: oc-includes/osclass/gui/user-account.php:1
 msgid "Your account"
@@ -3486,7 +3447,7 @@ msgstr ""
 #: oc-includes/osclass/gui/user-alerts.php:37
 #: oc-includes/osclass/gui/user-items.php:32
 msgid "Publication date"
-msgstr "Дата публикации"
+msgstr "Ngày đăng"
 
 #: oc-includes/osclass/gui/user-forgot-change.php:35
 msgid "Retype new password"
@@ -3504,11 +3465,11 @@ msgstr ""
 
 #: oc-includes/osclass/gui/user-items.php:22
 msgid "Your items"
-msgstr "Ваши объявления"
+msgstr "Mục của bạn"
 
 #: oc-includes/osclass/gui/user-items.php:25
 msgid "You do not have any items yet."
-msgstr "У Вас нет объявлений."
+msgstr "Bạn chưa đăng mục nào."
 
 #: oc-includes/osclass/gui/user-menu.php:22
 msgid "Menu"
@@ -3528,7 +3489,7 @@ msgstr ""
 
 #: oc-includes/osclass/gui/user-profile.php:1
 msgid "Update your profile"
-msgstr "Обновить ваш профиль"
+msgstr "Cập nhật Profile"
 
 #: oc-includes/osclass/gui/user-profile.php:20
 msgid "Leave it empty if you don't want to change it now."
@@ -3540,11 +3501,11 @@ msgstr ""
 
 #: oc-includes/osclass/gui/user-profile.php:54
 msgid "Update profile"
-msgstr "Обновить профиль"
+msgstr "Cập nhật Profile"
 
 #: oc-includes/osclass/gui/user-register.php:3
 msgid "Register an account (free)"
-msgstr "Зарегистрироваться (бесплатно)"
+msgstr ""
 
 #: oc-includes/osclass/gui/user-register.php:24
 msgid "Re-type password"

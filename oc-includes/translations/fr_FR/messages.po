@@ -2,1681 +2,3721 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-23 18:10+0100\n"
+"POT-Creation-Date: 2010-12-23 17:08+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: \n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: Mikou HAMZA <hamza@mikou.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __\n"
+"X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-Country: FRANCE\n"
-"X-Poedit-SearchPath-0: /var/www/osclass\n"
+"X-Poedit-SearchPath-0: \n"
 
-#: /var/www/osclass/user.php:25
-#: /var/www/osclass/user.php:125
-#: /var/www/osclass/user.php:141
-msgid "Create your account"
-msgstr "Créez votre compte"
-
-#: /var/www/osclass/user.php:78
-#: /var/www/osclass/user.php:109
-#: /var/www/osclass/item.php:62
-msgid "OSClass application"
-msgstr "Application OSClass"
-
-#: /var/www/osclass/user.php:79
-msgid "Email validation"
+#: index.php:46
+#: search.php:163
+msgid "Latest items added"
 msgstr ""
 
-#: /var/www/osclass/user.php:87
-msgid "Your account has been created."
+#: index.php:48
+#: search.php:165
+msgid "Latest items added in"
 msgstr ""
 
-#: /var/www/osclass/user.php:89
-msgid "The user could not be registered, sorry."
-msgstr ""
-
-#: /var/www/osclass/user.php:110
-#, fuzzy
-msgid "Successful registration"
-msgstr "Installation réussie!"
-
-#: /var/www/osclass/user.php:117
-msgid "Your account is correctly validated. Thanks."
-msgstr ""
-
-#: /var/www/osclass/user.php:119
-msgid "The link is not longer valid, sorry."
-msgstr ""
-
-#: /var/www/osclass/user.php:154
-#, fuzzy
-msgid "Access to your account"
-msgstr "Créez votre compte"
-
-#: /var/www/osclass/user.php:182
-#, fuzzy
-msgid "Wrong username or password."
-msgstr "Utilisateur et / ou mot de passe incorrect ."
-
-#: /var/www/osclass/index.php:88
+#: index.php:91
 #, fuzzy
 msgid "Contact form"
 msgstr "Format de la date"
 
-#: /var/www/osclass/index.php:89
+#: index.php:93
 #, fuzzy
 msgid "Administrator"
 msgstr "Administrateurs"
 
-#: /var/www/osclass/index.php:93
+#: index.php:103
 msgid "Your message has been sent and will be answered soon, thank you."
 msgstr ""
 
-#: /var/www/osclass/index.php:95
-msgid "The message could not been sent, try again later."
+#: item.php:52
+msgid "Thanks! That helps us."
 msgstr ""
 
-#: /var/www/osclass/page.php:22
-msgid "The page you are looking for does not exist."
+#: item.php:94
+msgid "We just send your message to "
 msgstr ""
 
-#: /var/www/osclass/item.php:63
-msgid "Item inquiry"
-msgstr "Enquête d'annonce"
+#: item.php:96
+msgid "We are very sorry but we could not deliver your message to your friend. Try again later."
+msgstr ""
 
-#: /var/www/osclass/search.php:74
+#: item.php:109
+#: item.php:128
+msgid "We're sorry, but the item is expired. You can not contact the seller."
+msgstr ""
+
+#: item.php:159
+msgid "We've just sent an e-mail to the seller."
+msgstr ""
+
+#: item.php:237
+msgid "We are very sorry but could not save your comment. Try again later."
+msgstr ""
+
+#: item.php:251
+msgid "You need to log-in in order to post a new item."
+msgstr ""
+
+#: item.php:274
+msgid "Publish your item"
+msgstr "Publish your item"
+
+#: page.php:29
+#: page.php:60
+msgid "Page not found"
+msgstr ""
+
+#: search.php:136
 msgid "Newly listed"
 msgstr ""
 
-#: /var/www/osclass/search.php:75
-msgid "Lower pricer first"
+#: search.php:137
+msgid "Lower price first"
 msgstr ""
 
-#: /var/www/osclass/search.php:76
+#: search.php:138
 msgid "Higher price first"
 msgstr ""
 
-#: /var/www/osclass/search.php:77
+#: search.php:139
 msgid "Best match"
 msgstr ""
 
-#: /var/www/osclass/search.php:82
+#: search.php:152
 #, php-format
 msgid "Search results for %s"
 msgstr ""
 
-#: /var/www/osclass/oc-installer/step3_logic.php:71
-msgid "Succesful installation!"
-msgstr "Installation réussie!"
+#: user.php:31
+#: user.php:194
+#: user.php:226
+msgid "Create your account"
+msgstr "Créez votre compte"
 
-#: /var/www/osclass/oc-installer/step3_logic.php:72
-msgid "OSClass administrator"
-msgstr "administrateur OSClass"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-login.php:22
-#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:29
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:13
-msgid "User name"
-msgstr "Nom d'utilisateur"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-login.php:27
-#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:34
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:18
-msgid "Password"
-msgstr "Mot de passe"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-login.php:32
-msgid "Remember me"
-msgstr "Se souvenir de moi"
-
-#: /var/www/osclass/oc-includes/osclass/gui/contact.php:9
-msgid "Subject"
+#: user.php:48
+msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
 msgstr ""
 
-#: /var/www/osclass/oc-includes/osclass/gui/contact.php:13
-msgid "Message"
+#: user.php:63
+msgid "Sorry, but the username can only contain alphanumeric characters."
 msgstr ""
 
-#: /var/www/osclass/oc-includes/osclass/gui/contact.php:17
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:61
-#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:22
-msgid "Your name"
-msgstr "Votre nom"
+#: user.php:102
+msgid "Your account has been created. An activation email has been sent to your email address."
+msgstr ""
 
-#: /var/www/osclass/oc-includes/osclass/gui/contact.php:21
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:62
+#: user.php:108
+msgid "Your account has been created. You're ready to go."
+msgstr ""
+
+#: user.php:111
+msgid "Sorry, but that username is already in use."
+msgstr ""
+
+#: user.php:115
+msgid "The user could not be registered, sorry."
+msgstr ""
+
+#: user.php:146
+msgid "We resend you the validation email. If you don't recive it after a few minutes, please check your SPAM folder."
+msgstr ""
+
+#: user.php:148
+msgid "The email couldn't be sent, sorry."
+msgstr ""
+
+#: user.php:182
+msgid "Your account is correctly validated. Thanks."
+msgstr ""
+
+#: user.php:184
+msgid "Your account has been activated before."
+msgstr ""
+
+#: user.php:187
+msgid "The link is not longer valid, sorry."
+msgstr ""
+
+#: user.php:199
+#: user.php:248
+#: user.php:263
+msgid "You need to login first."
+msgstr ""
+
+#: user.php:210
+msgid "Passwords don't match."
+msgstr ""
+
+#: user.php:221
+msgid "Your profile has been updated correctly"
+msgstr ""
+
+#: user.php:242
 #, fuzzy
-msgid "Your email"
-msgstr "Votre adresse e-mail"
+msgid "Manage your alerts"
+msgstr "Gérer les pages"
 
-#: /var/www/osclass/oc-includes/osclass/gui/contact.php:25
-msgid "Send"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:19
-msgid "Post your item"
-msgstr "Publiez votre annonce"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:27
-msgid "Category"
-msgstr "Catégorie"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:39
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:66
-msgid "Title"
-msgstr "Titre"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:44
-msgid "Description"
-msgstr "Description"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:49
-#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:13
-msgid "Price"
-msgstr "Prix"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:84
-msgid "Remove"
-msgstr "Supprimer"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:96
-msgid "Photos"
-msgstr "Photos"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:99
-msgid "optional"
-msgstr "facultatif"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:102
-msgid "Add new photo"
-msgstr "Ajouter une photo"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:104
-msgid "Item location"
-msgstr "Emplacement de l'article"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:107
-msgid "Country"
-msgstr "Pays"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:116
-msgid "City"
-msgstr "Ville"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:121
-msgid "Region"
-msgstr "Région"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:126
-msgid "Address"
-msgstr "Adresse"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:130
-msgid "Seller information"
-msgstr "informations du vendeur"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:133
-#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:24
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:8
-msgid "Name"
-msgstr "Nom"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:138
-#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:39
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:24
-msgid "E-mail"
-msgstr "E-mail"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:140
-msgid "Show email publicaly within the item page"
-msgstr "Montrer ton e-mail publiquement dans la page de l'article"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-post.php:155
-msgid "Publish"
-msgstr "Publier"
-
-#: /var/www/osclass/oc-includes/osclass/gui/category.php:6
-msgid "Publish your item"
-msgstr "Publish your item"
-
-#: /var/www/osclass/oc-includes/osclass/gui/category.php:16
-msgid "There is no results in this category yet."
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:6
-msgid "Price:"
-msgstr "Prix"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:7
+#: user.php:258
 #, fuzzy
-msgid "Publication date:"
-msgstr "Date de publication"
+msgid "Manage your account"
+msgstr "Créez votre compte"
 
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:14
+#: user.php:274
+msgid "Your item has been deleted."
+msgstr ""
+
+#: user.php:277
+#: user.php:331
+msgid "You could register and access every time to your items."
+msgstr ""
+
+#: user.php:354
 #, fuzzy
-msgid "Contact seller"
-msgstr "Pour (vendeur)"
+msgid "Access to your account"
+msgstr "Créez votre compte"
 
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:35
-msgid "Images"
-msgstr "Photos"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:47
-msgid "Comments"
-msgstr "Commentaires"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:54
-msgid "Be the first to comment on this item!"
+#: user.php:381
+msgid "You have not validated your account yet.<br/> Should we resend you the validation email?"
 msgstr ""
 
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:67
+#: user.php:381
+msgid "Yes, resend me the validation email."
+msgstr ""
+
+#: user.php:384
+#: oc-admin/index.php:107
 #, fuzzy
-msgid "Comment"
-msgstr "Commentaires"
+msgid "Wrong username or password."
+msgstr "Utilisateur et / ou mot de passe incorrect ."
 
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:70
+#: user.php:402
+msgid "Unsubscribed correctly."
+msgstr ""
+
+#: user.php:404
+msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator."
+msgstr ""
+
+#: user.php:410
+#: user.php:458
 #, fuzzy
-msgid "Send comment"
-msgstr "Voir les commentaires"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item.php:77
-msgid "Helpful information"
-msgstr "Informations utiles"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:10
-msgid "To (seller)"
-msgstr "Pour (vendeur)"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:14
-msgid "Item"
-msgstr "Annonce"
-
-#: /var/www/osclass/oc-includes/osclass/gui/item-contact.php:18
-msgid "Your email address"
-msgstr "Votre adresse e-mail"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:18
-msgid "Register an account (free)"
-msgstr "Créer un compte (gratuit)"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-register.php:51
-msgid "Create user"
-msgstr "Créer un utilisateur"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:2
-msgid "Update your profile"
-msgstr "Mettez à jour votre profil"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:29
-msgid "Web site"
-msgstr "Site Web"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:34
-msgid "Additional information"
-msgstr "Informations complémentaires"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:39
-msgid "Mobile phone"
-msgstr "Téléphone portable"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:44
-msgid "Land phone"
-msgstr "Téléphone Fixe"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-profile.php:49
-msgid "Update profile"
-msgstr "Mise à jour du profil"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:2
-msgid "Your items"
-msgstr "Vous annonces"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:5
-msgid "You do not have any items yet."
-msgstr "Vous n'avez pas d'éléments pour le moment."
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:12
-msgid "Publication date"
-msgstr "Date de publication"
-
-#: /var/www/osclass/oc-includes/osclass/gui/user-items.php:16
-msgid "Delete"
-msgstr "Supprimer"
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:2
-#, fuzzy
-msgid "Search results"
-msgstr "Recherche"
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:5
-#, fuzzy
-msgid "Page"
-msgstr "Pages"
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:19
-msgid "Show as:"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:19
-msgid "List"
-msgstr "Lister"
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:19
-msgid "image gallery"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:22
-msgid "Sort by:"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:82
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:91
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:112
-msgid "Apply"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:87
-msgid "Minimum"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:89
-msgid "Maximum"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:94
-#, fuzzy
-msgid "Pictures"
-msgstr "Prix"
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:101
-msgid "Show only items with picture"
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:124
-#, php-format
-msgid "There are no results matching \"%s\"."
-msgstr ""
-
-#: /var/www/osclass/oc-includes/osclass/gui/search.php:130
-msgid "Search"
-msgstr "Recherche"
-
-#: /var/www/osclass/oc-content/themes/default/admin.php:11
-msgid "Save"
-msgstr "Enregistrer"
-
-#: /var/www/osclass/oc-content/themes/default/home.php:21
-msgid "Categories"
-msgstr "Catégories"
-
-#: /var/www/osclass/oc-content/themes/default/home.php:25
-#, fuzzy, php-format
-msgid "%d items"
-msgstr "Annonce"
-
-#: /var/www/osclass/oc-content/themes/default/home.php:37
-msgid "Latest published items"
-msgstr ""
-
-#: /var/www/osclass/oc-content/themes/default/header.php:20
-msgid "Latest items added"
-msgstr ""
-
-#: /var/www/osclass/oc-content/themes/default/header.php:60
-#: /var/www/osclass/oc-content/themes/modern/header.php:84
-msgid "items"
-msgstr "Annonce"
-
-#: /var/www/osclass/oc-content/themes/default/header.php:62
-#: /var/www/osclass/oc-content/themes/modern/header.php:86
-msgid "profile"
-msgstr "profil"
-
-#: /var/www/osclass/oc-content/themes/default/header.php:63
-#: /var/www/osclass/oc-content/themes/modern/header.php:87
-msgid "Logout"
-msgstr "Déconnexion"
-
-#: /var/www/osclass/oc-content/themes/default/header.php:65
-#: /var/www/osclass/oc-content/themes/modern/header.php:89
-msgid "Register a free account"
-msgstr "Créer un compte gratuit"
-
-#: /var/www/osclass/oc-content/themes/default/header.php:65
-#: /var/www/osclass/oc-content/themes/modern/header.php:89
-msgid "login"
-msgstr "login"
-
-#: /var/www/osclass/oc-content/themes/modern/item-post.php:15
-msgid "General Information"
-msgstr "Information générale"
-
-#: /var/www/osclass/oc-content/themes/modern/item-post.php:102
-msgid "Item Location"
-msgstr "Lieu de l'annonce"
-
-#: /var/www/osclass/oc-content/themes/modern/header.php:130
-#, fuzzy
-msgid "Login"
-msgstr "Connectez-vous"
-
-#: /var/www/osclass/oc-content/themes/large/home.php:16
-msgid "Pages"
-msgstr "Pages"
-
-#: /var/www/osclass/oc-content/themes/large/category.php:3
-#, fuzzy
-msgid "Publish an item"
-msgstr "Publish your item"
-
-#: /var/www/osclass/oc-content/themes/modern_vertical/home.php:48
-msgid "No Latest Items"
-msgstr ""
-
-#: /var/www/osclass/oc-content/themes/modern_vertical/home.php:50
-msgid "Latest Items"
-msgstr ""
-
-#: /var/www/osclass/oc-content/themes/modern_vertical/home.php:68
-#, fuzzy
-msgid "Contact"
-msgstr "Contenu"
-
-#: /var/www/osclass/oc-content/plugins/google_maps/admin.php:15
-msgid "You can freely obtain a developer key after signing up on this URL:"
-msgstr ""
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/admin.php:21
-msgid "Cancel"
-msgstr "Annuler"
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:6
-msgid "Model"
-msgstr "Model"
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:10
-msgid "Num. of airbags"
-msgstr "Nombre d'airbags"
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:14
-msgid "Transmission"
-msgstr "Transmission"
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:15
-msgid "Automatic"
-msgstr "Automatique"
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/item_detail.php:15
-msgid "Manual"
-msgstr "Manuel"
-
-#: /var/www/osclass/oc-content/plugins/cars_attributes/form.php:6
-msgid "Type"
-msgstr "Type"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:6
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:6
-msgid "Num. of floors"
-msgstr "Nombre d'étages"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:10
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:16
-msgid "Num. of bathrooms"
-msgstr "Nombre de salles de bains"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:14
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:26
-msgid "Num. of garages (place for a car = one garage)"
-msgstr "Nombre de garages (place pour une voiture = un garage)"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:18
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:36
-msgid "Construction date"
-msgstr "Date de construction"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:22
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:40
-msgid "Square meters"
-msgstr "Nombre de mètres carrés"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:29
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:44
-msgid "Other characteristics"
-msgstr "D'autres caractéristiques"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:32
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:46
-msgid "Heating"
-msgstr "Chauffage"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:33
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:47
-msgid "Air condition"
-msgstr "Climatisation"
-
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/item_detail.php:34
-#: /var/www/osclass/oc-content/plugins/realestate_attributes/form.php:48
-msgid "Elevator"
-msgstr "Ascenseur"
-
-#: /var/www/osclass/oc-content/plugins/disqus_comments/admin.php:15
-#: /var/www/osclass/oc-content/plugins/paypal_integration/admin.php:15
-msgid "You can freely obtain a key after signing up on this URL:"
-msgstr ""
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:6
-#, fuzzy
-msgid "You are:"
-msgstr "Votre nom"
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:8
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:16
-#, fuzzy
-msgid "Man"
-msgstr "Manuel"
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:9
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:17
-msgid "Woman"
-msgstr ""
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:10
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:18
-msgid "Not informed"
-msgstr ""
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:14
-#, fuzzy
-msgid "Looking for:"
-msgstr "Vous cherchez un emploi"
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:22
-#, fuzzy
-msgid "Relation type:"
-msgstr "Rapport"
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:24
-msgid "Friendship"
-msgstr ""
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:25
-#, fuzzy
-msgid "Formal relation"
-msgstr "Dimensions normales"
-
-#: /var/www/osclass/oc-content/plugins/dating_attributes/form.php:26
-#, fuzzy
-msgid "Informal relation"
-msgstr "Information générale"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:11
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:6
-msgid "Relation"
-msgstr "Rapport"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:15
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:13
-msgid "Company name"
-msgstr "Nom de l'entreprise"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:19
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:17
-msgid "Position type"
-msgstr "Type de poste"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:23
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:27
-msgid "Desired experience"
-msgstr "Expérience souhaitée"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/item_detail.php:27
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:38
-msgid "Salary range"
-msgstr "Variations de salaire"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:8
-msgid "Hire someone"
-msgstr "Engagez quelqu'un"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:9
-msgid "Looking for a job"
-msgstr "Vous cherchez un emploi"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:20
-msgid "Undefined"
-msgstr "Indéfini"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:21
-msgid "Part time"
-msgstr "À temps partiel"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:22
-msgid "Full-time"
-msgstr "À plein temps"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:30
-msgid "Less than a year"
-msgstr "Moins d'un an"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:31
-msgid "Between 1 and 3 years"
-msgstr "Entre 1 et 3 ans"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:32
-msgid "Between 3 and 6 years"
-msgstr "Entre 3 et 6 ans"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:33
-msgid "More than 6 years"
-msgstr "Plus de 6 ans"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:42
-msgid "Hour"
-msgstr "Heure"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:43
-msgid "Week"
-msgstr "Semaine"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:44
-msgid "Month"
-msgstr "Mois"
-
-#: /var/www/osclass/oc-content/plugins/jobs_attributes/form.php:45
-msgid "Year"
-msgstr "Année"
-
-#: /var/www/osclass/oc-admin/tools.php:22
-#: /var/www/osclass/oc-admin/tools.php:34
-msgid "Tools"
-msgstr "Outils"
-
-#: /var/www/osclass/oc-admin/index.php:31
-#, fuzzy, php-format
-msgid "Your new password is \"%s\"."
-msgstr "Obtenez un nouveau mot de passe"
-
-#: /var/www/osclass/oc-admin/index.php:43
-msgid "Recover your password"
+msgid "Retrieve your password"
 msgstr "Récupérez votre mot de passe"
 
-#: /var/www/osclass/oc-admin/index.php:50
-msgid "A new password has been sent to your account."
+#: user.php:450
+msgid "Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/index.php:52
-msgid "The email you have entered does not belong to a valid administrator."
+#: user.php:462
+#: user.php:466
+#: user.php:483
+#: user.php:491
+msgid "Sorry, the link is not valid."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/main.php:30
-msgid "Dashboard"
-msgstr "Tableau de bord"
-
-#: /var/www/osclass/oc-admin/pages.php:28
-#: /var/www/osclass/oc-admin/users.php:38
-#: /var/www/osclass/oc-admin/admins.php:43
-#: /var/www/osclass/oc-admin/languages.php:37
-msgid "Edit"
-msgstr "Modfier"
-
-#: /var/www/osclass/oc-admin/pages.php:40
-#: /var/www/osclass/oc-admin/admins.php:55
-msgid "The item has been updated."
+#: user.php:480
+msgid "The password has been changed."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/pages.php:51
-msgid "The items have been deleted."
+#: user.php:487
+msgid "Error: Passwords don't match."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/pages.php:60
-#: /var/www/osclass/oc-admin/users.php:24
-#: /var/www/osclass/oc-admin/admins.php:24
+#: oc-admin/admins.php:31
+#: oc-admin/admins.php:50
+#: oc-admin/admins.php:100
+msgid "Administrators"
+msgstr "Administrateurs"
+
+#: oc-admin/admins.php:31
+#: oc-admin/categories.php:39
 #, fuzzy
 msgid "Add"
 msgstr "Adresse"
 
-#: /var/www/osclass/oc-admin/pages.php:66
-#: /var/www/osclass/oc-admin/users.php:30
-#: /var/www/osclass/oc-admin/admins.php:31
+#: oc-admin/admins.php:38
 msgid "The item has been added."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/plugins.php:23
-#: /var/www/osclass/oc-admin/plugins.php:52
-#: /var/www/osclass/oc-admin/plugins.php:60
-msgid "Plugins"
-msgstr "Plugins"
+#: oc-admin/admins.php:40
+msgid "The administrator could not be created."
+msgstr ""
 
-#: /var/www/osclass/oc-admin/plugins.php:23
-#: /var/www/osclass/oc-admin/languages.php:25
+#: oc-admin/admins.php:50
+#: oc-admin/categories.php:65
+msgid "Edit"
+msgstr "Modfier"
+
+#: oc-admin/admins.php:64
+msgid "Password didn't update. Passwords don't match."
+msgstr ""
+
+#: oc-admin/admins.php:68
+msgid "Password didn't update. \"Old password\" didn't match with our records in the database."
+msgstr ""
+
+#: oc-admin/admins.php:77
+#: oc-admin/admins.php:91
+#: oc-admin/categories.php:58
+#: oc-admin/categories.php:85
+#: oc-admin/categories.php:103
+#: oc-admin/categories.php:123
+#: oc-admin/categories.php:138
+#: oc-admin/categories.php:153
+#: oc-admin/comments.php:43
+#: oc-admin/comments.php:61
+#: oc-admin/comments.php:79
+#: oc-admin/comments.php:102
+msgid "Error: "
+msgstr ""
+
+#: oc-admin/admins.php:86
+msgid "The operation was not completed. You were trying to remove yourself!"
+msgstr ""
+
+#: oc-admin/appearance.php:29
+#: oc-admin/appearance.php:53
+#: oc-admin/appearance.php:56
+#: oc-admin/appearance.php:80
+msgid "Appearance"
+msgstr "Apparence"
+
+#: oc-admin/appearance.php:29
 #, fuzzy
 msgid "Upload"
 msgstr "Importer un thème"
 
-#: /var/www/osclass/oc-admin/plugins.php:52
+#: oc-admin/appearance.php:40
+#: oc-admin/appearance.php:44
+#, php-format
+msgid "Directory \"%s\" could not be removed."
+msgstr ""
+
+#: oc-admin/appearance.php:46
+#, fuzzy
+msgid "No theme selected."
+msgstr "Supprimer la sélection"
+
+#: oc-admin/categories.php:39
+#: oc-admin/categories.php:65
+#: oc-admin/categories.php:172
+msgid "Categories"
+msgstr "Catégories"
+
+#: oc-admin/categories.php:56
+msgid "The category has been added."
+msgstr ""
+
+#: oc-admin/categories.php:83
+msgid "The item has been updated."
+msgstr ""
+
+#: oc-admin/categories.php:101
+msgid "The items have been deleted."
+msgstr ""
+
+#: oc-admin/categories.php:114
+msgid "The category has been enabled."
+msgstr ""
+
+#: oc-admin/categories.php:116
+msgid "The category has been disabled."
+msgstr ""
+
+#: oc-admin/categories.php:119
+msgid "There was a problem with this page. The ID for the category is not set."
+msgstr ""
+
+#: oc-admin/categories.php:136
+msgid "The categories have been enabled."
+msgstr ""
+
+#: oc-admin/categories.php:151
+msgid "Selected categories have been disabled."
+msgstr ""
+
+#: oc-admin/comments.php:41
+msgid "The comments have been deleted."
+msgstr ""
+
+#: oc-admin/comments.php:59
+msgid "The comments have been activated."
+msgstr ""
+
+#: oc-admin/comments.php:77
+msgid "The comments have been deactivated."
+msgstr ""
+
+#: oc-admin/comments.php:100
+msgid "The comment has been activate."
+msgstr ""
+
+#: oc-admin/comments.php:112
+#: oc-admin/comments.php:135
+msgid "Comments"
+msgstr "Commentaires"
+
+#: oc-admin/comments.php:125
+msgid "Great! We've just update your item."
+msgstr ""
+
+#: oc-admin/common.php:43
+#: oc-admin/common.php:52
+msgid "Plugins"
+msgstr "Plugins"
+
+#: oc-admin/common.php:43
+#: oc-admin/common.php:52
 #, fuzzy
 msgid "Configuration"
 msgstr "Mise à jour de configuration"
 
-#: /var/www/osclass/oc-admin/media.php:25
-#: /var/www/osclass/oc-admin/media.php:44
-msgid "Media"
-msgstr "Médias"
+#: oc-admin/index.php:51
+#, fuzzy, php-format
+msgid "Your new password is \"%s\"."
+msgstr "Obtenez un nouveau mot de passe"
 
-#: /var/www/osclass/oc-admin/media.php:25
-#: /var/www/osclass/oc-admin/settings.php:26
-#: /var/www/osclass/oc-admin/settings.php:53
-#: /var/www/osclass/oc-admin/settings.php:58
-#: /var/www/osclass/oc-admin/settings.php:61
-#: /var/www/osclass/oc-admin/settings.php:86
-msgid "Settings"
-msgstr "Paramètres"
+#: oc-admin/index.php:59
+msgid "OSClass application"
+msgstr "Application OSClass"
 
-#: /var/www/osclass/oc-admin/users.php:24
-#: /var/www/osclass/oc-admin/users.php:38
-#: /var/www/osclass/oc-admin/users.php:64
-msgid "Users"
-msgstr "Utilisateurs"
+#: oc-admin/index.php:60
+msgid "Recover your password"
+msgstr "Récupérez votre mot de passe"
 
-#: /var/www/osclass/oc-admin/users.php:50
-msgid "Them item has been updated."
+#: oc-admin/index.php:62
+msgid "OSClass administrator"
+msgstr "administrateur OSClass"
+
+#: oc-admin/index.php:68
+msgid "A new password has been sent to your account."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/settings.php:105
-msgid "General settings"
-msgstr "Paramètres généraux"
+#: oc-admin/index.php:70
+msgid "The email you have entered does not belong to a valid administrator."
+msgstr ""
 
-#: /var/www/osclass/oc-admin/admins.php:24
-#: /var/www/osclass/oc-admin/admins.php:43
-#: /var/www/osclass/oc-admin/admins.php:80
-msgid "Administrators"
-msgstr "Administrateurs"
+#: oc-admin/items.php:48
+msgid "The items have been activated."
+msgstr ""
 
-#: /var/www/osclass/oc-admin/languages.php:25
-#: /var/www/osclass/oc-admin/languages.php:37
-#: /var/www/osclass/oc-admin/languages.php:91
-msgid "Languages"
-msgstr "Langues"
+#: oc-admin/items.php:68
+msgid "The items have been deactivated."
+msgstr ""
 
-#: /var/www/osclass/oc-admin/items.php:43
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:13
+#: oc-admin/items.php:86
+msgid "The items have been made premium."
+msgstr ""
+
+#: oc-admin/items.php:105
+msgid "The chages have been made."
+msgstr ""
+
+#: oc-admin/items.php:187
+msgid "The item has been activate."
+msgstr ""
+
+#: oc-admin/items.php:214
+msgid "Changes have been made."
+msgstr ""
+
+#: oc-admin/items.php:311
 msgid "Items"
 msgstr "Articles"
 
-#: /var/www/osclass/oc-admin/appearance.php:24
-#: /var/www/osclass/oc-admin/appearance.php:43
-#: /var/www/osclass/oc-admin/appearance.php:46
-#: /var/www/osclass/oc-admin/appearance.php:70
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:51
-msgid "Appearance"
-msgstr "Apparence"
+#: oc-admin/languages.php:31
+#: oc-admin/languages.php:44
+#: oc-admin/languages.php:139
+msgid "Languages"
+msgstr "Langues"
 
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:19
-msgid "Add a new category"
-msgstr "Ajouter une nouvelle catégorie"
+#: oc-admin/languages.php:36
+msgid "The language has been installed correctly."
+msgstr ""
 
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:23
+#: oc-admin/languages.php:38
+msgid "There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH."
+msgstr ""
+
+#: oc-admin/languages.php:66
+msgid "The language has been enabled for the public website."
+msgstr ""
+
+#: oc-admin/languages.php:66
+msgid "The language has been disabled for the public website."
+msgstr ""
+
+#: oc-admin/languages.php:69
+msgid "The language has been enabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:69
+msgid "The language has been disabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:77
+msgid "There was a problem updating the language. The ID of the language was lost."
+msgstr ""
+
+#: oc-admin/languages.php:93
+msgid "Selected languages have been enabled for the website."
+msgstr ""
+
+#: oc-admin/languages.php:96
+msgid "Selected languages have been disabled for the website."
+msgstr ""
+
+#: oc-admin/languages.php:99
+msgid "Selected languages have been enabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:102
+msgid "Selected languages have been disabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:113
+msgid "There was a problem updating the languages. The IDs of the languages were lost."
+msgstr ""
+
+#: oc-admin/languages.php:130
+#, php-format
+msgid "Directory \"%s\" could not be removed, it' the default language. Set another language as default first and try again."
+msgstr ""
+
+#: oc-admin/location.php:49
 #, fuzzy
-msgid "Add page"
-msgstr "Modifier la page"
+msgid "Countries"
+msgstr "Pays"
 
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:34
-msgid "Add a new plugin"
-msgstr "Ajouter un nouveau plugin"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:41
-msgid "Permalinks"
-msgstr "Permalinks"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:42
-msgid "Performance"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:43
-#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:3
-msgid "Spam and bots"
-msgstr "Spam et les rebots"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:44
-#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:3
-msgid "Registry"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:45
+#: oc-admin/location.php:58
 #, fuzzy
-msgid "Currencies"
-msgstr "Devise"
+msgid "Regions"
+msgstr "Région"
 
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:49
-msgid "Add a new language"
-msgstr "Ajouter une nouvelle langue"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:53
-msgid "Add a new theme"
-msgstr "Ajouter un nouveau thème"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:54
-msgid "Add or remove widgets"
-msgstr "Ajouter ou supprimer des widgets"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:58
-msgid "Import data"
-msgstr "Importer des données"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:59
-msgid "Upgrade OSClass"
-msgstr "Mise à niveau vers la dernière version OSClass"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:66
-msgid "Add a new user"
-msgstr "Ajouter un nouvel utilisateur"
-
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:70
+#: oc-admin/location.php:69
 #, fuzzy
-msgid "Add new administrator"
-msgstr "Mise à jour d'administrateur"
+msgid "Cities"
+msgstr "Annonce"
 
-#: /var/www/osclass/oc-admin/themes/default/sidebar.php:71
-#: /var/www/osclass/oc-admin/themes/default/header.php:30
-msgid "Your profile"
-msgstr "Votre profil"
-
-#: /var/www/osclass/oc-admin/themes/default/header.php:27
-msgid "Visit website"
+#: oc-admin/location.php:146
+msgid "Location management"
 msgstr ""
 
-#: /var/www/osclass/oc-admin/themes/default/header.php:30
-#, fuzzy
-msgid "Howdy"
-msgstr "Corps"
-
-#: /var/www/osclass/oc-admin/themes/default/header.php:36
-msgid "Back to the web"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/comments/index.php:14
-#: /var/www/osclass/oc-admin/themes/default/comments/index.php:34
-#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:22
-#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:42
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:19
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:41
-#: /var/www/osclass/oc-admin/themes/default/media/index.php:18
-#: /var/www/osclass/oc-admin/themes/default/media/index.php:38
-msgid "Options"
-msgstr "Options"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:11
-msgid "Language"
-msgstr "Langue"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:24
-msgid "Page title"
-msgstr "Titre de la page"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:29
-msgid "Page description"
-msgstr "Description de la page"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:34
-msgid "Date format"
-msgstr "Format de la date"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:51
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:71
-msgid "Custom"
-msgstr "Coutume"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:56
-msgid "Time format"
-msgstr "Format de l'heure"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:76
-msgid "Week starts on"
-msgstr "Début de la semaine"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:89
-#, fuzzy
-msgid "Update"
-msgstr "Mise à jour d'utilisateur"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/index.php:90
-msgid "Cancel and back"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:12
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:9
-#: /var/www/osclass/oc-admin/themes/default/media/index.php:9
-msgid "Delete selected"
-msgstr "Supprimer la sélection"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:19
-#: /var/www/osclass/oc-admin/themes/default/settings/currencies.php:39
-#: /var/www/osclass/oc-admin/themes/default/settings/addCurrency.php:9
-#, fuzzy
-msgid "Code"
-msgstr "Model"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:11
-#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:27
-#, fuzzy
-msgid "Section"
-msgstr "Description"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:13
-#: /var/www/osclass/oc-admin/themes/default/settings/registry.php:29
-msgid "Value"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/settings/addCurrency.php:3
-msgid "Create"
-msgstr "Créer"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/addCurrency.php:24
-#, fuzzy
-msgid "Create currency"
-msgstr "Devise"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:9
-msgid "Akismet key (same as Wordpress.com)"
-msgstr "Clés d'Akismet (comme Wordpress.com)"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:19
-msgid "Re-captcha private key"
-msgstr "Re-captcha clé privée"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:24
-msgid "Re-captcha public key"
-msgstr "Re-captcha clé publique"
-
-#: /var/www/osclass/oc-admin/themes/default/settings/spamNbots.php:29
-msgid "Update spam and bots configuration"
-msgstr "Mise à jour de la configuration du spam et les robots"
-
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:9
-msgid "Are you sure you want to delete the selected items?"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:17
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:39
-msgid "Excerpt"
-msgstr "Extrait"
-
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:30
-msgid "View comments"
-msgstr "Voir les commentaires"
-
-#: /var/www/osclass/oc-admin/themes/default/items/index.php:31
-msgid "View media"
-msgstr "Voir les médias"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:8
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:64
-msgid "Update configuration"
-msgstr "Mise à jour de configuration"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:11
-#, fuzzy
-msgid "Restrictions"
-msgstr "Description"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:14
-msgid "Maximum size in KB"
-msgstr "Taille maximale en KB"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:19
-msgid "Allowed format extensions (eg: png, jpg, gif)"
-msgstr "Format d'extensions autorisées (par exemple: png, jpg, gif)"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:28
-msgid "Path and URI"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:31
-msgid "Store uploads in this folder"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:36
-msgid "Full URL path to files"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:45
-#, fuzzy
-msgid "Dimensions"
-msgstr "Dimensions normales"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:48
-msgid "Thumbnail dimensions"
-msgstr "Dimensions de miniature"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:53
-msgid "Preview dimensions"
-msgstr "Aperçu des dimensions"
-
-#: /var/www/osclass/oc-admin/themes/default/media/config.php:58
-msgid "Normal dimensions"
-msgstr "Dimensions normales"
-
-#: /var/www/osclass/oc-admin/themes/default/plugins/index.php:25
-#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:47
-#, fuzzy
-msgid "Configure"
-msgstr "Configurer les médias"
-
-#: /var/www/osclass/oc-admin/themes/default/plugins/index.php:28
-msgid "Uninstall"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/plugins/index.php:31
-msgid "Install"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/plugins/add.php:9
-msgid "Plugin package"
-msgstr "Paquet de plugin"
-
-#: /var/www/osclass/oc-admin/themes/default/plugins/add.php:13
-msgid "Upload plugin"
-msgstr "Importer un plugin"
-
-#: /var/www/osclass/oc-admin/themes/default/tools/upgrade.php:11
-msgid "Upgrade file"
-msgstr "Mise à jour de fichier"
-
-#: /var/www/osclass/oc-admin/themes/default/tools/import.php:11
-msgid "Data"
-msgstr "Données"
-
-#: /var/www/osclass/oc-admin/themes/default/tools/export.php:3
-msgid "Export"
-msgstr "Exporter"
-
-#: /var/www/osclass/oc-admin/themes/default/tools/export.php:5
-msgid "Export now"
-msgstr "Exporter maintenant"
-
-#: /var/www/osclass/oc-admin/themes/default/index/index.php:14
-msgid "Username"
-msgstr "Nom d'utilisateur"
-
-#: /var/www/osclass/oc-admin/themes/default/index/index.php:32
-msgid "Theme"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/index/index.php:50
-#: /var/www/osclass/oc-admin/themes/default/index/recover.php:31
-msgid "Log in"
-msgstr "Connectez-vous"
-
-#: /var/www/osclass/oc-admin/themes/default/index/index.php:59
-msgid "Lost your password?"
-msgstr "Mot de passe oublié?"
-
-#: /var/www/osclass/oc-admin/themes/default/index/recover.php:24
-msgid "Get new password"
-msgstr "Obtenez un nouveau mot de passe"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/index.php:22
-#: /var/www/osclass/oc-admin/themes/default/categories/index.php:50
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:9
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:8
-msgid "Parent category"
-msgstr "Catégorie mère"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/index.php:40
-msgid "View subcategories"
-msgstr "Voir les sous-catégories"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:23
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:22
-#: /var/www/osclass/oc-admin/themes/default/pages/index.php:19
-#: /var/www/osclass/oc-admin/themes/default/pages/index.php:42
-msgid "Locale"
-msgstr "Locale"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:50
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:45
-#, fuzzy
-msgid "Expirations days"
-msgstr "Jour d'expiration (0 = pas d'expiration)"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:51
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:46
-#, fuzzy
-msgid "(0 = no expiration)"
-msgstr "Jour d'expiration (0 = pas d'expiration)"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:59
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:54
-#, fuzzy
-msgid "Position"
-msgstr "Type de poste"
-
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:60
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:55
-msgid "(order in relation to other categories)"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/categories/edit.php:74
-#: /var/www/osclass/oc-admin/themes/default/categories/add.php:64
-msgid "Enabled"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:3
-msgid "Current theme"
-msgstr "Thème actuel"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:11
-msgid "Available themes"
-msgstr "Thèmes disponibles"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:27
-#, fuzzy
-msgid "Thumbnail"
-msgstr "Dimensions de miniature"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:48
-msgid "Activate"
-msgstr "Activer"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/index.php:49
-msgid "Preview"
-msgstr "Aperçu"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/add_widget.php:17
-msgid "Create widget on "
-msgstr "Créer un widget sur"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/add_widget.php:29
-msgid "Content"
-msgstr "Contenu"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/add_widget.php:34
-msgid "Publish widget"
-msgstr "Publier la widget"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/add.php:9
-msgid "Theme package"
-msgstr "Paquet de thème"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/add.php:13
-msgid "Upload theme"
-msgstr "Importer un thème"
-
-#: /var/www/osclass/oc-admin/themes/default/appearance/widgets.php:3
-msgid "Widgets"
-msgstr "Widgets"
-
-#: /var/www/osclass/oc-admin/themes/default/pages/edit.php:31
-#: /var/www/osclass/oc-admin/themes/default/pages/add.php:26
-msgid "Body"
-msgstr "Corps"
-
-#: /var/www/osclass/oc-admin/themes/default/users/index.php:21
-#: /var/www/osclass/oc-admin/themes/default/users/index.php:46
-msgid "Info"
-msgstr "Info"
-
-#: /var/www/osclass/oc-admin/themes/default/languages/index.php:18
-#: /var/www/osclass/oc-admin/themes/default/languages/index.php:42
-#: /var/www/osclass/oc-admin/themes/default/languages/edit.php:22
-msgid "Short name"
-msgstr "Nom court"
-
-#: /var/www/osclass/oc-admin/themes/default/languages/edit.php:34
-#, fuzzy
-msgid "Money format"
-msgstr "Format de la date"
-
-#: /var/www/osclass/oc-admin/themes/default/languages/edit.php:40
-msgid "Stop words"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/default/languages/add.php:9
-#, fuzzy
-msgid "Language package"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/default/languages/add.php:13
-#, fuzzy
-msgid "Upload translation"
-msgstr "Importer un nouveau plugin"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:9
-msgid "Statistics"
-msgstr "Statistiques"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:11
-msgid "Number of items"
-msgstr "Nombre d'articles"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:12
-msgid "Number of public users"
-msgstr "Nombre d'utilisateurs"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:13
-msgid "Number of administrators"
-msgstr "Nombre d'administrateurs"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:18
-msgid "Items by category"
-msgstr "Annonces par catégorie"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:27
-msgid "News from OSClass' blog"
-msgstr "Nouvelles du blog OSClass"
-
-#: /var/www/osclass/oc-admin/themes/default/main/index.php:29
-msgid "Unable to fetch the news."
-msgstr "Impossible de récupérer les nouvelles."
-
-#: /var/www/osclass/oc-admin/themes/modern/footer.php:11
-msgid "Thank you for using"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/footer.php:12
-msgid "Documentation"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/footer.php:13
-msgid "Feedback"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/header.php:31
+#: oc-admin/login.php:31
+#: oc-admin/recover.php:26
 #, fuzzy
 msgid "OSClass Admin Panel Login"
 msgstr "administrateur OSClass"
 
-#: /var/www/osclass/oc-admin/themes/modern/header.php:44
+#: oc-admin/login.php:43
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: oc-admin/login.php:49
+msgid "Password"
+msgstr "Mot de passe"
+
+#: oc-admin/login.php:55
+msgid "Language"
+msgstr "Langue"
+
+#: oc-admin/login.php:68
+msgid "Theme"
+msgstr ""
+
+#: oc-admin/login.php:76
+msgid "Remember me"
+msgstr "Se souvenir de moi"
+
+#: oc-admin/login.php:80
+#: oc-admin/recover.php:50
+msgid "Log in"
+msgstr "Connectez-vous"
+
+#: oc-admin/login.php:85
+msgid "Lost your password?"
+msgstr "Mot de passe oublié?"
+
+#: oc-admin/login.php:88
+#: oc-admin/recover.php:54
+msgid "Have you lost?"
+msgstr ""
+
+#: oc-admin/login.php:88
+#: oc-admin/recover.php:54
+msgid "Back to"
+msgstr ""
+
+#: oc-admin/main.php:34
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: oc-admin/media.php:32
+#: oc-admin/media.php:51
+msgid "Media"
+msgstr "Médias"
+
+#: oc-admin/media.php:32
+#: oc-admin/settings.php:34
+#: oc-admin/settings.php:61
+#: oc-admin/settings.php:65
+#: oc-admin/settings.php:68
+#: oc-admin/settings.php:189
+#: oc-admin/settings.php:322
+#: oc-admin/settings.php:331
+#: oc-admin/settings.php:334
+#: oc-admin/settings.php:337
+msgid "Settings"
+msgstr "Paramètres"
+
+#: oc-admin/pages.php:33
+#: oc-admin/pages.php:105
+#: oc-admin/pages.php:148
+msgid "Pages"
+msgstr "Pages"
+
+#: oc-admin/pages.php:64
+msgid "The page has been updated."
+msgstr ""
+
+#: oc-admin/pages.php:76
+#: oc-admin/pages.php:83
+#: oc-admin/pages.php:93
+#: oc-admin/pages.php:97
+msgid "The item have been deleted."
+msgstr ""
+
+#: oc-admin/pages.php:79
+#: oc-admin/pages.php:95
+msgid "Error, this page can not be deleted."
+msgstr ""
+
+#: oc-admin/pages.php:139
+msgid "Ops! That internal name is already in use. We couldn't made the changes."
+msgstr ""
+
+#: oc-admin/plugins.php:45
+msgid "Plugin installed."
+msgstr ""
+
+#: oc-admin/plugins.php:56
+msgid "Plugin uninstalled."
+msgstr ""
+
+#: oc-admin/plugins.php:103
+#, fuzzy
+msgid "No plugin selected"
+msgstr "Supprimer la sélection"
+
+#: oc-admin/plugins.php:106
+#, fuzzy
+msgid "Configuration was saved"
+msgstr "Mise à jour de configuration"
+
+#: oc-admin/recover.php:36
+msgid "Please enter your username or e-mail address."
+msgstr ""
+
+#: oc-admin/recover.php:37
+#, fuzzy
+msgid "You will receive a new password via e-mail."
+msgstr "Obtenez un nouveau mot de passe"
+
+#: oc-admin/recover.php:43
+msgid "E-mail"
+msgstr "E-mail"
+
+#: oc-admin/recover.php:46
+msgid "Get new password"
+msgstr "Obtenez un nouveau mot de passe"
+
+#: oc-admin/settings.php:176
+#, fuzzy
+msgid "Location"
+msgstr "Lieu de l'annonce"
+
+#: oc-admin/settings.php:215
+#: oc-admin/settings.php:246
+#: oc-admin/settings.php:284
+msgid "Functionalities"
+msgstr ""
+
+#: oc-admin/settings.php:257
+#: oc-admin/settings.php:319
+#, fuzzy
+msgid "Notifications"
+msgstr "Description"
+
+#: oc-admin/settings.php:408
+msgid "General settings"
+msgstr "Paramètres généraux"
+
+#: oc-admin/tools.php:29
+#: oc-admin/tools.php:37
+#: oc-admin/tools.php:39
+#: oc-admin/tools.php:60
+msgid "Tools"
+msgstr "Outils"
+
+#: oc-admin/tools.php:47
+msgid "Backup made correctly"
+msgstr ""
+
+#: oc-admin/tools.php:56
+#: oc-admin/upgrade-plugin.php:75
+#: oc-admin/upgrade.php:77
+msgid "Archiving is sucessful!"
+msgstr ""
+
+#: oc-admin/tools.php:57
+#: oc-admin/upgrade-plugin.php:77
+#: oc-admin/upgrade.php:79
+msgid "Error, can't create a zip file!"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:44
+#: oc-admin/upgrade.php:44
+msgid "File downloaded correctly."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:46
+#: oc-admin/upgrade.php:46
+msgid "Missing filename."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:89
+#: oc-admin/upgrade.php:91
+msgid "OK"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:91
+#: oc-admin/upgrade.php:93
+msgid "Unzip failed"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:95
+#: oc-admin/upgrade.php:97
+msgid "Filename incorrect."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:106
+#: oc-admin/upgrade.php:108
+msgid "Error removing file: "
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:109
+#: oc-admin/upgrade.php:111
+msgid "Files removed ;)"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:112
+#: oc-admin/upgrade.php:114
+msgid "No files to remove ;)"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:131
+#: oc-admin/upgrade.php:135
+msgid "There were problems copying files."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:133
+#: oc-admin/upgrade-plugin.php:139
+#: oc-admin/upgrade.php:133
+#: oc-admin/upgrade.php:141
+msgid "Nothing to copy."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:135
+#: oc-admin/upgrade.php:137
+msgid "Files copied."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:149
+#: oc-admin/upgrade.php:151
+msgid "upgrade.sql executed."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:151
+#: oc-admin/upgrade.php:153
+msgid "No SQL to execute."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:159
+#: oc-admin/upgrade.php:161
+msgid "Custom actions executed."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:161
+#: oc-admin/upgrade.php:163
+msgid "No action to execute."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:169
+#: oc-admin/upgrade.php:169
+#, fuzzy
+msgid "Update"
+msgstr "Mise à jour d'utilisateur"
+
+#: oc-admin/users.php:31
+#: oc-admin/users.php:45
+#: oc-admin/users.php:101
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: oc-admin/users.php:61
+msgid "The user has been updated."
+msgstr ""
+
+#: oc-admin/users.php:73
+#: oc-admin/users.php:86
+msgid "The user has been deactivated."
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:105
+msgid "View comments"
+msgstr "Voir les commentaires"
+
+#: oc-admin/ajax/items_processing.php:106
+msgid "View media"
+msgstr "Voir les médias"
+
+#: oc-admin/ajax/items_processing.php:108
+#, fuzzy
+msgid "Deactivate"
+msgstr "Activer"
+
+#: oc-admin/ajax/items_processing.php:110
+msgid "Activate"
+msgstr "Activer"
+
+#: oc-admin/ajax/items_processing.php:113
+msgid "Demake Premium"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:115
+msgid "Make Premium"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:118
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:119
+msgid "Delete"
+msgstr "Supprimer"
+
+#: oc-admin/themes/modern/footer.php:29
+msgid "Thank you for using"
+msgstr ""
+
+#: oc-admin/themes/modern/footer.php:29
+#: oc-admin/themes/modern/footer.php:34
+#: oc-admin/themes/modern/header.php:198
+#: oc-admin/themes/modern/appearance/add.php:67
+#: oc-admin/themes/modern/languages/add.php:66
+#, fuzzy
+msgid "OSClass"
+msgstr "Mise à niveau vers la dernière version OSClass"
+
+#: oc-admin/themes/modern/footer.php:30
+msgid "Documentation"
+msgstr ""
+
+#: oc-admin/themes/modern/footer.php:31
+msgid "Feedback"
+msgstr ""
+
+#: oc-admin/themes/modern/header.php:38
 #, fuzzy
 msgid "OSClass Admin Panel"
 msgstr "administrateur OSClass"
 
-#: /var/www/osclass/oc-admin/themes/modern/header.php:183
+#: oc-admin/themes/modern/header.php:203
+msgid "Visit website"
+msgstr ""
+
+#: oc-admin/themes/modern/header.php:204
+#, fuzzy
+msgid "Howdy"
+msgstr "Corps"
+
+#: oc-admin/themes/modern/header.php:204
+msgid "Your profile"
+msgstr "Votre profil"
+
+#: oc-admin/themes/modern/header.php:204
 #, fuzzy
 msgid "Log Out"
 msgstr "Déconnexion"
 
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:18
-msgid "Processing"
+#: oc-admin/themes/modern/admins/add.php:23
+#: oc-admin/themes/modern/admins/edit.php:23
+#: oc-admin/themes/modern/appearance/add.php:23
+#: oc-admin/themes/modern/appearance/add_widget.php:23
+#: oc-admin/themes/modern/appearance/widgets.php:23
+#: oc-admin/themes/modern/categories/frm.php:22
+#: oc-admin/themes/modern/languages/add.php:23
+msgid "Invalid OSClass request."
 msgstr ""
 
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:19
-msgid "Show _MENU_ entries"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:20
-msgid "No matching records found"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:21
-msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:22
-msgid "Showing 0 to 0 of 0 entries"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:23
-msgid "filtered from _MAX_ total entries"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:28
+#: oc-admin/themes/modern/admins/add.php:38
+#: oc-admin/themes/modern/admins/edit.php:38
+#: oc-admin/themes/modern/include/backoffice_menu.php:194
 #, fuzzy
-msgid "First"
-msgstr "Lister"
+msgid "Add new administrator"
+msgstr "Mise à jour d'administrateur"
 
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:29
-#, fuzzy
-msgid "Previous"
-msgstr "Aperçu"
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:30
-msgid "Next"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:31
-#, fuzzy
-msgid "Last"
-msgstr "Lister"
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:33
-msgid "Show"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:38
-msgid "entries"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:46
-msgid "on"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:60
-msgid "Author"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:64
-#, fuzzy
-msgid "Date"
-msgstr "Données"
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:82
-#, fuzzy
-msgid "Manage Comments"
-msgstr "Commentaires"
-
-#: /var/www/osclass/oc-admin/themes/modern/comments/index.php:91
-msgid "Bulk Actions"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:68
-msgid "Sunday"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:69
-#, fuzzy
-msgid "Monday"
-msgstr "Corps"
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:70
-msgid "Tuesday"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:71
-msgid "Wednesday"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:72
-msgid "Thursday"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:73
-msgid "Friday"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/index.php:74
-msgid "Saturday"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:30
-msgid "Akismet"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:34
-msgid "Empty means Akismet service is disabled"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:34
-msgid "Get your free key at"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:39
-#, fuzzy
-msgid "Re-captcha"
-msgstr "Re-captcha clé publique"
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:41
-msgid "Same here, empty values mean Re-captcha service is disabled"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/spamNbots.php:41
-msgid "Get your free keys at"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:32
-msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:36
-#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:38
-msgid "Enable nice urls"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/settings/permalinks.php:42
-msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/items/index.php:93
-#, fuzzy
-msgid "Manage items"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/media/index.php:60
-#, fuzzy
-msgid "File"
-msgstr "Titre"
-
-#: /var/www/osclass/oc-admin/themes/modern/media/index.php:63
-msgid "Attached to"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/media/config.php:18
-#, fuzzy
-msgid "Configure Media"
-msgstr "Configurer les médias"
-
-#: /var/www/osclass/oc-admin/themes/modern/media/config.php:28
-msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/tools/upgrade.php:26
-msgid "From here you can upgrade OSClass to a newer, always better, version. Be careful and follow all the instructions for each specific upgrade"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/tools/import.php:26
-msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/categories/index.php:48
-#: /var/www/osclass/oc-admin/themes/modern/languages/index.php:49
-msgid "Disable"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/categories/index.php:64
-msgid "Parent"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/categories/index.php:92
-#: /var/www/osclass/oc-admin/themes/modern/languages/index.php:92
-msgid "Enable"
-msgstr ""
-
-#: /var/www/osclass/oc-admin/themes/modern/categories/edit.php:15
-msgid "Edit category"
-msgstr "Modifier la catégorie"
-
-#: /var/www/osclass/oc-admin/themes/modern/categories/edit.php:102
-#, fuzzy
-msgid "Save category"
-msgstr "Catégorie mère"
-
-#: /var/www/osclass/oc-admin/themes/modern/categories/add.php:88
-msgid "Add category"
-msgstr "Ajouter une catégorie"
-
-#: /var/www/osclass/oc-admin/themes/modern/appearance/add.php:16
-#: /var/www/osclass/oc-admin/themes/modern/pages/add.php:31
-#, fuzzy
-msgid "Add New Page"
-msgstr "Ajouter une nouvelle langue"
-
-#: /var/www/osclass/oc-admin/themes/modern/appearance/widgets.php:31
-#, fuzzy
-msgid "Add HTML widget"
-msgstr "Ajouter ou supprimer des widgets"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:14
-#, fuzzy
-msgid "Add new item"
-msgstr "Ajouter un nouveau thème"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:16
-#, fuzzy
-msgid "Manage media"
-msgstr "Configurer les médias"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:21
-#, fuzzy
-msgid "Manage categories"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:27
-msgid "Manage pages"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:28
-msgid "Create page"
-msgstr "Créer une page"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:34
-#, fuzzy
-msgid "Manage plugins"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:35
-#, fuzzy
-msgid "Add new plugin"
-msgstr "Ajouter un nouveau plugin"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:40
-#, fuzzy
-msgid "Manage languages"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:41
-#, fuzzy
-msgid "Add a language"
-msgstr "Ajouter une nouvelle langue"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:46
-#, fuzzy
-msgid "Manage themes"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:71
-#, fuzzy
-msgid "Manage users"
-msgstr "Gérer les pages"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:72
-#, fuzzy
-msgid "Add new user"
-msgstr "Ajouter un nouvel utilisateur"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:77
-#, fuzzy
-msgid "List administrators"
-msgstr "Administrateurs"
-
-#: /var/www/osclass/oc-admin/themes/modern/include/backoffice_menu.php:79
-#, fuzzy
-msgid "Edit Your Profile"
-msgstr "Votre profil"
-
-#: /var/www/osclass/oc-admin/themes/modern/pages/edit.php:34
-msgid "Edit page"
-msgstr "Modifier la page"
-
-#: /var/www/osclass/oc-admin/themes/modern/pages/edit.php:77
-#: /var/www/osclass/oc-admin/themes/modern/pages/add.php:69
-msgid "Publish page"
-msgstr "Publier la page"
-
-#: /var/www/osclass/oc-admin/themes/modern/users/index.php:66
-#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:62
-#: /var/www/osclass/oc-admin/themes/modern/users/add.php:61
+#: oc-admin/themes/modern/admins/add.php:53
+#: oc-admin/themes/modern/admins/edit.php:54
+#: oc-admin/themes/modern/admins/index.php:86
 #, fuzzy
 msgid "Real name"
 msgstr "Nom d'utilisateur"
 
-#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:14
-#, fuzzy
-msgid "Edit user"
-msgstr "Mise à jour d'utilisateur"
-
-#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:31
-#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:38
-#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:62
-#: /var/www/osclass/oc-admin/themes/modern/users/add.php:30
-#: /var/www/osclass/oc-admin/themes/modern/users/add.php:37
-#: /var/www/osclass/oc-admin/themes/modern/users/add.php:61
+#: oc-admin/themes/modern/admins/add.php:53
+#: oc-admin/themes/modern/admins/add.php:68
+#: oc-admin/themes/modern/admins/add.php:75
+#: oc-admin/themes/modern/admins/edit.php:54
+#: oc-admin/themes/modern/admins/edit.php:69
 msgid "required"
 msgstr ""
 
-#: /var/www/osclass/oc-admin/themes/modern/users/edit.php:85
-msgid "Update user"
-msgstr "Mise à jour d'utilisateur"
+#: oc-admin/themes/modern/admins/add.php:68
+#: oc-admin/themes/modern/admins/edit.php:69
+msgid "User name"
+msgstr "Nom d'utilisateur"
 
-#: /var/www/osclass/oc-admin/themes/modern/languages/index.php:64
+#: oc-admin/themes/modern/admins/add.php:81
+msgid "Create administrator"
+msgstr "Créer un administrateur"
+
+#: oc-admin/themes/modern/admins/edit.php:76
 #, fuzzy
-msgid "Short Name"
-msgstr "Nom court"
+msgid "Old password"
+msgstr "Mot de passe"
 
-#: /var/www/osclass/oc-admin/themes/modern/languages/edit.php:21
+#: oc-admin/themes/modern/admins/edit.php:78
+#, fuzzy
+msgid "New password"
+msgstr "Obtenez un nouveau mot de passe"
+
+#: oc-admin/themes/modern/admins/edit.php:80
+#, fuzzy
+msgid "Re-type new password"
+msgstr "Obtenez un nouveau mot de passe"
+
+#: oc-admin/themes/modern/admins/edit.php:83
+msgid "Leave it blank if you do not want to change your password now"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/edit.php:87
+msgid "Update administrator"
+msgstr "Mise à jour d'administrateur"
+
+#: oc-admin/themes/modern/admins/index.php:37
+#: oc-admin/themes/modern/admins/index.php:49
+#: oc-admin/themes/modern/categories/index.php:36
+#: oc-admin/themes/modern/categories/index.php:48
+#: oc-admin/themes/modern/comments/index.php:35
+#: oc-admin/themes/modern/comments/index.php:47
+#: oc-admin/themes/modern/items/index.php:48
+#: oc-admin/themes/modern/items/index.php:74
+msgid "Search"
+msgstr "Recherche"
+
+#: oc-admin/themes/modern/admins/index.php:42
+#: oc-admin/themes/modern/categories/index.php:41
+#: oc-admin/themes/modern/comments/index.php:40
+#: oc-admin/themes/modern/items/index.php:67
+msgid "Processing"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:43
+#: oc-admin/themes/modern/categories/index.php:42
+#: oc-admin/themes/modern/comments/index.php:41
+#: oc-admin/themes/modern/items/index.php:68
+msgid "Show _MENU_ entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:44
+#: oc-admin/themes/modern/categories/index.php:43
+#: oc-admin/themes/modern/comments/index.php:42
+#: oc-admin/themes/modern/items/index.php:69
+msgid "No matching records found"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:45
+#: oc-admin/themes/modern/categories/index.php:44
+#: oc-admin/themes/modern/comments/index.php:43
+#: oc-admin/themes/modern/items/index.php:70
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:46
+#: oc-admin/themes/modern/categories/index.php:45
+#: oc-admin/themes/modern/comments/index.php:44
+#: oc-admin/themes/modern/items/index.php:71
+msgid "Showing 0 to 0 of 0 entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:47
+#: oc-admin/themes/modern/categories/index.php:46
+#: oc-admin/themes/modern/comments/index.php:45
+#: oc-admin/themes/modern/items/index.php:72
+msgid "filtered from _MAX_ total entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:52
+#: oc-admin/themes/modern/categories/index.php:51
+#: oc-admin/themes/modern/comments/index.php:50
+#: oc-admin/themes/modern/items/index.php:77
+#, fuzzy
+msgid "First"
+msgstr "Lister"
+
+#: oc-admin/themes/modern/admins/index.php:53
+#: oc-admin/themes/modern/categories/index.php:52
+#: oc-admin/themes/modern/comments/index.php:51
+#: oc-admin/themes/modern/items/index.php:78
+#, fuzzy
+msgid "Previous"
+msgstr "Aperçu"
+
+#: oc-admin/themes/modern/admins/index.php:54
+#: oc-admin/themes/modern/categories/index.php:53
+#: oc-admin/themes/modern/comments/index.php:52
+#: oc-admin/themes/modern/items/index.php:79
+msgid "Next"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:55
+#: oc-admin/themes/modern/categories/index.php:54
+#: oc-admin/themes/modern/comments/index.php:53
+#: oc-admin/themes/modern/items/index.php:80
+#, fuzzy
+msgid "Last"
+msgstr "Lister"
+
+#: oc-admin/themes/modern/admins/index.php:57
+#: oc-admin/themes/modern/categories/index.php:56
+#: oc-admin/themes/modern/comments/index.php:55
+#: oc-admin/themes/modern/items/index.php:82
+msgid "Show"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:62
+#: oc-admin/themes/modern/categories/index.php:61
+#: oc-admin/themes/modern/comments/index.php:60
+#: oc-admin/themes/modern/items/index.php:87
+msgid "entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:112
+#: oc-admin/themes/modern/categories/index.php:129
+#: oc-admin/themes/modern/comments/index.php:119
+#: oc-admin/themes/modern/items/index.php:152
+msgid "Bulk Actions"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:115
+#: oc-admin/themes/modern/categories/index.php:134
+#: oc-admin/themes/modern/comments/index.php:124
+#: oc-admin/themes/modern/items/index.php:159
+msgid "Apply"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:38
+#, fuzzy
+msgid "Add New Page"
+msgstr "Ajouter une nouvelle langue"
+
+#: oc-admin/themes/modern/appearance/add.php:55
+msgid "Theme package"
+msgstr "Paquet de thème"
+
+#: oc-admin/themes/modern/appearance/add.php:59
+msgid "Upload theme"
+msgstr "Importer un thème"
+
+#: oc-admin/themes/modern/appearance/add.php:67
+msgid "The themes folder "
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:67
+msgid " is not writable on your server, "
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:67
+msgid " can't upload themes from the administration panel. Please copy the theme package using another technique (FTP, SSH) or make the mentioned themes folder writable."
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:70
+#: oc-admin/themes/modern/languages/add.php:69
+msgid "To make a directory writable under UNIX execute this command from the shell:"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add_widget.php:44
+msgid "Dashboard - Add New Widget"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add_widget.php:70
+msgid "Create widget on "
+msgstr "Créer un widget sur"
+
+#: oc-admin/themes/modern/appearance/add_widget.php:84
+#: oc-admin/themes/modern/categories/index.php:94
+#: oc-admin/themes/modern/items/index.php:108
+msgid "Description"
+msgstr "Description"
+
+#: oc-admin/themes/modern/appearance/add_widget.php:89
+msgid "Content"
+msgstr "Contenu"
+
+#: oc-admin/themes/modern/appearance/add_widget.php:93
+msgid "Publish widget"
+msgstr "Publier la widget"
+
+#: oc-admin/themes/modern/appearance/index.php:27
+msgid "Are you sure you want to cancel?"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/index.php:45
+#: oc-admin/themes/modern/include/backoffice_menu.php:83
+msgid "Add a new theme"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-admin/themes/modern/appearance/index.php:55
+msgid "Current theme"
+msgstr "Thème actuel"
+
+#: oc-admin/themes/modern/appearance/index.php:60
+#: oc-admin/themes/modern/comments/index.php:87
+msgid "Author"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/index.php:65
+msgid "Available themes"
+msgstr "Thèmes disponibles"
+
+#: oc-admin/themes/modern/appearance/index.php:80
+msgid "Preview"
+msgstr "Aperçu"
+
+#: oc-admin/themes/modern/appearance/widgets.php:37
+msgid "Widgets"
+msgstr "Widgets"
+
+#: oc-admin/themes/modern/appearance/widgets.php:53
+#, fuzzy
+msgid "Add HTML widget"
+msgstr "Ajouter ou supprimer des widgets"
+
+#: oc-admin/themes/modern/categories/frm.php:66
+msgid "Parent category"
+msgstr "Catégorie mère"
+
+#: oc-admin/themes/modern/categories/frm.php:68
+msgid "- No parent -"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:72
+#, fuzzy
+msgid "Expirations days"
+msgstr "Jour d'expiration (0 = pas d'expiration)"
+
+#: oc-admin/themes/modern/categories/frm.php:72
+#, fuzzy
+msgid "(0 = no expiration)"
+msgstr "Jour d'expiration (0 = pas d'expiration)"
+
+#: oc-admin/themes/modern/categories/frm.php:78
+msgid "Position (order in relation to other categories)"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:87
+msgid "Enabled"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:101
+#: oc-admin/themes/modern/items/item-edit.php:134
+msgid "Cancel"
+msgstr "Annuler"
+
+#: oc-admin/themes/modern/categories/frm.php:102
+msgid "Save"
+msgstr "Enregistrer"
+
+#: oc-admin/themes/modern/categories/index.php:77
+#: oc-admin/themes/modern/categories/index.php:131
+msgid "Disable"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:77
+msgid "View subcategories"
+msgstr "Voir les sous-catégories"
+
+#: oc-admin/themes/modern/categories/index.php:77
+msgid "WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:90
+msgid "Name"
+msgstr "Nom"
+
+#: oc-admin/themes/modern/categories/index.php:93
+msgid "Parent"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:121
+#, fuzzy
+msgid "Add New Category"
+msgstr "Ajouter une nouvelle catégorie"
+
+#: oc-admin/themes/modern/categories/index.php:130
+msgid "Enable"
+msgstr ""
+
+#: oc-admin/themes/modern/comments/index.php:68
+msgid "on"
+msgstr ""
+
+#: oc-admin/themes/modern/comments/index.php:90
+#, fuzzy
+msgid "Comment"
+msgstr "Commentaires"
+
+#: oc-admin/themes/modern/comments/index.php:91
+#: oc-admin/themes/modern/items/index.php:122
+#, fuzzy
+msgid "Date"
+msgstr "Données"
+
+#: oc-admin/themes/modern/comments/index.php:109
+#, fuzzy
+msgid "Manage Comments"
+msgstr "Commentaires"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:38
+#: oc-admin/themes/modern/items/index.php:141
+#, fuzzy
+msgid "Manage items"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:40
+#, fuzzy
+msgid "Add new item"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:45
+#, fuzzy
+msgid "Manage media"
+msgstr "Configurer les médias"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:54
+#, fuzzy
+msgid "Manage categories"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:57
+msgid "Add a new category"
+msgstr "Ajouter une nouvelle catégorie"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:66
+msgid "Manage pages"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:69
+msgid "Create page"
+msgstr "Créer une page"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:80
+#, fuzzy
+msgid "Manage themes"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:86
+msgid "Add or remove widgets"
+msgstr "Ajouter ou supprimer des widgets"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:95
+#, fuzzy
+msgid "Manage plugins"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:98
+#, fuzzy
+msgid "Add new plugin"
+msgstr "Ajouter un nouveau plugin"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:107
+#, fuzzy
+msgid "Manage languages"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:110
+#: oc-admin/themes/modern/languages/add.php:38
+#, fuzzy
+msgid "Add a language"
+msgstr "Ajouter une nouvelle langue"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:131
+#, fuzzy
+msgid "Locations"
+msgstr "Lieu de l'annonce"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:134
+msgid "Permalinks"
+msgstr "Permalinks"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:137
+msgid "Spam and bots"
+msgstr "Spam et les rebots"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:140
+#, fuzzy
+msgid "Currencies"
+msgstr "Devise"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:143
+msgid "Mail Server"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:149
+msgid "Cron system"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:158
+msgid "Import data"
+msgstr "Importer des données"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:161
+msgid "Backup data"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:164
+msgid "Upgrade OSClass"
+msgstr "Mise à niveau vers la dernière version OSClass"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:179
+#, fuzzy
+msgid "Manage users"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:182
+#, fuzzy
+msgid "Add new user"
+msgstr "Ajouter un nouvel utilisateur"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:191
+#, fuzzy
+msgid "List administrators"
+msgstr "Administrateurs"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:197
+#, fuzzy
+msgid "Edit Your Profile"
+msgstr "Votre profil"
+
+#: oc-admin/themes/modern/items/index.php:99
+msgid "Title"
+msgstr "Titre"
+
+#: oc-admin/themes/modern/items/index.php:104
+#, fuzzy
+msgid "Count"
+msgstr "Pays"
+
+#: oc-admin/themes/modern/items/index.php:112
+msgid "Category"
+msgstr "Catégorie"
+
+#: oc-admin/themes/modern/items/index.php:142
+#, fuzzy
+msgid "Add New Item"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-admin/themes/modern/items/index.php:162
+#, fuzzy
+msgid "Filter by"
+msgstr "Titre"
+
+#: oc-admin/themes/modern/items/index.php:162
+msgid "All"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:163
+msgid "Pending"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:164
+msgid "Spam"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:165
+msgid "Duplicated"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:166
+msgid "Bad classified"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:167
+msgid "Offensive"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:168
+#, fuzzy
+msgid "Expired"
+msgstr "Exporter"
+
+#: oc-admin/themes/modern/items/item-edit.php:13
+#, fuzzy
+msgid "New item"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-admin/themes/modern/items/item-edit.php:13
+#, fuzzy
+msgid "Update your item"
+msgstr "Mettez à jour votre profil"
+
+#: oc-admin/themes/modern/items/item-edit.php:28
+msgid "General Information"
+msgstr "Information générale"
+
+#: oc-admin/themes/modern/items/item-edit.php:36
+msgid "Price"
+msgstr "Prix"
+
+#: oc-admin/themes/modern/items/item-edit.php:62
+msgid "Remove"
+msgstr "Supprimer"
+
+#: oc-admin/themes/modern/items/item-edit.php:91
+msgid "Photos"
+msgstr "Photos"
+
+#: oc-admin/themes/modern/items/item-edit.php:99
+msgid "optional"
+msgstr "facultatif"
+
+#: oc-admin/themes/modern/items/item-edit.php:102
+msgid "Add new photo"
+msgstr "Ajouter une photo"
+
+#: oc-admin/themes/modern/items/item-edit.php:112
+msgid "Country"
+msgstr "Pays"
+
+#: oc-admin/themes/modern/items/item-edit.php:114
+msgid "Region"
+msgstr "Région"
+
+#: oc-admin/themes/modern/items/item-edit.php:116
+msgid "City"
+msgstr "Ville"
+
+#: oc-admin/themes/modern/items/item-edit.php:118
+#, fuzzy
+msgid "City area"
+msgstr "Ville"
+
+#: oc-admin/themes/modern/items/item-edit.php:120
+msgid "Address"
+msgstr "Adresse"
+
+#: oc-admin/themes/modern/items/item-edit.php:135
+#, fuzzy
+msgid "Add item"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-admin/themes/modern/languages/add.php:55
+#, fuzzy
+msgid "Language package"
+msgstr "Gérer les pages"
+
+#: oc-admin/themes/modern/languages/add.php:59
+#, fuzzy
+msgid "Upload translation"
+msgstr "Importer un nouveau plugin"
+
+#: oc-admin/themes/modern/languages/add.php:66
+msgid "The translations folder "
+msgstr ""
+
+#: oc-admin/themes/modern/languages/add.php:66
+msgid " is not writable on your server, this"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/add.php:66
+msgid "can't upload translations from the administration panel. Please copy the translation package using another technique (FTP, SSH) or make the mentioned translations folder writable."
+msgstr ""
+
+#: oc-admin/themes/modern/languages/edit.php:44
+#: oc-admin/themes/modern/languages/frm.php:56
 #, fuzzy
 msgid "Edit language"
 msgstr "Modifier la page"
 
-#: /var/www/osclass/oc-admin/themes/modern/admins/edit.php:57
-msgid "Leave it blank if you do not want to change your password now"
+#: oc-admin/themes/modern/languages/edit.php:63
+#: oc-admin/themes/modern/languages/frm.php:79
+msgid "Short name"
+msgstr "Nom court"
+
+#: oc-admin/themes/modern/languages/edit.php:71
+#: oc-admin/themes/modern/languages/frm.php:91
+#, fuzzy
+msgid "Currency format"
+msgstr "Format de la date"
+
+#: oc-admin/themes/modern/languages/edit.php:75
+#: oc-admin/themes/modern/languages/frm.php:97
+msgid "Date format"
+msgstr "Format de la date"
+
+#: oc-admin/themes/modern/languages/edit.php:79
+#: oc-admin/themes/modern/languages/frm.php:103
+msgid "Stop words"
 msgstr ""
 
-#: /var/www/osclass/oc-admin/themes/modern/admins/edit.php:61
-msgid "Update administrator"
-msgstr "Mise à jour d'administrateur"
-
-#: /var/www/osclass/oc-admin/themes/modern/admins/add.php:59
-msgid "Create administrator"
-msgstr "Créer un administrateur"
-
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:79
-msgid "Which of the following content you want to see on your dashboard"
+#: oc-admin/themes/modern/languages/edit.php:85
+#: oc-admin/themes/modern/languages/frm.php:111
+msgid "Enabled for the public website"
 msgstr ""
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:81
+#: oc-admin/themes/modern/languages/edit.php:91
+#: oc-admin/themes/modern/languages/frm.php:117
+msgid "Enabled for the backoffice (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:72
+msgid "Disable (website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:72
+#: oc-admin/themes/modern/languages/index.php:121
+msgid "Disable (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:75
+#: oc-admin/themes/modern/languages/index.php:76
+msgid "Yes"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:75
+#: oc-admin/themes/modern/languages/index.php:76
+msgid "No"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:88
+#, fuzzy
+msgid "Short Name"
+msgstr "Nom court"
+
+#: oc-admin/themes/modern/languages/index.php:90
+msgid "Enabled (website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:91
+msgid "Enabled (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:118
+msgid "Enable (Website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:119
+msgid "Disable (Website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:120
+msgid "Enable (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:101
+msgid "Which of the following content do you want to see on your dashboard"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:103
 #, fuzzy
 msgid "Last Items"
 msgstr "Articles"
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:87
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:128
+#: oc-admin/themes/modern/main/index.php:106
+#: oc-admin/themes/modern/main/index.php:143
+msgid "Statistics"
+msgstr "Statistiques"
+
+#: oc-admin/themes/modern/main/index.php:109
+#: oc-admin/themes/modern/main/index.php:157
 #, fuzzy
 msgid "Last Comments"
 msgstr "Commentaires"
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:90
+#: oc-admin/themes/modern/main/index.php:112
 #, fuzzy
 msgid "Last News from OSClass"
 msgstr "Nouvelles du blog OSClass"
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:102
+#: oc-admin/themes/modern/main/index.php:124
 #, fuzzy
 msgid "Items by Category"
 msgstr "Annonces par catégorie"
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:137
+#: oc-admin/themes/modern/main/index.php:137
+msgid "There aren't any uploaded items yet"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:145
+msgid "Number of items"
+msgstr "Nombre d'articles"
+
+#: oc-admin/themes/modern/main/index.php:146
+msgid "Number of public users"
+msgstr "Nombre d'utilisateurs"
+
+#: oc-admin/themes/modern/main/index.php:147
+msgid "Number of administrators"
+msgstr "Nombre d'administrateurs"
+
+#: oc-admin/themes/modern/main/index.php:160
+#, fuzzy
+msgid "Commented"
+msgstr "Commentaires"
+
+#: oc-admin/themes/modern/main/index.php:160
+msgid "Item"
+msgstr "Annonce"
+
+#: oc-admin/themes/modern/main/index.php:166
 #, fuzzy
 msgid "Latest News from OSClass"
 msgstr "Nouvelles du blog OSClass"
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:149
+#: oc-admin/themes/modern/main/index.php:178
 #, fuzzy
 msgid "Unable to fetch news from"
 msgstr "Impossible de récupérer les nouvelles."
 
-#: /var/www/osclass/oc-admin/themes/modern/main/index.php:149
+#: oc-admin/themes/modern/main/index.php:178
 msgid "Please try again later"
 msgstr ""
 
-#~ msgid "Update category"
-#~ msgstr "Mise à jour d'une catégorie"
-#~ msgid "Upload a new theme"
-#~ msgstr "Publier un nouveau thème"
-#~ msgid "Add new"
-#~ msgstr "Ajouter un nouveau"
+#: oc-admin/themes/modern/media/config.php:40
+#, fuzzy
+msgid "Configure Media"
+msgstr "Configurer les médias"
+
+#: oc-admin/themes/modern/media/config.php:50
+msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:56
+#, fuzzy
+msgid "Restrictions"
+msgstr "Description"
+
+#: oc-admin/themes/modern/media/config.php:58
+msgid "Maximum size in KB"
+msgstr "Taille maximale en KB"
+
+#: oc-admin/themes/modern/media/config.php:63
+msgid "Allowed format extensions (eg: png, jpg, gif)"
+msgstr "Format d'extensions autorisées (par exemple: png, jpg, gif)"
+
+#: oc-admin/themes/modern/media/config.php:69
+msgid "Path and URI"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:72
+msgid "Store uploads in this folder"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:77
+msgid "Full URL path to files"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:84
+#, fuzzy
+msgid "Dimensions"
+msgstr "Dimensions normales"
+
+#: oc-admin/themes/modern/media/config.php:86
+msgid "Thumbnail dimensions"
+msgstr "Dimensions de miniature"
+
+#: oc-admin/themes/modern/media/config.php:91
+msgid "Preview dimensions"
+msgstr "Aperçu des dimensions"
+
+#: oc-admin/themes/modern/media/config.php:96
+msgid "Normal dimensions"
+msgstr "Dimensions normales"
+
+#: oc-admin/themes/modern/media/config.php:101
+msgid "Update configuration"
+msgstr "Mise à jour de configuration"
+
+#: oc-admin/themes/modern/media/index.php:82
+#, fuzzy
+msgid "File"
+msgstr "Titre"
+
+#: oc-admin/themes/modern/media/index.php:85
+msgid "Attached to"
+msgstr ""
+
+#: oc-admin/themes/modern/pages/frm.php:112
+msgid "Internal Name (Short name to easily identify this page)"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/add.php:38
+#: oc-admin/themes/modern/plugins/configuration.php:51
+#: oc-admin/themes/modern/plugins/index.php:115
+#: oc-admin/themes/modern/plugins/view.php:32
+msgid "Add a new plugin"
+msgstr "Ajouter un nouveau plugin"
+
+#: oc-admin/themes/modern/plugins/add.php:55
+msgid "Plugin package"
+msgstr "Paquet de plugin"
+
+#: oc-admin/themes/modern/plugins/add.php:59
+msgid "Upload plugin"
+msgstr "Importer un plugin"
+
+#: oc-admin/themes/modern/plugins/add.php:67
+msgid "The plugins folder "
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/add.php:67
+msgid "can't upload plugins from the administration panel. Please copy the plugin package using another technique (FTP, SSH) or make the mentioned plugins folder writable."
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/configuration.php:80
+msgid "Select the categories you want to apply those attributes:"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+#, fuzzy
+msgid "Configure"
+msgstr "Configurer les médias"
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "There's a new version. You should update!"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "Uninstall"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "Install"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/addCurrency.php:52
+msgid "Create"
+msgstr "Créer"
+
+#: oc-admin/themes/modern/settings/addCurrency.php:57
+#: oc-admin/themes/modern/settings/currencies.php:84
+#, fuzzy
+msgid "Code"
+msgstr "Model"
+
+#: oc-admin/themes/modern/settings/addCurrency.php:74
+#, fuzzy
+msgid "Create currency"
+msgstr "Devise"
+
+#: oc-admin/themes/modern/settings/comments.php:63
+#, fuzzy
+msgid "Comments enabled"
+msgstr "Commentaires"
+
+#: oc-admin/themes/modern/settings/comments.php:72
+#, fuzzy
+msgid "Moderate comments"
+msgstr "Commentaires"
+
+#: oc-admin/themes/modern/settings/comments.php:83
+#, fuzzy
+msgid "Notify new comment"
+msgstr "Voir les commentaires"
+
+#: oc-admin/themes/modern/settings/cron.php:58
+msgid "Cron System"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/cron.php:64
+msgid "Auto-cron"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/cron.php:67
+msgid "Some functionalities os OSClass requires a cron system to work. Check this if you don't know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass."
+msgstr ""
+
+#: oc-admin/themes/modern/settings/editCurrency.php:75
+#, fuzzy
+msgid "Edit currency"
+msgstr "Devise"
+
+#: oc-admin/themes/modern/settings/functionalities.php:63
+#: oc-admin/themes/modern/settings/items.php:63
+msgid "Enabled recaptcha"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/functionalities.php:72
+#: oc-admin/themes/modern/settings/items.php:72
+msgid "Enabled item validation"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/functionalities.php:81
+#: oc-admin/themes/modern/settings/items.php:81
+msgid "Only allow registered users post items"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:56
+msgid "Page title"
+msgstr "Titre de la page"
+
+#: oc-admin/themes/modern/settings/index.php:63
+msgid "Page description"
+msgstr "Description de la page"
+
+#: oc-admin/themes/modern/settings/index.php:72
+#, fuzzy
+msgid "Administrator E-mail"
+msgstr "Administrateurs"
+
+#: oc-admin/themes/modern/settings/index.php:79
+#, fuzzy
+msgid "Default language"
+msgstr "Modifier la page"
+
+#: oc-admin/themes/modern/settings/index.php:113
+#: oc-admin/themes/modern/settings/index.php:162
+msgid "Custom"
+msgstr "Coutume"
+
+#: oc-admin/themes/modern/settings/index.php:120
+#, fuzzy
+msgid "Default currency"
+msgstr "Devise"
+
+#: oc-admin/themes/modern/settings/index.php:129
+msgid "Week starts on"
+msgstr "Début de la semaine"
+
+#: oc-admin/themes/modern/settings/index.php:131
+msgid "Sunday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:132
+#, fuzzy
+msgid "Monday"
+msgstr "Corps"
+
+#: oc-admin/themes/modern/settings/index.php:133
+msgid "Tuesday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:134
+msgid "Wednesday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:135
+msgid "Thursday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:136
+msgid "Friday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:137
+msgid "Saturday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:146
+#: oc-admin/themes/modern/settings/index.php:147
+msgid "Time format"
+msgstr "Format de l'heure"
+
+#: oc-admin/themes/modern/settings/index.php:169
+#, fuzzy
+msgid "Number of items in the RSS"
+msgstr "Nombre d'articles"
+
+#: oc-admin/themes/modern/settings/items.php:93
+#: oc-admin/themes/modern/settings/notifications.php:63
+msgid "Notify new item to admin"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/items.php:101
+#: oc-admin/themes/modern/settings/notifications.php:71
+msgid "Notify contact item to admin"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/items.php:109
+#: oc-admin/themes/modern/settings/notifications.php:79
+msgid "Notify contact friends to admin"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:96
+#: oc-admin/themes/modern/settings/locations.php:128
+#: oc-admin/themes/modern/settings/locations.php:345
+#, fuzzy
+msgid "Close"
+msgstr "Model"
+
+#: oc-admin/themes/modern/settings/locations.php:102
+#: oc-admin/themes/modern/settings/locations.php:349
+#, fuzzy
+msgid "View more"
+msgstr "Voir les médias"
+
+#: oc-admin/themes/modern/settings/locations.php:336
+#: oc-admin/themes/modern/settings/locations.php:367
+#: oc-admin/themes/modern/settings/locations.php:385
+msgid "Add new"
+msgstr "Ajouter un nouveau"
+
+#: oc-admin/themes/modern/settings/locations.php:401
+#, fuzzy
+msgid "Add new country"
+msgstr "Ajouter un nouvel utilisateur"
+
+#: oc-admin/themes/modern/settings/locations.php:410
+#: oc-admin/themes/modern/settings/locations.php:442
+#, fuzzy
+msgid "Country: "
+msgstr "Pays"
+
+#: oc-admin/themes/modern/settings/locations.php:414
+#, fuzzy
+msgid "Country code: "
+msgstr "Pays"
+
+#: oc-admin/themes/modern/settings/locations.php:419
+msgid "Country code has two characters"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:433
+#, fuzzy
+msgid "Edit country"
+msgstr "Modifier la catégorie"
+
+#: oc-admin/themes/modern/settings/locations.php:457
+#, fuzzy
+msgid "Add new region"
+msgstr "Ajouter un nouveau plugin"
+
+#: oc-admin/themes/modern/settings/locations.php:468
+#: oc-admin/themes/modern/settings/locations.php:492
+#, fuzzy
+msgid "Region: "
+msgstr "Région"
+
+#: oc-admin/themes/modern/settings/locations.php:483
+#, fuzzy
+msgid "Edit region"
+msgstr "Modifier la catégorie"
+
+#: oc-admin/themes/modern/settings/locations.php:507
+#, fuzzy
+msgid "Add new city"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-admin/themes/modern/settings/locations.php:519
+#: oc-admin/themes/modern/settings/locations.php:543
+#, fuzzy
+msgid "City: "
+msgstr "Ville"
+
+#: oc-admin/themes/modern/settings/locations.php:534
+#, fuzzy
+msgid "Edit city"
+msgstr "Modifier la catégorie"
+
+#: oc-admin/themes/modern/settings/mailserver.php:65
+msgid "Type of server"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:67
+#, fuzzy
+msgid "Custom Server"
+msgstr "Coutume"
+
+#: oc-admin/themes/modern/settings/mailserver.php:68
+msgid "GMail Server"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:73
+#, fuzzy
+msgid "Host Name"
+msgstr "Nom court"
+
+#: oc-admin/themes/modern/settings/mailserver.php:76
+msgid "Server Port"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:85
+#, fuzzy
+msgid "Encryption"
+msgstr "Description"
+
+#: oc-admin/themes/modern/settings/mailserver.php:88
+msgid "leave it empty if there isn't encryption, ssl or tls"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:95
+msgid "Enable SMTP authentication"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:101
+msgid "Help"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:102
+msgid "Enter your email server configuration."
+msgstr ""
+
+#: oc-admin/themes/modern/settings/notifications.php:87
+msgid "Enable item validation"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:25
+msgid "Invalid OSClass request"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:60
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:64
+#: oc-admin/themes/modern/settings/permalinks.php:66
+msgid "Enable nice urls"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:70
+msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:40
+msgid "Registry"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:51
+msgid "The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table."
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:57
+#: oc-admin/themes/modern/settings/registry.php:73
+#, fuzzy
+msgid "Section"
+msgstr "Description"
+
+#: oc-admin/themes/modern/settings/registry.php:59
+#: oc-admin/themes/modern/settings/registry.php:75
+msgid "Value"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:60
+#: oc-admin/themes/modern/settings/registry.php:76
+msgid "Type"
+msgstr "Type"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:52
+msgid "Akismet"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:54
+msgid "Akismet key (same as Wordpress.com)"
+msgstr "Clés d'Akismet (comme Wordpress.com)"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "If the field is empty it is because the Akismet service is disabled"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "Get your free key at"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:61
+#, fuzzy
+msgid "Re-captcha"
+msgstr "Re-captcha clé publique"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "If the field is empty it is because the reCAPTCHA service is disabled"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "Get your free keys at"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:66
+msgid "Re-captcha private key"
+msgstr "Re-captcha clé privée"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:71
+msgid "Re-captcha public key"
+msgstr "Re-captcha clé publique"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:76
+msgid "Update spam and bots configuration"
+msgstr "Mise à jour de la configuration du spam et les robots"
+
+#: oc-admin/themes/modern/settings/users.php:63
+#, fuzzy
+msgid "User validation"
+msgstr "Rapport"
+
+#: oc-admin/themes/modern/settings/users.php:67
+msgid "Users need to validation their account. After registering on the website, they will be sent an email with a validation link."
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:53
+msgid "Backing up data... please wait"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:84
+msgid "From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass."
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:90
+msgid "Backup Folder"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:92
+msgid "This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass' documentation."
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:96
+msgid "Backup Database"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:97
+#: oc-admin/themes/modern/tools/backup.php:103
+msgid "backup"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:102
+#, fuzzy
+msgid "Backup OSClass installation"
+msgstr "Application OSClass"
+
+#: oc-admin/themes/modern/tools/export.php:25
+msgid "Export"
+msgstr "Exporter"
+
+#: oc-admin/themes/modern/tools/export.php:27
+msgid "Export now"
+msgstr "Exporter maintenant"
+
+#: oc-admin/themes/modern/tools/import.php:48
+msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/import.php:54
+msgid "Data"
+msgstr "Données"
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:48
+#: oc-admin/themes/modern/tools/upgrade.php:48
+msgid "Checking for update (installed version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:52
+msgid "HORRAY! Your plugin installation is up to date! (current version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:54
+#: oc-admin/themes/modern/tools/upgrade.php:54
+msgid "current version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:55
+#: oc-admin/themes/modern/tools/upgrade.php:55
+msgid "Downloading update file: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:62
+#: oc-admin/themes/modern/tools/upgrade.php:62
+msgid "Unzipping file: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:67
+msgid "Copying old files: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:72
+msgid "Removing new files: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:77
+#: oc-admin/themes/modern/tools/upgrade.php:77
+msgid "Executing SQL: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:82
+#: oc-admin/themes/modern/tools/upgrade.php:82
+msgid "Executing additional actions: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:87
+#: oc-admin/themes/modern/tools/upgrade.php:87
+msgid "Cleanning all the mesh: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:93
+#: oc-admin/themes/modern/tools/upgrade.php:93
+msgid "Satisfaying user with awesome and easy auto-upgrade: Done!"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade.php:52
+msgid "HORRAY! Your OSClass installation is up to date! (current version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade.php:67
+msgid "Copying new files: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade.php:72
+msgid "Removing old files: "
+msgstr ""
+
+#: oc-admin/themes/modern/users/add.php:35
+#: oc-admin/themes/modern/users/index.php:104
+msgid "Add a new user"
+msgstr "Ajouter un nouvel utilisateur"
+
+#: oc-admin/themes/modern/users/add.php:74
+#: oc-admin/themes/modern/users/edit.php:76
+msgid "Web site"
+msgstr "Site Web"
+
+#: oc-admin/themes/modern/users/add.php:87
+#: oc-admin/themes/modern/users/edit.php:89
+msgid "Mobile phone"
+msgstr "Téléphone portable"
+
+#: oc-admin/themes/modern/users/add.php:92
+#: oc-admin/themes/modern/users/edit.php:94
+msgid "Land phone"
+msgstr "Téléphone Fixe"
+
+#: oc-admin/themes/modern/users/add.php:99
+#: oc-admin/themes/modern/users/edit.php:101
+msgid "Additional information"
+msgstr "Informations complémentaires"
+
+#: oc-admin/themes/modern/users/add.php:105
+msgid "Create user"
+msgstr "Créer un utilisateur"
+
+#: oc-admin/themes/modern/users/edit.php:35
+#, fuzzy
+msgid "Edit user"
+msgstr "Mise à jour d'utilisateur"
+
+#: oc-admin/themes/modern/users/edit.php:108
+#, fuzzy
+msgid "Activation"
+msgstr "Activer"
+
+#: oc-admin/themes/modern/users/edit.php:109
+#, fuzzy
+msgid "Active user"
+msgstr "Créer un utilisateur"
+
+#: oc-admin/themes/modern/users/edit.php:114
+msgid "Update user"
+msgstr "Mise à jour d'utilisateur"
+
+#: oc-admin/themes/modern/users/index.php:70
+#, fuzzy
+msgid "Activate user"
+msgstr "Activer"
+
+#: oc-admin/themes/modern/users/index.php:70
+#, fuzzy
+msgid "Deactivate user"
+msgstr "Créer un utilisateur"
+
+#: oc-admin/themes/modern/users/index.php:89
+msgid "Info"
+msgstr "Info"
+
+#: oc-content/plugins/banner_management/conf.php:110
+msgid "Banners"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:125
+#, fuzzy
+msgid "Edit banner"
+msgstr "Modifier la page"
+
+#: oc-content/plugins/banner_management/conf.php:133
+#: oc-content/plugins/banner_management/conf.php:155
+msgid "Short name to help you identify this ad"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:135
+#: oc-content/plugins/banner_management/conf.php:157
+msgid "HTML code for the ad "
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:138
+#: oc-content/plugins/banner_management/conf.php:160
+#: oc-content/plugins/banner_management/conf.php:249
+msgid "[On/Off] HTML editor"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:147
+#, fuzzy
+msgid "Add new banner"
+msgstr "Ajouter un nouvel utilisateur"
+
+#: oc-content/plugins/banner_management/conf.php:159
+msgid "Insert your image / media here. You could use the HTML button to edit directly the HTML code of this banner."
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:178
+msgid "Banners in campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:181
+msgid "Select a campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:212
+msgid "Add banners to your campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:229
+msgid "Select a campaign to ad/remove banners, first."
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:237
+#, fuzzy
+msgid "Create new campaign"
+msgstr "Créer une page"
+
+#: oc-content/plugins/banner_management/conf.php:244
+msgid "Write a name for your campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:246
+msgid "HTML code for the campaign. User '[banner]' for insert random banners or '[banner#banner_name]' for specific abnner."
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:248
+msgid "Example of banner inserting. <ul><li>[banner#example]</li><li>[banner]</li></ul>"
+msgstr ""
+
+#: oc-content/plugins/banner_management/index.php:95
+#, fuzzy
+msgid "Manage banners"
+msgstr "Gérer les pages"
+
+#: oc-content/plugins/banner_management/index.php:96
+#, fuzzy
+msgid "Manage Campaigns"
+msgstr "Gérer les pages"
+
+#: oc-content/plugins/cars_attributes/conf.php:91
+#, fuzzy
+msgid "Makes"
+msgstr "Pages"
+
+#: oc-content/plugins/cars_attributes/conf.php:112
+#, fuzzy
+msgid "Add new make"
+msgstr "Ajouter une nouvelle langue"
+
+#: oc-content/plugins/cars_attributes/conf.php:136
+#, fuzzy
+msgid "Models"
+msgstr "Model"
+
+#: oc-content/plugins/cars_attributes/conf.php:139
+#: oc-content/plugins/cars_attributes/form.php:59
+#: oc-content/plugins/cars_attributes/item_edit.php:56
+msgid "Select a make"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:171
+#, fuzzy
+msgid "Add new model"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-content/plugins/cars_attributes/conf.php:197
+msgid "Vehicle types"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:231
+#, fuzzy
+msgid "Add new car type"
+msgstr "Ajouter un nouveau thème"
+
+#: oc-content/plugins/cars_attributes/conf.php:272
+msgid "Warning"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:17
+#: oc-content/plugins/cars_attributes/item_edit.php:25
+msgid "Select a model..."
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:22
+#: oc-content/plugins/cars_attributes/item_edit.php:34
+#, fuzzy
+msgid "No results"
+msgstr "Recherche"
+
+#: oc-content/plugins/cars_attributes/form.php:52
+#: oc-content/plugins/cars_attributes/item_detail.php:2
+#: oc-content/plugins/cars_attributes/item_edit.php:49
+#: oc-content/plugins/cars_attributes/search_form.php:2
+msgid "Cars attributes"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:56
+#: oc-content/plugins/cars_attributes/item_detail.php:6
+#: oc-content/plugins/cars_attributes/item_edit.php:53
+msgid "Make"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:67
+#: oc-content/plugins/cars_attributes/item_detail.php:10
+#: oc-content/plugins/cars_attributes/item_edit.php:64
+#: oc-content/plugins/cars_attributes/search_form.php:10
+msgid "Model"
+msgstr "Model"
+
+#: oc-content/plugins/cars_attributes/form.php:78
+#: oc-content/plugins/cars_attributes/form.php:92
+#: oc-content/plugins/cars_attributes/item_detail.php:18
+#: oc-content/plugins/cars_attributes/item_detail.php:29
+#: oc-content/plugins/cars_attributes/item_edit.php:78
+#: oc-content/plugins/cars_attributes/item_edit.php:93
+msgid "Car type"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:106
+#: oc-content/plugins/cars_attributes/item_detail.php:39
+#: oc-content/plugins/cars_attributes/item_edit.php:107
+msgid "Year"
+msgstr "Année"
+
+#: oc-content/plugins/cars_attributes/form.php:110
+#: oc-content/plugins/cars_attributes/item_detail.php:43
+#: oc-content/plugins/cars_attributes/item_edit.php:111
+#, fuzzy
+msgid "Doors"
+msgstr "Outils"
+
+#: oc-content/plugins/cars_attributes/form.php:120
+#: oc-content/plugins/cars_attributes/item_detail.php:47
+#: oc-content/plugins/cars_attributes/item_edit.php:121
+#, fuzzy
+msgid "Seats"
+msgstr "Paramètres"
+
+#: oc-content/plugins/cars_attributes/form.php:130
+#: oc-content/plugins/cars_attributes/item_detail.php:51
+#: oc-content/plugins/cars_attributes/item_edit.php:131
+msgid "Mileage"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:135
+#: oc-content/plugins/cars_attributes/item_detail.php:56
+#: oc-content/plugins/cars_attributes/item_edit.php:136
+msgid "Engine size (cc)"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:139
+#: oc-content/plugins/cars_attributes/item_detail.php:60
+#: oc-content/plugins/cars_attributes/item_edit.php:140
+#, fuzzy
+msgid "Num. Airbags"
+msgstr "Nombre d'airbags"
+
+#: oc-content/plugins/cars_attributes/form.php:149
+#: oc-content/plugins/cars_attributes/item_detail.php:64
+#: oc-content/plugins/cars_attributes/item_edit.php:150
+#: oc-content/plugins/cars_attributes/search_form.php:24
+msgid "Transmission"
+msgstr "Transmission"
+
+#: oc-content/plugins/cars_attributes/form.php:151
+#: oc-content/plugins/cars_attributes/item_edit.php:152
+#: oc-content/plugins/cars_attributes/search_form.php:26
+msgid "Manual"
+msgstr "Manuel"
+
+#: oc-content/plugins/cars_attributes/form.php:152
+#: oc-content/plugins/cars_attributes/item_edit.php:153
+#, fuzzy
+msgid "Auto"
+msgstr "Automatique"
+
+#: oc-content/plugins/cars_attributes/form.php:156
+#: oc-content/plugins/cars_attributes/item_detail.php:68
+#: oc-content/plugins/cars_attributes/item_edit.php:157
+msgid "Fuel"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:158
+#: oc-content/plugins/cars_attributes/item_edit.php:159
+msgid "Diesel"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:159
+#: oc-content/plugins/cars_attributes/item_edit.php:160
+msgid "Gasoline"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:160
+#: oc-content/plugins/cars_attributes/item_edit.php:161
+msgid "Electric-hibrid"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:161
+#: oc-content/plugins/cars_attributes/item_edit.php:162
+msgid "Other"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:165
+#: oc-content/plugins/cars_attributes/item_detail.php:72
+#: oc-content/plugins/cars_attributes/item_edit.php:166
+msgid "Seller"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:167
+#: oc-content/plugins/cars_attributes/item_edit.php:168
+#, fuzzy
+msgid "Dealer"
+msgstr "Supprimer"
+
+#: oc-content/plugins/cars_attributes/form.php:168
+#: oc-content/plugins/cars_attributes/item_edit.php:169
+msgid "Owner"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:173
+#: oc-content/plugins/cars_attributes/item_detail.php:77
+#: oc-content/plugins/cars_attributes/item_edit.php:174
+msgid "Warranty"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:174
+#: oc-content/plugins/cars_attributes/item_detail.php:78
+#: oc-content/plugins/cars_attributes/item_edit.php:175
+msgid "New"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:178
+#: oc-content/plugins/cars_attributes/item_detail.php:82
+#: oc-content/plugins/cars_attributes/item_edit.php:179
+msgid "Power"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:180
+#: oc-content/plugins/cars_attributes/item_edit.php:181
+msgid "Kw"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:181
+#: oc-content/plugins/cars_attributes/item_edit.php:182
+msgid "Cv"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:182
+#: oc-content/plugins/cars_attributes/item_edit.php:183
+msgid "Ch"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:183
+#: oc-content/plugins/cars_attributes/item_edit.php:184
+msgid "Km"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:184
+#: oc-content/plugins/cars_attributes/item_edit.php:185
+msgid "Hp"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:185
+#: oc-content/plugins/cars_attributes/item_edit.php:186
+msgid "Ps"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:186
+#: oc-content/plugins/cars_attributes/item_edit.php:187
+msgid "Pk"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:187
+#: oc-content/plugins/cars_attributes/item_edit.php:188
+msgid "Cp"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:191
+#: oc-content/plugins/cars_attributes/item_detail.php:86
+#: oc-content/plugins/cars_attributes/item_edit.php:192
+#, fuzzy
+msgid "Gears"
+msgstr "Année"
+
+#: oc-content/plugins/cars_attributes/index.php:236
+#, fuzzy
+msgid "Configure plugin"
+msgstr "Configurer les médias"
+
+#: oc-content/plugins/cars_attributes/index.php:237
+#, fuzzy
+msgid "Manage makes"
+msgstr "Gérer les pages"
+
+#: oc-content/plugins/cars_attributes/index.php:238
+#, fuzzy
+msgid "Manage models"
+msgstr "Gérer les pages"
+
+#: oc-content/plugins/cars_attributes/index.php:239
+#, fuzzy
+msgid "Manage vehicle types"
+msgstr "Gérer les pages"
+
+#: oc-content/plugins/cars_attributes/search_form.php:14
+msgid "Num. of airbags"
+msgstr "Nombre d'airbags"
+
+#: oc-content/plugins/cars_attributes/search_form.php:27
+msgid "Automatic"
+msgstr "Automatique"
+
+#: oc-content/plugins/dating_attributes/form.php:1
+#: oc-content/plugins/dating_attributes/item_detail.php:1
+msgid "Dating attributes"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:4
+#, fuzzy
+msgid "You are:"
+msgstr "Votre nom"
+
+#: oc-content/plugins/dating_attributes/form.php:6
+#: oc-content/plugins/dating_attributes/form.php:14
+#, fuzzy
+msgid "Man"
+msgstr "Manuel"
+
+#: oc-content/plugins/dating_attributes/form.php:7
+#: oc-content/plugins/dating_attributes/form.php:15
+msgid "Woman"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:8
+#: oc-content/plugins/dating_attributes/form.php:16
+msgid "Not informed"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:12
+#, fuzzy
+msgid "Looking for:"
+msgstr "Vous cherchez un emploi"
+
+#: oc-content/plugins/dating_attributes/form.php:20
+#, fuzzy
+msgid "Relation type:"
+msgstr "Rapport"
+
+#: oc-content/plugins/dating_attributes/form.php:22
+msgid "Friendship"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:23
+#, fuzzy
+msgid "Formal relation"
+msgstr "Dimensions normales"
+
+#: oc-content/plugins/dating_attributes/form.php:24
+#, fuzzy
+msgid "Informal relation"
+msgstr "Information générale"
+
+#: oc-content/plugins/google_maps/admin.php:30
+msgid "You can freely obtain a developer key after signing up on this URL:"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:4
+#: oc-content/plugins/jobs_attributes/item_detail.php:11
+#: oc-content/plugins/jobs_attributes/item_edit.php:4
+#: oc-content/plugins/jobs_attributes/search_form.php:4
+msgid "Relation"
+msgstr "Rapport"
+
+#: oc-content/plugins/jobs_attributes/form.php:6
+#: oc-content/plugins/jobs_attributes/item_edit.php:6
+#: oc-content/plugins/jobs_attributes/search_form.php:6
+msgid "Hire someone"
+msgstr "Engagez quelqu'un"
+
+#: oc-content/plugins/jobs_attributes/form.php:7
+#: oc-content/plugins/jobs_attributes/item_edit.php:7
+#: oc-content/plugins/jobs_attributes/search_form.php:7
+msgid "Looking for a job"
+msgstr "Vous cherchez un emploi"
+
+#: oc-content/plugins/jobs_attributes/form.php:11
+#: oc-content/plugins/jobs_attributes/item_detail.php:15
+#: oc-content/plugins/jobs_attributes/item_edit.php:11
+#: oc-content/plugins/jobs_attributes/search_form.php:11
+msgid "Company name"
+msgstr "Nom de l'entreprise"
+
+#: oc-content/plugins/jobs_attributes/form.php:15
+#: oc-content/plugins/jobs_attributes/item_detail.php:19
+#: oc-content/plugins/jobs_attributes/item_edit.php:15
+#: oc-content/plugins/jobs_attributes/search_form.php:15
+msgid "Position type"
+msgstr "Type de poste"
+
+#: oc-content/plugins/jobs_attributes/form.php:18
+#: oc-content/plugins/jobs_attributes/item_edit.php:18
+#: oc-content/plugins/jobs_attributes/search_form.php:18
+msgid "Undefined"
+msgstr "Indéfini"
+
+#: oc-content/plugins/jobs_attributes/form.php:19
+#: oc-content/plugins/jobs_attributes/item_edit.php:19
+#: oc-content/plugins/jobs_attributes/search_form.php:20
+msgid "Part time"
+msgstr "À temps partiel"
+
+#: oc-content/plugins/jobs_attributes/form.php:20
+#: oc-content/plugins/jobs_attributes/search_form.php:19
+msgid "Full-time"
+msgstr "À plein temps"
+
+#: oc-content/plugins/jobs_attributes/form.php:25
+#: oc-content/plugins/jobs_attributes/item_detail.php:23
+#: oc-content/plugins/jobs_attributes/item_edit.php:25
+#: oc-content/plugins/jobs_attributes/search_form.php:25
+msgid "Salary range"
+msgstr "Variations de salaire"
+
+#: oc-content/plugins/jobs_attributes/form.php:29
+#: oc-content/plugins/jobs_attributes/item_edit.php:29
+#: oc-content/plugins/jobs_attributes/search_form.php:29
+msgid "Hour"
+msgstr "Heure"
+
+#: oc-content/plugins/jobs_attributes/form.php:30
+#: oc-content/plugins/jobs_attributes/item_edit.php:30
+#: oc-content/plugins/jobs_attributes/search_form.php:30
+msgid "Week"
+msgstr "Semaine"
+
+#: oc-content/plugins/jobs_attributes/form.php:31
+#: oc-content/plugins/jobs_attributes/item_edit.php:31
+#: oc-content/plugins/jobs_attributes/search_form.php:31
+msgid "Month"
+msgstr "Mois"
+
+#: oc-content/plugins/jobs_attributes/form.php:43
+#: oc-content/plugins/jobs_attributes/form.php:72
+#: oc-content/plugins/jobs_attributes/item_detail.php:30
+#: oc-content/plugins/jobs_attributes/item_detail.php:59
+#: oc-content/plugins/jobs_attributes/item_edit.php:42
+#: oc-content/plugins/jobs_attributes/item_edit.php:71
+msgid "Desired experience"
+msgstr "Expérience souhaitée"
+
+#: oc-content/plugins/jobs_attributes/form.php:47
+#: oc-content/plugins/jobs_attributes/form.php:76
+#: oc-content/plugins/jobs_attributes/item_detail.php:34
+#: oc-content/plugins/jobs_attributes/item_detail.php:63
+#: oc-content/plugins/jobs_attributes/item_edit.php:46
+#: oc-content/plugins/jobs_attributes/item_edit.php:75
+msgid "Studies"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:51
+#: oc-content/plugins/jobs_attributes/form.php:80
+#: oc-content/plugins/jobs_attributes/item_detail.php:38
+#: oc-content/plugins/jobs_attributes/item_detail.php:67
+#: oc-content/plugins/jobs_attributes/item_edit.php:50
+#: oc-content/plugins/jobs_attributes/item_edit.php:79
+msgid "Minimum requirements"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:55
+#: oc-content/plugins/jobs_attributes/form.php:84
+#: oc-content/plugins/jobs_attributes/item_detail.php:42
+#: oc-content/plugins/jobs_attributes/item_detail.php:71
+#: oc-content/plugins/jobs_attributes/item_edit.php:54
+#: oc-content/plugins/jobs_attributes/item_edit.php:83
+#, fuzzy
+msgid "Desired requirements"
+msgstr "Expérience souhaitée"
+
+#: oc-content/plugins/jobs_attributes/form.php:59
+#: oc-content/plugins/jobs_attributes/form.php:88
+#: oc-content/plugins/jobs_attributes/item_detail.php:46
+#: oc-content/plugins/jobs_attributes/item_detail.php:75
+#: oc-content/plugins/jobs_attributes/item_edit.php:58
+#: oc-content/plugins/jobs_attributes/item_edit.php:87
+#, fuzzy
+msgid "Contract"
+msgstr "Contenu"
+
+#: oc-content/plugins/jobs_attributes/form.php:63
+#: oc-content/plugins/jobs_attributes/form.php:92
+#: oc-content/plugins/jobs_attributes/item_detail.php:50
+#: oc-content/plugins/jobs_attributes/item_detail.php:79
+#: oc-content/plugins/jobs_attributes/item_edit.php:62
+#: oc-content/plugins/jobs_attributes/item_edit.php:91
+#, fuzzy
+msgid "Company description"
+msgstr "Description de la page"
+
+#: oc-content/plugins/jobs_attributes/item_detail.php:8
+msgid "Job attributes"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:39
+msgid "The plugin <strong>Products attributes</strong> adds a set of attributes to the categories you choose. Please select here all the categories where apply these attributes:"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:44
+#, fuzzy
+msgid "Presets categories"
+msgstr "Catégorie mère"
+
+#: oc-content/plugins/products_attributes/admin.php:45
+msgid "Check all"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:45
+msgid "Uncheck all"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:77
+msgid "This plugin is now configured."
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:80
+msgid "Return to plugins's page"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/item_detail.php:1
+#: oc-content/plugins/products_attributes/item_edit.php:1
+#: oc-content/plugins/realstate_attributes/form.php:1
+#: oc-content/plugins/realstate_attributes/item_detail.php:1
+#: oc-content/plugins/realstate_attributes/item_edit.php:1
+msgid "Realestate attributes"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/search_form.php:1
+msgid "Products attributes"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/conf.php:57
+#: oc-content/plugins/realstate_attributes/index.php:359
+msgid "Property types"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/conf.php:95
+#, fuzzy
+msgid "Add new property types"
+msgstr "Ajouter une photo"
+
+#: oc-content/plugins/realstate_attributes/conf.php:129
+msgid "Deleting property types may end in errors. Some of those property types could be attached to some actual items."
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:8
+#: oc-content/plugins/realstate_attributes/item_edit.php:8
+#: oc-content/plugins/realstate_attributes/search_form.php:75
+#, fuzzy
+msgid "For rent"
+msgstr "Dimensions normales"
+
+#: oc-content/plugins/realstate_attributes/form.php:9
+#: oc-content/plugins/realstate_attributes/item_edit.php:9
+#: oc-content/plugins/realstate_attributes/search_form.php:76
+msgid "For sale"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:17
+#: oc-content/plugins/realstate_attributes/form.php:32
+#: oc-content/plugins/realstate_attributes/item_detail.php:17
+#: oc-content/plugins/realstate_attributes/item_detail.php:28
+#: oc-content/plugins/realstate_attributes/item_edit.php:19
+#: oc-content/plugins/realstate_attributes/item_edit.php:32
+#: oc-content/plugins/realstate_attributes/search_form.php:87
+#: oc-content/plugins/realstate_attributes/search_form.php:100
+#, fuzzy
+msgid "Property type"
+msgstr "Type de poste"
+
+#: oc-content/plugins/realstate_attributes/form.php:47
+#: oc-content/plugins/realstate_attributes/item_edit.php:45
+#, fuzzy
+msgid "Num. of rooms"
+msgstr "Nombre de salles de bains"
+
+#: oc-content/plugins/realstate_attributes/form.php:54
+#: oc-content/plugins/realstate_attributes/item_edit.php:55
+msgid "Num. of bathrooms"
+msgstr "Nombre de salles de bains"
+
+#: oc-content/plugins/realstate_attributes/form.php:61
+#: oc-content/plugins/realstate_attributes/item_detail.php:45
+#: oc-content/plugins/realstate_attributes/item_edit.php:65
+#, fuzzy
+msgid "Status"
+msgstr "Statistiques"
+
+#: oc-content/plugins/realstate_attributes/form.php:64
+#: oc-content/plugins/realstate_attributes/item_edit.php:68
+#, fuzzy
+msgid "New construction"
+msgstr "Date de construction"
+
+#: oc-content/plugins/realstate_attributes/form.php:65
+#: oc-content/plugins/realstate_attributes/item_edit.php:69
+msgid "To renovate"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:66
+#: oc-content/plugins/realstate_attributes/item_edit.php:70
+#, fuzzy
+msgid "Good condition"
+msgstr "Climatisation"
+
+#: oc-content/plugins/realstate_attributes/form.php:71
+#: oc-content/plugins/realstate_attributes/item_edit.php:75
+msgid "Square meters"
+msgstr "Nombre de mètres carrés"
+
+#: oc-content/plugins/realstate_attributes/form.php:75
+#: oc-content/plugins/realstate_attributes/item_detail.php:61
+#: oc-content/plugins/realstate_attributes/item_edit.php:79
+#, fuzzy
+msgid "Construction Year"
+msgstr "Date de construction"
+
+#: oc-content/plugins/realstate_attributes/form.php:79
+#: oc-content/plugins/realstate_attributes/item_edit.php:83
+#, fuzzy
+msgid "Square meters (total)"
+msgstr "Nombre de mètres carrés"
+
+#: oc-content/plugins/realstate_attributes/form.php:83
+#: oc-content/plugins/realstate_attributes/item_edit.php:87
+msgid "Num. of floors"
+msgstr "Nombre d'étages"
+
+#: oc-content/plugins/realstate_attributes/form.php:93
+#: oc-content/plugins/realstate_attributes/item_edit.php:97
+msgid "Num. of garages (place for a car = one garage)"
+msgstr "Nombre de garages (place pour une voiture = un garage)"
+
+#: oc-content/plugins/realstate_attributes/form.php:101
+#: oc-content/plugins/realstate_attributes/item_detail.php:89
+#: oc-content/plugins/realstate_attributes/item_edit.php:107
+#, fuzzy
+msgid "Condition"
+msgstr "Climatisation"
+
+#: oc-content/plugins/realstate_attributes/form.php:105
+#: oc-content/plugins/realstate_attributes/item_detail.php:93
+#: oc-content/plugins/realstate_attributes/item_edit.php:111
+msgid "Agency"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:109
+#: oc-content/plugins/realstate_attributes/item_detail.php:97
+#: oc-content/plugins/realstate_attributes/item_edit.php:115
+msgid "Floor Number"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:114
+#: oc-content/plugins/realstate_attributes/item_edit.php:119
+#: oc-content/plugins/realstate_attributes/search_form.php:167
+msgid "Other characteristics"
+msgstr "D'autres caractéristiques"
+
+#: oc-content/plugins/realstate_attributes/form.php:116
+#: oc-content/plugins/realstate_attributes/item_detail.php:65
+#: oc-content/plugins/realstate_attributes/item_edit.php:121
+#: oc-content/plugins/realstate_attributes/search_form.php:169
+msgid "Heating"
+msgstr "Chauffage"
+
+#: oc-content/plugins/realstate_attributes/form.php:117
+#: oc-content/plugins/realstate_attributes/item_edit.php:122
+#: oc-content/plugins/realstate_attributes/search_form.php:170
+msgid "Air condition"
+msgstr "Climatisation"
+
+#: oc-content/plugins/realstate_attributes/form.php:118
+#: oc-content/plugins/realstate_attributes/item_detail.php:71
+#: oc-content/plugins/realstate_attributes/item_edit.php:123
+#: oc-content/plugins/realstate_attributes/search_form.php:171
+msgid "Elevator"
+msgstr "Ascenseur"
+
+#: oc-content/plugins/realstate_attributes/form.php:119
+#: oc-content/plugins/realstate_attributes/item_detail.php:74
+#: oc-content/plugins/realstate_attributes/item_edit.php:124
+#: oc-content/plugins/realstate_attributes/search_form.php:172
+msgid "Terrace"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:120
+#: oc-content/plugins/realstate_attributes/item_detail.php:77
+#: oc-content/plugins/realstate_attributes/item_edit.php:125
+#: oc-content/plugins/realstate_attributes/search_form.php:173
+msgid "Parking"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:121
+#: oc-content/plugins/realstate_attributes/item_detail.php:80
+#: oc-content/plugins/realstate_attributes/item_edit.php:126
+#: oc-content/plugins/realstate_attributes/search_form.php:174
+msgid "Furnished"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:123
+#: oc-content/plugins/realstate_attributes/item_edit.php:128
+#: oc-content/plugins/realstate_attributes/search_form.php:176
+msgid "By owner"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:131
+#: oc-content/plugins/realstate_attributes/form.php:143
+#: oc-content/plugins/realstate_attributes/item_detail.php:106
+#: oc-content/plugins/realstate_attributes/item_detail.php:119
+#: oc-content/plugins/realstate_attributes/item_edit.php:134
+#: oc-content/plugins/realstate_attributes/item_edit.php:147
+msgid "Transport"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:134
+#: oc-content/plugins/realstate_attributes/form.php:147
+#: oc-content/plugins/realstate_attributes/item_detail.php:110
+#: oc-content/plugins/realstate_attributes/item_detail.php:123
+#: oc-content/plugins/realstate_attributes/item_edit.php:138
+#: oc-content/plugins/realstate_attributes/item_edit.php:151
+msgid "Zone"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:37
+#, fuzzy
+msgid "Num. Rooms"
+msgstr "Nombre d'étages"
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:41
+#, fuzzy
+msgid "Num. Bathrooms"
+msgstr "Nombre de salles de bains"
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:49
+#, fuzzy
+msgid "Square Meters"
+msgstr "Nombre de mètres carrés"
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:53
+#, fuzzy
+msgid "Square Meters (total)"
+msgstr "Nombre de mètres carrés"
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:57
+#, fuzzy
+msgid "Num. Floors"
+msgstr "Nombre d'étages"
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:68
+#, fuzzy
+msgid "Air Condition"
+msgstr "Climatisation"
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:86
+msgid "By Owner"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:114
+#, fuzzy
+msgid "Num. Floors Range"
+msgstr "Nombre d'étages"
+
+#: oc-content/plugins/realstate_attributes/search_form.php:123
+msgid "Rooms Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:132
+msgid "Bathrooms Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:141
+#, fuzzy
+msgid "Garages Range"
+msgstr "Gérer les pages"
+
+#: oc-content/plugins/realstate_attributes/search_form.php:150
+#, fuzzy
+msgid "Construction year Range"
+msgstr "Date de construction"
+
+#: oc-content/plugins/realstate_attributes/search_form.php:159
+#, fuzzy
+msgid "Square Meters Range"
+msgstr "Nombre de mètres carrés"
+
+#: oc-content/themes/modern/category.php:7
+msgid "There are no results in this category yet."
+msgstr ""
+
+#: oc-content/themes/modern/footer.php:5
+msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>."
+msgstr ""
+
+#: oc-content/themes/modern/header.php:78
+msgid "Hello"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:79
+msgid "Manage from here your"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:80
+msgid "account"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:81
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: oc-content/themes/modern/header.php:83
+msgid "Register a free account"
+msgstr "Créer un compte gratuit"
+
+#: oc-content/themes/modern/header.php:83
+#, fuzzy
+msgid "or"
+msgstr "Heure"
+
+#: oc-content/themes/modern/header.php:83
+msgid "login"
+msgstr "login"
+
+#: oc-content/themes/modern/header.php:111
+msgid "Your search must be at least two characters long"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:1
+#: oc-content/themes/modern/item.php:7
+#: oc-content/themes/modern_vertical/item-contact.php:1
+#: oc-content/themes/modern_vertical/item.php:7
+#, fuzzy
+msgid "Contact seller"
+msgstr "Pour (vendeur)"
+
+#: oc-content/themes/modern/item-contact.php:11
+#: oc-content/themes/modern_vertical/item-contact.php:11
+msgid "To (seller)"
+msgstr "Pour (vendeur)"
+
+#: oc-content/themes/modern/item-contact.php:19
+#: oc-content/themes/modern_vertical/item-contact.php:19
+msgid "Your name"
+msgstr "Votre nom"
+
+#: oc-content/themes/modern/item-contact.php:19
+#: oc-content/themes/modern/item-contact.php:27
+#: oc-content/themes/modern_vertical/item-contact.php:19
+#: oc-content/themes/modern_vertical/item-contact.php:27
+#, fuzzy
+msgid "(optional)"
+msgstr "facultatif"
+
+#: oc-content/themes/modern/item-contact.php:23
+#: oc-content/themes/modern_vertical/item-contact.php:23
+msgid "Your email address"
+msgstr "Votre adresse e-mail"
+
+#: oc-content/themes/modern/item-contact.php:27
+#: oc-content/themes/modern_vertical/item-contact.php:27
+msgid "Phone number"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:31
+#: oc-content/themes/modern_vertical/item-contact.php:31
+msgid "Message"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:36
+#: oc-content/themes/modern_vertical/item-contact.php:36
+msgid "Send message"
+msgstr ""
+
+#: oc-content/themes/modern/item-post.php:5
+#: oc-content/themes/modern_vertical/item-post.php:95
+msgid "Post your item"
+msgstr "Publiez votre annonce"
+
+#: oc-content/themes/modern/item-post.php:58
+#: oc-content/themes/modern_vertical/item-post.php:274
+msgid "Seller information"
+msgstr "informations du vendeur"
+
+#: oc-content/themes/modern/item-post.php:75
+#: oc-content/themes/modern_vertical/item-post.php:298
+msgid "Publish"
+msgstr "Publier"
+
+#: oc-content/themes/modern/item.php:8
+#: oc-content/themes/modern_vertical/item.php:8
+msgid "Send to a friend"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:18
+#: oc-content/themes/modern_vertical/item.php:18
+msgid "Images"
+msgstr "Photos"
+
+#: oc-content/themes/modern/item.php:24
+#: oc-content/themes/modern_vertical/item.php:24
+#, fuzzy
+msgid "no pictures"
+msgstr "Prix"
+
+#: oc-content/themes/modern/item.php:34
+#: oc-content/themes/modern_vertical/item.php:34
+msgid "Mark as "
+msgstr ""
+
+#: oc-content/themes/modern/item.php:35
+#: oc-content/themes/modern_vertical/item.php:35
+msgid "spam"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:36
+#: oc-content/themes/modern_vertical/item.php:36
+#, fuzzy
+msgid "bad category"
+msgstr "Ajouter une catégorie"
+
+#: oc-content/themes/modern/item.php:37
+#: oc-content/themes/modern_vertical/item.php:37
+#, fuzzy
+msgid "repeated"
+msgstr "Créer"
+
+#: oc-content/themes/modern/item.php:38
+#: oc-content/themes/modern_vertical/item.php:38
+msgid "expired"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:39
+#: oc-content/themes/modern_vertical/item.php:39
+msgid "offensive"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:96
+#: oc-content/themes/modern_vertical/item.php:94
+msgid "Be the first to comment on this item!"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:100
+#: oc-content/themes/modern_vertical/item.php:98
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:103
+#: oc-content/themes/modern_vertical/item.php:101
+#, fuzzy
+msgid "Your name:"
+msgstr "Votre nom"
+
+#: oc-content/themes/modern/item.php:104
+#: oc-content/themes/modern_vertical/item.php:102
+#, fuzzy
+msgid "Your email:"
+msgstr "Votre adresse e-mail"
+
+#: oc-content/themes/modern/item.php:108
+#: oc-content/themes/modern_vertical/item.php:106
+#, fuzzy
+msgid "Title:"
+msgstr "Titre"
+
+#: oc-content/themes/modern/item.php:109
+#: oc-content/themes/modern_vertical/item.php:107
+#, fuzzy
+msgid "Comment:"
+msgstr "Commentaires"
+
+#: oc-content/themes/modern/item.php:112
+#: oc-content/themes/modern_vertical/item.php:110
+#, fuzzy
+msgid "Send comment"
+msgstr "Voir les commentaires"
+
+#: oc-content/themes/modern/item.php:117
+#: oc-content/themes/modern_vertical/item.php:115
+msgid "Comments are not enabled."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:125
+#: oc-content/themes/modern_vertical/item.php:123
+msgid "Helpful information"
+msgstr "Informations utiles"
+
+#: oc-content/themes/modern/item.php:128
+#: oc-content/themes/modern_vertical/item.php:126
+msgid "Avoid scams by dealing locally or paying with PayPal."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:129
+#: oc-content/themes/modern_vertical/item.php:127
+msgid "Never pay with Western Union, Moneygram or other anonymous payment services."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:130
+#: oc-content/themes/modern_vertical/item.php:128
+msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:131
+#: oc-content/themes/modern_vertical/item.php:129
+msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\"."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/category.php:30
+#: oc-content/themes/modern_vertical/home.php:93
+#, fuzzy
+msgid "no description."
+msgstr "Description de la page"
+
+#: oc-content/themes/modern_vertical/header.php:71
+msgid "Hello "
+msgstr ""
+
+#: oc-content/themes/modern_vertical/header.php:113
+#, fuzzy
+msgid "Login"
+msgstr "Connectez-vous"
+
+#: oc-content/themes/modern_vertical/home.php:47
+msgid "No Latest Items"
+msgstr ""
+
+#: oc-content/themes/modern_vertical/home.php:49
+msgid "Latest Items"
+msgstr ""
+
+#: oc-content/themes/modern_vertical/home.php:67
+#, fuzzy
+msgid "Contact"
+msgstr "Contenu"
+
+#: oc-content/themes/modern_vertical/item-post.php:17
+#: oc-content/themes/modern_vertical/item-post.php:233
+msgid "Select a region..."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:22
+#: oc-content/themes/modern_vertical/item-post.php:42
+#: oc-content/themes/modern_vertical/item-post.php:69
+msgid "none"
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:37
+#: oc-content/themes/modern_vertical/item-post.php:64
+#: oc-content/themes/modern_vertical/item-post.php:251
+msgid "Select a city..."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:89
+msgid "You have to select a region."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:90
+msgid "You have to select a city."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:211
+msgid "Item Location"
+msgstr "Lieu de l'annonce"
+
+#: oc-content/themes/modern_vertical/item-post.php:217
+msgid "Select a country..."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:263
+#, fuzzy
+msgid "City Area"
+msgstr "Ville"
+
+#: oc-content/themes/modern_vertical/item-post.php:284
+#, fuzzy
+msgid "Show email publically within the item page"
+msgstr "Montrer ton e-mail publiquement dans la page de l'article"
+
+#: oc-includes/osclass/items.php:178
+msgid "You new to log-in in order to post a new item."
+msgstr ""
+
+#: oc-includes/osclass/items.php:225
+msgid "You need to input your name and email to be able to publish a new item."
+msgstr ""
+
+#: oc-includes/osclass/items.php:465
+msgid "Great! You'll receive an e-mail to activate your item."
+msgstr ""
+
+#: oc-includes/osclass/items.php:467
+msgid "Great! We've just published your item."
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:34
+#: oc-includes/osclass/notifications.php:77
+#, fuzzy
+msgid "Contact Name"
+msgstr "Format de la date"
+
+#: oc-includes/osclass/notifications.php:35
+#: oc-includes/osclass/notifications.php:78
+#, fuzzy
+msgid "Contact E-mail"
+msgstr "Format de la date"
+
+#: oc-includes/osclass/notifications.php:57
+#: oc-includes/osclass/notifications.php:103
+msgid "Url"
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:68
+msgid "Validate your ad"
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:75
+#, fuzzy
+msgid "Dear "
+msgstr "Année"
+
+#: oc-includes/osclass/notifications.php:76
+msgid "You're receiving this email because an Ad is being placed at "
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:104
+msgid "You can validate your ad in this url"
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:93
+#: oc-includes/osclass/plugins.php:119
+#: oc-includes/osclass/plugins.php:121
+#: oc-includes/osclass/plugins.php:146
+#, fuzzy
+msgid "Plugin "
+msgstr "Plugins"
+
+#: oc-includes/osclass/plugins.php:93
+#: oc-includes/osclass/plugins.php:121
+msgid " is missing the index.php file."
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:119
+msgid " is missing the function "
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:146
+msgid " is missing the plugin's main file."
+msgstr ""
+
+#: oc-includes/osclass/session.php:23
+msgid "defined session"
+msgstr ""
+
+#: oc-includes/osclass/themes.php:45
+#: oc-includes/osclass/themes.php:53
+msgid "Consult"
+msgstr ""
+
+#: oc-includes/osclass/themes.php:48
+#, fuzzy
+msgid "Free"
+msgstr "Créer"
+
+#: oc-includes/osclass/frm/Item.form.class.php:98
+msgid "Select one country..."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:117
+msgid "Select one region..."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:135
+msgid "Select one city..."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:280
+msgid "You have to write a name."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:287
+msgid "You have to write an e-mail."
+msgstr ""
+
+#: oc-includes/osclass/frm/Page.form.class.php:48
+msgid "Body"
+msgstr "Corps"
+
+#: oc-includes/osclass/gui/alert-form.php:5
+msgid "You have been subscribe correctly to the alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:5
+msgid "There was a problem with the alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:12
+msgid "Subscribe to this search"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:23
+#, fuzzy
+msgid "Enter your e-mail"
+msgstr "Votre adresse e-mail"
+
+#: oc-includes/osclass/gui/alert-form.php:25
+msgid "Subscribe"
+msgstr ""
+
+#: oc-includes/osclass/gui/contact.php:29
+msgid "Subject"
+msgstr ""
+
+#: oc-includes/osclass/gui/contact.php:45
+msgid "Send"
+msgstr ""
+
+#: oc-includes/osclass/gui/header.php:58
+msgid "items"
+msgstr "Annonce"
+
+#: oc-includes/osclass/gui/header.php:59
+msgid "and "
+msgstr ""
+
+#: oc-includes/osclass/gui/header.php:60
+msgid "profile"
+msgstr "profil"
+
+#: oc-includes/osclass/gui/home.php:22
+#, fuzzy, php-format
+msgid "%d items"
+msgstr "Annonce"
+
+#: oc-includes/osclass/gui/home.php:34
+msgid "Latest published items"
+msgstr ""
+
+#: oc-includes/osclass/gui/item-send-friend.php:104
+#, fuzzy
+msgid "Your friend's name"
+msgstr "Votre nom"
+
+#: oc-includes/osclass/gui/item-send-friend.php:108
+#, fuzzy
+msgid "Your friend's email address"
+msgstr "Votre adresse e-mail"
+
+#: oc-includes/osclass/gui/item.php:28
+msgid "Price:"
+msgstr "Prix"
+
+#: oc-includes/osclass/gui/item.php:29
+#, fuzzy
+msgid "Publication date:"
+msgstr "Date de publication"
+
+#: oc-includes/osclass/gui/item.php:58
+msgid "Mark as"
+msgstr ""
+
+#: oc-includes/osclass/gui/item.php:101
+#, fuzzy
+msgid "Your email"
+msgstr "Votre adresse e-mail"
+
+#: oc-includes/osclass/gui/item.php:127
+msgid "Don't buy or sell outside of your country. Don't accept cashier check from outside your country."
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:50
+#, fuzzy
+msgid "Search results"
+msgstr "Recherche"
+
+#: oc-includes/osclass/gui/search.php:53
+#, fuzzy
+msgid "Page"
+msgstr "Pages"
+
+#: oc-includes/osclass/gui/search.php:67
+msgid "Show as:"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:67
+msgid "List"
+msgstr "Lister"
+
+#: oc-includes/osclass/gui/search.php:67
+msgid "image gallery"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:70
+msgid "Sort by:"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:112
+msgid "Minimum"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:114
+msgid "Maximum"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:118
+#, fuzzy
+msgid "Pictures"
+msgstr "Prix"
+
+#: oc-includes/osclass/gui/search.php:125
+msgid "Show only items with pictures"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:164
+#, php-format
+msgid "There are no results matching \"%s\"."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-account.php:1
+#, fuzzy
+msgid "Your account"
+msgstr "Créez votre compte"
+
+#: oc-includes/osclass/gui/user-alerts.php:22
+#, fuzzy
+msgid "Your alerts"
+msgstr "Votre nom"
+
+#: oc-includes/osclass/gui/user-alerts.php:25
+#, fuzzy
+msgid "You do not have any alerts yet."
+msgstr "Vous n'avez pas d'éléments pour le moment."
+
+#: oc-includes/osclass/gui/user-alerts.php:29
+msgid "Alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-alerts.php:29
+#, fuzzy
+msgid "Delete this alert"
+msgstr "Supprimer la sélection"
+
+#: oc-includes/osclass/gui/user-alerts.php:37
+#: oc-includes/osclass/gui/user-items.php:32
+msgid "Publication date"
+msgstr "Date de publication"
+
+#: oc-includes/osclass/gui/user-forgot-change.php:35
+#, fuzzy
+msgid "Retype new password"
+msgstr "Obtenez un nouveau mot de passe"
+
+#: oc-includes/osclass/gui/user-forgot-change.php:40
+#: oc-includes/osclass/gui/user-forgot.php:33
+msgid "If you forgot your password, enter your e-mail and we'll send you an e-mail to recover it."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-forgot-change.php:44
+#: oc-includes/osclass/gui/user-forgot.php:37
+#, fuzzy
+msgid "I forgot my password"
+msgstr "Mot de passe oublié?"
+
+#: oc-includes/osclass/gui/user-items.php:22
+msgid "Your items"
+msgstr "Vous annonces"
+
+#: oc-includes/osclass/gui/user-items.php:25
+msgid "You do not have any items yet."
+msgstr "Vous n'avez pas d'éléments pour le moment."
+
+#: oc-includes/osclass/gui/user-menu.php:22
+#, fuzzy
+msgid "Menu"
+msgstr "Manuel"
+
+#: oc-includes/osclass/gui/user-menu.php:22
+#, fuzzy
+msgid "Manage your profile"
+msgstr "Mettez à jour votre profil"
+
+#: oc-includes/osclass/gui/user-menu.php:22
+#, fuzzy
+msgid "Manage your items"
+msgstr "Gérer les pages"
+
+#: oc-includes/osclass/gui/user-menu.php:22
+#, fuzzy
+msgid "Log-out"
+msgstr "Déconnexion"
+
+#: oc-includes/osclass/gui/user-profile.php:1
+msgid "Update your profile"
+msgstr "Mettez à jour votre profil"
+
+#: oc-includes/osclass/gui/user-profile.php:20
+msgid "Leave it empty if you don't want to change it now."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-profile.php:24
+#, fuzzy
+msgid "Retype the password"
+msgstr "Obtenez un nouveau mot de passe"
+
+#: oc-includes/osclass/gui/user-profile.php:54
+msgid "Update profile"
+msgstr "Mise à jour du profil"
+
+#: oc-includes/osclass/gui/user-register.php:3
+msgid "Register an account (free)"
+msgstr "Créer un compte (gratuit)"
+
+#: oc-includes/osclass/gui/user-register.php:24
+#, fuzzy
+msgid "Re-type password"
+msgstr "Obtenez un nouveau mot de passe"
 
