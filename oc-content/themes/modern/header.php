@@ -64,7 +64,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                 <div id="header_left">
                     <div id="header_title_shadow">
                         <div id="header_title">
-                            <a href="<?php echo WEB_PATH; ?>/">
+                            <a href="<?php echo WEB_PATH; ?>">
                             <?php echo $preferences['pageTitle']; ?>
                             </a>
                         </div>

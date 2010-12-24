@@ -21,8 +21,8 @@
 
 define('OC_ADMIN', true);
 
-require_once ABS_PATH . 'common.php';
 require_once ABS_PATH . 'config.php';
+require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/web.php';
 require_once LIB_PATH . 'osclass/session.php';
 
