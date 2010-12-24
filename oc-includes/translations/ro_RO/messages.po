@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-18 09:39+0200\n"
+"POT-Creation-Date: 2010-12-23 22:53+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Marius Staicu <marius.staicu@gmail.com>\n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,924 +12,3546 @@ msgstr ""
 "X-Poedit-Language: Romanian\n"
 "X-Poedit-Country: ROMANIA\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __\n"
+"X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass\n"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/item.php:59
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index.php:40
-msgid "OSClass application"
-msgstr "Aplicația OSClass"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/item.php:60
-msgid "Item inquiry"
-msgstr "Caută anunț"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/user.php:23
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/user.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/user.php:63
-msgid "Create your account"
-msgstr "Creați un cont nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/user.php:77
-msgid "Wrong user and/or password."
-msgstr "Nume de utilizator sau parolă greșite"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins.php:16
-msgid "Administrators"
-msgstr "Administratori"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance.php:21
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance.php:40
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance.php:46
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance.php:61
-msgid "Appearance"
-msgstr "Aspect"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories.php:20
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories.php:32
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories.php:62
-msgid "Categories"
-msgstr "Categorii"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/comments.php:17
-msgid "Comments"
-msgstr "Comentarii"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index.php:41
-msgid "Recover your password"
-msgstr "Recuperați parola"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index.php:42
-msgid "OSClass administrator"
-msgstr "Administrator OSClass"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items.php:29
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:11
-msgid "Items"
-msgstr "Anunțuri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/languages.php:21
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/languages.php:38
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:41
-msgid "Languages"
-msgstr "Traduceri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media.php:20
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:14
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:38
-msgid "Media"
-msgstr "Media"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages.php:24
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages.php:41
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages.php:49
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:20
-msgid "Pages"
-msgstr "Pagini"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/plugins.php:23
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/plugins.php:33
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/plugins.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:28
-msgid "Plugins"
-msgstr "Plugin-uri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings.php:24
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings.php:53
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings.php:69
-msgid "General settings"
-msgstr "Configurări generale"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:7
-msgid "Dashboard"
-msgstr "Tablou de bord:"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:18
-msgid "Add a new category"
-msgstr "Adaugă o categorie nouă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:22
-msgid "Manage pages"
-msgstr "Gestionează paginile"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:23
-msgid "Create page"
-msgstr "Creează o pagină nouă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:30
-msgid "Add a new plugin"
-msgstr "Adaugă un modul nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:35
-msgid "Settings"
-msgstr "Configurări"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:37
-msgid "Permalinks"
-msgstr "Link permanent"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:39
-msgid "Spam and bots"
-msgstr "Spam și roboți"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:43
-msgid "Add a new language"
-msgstr "Adaugă o limbă nouă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:47
-msgid "Add a new theme"
-msgstr "Adaugă o tema noua"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:48
-msgid "Add or remove widgets"
-msgstr "Adaugă sau elimină controle"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:50
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/tools.php:22
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/tools.php:37
-msgid "Tools"
-msgstr "Unelte"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:52
-msgid "Import data"
-msgstr "Importă date"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:53
-msgid "Upgrade OSClass"
-msgstr "Actualizează OSClass"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:58
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users.php:24
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users.php:35
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users.php:45
-msgid "Users"
-msgstr "Utilizatori"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:60
-msgid "Add a new user"
-msgstr "Adaugă un utilizator nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:64
-msgid "Add new"
-msgstr "Adaugă un anunț nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/sidebar.php:65
-msgid "Your profile"
-msgstr "Profilul d-voastră"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/create.php:3
-msgid "Create"
-msgstr "Creează"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/create.php:9
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/edit.php:10
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:16
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:37
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:27
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:56
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:57
-msgid "Name"
-msgstr "Nume"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/create.php:14
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/edit.php:15
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:17
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:38
-msgid "User name"
-msgstr "Nume utilizator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/create.php:19
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/edit.php:20
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:18
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:39
-msgid "E-mail"
-msgstr "e_mail"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/create.php:24
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/edit.php:25
-msgid "Password"
-msgstr "Parolă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/create.php:29
-msgid "Create administrator"
-msgstr "Crează administrator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/edit.php:3
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:29
-msgid "Edit"
-msgstr "Editează"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/edit.php:31
-msgid "Update administrator"
-msgstr "Actualizează administrator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:9
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:19
-msgid "Delete selected"
-msgstr "Șterge pe cel ales"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:19
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:40
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:29
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:59
-msgid "Options"
-msgstr "Opțiuni"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/admins/index.php:30
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:48
-msgid "Delete"
-msgstr "Şterge"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/add.php:3
-msgid "Upload a new theme"
-msgstr "Adaugă temă noua"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/add.php:11
-msgid "Theme package"
-msgstr "Pachet tema"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/add.php:15
-msgid "Upload theme"
-msgstr "Adaugă temă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/add_widget.php:17
-msgid "Create widget on "
-msgstr "Crează control"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/add_widget.php:24
-msgid "Content"
-msgstr "Conținut"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/add_widget.php:29
-msgid "Publish widget"
-msgstr "Publică control"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:3
-msgid "Current theme"
-msgstr "Tema curentă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:11
-msgid "Available themes"
-msgstr "Temele disponibile"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:26
-msgid "Thumbnail"
-msgstr "Miniatură"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:28
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:58
-msgid "Description"
-msgstr "Descriere"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:46
-msgid "Activate"
-msgstr "Activează"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/index.php:47
-msgid "Preview"
-msgstr "Previzualizează"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/appearance/widgets.php:3
-msgid "Widgets"
-msgstr "Controale"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/add.php:3
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/add.php:45
-msgid "Add category"
-msgstr "Adaugă categorie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/add.php:9
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/edit.php:11
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/index.php:20
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/index.php:46
-msgid "Parent category"
-msgstr "Categoria părinte"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/add.php:22
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/edit.php:24
-msgid "Locale"
-msgstr "Localizare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/add.php:40
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/edit.php:42
-msgid "Expirations days (0 = no expiration)"
-msgstr "Zile pâna la expirare (0 = nu expiră)"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/edit.php:3
-msgid "Edit category"
-msgstr "Modifică categoria"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/edit.php:47
-msgid "Update category"
-msgstr "Actualizează categoria"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/categories/index.php:37
-msgid "View subcategories"
-msgstr "Vizualizare subcategorii"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index/index.php:13
-msgid "Username"
-msgstr "Utilizator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index/index.php:24
-msgid "Remember me"
-msgstr "Nu mă deautentifica"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index/index.php:27
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index/recover.php:31
-msgid "Log in"
-msgstr "Conectare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index/index.php:36
-msgid "Lost your password?"
-msgstr "Ai uitat parola?"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/index/recover.php:24
-msgid "Get new password"
-msgstr "Obțineți o parolă nouă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:16
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:39
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/create.php:14
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/edit.php:15
-msgid "Title"
-msgstr "Titlu"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:17
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:40
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/index.php:19
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/index.php:38
-msgid "Excerpt"
-msgstr "Extras"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:18
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:41
-msgid "Category"
-msgstr "Categorie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:31
-msgid "View comments"
-msgstr "Vezi comentarii"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/items/index.php:32
-msgid "View media"
-msgstr "Vizualizează media"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/languages/index.php:17
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/languages/index.php:41
-msgid "Short name"
-msgstr "Nume scurt"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:7
-msgid "Statistics"
-msgstr "Statistici"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:9
-msgid "Number of items"
-msgstr "Numărul de anunțuri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:10
-msgid "Number of public users"
-msgstr "Numărul de utilizatori publici"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:11
-msgid "Number of administrators"
-msgstr "Numărul de administratori"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:16
-msgid "Items by category"
-msgstr "Anunțuri pe categorie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:25
-msgid "News from OSClass' blog"
-msgstr "Noutăți de pe blogul OSClass"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/main/index.php:27
-msgid "Unable to fetch the news."
-msgstr "Imposibil de preluat noutatile"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:3
-msgid "Configure media"
-msgstr "Configurare media"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:11
-msgid "Maximum size in KB"
-msgstr "Dimensiunea maximă în KB"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:16
-msgid "Allowed format extensions (eg: png, jpg, gif)"
-msgstr "Extensii formate permise (de ex. png, jpg, gif)"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:21
-msgid "Thumbnail dimensions"
-msgstr "Dimensiuni miniatură"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:26
-msgid "Preview dimensions"
-msgstr "Dimensiuni previzualizare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:31
-msgid "Normal dimensions"
-msgstr "Dimensiuni imagine normală"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/media/config.php:36
-msgid "Update configuration"
-msgstr "Actualizare configurație"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/create.php:19
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/edit.php:20
-msgid "Body"
-msgstr "Corp"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/create.php:24
-msgid "Publish page"
-msgstr "Publică pagina"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/edit.php:8
-msgid "Edit page"
-msgstr "Modifică pagina"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/pages/edit.php:25
-msgid "Save"
-msgstr "Salvează"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/plugins/add.php:3
-msgid "Upload a new plugin"
-msgstr "Adaugă un modul nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/plugins/add.php:11
-msgid "Plugin package"
-msgstr "Pachet modul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/plugins/add.php:15
-msgid "Upload plugin"
-msgstr "Adaugă modul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:11
-msgid "Currency"
-msgstr "Moneda"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:16
-msgid "Language"
-msgstr "Limbă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:29
-msgid "Page title"
-msgstr "Titlu pagină"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:34
-msgid "Page description"
-msgstr "Descriere pagină"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:39
-msgid "Date format"
-msgstr "Format dată"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:44
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:54
-msgid "Custom"
-msgstr "Personalizat"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:49
-msgid "Time format"
-msgstr "Format oră"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/index.php:59
-msgid "Week starts on"
-msgstr "Săptămâna începe"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/spamNbots.php:9
-msgid "Akismet key (same as Wordpress.com)"
-msgstr "Cheia Akismet (la fel ca pe Wordpress.com)"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/spamNbots.php:19
-msgid "Re-captcha private key"
-msgstr "Cheia privata re-captcha"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/spamNbots.php:24
-msgid "Re-captcha public key"
-msgstr "Cheia publică re-captcha"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/settings/spamNbots.php:29
-msgid "Update spam and bots configuration"
-msgstr "Actualizare configurație spam și roboți"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/tools/export.php:3
-msgid "Export"
-msgstr "Exportă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/tools/export.php:5
-msgid "Export now"
-msgstr "Exportă acum"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/tools/import.php:11
-msgid "Data"
-msgstr "Data"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/tools/upgrade.php:11
-msgid "Upgrade file"
-msgstr "Fișier actualizare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/create.php:29
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/index.php:12
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/index.php:36
-msgid "Web site"
-msgstr "Sait Web"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/create.php:34
-msgid "Additional information"
-msgstr "Informații suplimentare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/create.php:39
-msgid "Mobile phone"
-msgstr "Telefon mobil"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/create.php:44
-msgid "Land phone"
-msgstr "Telefon fix"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/create.php:50
-msgid "Create user"
-msgstr "Crează utilizator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/edit.php:25
-msgid "Update user"
-msgstr "Actualizează utilizator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/index.php:13
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin/users/index.php:37
-msgid "Info"
-msgstr "Info"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-admin-new/pages/index.php:181
-msgid "List"
-msgstr "Listă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/admin.php:21
-msgid "Cancel"
-msgstr "Anulare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/form.php:6
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/item_detail.php:6
-msgid "Type"
-msgstr "Tip"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/form.php:10
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/item_detail.php:10
-msgid "Model"
-msgstr "Model"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/form.php:14
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/item_detail.php:14
-msgid "Num. of airbags"
-msgstr "Numărul de airbag-uri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/form.php:24
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/item_detail.php:18
-msgid "Transmission"
-msgstr "Transmisie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/form.php:26
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/item_detail.php:19
-msgid "Manual"
-msgstr "Manual"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/form.php:27
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/cars_attributes/item_detail.php:19
-msgid "Automatic"
-msgstr "Automat"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/google_maps/admin.php:15
-msgid "You can freely obtain a developer key after signing up on this URL:"
-msgstr "Se poate obține o licență gratuită la această adresa"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:6
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/item_detail.php:11
-msgid "Relation"
-msgstr "Relaţie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:8
-msgid "Hire someone"
-msgstr "Angajează pe cineva"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:9
-msgid "Looking for a job"
-msgstr "Cauţi de lucru"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:13
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/item_detail.php:15
-msgid "Company name"
-msgstr "Denumire companie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:17
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/item_detail.php:19
-msgid "Position type"
-msgstr "Tip poziţie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:20
-msgid "Undefined"
-msgstr "Nedefinit"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:21
-msgid "Part time"
-msgstr "Contract parţial"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:22
-msgid "Full-time"
-msgstr "Contract întreg"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:27
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/item_detail.php:23
-msgid "Desired experience"
-msgstr "Experienţa necesară"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:30
-msgid "Less than a year"
-msgstr "Sub 1 an"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:31
-msgid "Between 1 and 3 years"
-msgstr "Între 1 şi 3 ani"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:32
-msgid "Between 3 and 6 years"
-msgstr "Între 3 şi 6 ani"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:33
-msgid "More than 6 years"
-msgstr "Peste 6 ani"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:38
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/item_detail.php:27
-msgid "Salary range"
-msgstr "Interval salariu"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:42
-msgid "Hour"
-msgstr "Oră"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:43
-msgid "Week"
-msgstr "Săptămână"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:44
-msgid "Month"
-msgstr "Luna"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/jobs_attributes/form.php:45
-msgid "Year"
-msgstr "Anul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:6
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:6
-msgid "Num. of floors"
-msgstr "Număr de etaje"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:16
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:10
-msgid "Num. of bathrooms"
-msgstr "Număr de camere de baie"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:26
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:14
-msgid "Num. of garages (place for a car = one garage)"
-msgstr "Număr de garaje (un loc de mașina = un garaj)"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:36
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:18
-msgid "Construction date"
-msgstr "Data construcţiei"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:40
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:22
-msgid "Square meters"
-msgstr "Metri pătrați"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:44
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:29
-msgid "Other characteristics"
-msgstr "Alte caracteristici"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:46
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:32
-msgid "Heating"
-msgstr "Încălzire"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:33
-msgid "Air condition"
-msgstr "Aer condiţionat"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/form.php:48
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/plugins/realestate_attributes/item_detail.php:34
-msgid "Elevator"
-msgstr "Lift"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/header.php:42
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/header.php:42
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:61
-msgid "items"
-msgstr "anunțuri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/header.php:44
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/header.php:44
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:63
-msgid "profile"
-msgstr "profil"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/header.php:45
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/header.php:45
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:64
-msgid "Logout"
-msgstr "Deautentificare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/header.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/header.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:66
-msgid "Register a free account"
-msgstr "Înregistrează cont nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/header.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/header.php:47
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:66
-msgid "login"
-msgstr "autentificare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/home.php:8
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/home.php:8
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:119
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:120
-msgid "Search"
-msgstr "Căutare"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/anubis/home.php:8
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default/home.php:8
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/header.php:125
+"X-Poedit-SearchPath-0: \n"
+
+#: index.php:46
+#: search.php:163
+msgid "Latest items added"
+msgstr ""
+
+#: index.php:48
+#: search.php:165
+msgid "Latest items added in"
+msgstr ""
+
+#: index.php:91
+msgid "Contact form"
+msgstr ""
+
+#: index.php:93
+msgid "Administrator"
+msgstr ""
+
+#: index.php:103
+msgid "Your message has been sent and will be answered soon, thank you."
+msgstr ""
+
+#: item.php:52
+msgid "Thanks! That helps us."
+msgstr ""
+
+#: item.php:94
+msgid "We just send your message to "
+msgstr ""
+
+#: item.php:96
+msgid "We are very sorry but we could not deliver your message to your friend. Try again later."
+msgstr ""
+
+#: item.php:109
+#: item.php:128
+msgid "We're sorry, but the item is expired. You can not contact the seller."
+msgstr ""
+
+#: item.php:159
+msgid "We've just sent an e-mail to the seller."
+msgstr ""
+
+#: item.php:237
+msgid "We are very sorry but could not save your comment. Try again later."
+msgstr ""
+
+#: item.php:251
+msgid "You need to log-in in order to post a new item."
+msgstr ""
+
+#: item.php:274
 msgid "Publish your item"
 msgstr "Publică un anunț"
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/category.php:7
-msgid "Price"
-msgstr "Preț"
+#: page.php:29
+#: page.php:60
+msgid "Page not found"
+msgstr ""
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-contact.php:12
-msgid "To (seller)"
-msgstr "Către (vanzator)"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-contact.php:16
-msgid "Item"
-msgstr "Anunț"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-contact.php:20
-msgid "Your email address"
-msgstr "Adresa dumneavoastră de email"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-contact.php:24
-msgid "Your name"
-msgstr "Numele dumneavoastră"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:6
-msgid "Post your item"
-msgstr "Adaugă un anunț nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:16
-msgid "General Information"
-msgstr "Informații generale"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:69
-msgid "Remove"
-msgstr "Elimină"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:82
-msgid "Photos"
-msgstr "Imagini"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:85
-msgid "optional"
-msgstr "Opțional"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:88
-msgid "Add new photo"
-msgstr "Adaugă încă o imagine"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:94
-msgid "Item Location"
-msgstr "Locaţia elementului"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:97
-msgid "Country"
-msgstr "Țară"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:106
-msgid "City"
-msgstr "Oraşul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:111
-msgid "Region"
-msgstr "Regiune"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:116
-msgid "Address"
-msgstr "Adresă"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:121
-msgid "Seller information"
-msgstr "Informații vanzator"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:131
-msgid "Show email publicaly within the item page"
-msgstr "Afișează emailul pe pagina cu anunțul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item-post.php:147
-msgid "Publish"
-msgstr "Publică"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item.php:16
-msgid "Images"
-msgstr "Imagini"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/item.php:93
-msgid "Helpful information"
-msgstr "Alte informaţii"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/user-items.php:2
-msgid "Your items"
-msgstr "Anunțurile d-voastra"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/user-items.php:5
-msgid "You do not have any items yet."
-msgstr "Nu aveți nici un anunț"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/user-items.php:16
-msgid "Publication date"
-msgstr "Data publicării"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/user-profile.php:2
-msgid "Update your profile"
-msgstr "Actualizează profilul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/user-profile.php:51
-msgid "Update profile"
-msgstr "Actualizează profilul"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/default_new/user-register.php:1
-msgid "Register an account (free)"
-msgstr "Înregistrează un cont nou"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/modern_vertical/home.php:48
-msgid "No Latest Items"
-msgstr "Nu există anunțuri noi"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/modern_vertical/home.php:50
-msgid "Latest Items"
-msgstr "Ultimele anunțuri"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-content/themes/modern_vertical/home.php:68
-msgid "Contact"
-msgstr "Contact"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/item-post.php:80
-msgid "Item location"
-msgstr "Locaţia anunțului"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/item.php:6
-msgid "Price:"
-msgstr "Preț:"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:31
-msgid "Show as:"
-msgstr "Arată ca:"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:31
-msgid "image gallery"
-msgstr "galerie imagini"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:34
-msgid "Sort by:"
-msgstr "Sortare după"
-
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:36
+#: search.php:136
 msgid "Newly listed"
 msgstr "Nou apărute"
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:37
+#: search.php:137
 msgid "Lower price first"
 msgstr "Dupa preț, crescător"
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:38
+#: search.php:138
 msgid "Higher price first"
 msgstr "Dupa preț, descrescător"
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:39
+#: search.php:139
 msgid "Best match"
 msgstr "Selectează cea mai bună potrivire posibilă"
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-includes/osclass/gui/search.php:62
-msgid "Show only items with picture"
-msgstr "Arată doar anunțuri cu imagini"
+#: search.php:152
+#, php-format
+msgid "Search results for %s"
+msgstr ""
 
-#: /mnt/storage/containers/gentoo_02/rootfs/var/www/localhost/htdocs/osclass/oc-installer/step3_logic.php:41
-msgid "Succesful installation!"
-msgstr "Instalarea s-a finalizat cu success!"
+#: user.php:31
+#: user.php:194
+#: user.php:226
+msgid "Create your account"
+msgstr "Creați un cont nou"
 
+#: user.php:48
+msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
+msgstr ""
+
+#: user.php:63
+msgid "Sorry, but the username can only contain alphanumeric characters."
+msgstr ""
+
+#: user.php:102
+msgid "Your account has been created. An activation email has been sent to your email address."
+msgstr ""
+
+#: user.php:108
+msgid "Your account has been created. You're ready to go."
+msgstr ""
+
+#: user.php:111
+msgid "Sorry, but that username is already in use."
+msgstr ""
+
+#: user.php:115
+msgid "The user could not be registered, sorry."
+msgstr ""
+
+#: user.php:146
+msgid "We resend you the validation email. If you don't recive it after a few minutes, please check your SPAM folder."
+msgstr ""
+
+#: user.php:148
+msgid "The email couldn't be sent, sorry."
+msgstr ""
+
+#: user.php:182
+msgid "Your account is correctly validated. Thanks."
+msgstr ""
+
+#: user.php:184
+msgid "Your account has been activated before."
+msgstr ""
+
+#: user.php:187
+msgid "The link is not longer valid, sorry."
+msgstr ""
+
+#: user.php:199
+#: user.php:248
+#: user.php:263
+msgid "You need to login first."
+msgstr ""
+
+#: user.php:210
+msgid "Passwords don't match."
+msgstr ""
+
+#: user.php:221
+msgid "Your profile has been updated correctly"
+msgstr ""
+
+#: user.php:242
+msgid "Manage your alerts"
+msgstr ""
+
+#: user.php:258
+msgid "Manage your account"
+msgstr ""
+
+#: user.php:274
+msgid "Your item has been deleted."
+msgstr ""
+
+#: user.php:277
+#: user.php:331
+msgid "You could register and access every time to your items."
+msgstr ""
+
+#: user.php:354
+msgid "Access to your account"
+msgstr ""
+
+#: user.php:381
+msgid "You have not validated your account yet.<br/> Should we resend you the validation email?"
+msgstr ""
+
+#: user.php:381
+msgid "Yes, resend me the validation email."
+msgstr ""
+
+#: user.php:384
+#: oc-admin/index.php:107
+msgid "Wrong username or password."
+msgstr ""
+
+#: user.php:402
+msgid "Unsubscribed correctly."
+msgstr ""
+
+#: user.php:404
+msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator."
+msgstr ""
+
+#: user.php:410
+#: user.php:458
+msgid "Retrieve your password"
+msgstr ""
+
+#: user.php:450
+msgid "Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive."
+msgstr ""
+
+#: user.php:462
+#: user.php:466
+#: user.php:483
+#: user.php:491
+msgid "Sorry, the link is not valid."
+msgstr ""
+
+#: user.php:480
+msgid "The password has been changed."
+msgstr ""
+
+#: user.php:487
+msgid "Error: Passwords don't match."
+msgstr ""
+
+#: oc-admin/admins.php:31
+#: oc-admin/admins.php:50
+#: oc-admin/admins.php:100
+msgid "Administrators"
+msgstr "Administratori"
+
+#: oc-admin/admins.php:31
+#: oc-admin/categories.php:39
+msgid "Add"
+msgstr ""
+
+#: oc-admin/admins.php:38
+msgid "The item has been added."
+msgstr ""
+
+#: oc-admin/admins.php:40
+msgid "The administrator could not be created."
+msgstr ""
+
+#: oc-admin/admins.php:50
+#: oc-admin/categories.php:65
+msgid "Edit"
+msgstr "Editează"
+
+#: oc-admin/admins.php:64
+msgid "Password didn't update. Passwords don't match."
+msgstr ""
+
+#: oc-admin/admins.php:68
+msgid "Password didn't update. \"Old password\" didn't match with our records in the database."
+msgstr ""
+
+#: oc-admin/admins.php:77
+#: oc-admin/admins.php:91
+#: oc-admin/categories.php:58
+#: oc-admin/categories.php:85
+#: oc-admin/categories.php:103
+#: oc-admin/categories.php:123
+#: oc-admin/categories.php:138
+#: oc-admin/categories.php:153
+#: oc-admin/comments.php:43
+#: oc-admin/comments.php:61
+#: oc-admin/comments.php:79
+#: oc-admin/comments.php:102
+msgid "Error: "
+msgstr ""
+
+#: oc-admin/admins.php:86
+msgid "The operation was not completed. You were trying to remove yourself!"
+msgstr ""
+
+#: oc-admin/appearance.php:29
+#: oc-admin/appearance.php:53
+#: oc-admin/appearance.php:56
+#: oc-admin/appearance.php:80
+msgid "Appearance"
+msgstr "Aspect"
+
+#: oc-admin/appearance.php:29
+msgid "Upload"
+msgstr ""
+
+#: oc-admin/appearance.php:40
+#: oc-admin/appearance.php:44
+#, php-format
+msgid "Directory \"%s\" could not be removed."
+msgstr ""
+
+#: oc-admin/appearance.php:46
+msgid "No theme selected."
+msgstr ""
+
+#: oc-admin/categories.php:39
+#: oc-admin/categories.php:65
+#: oc-admin/categories.php:172
+msgid "Categories"
+msgstr "Categorii"
+
+#: oc-admin/categories.php:56
+msgid "The category has been added."
+msgstr ""
+
+#: oc-admin/categories.php:83
+msgid "The item has been updated."
+msgstr ""
+
+#: oc-admin/categories.php:101
+msgid "The items have been deleted."
+msgstr ""
+
+#: oc-admin/categories.php:114
+msgid "The category has been enabled."
+msgstr ""
+
+#: oc-admin/categories.php:116
+msgid "The category has been disabled."
+msgstr ""
+
+#: oc-admin/categories.php:119
+msgid "There was a problem with this page. The ID for the category is not set."
+msgstr ""
+
+#: oc-admin/categories.php:136
+msgid "The categories have been enabled."
+msgstr ""
+
+#: oc-admin/categories.php:151
+msgid "Selected categories have been disabled."
+msgstr ""
+
+#: oc-admin/comments.php:41
+msgid "The comments have been deleted."
+msgstr ""
+
+#: oc-admin/comments.php:59
+msgid "The comments have been activated."
+msgstr ""
+
+#: oc-admin/comments.php:77
+msgid "The comments have been deactivated."
+msgstr ""
+
+#: oc-admin/comments.php:100
+msgid "The comment has been activate."
+msgstr ""
+
+#: oc-admin/comments.php:112
+#: oc-admin/comments.php:135
+msgid "Comments"
+msgstr "Comentarii"
+
+#: oc-admin/comments.php:125
+msgid "Great! We've just update your item."
+msgstr ""
+
+#: oc-admin/common.php:43
+#: oc-admin/common.php:52
+msgid "Plugins"
+msgstr "Plugin-uri"
+
+#: oc-admin/common.php:43
+#: oc-admin/common.php:52
+msgid "Configuration"
+msgstr ""
+
+#: oc-admin/index.php:51
+#, php-format
+msgid "Your new password is \"%s\"."
+msgstr ""
+
+#: oc-admin/index.php:59
+msgid "OSClass application"
+msgstr "Aplicația OSClass"
+
+#: oc-admin/index.php:60
+msgid "Recover your password"
+msgstr "Recuperați parola"
+
+#: oc-admin/index.php:62
+msgid "OSClass administrator"
+msgstr "Administrator OSClass"
+
+#: oc-admin/index.php:68
+msgid "A new password has been sent to your account."
+msgstr ""
+
+#: oc-admin/index.php:70
+msgid "The email you have entered does not belong to a valid administrator."
+msgstr ""
+
+#: oc-admin/items.php:48
+msgid "The items have been activated."
+msgstr ""
+
+#: oc-admin/items.php:68
+msgid "The items have been deactivated."
+msgstr ""
+
+#: oc-admin/items.php:86
+msgid "The items have been made premium."
+msgstr ""
+
+#: oc-admin/items.php:105
+msgid "The chages have been made."
+msgstr ""
+
+#: oc-admin/items.php:187
+msgid "The item has been activate."
+msgstr ""
+
+#: oc-admin/items.php:214
+msgid "Changes have been made."
+msgstr ""
+
+#: oc-admin/items.php:311
+msgid "Items"
+msgstr "Anunțuri"
+
+#: oc-admin/languages.php:31
+#: oc-admin/languages.php:44
+#: oc-admin/languages.php:139
+msgid "Languages"
+msgstr "Traduceri"
+
+#: oc-admin/languages.php:36
+msgid "The language has been installed correctly."
+msgstr ""
+
+#: oc-admin/languages.php:38
+msgid "There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH."
+msgstr ""
+
+#: oc-admin/languages.php:66
+msgid "The language has been enabled for the public website."
+msgstr ""
+
+#: oc-admin/languages.php:66
+msgid "The language has been disabled for the public website."
+msgstr ""
+
+#: oc-admin/languages.php:69
+msgid "The language has been enabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:69
+msgid "The language has been disabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:77
+msgid "There was a problem updating the language. The ID of the language was lost."
+msgstr ""
+
+#: oc-admin/languages.php:93
+msgid "Selected languages have been enabled for the website."
+msgstr ""
+
+#: oc-admin/languages.php:96
+msgid "Selected languages have been disabled for the website."
+msgstr ""
+
+#: oc-admin/languages.php:99
+msgid "Selected languages have been enabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:102
+msgid "Selected languages have been disabled for the backoffice (oc-admin)."
+msgstr ""
+
+#: oc-admin/languages.php:113
+msgid "There was a problem updating the languages. The IDs of the languages were lost."
+msgstr ""
+
+#: oc-admin/languages.php:130
+#, php-format
+msgid "Directory \"%s\" could not be removed, it' the default language. Set another language as default first and try again."
+msgstr ""
+
+#: oc-admin/location.php:49
+msgid "Countries"
+msgstr ""
+
+#: oc-admin/location.php:58
+msgid "Regions"
+msgstr ""
+
+#: oc-admin/location.php:69
+msgid "Cities"
+msgstr ""
+
+#: oc-admin/location.php:146
+msgid "Location management"
+msgstr ""
+
+#: oc-admin/login.php:31
+#: oc-admin/recover.php:26
+msgid "OSClass Admin Panel Login"
+msgstr ""
+
+#: oc-admin/login.php:43
+msgid "Username"
+msgstr "Utilizator"
+
+#: oc-admin/login.php:49
+msgid "Password"
+msgstr "Parolă"
+
+#: oc-admin/login.php:55
+msgid "Language"
+msgstr "Limbă"
+
+#: oc-admin/login.php:68
+msgid "Theme"
+msgstr ""
+
+#: oc-admin/login.php:76
+msgid "Remember me"
+msgstr "Nu mă deautentifica"
+
+#: oc-admin/login.php:80
+#: oc-admin/recover.php:50
+msgid "Log in"
+msgstr "Conectare"
+
+#: oc-admin/login.php:85
+msgid "Lost your password?"
+msgstr "Ai uitat parola?"
+
+#: oc-admin/login.php:88
+#: oc-admin/recover.php:54
+msgid "Have you lost?"
+msgstr ""
+
+#: oc-admin/login.php:88
+#: oc-admin/recover.php:54
+msgid "Back to"
+msgstr ""
+
+#: oc-admin/main.php:34
+msgid "Dashboard"
+msgstr "Tablou de bord:"
+
+#: oc-admin/media.php:32
+#: oc-admin/media.php:51
+msgid "Media"
+msgstr "Media"
+
+#: oc-admin/media.php:32
+#: oc-admin/settings.php:34
+#: oc-admin/settings.php:61
+#: oc-admin/settings.php:65
+#: oc-admin/settings.php:68
+#: oc-admin/settings.php:189
+#: oc-admin/settings.php:322
+#: oc-admin/settings.php:331
+#: oc-admin/settings.php:334
+#: oc-admin/settings.php:337
+msgid "Settings"
+msgstr "Configurări"
+
+#: oc-admin/pages.php:33
+#: oc-admin/pages.php:105
+#: oc-admin/pages.php:148
+msgid "Pages"
+msgstr "Pagini"
+
+#: oc-admin/pages.php:64
+msgid "The page has been updated."
+msgstr ""
+
+#: oc-admin/pages.php:76
+#: oc-admin/pages.php:83
+#: oc-admin/pages.php:93
+#: oc-admin/pages.php:97
+msgid "The item have been deleted."
+msgstr ""
+
+#: oc-admin/pages.php:79
+#: oc-admin/pages.php:95
+msgid "Error, this page can not be deleted."
+msgstr ""
+
+#: oc-admin/pages.php:139
+msgid "Ops! That internal name is already in use. We couldn't made the changes."
+msgstr ""
+
+#: oc-admin/plugins.php:45
+msgid "Plugin installed."
+msgstr ""
+
+#: oc-admin/plugins.php:56
+msgid "Plugin uninstalled."
+msgstr ""
+
+#: oc-admin/plugins.php:103
+msgid "No plugin selected"
+msgstr ""
+
+#: oc-admin/plugins.php:106
+msgid "Configuration was saved"
+msgstr ""
+
+#: oc-admin/recover.php:36
+msgid "Please enter your username or e-mail address."
+msgstr ""
+
+#: oc-admin/recover.php:37
+msgid "You will receive a new password via e-mail."
+msgstr ""
+
+#: oc-admin/recover.php:43
+msgid "E-mail"
+msgstr "e_mail"
+
+#: oc-admin/recover.php:46
+msgid "Get new password"
+msgstr "Obțineți o parolă nouă"
+
+#: oc-admin/settings.php:176
+msgid "Location"
+msgstr ""
+
+#: oc-admin/settings.php:215
+#: oc-admin/settings.php:246
+#: oc-admin/settings.php:284
+msgid "Functionalities"
+msgstr ""
+
+#: oc-admin/settings.php:257
+#: oc-admin/settings.php:319
+msgid "Notifications"
+msgstr ""
+
+#: oc-admin/settings.php:408
+msgid "General settings"
+msgstr "Configurări generale"
+
+#: oc-admin/tools.php:29
+#: oc-admin/tools.php:37
+#: oc-admin/tools.php:39
+#: oc-admin/tools.php:60
+msgid "Tools"
+msgstr "Unelte"
+
+#: oc-admin/tools.php:47
+msgid "Backup made correctly"
+msgstr ""
+
+#: oc-admin/tools.php:56
+#: oc-admin/upgrade-plugin.php:75
+#: oc-admin/upgrade.php:77
+msgid "Archiving is sucessful!"
+msgstr ""
+
+#: oc-admin/tools.php:57
+#: oc-admin/upgrade-plugin.php:77
+#: oc-admin/upgrade.php:79
+msgid "Error, can't create a zip file!"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:44
+#: oc-admin/upgrade.php:44
+msgid "File downloaded correctly."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:46
+#: oc-admin/upgrade.php:46
+msgid "Missing filename."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:89
+#: oc-admin/upgrade.php:91
+msgid "OK"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:91
+#: oc-admin/upgrade.php:93
+msgid "Unzip failed"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:95
+#: oc-admin/upgrade.php:97
+msgid "Filename incorrect."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:106
+#: oc-admin/upgrade.php:108
+msgid "Error removing file: "
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:109
+#: oc-admin/upgrade.php:111
+msgid "Files removed ;)"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:112
+#: oc-admin/upgrade.php:114
+msgid "No files to remove ;)"
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:131
+#: oc-admin/upgrade.php:135
+msgid "There were problems copying files."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:133
+#: oc-admin/upgrade-plugin.php:139
+#: oc-admin/upgrade.php:133
+#: oc-admin/upgrade.php:141
+msgid "Nothing to copy."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:135
+#: oc-admin/upgrade.php:137
+msgid "Files copied."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:149
+#: oc-admin/upgrade.php:151
+msgid "upgrade.sql executed."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:151
+#: oc-admin/upgrade.php:153
+msgid "No SQL to execute."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:159
+#: oc-admin/upgrade.php:161
+msgid "Custom actions executed."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:161
+#: oc-admin/upgrade.php:163
+msgid "No action to execute."
+msgstr ""
+
+#: oc-admin/upgrade-plugin.php:169
+#: oc-admin/upgrade.php:169
+msgid "Update"
+msgstr ""
+
+#: oc-admin/users.php:31
+#: oc-admin/users.php:45
+#: oc-admin/users.php:101
+msgid "Users"
+msgstr "Utilizatori"
+
+#: oc-admin/users.php:61
+msgid "The user has been updated."
+msgstr ""
+
+#: oc-admin/users.php:73
+#: oc-admin/users.php:86
+msgid "The user has been deactivated."
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:105
+msgid "View comments"
+msgstr "Vezi comentarii"
+
+#: oc-admin/ajax/items_processing.php:106
+msgid "View media"
+msgstr "Vizualizează media"
+
+#: oc-admin/ajax/items_processing.php:108
+msgid "Deactivate"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:110
+msgid "Activate"
+msgstr "Activează"
+
+#: oc-admin/ajax/items_processing.php:113
+msgid "Demake Premium"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:115
+msgid "Make Premium"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:118
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: oc-admin/ajax/items_processing.php:119
+msgid "Delete"
+msgstr "Şterge"
+
+#: oc-admin/themes/modern/footer.php:29
+msgid "Thank you for using"
+msgstr ""
+
+#: oc-admin/themes/modern/footer.php:29
+#: oc-admin/themes/modern/footer.php:34
+#: oc-admin/themes/modern/header.php:198
+#: oc-admin/themes/modern/appearance/add.php:67
+#: oc-admin/themes/modern/languages/add.php:66
+msgid "OSClass"
+msgstr ""
+
+#: oc-admin/themes/modern/footer.php:30
+msgid "Documentation"
+msgstr ""
+
+#: oc-admin/themes/modern/footer.php:31
+msgid "Feedback"
+msgstr ""
+
+#: oc-admin/themes/modern/header.php:38
+msgid "OSClass Admin Panel"
+msgstr ""
+
+#: oc-admin/themes/modern/header.php:203
+msgid "Visit website"
+msgstr ""
+
+#: oc-admin/themes/modern/header.php:204
+msgid "Howdy"
+msgstr ""
+
+#: oc-admin/themes/modern/header.php:204
+msgid "Your profile"
+msgstr "Profilul d-voastră"
+
+#: oc-admin/themes/modern/header.php:204
+msgid "Log Out"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/add.php:23
+#: oc-admin/themes/modern/admins/edit.php:23
+#: oc-admin/themes/modern/appearance/add.php:23
+#: oc-admin/themes/modern/appearance/add_widget.php:23
+#: oc-admin/themes/modern/appearance/widgets.php:23
+#: oc-admin/themes/modern/categories/frm.php:22
+#: oc-admin/themes/modern/languages/add.php:23
+msgid "Invalid OSClass request."
+msgstr ""
+
+#: oc-admin/themes/modern/admins/add.php:38
+#: oc-admin/themes/modern/admins/edit.php:38
+#: oc-admin/themes/modern/include/backoffice_menu.php:194
+msgid "Add new administrator"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/add.php:53
+#: oc-admin/themes/modern/admins/edit.php:54
+#: oc-admin/themes/modern/admins/index.php:86
+msgid "Real name"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/add.php:53
+#: oc-admin/themes/modern/admins/add.php:68
+#: oc-admin/themes/modern/admins/add.php:75
+#: oc-admin/themes/modern/admins/edit.php:54
+#: oc-admin/themes/modern/admins/edit.php:69
+msgid "required"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/add.php:68
+#: oc-admin/themes/modern/admins/edit.php:69
+msgid "User name"
+msgstr "Nume utilizator"
+
+#: oc-admin/themes/modern/admins/add.php:81
+msgid "Create administrator"
+msgstr "Crează administrator"
+
+#: oc-admin/themes/modern/admins/edit.php:76
+msgid "Old password"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/edit.php:78
+msgid "New password"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/edit.php:80
+msgid "Re-type new password"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/edit.php:83
+msgid "Leave it blank if you do not want to change your password now"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/edit.php:87
+msgid "Update administrator"
+msgstr "Actualizează administrator"
+
+#: oc-admin/themes/modern/admins/index.php:37
+#: oc-admin/themes/modern/admins/index.php:49
+#: oc-admin/themes/modern/categories/index.php:36
+#: oc-admin/themes/modern/categories/index.php:48
+#: oc-admin/themes/modern/comments/index.php:35
+#: oc-admin/themes/modern/comments/index.php:47
+#: oc-admin/themes/modern/items/index.php:48
+#: oc-admin/themes/modern/items/index.php:74
+msgid "Search"
+msgstr "Căutare"
+
+#: oc-admin/themes/modern/admins/index.php:42
+#: oc-admin/themes/modern/categories/index.php:41
+#: oc-admin/themes/modern/comments/index.php:40
+#: oc-admin/themes/modern/items/index.php:67
+msgid "Processing"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:43
+#: oc-admin/themes/modern/categories/index.php:42
+#: oc-admin/themes/modern/comments/index.php:41
+#: oc-admin/themes/modern/items/index.php:68
+msgid "Show _MENU_ entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:44
+#: oc-admin/themes/modern/categories/index.php:43
+#: oc-admin/themes/modern/comments/index.php:42
+#: oc-admin/themes/modern/items/index.php:69
+msgid "No matching records found"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:45
+#: oc-admin/themes/modern/categories/index.php:44
+#: oc-admin/themes/modern/comments/index.php:43
+#: oc-admin/themes/modern/items/index.php:70
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:46
+#: oc-admin/themes/modern/categories/index.php:45
+#: oc-admin/themes/modern/comments/index.php:44
+#: oc-admin/themes/modern/items/index.php:71
+msgid "Showing 0 to 0 of 0 entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:47
+#: oc-admin/themes/modern/categories/index.php:46
+#: oc-admin/themes/modern/comments/index.php:45
+#: oc-admin/themes/modern/items/index.php:72
+msgid "filtered from _MAX_ total entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:52
+#: oc-admin/themes/modern/categories/index.php:51
+#: oc-admin/themes/modern/comments/index.php:50
+#: oc-admin/themes/modern/items/index.php:77
+msgid "First"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:53
+#: oc-admin/themes/modern/categories/index.php:52
+#: oc-admin/themes/modern/comments/index.php:51
+#: oc-admin/themes/modern/items/index.php:78
+msgid "Previous"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:54
+#: oc-admin/themes/modern/categories/index.php:53
+#: oc-admin/themes/modern/comments/index.php:52
+#: oc-admin/themes/modern/items/index.php:79
+msgid "Next"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:55
+#: oc-admin/themes/modern/categories/index.php:54
+#: oc-admin/themes/modern/comments/index.php:53
+#: oc-admin/themes/modern/items/index.php:80
+msgid "Last"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:57
+#: oc-admin/themes/modern/categories/index.php:56
+#: oc-admin/themes/modern/comments/index.php:55
+#: oc-admin/themes/modern/items/index.php:82
+msgid "Show"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:62
+#: oc-admin/themes/modern/categories/index.php:61
+#: oc-admin/themes/modern/comments/index.php:60
+#: oc-admin/themes/modern/items/index.php:87
+msgid "entries"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:112
+#: oc-admin/themes/modern/categories/index.php:129
+#: oc-admin/themes/modern/comments/index.php:119
+#: oc-admin/themes/modern/items/index.php:152
+msgid "Bulk Actions"
+msgstr ""
+
+#: oc-admin/themes/modern/admins/index.php:115
+#: oc-admin/themes/modern/categories/index.php:134
+#: oc-admin/themes/modern/comments/index.php:124
+#: oc-admin/themes/modern/items/index.php:159
+msgid "Apply"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:38
+msgid "Add New Page"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:55
+msgid "Theme package"
+msgstr "Pachet tema"
+
+#: oc-admin/themes/modern/appearance/add.php:59
+msgid "Upload theme"
+msgstr "Adaugă temă"
+
+#: oc-admin/themes/modern/appearance/add.php:67
+msgid "The themes folder "
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:67
+msgid " is not writable on your server, "
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:67
+msgid " can't upload themes from the administration panel. Please copy the theme package using another technique (FTP, SSH) or make the mentioned themes folder writable."
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add.php:70
+#: oc-admin/themes/modern/languages/add.php:69
+msgid "To make a directory writable under UNIX execute this command from the shell:"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add_widget.php:44
+msgid "Dashboard - Add New Widget"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/add_widget.php:70
+msgid "Create widget on "
+msgstr "Crează control"
+
+#: oc-admin/themes/modern/appearance/add_widget.php:84
+#: oc-admin/themes/modern/categories/index.php:94
+#: oc-admin/themes/modern/items/index.php:108
+msgid "Description"
+msgstr "Descriere"
+
+#: oc-admin/themes/modern/appearance/add_widget.php:89
+msgid "Content"
+msgstr "Conținut"
+
+#: oc-admin/themes/modern/appearance/add_widget.php:93
+msgid "Publish widget"
+msgstr "Publică control"
+
+#: oc-admin/themes/modern/appearance/index.php:27
+msgid "Are you sure you want to cancel?"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/index.php:45
+#: oc-admin/themes/modern/include/backoffice_menu.php:83
+msgid "Add a new theme"
+msgstr "Adaugă o tema noua"
+
+#: oc-admin/themes/modern/appearance/index.php:55
+msgid "Current theme"
+msgstr "Tema curentă"
+
+#: oc-admin/themes/modern/appearance/index.php:60
+#: oc-admin/themes/modern/comments/index.php:87
+msgid "Author"
+msgstr ""
+
+#: oc-admin/themes/modern/appearance/index.php:65
+msgid "Available themes"
+msgstr "Temele disponibile"
+
+#: oc-admin/themes/modern/appearance/index.php:80
+msgid "Preview"
+msgstr "Previzualizează"
+
+#: oc-admin/themes/modern/appearance/widgets.php:37
+msgid "Widgets"
+msgstr "Controale"
+
+#: oc-admin/themes/modern/appearance/widgets.php:53
+msgid "Add HTML widget"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:66
+msgid "Parent category"
+msgstr "Categoria părinte"
+
+#: oc-admin/themes/modern/categories/frm.php:68
+msgid "- No parent -"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:72
+msgid "Expirations days"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:72
+msgid "(0 = no expiration)"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:78
+msgid "Position (order in relation to other categories)"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:87
+msgid "Enabled"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/frm.php:101
+#: oc-admin/themes/modern/items/item-edit.php:134
+msgid "Cancel"
+msgstr "Anulare"
+
+#: oc-admin/themes/modern/categories/frm.php:102
+msgid "Save"
+msgstr "Salvează"
+
+#: oc-admin/themes/modern/categories/index.php:77
+#: oc-admin/themes/modern/categories/index.php:131
+msgid "Disable"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:77
+msgid "View subcategories"
+msgstr "Vizualizare subcategorii"
+
+#: oc-admin/themes/modern/categories/index.php:77
+msgid "WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:90
+msgid "Name"
+msgstr "Nume"
+
+#: oc-admin/themes/modern/categories/index.php:93
+msgid "Parent"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:121
+msgid "Add New Category"
+msgstr ""
+
+#: oc-admin/themes/modern/categories/index.php:130
+msgid "Enable"
+msgstr ""
+
+#: oc-admin/themes/modern/comments/index.php:68
+msgid "on"
+msgstr ""
+
+#: oc-admin/themes/modern/comments/index.php:90
+msgid "Comment"
+msgstr ""
+
+#: oc-admin/themes/modern/comments/index.php:91
+#: oc-admin/themes/modern/items/index.php:122
+msgid "Date"
+msgstr ""
+
+#: oc-admin/themes/modern/comments/index.php:109
+msgid "Manage Comments"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:38
+#: oc-admin/themes/modern/items/index.php:141
+msgid "Manage items"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:40
+msgid "Add new item"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:45
+msgid "Manage media"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:54
+msgid "Manage categories"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:57
+msgid "Add a new category"
+msgstr "Adaugă o categorie nouă"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:66
+msgid "Manage pages"
+msgstr "Gestionează paginile"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:69
+msgid "Create page"
+msgstr "Creează o pagină nouă"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:80
+msgid "Manage themes"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:86
+msgid "Add or remove widgets"
+msgstr "Adaugă sau elimină controle"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:95
+msgid "Manage plugins"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:98
+msgid "Add new plugin"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:107
+msgid "Manage languages"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:110
+#: oc-admin/themes/modern/languages/add.php:38
+msgid "Add a language"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:131
+msgid "Locations"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:134
+msgid "Permalinks"
+msgstr "Link permanent"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:137
+msgid "Spam and bots"
+msgstr "Spam și roboți"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:140
+msgid "Currencies"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:143
+msgid "Mail Server"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:149
+msgid "Cron system"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:158
+msgid "Import data"
+msgstr "Importă date"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:161
+msgid "Backup data"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:164
+msgid "Upgrade OSClass"
+msgstr "Actualizează OSClass"
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:179
+msgid "Manage users"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:182
+msgid "Add new user"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:191
+msgid "List administrators"
+msgstr ""
+
+#: oc-admin/themes/modern/include/backoffice_menu.php:197
+msgid "Edit Your Profile"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:99
+msgid "Title"
+msgstr "Titlu"
+
+#: oc-admin/themes/modern/items/index.php:104
+msgid "Count"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:112
+msgid "Category"
+msgstr "Categorie"
+
+#: oc-admin/themes/modern/items/index.php:142
+msgid "Add New Item"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:162
+msgid "Filter by"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:162
+msgid "All"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:163
+msgid "Pending"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:164
+msgid "Spam"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:165
+msgid "Duplicated"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:166
+msgid "Bad classified"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:167
+msgid "Offensive"
+msgstr ""
+
+#: oc-admin/themes/modern/items/index.php:168
+msgid "Expired"
+msgstr ""
+
+#: oc-admin/themes/modern/items/item-edit.php:13
+msgid "New item"
+msgstr ""
+
+#: oc-admin/themes/modern/items/item-edit.php:13
+msgid "Update your item"
+msgstr " "
+
+#: oc-admin/themes/modern/items/item-edit.php:28
+msgid "General Information"
+msgstr "Informații generale"
+
+#: oc-admin/themes/modern/items/item-edit.php:36
+msgid "Price"
+msgstr "Preț"
+
+#: oc-admin/themes/modern/items/item-edit.php:62
+msgid "Remove"
+msgstr "Elimină"
+
+#: oc-admin/themes/modern/items/item-edit.php:91
+msgid "Photos"
+msgstr "Imagini"
+
+#: oc-admin/themes/modern/items/item-edit.php:99
+msgid "optional"
+msgstr "Opțional"
+
+#: oc-admin/themes/modern/items/item-edit.php:102
+msgid "Add new photo"
+msgstr "Adaugă încă o imagine"
+
+#: oc-admin/themes/modern/items/item-edit.php:112
+msgid "Country"
+msgstr "Țară"
+
+#: oc-admin/themes/modern/items/item-edit.php:114
+msgid "Region"
+msgstr "Regiune"
+
+#: oc-admin/themes/modern/items/item-edit.php:116
+msgid "City"
+msgstr "Oraşul"
+
+#: oc-admin/themes/modern/items/item-edit.php:118
+msgid "City area"
+msgstr ""
+
+#: oc-admin/themes/modern/items/item-edit.php:120
+msgid "Address"
+msgstr "Adresă"
+
+#: oc-admin/themes/modern/items/item-edit.php:135
+msgid "Add item"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/add.php:55
+msgid "Language package"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/add.php:59
+msgid "Upload translation"
+msgstr " "
+
+#: oc-admin/themes/modern/languages/add.php:66
+msgid "The translations folder "
+msgstr ""
+
+#: oc-admin/themes/modern/languages/add.php:66
+msgid " is not writable on your server, this"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/add.php:66
+msgid "can't upload translations from the administration panel. Please copy the translation package using another technique (FTP, SSH) or make the mentioned translations folder writable."
+msgstr ""
+
+#: oc-admin/themes/modern/languages/edit.php:44
+#: oc-admin/themes/modern/languages/frm.php:56
+msgid "Edit language"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/edit.php:63
+#: oc-admin/themes/modern/languages/frm.php:79
+msgid "Short name"
+msgstr "Nume scurt"
+
+#: oc-admin/themes/modern/languages/edit.php:71
+#: oc-admin/themes/modern/languages/frm.php:91
+msgid "Currency format"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/edit.php:75
+#: oc-admin/themes/modern/languages/frm.php:97
+msgid "Date format"
+msgstr "Format dată"
+
+#: oc-admin/themes/modern/languages/edit.php:79
+#: oc-admin/themes/modern/languages/frm.php:103
+msgid "Stop words"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/edit.php:85
+#: oc-admin/themes/modern/languages/frm.php:111
+msgid "Enabled for the public website"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/edit.php:91
+#: oc-admin/themes/modern/languages/frm.php:117
+msgid "Enabled for the backoffice (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:72
+msgid "Disable (website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:72
+#: oc-admin/themes/modern/languages/index.php:121
+msgid "Disable (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:75
+#: oc-admin/themes/modern/languages/index.php:76
+msgid "Yes"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:75
+#: oc-admin/themes/modern/languages/index.php:76
+msgid "No"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:88
+msgid "Short Name"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:90
+msgid "Enabled (website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:91
+msgid "Enabled (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:118
+msgid "Enable (Website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:119
+msgid "Disable (Website)"
+msgstr ""
+
+#: oc-admin/themes/modern/languages/index.php:120
+msgid "Enable (oc-admin)"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:101
+msgid "Which of the following content do you want to see on your dashboard"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:103
+msgid "Last Items"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:106
+#: oc-admin/themes/modern/main/index.php:143
+msgid "Statistics"
+msgstr "Statistici"
+
+#: oc-admin/themes/modern/main/index.php:109
+#: oc-admin/themes/modern/main/index.php:157
+msgid "Last Comments"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:112
+msgid "Last News from OSClass"
+msgstr " "
+
+#: oc-admin/themes/modern/main/index.php:124
+msgid "Items by Category"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:137
+msgid "There aren't any uploaded items yet"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:145
+msgid "Number of items"
+msgstr "Numărul de anunțuri"
+
+#: oc-admin/themes/modern/main/index.php:146
+msgid "Number of public users"
+msgstr "Numărul de utilizatori publici"
+
+#: oc-admin/themes/modern/main/index.php:147
+msgid "Number of administrators"
+msgstr "Numărul de administratori"
+
+#: oc-admin/themes/modern/main/index.php:160
+msgid "Commented"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:160
+msgid "Item"
+msgstr "Anunț"
+
+#: oc-admin/themes/modern/main/index.php:166
+msgid "Latest News from OSClass"
+msgstr " "
+
+#: oc-admin/themes/modern/main/index.php:178
+msgid "Unable to fetch news from"
+msgstr ""
+
+#: oc-admin/themes/modern/main/index.php:178
+msgid "Please try again later"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:40
+msgid "Configure Media"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:50
+msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:56
+msgid "Restrictions"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:58
+msgid "Maximum size in KB"
+msgstr "Dimensiunea maximă în KB"
+
+#: oc-admin/themes/modern/media/config.php:63
+msgid "Allowed format extensions (eg: png, jpg, gif)"
+msgstr "Extensii formate permise (de ex. png, jpg, gif)"
+
+#: oc-admin/themes/modern/media/config.php:69
+msgid "Path and URI"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:72
+msgid "Store uploads in this folder"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:77
+msgid "Full URL path to files"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:84
+msgid "Dimensions"
+msgstr ""
+
+#: oc-admin/themes/modern/media/config.php:86
+msgid "Thumbnail dimensions"
+msgstr "Dimensiuni miniatură"
+
+#: oc-admin/themes/modern/media/config.php:91
+msgid "Preview dimensions"
+msgstr "Dimensiuni previzualizare"
+
+#: oc-admin/themes/modern/media/config.php:96
+msgid "Normal dimensions"
+msgstr "Dimensiuni imagine normală"
+
+#: oc-admin/themes/modern/media/config.php:101
+msgid "Update configuration"
+msgstr "Actualizare configurație"
+
+#: oc-admin/themes/modern/media/index.php:82
+msgid "File"
+msgstr ""
+
+#: oc-admin/themes/modern/media/index.php:85
+msgid "Attached to"
+msgstr ""
+
+#: oc-admin/themes/modern/pages/frm.php:112
+msgid "Internal Name (Short name to easily identify this page)"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/add.php:38
+#: oc-admin/themes/modern/plugins/configuration.php:51
+#: oc-admin/themes/modern/plugins/index.php:115
+#: oc-admin/themes/modern/plugins/view.php:32
+msgid "Add a new plugin"
+msgstr "Adaugă un modul nou"
+
+#: oc-admin/themes/modern/plugins/add.php:55
+msgid "Plugin package"
+msgstr "Pachet modul"
+
+#: oc-admin/themes/modern/plugins/add.php:59
+msgid "Upload plugin"
+msgstr "Adaugă modul"
+
+#: oc-admin/themes/modern/plugins/add.php:67
+msgid "The plugins folder "
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/add.php:67
+msgid "can't upload plugins from the administration panel. Please copy the plugin package using another technique (FTP, SSH) or make the mentioned plugins folder writable."
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/configuration.php:80
+msgid "Select the categories you want to apply those attributes:"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "Configure"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "There's a new version. You should update!"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "Uninstall"
+msgstr ""
+
+#: oc-admin/themes/modern/plugins/index.php:74
+msgid "Install"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/addCurrency.php:52
+msgid "Create"
+msgstr "Creează"
+
+#: oc-admin/themes/modern/settings/addCurrency.php:57
+#: oc-admin/themes/modern/settings/currencies.php:84
+msgid "Code"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/addCurrency.php:74
+msgid "Create currency"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/comments.php:63
+msgid "Comments enabled"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/comments.php:72
+msgid "Moderate comments"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/comments.php:83
+msgid "Notify new comment"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/cron.php:58
+msgid "Cron System"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/cron.php:64
+msgid "Auto-cron"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/cron.php:67
+msgid "Some functionalities os OSClass requires a cron system to work. Check this if you don't know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass."
+msgstr ""
+
+#: oc-admin/themes/modern/settings/editCurrency.php:75
+msgid "Edit currency"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/functionalities.php:63
+#: oc-admin/themes/modern/settings/items.php:63
+msgid "Enabled recaptcha"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/functionalities.php:72
+#: oc-admin/themes/modern/settings/items.php:72
+msgid "Enabled item validation"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/functionalities.php:81
+#: oc-admin/themes/modern/settings/items.php:81
+msgid "Only allow registered users post items"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:56
+msgid "Page title"
+msgstr "Titlu pagină"
+
+#: oc-admin/themes/modern/settings/index.php:63
+msgid "Page description"
+msgstr "Descriere pagină"
+
+#: oc-admin/themes/modern/settings/index.php:72
+msgid "Administrator E-mail"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:79
+msgid "Default language"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:113
+#: oc-admin/themes/modern/settings/index.php:162
+msgid "Custom"
+msgstr "Personalizat"
+
+#: oc-admin/themes/modern/settings/index.php:120
+msgid "Default currency"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:129
+msgid "Week starts on"
+msgstr "Săptămâna începe"
+
+#: oc-admin/themes/modern/settings/index.php:131
+msgid "Sunday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:132
+msgid "Monday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:133
+msgid "Tuesday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:134
+msgid "Wednesday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:135
+msgid "Thursday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:136
+msgid "Friday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:137
+msgid "Saturday"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/index.php:146
+#: oc-admin/themes/modern/settings/index.php:147
+msgid "Time format"
+msgstr "Format oră"
+
+#: oc-admin/themes/modern/settings/index.php:169
+msgid "Number of items in the RSS"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/items.php:93
+#: oc-admin/themes/modern/settings/notifications.php:63
+msgid "Notify new item to admin"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/items.php:101
+#: oc-admin/themes/modern/settings/notifications.php:71
+msgid "Notify contact item to admin"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/items.php:109
+#: oc-admin/themes/modern/settings/notifications.php:79
+msgid "Notify contact friends to admin"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:96
+#: oc-admin/themes/modern/settings/locations.php:128
+#: oc-admin/themes/modern/settings/locations.php:345
+msgid "Close"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:102
+#: oc-admin/themes/modern/settings/locations.php:349
+msgid "View more"
+msgstr " "
+
+#: oc-admin/themes/modern/settings/locations.php:336
+#: oc-admin/themes/modern/settings/locations.php:367
+#: oc-admin/themes/modern/settings/locations.php:385
+msgid "Add new"
+msgstr "Adaugă un anunț nou"
+
+#: oc-admin/themes/modern/settings/locations.php:401
+msgid "Add new country"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:410
+#: oc-admin/themes/modern/settings/locations.php:442
+msgid "Country: "
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:414
+msgid "Country code: "
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:419
+msgid "Country code has two characters"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:433
+msgid "Edit country"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:457
+msgid "Add new region"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:468
+#: oc-admin/themes/modern/settings/locations.php:492
+msgid "Region: "
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:483
+msgid "Edit region"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:507
+msgid "Add new city"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:519
+#: oc-admin/themes/modern/settings/locations.php:543
+msgid "City: "
+msgstr ""
+
+#: oc-admin/themes/modern/settings/locations.php:534
+msgid "Edit city"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:65
+msgid "Type of server"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:67
+msgid "Custom Server"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:68
+msgid "GMail Server"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:73
+msgid "Host Name"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:76
+msgid "Server Port"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:85
+msgid "Encryption"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:88
+msgid "leave it empty if there isn't encryption, ssl or tls"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:95
+msgid "Enable SMTP authentication"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:101
+msgid "Help"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/mailserver.php:102
+msgid "Enter your email server configuration."
+msgstr ""
+
+#: oc-admin/themes/modern/settings/notifications.php:87
+msgid "Enable item validation"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:25
+msgid "Invalid OSClass request"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:60
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:64
+#: oc-admin/themes/modern/settings/permalinks.php:66
+msgid "Enable nice urls"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/permalinks.php:70
+msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:40
+msgid "Registry"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:51
+msgid "The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table."
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:57
+#: oc-admin/themes/modern/settings/registry.php:73
+msgid "Section"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:59
+#: oc-admin/themes/modern/settings/registry.php:75
+msgid "Value"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/registry.php:60
+#: oc-admin/themes/modern/settings/registry.php:76
+msgid "Type"
+msgstr "Tip"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:52
+msgid "Akismet"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:54
+msgid "Akismet key (same as Wordpress.com)"
+msgstr "Cheia Akismet (la fel ca pe Wordpress.com)"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "If the field is empty it is because the Akismet service is disabled"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "Get your free key at"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:61
+msgid "Re-captcha"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "If the field is empty it is because the reCAPTCHA service is disabled"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "Get your free keys at"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/spamNbots.php:66
+msgid "Re-captcha private key"
+msgstr "Cheia privata re-captcha"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:71
+msgid "Re-captcha public key"
+msgstr "Cheia publică re-captcha"
+
+#: oc-admin/themes/modern/settings/spamNbots.php:76
+msgid "Update spam and bots configuration"
+msgstr "Actualizare configurație spam și roboți"
+
+#: oc-admin/themes/modern/settings/users.php:63
+msgid "User validation"
+msgstr ""
+
+#: oc-admin/themes/modern/settings/users.php:67
+msgid "Users need to validation their account. After registering on the website, they will be sent an email with a validation link."
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:53
+msgid "Backing up data... please wait"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:84
+msgid "From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass."
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:90
+msgid "Backup Folder"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:92
+msgid "This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass' documentation."
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:96
+msgid "Backup Database"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:97
+#: oc-admin/themes/modern/tools/backup.php:103
+msgid "backup"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/backup.php:102
+msgid "Backup OSClass installation"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/export.php:25
+msgid "Export"
+msgstr "Exportă"
+
+#: oc-admin/themes/modern/tools/export.php:27
+msgid "Export now"
+msgstr "Exportă acum"
+
+#: oc-admin/themes/modern/tools/import.php:48
+msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/import.php:54
+msgid "Data"
+msgstr "Data"
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:48
+#: oc-admin/themes/modern/tools/upgrade.php:48
+msgid "Checking for update (installed version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:52
+msgid "HORRAY! Your plugin installation is up to date! (current version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:54
+#: oc-admin/themes/modern/tools/upgrade.php:54
+msgid "current version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:55
+#: oc-admin/themes/modern/tools/upgrade.php:55
+msgid "Downloading update file: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:62
+#: oc-admin/themes/modern/tools/upgrade.php:62
+msgid "Unzipping file: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:67
+msgid "Copying old files: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:72
+msgid "Removing new files: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:77
+#: oc-admin/themes/modern/tools/upgrade.php:77
+msgid "Executing SQL: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:82
+#: oc-admin/themes/modern/tools/upgrade.php:82
+msgid "Executing additional actions: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:87
+#: oc-admin/themes/modern/tools/upgrade.php:87
+msgid "Cleanning all the mesh: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade-plugins.php:93
+#: oc-admin/themes/modern/tools/upgrade.php:93
+msgid "Satisfaying user with awesome and easy auto-upgrade: Done!"
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade.php:52
+msgid "HORRAY! Your OSClass installation is up to date! (current version: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade.php:67
+msgid "Copying new files: "
+msgstr ""
+
+#: oc-admin/themes/modern/tools/upgrade.php:72
+msgid "Removing old files: "
+msgstr ""
+
+#: oc-admin/themes/modern/users/add.php:35
+#: oc-admin/themes/modern/users/index.php:104
+msgid "Add a new user"
+msgstr "Adaugă un utilizator nou"
+
+#: oc-admin/themes/modern/users/add.php:74
+#: oc-admin/themes/modern/users/edit.php:76
+msgid "Web site"
+msgstr "Sait Web"
+
+#: oc-admin/themes/modern/users/add.php:87
+#: oc-admin/themes/modern/users/edit.php:89
+msgid "Mobile phone"
+msgstr "Telefon mobil"
+
+#: oc-admin/themes/modern/users/add.php:92
+#: oc-admin/themes/modern/users/edit.php:94
+msgid "Land phone"
+msgstr "Telefon fix"
+
+#: oc-admin/themes/modern/users/add.php:99
+#: oc-admin/themes/modern/users/edit.php:101
+msgid "Additional information"
+msgstr "Informații suplimentare"
+
+#: oc-admin/themes/modern/users/add.php:105
+msgid "Create user"
+msgstr "Crează utilizator"
+
+#: oc-admin/themes/modern/users/edit.php:35
+msgid "Edit user"
+msgstr ""
+
+#: oc-admin/themes/modern/users/edit.php:108
+msgid "Activation"
+msgstr ""
+
+#: oc-admin/themes/modern/users/edit.php:109
+msgid "Active user"
+msgstr ""
+
+#: oc-admin/themes/modern/users/edit.php:114
+msgid "Update user"
+msgstr "Actualizează utilizator"
+
+#: oc-admin/themes/modern/users/index.php:70
+msgid "Activate user"
+msgstr ""
+
+#: oc-admin/themes/modern/users/index.php:70
+msgid "Deactivate user"
+msgstr ""
+
+#: oc-admin/themes/modern/users/index.php:89
+msgid "Info"
+msgstr "Info"
+
+#: oc-content/plugins/banner_management/conf.php:110
+msgid "Banners"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:125
+msgid "Edit banner"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:133
+#: oc-content/plugins/banner_management/conf.php:155
+msgid "Short name to help you identify this ad"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:135
+#: oc-content/plugins/banner_management/conf.php:157
+msgid "HTML code for the ad "
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:138
+#: oc-content/plugins/banner_management/conf.php:160
+#: oc-content/plugins/banner_management/conf.php:249
+msgid "[On/Off] HTML editor"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:147
+msgid "Add new banner"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:159
+msgid "Insert your image / media here. You could use the HTML button to edit directly the HTML code of this banner."
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:178
+msgid "Banners in campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:181
+msgid "Select a campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:212
+msgid "Add banners to your campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:229
+msgid "Select a campaign to ad/remove banners, first."
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:237
+msgid "Create new campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:244
+msgid "Write a name for your campaign"
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:246
+msgid "HTML code for the campaign. User '[banner]' for insert random banners or '[banner#banner_name]' for specific abnner."
+msgstr ""
+
+#: oc-content/plugins/banner_management/conf.php:248
+msgid "Example of banner inserting. <ul><li>[banner#example]</li><li>[banner]</li></ul>"
+msgstr ""
+
+#: oc-content/plugins/banner_management/index.php:95
+msgid "Manage banners"
+msgstr ""
+
+#: oc-content/plugins/banner_management/index.php:96
+msgid "Manage Campaigns"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:91
+msgid "Makes"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:112
+msgid "Add new make"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:136
+msgid "Models"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:139
+#: oc-content/plugins/cars_attributes/form.php:59
+#: oc-content/plugins/cars_attributes/item_edit.php:56
+msgid "Select a make"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:171
+msgid "Add new model"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:197
+msgid "Vehicle types"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:231
+msgid "Add new car type"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/conf.php:272
+msgid "Warning"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:17
+#: oc-content/plugins/cars_attributes/item_edit.php:25
+msgid "Select a model..."
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:22
+#: oc-content/plugins/cars_attributes/item_edit.php:34
+msgid "No results"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:52
+#: oc-content/plugins/cars_attributes/item_detail.php:2
+#: oc-content/plugins/cars_attributes/item_edit.php:49
+#: oc-content/plugins/cars_attributes/search_form.php:2
+msgid "Cars attributes"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:56
+#: oc-content/plugins/cars_attributes/item_detail.php:6
+#: oc-content/plugins/cars_attributes/item_edit.php:53
+msgid "Make"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:67
+#: oc-content/plugins/cars_attributes/item_detail.php:10
+#: oc-content/plugins/cars_attributes/item_edit.php:64
+#: oc-content/plugins/cars_attributes/search_form.php:10
+msgid "Model"
+msgstr "Model"
+
+#: oc-content/plugins/cars_attributes/form.php:78
+#: oc-content/plugins/cars_attributes/form.php:92
+#: oc-content/plugins/cars_attributes/item_detail.php:18
+#: oc-content/plugins/cars_attributes/item_detail.php:29
+#: oc-content/plugins/cars_attributes/item_edit.php:78
+#: oc-content/plugins/cars_attributes/item_edit.php:93
+msgid "Car type"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:106
+#: oc-content/plugins/cars_attributes/item_detail.php:39
+#: oc-content/plugins/cars_attributes/item_edit.php:107
+msgid "Year"
+msgstr "Anul"
+
+#: oc-content/plugins/cars_attributes/form.php:110
+#: oc-content/plugins/cars_attributes/item_detail.php:43
+#: oc-content/plugins/cars_attributes/item_edit.php:111
+msgid "Doors"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:120
+#: oc-content/plugins/cars_attributes/item_detail.php:47
+#: oc-content/plugins/cars_attributes/item_edit.php:121
+msgid "Seats"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:130
+#: oc-content/plugins/cars_attributes/item_detail.php:51
+#: oc-content/plugins/cars_attributes/item_edit.php:131
+msgid "Mileage"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:135
+#: oc-content/plugins/cars_attributes/item_detail.php:56
+#: oc-content/plugins/cars_attributes/item_edit.php:136
+msgid "Engine size (cc)"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:139
+#: oc-content/plugins/cars_attributes/item_detail.php:60
+#: oc-content/plugins/cars_attributes/item_edit.php:140
+msgid "Num. Airbags"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:149
+#: oc-content/plugins/cars_attributes/item_detail.php:64
+#: oc-content/plugins/cars_attributes/item_edit.php:150
+#: oc-content/plugins/cars_attributes/search_form.php:24
+msgid "Transmission"
+msgstr "Transmisie"
+
+#: oc-content/plugins/cars_attributes/form.php:151
+#: oc-content/plugins/cars_attributes/item_edit.php:152
+#: oc-content/plugins/cars_attributes/search_form.php:26
+msgid "Manual"
+msgstr "Manual"
+
+#: oc-content/plugins/cars_attributes/form.php:152
+#: oc-content/plugins/cars_attributes/item_edit.php:153
+msgid "Auto"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:156
+#: oc-content/plugins/cars_attributes/item_detail.php:68
+#: oc-content/plugins/cars_attributes/item_edit.php:157
+msgid "Fuel"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:158
+#: oc-content/plugins/cars_attributes/item_edit.php:159
+msgid "Diesel"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:159
+#: oc-content/plugins/cars_attributes/item_edit.php:160
+msgid "Gasoline"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:160
+#: oc-content/plugins/cars_attributes/item_edit.php:161
+msgid "Electric-hibrid"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:161
+#: oc-content/plugins/cars_attributes/item_edit.php:162
+msgid "Other"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:165
+#: oc-content/plugins/cars_attributes/item_detail.php:72
+#: oc-content/plugins/cars_attributes/item_edit.php:166
+msgid "Seller"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:167
+#: oc-content/plugins/cars_attributes/item_edit.php:168
+msgid "Dealer"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:168
+#: oc-content/plugins/cars_attributes/item_edit.php:169
+msgid "Owner"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:173
+#: oc-content/plugins/cars_attributes/item_detail.php:77
+#: oc-content/plugins/cars_attributes/item_edit.php:174
+msgid "Warranty"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:174
+#: oc-content/plugins/cars_attributes/item_detail.php:78
+#: oc-content/plugins/cars_attributes/item_edit.php:175
+msgid "New"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:178
+#: oc-content/plugins/cars_attributes/item_detail.php:82
+#: oc-content/plugins/cars_attributes/item_edit.php:179
+msgid "Power"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:180
+#: oc-content/plugins/cars_attributes/item_edit.php:181
+msgid "Kw"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:181
+#: oc-content/plugins/cars_attributes/item_edit.php:182
+msgid "Cv"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:182
+#: oc-content/plugins/cars_attributes/item_edit.php:183
+msgid "Ch"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:183
+#: oc-content/plugins/cars_attributes/item_edit.php:184
+msgid "Km"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:184
+#: oc-content/plugins/cars_attributes/item_edit.php:185
+msgid "Hp"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:185
+#: oc-content/plugins/cars_attributes/item_edit.php:186
+msgid "Ps"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:186
+#: oc-content/plugins/cars_attributes/item_edit.php:187
+msgid "Pk"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:187
+#: oc-content/plugins/cars_attributes/item_edit.php:188
+msgid "Cp"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/form.php:191
+#: oc-content/plugins/cars_attributes/item_detail.php:86
+#: oc-content/plugins/cars_attributes/item_edit.php:192
+msgid "Gears"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/index.php:236
+msgid "Configure plugin"
+msgstr " "
+
+#: oc-content/plugins/cars_attributes/index.php:237
+msgid "Manage makes"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/index.php:238
+msgid "Manage models"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/index.php:239
+msgid "Manage vehicle types"
+msgstr ""
+
+#: oc-content/plugins/cars_attributes/search_form.php:14
+msgid "Num. of airbags"
+msgstr "Numărul de airbag-uri"
+
+#: oc-content/plugins/cars_attributes/search_form.php:27
+msgid "Automatic"
+msgstr "Automat"
+
+#: oc-content/plugins/dating_attributes/form.php:1
+#: oc-content/plugins/dating_attributes/item_detail.php:1
+msgid "Dating attributes"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:4
+msgid "You are:"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:6
+#: oc-content/plugins/dating_attributes/form.php:14
+msgid "Man"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:7
+#: oc-content/plugins/dating_attributes/form.php:15
+msgid "Woman"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:8
+#: oc-content/plugins/dating_attributes/form.php:16
+msgid "Not informed"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:12
+msgid "Looking for:"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:20
+msgid "Relation type:"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:22
+msgid "Friendship"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:23
+msgid "Formal relation"
+msgstr ""
+
+#: oc-content/plugins/dating_attributes/form.php:24
+msgid "Informal relation"
+msgstr ""
+
+#: oc-content/plugins/google_maps/admin.php:30
+msgid "You can freely obtain a developer key after signing up on this URL:"
+msgstr "Se poate obține o licență gratuită la această adresa"
+
+#: oc-content/plugins/jobs_attributes/form.php:4
+#: oc-content/plugins/jobs_attributes/item_detail.php:11
+#: oc-content/plugins/jobs_attributes/item_edit.php:4
+#: oc-content/plugins/jobs_attributes/search_form.php:4
+msgid "Relation"
+msgstr "Relaţie"
+
+#: oc-content/plugins/jobs_attributes/form.php:6
+#: oc-content/plugins/jobs_attributes/item_edit.php:6
+#: oc-content/plugins/jobs_attributes/search_form.php:6
+msgid "Hire someone"
+msgstr "Angajează pe cineva"
+
+#: oc-content/plugins/jobs_attributes/form.php:7
+#: oc-content/plugins/jobs_attributes/item_edit.php:7
+#: oc-content/plugins/jobs_attributes/search_form.php:7
+msgid "Looking for a job"
+msgstr "Cauţi de lucru"
+
+#: oc-content/plugins/jobs_attributes/form.php:11
+#: oc-content/plugins/jobs_attributes/item_detail.php:15
+#: oc-content/plugins/jobs_attributes/item_edit.php:11
+#: oc-content/plugins/jobs_attributes/search_form.php:11
+msgid "Company name"
+msgstr "Denumire companie"
+
+#: oc-content/plugins/jobs_attributes/form.php:15
+#: oc-content/plugins/jobs_attributes/item_detail.php:19
+#: oc-content/plugins/jobs_attributes/item_edit.php:15
+#: oc-content/plugins/jobs_attributes/search_form.php:15
+msgid "Position type"
+msgstr "Tip poziţie"
+
+#: oc-content/plugins/jobs_attributes/form.php:18
+#: oc-content/plugins/jobs_attributes/item_edit.php:18
+#: oc-content/plugins/jobs_attributes/search_form.php:18
+msgid "Undefined"
+msgstr "Nedefinit"
+
+#: oc-content/plugins/jobs_attributes/form.php:19
+#: oc-content/plugins/jobs_attributes/item_edit.php:19
+#: oc-content/plugins/jobs_attributes/search_form.php:20
+msgid "Part time"
+msgstr "Contract parţial"
+
+#: oc-content/plugins/jobs_attributes/form.php:20
+#: oc-content/plugins/jobs_attributes/search_form.php:19
+msgid "Full-time"
+msgstr "Contract întreg"
+
+#: oc-content/plugins/jobs_attributes/form.php:25
+#: oc-content/plugins/jobs_attributes/item_detail.php:23
+#: oc-content/plugins/jobs_attributes/item_edit.php:25
+#: oc-content/plugins/jobs_attributes/search_form.php:25
+msgid "Salary range"
+msgstr "Interval salariu"
+
+#: oc-content/plugins/jobs_attributes/form.php:29
+#: oc-content/plugins/jobs_attributes/item_edit.php:29
+#: oc-content/plugins/jobs_attributes/search_form.php:29
+msgid "Hour"
+msgstr "Oră"
+
+#: oc-content/plugins/jobs_attributes/form.php:30
+#: oc-content/plugins/jobs_attributes/item_edit.php:30
+#: oc-content/plugins/jobs_attributes/search_form.php:30
+msgid "Week"
+msgstr "Săptămână"
+
+#: oc-content/plugins/jobs_attributes/form.php:31
+#: oc-content/plugins/jobs_attributes/item_edit.php:31
+#: oc-content/plugins/jobs_attributes/search_form.php:31
+msgid "Month"
+msgstr "Luna"
+
+#: oc-content/plugins/jobs_attributes/form.php:43
+#: oc-content/plugins/jobs_attributes/form.php:72
+#: oc-content/plugins/jobs_attributes/item_detail.php:30
+#: oc-content/plugins/jobs_attributes/item_detail.php:59
+#: oc-content/plugins/jobs_attributes/item_edit.php:42
+#: oc-content/plugins/jobs_attributes/item_edit.php:71
+msgid "Desired experience"
+msgstr "Experienţa necesară"
+
+#: oc-content/plugins/jobs_attributes/form.php:47
+#: oc-content/plugins/jobs_attributes/form.php:76
+#: oc-content/plugins/jobs_attributes/item_detail.php:34
+#: oc-content/plugins/jobs_attributes/item_detail.php:63
+#: oc-content/plugins/jobs_attributes/item_edit.php:46
+#: oc-content/plugins/jobs_attributes/item_edit.php:75
+msgid "Studies"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:51
+#: oc-content/plugins/jobs_attributes/form.php:80
+#: oc-content/plugins/jobs_attributes/item_detail.php:38
+#: oc-content/plugins/jobs_attributes/item_detail.php:67
+#: oc-content/plugins/jobs_attributes/item_edit.php:50
+#: oc-content/plugins/jobs_attributes/item_edit.php:79
+msgid "Minimum requirements"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:55
+#: oc-content/plugins/jobs_attributes/form.php:84
+#: oc-content/plugins/jobs_attributes/item_detail.php:42
+#: oc-content/plugins/jobs_attributes/item_detail.php:71
+#: oc-content/plugins/jobs_attributes/item_edit.php:54
+#: oc-content/plugins/jobs_attributes/item_edit.php:83
+msgid "Desired requirements"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:59
+#: oc-content/plugins/jobs_attributes/form.php:88
+#: oc-content/plugins/jobs_attributes/item_detail.php:46
+#: oc-content/plugins/jobs_attributes/item_detail.php:75
+#: oc-content/plugins/jobs_attributes/item_edit.php:58
+#: oc-content/plugins/jobs_attributes/item_edit.php:87
+msgid "Contract"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/form.php:63
+#: oc-content/plugins/jobs_attributes/form.php:92
+#: oc-content/plugins/jobs_attributes/item_detail.php:50
+#: oc-content/plugins/jobs_attributes/item_detail.php:79
+#: oc-content/plugins/jobs_attributes/item_edit.php:62
+#: oc-content/plugins/jobs_attributes/item_edit.php:91
+msgid "Company description"
+msgstr ""
+
+#: oc-content/plugins/jobs_attributes/item_detail.php:8
+msgid "Job attributes"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:39
+msgid "The plugin <strong>Products attributes</strong> adds a set of attributes to the categories you choose. Please select here all the categories where apply these attributes:"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:44
+msgid "Presets categories"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:45
+msgid "Check all"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:45
+msgid "Uncheck all"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:77
+msgid "This plugin is now configured."
+msgstr ""
+
+#: oc-content/plugins/products_attributes/admin.php:80
+msgid "Return to plugins's page"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/item_detail.php:1
+#: oc-content/plugins/products_attributes/item_edit.php:1
+#: oc-content/plugins/realstate_attributes/form.php:1
+#: oc-content/plugins/realstate_attributes/item_detail.php:1
+#: oc-content/plugins/realstate_attributes/item_edit.php:1
+msgid "Realestate attributes"
+msgstr ""
+
+#: oc-content/plugins/products_attributes/search_form.php:1
+msgid "Products attributes"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/conf.php:57
+#: oc-content/plugins/realstate_attributes/index.php:359
+msgid "Property types"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/conf.php:95
+msgid "Add new property types"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/conf.php:129
+msgid "Deleting property types may end in errors. Some of those property types could be attached to some actual items."
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:8
+#: oc-content/plugins/realstate_attributes/item_edit.php:8
+#: oc-content/plugins/realstate_attributes/search_form.php:75
+msgid "For rent"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:9
+#: oc-content/plugins/realstate_attributes/item_edit.php:9
+#: oc-content/plugins/realstate_attributes/search_form.php:76
+msgid "For sale"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:17
+#: oc-content/plugins/realstate_attributes/form.php:32
+#: oc-content/plugins/realstate_attributes/item_detail.php:17
+#: oc-content/plugins/realstate_attributes/item_detail.php:28
+#: oc-content/plugins/realstate_attributes/item_edit.php:19
+#: oc-content/plugins/realstate_attributes/item_edit.php:32
+#: oc-content/plugins/realstate_attributes/search_form.php:87
+#: oc-content/plugins/realstate_attributes/search_form.php:100
+msgid "Property type"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:47
+#: oc-content/plugins/realstate_attributes/item_edit.php:45
+msgid "Num. of rooms"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:54
+#: oc-content/plugins/realstate_attributes/item_edit.php:55
+msgid "Num. of bathrooms"
+msgstr "Număr de camere de baie"
+
+#: oc-content/plugins/realstate_attributes/form.php:61
+#: oc-content/plugins/realstate_attributes/item_detail.php:45
+#: oc-content/plugins/realstate_attributes/item_edit.php:65
+msgid "Status"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:64
+#: oc-content/plugins/realstate_attributes/item_edit.php:68
+msgid "New construction"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:65
+#: oc-content/plugins/realstate_attributes/item_edit.php:69
+msgid "To renovate"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:66
+#: oc-content/plugins/realstate_attributes/item_edit.php:70
+msgid "Good condition"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:71
+#: oc-content/plugins/realstate_attributes/item_edit.php:75
+msgid "Square meters"
+msgstr "Metri pătrați"
+
+#: oc-content/plugins/realstate_attributes/form.php:75
+#: oc-content/plugins/realstate_attributes/item_detail.php:61
+#: oc-content/plugins/realstate_attributes/item_edit.php:79
+msgid "Construction Year"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:79
+#: oc-content/plugins/realstate_attributes/item_edit.php:83
+msgid "Square meters (total)"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:83
+#: oc-content/plugins/realstate_attributes/item_edit.php:87
+msgid "Num. of floors"
+msgstr "Număr de etaje"
+
+#: oc-content/plugins/realstate_attributes/form.php:93
+#: oc-content/plugins/realstate_attributes/item_edit.php:97
+msgid "Num. of garages (place for a car = one garage)"
+msgstr "Număr de garaje (un loc de mașina = un garaj)"
+
+#: oc-content/plugins/realstate_attributes/form.php:101
+#: oc-content/plugins/realstate_attributes/item_detail.php:89
+#: oc-content/plugins/realstate_attributes/item_edit.php:107
+msgid "Condition"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:105
+#: oc-content/plugins/realstate_attributes/item_detail.php:93
+#: oc-content/plugins/realstate_attributes/item_edit.php:111
+msgid "Agency"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:109
+#: oc-content/plugins/realstate_attributes/item_detail.php:97
+#: oc-content/plugins/realstate_attributes/item_edit.php:115
+msgid "Floor Number"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:114
+#: oc-content/plugins/realstate_attributes/item_edit.php:119
+#: oc-content/plugins/realstate_attributes/search_form.php:167
+msgid "Other characteristics"
+msgstr "Alte caracteristici"
+
+#: oc-content/plugins/realstate_attributes/form.php:116
+#: oc-content/plugins/realstate_attributes/item_detail.php:65
+#: oc-content/plugins/realstate_attributes/item_edit.php:121
+#: oc-content/plugins/realstate_attributes/search_form.php:169
+msgid "Heating"
+msgstr "Încălzire"
+
+#: oc-content/plugins/realstate_attributes/form.php:117
+#: oc-content/plugins/realstate_attributes/item_edit.php:122
+#: oc-content/plugins/realstate_attributes/search_form.php:170
+msgid "Air condition"
+msgstr "Aer condiţionat"
+
+#: oc-content/plugins/realstate_attributes/form.php:118
+#: oc-content/plugins/realstate_attributes/item_detail.php:71
+#: oc-content/plugins/realstate_attributes/item_edit.php:123
+#: oc-content/plugins/realstate_attributes/search_form.php:171
+msgid "Elevator"
+msgstr "Lift"
+
+#: oc-content/plugins/realstate_attributes/form.php:119
+#: oc-content/plugins/realstate_attributes/item_detail.php:74
+#: oc-content/plugins/realstate_attributes/item_edit.php:124
+#: oc-content/plugins/realstate_attributes/search_form.php:172
+msgid "Terrace"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:120
+#: oc-content/plugins/realstate_attributes/item_detail.php:77
+#: oc-content/plugins/realstate_attributes/item_edit.php:125
+#: oc-content/plugins/realstate_attributes/search_form.php:173
+msgid "Parking"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:121
+#: oc-content/plugins/realstate_attributes/item_detail.php:80
+#: oc-content/plugins/realstate_attributes/item_edit.php:126
+#: oc-content/plugins/realstate_attributes/search_form.php:174
+msgid "Furnished"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:123
+#: oc-content/plugins/realstate_attributes/item_edit.php:128
+#: oc-content/plugins/realstate_attributes/search_form.php:176
+msgid "By owner"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:131
+#: oc-content/plugins/realstate_attributes/form.php:143
+#: oc-content/plugins/realstate_attributes/item_detail.php:106
+#: oc-content/plugins/realstate_attributes/item_detail.php:119
+#: oc-content/plugins/realstate_attributes/item_edit.php:134
+#: oc-content/plugins/realstate_attributes/item_edit.php:147
+msgid "Transport"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/form.php:134
+#: oc-content/plugins/realstate_attributes/form.php:147
+#: oc-content/plugins/realstate_attributes/item_detail.php:110
+#: oc-content/plugins/realstate_attributes/item_detail.php:123
+#: oc-content/plugins/realstate_attributes/item_edit.php:138
+#: oc-content/plugins/realstate_attributes/item_edit.php:151
+msgid "Zone"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:37
+msgid "Num. Rooms"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:41
+msgid "Num. Bathrooms"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:49
+msgid "Square Meters"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:53
+msgid "Square Meters (total)"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:57
+msgid "Num. Floors"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:68
+msgid "Air Condition"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/item_detail.php:86
+msgid "By Owner"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:114
+msgid "Num. Floors Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:123
+msgid "Rooms Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:132
+msgid "Bathrooms Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:141
+msgid "Garages Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:150
+msgid "Construction year Range"
+msgstr ""
+
+#: oc-content/plugins/realstate_attributes/search_form.php:159
+msgid "Square Meters Range"
+msgstr " "
+
+#: oc-content/themes/modern/category.php:7
+msgid "There are no results in this category yet."
+msgstr ""
+
+#: oc-content/themes/modern/footer.php:5
+msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>."
+msgstr ""
+
+#: oc-content/themes/modern/header.php:78
+msgid "Hello"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:79
+msgid "Manage from here your"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:80
+msgid "account"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:81
+msgid "Logout"
+msgstr "Deautentificare"
+
+#: oc-content/themes/modern/header.php:83
+msgid "Register a free account"
+msgstr "Înregistrează cont nou"
+
+#: oc-content/themes/modern/header.php:83
+msgid "or"
+msgstr ""
+
+#: oc-content/themes/modern/header.php:83
+msgid "login"
+msgstr "autentificare"
+
+#: oc-content/themes/modern/header.php:111
+msgid "Your search must be at least two characters long"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:1
+#: oc-content/themes/modern/item.php:7
+#: oc-content/themes/modern_vertical/item-contact.php:1
+#: oc-content/themes/modern_vertical/item.php:7
+msgid "Contact seller"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:11
+#: oc-content/themes/modern_vertical/item-contact.php:11
+msgid "To (seller)"
+msgstr "Către (vanzator)"
+
+#: oc-content/themes/modern/item-contact.php:19
+#: oc-content/themes/modern_vertical/item-contact.php:19
+msgid "Your name"
+msgstr "Numele dumneavoastră"
+
+#: oc-content/themes/modern/item-contact.php:19
+#: oc-content/themes/modern/item-contact.php:27
+#: oc-content/themes/modern_vertical/item-contact.php:19
+#: oc-content/themes/modern_vertical/item-contact.php:27
+msgid "(optional)"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:23
+#: oc-content/themes/modern_vertical/item-contact.php:23
+msgid "Your email address"
+msgstr "Adresa dumneavoastră de email"
+
+#: oc-content/themes/modern/item-contact.php:27
+#: oc-content/themes/modern_vertical/item-contact.php:27
+msgid "Phone number"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:31
+#: oc-content/themes/modern_vertical/item-contact.php:31
+msgid "Message"
+msgstr ""
+
+#: oc-content/themes/modern/item-contact.php:36
+#: oc-content/themes/modern_vertical/item-contact.php:36
+msgid "Send message"
+msgstr ""
+
+#: oc-content/themes/modern/item-post.php:5
+#: oc-content/themes/modern_vertical/item-post.php:95
+msgid "Post your item"
+msgstr "Adaugă un anunț nou"
+
+#: oc-content/themes/modern/item-post.php:58
+#: oc-content/themes/modern_vertical/item-post.php:274
+msgid "Seller information"
+msgstr "Informații vanzator"
+
+#: oc-content/themes/modern/item-post.php:75
+#: oc-content/themes/modern_vertical/item-post.php:298
+msgid "Publish"
+msgstr "Publică"
+
+#: oc-content/themes/modern/item.php:8
+#: oc-content/themes/modern_vertical/item.php:8
+msgid "Send to a friend"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:18
+#: oc-content/themes/modern_vertical/item.php:18
+msgid "Images"
+msgstr "Imagini"
+
+#: oc-content/themes/modern/item.php:24
+#: oc-content/themes/modern_vertical/item.php:24
+msgid "no pictures"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:34
+#: oc-content/themes/modern_vertical/item.php:34
+msgid "Mark as "
+msgstr ""
+
+#: oc-content/themes/modern/item.php:35
+#: oc-content/themes/modern_vertical/item.php:35
+msgid "spam"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:36
+#: oc-content/themes/modern_vertical/item.php:36
+msgid "bad category"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:37
+#: oc-content/themes/modern_vertical/item.php:37
+msgid "repeated"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:38
+#: oc-content/themes/modern_vertical/item.php:38
+msgid "expired"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:39
+#: oc-content/themes/modern_vertical/item.php:39
+msgid "offensive"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:96
+#: oc-content/themes/modern_vertical/item.php:94
+msgid "Be the first to comment on this item!"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:100
+#: oc-content/themes/modern_vertical/item.php:98
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:103
+#: oc-content/themes/modern_vertical/item.php:101
+msgid "Your name:"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:104
+#: oc-content/themes/modern_vertical/item.php:102
+msgid "Your email:"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:108
+#: oc-content/themes/modern_vertical/item.php:106
+msgid "Title:"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:109
+#: oc-content/themes/modern_vertical/item.php:107
+msgid "Comment:"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:112
+#: oc-content/themes/modern_vertical/item.php:110
+msgid "Send comment"
+msgstr ""
+
+#: oc-content/themes/modern/item.php:117
+#: oc-content/themes/modern_vertical/item.php:115
+msgid "Comments are not enabled."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:125
+#: oc-content/themes/modern_vertical/item.php:123
+msgid "Helpful information"
+msgstr "Alte informaţii"
+
+#: oc-content/themes/modern/item.php:128
+#: oc-content/themes/modern_vertical/item.php:126
+msgid "Avoid scams by dealing locally or paying with PayPal."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:129
+#: oc-content/themes/modern_vertical/item.php:127
+msgid "Never pay with Western Union, Moneygram or other anonymous payment services."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:130
+#: oc-content/themes/modern_vertical/item.php:128
+msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country."
+msgstr ""
+
+#: oc-content/themes/modern/item.php:131
+#: oc-content/themes/modern_vertical/item.php:129
+msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\"."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/category.php:30
+#: oc-content/themes/modern_vertical/home.php:93
+msgid "no description."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/header.php:71
+msgid "Hello "
+msgstr ""
+
+#: oc-content/themes/modern_vertical/header.php:113
+msgid "Login"
+msgstr ""
+
+#: oc-content/themes/modern_vertical/home.php:47
+msgid "No Latest Items"
+msgstr "Nu există anunțuri noi"
+
+#: oc-content/themes/modern_vertical/home.php:49
+msgid "Latest Items"
+msgstr "Ultimele anunțuri"
+
+#: oc-content/themes/modern_vertical/home.php:67
+msgid "Contact"
+msgstr "Contact"
+
+#: oc-content/themes/modern_vertical/item-post.php:17
+#: oc-content/themes/modern_vertical/item-post.php:233
+msgid "Select a region..."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:22
+#: oc-content/themes/modern_vertical/item-post.php:42
+#: oc-content/themes/modern_vertical/item-post.php:69
+msgid "none"
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:37
+#: oc-content/themes/modern_vertical/item-post.php:64
+#: oc-content/themes/modern_vertical/item-post.php:251
+msgid "Select a city..."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:89
+msgid "You have to select a region."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:90
+msgid "You have to select a city."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:211
+msgid "Item Location"
+msgstr "Locaţia elementului"
+
+#: oc-content/themes/modern_vertical/item-post.php:217
+msgid "Select a country..."
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:263
+msgid "City Area"
+msgstr ""
+
+#: oc-content/themes/modern_vertical/item-post.php:284
+msgid "Show email publically within the item page"
+msgstr " "
+
+#: oc-includes/osclass/items.php:178
+msgid "You new to log-in in order to post a new item."
+msgstr ""
+
+#: oc-includes/osclass/items.php:225
+msgid "You need to input your name and email to be able to publish a new item."
+msgstr ""
+
+#: oc-includes/osclass/items.php:465
+msgid "Great! You'll receive an e-mail to activate your item."
+msgstr ""
+
+#: oc-includes/osclass/items.php:467
+msgid "Great! We've just published your item."
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:34
+#: oc-includes/osclass/notifications.php:77
+msgid "Contact Name"
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:35
+#: oc-includes/osclass/notifications.php:78
+msgid "Contact E-mail"
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:57
+#: oc-includes/osclass/notifications.php:103
+msgid "Url"
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:68
+msgid "Validate your ad"
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:75
+msgid "Dear "
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:76
+msgid "You're receiving this email because an Ad is being placed at "
+msgstr ""
+
+#: oc-includes/osclass/notifications.php:104
+msgid "You can validate your ad in this url"
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:93
+#: oc-includes/osclass/plugins.php:119
+#: oc-includes/osclass/plugins.php:121
+#: oc-includes/osclass/plugins.php:146
+msgid "Plugin "
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:93
+#: oc-includes/osclass/plugins.php:121
+msgid " is missing the index.php file."
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:119
+msgid " is missing the function "
+msgstr ""
+
+#: oc-includes/osclass/plugins.php:146
+msgid " is missing the plugin's main file."
+msgstr ""
+
+#: oc-includes/osclass/session.php:23
+msgid "defined session"
+msgstr ""
+
+#: oc-includes/osclass/themes.php:45
+#: oc-includes/osclass/themes.php:53
+msgid "Consult"
+msgstr ""
+
+#: oc-includes/osclass/themes.php:48
+msgid "Free"
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:98
+msgid "Select one country..."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:117
+msgid "Select one region..."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:135
+msgid "Select one city..."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:280
+msgid "You have to write a name."
+msgstr ""
+
+#: oc-includes/osclass/frm/Item.form.class.php:287
+msgid "You have to write an e-mail."
+msgstr ""
+
+#: oc-includes/osclass/frm/Page.form.class.php:48
+msgid "Body"
+msgstr "Corp"
+
+#: oc-includes/osclass/gui/alert-form.php:5
+msgid "You have been subscribe correctly to the alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:5
+msgid "There was a problem with the alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:12
+msgid "Subscribe to this search"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:23
+msgid "Enter your e-mail"
+msgstr ""
+
+#: oc-includes/osclass/gui/alert-form.php:25
+msgid "Subscribe"
+msgstr ""
+
+#: oc-includes/osclass/gui/contact.php:29
+msgid "Subject"
+msgstr ""
+
+#: oc-includes/osclass/gui/contact.php:45
+msgid "Send"
+msgstr ""
+
+#: oc-includes/osclass/gui/header.php:58
+msgid "items"
+msgstr "anunțuri"
+
+#: oc-includes/osclass/gui/header.php:59
+msgid "and "
+msgstr ""
+
+#: oc-includes/osclass/gui/header.php:60
+msgid "profile"
+msgstr "profil"
+
+#: oc-includes/osclass/gui/home.php:22
+#, php-format
+msgid "%d items"
+msgstr ""
+
+#: oc-includes/osclass/gui/home.php:34
+msgid "Latest published items"
+msgstr ""
+
+#: oc-includes/osclass/gui/item-send-friend.php:104
+msgid "Your friend's name"
+msgstr ""
+
+#: oc-includes/osclass/gui/item-send-friend.php:108
+msgid "Your friend's email address"
+msgstr ""
+
+#: oc-includes/osclass/gui/item.php:28
+msgid "Price:"
+msgstr "Preț:"
+
+#: oc-includes/osclass/gui/item.php:29
+msgid "Publication date:"
+msgstr ""
+
+#: oc-includes/osclass/gui/item.php:58
+msgid "Mark as"
+msgstr ""
+
+#: oc-includes/osclass/gui/item.php:101
+msgid "Your email"
+msgstr ""
+
+#: oc-includes/osclass/gui/item.php:127
+msgid "Don't buy or sell outside of your country. Don't accept cashier check from outside your country."
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:50
+msgid "Search results"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:53
+msgid "Page"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:67
+msgid "Show as:"
+msgstr "Arată ca:"
+
+#: oc-includes/osclass/gui/search.php:67
+msgid "List"
+msgstr "Listă"
+
+#: oc-includes/osclass/gui/search.php:67
+msgid "image gallery"
+msgstr "galerie imagini"
+
+#: oc-includes/osclass/gui/search.php:70
+msgid "Sort by:"
+msgstr "Sortare după"
+
+#: oc-includes/osclass/gui/search.php:112
+msgid "Minimum"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:114
+msgid "Maximum"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:118
+msgid "Pictures"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:125
+msgid "Show only items with pictures"
+msgstr ""
+
+#: oc-includes/osclass/gui/search.php:164
+#, php-format
+msgid "There are no results matching \"%s\"."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-account.php:1
+msgid "Your account"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-alerts.php:22
+msgid "Your alerts"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-alerts.php:25
+msgid "You do not have any alerts yet."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-alerts.php:29
+msgid "Alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-alerts.php:29
+msgid "Delete this alert"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-alerts.php:37
+#: oc-includes/osclass/gui/user-items.php:32
+msgid "Publication date"
+msgstr "Data publicării"
+
+#: oc-includes/osclass/gui/user-forgot-change.php:35
+msgid "Retype new password"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-forgot-change.php:40
+#: oc-includes/osclass/gui/user-forgot.php:33
+msgid "If you forgot your password, enter your e-mail and we'll send you an e-mail to recover it."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-forgot-change.php:44
+#: oc-includes/osclass/gui/user-forgot.php:37
+msgid "I forgot my password"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-items.php:22
+msgid "Your items"
+msgstr "Anunțurile d-voastra"
+
+#: oc-includes/osclass/gui/user-items.php:25
+msgid "You do not have any items yet."
+msgstr "Nu aveți nici un anunț"
+
+#: oc-includes/osclass/gui/user-menu.php:22
+msgid "Menu"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-menu.php:22
+msgid "Manage your profile"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-menu.php:22
+msgid "Manage your items"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-menu.php:22
+msgid "Log-out"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-profile.php:1
+msgid "Update your profile"
+msgstr "Actualizează profilul"
+
+#: oc-includes/osclass/gui/user-profile.php:20
+msgid "Leave it empty if you don't want to change it now."
+msgstr ""
+
+#: oc-includes/osclass/gui/user-profile.php:24
+msgid "Retype the password"
+msgstr ""
+
+#: oc-includes/osclass/gui/user-profile.php:54
+msgid "Update profile"
+msgstr "Actualizează profilul"
+
+#: oc-includes/osclass/gui/user-register.php:3
+msgid "Register an account (free)"
+msgstr "Înregistrează un cont nou"
+
+#: oc-includes/osclass/gui/user-register.php:24
+msgid "Re-type password"
+msgstr ""
+
+#~ msgid "Item inquiry"
+#~ msgstr "Caută anunț"
+
+#~ msgid "Options"
+#~ msgstr "Opțiuni"
+
+#~ msgid "Upload a new theme"
+#~ msgstr "Adaugă temă noua"
+
+#~ msgid "Thumbnail"
+#~ msgstr "Miniatură"
+
+#~ msgid "Locale"
+#~ msgstr "Localizare"
+
+#~ msgid "Update category"
+#~ msgstr "Actualizează categoria"
+
+#~ msgid "Excerpt"
+#~ msgstr "Extras"
+
+#~ msgid "Publish page"
+#~ msgstr "Publică pagina"
+
+#~ msgid "Upgrade file"
+#~ msgstr "Fișier actualizare"
+
+#~ msgid "Less than a year"
+#~ msgstr "Sub 1 an"
+
+#~ msgid "Between 1 and 3 years"
+#~ msgstr "Între 1 şi 3 ani"
+
+#~ msgid "Between 3 and 6 years"
+#~ msgstr "Între 3 şi 6 ani"
+
+#~ msgid "More than 6 years"
+#~ msgstr "Peste 6 ani"
+
+#~ msgid "Item location"
+#~ msgstr "Locaţia anunțului"
+
+#~ msgid "Succesful installation!"
+#~ msgstr "Instalarea s-a finalizat cu success!"

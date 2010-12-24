@@ -1,54 +1,53 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OSClass\n"
+"Project-Id-Version: OSClass 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-23 19:50+0100\n"
+"POT-Creation-Date: 2010-12-23 23:07+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Spanish\n"
+"X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Country: SPAIN\n"
 "X-Poedit-SearchPath-0: /Users/juanramon/htdocs/osclass-git\n"
 
 #: /Users/juanramon/htdocs/osclass-git/index.php:46
 #: /Users/juanramon/htdocs/osclass-git/search.php:163
 msgid "Latest items added"
-msgstr "Últimos artículos añadidos"
+msgstr "Zadnji oglasi dodani"
 
 #: /Users/juanramon/htdocs/osclass-git/index.php:48
 #: /Users/juanramon/htdocs/osclass-git/search.php:165
 msgid "Latest items added in"
-msgstr ""
+msgstr "Zadnji oglasi dodani v"
 
 #: /Users/juanramon/htdocs/osclass-git/index.php:91
 msgid "Contact form"
-msgstr "Formulario de contacto"
+msgstr "Kontakt"
 
 #: /Users/juanramon/htdocs/osclass-git/index.php:93
 msgid "Administrator"
-msgstr "Administrador"
+msgstr "Skrbnik"
 
 #: /Users/juanramon/htdocs/osclass-git/index.php:103
 msgid "Your message has been sent and will be answered soon, thank you."
-msgstr "Tu mensaje ha sido enviado y será contestado en breve, gracias."
+msgstr "Vaše sporočilo je bilo poslano, in bo odgovorjeno v kratkem, hvala."
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:52
 msgid "Thanks! That helps us."
-msgstr ""
+msgstr "Hvala."
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:94
 msgid "We just send your message to "
-msgstr ""
+msgstr "Pravkar smo poslali sporočilo na"
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:96
 msgid "We are very sorry but we could not deliver your message to your friend. Try again later."
-msgstr ""
+msgstr "Žal vašega sporočilo nismo mogli poslati vašemu prijatelju. Poskusite kasneje."
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:109
 #: /Users/juanramon/htdocs/osclass-git/item.php:128
@@ -57,19 +56,19 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:159
 msgid "We've just sent an e-mail to the seller."
-msgstr ""
+msgstr "Poslali smo sporočilo prodajalcu."
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:237
 msgid "We are very sorry but could not save your comment. Try again later."
-msgstr "Lo sentimos pero tu comentario no ha podido ser guardado. Inténtalo nuevamente más tarde."
+msgstr "Vašega komentarja žal nismo mogli shraniti. Poskusite kasneje."
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:251
 msgid "You need to log-in in order to post a new item."
-msgstr ""
+msgstr "Za oddajo novega oglasa se morate prijaviti."
 
 #: /Users/juanramon/htdocs/osclass-git/item.php:274
 msgid "Publish your item"
-msgstr "Publicar tu artículo"
+msgstr "Objavite vaš oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/page.php:29
 #: /Users/juanramon/htdocs/osclass-git/page.php:60
@@ -78,34 +77,34 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/search.php:136
 msgid "Newly listed"
-msgstr "Recientes"
+msgstr "Najnovejši"
 
 #: /Users/juanramon/htdocs/osclass-git/search.php:137
 msgid "Lower price first"
-msgstr "Más barato primero"
+msgstr "Z nižjo ceno naprej"
 
 #: /Users/juanramon/htdocs/osclass-git/search.php:138
 msgid "Higher price first"
-msgstr "Más caros primero"
+msgstr "Z višjo ceno naprej"
 
 #: /Users/juanramon/htdocs/osclass-git/search.php:139
 msgid "Best match"
-msgstr "Mejor coincidencia"
+msgstr "Najprimernejši zadetek"
 
 #: /Users/juanramon/htdocs/osclass-git/search.php:152
 #, php-format
 msgid "Search results for %s"
-msgstr "Resultados de búsqueda para %s"
+msgstr "Rezultati iskanja za %s"
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:31
 #: /Users/juanramon/htdocs/osclass-git/user.php:194
 #: /Users/juanramon/htdocs/osclass-git/user.php:226
 msgid "Create your account"
-msgstr "Crea tu cuenta"
+msgstr "Ustvarite račun"
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:48
 msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
-msgstr "El código reCAPTCHA no es correcto. Vuelve atrás e inténtalo de nuevo. (reCAPTCHA dice:"
+msgstr "reCAPTCHA ni bila pravilo vnešena. Pojdi nazaj in poskusi znova. ("
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:63
 msgid "Sorry, but the username can only contain alphanumeric characters."
@@ -113,7 +112,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:102
 msgid "Your account has been created. An activation email has been sent to your email address."
-msgstr ""
+msgstr "Tvoj račun je bil ustvarjen. Potrditveni email je bil poslan na tvoj email naslov."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:108
 msgid "Your account has been created. You're ready to go."
@@ -121,31 +120,31 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:111
 msgid "Sorry, but that username is already in use."
-msgstr ""
+msgstr "To uporabniško ime je žal zasedeno."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:115
 msgid "The user could not be registered, sorry."
-msgstr "El usuario no pudo ser registrado, lo sentimos."
+msgstr "Žal uporabnika ni bilo mogoče registrirati."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:146
 msgid "We resend you the validation email. If you don't recive it after a few minutes, please check your SPAM folder."
-msgstr ""
+msgstr "Ponovno smo ti poslali potrditveni email. Če ga ne prejmeš po nekaj minutah, preveri še mapo Smeti (SPAM)."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:148
 msgid "The email couldn't be sent, sorry."
-msgstr ""
+msgstr "Elektronsko sporočilo žal ni bilo poslano."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:182
 msgid "Your account is correctly validated. Thanks."
-msgstr "Tu cuenta ha sido correctamente validada, gracias."
+msgstr "Vaš račun je sedaj aktiven."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:184
 msgid "Your account has been activated before."
-msgstr ""
+msgstr "Vaš račun je že bil aktiviran."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:187
 msgid "The link is not longer valid, sorry."
-msgstr "El enlace ha dejado de ser válido, disculpas."
+msgstr "Povezava ni več veljavna."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:199
 #: /Users/juanramon/htdocs/osclass-git/user.php:248
@@ -155,11 +154,11 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:210
 msgid "Passwords don't match."
-msgstr ""
+msgstr "Gesli se ne ujemata."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:221
 msgid "Your profile has been updated correctly"
-msgstr ""
+msgstr "Vaš profil je bil posodobljen."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:242
 msgid "Manage your alerts"
@@ -180,20 +179,20 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:354
 msgid "Access to your account"
-msgstr "Accede a tu cuenta"
+msgstr "Prijavite se"
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:381
 msgid "You have not validated your account yet.<br/> Should we resend you the validation email?"
-msgstr ""
+msgstr "Niste še potrdili vašega računa. <br/> Vam ponovno pošljemo potrditveni email?"
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:381
 msgid "Yes, resend me the validation email."
-msgstr ""
+msgstr "Da, ponovno mi pošljite potrditveni email."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:384
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:107
 msgid "Wrong username or password."
-msgstr "Nombre de usuario o contraseña incorrectos."
+msgstr "Napačno uporabniško ime ali geslo."
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:402
 msgid "Unsubscribed correctly."
@@ -206,7 +205,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/user.php:410
 #: /Users/juanramon/htdocs/osclass-git/user.php:458
 msgid "Retrieve your password"
-msgstr ""
+msgstr "  "
 
 #: /Users/juanramon/htdocs/osclass-git/user.php:450
 msgid "Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive."
@@ -231,25 +230,25 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:50
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:100
 msgid "Administrators"
-msgstr "Administradores"
+msgstr "Skrbniki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:39
 msgid "Add"
-msgstr "Añadir"
+msgstr "Dodaj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:38
 msgid "The item has been added."
-msgstr "El artículo ha sido añadido."
+msgstr "Oglas je bil dodan."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:40
 msgid "The administrator could not be created."
-msgstr "El administrador no se ha podido crear."
+msgstr "Skrbnika ni bilo mogoče ustvariti."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:50
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:65
 msgid "Edit"
-msgstr "Editar"
+msgstr "Uredi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:64
 msgid "Password didn't update. Passwords don't match."
@@ -272,28 +271,28 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:79
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:102
 msgid "Error: "
-msgstr "Error: "
+msgstr "Napaka:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:86
 msgid "The operation was not completed. You were trying to remove yourself!"
-msgstr "La operación no se ha completado. ¡Te estas borrando a ti mismo!"
+msgstr "Operacije ni bila končana. Poskušal si odstraniti sam!"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:29
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:53
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:56
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:80
 msgid "Appearance"
-msgstr "Apariencia"
+msgstr "Izgled"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:29
 msgid "Upload"
-msgstr "Subir"
+msgstr "Naloži"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:40
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:44
 #, php-format
 msgid "Directory \"%s\" could not be removed."
-msgstr "El direcotrio \"%s\" no se ha podido quitar."
+msgstr "Mape \"%s\" ni bilo mogoče odstraniti."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:46
 msgid "No theme selected."
@@ -303,133 +302,133 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:65
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:172
 msgid "Categories"
-msgstr "Categorias"
+msgstr "Kategorije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:56
 msgid "The category has been added."
-msgstr ""
+msgstr "Kategorija je bila dodana."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:83
 msgid "The item has been updated."
-msgstr "El artículo ha sido actualizado."
+msgstr "Oglas je bil posodobljen."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:101
 msgid "The items have been deleted."
-msgstr "Los artículos han sido eliminados."
+msgstr "Oglasi so bili izbrisani."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:114
 msgid "The category has been enabled."
-msgstr ""
+msgstr "Kategorija je bila omogočena."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:116
 msgid "The category has been disabled."
-msgstr ""
+msgstr "Kategorija je bila onemogočena."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:119
 msgid "There was a problem with this page. The ID for the category is not set."
-msgstr ""
+msgstr "Nastala je napaka pri tej strani. ID za to kategorijo ni podan."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:136
 msgid "The categories have been enabled."
-msgstr "Las categorías han sido activadas."
+msgstr "Kategorije so bile omogočene."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:151
 msgid "Selected categories have been disabled."
-msgstr "Selecciona las categorías que quieras desactivar."
+msgstr "Izbrane kategorije so bile onemogočene."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:41
 msgid "The comments have been deleted."
-msgstr ""
+msgstr "Komentarji so bili izbrisani."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:59
 msgid "The comments have been activated."
-msgstr ""
+msgstr "Komentarji si bili vključeni."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:77
 msgid "The comments have been deactivated."
-msgstr ""
+msgstr "Komentarji so bili izključeni."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:100
 msgid "The comment has been activate."
-msgstr ""
+msgstr "Komentar je bil vključen."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:112
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:135
 msgid "Comments"
-msgstr "Comentarios"
+msgstr "Komentarji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/comments.php:125
 msgid "Great! We've just update your item."
-msgstr ""
+msgstr "Super. Tvoj oglas je bil posodobljen."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/common.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/common.php:52
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Vtičniki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/common.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/common.php:52
 msgid "Configuration"
-msgstr "Configuración"
+msgstr "Konfiguracija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:51
 #, php-format
 msgid "Your new password is \"%s\"."
-msgstr "Tu nueva contraseña es \"%s\"."
+msgstr "Tvoje novo geslo je \"%s\"."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:59
 msgid "OSClass application"
-msgstr "Aplicación OSClass"
+msgstr "OSClass aplikacija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:60
 msgid "Recover your password"
-msgstr "Recuperar tu contraseña"
+msgstr "Obnovi svoje geslo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:62
 msgid "OSClass administrator"
-msgstr "Administrador de OSClass"
+msgstr "OSClass administrator"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:68
 msgid "A new password has been sent to your account."
-msgstr "Se ha enviado una contraseña nueva a tu cuenta."
+msgstr "Novo geslo je bilo poslano."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/index.php:70
 msgid "The email you have entered does not belong to a valid administrator."
-msgstr "El correo electrónico que has introducido no pertenece a un administrador."
+msgstr "Email, ki si ga vpisal ne pripada administratorju."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:48
 msgid "The items have been activated."
-msgstr ""
+msgstr "Oglasi so bili omogočeni."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:68
 msgid "The items have been deactivated."
-msgstr ""
+msgstr "Oglasi so bili onemogočeni."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:86
 msgid "The items have been made premium."
-msgstr ""
+msgstr "Oglasi si bili označeni Premium."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:105
 msgid "The chages have been made."
-msgstr ""
+msgstr "Spremembe so bile shranjene."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:187
 msgid "The item has been activate."
-msgstr ""
+msgstr "Oglas je bil omogočen."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:214
 msgid "Changes have been made."
-msgstr ""
+msgstr "Spremembe so bile shranjene."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:311
 msgid "Items"
-msgstr "Artículos"
+msgstr "Oglasi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:139
 msgid "Languages"
-msgstr "Idiomas"
+msgstr "Prevodi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:36
 msgid "The language has been installed correctly."
@@ -441,43 +440,43 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:66
 msgid "The language has been enabled for the public website."
-msgstr ""
+msgstr "Prevod je bil omogočen za prvo stran."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:66
 msgid "The language has been disabled for the public website."
-msgstr ""
+msgstr "Prevod je bil onemogočen za prvo stran."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:69
 msgid "The language has been enabled for the backoffice (oc-admin)."
-msgstr ""
+msgstr "Prevod je bil omogočen za Skrbništvo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:69
 msgid "The language has been disabled for the backoffice (oc-admin)."
-msgstr ""
+msgstr "Prevod je bil onemogočen za Skrbništvo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:77
 msgid "There was a problem updating the language. The ID of the language was lost."
-msgstr ""
+msgstr "Nastala je napaka pri posodabljanju prevoda. ID prevoda je izgubljen."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:93
 msgid "Selected languages have been enabled for the website."
-msgstr ""
+msgstr "Izbrani prevodi so bili omogočeni za prvo stran."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:96
 msgid "Selected languages have been disabled for the website."
-msgstr ""
+msgstr "Izbrani prevodi so bili onemogočeni za prvo stran."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:99
 msgid "Selected languages have been enabled for the backoffice (oc-admin)."
-msgstr ""
+msgstr "Izbrani prevodi so bili omogočeni za Skrbništvo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:102
 msgid "Selected languages have been disabled for the backoffice (oc-admin)."
-msgstr ""
+msgstr "Izbrani prevodi so bili onemogočeni za Skrbništvo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:113
 msgid "There was a problem updating the languages. The IDs of the languages were lost."
-msgstr ""
+msgstr "Nastala je napaka pri posodabljanju prevodov. IDji prevodov so izgubljeni."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:130
 #, php-format
@@ -503,55 +502,55 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:26
 msgid "OSClass Admin Panel Login"
-msgstr "Acceso al panel de administración de OSClass."
+msgstr "OSClass prijava v Skrbništvo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:43
 msgid "Username"
-msgstr "Usuario"
+msgstr "Uporabniško ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:49
 msgid "Password"
-msgstr "Contraseña"
+msgstr "Geslo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:55
 msgid "Language"
-msgstr "Idioma"
+msgstr "Jezik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:68
 msgid "Theme"
-msgstr "Aspecto"
+msgstr "Predloga"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:76
 msgid "Remember me"
-msgstr "Recordarme"
+msgstr "Zapomni se me"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:80
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:50
 msgid "Log in"
-msgstr "Iniciar sesión"
+msgstr "Prijava"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:85
 msgid "Lost your password?"
-msgstr "¿Has perdido tu contraseña?"
+msgstr "Ste pozabili geslo?"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:88
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:54
 msgid "Have you lost?"
-msgstr "¿Te has perdido?"
+msgstr "Si se izgubil?"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:88
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:54
 msgid "Back to"
-msgstr "Volver a "
+msgstr "Nazaj na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/main.php:34
 msgid "Dashboard"
-msgstr "Panel"
+msgstr "Namizje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/media.php:32
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/media.php:51
 msgid "Media"
-msgstr "Multimedia"
+msgstr "Predstavnost"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/media.php:32
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:34
@@ -564,17 +563,17 @@ msgstr "Multimedia"
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:334
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:337
 msgid "Settings"
-msgstr "Ajustes"
+msgstr "Nastavitve"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:33
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:105
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:148
 msgid "Pages"
-msgstr "Páginas"
+msgstr "Strani"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:64
 msgid "The page has been updated."
-msgstr ""
+msgstr "Stran je bila posodobljena."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:76
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:83
@@ -586,11 +585,11 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:79
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:95
 msgid "Error, this page can not be deleted."
-msgstr ""
+msgstr "Napaka, strani ne morem izbrisati."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/pages.php:139
 msgid "Ops! That internal name is already in use. We couldn't made the changes."
-msgstr ""
+msgstr "Ups! Notranje ime je že v uporabi. Nismo mogli shraniti sprememb."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:45
 msgid "Plugin installed."
@@ -602,157 +601,157 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:103
 msgid "No plugin selected"
-msgstr ""
+msgstr "Izbran ni bil noben vtičnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/plugins.php:106
 msgid "Configuration was saved"
-msgstr ""
+msgstr "Konfiguracija shranjena"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:36
 msgid "Please enter your username or e-mail address."
-msgstr "Por favor introduce tu usuario o correo electrónico."
+msgstr "Prosimo, vpišite vaše uporabniško ime in email."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:37
 msgid "You will receive a new password via e-mail."
-msgstr "Recibirás por correo electrónico tu nueva contraseña."
+msgstr "Novo geslo bo poslano na vaš elektronski naslov."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:43
 msgid "E-mail"
-msgstr "Correo electrónico"
+msgstr "E-mail"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/recover.php:46
 msgid "Get new password"
-msgstr "Consigue una nueva contraseña"
+msgstr "Pridobi novo geslo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:176
 msgid "Location"
-msgstr ""
+msgstr "Lokacija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:215
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:246
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:284
 msgid "Functionalities"
-msgstr "Funcionalidades"
+msgstr "Funkcije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:257
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:319
 msgid "Notifications"
-msgstr "Notificaciones"
+msgstr "Obvestila"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:408
 msgid "General settings"
-msgstr "Opciones generales"
+msgstr "Splošne nastavitve"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:29
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:37
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:39
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:60
 msgid "Tools"
-msgstr "Herramientas"
+msgstr "Orodja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:47
 msgid "Backup made correctly"
-msgstr ""
+msgstr "Backup je bil uspešno izveden."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:56
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:75
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:77
 msgid "Archiving is sucessful!"
-msgstr ""
+msgstr "Arhiviranje uspešno končano."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:57
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:77
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:79
 msgid "Error, can't create a zip file!"
-msgstr ""
+msgstr "Napaka, zip datoteke ni mogoče kreirati."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:44
 msgid "File downloaded correctly."
-msgstr ""
+msgstr "Datoteka je bila pravilno prenešena."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:46
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:46
 msgid "Missing filename."
-msgstr ""
+msgstr "Manjka ime datoteke."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:89
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:91
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:91
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:93
 msgid "Unzip failed"
-msgstr ""
+msgstr "Razpakiranje ni uspelo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:95
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:97
 msgid "Filename incorrect."
-msgstr ""
+msgstr "Ime datoteke ni pravilno."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:106
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:108
 msgid "Error removing file: "
-msgstr ""
+msgstr "Napaka pri brisanju datoteke:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:109
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:111
 msgid "Files removed ;)"
-msgstr ""
+msgstr "Datoteke izbrisane."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:112
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:114
 msgid "No files to remove ;)"
-msgstr ""
+msgstr "Nič datotek ni za brisanje."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:131
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:135
 msgid "There were problems copying files."
-msgstr ""
+msgstr "Pojavile so se napake pri kopiranju datotek."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:133
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:139
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:133
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:141
 msgid "Nothing to copy."
-msgstr ""
+msgstr "Nič ni za kopirati."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:135
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:137
 msgid "Files copied."
-msgstr ""
+msgstr "Datoteke skopirane."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:149
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:151
 msgid "upgrade.sql executed."
-msgstr ""
+msgstr "upgrade.sql izvedeno."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:151
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:153
 msgid "No SQL to execute."
-msgstr ""
+msgstr "Ni SQL za izvedbo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:159
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:161
 msgid "Custom actions executed."
-msgstr ""
+msgstr "Poljubne akcije so bile izvedene."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:161
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:163
 msgid "No action to execute."
-msgstr ""
+msgstr "Ni akcije za izvedbo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:169
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:169
 msgid "Update"
-msgstr "Actualizar"
+msgstr "Posodobitev"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:101
 msgid "Users"
-msgstr "Usuarios"
+msgstr "Uporabniki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:61
 msgid "The user has been updated."
@@ -765,39 +764,39 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:105
 msgid "View comments"
-msgstr "Ver comentarios"
+msgstr "Poglej komentarje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:106
 msgid "View media"
-msgstr "Ver multimedia"
+msgstr "Poglej predstavnost"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:108
 msgid "Deactivate"
-msgstr ""
+msgstr "Onemogoči"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:110
 msgid "Activate"
-msgstr "Activar"
+msgstr "Omogoči"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:113
 msgid "Demake Premium"
-msgstr ""
+msgstr "Onemogoči Premium"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:115
 msgid "Make Premium"
-msgstr ""
+msgstr "Omogoči Premium"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:118
 msgid "This action can not be undone. Are you sure you want to continue?"
-msgstr ""
+msgstr "Te zahteve ni mogoče več razveljaviti. Ste prepričani, da želite nadaljevati?"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:119
 msgid "Delete"
-msgstr "Eliminar"
+msgstr "Izbriši"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:29
 msgid "Thank you for using"
-msgstr "Gracias por utilizar"
+msgstr "Hvala, ker uporabljate"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:29
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:34
@@ -809,31 +808,31 @@ msgstr "OSClass"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:30
 msgid "Documentation"
-msgstr "Documentación"
+msgstr "Dokumentacija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:31
 msgid "Feedback"
-msgstr "Soporte"
+msgstr "Mnenje o OSClass"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:38
 msgid "OSClass Admin Panel"
-msgstr "Panel de administración de OSClass"
+msgstr "OSClass Skrbništvo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:203
 msgid "Visit website"
-msgstr "Visitar sitio web"
+msgstr "Pojdi na stran"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:204
 msgid "Howdy"
-msgstr "Hola"
+msgstr "Živijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:204
 msgid "Your profile"
-msgstr "Tú perfil"
+msgstr "Tvoj profil"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:204
 msgid "Log Out"
-msgstr "Desconectar"
+msgstr "Odjava"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:23
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:23
@@ -843,19 +842,19 @@ msgstr "Desconectar"
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:22
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:23
 msgid "Invalid OSClass request."
-msgstr "Solicitud de OSClass errónea"
+msgstr "Napačna OSClass zahteva"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:38
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:38
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:194
 msgid "Add new administrator"
-msgstr "Añadir nuevo administrador"
+msgstr "Dodaj novega administratorja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:53
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:86
 msgid "Real name"
-msgstr "Nombre real"
+msgstr "Pravo ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:53
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:68
@@ -863,16 +862,16 @@ msgstr "Nombre real"
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:69
 msgid "required"
-msgstr "requerido"
+msgstr "obvezno"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:68
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:69
 msgid "User name"
-msgstr "Nombre de usuario"
+msgstr "Uporabniško ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:81
 msgid "Create administrator"
-msgstr "Crear administrador"
+msgstr "Ustvari administratorja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:76
 msgid "Old password"
@@ -888,11 +887,11 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:83
 msgid "Leave it blank if you do not want to change your password now"
-msgstr "Dejar en blanco si no quieres cambiar la contraseña ahora"
+msgstr "Pusti prazno, če ne želiš spremeniti gesla"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:87
 msgid "Update administrator"
-msgstr "Actualizar administrador"
+msgstr "Posodobi administratorja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:37
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:49
@@ -903,323 +902,323 @@ msgstr "Actualizar administrador"
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:48
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:74
 msgid "Search"
-msgstr "Buscar"
+msgstr "Išči"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:42
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:41
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:40
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:67
 msgid "Processing"
-msgstr "Procesando"
+msgstr "Obdelujem"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:42
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:41
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:68
 msgid "Show _MENU_ entries"
-msgstr "Mostrar _MENU entradas"
+msgstr "Pokaži elemente menija _MENU_"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:42
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:69
 msgid "No matching records found"
-msgstr "No se han encontrado resultados."
+msgstr "Ni bilo najdenih zadetkov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:70
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
-msgstr "Mostrando _START_ a _END_ de _TOTAL_ entradas"
+msgstr "Prikazujem _START_ do _END_ od skupno _TOTAL_ oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:46
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:71
 msgid "Showing 0 to 0 of 0 entries"
-msgstr "Mostrando 0 a 0 de 0 entradas"
+msgstr "Prikazujem 0 do 0 od skupno 0 oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:47
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:46
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:72
 msgid "filtered from _MAX_ total entries"
-msgstr "filtradas de _MAX_ entradas totales"
+msgstr "filtrirano od _MAX_ oglasov skupaj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:52
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:51
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:50
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:77
 msgid "First"
-msgstr "Primero"
+msgstr "Prvi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:53
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:52
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:51
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:78
 msgid "Previous"
-msgstr "Anterior"
+msgstr "Prejšni"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:53
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:52
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:79
 msgid "Next"
-msgstr "Siguiente"
+msgstr "Naslednji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:55
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:53
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:80
 msgid "Last"
-msgstr "Último"
+msgstr "Zadnji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:57
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:56
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:55
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:82
 msgid "Show"
-msgstr "Mostrar"
+msgstr "Pokaži"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:62
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:61
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:60
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:87
 msgid "entries"
-msgstr "entradas"
+msgstr "vnosov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:112
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:129
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:119
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:152
 msgid "Bulk Actions"
-msgstr "Acciones en bloque"
+msgstr "Akcije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:115
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:134
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:124
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:159
 msgid "Apply"
-msgstr "Aplicar"
+msgstr "Uporabi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:38
 msgid "Add New Page"
-msgstr "Añadir nueva página"
+msgstr "Dodaj novo stran"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:55
 msgid "Theme package"
-msgstr "Paquete del tema"
+msgstr "Predloga paket"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:59
 msgid "Upload theme"
-msgstr "Subir un tema"
+msgstr "Naloži predlogo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:67
 msgid "The themes folder "
-msgstr "En la carpeta de temas"
+msgstr "Mapa predlog"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:67
 msgid " is not writable on your server, "
-msgstr " de tu servidor no se puede escribir."
+msgstr " ni zapisljiv na strežniku"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:67
 msgid " can't upload themes from the administration panel. Please copy the theme package using another technique (FTP, SSH) or make the mentioned themes folder writable."
-msgstr " no se puede subir temas desde el panel de administración. Por favor, copia el tema usando otra técnica (FTP, SSH) o haz que se pueda escribir en la carpeta."
+msgstr " ne morem naložiti predloge iz Skrbništva. Skopirajte paket predloge z uporabo druge tehhnike (FTP, SSH) ali spremenite pravice mape themes, da bo zapisljiva."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:70
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:69
 msgid "To make a directory writable under UNIX execute this command from the shell:"
-msgstr "Para que se pueda escribir en un directorio de UNIX se ha de ejecutar este comando en la terminal:"
+msgstr "Da spremenite pravice mape in jih naredite zapisljive, v UNIX sistemu uporabite naslednji ukaz:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:44
 msgid "Dashboard - Add New Widget"
-msgstr "Panel - Añadir nuevo widget"
+msgstr "Namizje - Dodaj nov Widget"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:70
 msgid "Create widget on "
-msgstr "Crear un widget en"
+msgstr "Ustvari widget na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:84
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:94
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:108
 msgid "Description"
-msgstr "Descripción"
+msgstr "Opis"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:89
 msgid "Content"
-msgstr "Contenido"
+msgstr "Vsebina"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:93
 msgid "Publish widget"
-msgstr "Publicar widget"
+msgstr "Objavi widget"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:27
 msgid "Are you sure you want to cancel?"
-msgstr "¿Estás seguro que quieres cancelar esta acción?"
+msgstr "Ste prepričani, da želite preklicati?"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:83
 msgid "Add a new theme"
-msgstr "Añadir nueva tema"
+msgstr "Dodaj novo predlogo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:55
 msgid "Current theme"
-msgstr "Aspecto actual"
+msgstr "Trenutna tema"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:60
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:87
 msgid "Author"
-msgstr "Autor"
+msgstr "Avtor"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:65
 msgid "Available themes"
-msgstr "Temas disponibles"
+msgstr "Predloge, ki so na voljo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:80
 msgid "Preview"
-msgstr "Previsualizar"
+msgstr "Predogled"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/widgets.php:37
 msgid "Widgets"
-msgstr "Widgets"
+msgstr "Widgeti"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/widgets.php:53
 msgid "Add HTML widget"
-msgstr "Añadir un widget HTML"
+msgstr "Dodaj HTML widget"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:66
 msgid "Parent category"
-msgstr "Categoría padre"
+msgstr "Nadkategorija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:68
 msgid "- No parent -"
-msgstr ""
+msgstr "- Ni nadkategorije -"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:72
 msgid "Expirations days"
-msgstr "Días de expiración"
+msgstr "Preteče čez koliko dni"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:72
 msgid "(0 = no expiration)"
-msgstr "(0 = sin expiración)"
+msgstr "(0 = ne poteče)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:78
 msgid "Position (order in relation to other categories)"
-msgstr ""
+msgstr "Zaporedje (v odvisnosti od drugih kategorij)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:87
 msgid "Enabled"
-msgstr "Habilitado"
+msgstr "Omogočeno"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:101
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:134
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Prekliči"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:102
 msgid "Save"
-msgstr "Guardar"
+msgstr "Shrani"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:77
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:131
 msgid "Disable"
-msgstr "Deshabilitar"
+msgstr "Onemogoči"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:77
 msgid "View subcategories"
-msgstr "Ver subcategorías"
+msgstr "Poglej podkategorije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:77
 msgid "WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?"
-msgstr ""
+msgstr "POZOR: Ta ukaz bo izbrisal tudi vse oglase v tej kategoriji. Tega se ne da razveljaviti. Ste prepričani, da želite nadaljeveti?"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:90
 msgid "Name"
-msgstr "Nombre"
+msgstr "Ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:93
 msgid "Parent"
-msgstr "Padre"
+msgstr "Nadkategorija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:121
 msgid "Add New Category"
-msgstr "Añadir nueva categoría"
+msgstr "Dodaj novo kategorijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:130
 msgid "Enable"
-msgstr "Habilitar"
+msgstr "Omogoči"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:68
 msgid "on"
-msgstr "en"
+msgstr "na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:90
 msgid "Comment"
-msgstr "Comentario"
+msgstr "Komentiraj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:91
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:122
 msgid "Date"
-msgstr "Fecha"
+msgstr "Datum"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:109
 msgid "Manage Comments"
-msgstr "Administrar comentarios"
+msgstr "Upravljaj s komentarji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:38
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:141
 msgid "Manage items"
-msgstr "Administrar artículos"
+msgstr "Upravljaj z oglasi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:40
 msgid "Add new item"
-msgstr "Añadir nuevo artículo"
+msgstr "Dodaj nov oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:45
 msgid "Manage media"
-msgstr "Administrar multimedia"
+msgstr "Upravljaj s predstavnostjo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:54
 msgid "Manage categories"
-msgstr "Administrar categorías"
+msgstr "Upravljaj s kategorijami"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:57
 msgid "Add a new category"
-msgstr "Añadir nueva categoría"
+msgstr "Dodaj novo kategorijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:66
 msgid "Manage pages"
-msgstr "Administrar páginas"
+msgstr "Upravljaj s stranmi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:69
 msgid "Create page"
-msgstr "Crear página"
+msgstr "Ustvari stran"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:80
 msgid "Manage themes"
-msgstr "Administrar temas"
+msgstr "Upravljaj s predlogami"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:86
 msgid "Add or remove widgets"
-msgstr "Añadir o eliminar widgets"
+msgstr "Dodaj ali odstrani widgete"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:95
 msgid "Manage plugins"
-msgstr "Administrar plugins"
+msgstr "Upravljaj z vtičniki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:98
 msgid "Add new plugin"
-msgstr "Añadir nuevo plugin"
+msgstr "Dodaj nov vtičnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:107
 msgid "Manage languages"
-msgstr "Administrar idiomas"
+msgstr "Upravljaj z jeziki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:110
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:38
 msgid "Add a language"
-msgstr "Añadir idioma"
+msgstr "Dodaj jezik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:131
 msgid "Locations"
@@ -1227,19 +1226,19 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:134
 msgid "Permalinks"
-msgstr "Permalinks"
+msgstr "Statične povezave (Permalinks)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:137
 msgid "Spam and bots"
-msgstr "Spam y bots"
+msgstr "Spam in boti"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:140
 msgid "Currencies"
-msgstr "Divisas"
+msgstr "Valute"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:143
 msgid "Mail Server"
-msgstr ""
+msgstr "Mail strežnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:149
 msgid "Cron system"
@@ -1247,35 +1246,35 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:158
 msgid "Import data"
-msgstr "Importar"
+msgstr "Uvozi podatke"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:161
 msgid "Backup data"
-msgstr " "
+msgstr "Izvozi podatke"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:164
 msgid "Upgrade OSClass"
-msgstr "Actualizar OSClass"
+msgstr "Nadgradi OSClass"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:179
 msgid "Manage users"
-msgstr "Administrar usuarios"
+msgstr "Upravljaj z uporabniki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:182
 msgid "Add new user"
-msgstr "Añadir nueva usuario"
+msgstr "Dodaj novega uporabnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:191
 msgid "List administrators"
-msgstr "Lista de administradores"
+msgstr "Seznam administratorjev"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:197
 msgid "Edit Your Profile"
-msgstr "Edita tu perfil"
+msgstr "Uredi svoj profil"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:99
 msgid "Title"
-msgstr "Título"
+msgstr "Naslov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:104
 msgid "Count"
@@ -1283,11 +1282,11 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:112
 msgid "Category"
-msgstr "Categoría"
+msgstr "Kategorija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:142
 msgid "Add New Item"
-msgstr "Añadir nueva artículo"
+msgstr "Dodaj nov oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:162
 msgid "Filter by"
@@ -1323,55 +1322,55 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:13
 msgid "New item"
-msgstr "Nuevo artículo"
+msgstr "Nov oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:13
 msgid "Update your item"
-msgstr ""
+msgstr "Posodobi svoj oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:28
 msgid "General Information"
-msgstr "Información general"
+msgstr "Splošne informacije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:36
 msgid "Price"
-msgstr "Precio"
+msgstr "Cena"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:62
 msgid "Remove"
-msgstr "Quitar"
+msgstr "Odstrani"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:91
 msgid "Photos"
-msgstr "Fotos"
+msgstr "Fotografije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:99
 msgid "optional"
-msgstr "opcional"
+msgstr "po želji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:102
 msgid "Add new photo"
-msgstr "Añadir nueva foto"
+msgstr "Dodaj novo fotografijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:112
 msgid "Country"
-msgstr "País"
+msgstr "Država"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:114
 msgid "Region"
-msgstr "Región"
+msgstr "Regija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:116
 msgid "City"
-msgstr "Ciudad"
+msgstr "Kraj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:118
 msgid "City area"
-msgstr ""
+msgstr "Okolica večjega mesta"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:120
 msgid "Address"
-msgstr "Dirección"
+msgstr "Naslov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/item-edit.php:135
 msgid "Add item"
@@ -1379,307 +1378,307 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:55
 msgid "Language package"
-msgstr "Paquete de idioma"
+msgstr "Jezikovni paket"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:59
 msgid "Upload translation"
-msgstr "Subir traducción"
+msgstr "Naloži prevod"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:66
 msgid "The translations folder "
-msgstr "Las carpetas de idiomas "
+msgstr "Mapa prevodov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:66
 msgid " is not writable on your server, this"
-msgstr " no se pueden escribir en este servidor, esta "
+msgstr "ni zapisljiva na strežniku, zato"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:66
 msgid "can't upload translations from the administration panel. Please copy the translation package using another technique (FTP, SSH) or make the mentioned translations folder writable."
-msgstr "no se pueden subir traducciones desde el panel de administración. Por favor copia el paquete de traducción usando otra técnica (FTP, SSH) o haz que se pueda escribir en la carpeta."
+msgstr " ne morem naložiti prevoda  iz Skrbništva. Skopirajte paket predloge z uporabo druge tehhnike (FTP, SSH) ali spremenite pravice mape languages, da bo zapisljiva."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:44
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:56
 msgid "Edit language"
-msgstr "Editar idioma"
+msgstr "Uredi prevod"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:63
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:79
 msgid "Short name"
-msgstr "Nombre corto"
+msgstr "Kratko ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:71
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:91
 msgid "Currency format"
-msgstr ""
+msgstr "Format valute"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:75
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:97
 msgid "Date format"
-msgstr "Formato fecha"
+msgstr "Format datuma"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:79
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:103
 msgid "Stop words"
-msgstr "Palabras prohibidas"
+msgstr "Neželjene besede"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:85
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:111
 msgid "Enabled for the public website"
-msgstr ""
+msgstr "Omogočeno za ospredje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/edit.php:91
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:117
 msgid "Enabled for the backoffice (oc-admin)"
-msgstr ""
+msgstr "Omogočeno za admin"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:72
 msgid "Disable (website)"
-msgstr ""
+msgstr "Onemogoči (ospredje)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:72
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:121
 msgid "Disable (oc-admin)"
-msgstr ""
+msgstr "Onemogoči (admin)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:75
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:76
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:75
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:76
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:88
 msgid "Short Name"
-msgstr "Nombre corto"
+msgstr "Kratko ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:90
 msgid "Enabled (website)"
-msgstr ""
+msgstr "Omogočeno (ospredje)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:91
 msgid "Enabled (oc-admin)"
-msgstr ""
+msgstr "Omogočeno (admin)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:118
 msgid "Enable (Website)"
-msgstr ""
+msgstr "Omogoči (ospredje)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:119
 msgid "Disable (Website)"
-msgstr ""
+msgstr "Onemogoči (ospredje)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:120
 msgid "Enable (oc-admin)"
-msgstr ""
+msgstr "Omogoči (admin)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:101
 msgid "Which of the following content do you want to see on your dashboard"
-msgstr "Del siguiente contenido, cual quieres mostrar en tu panel"
+msgstr "Katere od naslednjih vsebin želiš videti na Namizju Skrbništva?"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:103
 msgid "Last Items"
-msgstr "Últimos artículos"
+msgstr "Zadnji dodani oglasi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:106
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:143
 msgid "Statistics"
-msgstr "Estadísticas"
+msgstr "Statistika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:109
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:157
 msgid "Last Comments"
-msgstr "Últimos comentarios"
+msgstr "Zadnji komentarji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:112
 msgid "Last News from OSClass"
-msgstr "Últimas noticias de OSClass"
+msgstr "Zadnji novice z OSClass"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:124
 msgid "Items by Category"
-msgstr "Artículos por categoría"
+msgstr "Oglasov po kategorijah"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:137
 msgid "There aren't any uploaded items yet"
-msgstr ""
+msgstr "Ni še oddanih oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:145
 msgid "Number of items"
-msgstr "Número de artículos"
+msgstr "Število oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:146
 msgid "Number of public users"
-msgstr "Número de usuarios públicos"
+msgstr "Število uporabnikov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:147
 msgid "Number of administrators"
-msgstr "Número de administradores"
+msgstr "Število administratorjev"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:160
 msgid "Commented"
-msgstr "Comentado"
+msgstr "Komentirano"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:160
 msgid "Item"
-msgstr "Artículo"
+msgstr "Oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:166
 msgid "Latest News from OSClass"
-msgstr "Últimas noticias de OSClass"
+msgstr "Zadnje novice z OSClass"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:178
 msgid "Unable to fetch news from"
-msgstr "No se pueden mostrar noticias de"
+msgstr "Nismo mogli prenesti novic z"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:178
 msgid "Please try again later"
-msgstr "Por favor, intentalo más tarde"
+msgstr "Prosimo, poskusite kasneje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:40
 msgid "Configure Media"
-msgstr "Configurar multimedia"
+msgstr "Nastavitve predstavnosti"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:50
 msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
-msgstr "Por favor selecciona las dimensiones preferidas para todas las imágenes de la web. (en formato anchoxalto, p.ej.: 640x480)"
+msgstr "Nastavite željene dimenzije fotografij na spletni strani. (format DOLŽINAxŠIRINA, npr. 640x480)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:56
 msgid "Restrictions"
-msgstr "Restricciones"
+msgstr "Omejitve"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:58
 msgid "Maximum size in KB"
-msgstr "Tamaño máximo en KB"
+msgstr "Največja dovoljena velikost v kB"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:63
 msgid "Allowed format extensions (eg: png, jpg, gif)"
-msgstr "Formato permitidos (p.ej.: png, jpg, gif)"
+msgstr "Dovoljeni formati datotek (npr. png, jpg, gif)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:69
 msgid "Path and URI"
-msgstr "Ruta y URI"
+msgstr "Pot in URI"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:72
 msgid "Store uploads in this folder"
-msgstr "Guardar los archivos subidos en esta carpeta"
+msgstr "Shrani naložene datoteke v to mapo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:77
 msgid "Full URL path to files"
-msgstr "Ruta completa de los archivos"
+msgstr "URL pot do datotek"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:84
 msgid "Dimensions"
-msgstr "Dimensiones"
+msgstr "Dimenzije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:86
 msgid "Thumbnail dimensions"
-msgstr "Dimensiones thumbnail"
+msgstr "Dimenzija thumbnaila"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:91
 msgid "Preview dimensions"
-msgstr "Previsualizar dimensiones"
+msgstr "Dimenzija predogleda"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:96
 msgid "Normal dimensions"
-msgstr "Dimensiones normales"
+msgstr "Normalna dimenzija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/config.php:101
 msgid "Update configuration"
-msgstr "Actualizar configuración"
+msgstr "Posodobi konfiguracijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/index.php:82
 msgid "File"
-msgstr "Archivo"
+msgstr "Datoteka"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/index.php:85
 msgid "Attached to"
-msgstr "Adjuntar a "
+msgstr "Pripeto k"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/pages/frm.php:112
 msgid "Internal Name (Short name to easily identify this page)"
-msgstr ""
+msgstr "Notranje ime (kratko ime, za identifikacijo te strani)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:38
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:51
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:115
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/view.php:32
 msgid "Add a new plugin"
-msgstr "Añadir nuevo plugin"
+msgstr "Dodaj nov vtičnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:55
 msgid "Plugin package"
-msgstr "Paquete del plugin"
+msgstr "Paket vtičnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:59
 msgid "Upload plugin"
-msgstr "Subir plugin"
+msgstr "Naloži vtičnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:67
 msgid "The plugins folder "
-msgstr "La carpeta de plugins "
+msgstr "Mapa vtičnikov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:67
 msgid "can't upload plugins from the administration panel. Please copy the plugin package using another technique (FTP, SSH) or make the mentioned plugins folder writable."
-msgstr "no se puede subir plugins desde el panel de administración. Por favor copia el plugin usando otra técnica (FTP, SSH) o haz que se pueda escribir en la carpeta."
+msgstr " ne morem naložiti vtičnikov iz Skrbništva. Skopirajte paket predloge z uporabo druge tehhnike (FTP, SSH) ali spremenite pravice mape plugins, da bo zapisljiva."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:80
 msgid "Select the categories you want to apply those attributes:"
-msgstr ""
+msgstr "Izberite kategorije, katerim želite dodati te atribute:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:74
 msgid "Configure"
-msgstr "Configurar"
+msgstr "Nastavi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:74
 msgid "There's a new version. You should update!"
-msgstr ""
+msgstr "Izšla je nova različica. Priporočena je posodobitev!"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:74
 msgid "Uninstall"
-msgstr "Desinstalar"
+msgstr "Odstrani"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:74
 msgid "Install"
-msgstr "Instalar"
+msgstr "Namesti"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/addCurrency.php:52
 msgid "Create"
-msgstr "Crear"
+msgstr "Ustvari"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/addCurrency.php:57
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/currencies.php:84
 msgid "Code"
-msgstr "Código"
+msgstr "Koda"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/addCurrency.php:74
 msgid "Create currency"
-msgstr "Crear divisa"
+msgstr "Ustvari valuto"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:63
 msgid "Comments enabled"
-msgstr "Comentarios habilitados"
+msgstr "Komentarji omogočeni"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:72
 msgid "Moderate comments"
-msgstr ""
+msgstr "Uredi komentarje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:83
 msgid "Notify new comment"
-msgstr "Notificar nuevos comentarios"
+msgstr "Obvesti o novem komentarju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/cron.php:58
 msgid "Cron System"
-msgstr ""
+msgstr "Cron sistem"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/cron.php:64
 msgid "Auto-cron"
-msgstr ""
+msgstr "Auto-cron"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/cron.php:67
 msgid "Some functionalities os OSClass requires a cron system to work. Check this if you don't know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass."
-msgstr ""
+msgstr "Nekatere funkcije OSClass zahtevajo CRON, da delujejo. Označite, če ne veste kaj je CRON, ali če jih vaš ponudnik gostovanje ne dovoli. Odznačite, če želite CRON nastaviti sami. Oglejte si vodič OSClass, da izveste več o CRONu na OSClass."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/editCurrency.php:75
 msgid "Edit currency"
@@ -1688,29 +1687,29 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/functionalities.php:63
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:63
 msgid "Enabled recaptcha"
-msgstr "Habilitar reCAPTCHA"
+msgstr "Omogočen recaptha"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/functionalities.php:72
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:72
 msgid "Enabled item validation"
-msgstr "Validación de correo electrónico habilitada"
+msgstr "Omogočeno potrjevanje oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/functionalities.php:81
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:81
 msgid "Only allow registered users post items"
-msgstr ""
+msgstr "Dovoli samo registriranim uporabnikom oddajo oglasa"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:56
 msgid "Page title"
-msgstr "Título de la página"
+msgstr "Naslov strani"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:63
 msgid "Page description"
-msgstr "Descripción de la página"
+msgstr "Opis strani"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:72
 msgid "Administrator E-mail"
-msgstr "Correo electrónico del administrador"
+msgstr "Administratorjev email"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:79
 msgid "Default language"
@@ -1719,7 +1718,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:113
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:162
 msgid "Custom"
-msgstr "Personalizado"
+msgstr "Po meri"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:120
 msgid "Default currency"
@@ -1727,59 +1726,59 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:129
 msgid "Week starts on"
-msgstr "La semana empieza en"
+msgstr "Teden se začne na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:131
 msgid "Sunday"
-msgstr "Domingo"
+msgstr "Nedelja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:132
 msgid "Monday"
-msgstr "Lunes"
+msgstr "Ponedeljek"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:133
 msgid "Tuesday"
-msgstr "Martes"
+msgstr "Torek"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:134
 msgid "Wednesday"
-msgstr "Miércoles"
+msgstr "Sreda"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:135
 msgid "Thursday"
-msgstr "Jueves"
+msgstr "Četrtek"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:136
 msgid "Friday"
-msgstr "Viernes"
+msgstr "Petek"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:137
 msgid "Saturday"
-msgstr "Sábado"
+msgstr "Sobota"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:146
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:147
 msgid "Time format"
-msgstr "Formato hora"
+msgstr "Format časa"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:169
 msgid "Number of items in the RSS"
-msgstr ""
+msgstr "Število oglasov v RSS"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:93
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/notifications.php:63
 msgid "Notify new item to admin"
-msgstr "Notificar nuevo artículo al administrador"
+msgstr "Pošlji obvestilo o novem oglasu administratorju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:101
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/notifications.php:71
 msgid "Notify contact item to admin"
-msgstr "Notificar \"Contactar con el vendedor\" al administrador"
+msgstr "Pošlji obvestilo o novem kontaktu administratorju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:109
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/notifications.php:79
 msgid "Notify contact friends to admin"
-msgstr "Notificar \"Enviar a un amigo\" al administrador"
+msgstr "Pošlji obvestilo o priporočitvi prijatelju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:96
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:128
@@ -1796,7 +1795,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:367
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:385
 msgid "Add new"
-msgstr ""
+msgstr "Dodaj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:401
 msgid "Add new country"
@@ -1817,7 +1816,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:433
 msgid "Edit country"
-msgstr ""
+msgstr " "
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:457
 msgid "Add new region"
@@ -1847,23 +1846,23 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:65
 msgid "Type of server"
-msgstr ""
+msgstr "Tip strežnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:67
 msgid "Custom Server"
-msgstr ""
+msgstr "Strežnik po meri"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:68
 msgid "GMail Server"
-msgstr ""
+msgstr "GMail strežnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:73
 msgid "Host Name"
-msgstr ""
+msgstr "Gostitelj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:76
 msgid "Server Port"
-msgstr ""
+msgstr "Strežniška vrata"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:85
 msgid "Encryption"
@@ -1875,19 +1874,19 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:95
 msgid "Enable SMTP authentication"
-msgstr ""
+msgstr "Omogoči SMTP avtorizacijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:101
 msgid "Help"
-msgstr ""
+msgstr "Pomoč"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:102
 msgid "Enter your email server configuration."
-msgstr ""
+msgstr "Vpišite konfiguracijo vašega email strežnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/notifications.php:87
 msgid "Enable item validation"
-msgstr ""
+msgstr "Omogoči potrjevanje oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:25
 msgid "Invalid OSClass request"
@@ -1895,79 +1894,79 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:60
 msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
-msgstr "Por defecto OSClass usa URLs que tienen signos de interrogación y muchos números, sin embargo OSClass permite crear URL personalizables. Esto puede mejorar la estética, la usabilidad y la compatibilidad de tus enlaces. Aquí tienes algunos ejemplos para empezar"
+msgstr "Privzeto OSClass uporablja URLje, ki imajo v sebi vprašaje in veliko številk, zato OSClass ponuja možnost, da sami ustvarite URLje. To izboljša izgled, uporabnost in kompatibilnost vaših povezav. Nekaj tagov je na voljo, in nekaj primerov, da vidite kako to gre."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:64
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:66
 msgid "Enable nice urls"
-msgstr "Activar urls bonitas"
+msgstr "Omogoči prijazne URLje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:70
 msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
-msgstr "Si tu archivo .htaccess se puede modificar, haremos esto automáticamente, pero si no éstas son las reglas que debes tener en tu archivo .htaccess. Pulsa en el campo y apreta CTRL + A para seleccionar todo."
+msgstr "Če bi bil .htaccess zapisljiv, bi to lahko storili samodejno, ampak ni, zato so to mod_rewrite pravil, ki jih morate vpisati v .htaccess. Kliknite v polje in pritisnite CTRL + A za izberete vse."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:40
 msgid "Registry"
-msgstr "Registro"
+msgstr "Register"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:51
 msgid "The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table."
-msgstr "El registro es un lugar dentro de OSClass donde puedes ver las preferencias de tus plugins, temas y más que se han guardado. Estos valores se deben poder modificar des de los plugins o temas, es una tabla informativa."
+msgstr "Register je mesto v OSClass, kjer so shranjene vse nastavitve od vtičnikov, predlog  in drugega. Te vrednosti se spreminja iz vtičnikov ali predlog, ta tabela je samo za pregled."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:57
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:73
 msgid "Section"
-msgstr "Sección"
+msgstr "Sekcija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:59
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:75
 msgid "Value"
-msgstr "Valor"
+msgstr "Vrednost"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:60
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/registry.php:76
 msgid "Type"
-msgstr "Tipo"
+msgstr "Tip"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:52
 msgid "Akismet"
-msgstr "Akismet"
+msgstr "Aksimet"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:54
 msgid "Akismet key (same as Wordpress.com)"
-msgstr "Akismet key (lo mismo que en Wordpress.com)"
+msgstr "Akismet ključ (isto kot za Wordpress.com)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:56
 msgid "If the field is empty it is because the Akismet service is disabled"
-msgstr ""
+msgstr "Če je polje prazno, je storitev Aksimet onemogočena"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:56
 msgid "Get your free key at"
-msgstr ""
+msgstr "Pridobi svoj brezplačni ključ na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:61
 msgid "Re-captcha"
-msgstr ""
+msgstr "Re-captha"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:63
 msgid "If the field is empty it is because the reCAPTCHA service is disabled"
-msgstr ""
+msgstr "Če je polje prazno, je storitev reCAPTCHA onemogočena"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:63
 msgid "Get your free keys at"
-msgstr ""
+msgstr "Pridobi svoj brezplačni ključ na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:66
 msgid "Re-captcha private key"
-msgstr "reCAPTCHA private key"
+msgstr "Re-captha private ključ"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:71
 msgid "Re-captcha public key"
-msgstr "reCAPTCHA public key"
+msgstr "Re-captcha public ključ"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:76
 msgid "Update spam and bots configuration"
-msgstr "Actualizar configuración spam y bots"
+msgstr "Posodobi nastavitve za bote in spam"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/users.php:63
 msgid "User validation"
@@ -1979,72 +1978,72 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:53
 msgid "Backing up data... please wait"
-msgstr ""
+msgstr "Izdelujem varnostno kopijo... prosim počakaj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:84
 msgid "From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass."
-msgstr ""
+msgstr "Od tukaj lahko nardite varnostno kopijo OSClass. POZOR: Varnostna kopija bo shranjena v korenski imenik OSClass."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:90
 msgid "Backup Folder"
-msgstr ""
+msgstr "Mapa varnostne kopije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:92
 msgid "This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass' documentation."
-msgstr ""
+msgstr "To je mapa, v katerem bo ustvarjena varnostna kopija. Predlagamo, da izberte zasebno pot. Za več informacij poglejte OSClass dokumentacijo."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:96
 msgid "Backup Database"
-msgstr ""
+msgstr "Izdelaj varnostno kopijo podatkovne baze"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:97
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:103
 msgid "backup"
-msgstr ""
+msgstr "varnostno kopiraj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:102
 msgid "Backup OSClass installation"
-msgstr ""
+msgstr "Varnostna kopija OSClass namestitve"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/export.php:25
 msgid "Export"
-msgstr "Exportar"
+msgstr "Izvozi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/export.php:27
 msgid "Export now"
-msgstr "Exportar ahora"
+msgstr "Izvozi zdaj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/import.php:48
 msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
-msgstr ""
+msgstr "Ta funkcija omogoča dodajanje, odstranjevanje in spreminjanje podatkov v bazi. Navadno se uporablja za uvoz držav, mest, valut in drugega."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/import.php:54
 msgid "Data"
-msgstr ""
+msgstr "Podatki"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:48
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:48
 msgid "Checking for update (installed version: "
-msgstr ""
+msgstr "Preverjam za novejšo različico (trenutna različica:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:52
 msgid "HORRAY! Your plugin installation is up to date! (current version: "
-msgstr ""
+msgstr "Super! Za vtičnik ne obstaja novejša različica! (trenutna različica:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:54
 msgid "current version: "
-msgstr ""
+msgstr "trenutna različica:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:55
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:55
 msgid "Downloading update file: "
-msgstr ""
+msgstr "Prenašam posodobitveno datoteko:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:62
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:62
 msgid "Unzipping file: "
-msgstr ""
+msgstr "Razširjam datoteko:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:67
 msgid "Copying old files: "
@@ -2057,67 +2056,67 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:77
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:77
 msgid "Executing SQL: "
-msgstr ""
+msgstr "Izvajam SQL:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:82
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:82
 msgid "Executing additional actions: "
-msgstr ""
+msgstr "Izvajam dodatne akcije:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:87
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:87
 msgid "Cleanning all the mesh: "
-msgstr ""
+msgstr "Čistim vse namestitvene datoteke:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:93
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:93
 msgid "Satisfaying user with awesome and easy auto-upgrade: Done!"
-msgstr ""
+msgstr "Zadovoljevanje uporabnika z super in lahkim avtomatskim nadgrajevanjem: Končano!"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:52
 msgid "HORRAY! Your OSClass installation is up to date! (current version: "
-msgstr ""
+msgstr "Super! Tvoja OSClass namestitev je najnovejša. (trenutna različica:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:67
 msgid "Copying new files: "
-msgstr ""
+msgstr "Prenašam nove datoteke:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:72
 msgid "Removing old files: "
-msgstr ""
+msgstr "Odstranjujem stare datoteke:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/add.php:35
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:104
 msgid "Add a new user"
-msgstr "Añadir un nuevo usuario"
+msgstr "Dodaj novega uporabnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/add.php:74
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:76
 msgid "Web site"
-msgstr "Página Web"
+msgstr "Spletna stran"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/add.php:87
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:89
 msgid "Mobile phone"
-msgstr "Teléfono móvil"
+msgstr "Mobitel"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/add.php:92
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:94
 msgid "Land phone"
-msgstr "Teléfono fijo"
+msgstr "Stacionarni telefon"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/add.php:99
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:101
 msgid "Additional information"
-msgstr "Información adicional"
+msgstr "Dodatne informacije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/add.php:105
 msgid "Create user"
-msgstr "Crear usuario"
+msgstr "Ustvari uporabnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:35
 msgid "Edit user"
-msgstr "Editar usuario"
+msgstr "Uredi uporabnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:108
 msgid "Activation"
@@ -2129,7 +2128,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/edit.php:114
 msgid "Update user"
-msgstr "Actualizar usuario"
+msgstr "Posodobi uporabnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:70
 msgid "Activate user"
@@ -2141,7 +2140,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:89
 msgid "Info"
-msgstr "Información"
+msgstr "Info"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/banner_management/conf.php:110
 msgid "Banners"
@@ -2149,7 +2148,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/banner_management/conf.php:125
 msgid "Edit banner"
-msgstr ""
+msgstr " "
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/banner_management/conf.php:133
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/banner_management/conf.php:155
@@ -2217,47 +2216,47 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:91
 msgid "Makes"
-msgstr ""
+msgstr "Proizvajalci"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:112
 msgid "Add new make"
-msgstr ""
+msgstr "Dodaj novega proizvajalca"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:136
 msgid "Models"
-msgstr ""
+msgstr "Modeli"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:139
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:59
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:56
 msgid "Select a make"
-msgstr ""
+msgstr "Izberi proizvajalca"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:171
 msgid "Add new model"
-msgstr ""
+msgstr "Dodaj nov model"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:197
 msgid "Vehicle types"
-msgstr ""
+msgstr "Tipi avtomobilov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:231
 msgid "Add new car type"
-msgstr ""
+msgstr "Dodaj nov tip avtomobila"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/conf.php:272
 msgid "Warning"
-msgstr ""
+msgstr "Pozor"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:17
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:25
 msgid "Select a model..."
-msgstr ""
+msgstr "Izberi model..."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:22
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:34
 msgid "No results"
-msgstr ""
+msgstr "Ni rezultatov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:52
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:2
@@ -2270,14 +2269,14 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:6
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:53
 msgid "Make"
-msgstr ""
+msgstr "Proizvajalec"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:67
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:10
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:64
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/search_form.php:10
 msgid "Model"
-msgstr "Modelo"
+msgstr "Model"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:78
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:92
@@ -2286,191 +2285,191 @@ msgstr "Modelo"
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:78
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:93
 msgid "Car type"
-msgstr ""
+msgstr "Tip avtomobila"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:106
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:39
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:107
 msgid "Year"
-msgstr "Año"
+msgstr "Letnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:110
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:111
 msgid "Doors"
-msgstr ""
+msgstr "Število vrat"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:120
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:47
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:121
 msgid "Seats"
-msgstr ""
+msgstr "Število sedežev"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:130
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:51
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:131
 msgid "Mileage"
-msgstr ""
+msgstr "Število prevoženih kilometrov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:135
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:56
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:136
 msgid "Engine size (cc)"
-msgstr ""
+msgstr "Prostornina motorja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:139
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:60
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:140
 msgid "Num. Airbags"
-msgstr ""
+msgstr "Število zračnih blazin"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:149
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:64
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:150
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/search_form.php:24
 msgid "Transmission"
-msgstr "Transmisión"
+msgstr "Menjalnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:151
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:152
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/search_form.php:26
 msgid "Manual"
-msgstr "Manual"
+msgstr "Ročni"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:152
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:153
 msgid "Auto"
-msgstr ""
+msgstr "Avtomatski"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:156
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:68
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:157
 msgid "Fuel"
-msgstr ""
+msgstr "Gorivo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:158
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:159
 msgid "Diesel"
-msgstr ""
+msgstr "Dizel"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:159
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:160
 msgid "Gasoline"
-msgstr ""
+msgstr "Bencin"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:160
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:161
 msgid "Electric-hibrid"
-msgstr ""
+msgstr "Elektrika-hibrid"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:161
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:162
 msgid "Other"
-msgstr ""
+msgstr "Drugo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:165
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:72
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:166
 msgid "Seller"
-msgstr ""
+msgstr "Prodajalec"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:167
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:168
 msgid "Dealer"
-msgstr ""
+msgstr "Posrednik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:168
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:169
 msgid "Owner"
-msgstr ""
+msgstr "Lastnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:173
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:77
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:174
 msgid "Warranty"
-msgstr ""
+msgstr "Garancija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:174
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:78
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:175
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:178
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:82
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:179
 msgid "Power"
-msgstr ""
+msgstr "Moč"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:180
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:181
 msgid "Kw"
-msgstr ""
+msgstr "kW"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:181
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:182
 msgid "Cv"
-msgstr ""
+msgstr "Cv"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:182
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:183
 msgid "Ch"
-msgstr ""
+msgstr "Ch"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:183
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:184
 msgid "Km"
-msgstr ""
+msgstr "km"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:184
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:185
 msgid "Hp"
-msgstr ""
+msgstr "KM"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:185
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:186
 msgid "Ps"
-msgstr ""
+msgstr "Ps"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:186
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:187
 msgid "Pk"
-msgstr ""
+msgstr "Pk"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:187
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:188
 msgid "Cp"
-msgstr ""
+msgstr "Cp"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/form.php:191
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_detail.php:86
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/item_edit.php:192
 msgid "Gears"
-msgstr ""
+msgstr "Število prestav"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/index.php:236
 msgid "Configure plugin"
-msgstr ""
+msgstr "Nastavi vtičnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/index.php:237
 msgid "Manage makes"
-msgstr ""
+msgstr "Uredi proizvajalce"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/index.php:238
 msgid "Manage models"
-msgstr ""
+msgstr "Uredi modele"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/index.php:239
 msgid "Manage vehicle types"
-msgstr ""
+msgstr "Uredi tipe avtomobilov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/search_form.php:14
 msgid "Num. of airbags"
-msgstr "Núm. de airbags"
+msgstr "Število zračnih blazin"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/cars_attributes/search_form.php:27
 msgid "Automatic"
-msgstr "Automático"
+msgstr "Avtomatski"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:1
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/item_detail.php:1
@@ -2479,121 +2478,121 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:4
 msgid "You are:"
-msgstr "Tú eres:"
+msgstr "Vi ste:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:6
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:14
 msgid "Man"
-msgstr "Hombre"
+msgstr "Moški"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:7
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:15
 msgid "Woman"
-msgstr "Mujer"
+msgstr "Ženska"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:8
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:16
 msgid "Not informed"
-msgstr "No se informa"
+msgstr "Neopredeljen"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:12
 msgid "Looking for:"
-msgstr "Buscando a:"
+msgstr "Iščem:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:20
 msgid "Relation type:"
-msgstr "Tipo de relación:"
+msgstr "Tip zveze:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:22
 msgid "Friendship"
-msgstr "Amistad"
+msgstr "Prijateljstvo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:23
 msgid "Formal relation"
-msgstr "Relación formal"
+msgstr "Resno zvezo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/dating_attributes/form.php:24
 msgid "Informal relation"
-msgstr "Relación informal"
+msgstr "Neresno zvezo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:30
 msgid "You can freely obtain a developer key after signing up on this URL:"
-msgstr "Puedes obtener gratis una clave de desarrollador después de darte de alta en esta dirección:"
+msgstr "Tukaj lahko brezplačno pridobite razvijalski ključ:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:4
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_detail.php:11
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:4
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:4
 msgid "Relation"
-msgstr "Relación"
+msgstr "Zveza"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:6
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:6
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:6
 msgid "Hire someone"
-msgstr "Contratar a alguien"
+msgstr "Zaposlite nekoga"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:7
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:7
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:7
 msgid "Looking for a job"
-msgstr "Buscando un trabajo"
+msgstr "Iščem delo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:11
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_detail.php:15
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:11
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:11
 msgid "Company name"
-msgstr "Nombre de la compañia"
+msgstr "Naziv podjetja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:15
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_detail.php:19
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:15
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:15
 msgid "Position type"
-msgstr "Puesto"
+msgstr "Vaš položaj v podjetju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:18
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:18
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:18
 msgid "Undefined"
-msgstr "Indefinido"
+msgstr "Ni podano"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:19
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:19
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:20
 msgid "Part time"
-msgstr "Media jornada"
+msgstr "Delni delovnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:20
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:19
 msgid "Full-time"
-msgstr "Jornada completa"
+msgstr "Polni delovnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:25
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_detail.php:23
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:25
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:25
 msgid "Salary range"
-msgstr "Rango de salario"
+msgstr "Plača"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:29
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:29
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:29
 msgid "Hour"
-msgstr "Hora"
+msgstr "Ura"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:30
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:30
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:30
 msgid "Week"
-msgstr "Semana"
+msgstr "Teden"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/search_form.php:31
 msgid "Month"
-msgstr "Mes"
+msgstr "Mesec"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:43
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:72
@@ -2602,7 +2601,7 @@ msgstr "Mes"
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:42
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:71
 msgid "Desired experience"
-msgstr "Experiencia deseada"
+msgstr "Željene izkušnje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:47
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:76
@@ -2611,7 +2610,7 @@ msgstr "Experiencia deseada"
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:46
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:75
 msgid "Studies"
-msgstr ""
+msgstr "Študiji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:51
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:80
@@ -2620,7 +2619,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:50
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:79
 msgid "Minimum requirements"
-msgstr ""
+msgstr "Minimalne zahteve"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:55
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:84
@@ -2629,7 +2628,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:83
 msgid "Desired requirements"
-msgstr ""
+msgstr "Priporočene zahteve"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:59
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:88
@@ -2638,7 +2637,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:58
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:87
 msgid "Contract"
-msgstr ""
+msgstr "Pogodba"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:63
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/form.php:92
@@ -2647,7 +2646,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:62
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_edit.php:91
 msgid "Company description"
-msgstr ""
+msgstr "Opis podjetja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/jobs_attributes/item_detail.php:8
 msgid "Job attributes"
@@ -2675,7 +2674,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/products_attributes/admin.php:80
 msgid "Return to plugins's page"
-msgstr ""
+msgstr "Vrni se na stran vtičnikov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/products_attributes/item_detail.php:1
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/products_attributes/item_edit.php:1
@@ -2692,7 +2691,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/conf.php:57
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/index.php:359
 msgid "Property types"
-msgstr ""
+msgstr "Tipi nepremičnin"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/conf.php:95
 msgid "Add new property types"
@@ -2706,13 +2705,13 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:8
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:75
 msgid "For rent"
-msgstr ""
+msgstr "Oddamo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:9
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:9
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:76
 msgid "For sale"
-msgstr ""
+msgstr "Prodamo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:17
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:32
@@ -2723,135 +2722,135 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:87
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:100
 msgid "Property type"
-msgstr ""
+msgstr "Tip nepremičnine"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:47
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:45
 msgid "Num. of rooms"
-msgstr ""
+msgstr "Število sob"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:54
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:55
 msgid "Num. of bathrooms"
-msgstr "Núm. de baños"
+msgstr "Število kopalnic"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:61
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:65
 msgid "Status"
-msgstr ""
+msgstr "Stanje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:64
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:68
 msgid "New construction"
-msgstr ""
+msgstr "Novogradnja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:65
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:69
 msgid "To renovate"
-msgstr ""
+msgstr "Pred prenovo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:66
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:70
 msgid "Good condition"
-msgstr ""
+msgstr "V dobrem stanju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:71
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:75
 msgid "Square meters"
-msgstr "Metros cuadrados"
+msgstr "kvadratnih metrov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:75
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:61
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:79
 msgid "Construction Year"
-msgstr ""
+msgstr "Leto gradnje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:79
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:83
 msgid "Square meters (total)"
-msgstr ""
+msgstr "kvadratnih metrov (skupaj)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:83
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:87
 msgid "Num. of floors"
-msgstr "Núm. de pisos"
+msgstr "Število nadstropij"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:93
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:97
 msgid "Num. of garages (place for a car = one garage)"
-msgstr "Núm. de garages (plaza para un coche = un garaje)"
+msgstr "Število garaž (en avto = ena garaža)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:101
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:89
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:107
 msgid "Condition"
-msgstr ""
+msgstr "Stanje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:105
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:93
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:111
 msgid "Agency"
-msgstr ""
+msgstr "Agencija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:109
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:97
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:115
 msgid "Floor Number"
-msgstr ""
+msgstr "Nadstropje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:114
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:119
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:167
 msgid "Other characteristics"
-msgstr "Otras características"
+msgstr "Ostale lastnosti"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:116
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:65
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:121
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:169
 msgid "Heating"
-msgstr "Calefacción"
+msgstr "Ogrevanje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:117
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:122
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:170
 msgid "Air condition"
-msgstr "Aire acondicionado"
+msgstr "Klima"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:118
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:71
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:123
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:171
 msgid "Elevator"
-msgstr "Ascensor"
+msgstr "Dvigalo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:119
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:74
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:124
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:172
 msgid "Terrace"
-msgstr ""
+msgstr "Terasa"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:120
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:77
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:125
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:173
 msgid "Parking"
-msgstr ""
+msgstr "Parkirni prostor"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:121
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:80
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:126
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:174
 msgid "Furnished"
-msgstr ""
+msgstr "Opremljeno"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:123
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:128
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:176
 msgid "By owner"
-msgstr ""
+msgstr "Od lastnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:131
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:143
@@ -2860,7 +2859,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:134
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:147
 msgid "Transport"
-msgstr ""
+msgstr "Transport"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:134
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/form.php:147
@@ -2869,63 +2868,63 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:138
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_edit.php:151
 msgid "Zone"
-msgstr ""
+msgstr "Cona"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:37
 msgid "Num. Rooms"
-msgstr ""
+msgstr "Število sob"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:41
 msgid "Num. Bathrooms"
-msgstr ""
+msgstr "Število kopalnic"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:49
 msgid "Square Meters"
-msgstr ""
+msgstr "Kvadratnih metrov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:53
 msgid "Square Meters (total)"
-msgstr ""
+msgstr "Kvadratnih metrov (skupaj)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:57
 msgid "Num. Floors"
-msgstr ""
+msgstr "Število nadstropij"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:68
 msgid "Air Condition"
-msgstr ""
+msgstr "Klima"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/item_detail.php:86
 msgid "By Owner"
-msgstr ""
+msgstr "Od lastnika"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:114
 msgid "Num. Floors Range"
-msgstr ""
+msgstr "Območje števila nadstropij"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:123
 msgid "Rooms Range"
-msgstr ""
+msgstr "Območje sob"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:132
 msgid "Bathrooms Range"
-msgstr ""
+msgstr "Območje kopalnic"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:141
 msgid "Garages Range"
-msgstr ""
+msgstr "Območje garaž"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:150
 msgid "Construction year Range"
-msgstr ""
+msgstr "Območje leta gradnje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/realstate_attributes/search_form.php:159
 msgid "Square Meters Range"
-msgstr ""
+msgstr "Območje kvadratnih metrov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/category.php:7
 msgid "There are no results in this category yet."
-msgstr "No hay resultados en esta categoria aún."
+msgstr "V tej kategoriji še ni oglasov."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/footer.php:5
 msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>."
@@ -2933,11 +2932,11 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:78
 msgid "Hello"
-msgstr ""
+msgstr "Pozdravljen"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:79
 msgid "Manage from here your"
-msgstr "Administra desde aquí tus "
+msgstr "Od tukaj upravljaj tvoj"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:80
 msgid "account"
@@ -2945,19 +2944,19 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:81
 msgid "Logout"
-msgstr "Desconectar"
+msgstr "Odjava"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:83
 msgid "Register a free account"
-msgstr "Registrar una cuenta gratuita"
+msgstr "Brezplačno ustvarite račun"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:83
 msgid "or"
-msgstr "o"
+msgstr "ali"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:83
 msgid "login"
-msgstr "acceder"
+msgstr "se prijavite"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/header.php:111
 msgid "Your search must be at least two characters long"
@@ -2968,79 +2967,79 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:1
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:7
 msgid "Contact seller"
-msgstr "Contactar al vendedor"
+msgstr "Kontaktiraj prodajalca"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:11
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:11
 msgid "To (seller)"
-msgstr "A (vendedor)"
+msgstr "Prejemnik (prodajalec)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:19
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:19
 msgid "Your name"
-msgstr "Tu nombre"
+msgstr "Tvoje ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:19
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:27
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:19
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:27
 msgid "(optional)"
-msgstr "(opcional)"
+msgstr "(neobvezno)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:23
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:23
 msgid "Your email address"
-msgstr "Tu correo electrónico"
+msgstr "Tvoj email"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:27
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:27
 msgid "Phone number"
-msgstr "Número de teléfono"
+msgstr "Telefon"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:31
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:31
 msgid "Message"
-msgstr "Mensaje"
+msgstr "Sporočilo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-contact.php:36
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-contact.php:36
 msgid "Send message"
-msgstr "Enviar mensaje"
+msgstr "Pošlji sporočilo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-post.php:5
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:95
 msgid "Post your item"
-msgstr "Publica tu artículo"
+msgstr "Objavi svoj oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-post.php:58
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:274
 msgid "Seller information"
-msgstr "Información del vendedor"
+msgstr "Podrobnosti o prodajalcu"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item-post.php:75
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:298
 msgid "Publish"
-msgstr "Publicar"
+msgstr "Objavi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:8
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:8
 msgid "Send to a friend"
-msgstr "Enviar a un amigo"
+msgstr "Pošlji prijatelju"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:18
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:18
 msgid "Images"
-msgstr "Imágenes"
+msgstr "Fotografije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:24
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:24
 msgid "no pictures"
-msgstr ""
+msgstr "ni fotografij"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:34
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:34
 msgid "Mark as "
-msgstr "Marcar como"
+msgstr "Označi kot"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:35
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:35
@@ -3050,92 +3049,92 @@ msgstr "spam"
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:36
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:36
 msgid "bad category"
-msgstr "categoria errónea"
+msgstr "napačna kategorija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:37
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:37
 msgid "repeated"
-msgstr ""
+msgstr "ponavaljajoči oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:38
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:38
 msgid "expired"
-msgstr ""
+msgstr "pretečen oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:39
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:39
 msgid "offensive"
-msgstr "ofensivo"
+msgstr "žaljiv oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:96
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:94
 msgid "Be the first to comment on this item!"
-msgstr "Se el primero en comentar en este artículo!"
+msgstr "Bodi prvi in pokomentiraj oglas!"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:100
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:98
 msgid "Leave your comment (spam and offensive messages will be removed)"
-msgstr "Deja tu comentario (spam y mensajes ofensivos serán borrados)"
+msgstr "Oddaj svoj komentiraj (nezaželeni in žaljivi komentarji bodo odstranjeni)"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:103
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:101
 msgid "Your name:"
-msgstr "Tu nombre:"
+msgstr "Tvoje ime:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:104
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:102
 msgid "Your email:"
-msgstr "Tu correo electrónico:"
+msgstr "Tvoj email:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:108
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:106
 msgid "Title:"
-msgstr "Título:"
+msgstr "Naslov:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:109
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:107
 msgid "Comment:"
-msgstr "Comentario:"
+msgstr "Komentar:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:112
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:110
 msgid "Send comment"
-msgstr "Enviar comentario"
+msgstr "Pošlji komentar"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:117
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:115
 msgid "Comments are not enabled."
-msgstr ""
+msgstr "Komentarji niso omogočeni."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:125
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:123
 msgid "Helpful information"
-msgstr "Información útil"
+msgstr "Priporočila"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:128
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:126
 msgid "Avoid scams by dealing locally or paying with PayPal."
-msgstr "Evita las estafas pagando en mano o a través de PayPal."
+msgstr "Izognite se prevaram tako, da poslujete samo lokalno ali uporabljate PayPal."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:129
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:127
 msgid "Never pay with Western Union, Moneygram or other anonymous payment services."
-msgstr "No pagues a través de Western Union, Moneygram u otros sistemas de pago anónimo."
+msgstr "Nikoli ne plačujte z Western Union, Moneygram ali katerokoli drugo anonimno plačilno storitev."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:130
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:128
 msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country."
-msgstr "No compres o vendas fuera de tu país. No aceptes un cheque de una caja de fuera del país."
+msgstr "Ne kupujte ali prodajajte izven vaše države. Ne sprejemajte gotovinskih čekov izven svoje države."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern/item.php:131
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item.php:129
 msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\"."
-msgstr "Este sitio no está involucrado en ninguna operación y no maneja pagos, envíos, transacciones, reservas, ni ofrece \"protección al comprador\" o \"certificación del vendedor\"."
+msgstr "Ta stran ni nikoli vpletena v kakršnokoli transakcijo in ne upravlja s plačili in pošiljanjem, ter ne zagotavlja poštenosti kupcev ali prodajalcev."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/category.php:30
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/home.php:93
 msgid "no description."
-msgstr "sin descripción."
+msgstr "ni opisa."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/header.php:71
 msgid "Hello "
@@ -3143,64 +3142,64 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/header.php:113
 msgid "Login"
-msgstr "Acceder"
+msgstr "Prijava"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/home.php:47
 msgid "No Latest Items"
-msgstr "No hay últimos artículos"
+msgstr "Ni zadnjih oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/home.php:49
 msgid "Latest Items"
-msgstr "Últimos artículos"
+msgstr "Zadnji dodani oglasi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/home.php:67
 msgid "Contact"
-msgstr "Contacto"
+msgstr "Kontakt"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:17
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:233
 msgid "Select a region..."
-msgstr ""
+msgstr "Izberite regijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:22
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:42
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:69
 msgid "none"
-msgstr ""
+msgstr "/"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:37
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:64
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:251
 msgid "Select a city..."
-msgstr ""
+msgstr "Izberite mesto"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:89
 msgid "You have to select a region."
-msgstr ""
+msgstr "Izbira regije je obvezna"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:90
 msgid "You have to select a city."
-msgstr ""
+msgstr "Izbira mesta je obvezna."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:211
 msgid "Item Location"
-msgstr "Localización del artículo"
+msgstr "Kraj oglasa"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:217
 msgid "Select a country..."
-msgstr ""
+msgstr "Izberite državo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:263
 msgid "City Area"
-msgstr ""
+msgstr "Okolica mesta"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/themes/modern_vertical/item-post.php:284
 msgid "Show email publically within the item page"
-msgstr "Hacer público mi correo electrónico en la página del artículo"
+msgstr "Pokaži moj email v oglasu"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/items.php:178
 msgid "You new to log-in in order to post a new item."
-msgstr ""
+msgstr "Če želite oddati oglas se morate prej prijaviti."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/items.php:225
 msgid "You need to input your name and email to be able to publish a new item."
@@ -3208,87 +3207,87 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/items.php:465
 msgid "Great! You'll receive an e-mail to activate your item."
-msgstr ""
+msgstr "Super! Prejeli boste email, da potrdite vaš oglas."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/items.php:467
 msgid "Great! We've just published your item."
-msgstr ""
+msgstr "Super! Vaš oglas je objavljen."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:34
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:77
 msgid "Contact Name"
-msgstr "Nombre de contact"
+msgstr "Kontaktno ime"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:35
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:78
 msgid "Contact E-mail"
-msgstr "Correo electrónico de contacto"
+msgstr "Kontaktni email"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:57
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:103
 msgid "Url"
-msgstr "Url"
+msgstr "URL"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:68
 msgid "Validate your ad"
-msgstr "Valida tu anuncio"
+msgstr "Potrdite vaš oglas"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:75
 msgid "Dear "
-msgstr ""
+msgstr "Živijo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:76
 msgid "You're receiving this email because an Ad is being placed at "
-msgstr ""
+msgstr "Ta email si prejel, ker si oddal oglas na"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/notifications.php:104
 msgid "You can validate your ad in this url"
-msgstr "Puedes actualizar este"
+msgstr "Svoj oglas lahko potrdiš na temu naslovu"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:93
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:119
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:121
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:146
 msgid "Plugin "
-msgstr "Plugin"
+msgstr "Vtičnik"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:93
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:121
 msgid " is missing the index.php file."
-msgstr "falta el archivo index.php."
+msgstr "manjka index.php datoteka."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:119
 msgid " is missing the function "
-msgstr "falta la función"
+msgstr "manjka funkcija"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:146
 msgid " is missing the plugin's main file."
-msgstr ""
+msgstr "manjka glavna datoteka vtičnika."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/session.php:23
 msgid "defined session"
-msgstr "sesión definida"
+msgstr "določena seja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/themes.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/themes.php:53
 msgid "Consult"
-msgstr ""
+msgstr "Svetovati"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/themes.php:48
 msgid "Free"
-msgstr ""
+msgstr "Brezplačno"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:98
 msgid "Select one country..."
-msgstr ""
+msgstr "Izberite državo..."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:117
 msgid "Select one region..."
-msgstr ""
+msgstr "Izberite regijo..."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:135
 msgid "Select one city..."
-msgstr ""
+msgstr "Izberite mesto..."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:280
 msgid "You have to write a name."
@@ -3300,7 +3299,7 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Page.form.class.php:48
 msgid "Body"
-msgstr "Contenido"
+msgstr "Telo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/alert-form.php:5
 msgid "You have been subscribe correctly to the alert"
@@ -3324,105 +3323,105 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:29
 msgid "Subject"
-msgstr "Asunto"
+msgstr "Predmet"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:45
 msgid "Send"
-msgstr "Enviar"
+msgstr "Pošlji"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:58
 msgid "items"
-msgstr "artículos"
+msgstr "oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:59
 msgid "and "
-msgstr "y "
+msgstr "in"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:60
 msgid "profile"
-msgstr "perfil"
+msgstr "profil"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/home.php:22
 #, php-format
 msgid "%d items"
-msgstr "%d artículos"
+msgstr "%d oglasov"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/home.php:34
 msgid "Latest published items"
-msgstr "Últimos artículos publicados"
+msgstr "Zadnji dodani oglasi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:104
 msgid "Your friend's name"
-msgstr "Nombre de tu amigo"
+msgstr "Ime tvojega prijatelja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:108
 msgid "Your friend's email address"
-msgstr "Correo electrónico de tu amigo"
+msgstr "Email tvojega prijatelja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:28
 msgid "Price:"
-msgstr "Precio:"
+msgstr "Cena"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:29
 msgid "Publication date:"
-msgstr "Fecha de publicación:"
+msgstr "Datum objave:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:58
 msgid "Mark as"
-msgstr "Marcar como"
+msgstr "Označi kot"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:101
 msgid "Your email"
-msgstr "Tu correo electrónico"
+msgstr "Tvoj email"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:127
 msgid "Don't buy or sell outside of your country. Don't accept cashier check from outside your country."
-msgstr "No compres o vendas fuera de tu país. No aceptes un cheque de una caja de fuera del país."
+msgstr "Ne kupujte ali prodajajte izven vaše države. Ne sprejemajte gotovinskih čekov izven vaše države."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:50
 msgid "Search results"
-msgstr "Resultados de búsqueda"
+msgstr "Rezultati iskanja"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:53
 msgid "Page"
-msgstr "Página"
+msgstr "Stran"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:67
 msgid "Show as:"
-msgstr "Mostrar como:"
+msgstr "Pokaži kot:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:67
 msgid "List"
-msgstr "Lista"
+msgstr "Seznam"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:67
 msgid "image gallery"
-msgstr "galería de imágenes"
+msgstr "galerija fotografij"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:70
 msgid "Sort by:"
-msgstr "Ordenar por:"
+msgstr "Razvrsti po:"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:112
 msgid "Minimum"
-msgstr "Mínimo"
+msgstr "Najmanjše"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:114
 msgid "Maximum"
-msgstr "Máximo"
+msgstr "Največje"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:118
 msgid "Pictures"
-msgstr "Imágenes"
+msgstr "Fotografije"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:125
 msgid "Show only items with pictures"
-msgstr "Mostrar artículos con fotos sólo"
+msgstr "Pokaži samo oglase s fotografijami"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:164
 #, php-format
 msgid "There are no results matching \"%s\"."
-msgstr "No hay resultados para esta búsqueda \"%s\"."
+msgstr "Ni rezultatov za iskalni niz \"%s\"."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-account.php:1
 msgid "Your account"
@@ -3447,7 +3446,7 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-alerts.php:37
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:32
 msgid "Publication date"
-msgstr "Fecha de publicación"
+msgstr "Datum objave"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-forgot-change.php:35
 msgid "Retype new password"
@@ -3465,11 +3464,11 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:22
 msgid "Your items"
-msgstr "Tus articulos"
+msgstr "Tvoji oglasi"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:25
 msgid "You do not have any items yet."
-msgstr "Todavía no tienes ningún artículo"
+msgstr "Niste še oddali oglasa."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-menu.php:22
 msgid "Menu"
@@ -3489,25 +3488,25 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:1
 msgid "Update your profile"
-msgstr "Actualizar tu perfil"
+msgstr "Posodobi svoj profil"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:20
 msgid "Leave it empty if you don't want to change it now."
-msgstr "Déjalo vacío si no quieres cambiarlo ahora."
+msgstr "Pusti prazno, če ne želiš spremeniti."
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:24
 msgid "Retype the password"
-msgstr ""
+msgstr "Ponovno vpišite geslo"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:54
 msgid "Update profile"
-msgstr "Actualizar perfil"
+msgstr "Posodobi profil"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:3
 msgid "Register an account (free)"
-msgstr "Registra una cuenta gratuita"
+msgstr "Registiraj se"
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:24
 msgid "Re-type password"
-msgstr ""
+msgstr "Ponovno vpiši geslo"
 
