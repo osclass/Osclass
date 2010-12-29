@@ -90,7 +90,7 @@ function osc_listAllPlugins() {
 			if(file_exists($pluginPath)) {
 				$plugins[] = $file."/index.php";
 			} else {
-				trigger_error(__('Plugin ') . $file . __(' is missing the index.php file.'));
+				trigger_error(__('Plugin ') . $file . __(' is missing the index.php file.').$pluginPath);
 			}
 		}
 	}

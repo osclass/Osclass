@@ -114,6 +114,25 @@ class Category extends DAO {
         return $roots;
     }
 
+    public function toRootTree($cat = null) {
+        $tree = null;
+        if($cat!=null) {
+            $tree_b = array();
+            if(is_int($cat)) {
+                $cat = $this->findByPrimaryKey($cat);
+            } else {
+                $cat = $this->find_by_slug($cat);
+            }
+            $tree[0] = $cat;
+            while($cat['fk_i_parent_id']!=null) {
+                $cat = $this->findByPrimaryKey($cat['fk_i_parent_id']);
+                array_unshift($tree, '');//$cat);
+                $tree[0] = $cat;
+            }
+        }
+        return $tree;
+    }
+
     public function isParentOf($parent_id) {
         $children = $this->listWhere("a.fk_i_parent_id = " . $parent_id . "");
         return $children;

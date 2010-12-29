@@ -217,7 +217,7 @@ function osc_createItemURL($item, $absolute = false) {
         for ($i = (count($cat)); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
         }
-        return sprintf($prefix . '%s%s-%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
+        return sprintf($prefix . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
     } else
         return sprintf($prefix . 'item.php?id=%d', $item['pk_i_id']);
 }

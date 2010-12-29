@@ -20,7 +20,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$preferences = Preference::newInstance()->toArray();
+require_once 'oc-load.php';
+
+//$preferences = Preference::newInstance()->toArray();
 $manager = Item::newInstance();
 $theme = $preferences['theme'];
 $locales = Locale::newInstance()->listAllEnabled();
@@ -368,6 +370,11 @@ switch ($action) {
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);
+        global $osc_request;
+        $osc_request['section'] = $item['s_title'];
+        $osc_request['category'] = $item['fk_i_category_id'];
+        $osc_request['item'] = $item;
+
 
         if ($item['e_status'] == 'ACTIVE') {
             $mStats = new ItemStats();

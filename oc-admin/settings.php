@@ -340,29 +340,29 @@ switch ($action) {
         osc_renderAdminSection('settings/permalinks.php', __('Settings'));
         break;
     case 'permalinks_post':
-    
+    //print_r($_REQUEST);die;
         $htaccess_status = 0;
+        $prefManager->update(
+            array('s_value' => isset($_REQUEST['rewrite_enabled']) ? 1 : 0),
+            array('s_name' => 'rewriteEnabled')
+        );
         if(isset($_REQUEST['rewrite_enabled'])) {
-            $prefManager->update(
-                    array('s_value' => $_REQUEST['rewrite_enabled'] ? true : false),
-                    array('s_name' => 'rewriteEnabled')
-            );
 
 
-            if($_REQUEST['rewrite_enabled']==1) {
+            if($_REQUEST['rewrite_enabled']=='on') {
                 $mods = apache_get_modules();
                 $htaccess_status = 1;
                 foreach($mods as $mod) {
                     if($mod=='mod_rewrite') {
                         $htaccess_status = 2;
-                        $htaccess_text = '\n
-<IfModule mod_rewrite.c>\n
-RewriteEngine On\n
-RewriteBase '.REL_WEB_URL.'\n
-RewriteRule ^index\.php$ - [L]\n
-RewriteCond %{REQUEST_FILENAME} !-f\n
-RewriteCond %{REQUEST_FILENAME} !-d\n
-RewriteRule . '.REL_WEB_URL.'index.php [L]\n
+                        $htaccess_text = '
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase '.REL_WEB_URL.'
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . '.REL_WEB_URL.'index.php [L]
 </IfModule>';
 
                             

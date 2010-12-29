@@ -21,9 +21,9 @@
 try {
 	require_once 'oc-load.php';
 
-
+    global $preferences;
 	$categories = Category::newInstance()->toTree();
-	$preferences = Preference::newInstance()->toArray();
+	//$preferences = Preference::newInstance()->toArray();
 	if(isset($_GET['theme'])) $preferences['theme'] = $_GET['theme'];
 
 	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
@@ -107,14 +107,16 @@ try {
 
 		default:
 
-            $redirected = Rewrite::newInstance()->doRedirect();
+            global $osc_request;
+            //$redirected = Rewrite::newInstance()->doRedirect();
+            //print_r($osc_request);
 
-            if($redirected==null) {
+            if($osc_request['uri']==null) {
     			osc_renderHeader();
     			osc_renderView('home.php');
     			osc_renderFooter();
             } else {
-                include_once $redirected;
+                include_once $osc_request['uri'];
             }
 
 	}

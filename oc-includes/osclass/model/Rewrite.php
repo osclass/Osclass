@@ -69,22 +69,27 @@ class Rewrite {
         }
     }
 
-    public function doRedirect() {
-
-        $redirected = null;
+    public function init() {
+        global $osc_request, $preferences;
+        $osc_request['uri'] = null;
         if(isset($_SERVER['REQUEST_URI'])) {
             //$rules = Permalink::newInstance()->getRules();
-            $request_uri = str_replace(REL_WEB_URL, "", $_SERVER['REQUEST_URI']);
-            foreach($this->rules as $match => $uri) {
-                if(preg_match('#'.$match.'#', $request_uri, $m)) {
-                    $uri = preg_replace('#'.$match.'#', $uri, $request_uri);
-                    $this->extractParams($uri);
-                    $redirected = $this->extractURL($uri);
-                    break;
+            $request_uri = urldecode(str_replace(REL_WEB_URL, "", $_SERVER['REQUEST_URI']));
+            if(isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']==1) {
+                foreach($this->rules as $match => $uri) {
+                    //echo '#'.$match.'#'.$request_uri."<br />";
+                    if(preg_match('#'.$match.'#', $request_uri, $m)) {
+                        $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
+                        break;
+                    }
                 }
             }
+            $this->extractParams($request_uri);
+            $osc_request['request_uri'] = $request_uri;
+            $osc_request['uri'] = $this->extractURL($request_uri);
+            $osc_request['location'] = str_replace(".php", "", $osc_request['uri']);
+            if(isset($_REQUEST['action'])) { $osc_request['section'] = $_REQUEST['action']; };
         }
-        return $redirected;
     }
 
     public function extractURL($uri = '') {
@@ -119,7 +124,6 @@ class Rewrite {
         unset($this->rules);
         $this->rules = array();
     }
-
 
 
 }

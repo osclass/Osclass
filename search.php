@@ -94,7 +94,11 @@ $conditions = array();
 $plugins_tables = "";
 $search_tables = array();
 
-$search->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $pattern, $pattern));
+if($pattern!='') {
+    $search->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $pattern, $pattern));
+    global $osc_request;
+    $osc_request['section'] = $pattern;
+}
 
 $priceMin = osc_paramRequest('priceMin', null);
 /*if(!is_null($priceMin) && $priceMin!="")

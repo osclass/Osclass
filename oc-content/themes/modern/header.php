@@ -122,3 +122,4 @@ $locales = Locale::newInstance()->listAllEnabled();
 
         <div id="content" align="left">
         <?php osc_showWidgets('header'); ?>
+<?php breadcrumbs(); ?>

@@ -103,5 +103,8 @@ if(!defined('__FROM_CRON__')) {
     }
 };
 
+global $preferences;
+$preferences = Preference::newInstance()->toArray();
+Rewrite::newInstance()->init();
 
 ?>
