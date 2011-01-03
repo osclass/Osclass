@@ -1,0 +1,4160 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass 1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-12-30 15:42-0400\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
+"Language-Team: OSClass <info@osclass.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-SearchPath-0: \n"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/index.php:50
+#: Classifieds/Osclass/search.php:165
+msgid "Latest items added"
+msgstr "Laatste voorwerp"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/index.php:52
+#: Classifieds/Osclass/search.php:167
+msgid "Latest items added in"
+msgstr "Nieuwste advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/index.php:97
+msgid "Contact form"
+msgstr "Contactformulier"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/index.php:99
+msgid "Administrator"
+msgstr "Administrator"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/index.php:109
+msgid "Your message has been sent and will be answered soon, thank you."
+msgstr "Uw bericht was gestuurd. U krijgt een antwoord zo snel mogelijk."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:54
+msgid "Thanks! That helps us."
+msgstr "Bedankt. Dit helpt ons."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:96
+msgid "We just send your message to "
+msgstr "We hebben net uw bericht gestuurd naar"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:98
+msgid "We are very sorry but we could not deliver your message to your friend. Try again later."
+msgstr "Het spijt ons. We hebben uw bericht niet kunnen sturen. Probeer later eens opnieuw."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:111
+#: Classifieds/Osclass/item.php:130
+msgid "We're sorry, but the item is expired. You can not contact the seller."
+msgstr "Het spijt ons maar dit advertentie is vervallen. U kunt de verkoper niet contacteren."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:161
+msgid "We've just sent an e-mail to the seller."
+msgstr "We hebben net een email gestuurd aan de verkoper."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:239
+msgid "We are very sorry but could not save your comment. Try again later."
+msgstr "Het spijt ons. We hebben uw comment niet kunnen opslaan. Probeer later opnieuw."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:253
+msgid "You need to log-in in order to post a new item."
+msgstr "U moet inloggen om een nieuwe advertentie te plaatsen."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/item.php:276
+msgid "Publish your item"
+msgstr "Plaats uw advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/page.php:31
+#: Classifieds/Osclass/page.php:62
+msgid "Page not found"
+msgstr "Pagina niet gevonden"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/search.php:138
+msgid "Newly listed"
+msgstr "Nieuwste advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/search.php:139
+msgid "Lower price first"
+msgstr "Laagste prijs"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/search.php:140
+msgid "Higher price first"
+msgstr "Hoogste prijs"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/search.php:141
+msgid "Best match"
+msgstr "Beste resultaat"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/search.php:154
+#, php-format
+msgid "Search results for %s"
+msgstr "Zoekresultaten voor %s"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:33
+#: Classifieds/Osclass/user.php:196
+#: Classifieds/Osclass/user.php:228
+msgid "Create your account"
+msgstr "Schrijf u in"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:50
+msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
+msgstr "De reCAPTCHA was niet geldig. Probeer het opnieuw. (reCAPTCHA :"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:65
+msgid "Sorry, but the username can only contain alphanumeric characters."
+msgstr "Sorry maar je gebruikersnaam kan enkel letter en cijfers bevatten."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:104
+msgid "Your account has been created. An activation email has been sent to your email address."
+msgstr "Uw account is aangemaakt. Een activatie email was net gestuurd naar uw emailadres."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:110
+msgid "Your account has been created. You're ready to go."
+msgstr "Uw account is aangemaakt. Veel plezier."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:113
+msgid "Sorry, but that username is already in use."
+msgstr "Sorry, maar deze username is al in gebruik"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:117
+msgid "The user could not be registered, sorry."
+msgstr "De gebruiker kan niet worden geregistreerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:148
+msgid "We resend you the validation email. If you don't recive it after a few minutes, please check your SPAM folder."
+msgstr "Wij sturen u de validatie e-mail opnieuw op. Als u het niet ontvangt na een paar minuten, controleer uw spam folder."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:150
+msgid "The email couldn't be sent, sorry."
+msgstr "De email kon niet verzend worden, sorry."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:184
+msgid "Your account is correctly validated. Thanks."
+msgstr "Deze account is geldig gevalideerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:186
+msgid "Your account has been activated before."
+msgstr "Deze account is al eerder gevalideerd geweest."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:189
+msgid "The link is not longer valid, sorry."
+msgstr "Sorry, de link is niet meer geldig"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:201
+#: Classifieds/Osclass/user.php:250
+#: Classifieds/Osclass/user.php:265
+msgid "You need to login first."
+msgstr "U moet zich eerst inloggen."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:212
+msgid "Passwords don't match."
+msgstr "Wachtwoorden komen niet overeen."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:223
+msgid "Your profile has been updated correctly"
+msgstr "Uw profiel werd aangepast."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:244
+msgid "Manage your alerts"
+msgstr "Beheer uw alerts"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:260
+msgid "Manage your account"
+msgstr "Beheer uw account"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:277
+msgid "Your item has been deleted."
+msgstr "Uw advertentie is verwijderd"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:280
+#: Classifieds/Osclass/user.php:334
+msgid "You could register and access every time to your items."
+msgstr "U kunt zich inschrijven en altijd toegang hebben tot uw advertenties."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:357
+msgid "Access to your account"
+msgstr "Toegang tot uw account"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:385
+msgid "You have not validated your account yet.<br/> Should we resend you the validation email?"
+msgstr "U hebt uw account nog niet gevalideerd. <br/> Zullen we de validatie email opnieuw sturen ?"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:385
+msgid "Yes, resend me the validation email."
+msgstr "Ja, stuur mij de validation email opnieuw door."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:388
+msgid "Wrong username or password."
+msgstr "Verkeerd username of paswoord"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:406
+msgid "Unsubscribed correctly."
+msgstr "U bent uitgeschreven."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:408
+msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator."
+msgstr "Oeps! Er is een probleem opgetreden tijdens het uitschrijven. Neem contact met de administrator."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:414
+#: Classifieds/Osclass/user.php:462
+msgid "Retrieve your password"
+msgstr "Krijg uw paswoord opnieuw"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:454
+msgid "Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive."
+msgstr "Check uw mailbox. U ontvangt zo spoedig mogelijk de instructies om uw paswoord te recupereren."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:466
+#: Classifieds/Osclass/user.php:470
+#: Classifieds/Osclass/user.php:487
+#: Classifieds/Osclass/user.php:495
+msgid "Sorry, the link is not valid."
+msgstr "Sorry, de link is niet geldig."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:484
+msgid "The password has been changed."
+msgstr "De paswoord is vervangen."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/user.php:491
+msgid "Error: Passwords don't match."
+msgstr "Fout: paswoorden zijn verschillend"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:30
+#: Classifieds/Osclass/oc-admin/admins.php:49
+#: Classifieds/Osclass/oc-admin/admins.php:99
+msgid "Administrators"
+msgstr "Administrators"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:30
+#: Classifieds/Osclass/oc-admin/categories.php:37
+msgid "Add"
+msgstr "Toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:37
+msgid "The item has been added."
+msgstr "De advertentie is toegevoegd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:39
+msgid "The administrator could not be created."
+msgstr "De administrator kon niet aangemaakt worden."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:49
+#: Classifieds/Osclass/oc-admin/categories.php:63
+msgid "Edit"
+msgstr "Aanpassen"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:63
+msgid "Password didn't update. Passwords don't match."
+msgstr "Wachtwoord is niet aangepast. De wachtwoorden kwamen niet overeen."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:67
+msgid "Password didn't update. \"Old password\" didn't match with our records in the database."
+msgstr "Wachtwoord niet updated. \"Old password\" komt niet overeen met de wachtwoord in de database."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:76
+#: Classifieds/Osclass/oc-admin/admins.php:90
+#: Classifieds/Osclass/oc-admin/categories.php:56
+#: Classifieds/Osclass/oc-admin/categories.php:83
+#: Classifieds/Osclass/oc-admin/categories.php:101
+#: Classifieds/Osclass/oc-admin/categories.php:121
+#: Classifieds/Osclass/oc-admin/categories.php:136
+#: Classifieds/Osclass/oc-admin/categories.php:151
+msgid "Error: "
+msgstr "Fout:"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/admins.php:85
+msgid "The operation was not completed. You were trying to remove yourself!"
+msgstr "De operatie was niet voltooid. U probeerde om uzelf te verwijderen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/appearance.php:28
+#: Classifieds/Osclass/oc-admin/appearance.php:52
+#: Classifieds/Osclass/oc-admin/appearance.php:55
+#: Classifieds/Osclass/oc-admin/appearance.php:79
+msgid "Appearance"
+msgstr "Uiterlijk"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/appearance.php:28
+msgid "Upload"
+msgstr "Upload"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/appearance.php:39
+#: Classifieds/Osclass/oc-admin/appearance.php:43
+#, php-format
+msgid "Directory \"%s\" could not be removed."
+msgstr "Folder \"%s\" kon niet verwijderd worden."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/appearance.php:45
+msgid "No theme selected."
+msgstr "Geen Theme geselecteerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:37
+#: Classifieds/Osclass/oc-admin/categories.php:63
+#: Classifieds/Osclass/oc-admin/categories.php:170
+msgid "Categories"
+msgstr "Afdelingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:54
+msgid "The category has been added."
+msgstr "De afdeling is toegevoegd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:81
+msgid "The item has been updated."
+msgstr "De advertentie is aangepast."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:99
+msgid "The items have been deleted."
+msgstr "De advertenties zijn aangepast."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:112
+msgid "The category has been enabled."
+msgstr "De afdeling is geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:114
+msgid "The category has been disabled."
+msgstr "De afdeling is gedeactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:117
+msgid "There was a problem with this page. The ID for the category is not set."
+msgstr "Er is een fout opgetreden met deze pagina.  De ID voor deze afdeling is niet ingesteld."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:134
+msgid "The categories have been enabled."
+msgstr "De afdelingen zijn geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/categories.php:149
+msgid "Selected categories have been disabled."
+msgstr "Geselecteerde afdelingen zijn deactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/comments.php:39
+msgid "The comments have been deleted."
+msgstr "De opmerkingen zijn gewist"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/comments.php:57
+msgid "The comments have been activated."
+msgstr "De opmerkingen zijn geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/comments.php:75
+msgid "The comments have been deactivated."
+msgstr "De opmerkingen zijn ge-deactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/comments.php:98
+msgid "The comment has been activate."
+msgstr "De opmerkingen is geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/comments.php:110
+#: Classifieds/Osclass/oc-admin/comments.php:133
+msgid "Comments"
+msgstr "Opmerkingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/comments.php:123
+msgid "Great! We've just update your item."
+msgstr "Fantastisch. We hebben net uw advertentie geupdateerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/common.php:43
+#: Classifieds/Osclass/oc-admin/common.php:52
+#: Classifieds/Osclass/oc-admin/plugins.php:28
+#: Classifieds/Osclass/oc-admin/plugins.php:90
+#: Classifieds/Osclass/oc-admin/plugins.php:92
+#: Classifieds/Osclass/oc-admin/plugins.php:103
+#: Classifieds/Osclass/oc-admin/plugins.php:109
+msgid "Plugins"
+msgstr "Plugins"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/common.php:43
+#: Classifieds/Osclass/oc-admin/common.php:52
+#: Classifieds/Osclass/oc-admin/plugins.php:90
+msgid "Configuration"
+msgstr "Configuratie"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/index.php:49
+#, php-format
+msgid "Your new password is \"%s\"."
+msgstr "Uw nieuwe pasword is \"%s\"."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/index.php:57
+msgid "OSClass application"
+msgstr "OSClass application"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/index.php:58
+msgid "Recover your password"
+msgstr "Wachtwoord vergeten"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/index.php:60
+msgid "OSClass administrator"
+msgstr "OSClass administrator"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/index.php:66
+msgid "A new password has been sent to your account."
+msgstr "Een nieuwe paswoord was gestuurd naar uw account."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/index.php:68
+msgid "The email you have entered does not belong to a valid administrator."
+msgstr "De email u hebt ingevoerd behoort niet tot een geldig administrator."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:46
+msgid "The items have been activated."
+msgstr "De advertenties zijn geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:66
+msgid "The items have been deactivated."
+msgstr "De advertenties zijn gedeactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:84
+msgid "The items have been made premium."
+msgstr "De advertentie is nu premium."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:103
+msgid "The chages have been made."
+msgstr "De veranderingen zijn toegepast."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:185
+msgid "The item has been activate."
+msgstr "De advertentie is geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:212
+msgid "Changes have been made."
+msgstr "Aanpassingen uitgevoerd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/items.php:309
+msgid "Items"
+msgstr "Advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:30
+#: Classifieds/Osclass/oc-admin/languages.php:43
+#: Classifieds/Osclass/oc-admin/languages.php:138
+msgid "Languages"
+msgstr "Talen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:35
+msgid "The language has been installed correctly."
+msgstr "De taal is correct geinstaleerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:37
+msgid "There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH."
+msgstr "Er was een fout tijdens het toevoegen van deze taal. Gelieve, later opnieuw te proberen. Moest het probleem permanent zijn, gelieven contact op te nemen met de ontwikkelaar van de package. Of installeer het via FTP/SSH."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:65
+msgid "The language has been enabled for the public website."
+msgstr "Taal is actief voor de publieke website."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:65
+msgid "The language has been disabled for the public website."
+msgstr "Taal is niet actief voor de publieke website."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:68
+msgid "The language has been enabled for the backoffice (oc-admin)."
+msgstr "Taal is actief voor de backoffice (oc-admin)."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:68
+msgid "The language has been disabled for the backoffice (oc-admin)."
+msgstr "Taal is niet actief voor de backoffice (oc-admin)."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:76
+msgid "There was a problem updating the language. The ID of the language was lost."
+msgstr "Er is een fout opgetreden tijdens het updaten van de taal. De ID van de taal is verloren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:92
+msgid "Selected languages have been enabled for the website."
+msgstr "Geselecteerde talen zijn geactiveerd voor de website."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:95
+msgid "Selected languages have been disabled for the website."
+msgstr "Geselecteerde talen zijn ge-deactiveerd voor de website."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:98
+msgid "Selected languages have been enabled for the backoffice (oc-admin)."
+msgstr "Geselecteerde talen zijn geactiveerd voor de backoffice (oc-admin)."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:101
+msgid "Selected languages have been disabled for the backoffice (oc-admin)."
+msgstr "Geselecteerde talen zijn ge-deactiveerd voor de backoffice (oc-admin)."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:112
+msgid "There was a problem updating the languages. The IDs of the languages were lost."
+msgstr "Er was een probleem met de update van de talen. De ID's van de talen zijn verloren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/languages.php:129
+#, php-format
+msgid "Directory \"%s\" could not be removed, it' the default language. Set another language as default first and try again."
+msgstr "Folder \"%s\" n niet verwijderd worden. Het is de standaardtaal. Zet een andere taal als standaard, en probeer het opnieuw."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/location.php:47
+msgid "Countries"
+msgstr "Landen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/location.php:56
+msgid "Regions"
+msgstr "Regio"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/location.php:67
+msgid "Cities"
+msgstr "Steden"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/location.php:144
+msgid "Location management"
+msgstr "Locatie management"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:31
+#: Classifieds/Osclass/oc-admin/recover.php:26
+msgid "OSClass Admin Panel Login"
+msgstr "OSClass Admin Panel Login"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:43
+msgid "Username"
+msgstr "Username"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:49
+msgid "Password"
+msgstr "Paswoord"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:55
+msgid "Language"
+msgstr "Taal"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:68
+msgid "Theme"
+msgstr "Theme"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:76
+msgid "Remember me"
+msgstr "Onthoud mij"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:80
+#: Classifieds/Osclass/oc-admin/recover.php:50
+msgid "Log in"
+msgstr "Inloggen"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:85
+msgid "Lost your password?"
+msgstr "Paswoord kwijt ?"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:88
+#: Classifieds/Osclass/oc-admin/recover.php:54
+msgid "Have you lost?"
+msgstr "Bent u de weg kwijt ?"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/login.php:88
+#: Classifieds/Osclass/oc-admin/recover.php:54
+msgid "Back to"
+msgstr "Terug naar"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/main.php:32
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/media.php:30
+#: Classifieds/Osclass/oc-admin/media.php:49
+msgid "Media"
+msgstr "Media"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/media.php:30
+#: Classifieds/Osclass/oc-admin/settings.php:32
+#: Classifieds/Osclass/oc-admin/settings.php:59
+#: Classifieds/Osclass/oc-admin/settings.php:63
+#: Classifieds/Osclass/oc-admin/settings.php:66
+#: Classifieds/Osclass/oc-admin/settings.php:187
+#: Classifieds/Osclass/oc-admin/settings.php:320
+#: Classifieds/Osclass/oc-admin/settings.php:329
+#: Classifieds/Osclass/oc-admin/settings.php:332
+#: Classifieds/Osclass/oc-admin/settings.php:335
+msgid "Settings"
+msgstr "Instellingen"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/pages.php:32
+#: Classifieds/Osclass/oc-admin/pages.php:104
+#: Classifieds/Osclass/oc-admin/pages.php:147
+msgid "Pages"
+msgstr "Paginas"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/pages.php:63
+msgid "The page has been updated."
+msgstr "Deze pagina is aangepast."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/pages.php:75
+#: Classifieds/Osclass/oc-admin/pages.php:82
+#: Classifieds/Osclass/oc-admin/pages.php:92
+#: Classifieds/Osclass/oc-admin/pages.php:96
+msgid "The item have been deleted."
+msgstr "De advertenties zijn verwijderd."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/pages.php:78
+#: Classifieds/Osclass/oc-admin/pages.php:94
+msgid "Error, this page can not be deleted."
+msgstr "Fout, deze pagina kan niet verwijderd worden."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/pages.php:138
+msgid "Ops! That internal name is already in use. We couldn't made the changes."
+msgstr "Oups! Deze naam is al in gebruik. We hebben de aanpassingen niet kunnen uitvoeren,"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/plugins.php:44
+msgid "Plugin installed."
+msgstr "Plugin geinstaleerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/plugins.php:55
+msgid "Plugin uninstalled."
+msgstr "Plugin verwijderd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/plugins.php:102
+msgid "No plugin selected"
+msgstr "Geen plugin geselecteerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/plugins.php:105
+msgid "Configuration was saved"
+msgstr "Configuratie opgeslagen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/recover.php:36
+msgid "Please enter your username or e-mail address."
+msgstr "Vul je username of emailadres."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/recover.php:37
+msgid "You will receive a new password via e-mail."
+msgstr "U ontvangt een nieuwe paswoord per email."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/recover.php:43
+msgid "E-mail"
+msgstr "Email"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/recover.php:46
+msgid "Get new password"
+msgstr "Ontvang een nieuwe paswoord"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/settings.php:174
+msgid "Location"
+msgstr "Locatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/settings.php:213
+#: Classifieds/Osclass/oc-admin/settings.php:244
+#: Classifieds/Osclass/oc-admin/settings.php:282
+msgid "Functionalities"
+msgstr "Functionaliteiten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/settings.php:255
+#: Classifieds/Osclass/oc-admin/settings.php:317
+msgid "Notifications"
+msgstr "Meldingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/settings.php:406
+msgid "General settings"
+msgstr "Algemene instellingen"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/tools.php:28
+#: Classifieds/Osclass/oc-admin/tools.php:36
+#: Classifieds/Osclass/oc-admin/tools.php:38
+#: Classifieds/Osclass/oc-admin/tools.php:59
+msgid "Tools"
+msgstr "Tools"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/tools.php:46
+msgid "Backup made correctly"
+msgstr "Backup succesvol"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/tools.php:55
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:74
+msgid "Archiving is sucessful!"
+msgstr "Succesvol archivering "
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/tools.php:56
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:76
+msgid "Error, can't create a zip file!"
+msgstr "Fout, kan geen zip file maken!"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:43
+msgid "File downloaded correctly."
+msgstr "Bestand succesvol gedownload."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:45
+msgid "Missing filename."
+msgstr "Bestandsnaam ontbreekt."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:88
+msgid "OK"
+msgstr "OK"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:90
+msgid "Unzip failed"
+msgstr "Unzip mislukt"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:94
+msgid "Filename incorrect."
+msgstr "Verkeerd bestandsnaam."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:105
+msgid "Error removing file: "
+msgstr "Fout bij het verwijderen van het bestand: "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:108
+msgid "Files removed ;)"
+msgstr "Bestanden verwijderd ;)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:111
+msgid "No files to remove ;)"
+msgstr "Geen bestanden te verwijderen ;)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:130
+msgid "There were problems copying files."
+msgstr "Er waren problemen tijdens het kopieren van bestanden."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:132
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:138
+msgid "Nothing to copy."
+msgstr "Niets te kopieren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:134
+msgid "Files copied."
+msgstr "Bestanden gecopieerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:148
+msgid "upgrade.sql executed."
+msgstr "upgrade.sql uitgevoerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:150
+msgid "No SQL to execute."
+msgstr "Geen SQL te uitvoeren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:158
+msgid "Custom actions executed."
+msgstr "Gepersonaliseerde acties uitgevoerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:160
+msgid "No action to execute."
+msgstr "Geen actie om uit te voeren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/upgrade-plugin.php:168
+msgid "Update"
+msgstr "Update"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/users.php:30
+#: Classifieds/Osclass/oc-admin/users.php:44
+#: Classifieds/Osclass/oc-admin/users.php:100
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:128
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:175
+msgid "Users"
+msgstr "Gebruikers"
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/users.php:60
+msgid "The user has been updated."
+msgstr "De user is aangepast."
+
+#: /Users/Olga/Documents/Sultan/SXM Classifieds/Osclass/oc-admin/users.php:72
+#: Classifieds/Osclass/oc-admin/users.php:85
+msgid "The user has been deactivated."
+msgstr "De user is ge-deactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:103
+msgid "View comments"
+msgstr "Zie opmerkingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:104
+msgid "View media"
+msgstr "Zie media"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:106
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:70
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:122
+msgid "Deactivate"
+msgstr "Deactiveren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:108
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:79
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:72
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:121
+msgid "Activate"
+msgstr "Activeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:111
+msgid "Demake Premium"
+msgstr "Premium verwijderen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:113
+msgid "Make Premium"
+msgstr "Maak Premium"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:116
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:70
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:81
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:73
+msgid "This action can not be undone. Are you sure you want to continue?"
+msgstr "Deze actie kan niet geanuleerd worden. Bent u zeker dat u hiermee verder wilt ?"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/ajax/items_processing.php:117
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:70
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:113
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:81
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/widgets.php:58
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:77
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:132
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:73
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:120
+msgid "Delete"
+msgstr "Wissen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/footer.php:29
+msgid "Thank you for using"
+msgstr "Bedankt voor het gebruik"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/footer.php:29
+#: Classifieds/Osclass/oc-admin/themes/modern/footer.php:34
+#: Classifieds/Osclass/oc-admin/themes/modern/header.php:207
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:67
+msgid "OSClass"
+msgstr "OSClass"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/footer.php:30
+msgid "Documentation"
+msgstr "Documentatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/footer.php:31
+msgid "Feedback"
+msgstr "Feedback"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/header.php:47
+msgid "OSClass Admin Panel"
+msgstr "OSClass Admin Panel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/header.php:212
+msgid "Visit website"
+msgstr "Bezoek website"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/header.php:213
+msgid "Howdy"
+msgstr "Hi"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/header.php:213
+msgid "Your profile"
+msgstr "Uw profiel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/header.php:213
+msgid "Log Out"
+msgstr "Uitloggen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:23
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:23
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:23
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add_widget.php:23
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/widgets.php:23
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:22
+msgid "Invalid OSClass request."
+msgstr "Ongeldige OSClass request."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:38
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:38
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:194
+msgid "Add new administrator"
+msgstr "Nieuwe administrator toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:53
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:54
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:86
+msgid "Real name"
+msgstr "Echt naam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:53
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:68
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:75
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:54
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:69
+msgid "required"
+msgstr "verplicht"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:68
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:69
+msgid "User name"
+msgstr "Gebuikersnaam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/add.php:81
+msgid "Create administrator"
+msgstr "Administrator aanmaken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:76
+msgid "Old password"
+msgstr "Oude paswoord"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:78
+msgid "New password"
+msgstr "Nieuwe paswoord"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:80
+msgid "Re-type new password"
+msgstr "Nieuwe paswoord opnieuw invoeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:83
+msgid "Leave it blank if you do not want to change your password now"
+msgstr "Laat het veld leeg als je je paswoord niet wenst te veranderen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/edit.php:87
+msgid "Update administrator"
+msgstr "Update administrator"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:37
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:49
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:36
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:48
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:35
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:47
+msgid "Search"
+msgstr "Zoeken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:42
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:41
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:40
+msgid "Processing"
+msgstr "Processing"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:43
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:42
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:41
+msgid "Show _MENU_ entries"
+msgstr "Toon _MENU_ entries"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:44
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:43
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:42
+msgid "No matching records found"
+msgstr "Geen overeenkomende records gevonden"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:45
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:44
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:43
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr "Toont _START_ to _END_ of _TOTAL_ records"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:46
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:45
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:44
+msgid "Showing 0 to 0 of 0 entries"
+msgstr "Toont 0 tot 0 van 0 lijnen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:47
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:46
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:45
+msgid "filtered from _MAX_ total entries"
+msgstr "Gesorteerd van _MAX_ totale lijnen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:52
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:51
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:50
+msgid "First"
+msgstr "Eerst"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:53
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:52
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:51
+msgid "Previous"
+msgstr "Vorige"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:54
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:53
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:52
+msgid "Next"
+msgstr "Volgende"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:55
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:54
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:53
+msgid "Last"
+msgstr "Laatste"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:57
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:56
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:55
+msgid "Show"
+msgstr "Toon"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:62
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:61
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:60
+msgid "entries"
+msgstr "lijnen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:112
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:129
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:119
+msgid "Bulk Actions"
+msgstr "Bulk acties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/admins/index.php:115
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:134
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:124
+msgid "Apply"
+msgstr "Toepassen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:38
+msgid "Add New Page"
+msgstr "Pagina toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:55
+msgid "Theme package"
+msgstr "Theme package"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:59
+msgid "Upload theme"
+msgstr "Upload theme"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:67
+msgid "The themes folder "
+msgstr "Themes folder"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:67
+msgid " is not writable on your server, "
+msgstr "is niet writable op jouw server, "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:67
+msgid " can't upload themes from the administration panel. Please copy the theme package using another technique (FTP, SSH) or make the mentioned themes folder writable."
+msgstr " kan geen Themes uploaden van de administratie console. Kopieer de Theme package door een andere middel (FTP, SSH) of maak de Themes folder writable."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add.php:70
+msgid "To make a directory writable under UNIX execute this command from the shell:"
+msgstr "Om een folder writable te maken onder UNIX, gebruik deze commando vanuit de shell:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add_widget.php:44
+msgid "Dashboard - Add New Widget"
+msgstr "Dashboard - Nieuwe widget toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add_widget.php:70
+msgid "Create widget on "
+msgstr "Creer widget op "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add_widget.php:84
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:94
+msgid "Description"
+msgstr "Beschrijving"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add_widget.php:89
+msgid "Content"
+msgstr "Inhoud"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/add_widget.php:93
+msgid "Publish widget"
+msgstr "Widget publiceren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:27
+msgid "Are you sure you want to cancel?"
+msgstr "Bent u zeker dat u wenst te annuleren ?"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:45
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:83
+msgid "Add a new theme"
+msgstr "Theme toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:55
+msgid "Current theme"
+msgstr "Huidige theme"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:60
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:87
+msgid "Author"
+msgstr "Auteur"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:65
+msgid "Available themes"
+msgstr "Beschikbare Themes"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/index.php:80
+msgid "Preview"
+msgstr "Preview"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/widgets.php:37
+msgid "Widgets"
+msgstr "Widgets"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/appearance/widgets.php:53
+msgid "Add HTML widget"
+msgstr "HTML widget toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:66
+msgid "Parent category"
+msgstr "Bovenliggende categorie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:68
+msgid "- No parent -"
+msgstr "- Geen bovenliggende categorie -"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:72
+msgid "Expirations days"
+msgstr "Vervaldagen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:72
+msgid "(0 = no expiration)"
+msgstr "(0 = geen expiratiedatum)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:78
+msgid "Position (order in relation to other categories)"
+msgstr "Positie (in vergelijking met andere categorien)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:87
+msgid "Enabled"
+msgstr "Actief"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:101
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/frm.php:102
+msgid "Save"
+msgstr "Opslaan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:77
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:131
+msgid "Disable"
+msgstr "Deactiveren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:77
+msgid "View subcategories"
+msgstr "Zie subcategorien"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:77
+msgid "WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?"
+msgstr "OPGELET: Dit zal ook alle advertenties deleten onder deze afdeling. Deze actie kan niet geannuleerd worden. Bent u zeker dat u verder wilt?"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:90
+msgid "Name"
+msgstr "Naam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:93
+msgid "Parent"
+msgstr "Hoofd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:121
+msgid "Add New Category"
+msgstr "Nieuwe afdeling toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/categories/index.php:130
+msgid "Enable"
+msgstr "Activeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:68
+msgid "on"
+msgstr "op"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:90
+msgid "Comment"
+msgstr "Opmerking"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:91
+msgid "Date"
+msgstr "Datum"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/comments/index.php:109
+msgid "Manage Comments"
+msgstr "Beheer opmerkingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:38
+msgid "Manage items"
+msgstr "Beheer advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:40
+msgid "Add new item"
+msgstr "Advertentie toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:45
+msgid "Manage media"
+msgstr "Media toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:54
+msgid "Manage categories"
+msgstr "Beheer "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:57
+msgid "Add a new category"
+msgstr "Nieuwe afdeling toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:66
+msgid "Manage pages"
+msgstr "Paginas beheren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:69
+msgid "Create page"
+msgstr "Pagina maken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:80
+msgid "Manage themes"
+msgstr "Beheer themes"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:86
+msgid "Add or remove widgets"
+msgstr "Widgets toevoegen of verwijderen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:95
+msgid "Manage plugins"
+msgstr "Beheer plugins"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:98
+msgid "Add new plugin"
+msgstr "Nieuwe plugin toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:107
+msgid "Manage languages"
+msgstr "Beheer talen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:110
+msgid "Add a language"
+msgstr "Taal toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:131
+msgid "Locations"
+msgstr "Plaatsen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:134
+msgid "Permalinks"
+msgstr "Permalinks"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:137
+msgid "Spam and bots"
+msgstr "Spam en bots"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:140
+msgid "Currencies"
+msgstr "Munteenheden"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:143
+msgid "Mail Server"
+msgstr "Mail Server"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:149
+msgid "Cron system"
+msgstr "Cron system"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:158
+msgid "Import data"
+msgstr "Data importeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:161
+msgid "Backup data"
+msgstr "Backup data"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:164
+msgid "Upgrade OSClass"
+msgstr "OSClass upgraden"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:179
+msgid "Manage users"
+msgstr "Gebruikers beheren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:182
+msgid "Add new user"
+msgstr "Nieuwe gebruiker toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:191
+msgid "List administrators"
+msgstr "Administrator lijst"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/include/backoffice_menu.php:197
+msgid "Edit Your Profile"
+msgstr "Pas je profiel aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:99
+msgid "Title"
+msgstr "Titel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:104
+msgid "Count"
+msgstr "Aantal"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:112
+msgid "Category"
+msgstr "Afdeling"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:142
+msgid "Add New Item"
+msgstr "Nieuwe advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:162
+msgid "Filter by"
+msgstr "Sorteer per"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:162
+msgid "All"
+msgstr "Alle"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:163
+msgid "Pending"
+msgstr "In afwachting"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:164
+msgid "Spam"
+msgstr "Spam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:165
+msgid "Duplicated"
+msgstr "Gekopieerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:166
+msgid "Bad classified"
+msgstr "Slechte classificatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:167
+msgid "Offensive"
+msgstr "Beledigend"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/index.php:168
+msgid "Expired"
+msgstr "Vervallen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:13
+msgid "New item"
+msgstr "Nieuwe advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:13
+msgid "Update your item"
+msgstr "Pas jouw advertentie aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:28
+msgid "General Information"
+msgstr "Algemene informatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:36
+msgid "Price"
+msgstr "Prijs"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:62
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:91
+msgid "Photos"
+msgstr "Fotos"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:99
+msgid "optional"
+msgstr "Optioneel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:102
+msgid "Add new photo"
+msgstr "Foto toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:112
+msgid "Country"
+msgstr "Land"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:114
+msgid "Region"
+msgstr "Regio"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:116
+msgid "City"
+msgstr "Stad"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:118
+msgid "City area"
+msgstr "Buurt"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:120
+msgid "Address"
+msgstr "Adres"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/items/item-edit.php:135
+msgid "Add item"
+msgstr "Advertentie toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/add.php:55
+msgid "Language package"
+msgstr "Taalpackage"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/add.php:59
+msgid "Upload translation"
+msgstr "Upload vertaling"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/add.php:66
+msgid "The translations folder "
+msgstr "Het vertalingfolder"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/add.php:66
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/add.php:67
+msgid " is not writable on your server, this"
+msgstr "is niet writable op uw server, deze "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/add.php:66
+msgid "can't upload translations from the administration panel. Please copy the translation package using another technique (FTP, SSH) or make the mentioned translations folder writable."
+msgstr "kan de vertalingen niet uploaden uit de administratie paneel. Upload het pakket met een andere techniek (FTP, SSH) of maak de genoemde vertalingen map schrijfbaar."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:44
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:56
+msgid "Edit language"
+msgstr "Taal aanpassen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:63
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:79
+msgid "Short name"
+msgstr "Korte naam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:71
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:91
+msgid "Currency format"
+msgstr "Formaat munteenheid"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:75
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:97
+msgid "Date format"
+msgstr "Datum formaat"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:79
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:103
+msgid "Stop words"
+msgstr "Stopwoorden"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:85
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:111
+msgid "Enabled for the public website"
+msgstr "Actief voor de publieke website"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/edit.php:91
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/frm.php:117
+msgid "Enabled for the backoffice (oc-admin)"
+msgstr "Actief voor de backoffice (oc-admin)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:72
+msgid "Disable (website)"
+msgstr "Uitschakelen (website)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:72
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:121
+msgid "Disable (oc-admin)"
+msgstr "Uitschakelen (oc-admin)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:75
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:76
+msgid "Yes"
+msgstr "Ja"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:75
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:76
+msgid "No"
+msgstr "Nee"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:88
+msgid "Short Name"
+msgstr "Korte naam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:90
+msgid "Enabled (website)"
+msgstr "Activeren (website)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:91
+msgid "Enabled (oc-admin)"
+msgstr "Activeren (oc-admin)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:118
+msgid "Enable (Website)"
+msgstr "Activeren (Website)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:119
+msgid "Disable (Website)"
+msgstr "Uitschakelen(Website)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/languages/index.php:120
+msgid "Enable (oc-admin)"
+msgstr "Activeren (oc-admin)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:101
+msgid "Which of the following content do you want to see on your dashboard"
+msgstr "Wat wenst u te zien in uw dashboard ?"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:103
+msgid "Last Items"
+msgstr "Laatste advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:106
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:143
+msgid "Statistics"
+msgstr "Statistieken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:109
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:157
+msgid "Last Comments"
+msgstr "Laatste opmerkingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:112
+msgid "Last News from OSClass"
+msgstr "Laatste nieuws van OSClass"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:124
+msgid "Items by Category"
+msgstr "Advertenties per afdeling"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:137
+msgid "There aren't any uploaded items yet"
+msgstr "Er zijn tot nu toe geen uploaded advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:145
+msgid "Number of items"
+msgstr "Aantal advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:146
+msgid "Number of public users"
+msgstr "Aantal publieke gebruikers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:147
+msgid "Number of administrators"
+msgstr "Aantal administrators"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:160
+msgid "Commented"
+msgstr "Commented"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:160
+msgid "Item"
+msgstr "Advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:166
+msgid "Latest News from OSClass"
+msgstr "Laatste nieuws van OSClass"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:178
+msgid "Unable to fetch news from"
+msgstr "Kan geen informatie halen van "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/main/index.php:178
+msgid "Please try again later"
+msgstr "Probeer het later eens opnieuw"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:40
+msgid "Configure Media"
+msgstr "Media configureren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:50
+msgid "Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)"
+msgstr "Stel de gewenste afmetingen voor alle afbeeldingen op de website. (in het formaat BREEDTExHOOGTE, bv: 640x480)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:56
+msgid "Restrictions"
+msgstr "Beperkingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:58
+msgid "Maximum size in KB"
+msgstr "Maximum grootte in KB"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:63
+msgid "Allowed format extensions (eg: png, jpg, gif)"
+msgstr "Toegestane formaten (bv: png, jpg, gif)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:69
+msgid "Path and URI"
+msgstr "Path en URI"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:72
+msgid "Store uploads in this folder"
+msgstr "Sla upload in deze folder"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:77
+msgid "Full URL path to files"
+msgstr "Volledige URL path naar de files"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:84
+msgid "Dimensions"
+msgstr "Afmetingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:86
+msgid "Thumbnail dimensions"
+msgstr "Thumbnail grootte"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:91
+msgid "Preview dimensions"
+msgstr "Preview grootte"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:96
+msgid "Normal dimensions"
+msgstr "Normale afmetingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/config.php:101
+msgid "Update configuration"
+msgstr "Configuratie updaten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/index.php:82
+msgid "File"
+msgstr "Bestand"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/media/index.php:85
+msgid "Attached to"
+msgstr "Bijdeboegd aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/pages/frm.php:112
+msgid "Internal Name (Short name to easily identify this page)"
+msgstr "Internenaam (kort naam om deze pagina makkelijk te identificeren)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/add.php:38
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/configuration.php:51
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/index.php:115
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/view.php:32
+msgid "Add a new plugin"
+msgstr "Nieuwe plugin toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/add.php:55
+msgid "Plugin package"
+msgstr "Plugin package"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/add.php:59
+msgid "Upload plugin"
+msgstr "Upload plugin"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/add.php:67
+msgid "The plugins folder "
+msgstr "De plugins folder"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/add.php:67
+msgid "can't upload plugins from the administration panel. Please copy the plugin package using another technique (FTP, SSH) or make the mentioned plugins folder writable."
+msgstr " kan geen plugins uploaden van de administratie console. Kopieer de Theme package door een andere middel (FTP, SSH) of maak de Themes folder writable."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/configuration.php:80
+msgid "Select the categories you want to apply those attributes:"
+msgstr "Selecteer de categorien waarvoor deze attributen van toepassing moeten zijn:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/index.php:74
+msgid "Configure"
+msgstr "Configureer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/index.php:74
+msgid "There's a new version. You should update!"
+msgstr "Er is een nieuwe versie beschikbaar. U zou moeten updaten."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/index.php:74
+msgid "Uninstall"
+msgstr "Deinstalleer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/plugins/index.php:74
+msgid "Install"
+msgstr "Installeer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/addCurrency.php:52
+msgid "Create"
+msgstr "Maak aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/addCurrency.php:57
+msgid "Code"
+msgstr "Code"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/addCurrency.php:74
+msgid "Create currency"
+msgstr "Munteenheid aanmaken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/comments.php:63
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:93
+msgid "Comments enabled"
+msgstr "Opmerkingen geactiveerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/comments.php:72
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:102
+msgid "Moderate comments"
+msgstr "Matig opmerkingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/comments.php:83
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/notifications.php:99
+msgid "Notify new comment"
+msgstr "Nieuwe reacties melden"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/cron.php:58
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:107
+msgid "Cron System"
+msgstr "Cron systeem"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/cron.php:64
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:113
+msgid "Auto-cron"
+msgstr "Auto-cron"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/cron.php:67
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:116
+msgid "Some functionalities os OSClass requires a cron system to work. Check this if you don't know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass."
+msgstr "Sommige functionaliteiten van OSClass vereisen een cron-systeem om te werken. Vink dit aan als je niet weet wat een cron-job is. Of als uw host  niet in staat is om dat te doen. Haal het vinkje weg als u wilt uw cron handmatig te programmeren. Raadpleeg de handleiding voor meer informatie over de cron systeem in OSClass te verkrijgen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/editCurrency.php:75
+msgid "Edit currency"
+msgstr "Pas munteenheid aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:63
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/items.php:63
+msgid "Enabled recaptcha"
+msgstr "reCAPTCHA geactiveerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:72
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/items.php:72
+msgid "Enabled item validation"
+msgstr "Validatie van de advertentie geactiveerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/functionalities.php:81
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/items.php:81
+msgid "Only allow registered users post items"
+msgstr "Allen geregistreerde gebuikers kunnent advertenties plaatsen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:56
+msgid "Page title"
+msgstr "Titel pagina"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:63
+msgid "Page description"
+msgstr "Beschrijving van de pagina"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:72
+msgid "Administrator E-mail"
+msgstr "Email administrator"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:79
+msgid "Default language"
+msgstr "Standaard taal"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:113
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:162
+msgid "Custom"
+msgstr "Aangepast"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:120
+msgid "Default currency"
+msgstr "Standaard munteenheid"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:129
+msgid "Week starts on"
+msgstr "Week start op"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:131
+msgid "Sunday"
+msgstr "Zondag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:132
+msgid "Monday"
+msgstr "Maandag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:133
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:134
+msgid "Wednesday"
+msgstr "Woensdag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:135
+msgid "Thursday"
+msgstr "Donderdag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:136
+msgid "Friday"
+msgstr "Vrijdag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:137
+msgid "Saturday"
+msgstr "Zaterdag"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:146
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:147
+msgid "Time format"
+msgstr "Tijdnotatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/index.php:169
+msgid "Number of items in the RSS"
+msgstr "Aantal items in de RSS"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/items.php:93
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/notifications.php:63
+msgid "Notify new item to admin"
+msgstr "Nieuwe advertenties melden aan de admin"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/items.php:101
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/notifications.php:71
+msgid "Notify contact item to admin"
+msgstr "Melden contactadvertenties aan admin"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/items.php:109
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/notifications.php:79
+msgid "Notify contact friends to admin"
+msgstr "Melden vriendenadvertenties aan admin"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:96
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:128
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:345
+msgid "Close"
+msgstr "Sluiten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:102
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:349
+msgid "View more"
+msgstr "Zie meer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:336
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:367
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:385
+msgid "Add new"
+msgstr "Nieuwe toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:401
+msgid "Add new country"
+msgstr "Land toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:410
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:442
+msgid "Country: "
+msgstr "Land:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:414
+msgid "Country code: "
+msgstr "Land code:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:419
+msgid "Country code has two characters"
+msgstr "Land code heeft twee letters"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:433
+msgid "Edit country"
+msgstr "Land aanpassen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:457
+msgid "Add new region"
+msgstr "Nieuwe regio toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:468
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:492
+msgid "Region: "
+msgstr "Regio:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:483
+msgid "Edit region"
+msgstr "Regio aanpassen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:507
+msgid "Add new city"
+msgstr "Stad toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:519
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:543
+msgid "City: "
+msgstr "Stad"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/locations.php:534
+msgid "Edit city"
+msgstr "Stad aanpassen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:65
+msgid "Type of server"
+msgstr "Soort server"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:67
+msgid "Custom Server"
+msgstr "Aangepast Server"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:68
+msgid "GMail Server"
+msgstr "GMail Server"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:73
+msgid "Host Name"
+msgstr "Host Name"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:76
+msgid "Server Port"
+msgstr "Server Port"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:85
+msgid "Encryption"
+msgstr "Encryption"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:88
+msgid "leave it empty if there isn't encryption, ssl or tls"
+msgstr "laat het veld leeg als er geen encryptie, ssl of tls is."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:95
+msgid "Enable SMTP authentication"
+msgstr "Activeer SMTP authenticatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:101
+msgid "Help"
+msgstr "Hulp"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/mailserver.php:102
+msgid "Enter your email server configuration."
+msgstr "Vul je emailserver configuratie."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/notifications.php:87
+msgid "Enable item validation"
+msgstr "Activeer validatie van de advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/permalinks.php:25
+msgid "Invalid OSClass request"
+msgstr "Ongeldige OSClass request"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/permalinks.php:60
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started"
+msgstr "Standaard OSClass maakt gebruik van web-URL's die vraagtekens en veel getallen in hen hebben. OSClass biedt u de mogelijkheid om een aangepaste URL-structuur voor je permalinks en archief te creëren. Dit kan het estethiek, gebruiksvriendelijkheid, en forward-compatibiliteit verbeteren van uw links. Een aantal tags zijn beschikbaar. Hieronder nog een paar voorbeelden om aan de slag te gaan."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/permalinks.php:64
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/permalinks.php:66
+msgid "Enable nice urls"
+msgstr "Mooie urls activeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/permalinks.php:70
+msgid "If your .htaccess file were writable, we could do this automatically, but it isn't so these are the mod_rewrite rules you should have in your .htaccess file. Click in the field and press CTRL + a to select all"
+msgstr "Als uw .htaccess bestand writable was, konden dit automatisch doen. Deze zijn de mod_rewrite rules die moeten toegevoegd worden aan de .htaccess. Klik in het veld en gebruik CTRL+A om alles te selecteren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:40
+msgid "Registry"
+msgstr "Register"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:51
+msgid "The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table."
+msgstr "De registry is een plaats waar OSClass alle voorkeuren van de plugins, thema's en nog veel meer opslaat. Deze waarden moeten worden gewijzigd door de plugins of thema's. Dit is slechts een informatieve tabel."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:57
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:73
+msgid "Section"
+msgstr "Sectie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:59
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:75
+msgid "Value"
+msgstr "Waarde"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:60
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/registry.php:76
+msgid "Type"
+msgstr "Soort"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:52
+msgid "Akismet"
+msgstr "Akismet"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:54
+msgid "Akismet key (same as Wordpress.com)"
+msgstr "Akismet key (zelfde als Wordpress.com)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "If the field is empty it is because the Akismet service is disabled"
+msgstr "Als deze veld leeg is, is het omdat het Akismet dienst niet actief is"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:56
+msgid "Get your free key at"
+msgstr "Ontvang je gratis key op "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:61
+msgid "Re-captcha"
+msgstr "Re-captcha"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "If the field is empty it is because the reCAPTCHA service is disabled"
+msgstr "Als deze veld leeg is, is het omdat het reCAPTCHA dienst niet actief is"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:63
+msgid "Get your free keys at"
+msgstr "Ontvang je gratis key op "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:66
+msgid "Re-captcha private key"
+msgstr "Re-captcha private key"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:71
+msgid "Re-captcha public key"
+msgstr "Re-captcha public key"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/spamNbots.php:76
+msgid "Update spam and bots configuration"
+msgstr "Spam en Bots configuratie updaten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/users.php:63
+msgid "User validation"
+msgstr "Gebruikervalidatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/settings/users.php:67
+msgid "Users need to validation their account. After registering on the website, they will be sent an email with a validation link."
+msgstr "Gebruikers moeten hun account valideren. Na registratie, zullen ze een email krijgen met een activatielink."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:53
+msgid "Backing up data... please wait"
+msgstr "Backup data... even wachten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:84
+msgid "From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass."
+msgstr "Vanuit hier kunt u OSClass backupen. OPGELET: Backupbestanden zullen geplaatst worden op de root van je OSClass installatie."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:90
+msgid "Backup Folder"
+msgstr "Backup Folder"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:92
+msgid "This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass' documentation."
+msgstr "Dit is de folder waar je backups zullen gemaakt worden. We adviseren om een niet-publieke folder te kiezen. Voor meer informatie, kijk naar de OSClass documentatie."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:96
+msgid "Backup Database"
+msgstr "Backup Database"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:97
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:103
+msgid "backup"
+msgstr "backup"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/backup.php:102
+msgid "Backup OSClass installation"
+msgstr "Backup OSClass installatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/export.php:25
+msgid "Export"
+msgstr "Export"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/export.php:27
+msgid "Export now"
+msgstr "Nu exporteren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/import.php:48
+msgid "This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"
+msgstr "Deze functie geeft u de mogelijkheid om uw database aan te passen (toevoegen, verwijderen, ...) Het is meestal gebruikt om landen-, steden-, munteenheden-lijsten te importeren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/import.php:54
+msgid "Data"
+msgstr "Data"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:48
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:48
+msgid "Checking for update (installed version: "
+msgstr "Checkt voor update (huidige versie:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:52
+msgid "HORRAY! Your plugin installation is up to date! (current version: "
+msgstr "YAHOO! Jouw plugin installatie is up to date! (huidige versie:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:54
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:54
+msgid "current version: "
+msgstr "huidige versie:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:55
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:55
+msgid "Downloading update file: "
+msgstr "Download updatefile:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:62
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:62
+msgid "Unzipping file: "
+msgstr "Unzip bestand:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:67
+msgid "Copying old files: "
+msgstr "Kopieer oude bestanden:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:72
+msgid "Removing new files: "
+msgstr "Verwijdert oude bestanden:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:77
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:77
+msgid "Executing SQL: "
+msgstr "Voert SQL uit:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:82
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:82
+msgid "Executing additional actions: "
+msgstr "Voert additionele acties:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:87
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:87
+msgid "Cleanning all the mesh: "
+msgstr "Maakt de boel schoon:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade-plugins.php:93
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:93
+msgid "Satisfaying user with awesome and easy auto-upgrade: Done!"
+msgstr "Een tevreden gebruiker dankzij een makkelijke upgrade: Check !"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:52
+msgid "HORRAY! Your OSClass installation is up to date! (current version: "
+msgstr "YAHOO! Uw OSClass installatie is up to date (huidige versie:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:67
+msgid "Copying new files: "
+msgstr "Kopieer nieuwe bestanden:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/tools/upgrade.php:72
+msgid "Removing old files: "
+msgstr "Oude bestanden verwijderen:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/add.php:35
+#: Classifieds/Osclass/oc-admin/themes/modern/users/index.php:104
+msgid "Add a new user"
+msgstr "Nieuwe gebruiker toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/add.php:74
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:76
+msgid "Web site"
+msgstr "Website"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/add.php:87
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:89
+msgid "Mobile phone"
+msgstr "Mobiel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/add.php:92
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:94
+msgid "Land phone"
+msgstr "Vast"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/add.php:99
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:101
+msgid "Additional information"
+msgstr "Bijkomende informatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/add.php:105
+msgid "Create user"
+msgstr "Maak user aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:35
+msgid "Edit user"
+msgstr "Bewerk user"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:108
+msgid "Activation"
+msgstr "Activatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:109
+msgid "Active user"
+msgstr "Actieve user"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/edit.php:114
+msgid "Update user"
+msgstr "Update gebruiker"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/index.php:70
+msgid "Activate user"
+msgstr "User activeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/index.php:70
+msgid "Deactivate user"
+msgstr "User deactiveren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-admin/themes/modern/users/index.php:89
+msgid "Info"
+msgstr "Info"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:110
+msgid "Banners"
+msgstr "Banners"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:125
+msgid "Edit banner"
+msgstr "Banner bewerken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:133
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:155
+msgid "Short name to help you identify this ad"
+msgstr "Korte naam om u te helpen om deze advertentie te identificeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:135
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:157
+msgid "HTML code for the ad "
+msgstr "HTML code voor de advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:138
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:160
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:249
+msgid "[On/Off] HTML editor"
+msgstr "HTML editor [Aan/Uit]"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:147
+msgid "Add new banner"
+msgstr "Nieuwe banner toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:159
+msgid "Insert your image / media here. You could use the HTML button to edit directly the HTML code of this banner."
+msgstr "Plaats je foto/media hier. U kunt de HML button gebruiken  om rechtstreeks de HTML code aan te passen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:178
+msgid "Banners in campaign"
+msgstr "Banners in campagne"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:181
+msgid "Select a campaign"
+msgstr "Selecteer een campaign"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:212
+msgid "Add banners to your campaign"
+msgstr "Banners toevoegen aan je campaign"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:229
+msgid "Select a campaign to ad/remove banners, first."
+msgstr "Selecteer een campagne om banners toe te voegen (of verwijderen)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:237
+msgid "Create new campaign"
+msgstr "Maak nieuwe campagne aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:244
+msgid "Write a name for your campaign"
+msgstr "Geef een naam aan je campagne"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:246
+msgid "HTML code for the campaign. User '[banner]' for insert random banners or '[banner#banner_name]' for specific abnner."
+msgstr "HTML code voor de campagne. Gebruiker '[banner]' voor willekeurige banners of '[banner#banner_name]' voor een specifiek banner."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/conf.php:248
+msgid "Example of banner inserting. <ul><li>[banner#example]</li><li>[banner]</li></ul>"
+msgstr "Voorbeeld van bannerinsertie. <ul><li>[banner#examAple]</li><li>[banner]</li></ul>"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/index.php:95
+msgid "Manage banners"
+msgstr "Beheer banners"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/banner_management/index.php:96
+msgid "Manage Campaigns"
+msgstr "Beheer campagnes"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:91
+msgid "Makes"
+msgstr "Merken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:112
+msgid "Add new make"
+msgstr "Merk toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:136
+msgid "Models"
+msgstr "Modellen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:139
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:59
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:56
+msgid "Select a make"
+msgstr "Selecteer een merk"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:171
+msgid "Add new model"
+msgstr "Model toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:197
+msgid "Vehicle types"
+msgstr "Soort voertuig"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:231
+msgid "Add new car type"
+msgstr "Soort voertuig toevoegen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/conf.php:272
+msgid "Warning"
+msgstr "Opgelet"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:17
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:25
+msgid "Select a model..."
+msgstr "Selecteer een model..."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:22
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:34
+msgid "No results"
+msgstr "Geen resultaten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:52
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:2
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:49
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/search_form.php:2
+msgid "Cars attributes"
+msgstr "Auto eigenschappen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:56
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:6
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:53
+msgid "Make"
+msgstr "Merk"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:67
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:10
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:64
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/search_form.php:10
+msgid "Model"
+msgstr "Model"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:78
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:92
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:18
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:29
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:78
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:93
+msgid "Car type"
+msgstr "Soort voertuid"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:106
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:39
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:107
+msgid "Year"
+msgstr "Jaar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:110
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:43
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:111
+msgid "Doors"
+msgstr "Deuren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:120
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:47
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:121
+msgid "Seats"
+msgstr "Stoelen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:130
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:51
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:131
+msgid "Mileage"
+msgstr "Kms"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:135
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:56
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:136
+msgid "Engine size (cc)"
+msgstr "Cilinderinhoud (cc)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:139
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:60
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:140
+msgid "Num. Airbags"
+msgstr "Aantal airbags"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:149
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:64
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:150
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/search_form.php:24
+msgid "Transmission"
+msgstr "Transmissie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:151
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:152
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/search_form.php:26
+msgid "Manual"
+msgstr "Manueel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:152
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:153
+msgid "Auto"
+msgstr "Automatisch"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:156
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:68
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:157
+msgid "Fuel"
+msgstr "Brandstof"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:158
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:159
+msgid "Diesel"
+msgstr "Diesel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:159
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:160
+msgid "Gasoline"
+msgstr "Benzine"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:160
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:161
+msgid "Electric-hibrid"
+msgstr "Hybride electrisch"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:161
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:162
+msgid "Other"
+msgstr "Andere"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:165
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:72
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:166
+msgid "Seller"
+msgstr "Verkoper"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:167
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:168
+msgid "Dealer"
+msgstr "Dealer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:168
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:169
+msgid "Owner"
+msgstr "Eigenaar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:173
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:77
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:174
+msgid "Warranty"
+msgstr "Garantie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:174
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:78
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:175
+msgid "New"
+msgstr "Nieuwe"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:178
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:82
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:179
+msgid "Power"
+msgstr "Vermogen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:180
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:181
+msgid "Kw"
+msgstr "Kw"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:181
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:182
+msgid "Cv"
+msgstr "Cv"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:182
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:183
+msgid "Ch"
+msgstr "PK"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:183
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:184
+msgid "Km"
+msgstr "Km"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:184
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:185
+msgid "Hp"
+msgstr "Hp"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:185
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:186
+msgid "Ps"
+msgstr "Ps"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:186
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:187
+msgid "Pk"
+msgstr "Pk"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:187
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:188
+msgid "Cp"
+msgstr "Cp"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/form.php:191
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_detail.php:86
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/item_edit.php:192
+msgid "Gears"
+msgstr "Transmissie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/index.php:236
+msgid "Configure plugin"
+msgstr "Plugin configureren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/index.php:237
+msgid "Manage makes"
+msgstr "Beheer merken"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/index.php:238
+msgid "Manage models"
+msgstr "Beheer modellen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/index.php:239
+msgid "Manage vehicle types"
+msgstr "Beheer soorten voertuigen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/search_form.php:14
+msgid "Num. of airbags"
+msgstr "Aantal airbags"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/cars_attributes/search_form.php:27
+msgid "Automatic"
+msgstr "Automatisch"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:1
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_detail.php:1
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:1
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:1
+msgid "Dating attributes"
+msgstr "Dating eigenschappen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:4
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:4
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:4
+msgid "You are:"
+msgstr "Je bent:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:6
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:14
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:6
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:14
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:6
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:14
+msgid "Man"
+msgstr "Man"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:7
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:15
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:7
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:15
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:7
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:15
+msgid "Woman"
+msgstr "Vrouw"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:8
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:16
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:8
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:16
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:8
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:16
+msgid "Not informed"
+msgstr "Onbekend"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:12
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:12
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:12
+msgid "Looking for:"
+msgstr "Op zork naar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:20
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:20
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:20
+msgid "Relation type:"
+msgstr "Soort relatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:22
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:22
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:22
+msgid "Friendship"
+msgstr "Vriendschap"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:23
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:23
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:23
+msgid "Formal relation"
+msgstr "Formele relatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/form.php:24
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/item_edit.php:24
+#: Classifieds/Osclass/oc-content/plugins/dating_attributes/search_form.php:24
+msgid "Informal relation"
+msgstr "Informele relatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/google_maps/admin.php:30
+msgid "You can freely obtain a developer key after signing up on this URL:"
+msgstr "U kunt een gratis developer key krijgen, als u zich inschrijft op:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:4
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:11
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:4
+msgid "Relation"
+msgstr "Relatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:6
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:6
+msgid "Hire someone"
+msgstr "Neem iemand aan"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:7
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:7
+msgid "Looking for a job"
+msgstr "Op zoek naar een job"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:11
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:15
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:11
+msgid "Company name"
+msgstr "Bedrijf"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:15
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:19
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:15
+msgid "Position type"
+msgstr "Type job"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:18
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:18
+msgid "Undefined"
+msgstr "Onbepaald"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:19
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:19
+msgid "Part time"
+msgstr "Deeltijds"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:20
+msgid "Full-time"
+msgstr "Voltijds"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:25
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:23
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:25
+msgid "Salary range"
+msgstr "Loon"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:29
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:29
+msgid "Hour"
+msgstr "Uur"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:30
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:30
+msgid "Week"
+msgstr "Week"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:31
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:31
+msgid "Month"
+msgstr "Maand"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:43
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:72
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:30
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:59
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:42
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:71
+msgid "Desired experience"
+msgstr "Ervaringsniveau"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:47
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:76
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:34
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:63
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:46
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:75
+msgid "Studies"
+msgstr "Opleiding"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:51
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:80
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:38
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:67
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:50
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:79
+msgid "Minimum requirements"
+msgstr "Minimale verwachtingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:55
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:84
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:42
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:71
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:54
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:83
+msgid "Desired requirements"
+msgstr "Verwachtingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:59
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:88
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:46
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:75
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:58
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:87
+msgid "Contract"
+msgstr "Contract"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:63
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/form.php:92
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:50
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:79
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:62
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_edit.php:91
+msgid "Company description"
+msgstr "Bedrijfsomschrijving"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/jobs_attributes/item_detail.php:8
+msgid "Job attributes"
+msgstr "Job eigeschappen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/admin.php:39
+msgid "The plugin <strong>Products attributes</strong> adds a set of attributes to the categories you choose. Please select here all the categories where apply these attributes:"
+msgstr "De plugin <strong>Products attributes</strong> voegt een aantal extra attributen aan de categorie die u kiest. Maak een selectie van de categorien waar u deze attributen wenst toe te passen: "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/admin.php:44
+msgid "Presets categories"
+msgstr "Presets categoriëen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/admin.php:45
+msgid "Check all"
+msgstr "Selecteer alles"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/admin.php:45
+msgid "Uncheck all"
+msgstr "Deselecteer alles"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/admin.php:77
+msgid "This plugin is now configured."
+msgstr "De plugin is geconfigureerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/admin.php:80
+msgid "Return to plugins's page"
+msgstr "Terug naar de plugin pagina"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/item_detail.php:1
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/item_edit.php:1
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:1
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:1
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:1
+msgid "Realestate attributes"
+msgstr "Immo eigenschappen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/products_attributes/search_form.php:1
+msgid "Products attributes"
+msgstr "Product eigenschappen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/conf.php:57
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/index.php:359
+msgid "Property types"
+msgstr "Soort woning"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/conf.php:95
+msgid "Add new property types"
+msgstr "Nieuwe soorten woning toevoegen "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/conf.php:129
+msgid "Deleting property types may end in errors. Some of those property types could be attached to some actual items."
+msgstr "Property types deleten kan fouten veroorzaken. Sommige property type kunnen gelinkt zijn aan bestaande advertenties."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:8
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:8
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:75
+msgid "For rent"
+msgstr "Te huur"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:9
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:9
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:76
+msgid "For sale"
+msgstr "Te koop"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:17
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:32
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:17
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:28
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:19
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:32
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:87
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:100
+msgid "Property type"
+msgstr "Type vastgoed"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:47
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:45
+msgid "Num. of rooms"
+msgstr "Aantal kamers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:54
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:55
+msgid "Num. of bathrooms"
+msgstr "Aantal badkamers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:61
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:45
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:65
+msgid "Status"
+msgstr "Status"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:64
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:68
+msgid "New construction"
+msgstr "Nieuwbouw"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:65
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:69
+msgid "To renovate"
+msgstr "Te renoveren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:66
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:70
+msgid "Good condition"
+msgstr "Goede staat"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:71
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:75
+msgid "Square meters"
+msgstr "Vierkante meters"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:75
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:61
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:79
+msgid "Construction Year"
+msgstr "Bouwjaar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:79
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:83
+msgid "Square meters (total)"
+msgstr "Vierkante meters (totaal)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:83
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:87
+msgid "Num. of floors"
+msgstr "Aantal verdiepingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:93
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:97
+msgid "Num. of garages (place for a car = one garage)"
+msgstr "Aantal garage (parkeerplaatsen)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:101
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:89
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:107
+msgid "Condition"
+msgstr "Staat"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:105
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:93
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:111
+msgid "Agency"
+msgstr "Makelaar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:109
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:97
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:115
+msgid "Floor Number"
+msgstr "Vloer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:114
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:119
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:167
+msgid "Other characteristics"
+msgstr "Andere eigenschappen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:116
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:65
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:121
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:169
+msgid "Heating"
+msgstr "Verwarming"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:117
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:122
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:170
+msgid "Air condition"
+msgstr "Air conditioning"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:118
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:71
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:123
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:171
+msgid "Elevator"
+msgstr "Lift"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:119
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:74
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:124
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:172
+msgid "Terrace"
+msgstr "Terras"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:120
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:77
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:125
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:173
+msgid "Parking"
+msgstr "Parkeerplaats"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:121
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:80
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:126
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:174
+msgid "Furnished"
+msgstr "Gemeubileerd"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:123
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:128
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:176
+msgid "By owner"
+msgstr "Door eigenaar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:131
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:143
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:106
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:119
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:134
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:147
+msgid "Transport"
+msgstr "Vervoer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:134
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/form.php:147
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:110
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:123
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:138
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_edit.php:151
+msgid "Zone"
+msgstr "Zone"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:37
+msgid "Num. Rooms"
+msgstr "Aantal kamers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:41
+msgid "Num. Bathrooms"
+msgstr "Aantal badkamers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:49
+msgid "Square Meters"
+msgstr "Vierkante meters"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:53
+msgid "Square Meters (total)"
+msgstr "Vierkante meters (totaal)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:57
+msgid "Num. Floors"
+msgstr "Aantal vloeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:68
+msgid "Air Condition"
+msgstr "Air conditionning"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/item_detail.php:86
+msgid "By Owner"
+msgstr "Door eigenaar"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:114
+msgid "Num. Floors Range"
+msgstr "Aantal kamers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:123
+msgid "Rooms Range"
+msgstr "Aantal verdiepingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:132
+msgid "Bathrooms Range"
+msgstr "Aantal badkamers"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:141
+msgid "Garages Range"
+msgstr "Aantal garages"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:150
+msgid "Construction year Range"
+msgstr "Bouwperiode"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/plugins/realstate_attributes/search_form.php:159
+msgid "Square Meters Range"
+msgstr "Vierkante meters "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/category.php:7
+msgid "There are no results in this category yet."
+msgstr "Er zijn geen resultaten in deze afdeling."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/footer.php:5
+msgid "Driven by <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>."
+msgstr "Gebruikt <a title=\"OSClass web\" href=\"http://osclass.org/\">advertentiesoftware</a> <strong>OSClass</strong>."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:78
+msgid "Hello"
+msgstr "Hallo"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:79
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:73
+msgid "Manage from here your"
+msgstr "Beheer vanuit hier uw"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:80
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:74
+msgid "account"
+msgstr "account"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:81
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:75
+msgid "Logout"
+msgstr "Logout"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:83
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:77
+msgid "Register a free account"
+msgstr "Schrijf u in voor een gratis account"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:83
+msgid "or"
+msgstr "of"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:83
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:77
+msgid "login"
+msgstr "login"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/header.php:111
+msgid "Your search must be at least two characters long"
+msgstr "Uw zoekopdracht moet minstens twee tekens bevatten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:1
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:7
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:1
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:7
+msgid "Contact seller"
+msgstr "Contacteer verkoper"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:11
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:11
+msgid "To (seller)"
+msgstr "Naar (verkoper)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:19
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:19
+msgid "Your name"
+msgstr "Uw naam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:19
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:27
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:19
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:27
+msgid "(optional)"
+msgstr "(optioneel)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:23
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:23
+msgid "Your email address"
+msgstr "Uw emailadres"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:27
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:27
+msgid "Phone number"
+msgstr "Telefoonnummer"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:31
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:31
+msgid "Message"
+msgstr "Bericht"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-contact.php:36
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-contact.php:36
+msgid "Send message"
+msgstr "Stuur bericht"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-post.php:5
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:95
+msgid "Post your item"
+msgstr "Plaats uw advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-post.php:58
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:274
+msgid "Seller information"
+msgstr "Verkoper informatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item-post.php:75
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:298
+msgid "Publish"
+msgstr "Publiceren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:8
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:8
+msgid "Send to a friend"
+msgstr "Stuur aan een vriend"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:18
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:18
+msgid "Images"
+msgstr "Afbeeldingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:24
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:24
+msgid "no pictures"
+msgstr "Geen afbeeldingen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:34
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:34
+msgid "Mark as "
+msgstr "Markeren als"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:35
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:35
+msgid "spam"
+msgstr "spam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:36
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:36
+msgid "bad category"
+msgstr "Slechte categorie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:37
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:37
+msgid "repeated"
+msgstr "herhaalde"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:38
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:38
+msgid "expired"
+msgstr "verlopen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:39
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:39
+msgid "offensive"
+msgstr "beledigend"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:96
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:94
+msgid "Be the first to comment on this item!"
+msgstr "Schrijf als eerste een opmerking !"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:100
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:98
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr "Laat jouw opmerkingen achter (spam en beledigend berichten zullen verwijderd worden)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:103
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:101
+msgid "Your name:"
+msgstr "Uw naam:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:104
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:102
+msgid "Your email:"
+msgstr "Uw email:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:108
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:106
+msgid "Title:"
+msgstr "Titel:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:109
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:107
+msgid "Comment:"
+msgstr "Opmerking:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:112
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:110
+msgid "Send comment"
+msgstr "Stuur opmerking"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:117
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:115
+msgid "Comments are not enabled."
+msgstr "Opmerkingen zijn niet geactiveerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:125
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:123
+msgid "Helpful information"
+msgstr "Handige informatie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:128
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:126
+msgid "Avoid scams by dealing locally or paying with PayPal."
+msgstr "Vermijd problemen door met lokale mensen te werken. Kies ook veilige betaalmethoden zoals Paypal. "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:129
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:127
+msgid "Never pay with Western Union, Moneygram or other anonymous payment services."
+msgstr "Betaal nooit met Western Union, Moneygram of een andere anonieme betalingservice"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:130
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:128
+msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country."
+msgstr "Koop of verkoop niet buiten je land. Aanvaard geen cheques van andere landen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern/item.php:131
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item.php:129
+msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\"."
+msgstr "Deze site is nooit betrokken bij transacties. We handelen ook geen betalingen, verzending of koperwaarborgen. We bieden ook geen \"buyer protection\" of \"seller certification\"."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/category.php:30
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/home.php:94
+msgid "no description."
+msgstr "Geen beschrijving"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/footer.php:7
+msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>."
+msgstr "Deze website gebruikt <a title=\"OSClass web\" href=\"http://osclass.org/\">open source advertentiesoftware </a><strong>OSClass</strong>."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:72
+msgid "Hello "
+msgstr "Hallo"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/header.php:114
+msgid "Login"
+msgstr "Login"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/home.php:48
+msgid "No Latest Items"
+msgstr "Geen laatste advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/home.php:50
+msgid "Latest Items"
+msgstr "Laatste advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/home.php:68
+msgid "Contact"
+msgstr "Contact"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:17
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:233
+msgid "Select a region..."
+msgstr "Selecteer een regio..."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:22
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:42
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:69
+msgid "none"
+msgstr "geen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:37
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:64
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:251
+msgid "Select a city..."
+msgstr "Selecteer een stad..."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:89
+msgid "You have to select a region."
+msgstr "U moet een regio selecteren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:90
+msgid "You have to select a city."
+msgstr "U moet een stad selecteren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:211
+msgid "Item Location"
+msgstr "Advertentieplaats"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:217
+msgid "Select a country..."
+msgstr "Selecteer een land..."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:263
+msgid "City Area"
+msgstr "Buurt"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-content/themes/modern_vertical/item-post.php:284
+msgid "Show email publically within the item page"
+msgstr "Toon email op de advertentiepagina"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/items.php:178
+msgid "You new to log-in in order to post a new item."
+msgstr "U moet zich inloggen om een advertentie te plaatsen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/items.php:225
+msgid "You need to input your name and email to be able to publish a new item."
+msgstr "U moet uw naam en emailadres opgeven om een advertentie te plaatsen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/items.php:465
+msgid "Great! You'll receive an e-mail to activate your item."
+msgstr "Fantastisch! U ontvangt een email om uw advertentie te activeren."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/items.php:467
+msgid "Great! We've just published your item."
+msgstr "Super ! We hebben jouw advertentie net gepubliceerd."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:34
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:77
+msgid "Contact Name"
+msgstr "Contactnaam"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:35
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:78
+msgid "Contact E-mail"
+msgstr "Contact email"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:57
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:103
+msgid "Url"
+msgstr "Url"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:68
+msgid "Validate your ad"
+msgstr "Valideer uw advertentie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:75
+msgid "Dear "
+msgstr "Beste"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:76
+msgid "You're receiving this email because an Ad is being placed at "
+msgstr "Uw ontvangt deze email omdat een advertentie was geplaatst op "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/notifications.php:104
+msgid "You can validate your ad in this url"
+msgstr "U kunt uw advertentie valideren op deze link"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:95
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:121
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:123
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:148
+msgid "Plugin "
+msgstr "Plugin "
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:95
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:123
+msgid " is missing the index.php file."
+msgstr "ontbreekt de index.php bestand"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:121
+msgid " is missing the function "
+msgstr "ontbreekt de function"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/plugins.php:148
+msgid " is missing the plugin's main file."
+msgstr "mist de hoofdbestand van de plugin"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/session.php:23
+msgid "defined session"
+msgstr "gedefinieerde sessie"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/themes.php:45
+#: Classifieds/Osclass/oc-includes/osclass/themes.php:53
+msgid "Consult"
+msgstr "Raadpleeg"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/themes.php:48
+msgid "Free"
+msgstr "Gratis"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/frm/Item.form.class.php:98
+msgid "Select one country..."
+msgstr "Selecteer een land"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/frm/Item.form.class.php:117
+msgid "Select one region..."
+msgstr "Selecteer een regio..."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/frm/Item.form.class.php:135
+msgid "Select one city..."
+msgstr "Selecteer een stad..."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/frm/Item.form.class.php:280
+msgid "You have to write a name."
+msgstr "U moet een naam invullen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/frm/Item.form.class.php:287
+msgid "You have to write an e-mail."
+msgstr "U moet een email invullen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/frm/Page.form.class.php:48
+msgid "Body"
+msgstr "Body"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/alert-form.php:5
+msgid "You have been subscribe correctly to the alert"
+msgstr "U hebt zich ingeschreven op het alert"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/alert-form.php:5
+msgid "There was a problem with the alert"
+msgstr "Er was een probleem met het alert"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/alert-form.php:12
+msgid "Subscribe to this search"
+msgstr "Aboneer je op deze zoekopdracht"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/alert-form.php:23
+msgid "Enter your e-mail"
+msgstr "Voer je email in"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/alert-form.php:25
+msgid "Subscribe"
+msgstr "Schrijf u in"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/contact.php:29
+msgid "Subject"
+msgstr "Onderwerp"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/contact.php:45
+msgid "Send"
+msgstr "Versturen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/header.php:60
+msgid "items"
+msgstr "advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/header.php:61
+msgid "and "
+msgstr "en"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/header.php:62
+msgid "profile"
+msgstr "profiel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/home.php:23
+#, php-format
+msgid "%d items"
+msgstr "%d advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/home.php:35
+msgid "Latest published items"
+msgstr "Laatste advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item-send-friend.php:104
+msgid "Your friend's name"
+msgstr "Naam van uw vriend"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item-send-friend.php:108
+msgid "Your friend's email address"
+msgstr "Emailadres van uw vriend"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item.php:28
+msgid "Price:"
+msgstr "Prijs:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item.php:29
+msgid "Publication date:"
+msgstr "Publicatiedatum:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item.php:58
+msgid "Mark as"
+msgstr "Markeren als"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item.php:101
+msgid "Your email"
+msgstr "Uw email"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/item.php:127
+msgid "Don't buy or sell outside of your country. Don't accept cashier check from outside your country."
+msgstr "Koop of verkoop niet buiten je land. Aanvaard geen cheques van andere landen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:50
+msgid "Search results"
+msgstr "Zoekresultaten"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:53
+msgid "Page"
+msgstr "Pagina"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:67
+msgid "Show as:"
+msgstr "Toon als:"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:67
+msgid "List"
+msgstr "Lijst"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:67
+msgid "image gallery"
+msgstr "fotogallerij"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:70
+msgid "Sort by:"
+msgstr "Sorteer per"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:112
+msgid "Minimum"
+msgstr "Minimum"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:114
+msgid "Maximum"
+msgstr "Maximum"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:118
+msgid "Pictures"
+msgstr "Fotos"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:125
+msgid "Show only items with pictures"
+msgstr "Toon enkel advertenties met fotos"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/search.php:164
+#, php-format
+msgid "There are no results matching \"%s\"."
+msgstr "Er zijn geen resultaten die komen overeen met \"%s\"."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-account.php:1
+msgid "Your account"
+msgstr "Uw account"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-alerts.php:22
+msgid "Your alerts"
+msgstr "Uw alerts"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-alerts.php:25
+msgid "You do not have any alerts yet."
+msgstr "U hebt nog geen alerts."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-alerts.php:29
+msgid "Alert"
+msgstr "Alert"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-alerts.php:29
+msgid "Delete this alert"
+msgstr "Delete deze alert"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-alerts.php:37
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-items.php:32
+msgid "Publication date"
+msgstr "Publicatiedatum"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-items.php:22
+msgid "Your items"
+msgstr "Uw advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-items.php:25
+msgid "You do not have any items yet."
+msgstr "U hebt nog geen advertenties."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-menu.php:22
+msgid "Menu"
+msgstr "Menu"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-menu.php:22
+msgid "Manage your profile"
+msgstr "Beheer uw profiel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-menu.php:22
+msgid "Manage your items"
+msgstr "Beheer je advertenties"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-menu.php:22
+msgid "Log-out"
+msgstr "Uitloggen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-profile.php:1
+msgid "Update your profile"
+msgstr "Update je profiel"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-profile.php:20
+msgid "Leave it empty if you don't want to change it now."
+msgstr "Laat het blank als u het niet wenst aan te passen."
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-profile.php:24
+msgid "Retype the password"
+msgstr "Wachtwoord opnieuw invoeren"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-profile.php:54
+msgid "Update profile"
+msgstr "Profiel aanpassen"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-register.php:3
+msgid "Register an account (free)"
+msgstr "Schrijf uw in voor een account (gratis)"
+
+#: /Users/Olga/Documents/Sultan/SXM
+#: Classifieds/Osclass/oc-includes/osclass/gui/user-register.php:24
+msgid "Re-type password"
+msgstr "Wachtwoord opnieuw invoeren"
+
