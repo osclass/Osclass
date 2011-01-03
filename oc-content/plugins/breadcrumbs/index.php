@@ -16,6 +16,12 @@ function breadcrumbs() {
 
 global $osc_request, $preferences;
 
+
+    // You could modify the separator
+    $separator = " / ";
+
+
+    // You DO NOT have to modify anything else
     if($osc_request['location']=='search') {
         if(isset($_REQUEST['catId'])) {
             $category = $_REQUEST['catId'];
@@ -24,14 +30,11 @@ global $osc_request, $preferences;
             $category = preg_replace('|/$|','',$category);
             $slug_categories = explode('/', $category);
             $category = $slug_categories[count($slug_categories) - 1];
-            //$category = Category::newInstance()->find_by_slug($slug_categories[count($slug_categories) - 1]);
         }
     } else if($osc_request['location']=='item' && isset($osc_request['item'])) {
-        //$osc_request['location'] = '';
         $category = $osc_request['item']['fk_i_category_id'];
     }
-
-    $separator = " / ";
+    
     $bc_text = "<a href='".ABS_WEB_URL."' ><span class='bc_root'>".$preferences['pageTitle']."</span></a>";
     $deep_c = -1;
     if(isset($category)) {
