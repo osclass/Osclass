@@ -35,7 +35,7 @@ function validateLoginForm() {
 
 <h2><?php _e('Access to your account'); ?></h2>
 
-<form action="user.php" method="post" onsubmit="return validateLoginForm();">
+<form action="<?php echo osc_createURL('user');?>" method="post" onsubmit="return validateLoginForm();">
 <input type="hidden" name="action" value="login_post" />
 
 <p>

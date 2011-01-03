@@ -134,6 +134,14 @@ function osc_createLogoutURL() {
         return WEB_PATH_URL . 'user.php?action=logout';
 }
 
+function osc_createSearchURL($pattern) {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH_URL . 'search/' . $pattern;
+    } else
+        return WEB_PATH_URL . 'search.php?pattern=' . $pattern;
+}
+
 function osc_createProfileURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
@@ -158,20 +166,31 @@ function osc_createUserItemsURL() {
         return WEB_PATH_URL . 'user.php?action=items';
 }
 
-function osc_createURL($params = array()) {
+function osc_createURL($params = null) {
     global $preferences;
-    if (count($params) > 0 && isset($params['file']) && $params['file'] != "") {
-        $params_string = "";
-        foreach ($params as $k => $v) {
-            if ($k != 'file') {
-                $params_string .= $k . '=' . $v . '&';
+    if(is_array($params)) {
+        if (count($params) > 0 && isset($params['file']) && $params['file'] != "") {
+            $params_string = "";
+            foreach ($params as $k => $v) {
+                if ($k != 'file') {
+                    $params_string .= $k . '=' . $v . '&';
+                }
+            }
+
+            if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+                return WEB_PATH_URL . $params['file'] . "/" . $params_string;
+            } else {
+                return WEB_PATH_URL . $params['file'] . ".php?" . $params_string;
             }
         }
-
-        return WEB_PATH_URL . $params['file'] . '?' . $params_string ;
-    } else {
-        return '';
+    } else if(is_string($params)) {
+        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+            return WEB_PATH_URL . $params;
+        } else {
+            return WEB_PATH_URL . $params.".php";
+        }
     }
+    return '';
 }
 
 function osc_createThumbnailURL($resource) {
@@ -187,10 +206,19 @@ function osc_createResourceURL($resource) {
 }
 
 function osc_createItemPostURL($cat = null) {
-    if (is_null($cat))
-        return sprintf(WEB_PATH_URL . 'item.php?action=post');
-    else
-        return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
+    if (is_null($cat)) {
+        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+            return WEB_PATH_URL . 'item/new';//sprintf(WEB_PATH_URL . 'item.php?action=post');
+        } else {
+            return sprintf(WEB_PATH_URL . 'item.php?action=post');
+        }
+    } else {
+        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'];//sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
+        } else {
+            return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
+        }
+    }
 }
 
 function osc_createCategoryURL($cat, $absolute = false) {

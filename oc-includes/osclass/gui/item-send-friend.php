@@ -83,7 +83,7 @@
         });
     });
 </script>
-<form id="send-friend" name = "send-friend" action="item.php" method="post">
+<form id="send-friend" name = "send-friend" action="<?php echo osc_createURL('item');?>" method="post">
 <input type="hidden" name="action" value="send_friend_post" />
 <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 
