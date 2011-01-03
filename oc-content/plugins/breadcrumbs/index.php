@@ -24,6 +24,7 @@ global $osc_request, $preferences;
             $category = preg_replace('|/$|','',$category);
             $slug_categories = explode('/', $category);
             $category = $slug_categories[count($slug_categories) - 1];
+            //$category = Category::newInstance()->find_by_slug($slug_categories[count($slug_categories) - 1]);
         }
     } else if($osc_request['location']=='item' && isset($osc_request['item'])) {
         //$osc_request['location'] = '';
@@ -34,7 +35,7 @@ global $osc_request, $preferences;
     $bc_text = "<a href='".ABS_WEB_URL."' ><span class='bc_root'>".$preferences['pageTitle']."</span></a>";
     $deep_c = -1;
     if(isset($category)) {
-        $cats = Category::newInstance()->toRootTree((int)($category));
+        $cats = Category::newInstance()->toRootTree($category);
         foreach($cats as $cat) {
             $deep_c++;
             $bc_text .= $separator."<a href='".osc_createCategoryURL($cat)."' ><span class='bc_level_".$deep_c."'>".$cat['s_name']."</span></a>";

@@ -21,7 +21,7 @@
 ?>
 <h2><?php _e('Retrieve your password'); ?></h2>
 
-<form action="user.php" method="post" >
+<form action="<?php echo osc_createURL('user');?>" method="post" >
 <input type="hidden" name="action" value="forgot_change_post" />
 <input type="hidden" name="id" value="<?php echo isset($_REQUEST['id'])?$_REQUEST['id']:''; ?>" />
 <input type="hidden" name="code" value="<?php echo isset($_REQUEST['code'])?$_REQUEST['code']:''; ?>" />

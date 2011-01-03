@@ -1,5 +1,5 @@
 <div id="home_header"><div><?php _e('Update your profile'); ?></div></div>
-<form action="user.php" method="post">
+<form action="<?php echo osc_createURL('user');?>" method="post">
 <input type="hidden" name="action" value="profile_post" />
 
 <div align="center">

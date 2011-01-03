@@ -6,7 +6,7 @@
 <?php UserForm::js_validation(); ?>
 <div align="center">
     <div id="register_form">
-        <form action="user.php" method="post" onSubmit="return checkForm()">
+        <form action="<?php echo osc_createURL('user');?>" method="post" onSubmit="return checkForm()">
             <input type="hidden" name="action" value="register_post" />
             <p>
 		<label for="name"><?php _e('Name'); ?></label><br />

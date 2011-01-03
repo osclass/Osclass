@@ -89,7 +89,7 @@ div.hh {
 </style>
 
 <div class="searchFormHolder" >
-<form action="search.php" method="POST" >
+<form action="<?php echo osc_createURL('search');?>" method="POST" >
 
 <?php
 foreach($_REQUEST as $k => $v) {

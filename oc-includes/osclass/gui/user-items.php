@@ -33,7 +33,7 @@
 		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
 		</div>
 
-		<div class="userItemButtons" ><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=deleteItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Delete'); ?></a> | <a href="user.php?action=editItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Edit'); ?></a></div>
+		<div class="userItemButtons" ><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="<?php echo osc_createURL('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']);?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_createURL('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']);?>"><?php _e('Edit'); ?></a></div>
 	</div>
 	<br />
 <?php endforeach; ?>

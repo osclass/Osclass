@@ -118,7 +118,7 @@ class Category extends DAO {
         $tree = null;
         if($cat!=null) {
             $tree_b = array();
-            if(is_int($cat)) {
+            if(ctype_digit($cat)) {
                 $cat = $this->findByPrimaryKey($cat);
             } else {
                 $cat = $this->find_by_slug($cat);
