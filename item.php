@@ -270,7 +270,7 @@ switch ($action) {
         }
         $cities = array();
         if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
-            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
         } else if( count($regions) > 0 ) {
             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
         }
