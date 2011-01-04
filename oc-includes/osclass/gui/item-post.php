@@ -38,15 +38,15 @@
                         <div class="itemFormHeader"><?php _e('Location'); ?></div>
                         <dl>
                             <dt><?php _e('Country'); ?></dt>
-                            <dd><?php ItemForm::country_select($countries) ; ?></dd>
+                            <dd><?php ItemForm::country_select($countries, $user) ; ?></dd>
                             <dt><?php _e('Region'); ?></dt>
-                            <dd><?php ItemForm::region_select($regions) ; ?></dd>
+                            <dd><?php ItemForm::region_select($regions, $user) ; ?></dd>
                             <dt><?php _e('City'); ?></dt>
-                            <dd><?php ItemForm::city_select($cities) ; ?></dd>
+                            <dd><?php ItemForm::city_select($cities, $user) ; ?></dd>
                             <dt><?php _e('City area'); ?></dt>
-                            <dd><?php ItemForm::city_area_text() ; ?></dd>
+                            <dd><?php ItemForm::city_area_text($user) ; ?></dd>
                             <dt><?php _e('Address'); ?></dt>
-                            <dd><?php ItemForm::address_text() ; ?></dd>
+                            <dd><?php ItemForm::address_text($user) ; ?></dd>
                         </dl>
                     </div>
 
