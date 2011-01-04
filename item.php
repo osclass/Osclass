@@ -259,14 +259,19 @@ switch ($action) {
             }
         }
 
+        $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
         $categories = Category::newInstance()->toTree();
         $countries = Country::newInstance()->listAll();
         $regions = array();
-        if( count($countries) > 0 ) {
+        if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+            $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+        } else if( count($countries) > 0 ) {
             $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
         }
         $cities = array();
-        if( count($regions) > 0 ) {
+        if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+        } else if( count($regions) > 0 ) {
             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
         }
         
@@ -277,7 +282,6 @@ switch ($action) {
                     'noindex' => 'true'
                 )
         );
-        $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
         osc_renderView('item-post.php');
         osc_renderFooter();
     break;
