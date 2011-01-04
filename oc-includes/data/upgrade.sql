@@ -11,3 +11,19 @@ INSERT INTO /*TABLE_PREFIX*/t_pages (pk_i_id, s_internal_name, b_indelible, dt_p
 
 INSERT INTO /*TABLE_PREFIX*/t_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (13, 'en_US', '{WEB_TITLE} Recover your password', '<p>Hi {USER_NAME},</p>\r\n<p> </p>\r\n<p>We sent this e-mail because you forgot your password. Follow the link to recover it : {PASSWORD_LINK}</p>\r\n<p>The link will be disabled in 24 hours.</p>\r\n<p> </p>\r\n<p>If you didn''t forget your password, ignore this message. This petition was made from IP : {IP_ADDRESS} on {DATE_TIME}</p>');
 
+
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_c_country_code` char(2) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_country` varchar(40) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_address` varchar(100) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_zip` varchar(15) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_i_region_id` int(10) unsigned DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_region` varchar(100) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_i_city_id` int(10) unsigned DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_city` varchar(100) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_i_city_area_id` int(10) unsigned DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_city_area` varchar(200) DEFAULT NULL;
+
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_c_country_code`) REFERENCES `/*TABLE_PREFIX*/t_country` (`pk_c_code`);
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_region_id`) REFERENCES `/*TABLE_PREFIX*/t_region` (`pk_i_id`);
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_id`) REFERENCES `/*TABLE_PREFIX*/t_city` (`pk_i_id`);
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_area_id`) REFERENCES `/*TABLE_PREFIX*/t_city_area` (`pk_i_id`);

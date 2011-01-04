@@ -191,6 +191,20 @@ switch ($action) {
     case 'profile':
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            $countries = Country::newInstance()->listAll();
+            $regions = array();
+            if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+                $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+            } else if( count($countries) > 0 ) {
+                $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+            }
+            $cities = array();
+            if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+                $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+            } else if( count($regions) > 0 ) {
+                $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+            }
+
             osc_renderHeader(array('pageTitle' => __('Create your account')));
             osc_renderView('user-menu.php');
             osc_renderView('user-profile.php');
@@ -208,18 +222,81 @@ switch ($action) {
         } else {
             if($_POST['profile_password']!=$_POST['profile_password2']) {
                 osc_addFlashMessage(__('Passwords don\'t match.'));
-                osc_redirectTo($_SERVER['HTTP_REFERER']);
+                osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
             } else {
                 $_POST['s_password'] = sha1($_POST['profile_password']);
                 unset($_POST['profile_password']);
                 unset($_POST['profile_password2']);
             }
         }
-           unset($_POST['profile_username']);
-        $manager->update($_POST, array('pk_i_id' => $_SESSION['userId']));
 
+           //unset($_POST['profile_username']);
+        //$manager->update($_POST, array('pk_i_id' => $_SESSION['userId']));
+
+
+            // insert location (copied from osclass/items.php)
+            $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
+            if(count($country) > 0) {
+                $countryId = $country['pk_c_code'];
+                $countryName = $country['s_name'];
+            } else {
+                $countryId = null;
+                $countryName = null;
+            }
+
+            if( isset($_REQUEST['regionId']) ) {
+                if( intval($_REQUEST['regionId']) ) {
+                    $region = Region::newInstance()->findByPrimaryKey($_REQUEST['regionId']);
+                    if( count($region) > 0 ) {
+                        $regionId = $region['pk_i_id'];
+                        $regionName = $region['s_name'];
+                    }
+                }
+            } else {
+                $regionId = null;
+                $regionName = $_REQUEST['region'];
+            }
+
+            if( isset($_REQUEST['cityId']) ) {
+                if( intval($_REQUEST['cityId']) ) {
+                    $city = City::newInstance()->findByPrimaryKey($_REQUEST['cityId']);
+                    if( count($city) > 0 ) {
+                        $cityId = $city['pk_i_id'];
+                        $cityName = $city['s_name'];
+                    }
+                }
+            } else {
+                $cityId = null;
+                $cityName = $_REQUEST['city'];
+            }
+
+            if( empty($_REQUEST['cityArea']) )
+                $_POST['cityArea'] = null;
+
+            if( empty($_REQUEST['address']) )
+                $_POST['address'] = null;
+
+            $data = array(
+                's_name' => $_POST['s_name'],
+                's_username' => $_POST['s_username'],
+                's_password' => $_POST['s_password'],
+                's_email' => $_POST['s_email'],
+                's_website' => $_POST['s_website'],
+                's_info' => $_POST['s_info'],
+                's_phone_land' => $_POST[''],
+                's_phone_mobile' => $_POST['s_phone_mobile'],
+                'fk_c_country_code' => $countryId,
+                's_country' => $countryName,
+                'fk_i_region_id' => $regionId,
+                's_region' => $regionName,
+                'fk_i_city_id' => $cityId,
+                's_city' => $cityName,
+                's_city_area' => $_POST['cityArea'],
+                's_address' => $_POST['address']
+            );
+        $manager->update($data, array('pk_i_id' => $_SESSION['userId']));
         osc_addFlashMessage(__('Your profile has been updated correctly'));
-        osc_redirectTo($_SERVER['HTTP_REFERER']);
+        osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
         break;
     case 'items':
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);

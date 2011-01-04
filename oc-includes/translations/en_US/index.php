@@ -24,7 +24,7 @@ function locale_en_US_info() {
 		'name' => 'English (US)'
 		,'short_name' => 'English'
 		,'description' => 'American english translation'
-		,'version' => 1.2
+		,'version' => 1.0
 		,'author_name' => 'OSClass'
 		,'author_url' => 'http://osclass.org/'
 		,'currency_format' => 'USD %.02f'

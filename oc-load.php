@@ -19,7 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define( 'ABS_PATH', dirname(__FILE__) . '/' );
+if( !defined('ABS_PATH') ) {
+    define( 'ABS_PATH', dirname(__FILE__) . '/' );
+};
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once ABS_PATH . 'oc-includes/osclass/functions.php';

@@ -290,8 +290,10 @@ switch ($action) {
                 $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
 
                 $item_url = osc_createItemURL($item, true);
-                $edit_link = ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
-                $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $edit_link = osc_createURL(array('file' => 'user', 'action' => 'item_edit', 'id' => $itemId, 'userId' => NULL, 'secret' => $item['s_secret']));
+                //ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $delete_link = osc_createURL(array('file' => 'user', 'action' => 'item_delete', 'id' => $itemId, 'userId' => NULL, 'secret' => $item['s_secret']));
+                //ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
 
                 $words = array();
                 $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
@@ -312,7 +314,7 @@ switch ($action) {
             $category = Category::newInstance()->findByPrimaryKey($PcatId);
             osc_redirectTo(osc_createCategoryURL($category));
         } else {
-            osc_redirectTo('item.php?action=post');
+            osc_redirectTo(osc_createItemPostURL());//'item.php?action=post');
         }
         break;
     case 'activate':
