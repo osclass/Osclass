@@ -19,11 +19,11 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function locale_de_DE_info() {
+function locale_nl_NL_info() {
 	return array(
-		'name' => 'Deutsch (DE)'
-		,'short_name' => 'Deutsch'
-		,'description' => 'Deutsch translation'
+		'name' => 'Dutch (NL)'
+		,'short_name' => 'Dutch'
+		,'description' => 'Dutch translation'
 		,'version' => 1.2
 		,'author_name' => 'Sultan Semlali'
 		,'author_url' => 'http://twitter.com/kingsult'
