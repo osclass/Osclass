@@ -394,6 +394,8 @@ switch ($action) {
                 $item['locale'][$k]['s_description'] = osc_applyFilter('item_description',$v['s_description']);
             }
 
+            $user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);
+
             $headerConf = array('pageTitle' => $item['s_title']);
             osc_renderHeader($headerConf);
             osc_renderView('item.php');
