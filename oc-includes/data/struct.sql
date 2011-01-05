@@ -284,6 +284,16 @@ CREATE TABLE /*TABLE_PREFIX*/t_preference (
         UNIQUE KEY (s_section, s_name)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
+CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
+    fk_i_user_id INT UNSIGNED NULL,
+    s_name VARCHAR(40) NOT NULL,
+    s_value LONGTEXT NOT NULL,
+    e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
+
+        UNIQUE KEY (fk_i_user_id, s_name),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
 CREATE TABLE /*TABLE_PREFIX*/t_pages (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     s_internal_name VARCHAR(50) NULL,

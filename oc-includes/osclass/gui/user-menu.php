@@ -19,4 +19,4 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<div class="user_menu" ><a href="<?php echo osc_createUserAccountURL(); ?>" ><?php _e('Menu'); ?></a> | <a href="<?php echo osc_createProfileURL(); ?>" ><?php _e('Manage your profile'); ?></a> | <a href="<?php echo osc_createUserItemsURL(); ?>" ><?php _e('Manage your items'); ?></a> | <a href="<?php echo osc_createUserAlertsURL(); ?>" ><?php _e('Manage your alerts'); ?></a> | <a href="<?php echo osc_createLogoutURL(); ?>" ><?php _e('Log-out'); ?></a></div>
+<div class="user_menu" ><a href="<?php echo osc_createUserAccountURL(); ?>" ><?php _e('Menu'); ?></a> | <a href="<?php echo osc_createProfileURL(); ?>" ><?php _e('Manage your profile'); ?></a> | <a href="<?php echo osc_createUserItemsURL(); ?>" ><?php _e('Manage your items'); ?></a> | <a href="<?php echo osc_createUserOptionsURL(); ?>" ><?php _e('Options'); ?></a> | <a href="<?php echo osc_createUserAlertsURL(); ?>" ><?php _e('Manage your alerts'); ?></a> | <a href="<?php echo osc_createLogoutURL(); ?>" ><?php _e('Log-out'); ?></a></div>

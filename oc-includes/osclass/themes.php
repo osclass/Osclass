@@ -166,6 +166,14 @@ function osc_createUserItemsURL() {
         return WEB_PATH_URL . 'user.php?action=items';
 }
 
+function osc_createUserOptionsURL() {
+    global $preferences;
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        return WEB_PATH_URL . 'user/options';
+    } else
+        return WEB_PATH_URL . 'user.php?action=options';
+}
+
 function osc_createURL($params = null) {
     global $preferences;
     if(is_array($params)) {

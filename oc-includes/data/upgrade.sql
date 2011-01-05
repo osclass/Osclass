@@ -27,3 +27,14 @@ ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_c_country_code`) REFEREN
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_region_id`) REFERENCES `/*TABLE_PREFIX*/t_region` (`pk_i_id`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_id`) REFERENCES `/*TABLE_PREFIX*/t_city` (`pk_i_id`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_area_id`) REFERENCES `/*TABLE_PREFIX*/t_city_area` (`pk_i_id`);
+
+
+CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
+    fk_i_user_id INT UNSIGNED NULL,
+    s_name VARCHAR(40) NOT NULL,
+    s_value LONGTEXT NOT NULL,
+    e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
+
+        UNIQUE KEY (fk_i_user_id, s_name),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

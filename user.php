@@ -570,6 +570,38 @@ switch ($action) {
             }
         break;
 
+    case 'options':
+
+        if(isset($_SESSION['userId'])) {
+            $user_prefs = $manager->preferences($_SESSION['userId']);
+
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            osc_renderView('user-menu.php');
+            osc_renderView('user-options.php');
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+        }
+        break;
+
+
+    case 'options_post':
+
+        if(isset($_SESSION['userId'])) {
+
+            unset($_POST['action']);
+
+            $manager->updatePreferences($_POST, $_SESSION['userId']);
+
+            osc_addFlashMessage(__('Options saved.'));
+            osc_redirectTo(osc_createUserOptionsURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+        };
+        break;
+
 
     default : 
         osc_redirectTo('index.php');

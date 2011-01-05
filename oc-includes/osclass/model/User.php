@@ -50,5 +50,23 @@ class User extends DAO {
         $date = date("Y-m-d H:i:s", (time()-(24*3600)));//mktime(date('H'), date('i'), date('s'), date('m'), date('d')-1, date('Y')));
 		return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
 	}
+
+	public function preferences($id) {
+		$prefs = $this->conn->osc_dbFetchResults("SELECT * FROM %st_user_preferences WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
+        $preferences = array();
+        foreach($prefs as $pref) {
+            $preferences[$pref['s_name']] = $pref['s_value'];
+        }
+        return $preferences;
+	}
+
+	public function updatePreferences($options = array(), $id = null) {
+        if($id!=null) {
+            foreach($options as $k => $v) {
+        		$this->conn->osc_dbExec("REPLACE INTO `%st_user_preferences` SET `s_value` = %s, `fk_i_user_id` = %d, `s_name` = '%s'", DB_TABLE_PREFIX, $v, $id, $k);
+            }
+        }
+	}
+
 }
 
