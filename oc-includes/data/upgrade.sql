@@ -1,4 +1,5 @@
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'enabled_user_validation', true, 'BOOLEAN');
+INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'keep_original_image', '1', 'BOOLEAN');
 
 ALTER TABLE  /*TABLE_PREFIX*/t_user ADD  `s_pass_code` VARCHAR(100) NULL ,
 ADD  `s_pass_date` DATETIME NULL ,

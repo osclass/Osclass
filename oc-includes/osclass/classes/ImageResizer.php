@@ -65,6 +65,27 @@ class ImageResizer {
 		return $this;
 	}
 
+	public function resizeTo($width, $height) {
+		$w = imagesx($this->im);
+		$h = imagesy($this->im);
+
+		if(($w/$h)>=($width/$height)) {
+			$newW = $width;
+			$newH = $h * ($newW / $w);
+		} else {
+			$newH = $height;
+			$newW = $w * ($newH / $h);
+		}
+
+		$newIm = imagecreatetruecolor($width,$height);//$newW, $newH);
+		imagecopyresampled($newIm, $this->im, (($width-$newW)/2), (($height-$newH)/2), 0, 0, $newW, $newH, $w, $h);
+		imagedestroy($this->im);
+
+		$this->im = $newIm;
+
+		return $this;
+	}
+
 	public function saveToFile($imagePath) {
 		if(file_exists($imagePath) && !is_writable($imagePath)) throw new Exception("$imagePath is not writable!");
 

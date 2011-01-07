@@ -138,11 +138,25 @@ switch ($action) {
                 ));
                 $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
 
+                // Create thumbnail
                 $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                ImageResizer::fromFile($tmpName)->resizeToMax(100)->saveToFile($thumbnailPath);
+                $size = explode('x', $preferences['dimThumbnail']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'.png';
-                move_uploaded_file($tmpName, $path);
+                // Create preview
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                $size = explode('x', $preferences['dimPreview']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                // Create normal size
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                $size = explode('x', $preferences['dimNormal']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
+                    move_uploaded_file($tmpName, $path);
+                }
 
                 $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
                 $dao_itemResource->update(array(
@@ -347,11 +361,26 @@ switch ($action) {
                     ));
                     $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
-                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    ImageResizer::fromFile($tmpName)->resizeToMax(100)->saveToFile($thumbnailPath);
+                // Create thumbnail
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                $size = explode('x', $preferences['dimThumbnail']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'.png';
+                // Create preview
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                $size = explode('x', $preferences['dimPreview']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                // Create normal size
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                $size = explode('x', $preferences['dimNormal']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
                     move_uploaded_file($tmpName, $path);
+                }
+
 
                     $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
                     $dao_itemResource->update(array(

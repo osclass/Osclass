@@ -17,6 +17,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'dimThumbnail', '240x200', 'STRING'),
     ('osclass', 'dimPreview', '320x200', 'STRING'),
     ('osclass', 'dimNormal', '640x480', 'STRING'),
+    ('osclass', 'keep_original_image', '1', 'BOOLEAN'),
 
     ('osclass', 'dateFormat', 'F j, Y', 'STRING'),
     ('osclass', 'timeFormat', 'g:i a', 'STRING'),

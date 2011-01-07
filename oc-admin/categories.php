@@ -168,7 +168,7 @@ switch ($action)
         } else {
             $categories = $categoryManager->listWhere("fk_i_parent_id IS NULL GROUP BY pk_i_id");
         }
-print_r($categories);
+
         osc_renderAdminSection('categories/index.php', __('Categories'));
 }
 
