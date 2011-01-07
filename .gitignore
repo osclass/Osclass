@@ -4,4 +4,5 @@
 .htaccess
 config.php
 .gitignore
+oc-content/uploads/*
 dist
