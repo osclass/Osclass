@@ -1,4 +1,7 @@
 .DS_Store
 *.diff
 *.patch
+.htaccess
+config.php
+.gitignore
 dist

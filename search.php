@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-global $search;
+global $search, $osc_request;
 $search = Search::newInstance();
 
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
@@ -128,7 +128,7 @@ $search->addConditions(sprintf("%st_item.e_status = 'ACTIVE' ", DB_TABLE_PREFIX)
 // RETRIEVE ITEMS AND TOTAL
 $totalItems = $search->count();
 $items = $search->search();
-//print_r($search);
+
 if(!isset($_REQUEST['feed'])) {
 
     // NORMAL SEARCH

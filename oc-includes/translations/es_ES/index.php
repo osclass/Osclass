@@ -24,7 +24,7 @@ function locale_es_ES_info() {
 		'name' => 'Castellano (España)'
 		,'short_name' => 'Castellano'
 		,'description' => 'Traducción al castellano'
-		,'version' => 1.2
+		,'version' => 1.0
 		,'author_name' => 'OSClass'
 		,'author_url' => 'http://osclass.org/'
 		,'currency_format' => '%.02f €'
