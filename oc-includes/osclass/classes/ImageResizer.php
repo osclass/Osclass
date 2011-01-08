@@ -91,5 +91,12 @@ class ImageResizer {
 
 		imagepng($this->im, $imagePath, 7);
 	}
+
+    public function show() {
+        header('Content-Disposition: Attachment;filename=image.png'); 
+        header('Content-type: image/png'); 
+        imagepng($this->im);
+    }
+
 }
 
