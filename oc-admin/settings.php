@@ -350,7 +350,11 @@ switch ($action) {
 
             generate_rewrite_rules();
             if($_REQUEST['rewrite_enabled']=='on') {
-                $mods = apache_get_modules();
+                if(function_exists('apache_get_modules')) {
+                    $mods = apache_get_modules();
+                } else {
+                    $mods = array();
+                }
                 $htaccess_status = 1;
                 foreach($mods as $mod) {
                     if($mod=='mod_rewrite') {
@@ -375,18 +379,18 @@ RewriteRule . '.REL_WEB_URL.'index.php [L]
                         }
                         break;
                     }
-                    if($htaccess_status==2) {
-                        $prefManager->update(
-                                array('s_value' => 0),
-                                array('s_name' => 'mod_rewrite_loaded')
-                        );
-                    } else {
-                        $prefManager->update(
-                                array('s_value' => 1),
-                                array('s_name' => 'mod_rewrite_loaded')
-                        );
-                    };
                 }
+                if($htaccess_status==2) {
+                    $prefManager->update(
+                            array('s_value' => 0),
+                            array('s_name' => 'mod_rewrite_loaded')
+                    );
+                } else {
+                    $prefManager->update(
+                            array('s_value' => 1),
+                            array('s_name' => 'mod_rewrite_loaded')
+                    );
+                };
             }
         }
 
