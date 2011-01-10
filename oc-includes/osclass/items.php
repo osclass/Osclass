@@ -228,6 +228,7 @@ switch ($action) {
         if ($userId != null) {
             if(isset($admin) && $admin==TRUE) {
                 $data = Admin::newInstance()->findByPrimaryKey($userId);
+                $userId = null;
             } else {
                 $data = User::newInstance()->findByPrimaryKey($userId);
             }

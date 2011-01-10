@@ -20,6 +20,8 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once 'oc-load.php';
+
 $preferences = Preference::newInstance()->toArray();
 $manager = User::newInstance();
 $theme = $preferences['theme'];
