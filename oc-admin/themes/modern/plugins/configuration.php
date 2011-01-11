@@ -86,7 +86,10 @@
 			<label for="categories">Presets categories</label><br />
 			<a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', true); return false;">Check all</a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', false); return false;">Uncheck all</a>
 			</td>
-			<?php for ($j = 0 ; $j < $numCols ; $j++) {?>
+			<td>
+			    <?php CategoryForm::plugin_categories($categories, $selected); ?>
+			</td>
+			<?php /* for ($j = 0 ; $j < $numCols ; $j++) {?>
 				<td>
 				<?php for ($i = $catsPerCol*$j ; $i < $catsPerCol*($j+1) ; $i++) {?>
 					<?php if (is_array($categories[$i])) { ?>
@@ -99,7 +102,9 @@
 					<?php } ?>
 				<?php } ?>
 				</td>
-			<?php } //FIRST FOR's END ?>
+			<?php } //FIRST FOR's END 
+			    */
+			    ?>
 			</tr>
 			</table>
 			</p>

@@ -208,7 +208,16 @@ switch ($action) {
             $code = "'$code'";
         unset($code);
         $cond = 'pk_c_code IN (' . implode(', ', $codes) . ')';
-        Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
+        try {
+            Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
+        } catch (Exception $e) {
+            if($e->getMessage()=="1451") {
+                osc_addFlashMessage(__('This currency is currently being used in some items. It can not be deleted.'));
+            } else {
+                osc_addFlashMessage($e->getMessage());
+            }
+        }
+
         osc_redirectTo('settings.php?action=currencies');
         break;
     case 'functionalities':
@@ -350,7 +359,11 @@ switch ($action) {
 
             generate_rewrite_rules();
             if($_REQUEST['rewrite_enabled']=='on') {
-                $mods = apache_get_modules();
+                if(function_exists('apache_get_modules')) {
+                    $mods = apache_get_modules();
+                } else {
+                    $mods = array();
+                }
                 $htaccess_status = 1;
                 foreach($mods as $mod) {
                     if($mod=='mod_rewrite') {
@@ -375,18 +388,18 @@ RewriteRule . '.REL_WEB_URL.'index.php [L]
                         }
                         break;
                     }
-                    if($htaccess_status==2) {
-                        $prefManager->update(
-                                array('s_value' => 0),
-                                array('s_name' => 'mod_rewrite_loaded')
-                        );
-                    } else {
-                        $prefManager->update(
-                                array('s_value' => 1),
-                                array('s_name' => 'mod_rewrite_loaded')
-                        );
-                    };
                 }
+                if($htaccess_status==2) {
+                    $prefManager->update(
+                            array('s_value' => 0),
+                            array('s_name' => 'mod_rewrite_loaded')
+                    );
+                } else {
+                    $prefManager->update(
+                            array('s_value' => 1),
+                            array('s_name' => 'mod_rewrite_loaded')
+                    );
+                };
             }
         }
 

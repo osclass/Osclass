@@ -297,7 +297,6 @@ switch ($action) {
         $manager = Item::newInstance();
 
         require_once LIB_PATH . 'osclass/items.php';
-
         osc_redirectTo('items.php');
         break;
 

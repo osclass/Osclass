@@ -57,16 +57,17 @@ if(isset($_REQUEST['plugin_action'])) {
                 <legend><?php _e('Property types'); ?></legend>
                     <form name="propertys_form" id="propertys_form" action="plugins.php" method="GET" enctype="multipart/form-data" >
                 <div class="tabber">
-                <?php $locales = Locale::newInstance()->listAll();
+                <?php $locales = Locale::newInstance()->listAllEnabled(true);
                     $property_type = $conn->osc_dbFetchResults('SELECT * FROM %st_item_house_property_type_attr', DB_TABLE_PREFIX);
                     $data = array();
                     foreach ($property_type as $c) {
                         $data[$c['fk_c_locale_code']][] = array('pk_i_id' => $c['pk_i_id'], 's_name' => $c['s_name']);
                     }
                     $default = current($data);
+                    if(is_array($default)) {
                     foreach($default as $d) {
                         $data['new'][] = array('pk_i_id' => $d['pk_i_id'], 's_name' => '');
-                    }
+                    }}
                 ?>
                     <?php foreach($locales as $locale) {?>
                         <div class="tabbertab">
@@ -99,7 +100,7 @@ if(isset($_REQUEST['plugin_action'])) {
                     <input type="hidden" name="plugin_action" value="type_add" />
 
                     <div class="tabber">
-                    <?php $locales = Locale::newInstance()->listAll();
+                    <?php $locales = Locale::newInstance()->listAllEnabled(true);
                         $property_type = $conn->osc_dbFetchResults('SELECT * FROM %st_item_house_property_type_attr', DB_TABLE_PREFIX);
                         $data = array();
                         foreach ($property_type as $c) {

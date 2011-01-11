@@ -88,6 +88,7 @@ class ItemForm extends Form {
             
             parent::generic_select('currency', $currencies, 'pk_c_code', 's_description', null, $default_key) ;
         } else if (count($currencies) == 1) {
+            parent::generic_input_hidden("currency", $currencies[0]["pk_c_code"]) ;
             echo $currencies[0]['s_description'];
         }
     }

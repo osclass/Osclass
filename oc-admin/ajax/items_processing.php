@@ -20,9 +20,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)));
+define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
 
-require_once ABS_PATH . 'oc-load.php';
+require_once ABS_PATH . 'oc-admin/oc-load.php';
  
  class items_processing_ajax extends Item
  {
