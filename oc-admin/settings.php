@@ -208,7 +208,16 @@ switch ($action) {
             $code = "'$code'";
         unset($code);
         $cond = 'pk_c_code IN (' . implode(', ', $codes) . ')';
-        Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
+        try {
+            Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
+        } catch (Exception $e) {
+            if($e->getMessage()=="1451") {
+                osc_addFlashMessage(__('This currency is currently being used in some items. It can not be deleted.'));
+            } else {
+                osc_addFlashMessage($e->getMessage());
+            }
+        }
+
         osc_redirectTo('settings.php?action=currencies');
         break;
     case 'functionalities':
