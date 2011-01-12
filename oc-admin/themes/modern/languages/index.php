@@ -20,7 +20,7 @@
  */
 ?>
 
-<?php defined('APP_PATH') or die( __('Invalid OSClass request.') ); ?>
+<?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 <?php $last = end($locales); $last_id = $last['pk_c_code']; ?>
 <?php $default_lang = Preference::newInstance()->findValueByName('language'); ?>
 <script>

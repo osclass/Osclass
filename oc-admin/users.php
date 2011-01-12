@@ -19,8 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
+require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $userManager = User::newInstance();
 
@@ -64,31 +65,31 @@ switch($action) {
 		osc_redirectTo('users.php');
 		break;
 	case 'activate':
-        foreach($_REQUEST['id'] as $id) {
-		    $conditions = array('pk_i_id' => $id);
-            $values = array('b_enabled' => 1);
-		    try {
-			    $userManager->update($values, $conditions);
-			    osc_addFlashMessage(__('The user has been deactivated.'));
-		    } catch (Exception $e) {
-			    osc_addFlashMessage(__('Error: ') . $e->getMessage());
-		    }
-        }
-        osc_redirectTo('users.php');
-		break;
+            foreach($_REQUEST['id'] as $id) {
+                $conditions = array('pk_i_id' => $id);
+                $values = array('b_enabled' => 1);
+                try {
+                    $userManager->update($values, $conditions);
+                    osc_addFlashMessage(__('The user has been activated.'));
+                } catch (Exception $e) {
+                    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                }
+            }
+            osc_redirectTo('users.php');
+            break;
 	case 'deactivate':
-        foreach($_REQUEST['id'] as $id) {
-		    $conditions = array('pk_i_id' => $id);
-            $values = array('b_enabled' => 0);
-		    try {
-			    $userManager->update($values, $conditions);
-			    osc_addFlashMessage(__('The user has been deactivated.'));
-		    } catch (Exception $e) {
-			    osc_addFlashMessage(__('Error: ') . $e->getMessage());
-		    }
-        }
-        osc_redirectTo('users.php');
-		break;
+            foreach($_REQUEST['id'] as $id) {
+                $conditions = array('pk_i_id' => $id);
+                $values = array('b_enabled' => 0);
+                try {
+                    $userManager->update($values, $conditions);
+                    osc_addFlashMessage(__('The user has been deactivated.'));
+                } catch (Exception $e) {
+                    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                }
+            }
+            osc_redirectTo('users.php');
+            break;
 	case 'delete':
 		foreach($_REQUEST['id'] as $id)
 			$userManager->deleteByID($id);

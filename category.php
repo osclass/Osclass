@@ -19,8 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
-
 $preference_manager = Preference::newInstance();
 $category_manager = Category::newInstance();
 $item_manager = Item::newInstance();

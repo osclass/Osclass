@@ -20,7 +20,7 @@
  */
 ?>
 
-<?php defined('APP_PATH') or die(__('Invalid OSClass request.')); ?>
+<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <?php
 $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
@@ -64,7 +64,7 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 
 																<br/>
 
-                                                                <?php echo _('Users need to validation their account. After registering on the website, they will be sent an email with a validation link.'); ?>
+                                                                <?php _e('Users need to validation their account. After registering on the website, they will be sent an email with a validation link.'); ?>
                                                         </fieldset>
 						</div>
 						<div style="clear: both;"></div>

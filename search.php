@@ -20,7 +20,8 @@
  */
 
 require_once 'oc-load.php';
-global $search;
+
+global $search, $osc_request;
 $search = Search::newInstance();
 
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
@@ -43,14 +44,13 @@ if(isset($_REQUEST['cats']))
 	$cats = $_REQUEST['cats'];
 // UNKNOW CODE ENDS
 
-
 if(isset($_REQUEST['catId'])) {
     $search->addCategory((int)($_REQUEST['catId']));
 }
 
 
 if(isset($_REQUEST['category'])) {
-    $s_categories = $_REQUEST['category'];
+    $s_categories = urldecode($_REQUEST['category']);
     $s_categories = preg_replace('|/$|','',$s_categories);
     $slug_categories = explode('/', $s_categories);
     $search->addCategory($slug_categories[count($slug_categories) - 1]);
@@ -96,7 +96,11 @@ $conditions = array();
 $plugins_tables = "";
 $search_tables = array();
 
-$search->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $pattern, $pattern));
+if($pattern!='') {
+    $search->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $pattern, $pattern));
+    global $osc_request;
+    $osc_request['section'] = $pattern;
+}
 
 $priceMin = osc_paramRequest('priceMin', null);
 /*if(!is_null($priceMin) && $priceMin!="")

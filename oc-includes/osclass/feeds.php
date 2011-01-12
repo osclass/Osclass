@@ -24,7 +24,7 @@
  * This functions retrieves a news list from http://osclass.org. It uses the Cache services to speed up the process.
  */
 function osc_listNews() {
-	require_once 'osclass/classes/Cache.php';
+	require_once LIB_PATH . 'osclass/classes/Cache.php';
 
 	$cache = new Cache('admin-blog_news', 900);
 	if($cache->check()) {

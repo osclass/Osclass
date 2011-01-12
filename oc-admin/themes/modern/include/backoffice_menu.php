@@ -163,6 +163,9 @@
             <li>
                 <a href="tools.php?action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
             </li>
+            <li>
+                <a href="tools.php?action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
+            </li>
         </ul>
 
         &nbsp;

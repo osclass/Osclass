@@ -22,7 +22,7 @@
 
 require_once 'oc-load.php';
 
-$preferences = Preference::newInstance()->toArray();
+//$preferences = Preference::newInstance()->toArray();
 $manager = Item::newInstance();
 $theme = $preferences['theme'];
 $locales = Locale::newInstance()->listAllEnabled();
@@ -67,7 +67,7 @@ switch ($action) {
         $item = $manager->findByPrimaryKey($_POST['id']);
         $item_url = osc_createItemURL($item, true);
 
-		$words = array();
+        $words = array();
         $words[] = array('{FRIEND_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{FRIEND_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}');
         $words[] = array($_POST['friendName'], $_POST['yourName'], $_POST['yourEmail'], $_POST['friendEmail'], ABS_WEB_URL, $item['s_title'], $_POST['message'], $item_url, $preferences['pageTitle']);
         $title = osc_mailBeauty($content['s_title'], $words);
@@ -92,11 +92,12 @@ switch ($action) {
             'body' => $body,
             'alt_body' => $body
         );
+
         if(osc_sendMail($params)) {
-			osc_addFlashMessage(__('We just send your message to ').$_POST['friendName'].".");
-		} else {
-			osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.'));
-		}
+            osc_addFlashMessage(__('We just send your message to ').$_POST['friendName'].".");
+        } else {
+            osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.'));
+        }
 
         osc_redirectTo($item_url);
     break;
@@ -155,8 +156,10 @@ switch ($action) {
             'to' => $item['s_contact_email'],
             'to_name' => $item['s_contact_name'],
             'body' => $body,
-            'alt_body' => $body
+            'alt_body' => $body,
+            'reply_to' => $_POST['yourEmail']
         );
+        
         osc_sendMail($params);
         osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.'));
         osc_redirectTo(osc_createItemURL($item));
@@ -178,7 +181,7 @@ switch ($action) {
             $status = 'ACTIVE';
         }
         if (isset($preferences['akismetKey']) && !empty($preferences['akismetKey'])) {
-            require_once 'Akismet.class.php';
+            require_once LIB_PATH . 'Akismet.class.php';
             $akismet = new Akismet(ABS_WEB_URL, $preferences['akismetKey']);
             $akismet->setCommentAuthor($authorName);
             $akismet->setCommentAuthorEmail($authorEmail);
@@ -259,14 +262,19 @@ switch ($action) {
             }
         }
 
+        $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
         $categories = Category::newInstance()->toTree();
         $countries = Country::newInstance()->listAll();
         $regions = array();
-        if( count($countries) > 0 ) {
+        if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+            $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+        } else if( count($countries) > 0 ) {
             $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
         }
         $cities = array();
-        if( count($regions) > 0 ) {
+        if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+        } else if( count($regions) > 0 ) {
             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
         }
         
@@ -281,7 +289,7 @@ switch ($action) {
         osc_renderFooter();
     break;
     case 'post_item':
-        require_once LIB_PATH.'/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
 
         if($success) {
             if(!isset($_SESSION['userId'])) {
@@ -289,8 +297,10 @@ switch ($action) {
                 $content = Page::newInstance()->findByInternalName('email_new_item_non_register_user');
 
                 $item_url = osc_createItemURL($item, true);
-                $edit_link = ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
-                $delete_link = ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $edit_link = osc_createURL(array('file' => 'user', 'action' => 'item_edit', 'id' => $itemId, 'userId' => NULL, 'secret' => $item['s_secret']));
+                //ABS_WEB_URL."/user.php?action=item_edit&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
+                $delete_link = osc_createURL(array('file' => 'user', 'action' => 'item_delete', 'id' => $itemId, 'userId' => NULL, 'secret' => $item['s_secret']));
+                //ABS_WEB_URL."/user.php?action=item_delete&id=".$itemId."&userId=NULL&secret=".$item['s_secret'];
 
                 $words = array();
                 $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
@@ -311,7 +321,7 @@ switch ($action) {
             $category = Category::newInstance()->findByPrimaryKey($PcatId);
             osc_redirectTo(osc_createCategoryURL($category));
         } else {
-            osc_redirectTo('item.php?action=post');
+            osc_redirectTo(osc_createItemPostURL());//'item.php?action=post');
         }
         break;
     case 'activate':
@@ -369,6 +379,11 @@ switch ($action) {
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);
+        global $osc_request;
+        $osc_request['section'] = $item['s_title'];
+        $osc_request['category'] = $item['fk_i_category_id'];
+        $osc_request['item'] = $item;
+
 
         if ($item['e_status'] == 'ACTIVE') {
             $mStats = new ItemStats();
@@ -381,6 +396,8 @@ switch ($action) {
                 $item['locale'][$k]['s_title'] = osc_applyFilter('item_title',$v['s_title']);
                 $item['locale'][$k]['s_description'] = osc_applyFilter('item_description',$v['s_description']);
             }
+
+            $user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);
 
             $headerConf = array('pageTitle' => $item['s_title']);
             osc_renderHeader($headerConf);

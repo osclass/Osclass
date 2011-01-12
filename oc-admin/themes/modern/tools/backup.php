@@ -20,7 +20,7 @@
  */
 ?>
 
-<?php defined('APP_PATH') or die(__('Invalid OSClass request.')); ?>
+<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 <script>
 	$().ready(function(){
 		$.ajaxSetup({
@@ -52,7 +52,7 @@
 			}
 			result.innerHTML = "<?php echo __('Backing up data... please wait'); ?>";
 
-				$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/tools.php?bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
+				$.get('<?php echo ABS_WEB_URL; ?>oc-admin/tools.php?bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
 					result.innerHTML = data;
 				});
 		});
@@ -88,7 +88,7 @@
 						
 						<p>
 						<label for="data"><?php echo __('Backup Folder'); ?></label>
-						<input id="backup_dir" type="text" value="<?php echo APP_PATH; ?>" />
+						<input id="backup_dir" type="text" value="<?php echo ABS_PATH; ?>" />
 						<?php echo __('This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass\' documentation.')?>
 						</p>
 						

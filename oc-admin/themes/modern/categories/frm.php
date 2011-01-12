@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php defined('APP_PATH') or die( __('Invalid OSClass request.') ); ?>
+<?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 
 <?php 
 
@@ -65,7 +65,7 @@
 				<div class="FormElement">
 				    <div class="FormElementName"><?php echo __('Parent category'); ?></div>
 					<div class="FormElementInput">
-					   <?php CategoryForm::category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
+					   <?php CategoryForm::parent_category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
 					</div>
 				</div>
 				<div class="FormElement">

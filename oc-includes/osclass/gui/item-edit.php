@@ -4,7 +4,7 @@
 <div id="home_header" class="sectionHeader"><?php _e('Update your item'); ?></div>
 <div class="itemFormHolder">
 	<div id="add_item_form" class="itemForm">
-		<form action="user.php" method="post" enctype="multipart/form-data">
+		<form action="<?php echo osc_createURL('user');?>" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="item_edit_post" />
 		<input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
 		<input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />

@@ -41,7 +41,7 @@ switch ($action) {
         unset($_POST['action']);
 
         if (isset($preferences['recaptchaPrivKey'])) {
-            require_once 'recaptchalib.php';
+            require_once LIB_PATH . 'recaptchalib.php';
             $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
                             $_SERVER["REMOTE_ADDR"],
                             $_POST["recaptcha_challenge_field"],
@@ -84,8 +84,8 @@ switch ($action) {
 
                     $content = Page::newInstance()->findByInternalName('email_user_validation');
                     if (!is_null($content)) {
-                        $validationLink = sprintf('%s/user.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
-				        $words = array();
+                        $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+                        $words = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
                         $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
                         $title = osc_mailBeauty($content['s_title'], $words);
@@ -128,7 +128,7 @@ switch ($action) {
 
             $content = Page::newInstance()->findByInternalName('email_user_validation');
             if (!is_null($content)) {
-                $validationLink = sprintf('%s/user.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $user['s_secret']);
+                $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $user['s_secret']);
 				$words = array();
                 $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
                 $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
@@ -193,6 +193,20 @@ switch ($action) {
     case 'profile':
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            $countries = Country::newInstance()->listAll();
+            $regions = array();
+            if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+                $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+            } else if( count($countries) > 0 ) {
+                $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+            }
+            $cities = array();
+            if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+                $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+            } else if( count($regions) > 0 ) {
+                $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+            }
+
             osc_renderHeader(array('pageTitle' => __('Create your account')));
             osc_renderView('user-menu.php');
             osc_renderView('user-profile.php');
@@ -210,18 +224,81 @@ switch ($action) {
         } else {
             if($_POST['profile_password']!=$_POST['profile_password2']) {
                 osc_addFlashMessage(__('Passwords don\'t match.'));
-                osc_redirectTo($_SERVER['HTTP_REFERER']);
+                osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
             } else {
                 $_POST['s_password'] = sha1($_POST['profile_password']);
                 unset($_POST['profile_password']);
                 unset($_POST['profile_password2']);
             }
         }
-           unset($_POST['profile_username']);
-        $manager->update($_POST, array('pk_i_id' => $_SESSION['userId']));
 
+           //unset($_POST['profile_username']);
+        //$manager->update($_POST, array('pk_i_id' => $_SESSION['userId']));
+
+
+            // insert location (copied from osclass/items.php)
+            $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
+            if(count($country) > 0) {
+                $countryId = $country['pk_c_code'];
+                $countryName = $country['s_name'];
+            } else {
+                $countryId = null;
+                $countryName = null;
+            }
+
+            if( isset($_REQUEST['regionId']) ) {
+                if( intval($_REQUEST['regionId']) ) {
+                    $region = Region::newInstance()->findByPrimaryKey($_REQUEST['regionId']);
+                    if( count($region) > 0 ) {
+                        $regionId = $region['pk_i_id'];
+                        $regionName = $region['s_name'];
+                    }
+                }
+            } else {
+                $regionId = null;
+                $regionName = $_REQUEST['region'];
+            }
+
+            if( isset($_REQUEST['cityId']) ) {
+                if( intval($_REQUEST['cityId']) ) {
+                    $city = City::newInstance()->findByPrimaryKey($_REQUEST['cityId']);
+                    if( count($city) > 0 ) {
+                        $cityId = $city['pk_i_id'];
+                        $cityName = $city['s_name'];
+                    }
+                }
+            } else {
+                $cityId = null;
+                $cityName = $_REQUEST['city'];
+            }
+
+            if( empty($_REQUEST['cityArea']) )
+                $_POST['cityArea'] = null;
+
+            if( empty($_REQUEST['address']) )
+                $_POST['address'] = null;
+
+            $data = array(
+                's_name' => $_POST['s_name'],
+                's_username' => $_POST['s_username'],
+                's_password' => $_POST['s_password'],
+                's_email' => $_POST['s_email'],
+                's_website' => $_POST['s_website'],
+                's_info' => $_POST['s_info'],
+                's_phone_land' => $_POST[''],
+                's_phone_mobile' => $_POST['s_phone_mobile'],
+                'fk_c_country_code' => $countryId,
+                's_country' => $countryName,
+                'fk_i_region_id' => $regionId,
+                's_region' => $regionName,
+                'fk_i_city_id' => $cityId,
+                's_city' => $cityName,
+                's_city_area' => $_POST['cityArea'],
+                's_address' => $_POST['address']
+            );
+        $manager->update($data, array('pk_i_id' => $_SESSION['userId']));
         osc_addFlashMessage(__('Your profile has been updated correctly'));
-        osc_redirectTo($_SERVER['HTTP_REFERER']);
+        osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
         break;
     case 'items':
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);
@@ -273,7 +350,6 @@ switch ($action) {
         $id = intval(osc_paramGet('id', 0));
         $secret = osc_paramGet('secret', '');
         $userId = intval(osc_paramSession('userId', 0));
-        //require_once 'osclass/model/Item.php';
         osc_addFlashMessage(__('Your item has been deleted.'));
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
@@ -327,7 +403,7 @@ switch ($action) {
     case 'editItemPost':
 
         // The magic code
-        require_once LIB_PATH.'/osclass/items.php';
+        require_once LIB_PATH . 'osclass/items.php';
 
         $userId = intval(osc_paramSession('userId', 0));
         if($userId==0) {
@@ -340,13 +416,13 @@ switch ($action) {
 
     case 'deleteResource':
         $id = osc_paramGet('id', -1);
-        $name = osc_paramGet('name', '');
+        $name = osc_paramGet('name', '');   
         $fkid = osc_paramGet('fkid', -1);
 
         $item = ItemResource::newInstance()->findByConditions(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
         if(isset($item['s_path'])) {
-            unlink(APP_PATH."/".$item['s_path']);
-            unlink(APP_PATH."/".str_replace("_thumbnail", "", $item['s_path']));
+            unlink(ABS_PATH.$item['s_path']);
+            unlink(ABS_PATH.str_replace("_thumbnail", "", $item['s_path']));
         }
         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
         osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
@@ -363,7 +439,6 @@ switch ($action) {
         break;
     case 'login_post':
         define('COOKIE_LIFE', 86400);
-        //require_once 'osclass/security.php';
         $user = $manager->findByCredentials($_POST['userName'], $_POST['password']);
         if ($user && $user['b_enabled'] == '1') {
             if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 1) {
@@ -428,7 +503,7 @@ switch ($action) {
                         array('pk_i_id' => $user['pk_i_id'])
                     );
 
-                    $password_link = sprintf('%s/user.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+                    $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
 
                     $content = Page::newInstance()->findByInternalName('email_user_forgot_password');
                     if (!is_null($content)) {
@@ -495,6 +570,38 @@ switch ($action) {
                 osc_addFlashMessage(__('Sorry, the link is not valid.'));
                 osc_redirectTo('index.php');
             }
+        break;
+
+    case 'options':
+
+        if(isset($_SESSION['userId'])) {
+            $user_prefs = $manager->preferences($_SESSION['userId']);
+
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            osc_renderView('user-menu.php');
+            osc_renderView('user-options.php');
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+        }
+        break;
+
+
+    case 'options_post':
+
+        if(isset($_SESSION['userId'])) {
+
+            unset($_POST['action']);
+
+            $manager->updatePreferences($_POST, $_SESSION['userId']);
+
+            osc_addFlashMessage(__('Options saved.'));
+            osc_redirectTo(osc_createUserOptionsURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+        };
         break;
 
 

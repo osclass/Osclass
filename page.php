@@ -54,6 +54,9 @@ if( count($page) == 0 )  {
         $headerConf = array(
             'pageTitle' => $page['s_title'] . ' - '.$preferences['pageTitle'],
         );
+        global $osc_request;
+        $osc_request['section'] = $page['s_title'];
+
         osc_renderHeader($headerConf);
         osc_renderView('page.php');
         osc_renderFooter();

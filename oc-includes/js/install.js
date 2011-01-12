@@ -82,13 +82,14 @@ function validate_form() {
 
     $.ajax({
         type: 'POST',
-        url: 'install.php',
+        url: 'install-location.php',
         data: input,
         timeout: 600000,
         success: function(data) {
             if(!data.match(/file_get_contents/)) {
-                window.location = 'index.php?step=4';
+                window.location = 'install.php?step=4';
             } else {
+                alert('There have been some error');
                 $("#lightbox").css('display','none');
             }
         },
@@ -360,15 +361,6 @@ function change_to_country(input) {
         $("#t_country").removeAttr("disabled");
         $("#region-div").css('display','none');
         $("#region-box").css('display','none');
-    }
-}
-
-
-function step2() {
-    if($("#save_stats").is(':checked')==true) {
-        window.location = 'index.php?step=2&save_stats=1';
-    } else {
-        window.location = 'index.php?step=2';
     }
 }
 

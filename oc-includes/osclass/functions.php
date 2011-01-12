@@ -3,7 +3,7 @@
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ *                         Copyright (C) 2010 OSCLASS
  *
  *       This program is free software: you can redistribute it and/or
  *     modify it under the terms of the GNU Affero General Public License
@@ -20,41 +20,28 @@
  */
 
 /**
- * This class holds the results obtained from database. Not currently in use.
+ * Kill OSClass with an error message
  *
- * @author OSClass
+ * @since 1.2
+ *
+ * @param string $message Error message
+ * @param string $title Error title
  */
-class DAOEntity {
-
-	private $values;
-
-	public function __construct() {
-		$this->values = array();
-	}
-
-	public function getValue($name) {
-		if(isset($values[$name]))
-			return $values[$name];
-		return null;
-	}
-
-	public function getCastedValue($name, $type) {
-		$value = $this->getValue($name);
-		if($value)
-			settype($value, $type);
-		return $value;
-	}
-
-	public function getBoolean($name) {
-		return $this->getCastedValue($name, 'boolean');
-	}
-
-	public function getString($name) {
-		return $this->getCastedValue($name, 'string');
-	}
-
-	public function getInteger($name) {
-		return $this->getCastedValue($name, 'integer');
-	}
+function osc_die( $title, $message ) {
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo $title; ?></title>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php if( defined('ABS_WEB_URL') ) echo ABS_WEB_URL; ?>oc-includes/css/install.css" />
+    </head>
+    <body class="page-error">
+        <p><?php echo $message; ?></p>
+    </body>
+</html>
+<?php
+    die();
 }
 
+?>

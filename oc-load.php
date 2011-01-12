@@ -19,63 +19,76 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once  dirname(__FILE__).'/common.php';
-require_once  APP_PATH.'/oc-includes/osclass/check.php';
-require_once  APP_PATH.'/config.php';
-require_once  LIB_PATH.'/osclass/web.php';
-require_once  LIB_PATH.'/osclass/db.php';
-require_once  LIB_PATH.'/osclass/classes/DAO.php';
-require_once  LIB_PATH.'/osclass/session.php';
-require_once  LIB_PATH.'/osclass/plugins.php';
-require_once  LIB_PATH.'/osclass/themes.php';
-require_once  LIB_PATH.'/osclass/utils.php';
-require_once  LIB_PATH.'/osclass/locale.php';
-require_once  LIB_PATH.'/osclass/formatting.php';
-require_once  LIB_PATH.'/osclass/AdminThemes.php';
+if( !defined('ABS_PATH') ) {
+    define( 'ABS_PATH', dirname(__FILE__) . '/' );
+};
 
-require_once  LIB_PATH.'/osclass/error.php';
-require_once  LIB_PATH.'/osclass/feeds.php';
-require_once  LIB_PATH.'/osclass/install.php';
-require_once  LIB_PATH.'/osclass/locales.php';
-require_once  LIB_PATH.'/osclass/security.php';
-require_once  LIB_PATH.'/osclass/validations.php';
-require_once  LIB_PATH.'/osclass/model/Admin.php';
-require_once  LIB_PATH.'/osclass/model/Alerts.php';
-require_once  LIB_PATH.'/osclass/model/Cron.php';
-require_once  LIB_PATH.'/osclass/model/Category.php';
-require_once  LIB_PATH.'/osclass/model/CategoryStats.php';
-require_once  LIB_PATH.'/osclass/model/City.php';
-require_once  LIB_PATH.'/osclass/model/Country.php';
-require_once  LIB_PATH.'/osclass/model/Comment.php';
-require_once  LIB_PATH.'/osclass/model/Currency.php';
-require_once  LIB_PATH.'/osclass/model/Locale.php';
-require_once  LIB_PATH.'/osclass/model/Item.php';
-require_once  LIB_PATH.'/osclass/model/ItemComment.php';
-require_once  LIB_PATH.'/osclass/model/ItemResource.php';
-require_once  LIB_PATH.'/osclass/model/ItemStats.php';
-require_once  LIB_PATH.'/osclass/model/Page.php';
-require_once  LIB_PATH.'/osclass/model/Plugin.php';
-require_once  LIB_PATH.'/osclass/model/PluginCategory.php';
-require_once  LIB_PATH.'/osclass/model/Preference.php';
-require_once  LIB_PATH.'/osclass/model/Region.php';
-require_once  LIB_PATH.'/osclass/model/User.php';
-require_once  LIB_PATH.'/osclass/model/ItemLocation.php';
-require_once  LIB_PATH.'/osclass/model/Widget.php';
-require_once  LIB_PATH.'/osclass/model/Search.php';
-require_once  LIB_PATH.'/osclass/classes/Cache.php';
-require_once  LIB_PATH.'/osclass/classes/DAOEntity.php';
-require_once  LIB_PATH.'/osclass/classes/HTML.php';
-require_once  LIB_PATH.'/osclass/classes/ImageResizer.php';
-require_once  LIB_PATH.'/osclass/classes/RSSFeed.php';
-require_once  LIB_PATH.'/osclass/classes/Sitemap.php';
-require_once  LIB_PATH.'/osclass/alerts.php';
+if( !file_exists(ABS_PATH . 'config.php') ) {
+    require_once ABS_PATH . 'oc-includes/osclass/functions.php';
 
-require_once  LIB_PATH.'/osclass/frm/Form.form.class.php';
-require_once  LIB_PATH.'/osclass/frm/Page.form.class.php';
-require_once  LIB_PATH.'/osclass/frm/Category.form.class.php';
-require_once  LIB_PATH.'/osclass/frm/Item.form.class.php';
-require_once  LIB_PATH.'/osclass/frm/Contact.form.class.php';
-require_once  LIB_PATH.'/osclass/frm/User.form.class.php';
+    $title = 'OSClass &raquo; Error';
+    $message = 'There doesn\'t exist config.php file. OSClass seems that is not installed.</p>';
+    $message .= '<p><a class="button" href="oc-includes/osclass/install.php">Install</a></p>';
+
+    osc_die($title, $message);
+}
+
+require_once  ABS_PATH . 'config.php';
+require_once  ABS_PATH . 'common.php';
+require_once  LIB_PATH . 'osclass/web.php';
+require_once  LIB_PATH . 'osclass/db.php';
+require_once  LIB_PATH . 'osclass/classes/DAO.php';
+require_once  LIB_PATH . 'osclass/session.php';
+require_once  LIB_PATH . 'osclass/plugins.php';
+require_once  LIB_PATH . 'osclass/themes.php';
+require_once  LIB_PATH . 'osclass/utils.php';
+require_once  LIB_PATH . 'osclass/locale.php';
+require_once  LIB_PATH . 'osclass/formatting.php';
+require_once  LIB_PATH . 'osclass/AdminThemes.php';
+
+require_once  LIB_PATH . 'osclass/error.php';
+require_once  LIB_PATH . 'osclass/feeds.php';
+require_once  LIB_PATH . 'osclass/locales.php';
+require_once  LIB_PATH . 'osclass/security.php';
+require_once  LIB_PATH . 'osclass/validations.php';
+require_once  LIB_PATH . 'osclass/model/Admin.php';
+require_once  LIB_PATH . 'osclass/model/Alerts.php';
+require_once  LIB_PATH . 'osclass/model/Cron.php';
+require_once  LIB_PATH . 'osclass/model/Category.php';
+require_once  LIB_PATH . 'osclass/model/CategoryStats.php';
+require_once  LIB_PATH . 'osclass/model/City.php';
+require_once  LIB_PATH . 'osclass/model/Country.php';
+require_once  LIB_PATH . 'osclass/model/Comment.php';
+require_once  LIB_PATH . 'osclass/model/Currency.php';
+require_once  LIB_PATH . 'osclass/model/Locale.php';
+require_once  LIB_PATH . 'osclass/model/Item.php';
+require_once  LIB_PATH . 'osclass/model/ItemComment.php';
+require_once  LIB_PATH . 'osclass/model/ItemResource.php';
+require_once  LIB_PATH . 'osclass/model/ItemStats.php';
+require_once  LIB_PATH . 'osclass/model/Page.php';
+require_once  LIB_PATH . 'osclass/model/Plugin.php';
+require_once  LIB_PATH . 'osclass/model/PluginCategory.php';
+require_once  LIB_PATH . 'osclass/model/Preference.php';
+require_once  LIB_PATH . 'osclass/model/Region.php';
+require_once  LIB_PATH . 'osclass/model/Rewrite.php';
+require_once  LIB_PATH . 'osclass/model/User.php';
+require_once  LIB_PATH . 'osclass/model/ItemLocation.php';
+require_once  LIB_PATH . 'osclass/model/Widget.php';
+require_once  LIB_PATH . 'osclass/model/Search.php';
+require_once  LIB_PATH . 'osclass/classes/Cache.php';
+//require_once  LIB_PATH . 'osclass/classes/DAOEntity.php';
+require_once  LIB_PATH . 'osclass/classes/HTML.php';
+require_once  LIB_PATH . 'osclass/classes/ImageResizer.php';
+require_once  LIB_PATH . 'osclass/classes/RSSFeed.php';
+require_once  LIB_PATH . 'osclass/classes/Sitemap.php';
+require_once  LIB_PATH . 'osclass/alerts.php';
+
+require_once  LIB_PATH . 'osclass/frm/Form.form.class.php';
+require_once  LIB_PATH . 'osclass/frm/Page.form.class.php';
+require_once  LIB_PATH . 'osclass/frm/Category.form.class.php';
+require_once  LIB_PATH . 'osclass/frm/Item.form.class.php';
+require_once  LIB_PATH . 'osclass/frm/Contact.form.class.php';
+require_once  LIB_PATH . 'osclass/frm/User.form.class.php';
 
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);
@@ -86,11 +99,14 @@ $_REQUEST = add_slashes_extended($_REQUEST);
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
-	$auto_cron = Preference::newInstance()->findValueByName('auto_cron');
-	if($auto_cron) {
-		osc_doRequest(ABS_WEB_URL.'/oc-includes/osclass/cron.php', array());
-	}
+    $auto_cron = Preference::newInstance()->findValueByName('auto_cron');
+    if($auto_cron) {
+        osc_doRequest(ABS_WEB_URL.'oc-includes/osclass/cron.php', array());
+    }
 };
 
+global $preferences;
+$preferences = Preference::newInstance()->toArray();
+Rewrite::newInstance()->init();
 
 ?>

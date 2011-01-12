@@ -21,7 +21,7 @@
 
     function alert_new_item($preferences, $item) {
         if (isset($preferences['notify_new_item']) && $preferences['notify_new_item']) {
-            require_once 'phpmailer/class.phpmailer.php';
+            require_once LIB_PATH . 'phpmailer/class.phpmailer.php';
             $mail = new PHPMailer;
             $mail->CharSet = "utf-8";
             $mail->Host = 'localhost';
@@ -101,7 +101,7 @@
             $body .= __('Region') . ': ' . $item['s_region'] . '<br/>';
             $body .= __('City') . ': ' . $item['s_city'] . '<br/>';
             $body .= __('Url') . ': ' . osc_createItemURL($item, true) . '<br/>';
-            $body .= __('You can validate your ad in this url') . ': <a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a><br/>';
+            $body .= __('You can validate your ad in this url') . ': <a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a><br/>';
             $body .= "<br/>--<br/>" . $preferences['pageTitle'];
 
             $params = array(

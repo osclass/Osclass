@@ -21,7 +21,7 @@
  */
 ?>
 
-<?php defined('APP_PATH') or die( __('Invalid OSClass request.') ); ?>
+<?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 
 <?php 
 
@@ -35,7 +35,7 @@
 ?>
 
 <?php
-    require_once 'osclass/classes/HTML.php';
+    require_once LIB_PATH . 'osclass/classes/HTML.php';
     $enabledCtrl = new HTMLInputCheckbox('b_enabled', __('Enabled'));
     $enabledCtrl->setChecked($locale['b_enabled']);
     $enabledCtrl->setValue(1);

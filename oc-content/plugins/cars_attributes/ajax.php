@@ -19,14 +19,15 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-    require_once  '../../../common.php';
-    require_once  APP_PATH.'/oc-includes/osclass/check.php';
-    require_once  APP_PATH.'/config.php';
-    require_once  LIB_PATH.'/osclass/web.php';
-    require_once  LIB_PATH.'/osclass/db.php';
+    define('ABS_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/');
 
-    require_once  LIB_PATH.'/osclass/classes/DAO.php';
-    require_once  LIB_PATH.'/osclass/model/City.php';
+    require_once  ABS_PATH . 'common.php';
+    require_once  ABS_PATH . 'config.php';
+    require_once  LIB_PATH . 'osclass/web.php';
+    require_once  LIB_PATH . 'osclass/db.php';
+
+    require_once  LIB_PATH . 'osclass/classes/DAO.php';
+    require_once  LIB_PATH . 'osclass/model/City.php';
 
     if(isset($_REQUEST['makeId']) && $_REQUEST['makeId']!='') {
         $conn = getConnection() ;

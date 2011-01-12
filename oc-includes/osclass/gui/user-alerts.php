@@ -26,7 +26,7 @@
 <?php else: ?>
 <?php foreach($alerts as $a): ?>
 	<div class="userItem" >
-		<div><?php echo __('Alert'); ?> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=unsub_alert&amp;alert=<?php echo $a['s_search']; ?>&amp;email=<?php echo $a['s_email']; ?>"><?php echo __('Delete this alert'); ?></a></div>
+		<div><?php echo __('Alert'); ?> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="<?php echo osc_createURL(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $a['s_email'], 'alert' => $a['s_search'])); ?>"><?php echo __('Delete this alert'); ?></a></div>
 
         <div style="width: 75%; padding-left: 100px;" >
         <?php foreach($a['items'] as $i) : ?>

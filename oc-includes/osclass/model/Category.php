@@ -19,7 +19,7 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once  LIB_PATH.'/osclass/model/Preference.php';
+require_once  LIB_PATH . 'osclass/model/Preference.php';
 class Category extends DAO {
 
     private $language;
@@ -112,6 +112,25 @@ class Category extends DAO {
         }
         unset($r);
         return $roots;
+    }
+
+    public function toRootTree($cat = null) {
+        $tree = null;
+        if($cat!=null) {
+            $tree_b = array();
+            if(ctype_digit($cat)) {
+                $cat = $this->findByPrimaryKey($cat);
+            } else {
+                $cat = $this->find_by_slug($cat);
+            }
+            $tree[0] = $cat;
+            while($cat['fk_i_parent_id']!=null) {
+                $cat = $this->findByPrimaryKey($cat['fk_i_parent_id']);
+                array_unshift($tree, '');//$cat);
+                $tree[0] = $cat;
+            }
+        }
+        return $tree;
     }
 
     public function isParentOf($parent_id) {

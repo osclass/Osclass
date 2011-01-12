@@ -19,9 +19,11 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
-$preferences = Preference::newInstance()->toArray();
+require_once ABS_PATH . 'oc-admin/oc-load.php';
+$prefManager = Preference::newInstance();
+$preferences = $prefManager->toArray();
 $resourcesManager = ItemResource::newInstance();
 
 $action = osc_readAction();
@@ -30,6 +32,17 @@ switch($action) {
 		osc_renderAdminSection('media/config.php', __('Media'), __('Settings'));
 		break;
 	case 'config_post':
+
+        unset($_POST['action']);
+        if(!isset($_POST['keep_original_image'])) { $_POST['keep_original_image'] = 0; };
+        foreach($_POST as $k => $v) {
+            $prefManager->update(
+            array('s_value' => $v),
+            array('s_name' => $k)
+            );
+        }
+        $preferences = $prefManager->toArray();
+		osc_renderAdminSection('media/config.php', __('Media'), __('Settings'));
 		break;
 	case 'delete':
 		if(isset($_REQUEST['id']) && is_array($_REQUEST['id'])) {

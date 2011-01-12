@@ -130,7 +130,7 @@ function feed_trovit_houses($items) {
         foreach($resources as $res) {
             if(strpos($res['s_content_type'], 'image')!==FALSE) {
                 $res_string .= '<picture>
-                                    <picture_url><![CDATA['.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
+                                    <picture_url><![CDATA['.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
                                     <picture_title><![CDATA['.$res['s_name'].']]></picture_title>
                                 </picture>';
             }
@@ -198,7 +198,7 @@ function feed_trovit_products($items) {
         foreach($resources as $res) {
             if(strpos($res['s_content_type'], 'image')!==FALSE) {
                 $res_string .= '<picture>
-                                    <picture_url><![CDATA['.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
+                                    <picture_url><![CDATA['.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
                                     <picture_title><![CDATA['.$res['s_name'].']]></picture_title>
                                 </picture>';
             }
@@ -304,7 +304,7 @@ function feed_trovit_cars($items) {
                 <model><![CDATA['.((isset($item['s_model']))?$item['s_model']:'').']]></model>
                 <color><![CDATA['.((isset($item['s_color']))?$item['s_color']:'').']]></color>
 
-                <mileage><![CDATA['.((isset($item['i_year']))?$item['i_year']:'').']]></mileage>
+                <mileage><![CDATA['.((isset($item['i_mileage']))?$item['i_mileage']:'').']]></mileage>
                 <doors><![CDATA['.((isset($item['i_doors']))?$item['i_doors']:'').']]></doors>
                 <fuel><![CDATA['.((isset($item['e_fuel']))?$item['e_fuel']:'').']]></fuel>
                 <transmission><![CDATA['.((isset($item['e_transmission']))?$item['e_transmission']:'').']]></transmission>
@@ -329,7 +329,7 @@ function feed_trovit_cars($items) {
         foreach($resources as $res) {
             if(strpos($res['s_content_type'], 'image')!==FALSE) {
                 $res_string .= '<picture>
-                                    <picture_url><![CDATA['.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
+                                    <picture_url><![CDATA['.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
                                     <picture_title><![CDATA['.$res['s_name'].']]></picture_title>
                                 </picture>';
             }
@@ -347,6 +347,111 @@ function feed_trovit_cars($items) {
     
     echo '</trovit>';
 }
+
+
+function feed_google_jobs($items) {
+    global $preferences;    
+    $items = $items[0];
+ 
+    echo '<rss version ="2.0" xmlns:g="http://base.google.com/ns/1.0"> 
+     
+    <channel> 
+	    <title>'.$preferences["pageTitle"].'</title> 
+	    <description>'.$preferences["pageDesc"].'</description> 
+	    <link>'.ABS_WEB_URL.'</link>';
+
+    foreach($items as $item) {
+        $resources = Item::newInstance()->findResourcesByID($item['pk_i_id']);
+
+        $item = feed_get_job_data($item);
+
+        $date = date('d/m/Y');
+        $time = date('H:i');
+
+        if(preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2})|', $item['dt_pub_date'], $tmp)) {
+            $date = $tmp[3]."/".$tmp[2]."/".$tmp[1];
+        }
+
+       
+
+
+        echo '<item> 
+        <title>'.$item['s_title'].'</title> 
+        <description>'.$item['s_description'].'</description> 
+        <g:education>'.((isset($item['s_studies']))?$item['s_studies']:'').'</g:education> 
+        <g:employer>'.((isset($item['s_company_name']))?$item['s_company_name']:'').'</g:employer> 
+        <g:id>'.$item['pk_i_id'].'</g:id> 
+        <g:job_industry>'.((isset($item['s_category']))?$item['s_category']:'').'</g:job_industry> 
+        <g:job_type>'.((isset($item['s_contract']))?$item['s_contract']:'').'</g:job_type> 
+        <link>'.osc_createItemURL($item).'</link> 
+        <g:location>'.((isset($item['s_address']))?$item['s_address']:'').', '.((isset($item['s_city']))?$item['s_city']:'').', '.((isset($item['s_region']))?$item['s_region']:'').', '.((isset($item['s_zip']))?$item['s_zip']:'').' '.((isset($item['s_country']))?$item['s_country']:'').'</g:location> 
+        <g:publish_date>'.$date.'</g:publish_date> 
+        <g:salary>'.((isset($item['i_salary_min']) && isset($item['i_salary_max']))?$item['i_salary_min'].' - '.$item['i_salary_max']:'').'</g:salary> 
+        </item>';
+    }
+
+    echo '</channel> 
+    </rss>';
+
+}
+
+
+function feed_google_cars($items) {
+    global $preferences;    
+    $items = $items[0];
+ 
+    echo '<rss version ="2.0" xmlns:g="http://base.google.com/ns/1.0"> 
+     
+    <channel> 
+	    <title>'.$preferences["pageTitle"].'</title> 
+	    <description>'.$preferences["pageDesc"].'</description> 
+	    <link>'.ABS_WEB_URL.'</link>';
+
+    foreach($items as $item) {
+        $resources = Item::newInstance()->findResourcesByID($item['pk_i_id']);
+
+        $item = feed_get_car_data($item);
+
+        $date = date('d/m/Y');
+        $time = date('H:i');
+
+        if(preg_match('|([0-9]{4})-([0-9]{2})-([0-9]{2})|', $item['dt_pub_date'], $tmp)) {
+            $date = $tmp[3]."/".$tmp[2]."/".$tmp[1];
+        }
+
+       
+
+
+        echo '<item> 
+        <title>'.$item['s_title'].'</title> 
+        <description>'.$item['s_description'].'</description> 
+        <g:id>'.$item['pk_i_id'].'</g:id> 
+        <link>'.osc_createItemURL($item).'</link> 
+        <g:location>'.((isset($item['s_address']))?$item['s_address']:'').', '.((isset($item['s_city']))?$item['s_city']:'').', '.((isset($item['s_region']))?$item['s_region']:'').', '.((isset($item['s_zip']))?$item['s_zip']:'').' '.((isset($item['s_country']))?$item['s_country']:'').'</g:location> 
+        <g:publish_date>'.$date.'</g:publish_date> 
+        <g:color>'.((isset($item['s_color']))?$item['s_color']:'').'</g:color> 
+        <g:condition>'.((isset($item['b_new']) && $item['b_new']==1)?'new':'used').'</g:condition> 
+        <g:image_link>'.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).'</g:image_link> 
+        <g:make>'.((isset($item['s_make']))?$item['s_make']:'').'</g:make> 
+        <g:mileage>'.((isset($item['i_mileage']))?$item['i_mileage']:'').'</g:mileage> 
+        <g:model>'.((isset($item['s_model']))?$item['s_model']:'').'</g:model> 
+        <g:price>'.((isset($item['f_price']))?$item['f_price']:'').'</g:price> 
+        <g:vehicle_type>'.((isset($item['s_name']))?$item['s_name']:'').'</g:vehicle_type> 
+        <g:year>'.((isset($item['i_year']))?$item['i_year']:'').'</g:year>
+        </item>';
+
+
+        if($res_string!='') {
+            echo '<pictures>'.$res_string.'</pictures>';
+        }
+
+    }
+
+    echo '</channel> 
+    </rss>';
+
+}
+
 
 
 function feed_get_house_data($item) {
@@ -431,5 +536,7 @@ osc_addFilter('feed_trovit_houses', 'feed_trovit_houses');
 osc_addFilter('feed_trovit_jobs', 'feed_trovit_jobs');
 osc_addFilter('feed_trovit_products', 'feed_trovit_products');
 osc_addFilter('feed_trovit_cars', 'feed_trovit_cars');
+osc_addFilter('feed_google_jobs', 'feed_google_jobs');
+osc_addFilter('feed_google_cars', 'feed_google_cars');
 
 ?>

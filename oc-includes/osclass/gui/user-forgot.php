@@ -1,5 +1,4 @@
 <?php
-
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -19,30 +18,23 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+?>
+<h2><?php _e('Retrieve your password'); ?></h2>
 
+<form action="<?php echo osc_createURL('user');?>" method="post" >
+<input type="hidden" name="action" value="forgot_post" />
 
-define('INST_DIR', APP_PATH . '/oc-installer');
-define('CONFIG_FILE', APP_PATH . '/config.php');
+<p>
+<label for="email"><?php _e('E-mail'); ?></label><br />
+<?php UserForm::email_text(); ?>
+</p>
 
-if (!file_exists(CONFIG_FILE)) {
-    if (!is_dir(INST_DIR)) {
-        echo '<p>You don\' have installed OSClass.</p>';
-        echo '<p>In addition, it\'s missing oc-installer folder too. Check if you have decompressed all the files.</p>';
-        die;
-    } else {
-        header('Location: oc-installer/');
-    }
-}
+<p>
+<?php echo __('If you forgot your password, enter your e-mail and we\'ll send you an e-mail to recover it.'); ?>
+</p>
 
-require_once CONFIG_FILE;
+<p>
+<input type="submit" value="<?php echo __('I forgot my password');?>" />
+</p>
 
-if (file_exists(INST_DIR) && is_dir(INST_DIR)) {
-    if (defined('DB_HOST') && defined('DB_USER') && defined('DB_PASSWORD') && defined('DB_NAME')) {
-        echo '<p>To run the OSClass you must remove the folder (' . INST_DIR . ') .</p>';
-        echo '<p>If you want to reinstall the software follow this <a href="oc-installer">link</a>.</p>';
-        exit;
-    } else {
-        header('Location: oc-installer/');
-    }
-}
-
+</form>

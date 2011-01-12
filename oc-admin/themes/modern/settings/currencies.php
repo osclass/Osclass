@@ -20,7 +20,7 @@
  */
 ?>
 
-<?php defined('APP_PATH') or die('Invalid OSClass request.'); ?>
+<?php defined('ABS_PATH') or die('Invalid OSClass request.'); ?>
 <?php $last = end($currencies); $last_id = $last['pk_c_code']; ?>
 <script>
 	$(function() {

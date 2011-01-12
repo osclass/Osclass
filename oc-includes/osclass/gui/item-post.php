@@ -5,7 +5,7 @@
 <div id="home_header" class="sectionHeader"><?php _e('Post your item'); ?></div>
     <div class="itemFormHolder">
 	<div id="add_item_form" class="itemForm">
-		<form action="item.php" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
+		<form action="<?php echo osc_createURL('item');?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
 		<input type="hidden" name="action" value="post_item" />
                 
 		<!-- left -->
@@ -38,15 +38,15 @@
                         <div class="itemFormHeader"><?php _e('Location'); ?></div>
                         <dl>
                             <dt><?php _e('Country'); ?></dt>
-                            <dd><?php ItemForm::country_select($countries) ; ?></dd>
+                            <dd><?php ItemForm::country_select($countries, $user) ; ?></dd>
                             <dt><?php _e('Region'); ?></dt>
-                            <dd><?php ItemForm::region_select($regions) ; ?></dd>
+                            <dd><?php ItemForm::region_select($regions, $user) ; ?></dd>
                             <dt><?php _e('City'); ?></dt>
-                            <dd><?php ItemForm::city_select($cities) ; ?></dd>
+                            <dd><?php ItemForm::city_select($cities, $user) ; ?></dd>
                             <dt><?php _e('City area'); ?></dt>
-                            <dd><?php ItemForm::city_area_text() ; ?></dd>
+                            <dd><?php ItemForm::city_area_text($user) ; ?></dd>
                             <dt><?php _e('Address'); ?></dt>
-                            <dd><?php ItemForm::address_text() ; ?></dd>
+                            <dd><?php ItemForm::address_text($user) ; ?></dd>
                         </dl>
                     </div>
 

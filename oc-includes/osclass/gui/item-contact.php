@@ -21,7 +21,7 @@
 ?>
 <div id="home_header"><div><?php _e('Contact seller'); ?></div></div>
 <?php ContactForm::js_validation(); ?>
-<form action="item.php" method="post" onsubmit="return validate_contact();">
+<form action="<?php echo osc_createURL('item');?>" method="post" onsubmit="return validate_contact();">
 <input type="hidden" name="action" value="contact_post" />
 <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 

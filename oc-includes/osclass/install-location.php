@@ -1,14 +1,22 @@
 <?php
 
-require_once '../config.php';
-require '../common.php';
-require 'osclass/web.php';
-require 'osclass/db.php';
-require 'osclass/formatting.php';
-require_once 'osclass/classes/DAO.php';
-require_once 'osclass/utils.php';
+define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
+
+require_once ABS_PATH . 'common.php';
+require_once ABS_PATH . 'config.php';
+require_once ABS_PATH . 'oc-includes/osclass/db.php';
+require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
+require_once ABS_PATH . 'oc-includes/osclass/web.php';
+require_once ABS_PATH . 'oc-includes/osclass/functions.php';
+require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
+require_once ABS_PATH . 'oc-includes/osclass/formatting.php';
+require_once ABS_PATH . 'oc-includes/osclass/utils.php';
 
 $_POST = add_slashes_extended($_POST);
+
+if( is_osclass_installed( ) ) {
+    die();
+}
 
 basic_info();
 
@@ -17,8 +25,8 @@ if( $_POST['skip-location-h'] == 0 ) {
 }
 
 function basic_info() {
-    require_once 'osclass/model/Admin.php';
-    require_once 'osclass/model/Preference.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 
     Admin::newInstance()->insert(array(
         's_name' => 'Administrator',
@@ -256,9 +264,9 @@ function install_locations ( ) {
     if( !isset($_POST['c_country']) )
         return false;
 
-    require_once 'osclass/model/Country.php';
-    require_once 'osclass/model/Region.php';
-    require_once 'osclass/model/City.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Country.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Region.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/City.php';
 
     if( isset($_POST['city']) )
         location_by_city(); 

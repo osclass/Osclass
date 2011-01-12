@@ -20,8 +20,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
+require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $localeManager = Locale::newInstance();
 $action = osc_readAction();

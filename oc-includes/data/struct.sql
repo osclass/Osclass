@@ -113,9 +113,25 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_pass_question VARCHAR(100) NULL ,
     s_pass_answer VARCHAR(100) NULL,
     s_pass_ip VARCHAR(15) NULL,
+    fk_c_country_code CHAR(2) NULL,
+    s_country VARCHAR(40) NULL, 
+    s_address VARCHAR(100) NULL,
+    s_zip VARCHAR(15) NULL,
+    fk_i_region_id INT UNSIGNED NULL,
+    s_region VARCHAR(100),
+    fk_i_city_id INT UNSIGNED NULL,
+    s_city VARCHAR(100) NULL,
+    fk_i_city_area_id INT UNSIGNED NULL,
+    s_city_area VARCHAR(200) NULL,
+    d_coord_lat DECIMAL(10, 6),
+    d_coord_long DECIMAL(10, 6),
 
         PRIMARY KEY (pk_i_id),
-        UNIQUE KEY (s_username)
+        UNIQUE KEY (s_username),
+        FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
+        FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
+        FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
+        FOREIGN KEY (fk_i_city_area_id) REFERENCES /*TABLE_PREFIX*/t_city_area (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category (
@@ -266,6 +282,16 @@ CREATE TABLE /*TABLE_PREFIX*/t_preference (
     e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
 
         UNIQUE KEY (s_section, s_name)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
+    fk_i_user_id INT UNSIGNED NULL,
+    s_name VARCHAR(40) NOT NULL,
+    s_value LONGTEXT NOT NULL,
+    e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
+
+        UNIQUE KEY (fk_i_user_id, s_name),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_pages (

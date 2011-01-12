@@ -20,13 +20,15 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+
+require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $prefManager = Preference::newInstance();
 $preferences = $prefManager->toArray();
 
 $categoryManager = Category::newInstance();
-$categories = $categoryManager->toTreeAll();
+//$categories = $categoryManager->toTreeAll();
 
 $action = osc_readAction();
 switch ($action) 
@@ -161,10 +163,10 @@ switch ($action)
         }
         
         if (!is_null($parentId)) {
-            $categories = $categoryManager->listWhere('fk_i_parent_id = %d GROUP BY pk_i_id', $_GET['parentId']);
+            $categories = $categoryManager->listWhere('a.fk_i_parent_id = %d ', $_GET['parentId']);
             $parent = $categoryManager->findByPrimaryKey($_GET['parentId']);
         } else {
-            $categories = $categoryManager->listWhere("fk_i_parent_id IS NULL GROUP BY pk_i_id");
+            $categories = $categoryManager->listWhere("a.fk_i_parent_id IS NULL");// GROUP BY pk_i_id");
         }
 
         osc_renderAdminSection('categories/index.php', __('Categories'));

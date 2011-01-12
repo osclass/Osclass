@@ -31,7 +31,7 @@ class CategoryForm extends Form {
                 echo '<option value="">' . $default_item . '</option>' ;
             }
             foreach($categories as $c) {
-                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     CategoryForm::subcategory_select($c['categories'], $category, $default_item, 1);
                 }
@@ -47,11 +47,72 @@ class CategoryForm extends Form {
             }
             $deep++;
             foreach($categories as $c) {
-                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
+                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     CategoryForm::subcategory_select($c['categories'], $category, $default_item, $deep+1);
                 }
             }
+    }
+    
+    static public function parent_category_select($categories, $category, $default_item = null) {
+        echo '<select name="fk_i_parent_id" id="parentId">' ;
+            if(isset($default_item)) {
+                echo '<option value="">' . $default_item . '</option>' ;
+            }
+            foreach($categories as $c) {
+                if($category['fk_i_parent_id']==$c['pk_i_id']) {
+                    $extra = ' selected="selected" ';
+                } else if($category['pk_i_id']==$c['pk_i_id']) {
+                    $extra = ' disabled="disabled" ';
+                } else {
+                    $extra = '';
+                }
+                echo '<option value="' . $c['pk_i_id'] . '"' . $extra . '>' . $c['s_name'] . '</option>' ;
+                if(isset($c['categories']) && is_array($c['categories'])) {
+                    CategoryForm::parent_subcategory_select($c['categories'], $category, $default_item, 1);
+                }
+            }
+        echo '</select>' ;
+        return true ;
+    }
+
+    static public function parent_subcategory_select($categories, $category, $default_item = null, $deep = 0) {
+            $deep_string = "";
+            for($var = 0;$var<$deep;$var++) {
+                $deep_string .= '&nbsp;&nbsp;';
+            }
+            $deep++;
+            foreach($categories as $c) {
+                if($category['fk_i_parent_id']==$c['pk_i_id']) {
+                    $extra = ' selected="selected" ';
+                } else if($category['pk_i_id']==$c['pk_i_id']) {
+                    $extra = ' disabled="disabled" ';
+                } else {
+                    $extra = '';
+                }
+                echo '<option value="' . $c['pk_i_id'] . '"' . $extra . '>' . $deep_string.$c['s_name'] . '</option>' ;
+                if(isset($c['categories']) && is_array($c['categories'])) {
+                    CategoryForm::subcategory_select($c['categories'], $category, $default_item, $deep+1);
+                }
+            }
+    }
+
+    static public function plugin_categories($categories = null, $selected = null, $depth = 0) {
+
+        if($categories!=null && is_array($categories)) {
+        
+            $d_string = '';
+            for($var_d=0;$var_d<$depth;$var_d++) {
+                $d_string .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+            }
+        
+            echo '<div id="cat'.$categories[0]['fk_i_parent_id'].'">';    
+            foreach($categories as $c) {
+                echo $d_string.'<input type="checkbox" name="categories[]" value="'.$c['pk_i_id'].'" onclick="javascript:checkCat(\''.$c['pk_i_id'].'\', this.checked);" '.(in_array($c['pk_i_id'], $selected)?'checked':'').'>'.(($depth==0)?'<span style="font-size:25px">':'').$c['s_name'].(($depth==0)?'</span>':'').'</input><br />';
+                CategoryForm::plugin_categories($c['categories'], $selected, $depth+1);
+            }
+            echo '</div>';
+        }
     }
 
     static public function expiration_days_input_text($category = null) {

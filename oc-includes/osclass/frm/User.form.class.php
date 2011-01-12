@@ -100,6 +100,75 @@ class UserForm extends Form {
         return true ;
     }
     
+    static public function country_select($countries, $user = null) {
+        if( count($countries) > 1 ) {
+            parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select one country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
+            return true ;
+        } else if ( count($countries) == 1 ) {
+            parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
+            echo '</span>' .$countries[0]['s_name'] . '</span>';
+            return false ;
+        } else {
+            parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
+            return true ;
+        }
+    }
+
+    static public function country_text($user = null) {
+        parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
+        return true ;
+    }
+
+    static public function region_select($regions, $user = null) {
+        if( count($regions) > 1 ) {
+            parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select one region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
+            return true ;
+        } else if ( count($regions) == 1 ) {
+            parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+            echo '</span>' .$regions[0]['s_name'] . '</span>';
+            return false ;
+        } else {
+            parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
+            return true ;
+        }
+    }
+
+    static public function region_text($user = null) {
+        parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
+    }
+
+    static public function city_select($cities, $user = null) {
+        if( count($cities) > 1 ) {
+            parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select one city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+            return true ;
+        } else if ( count($cities) == 1 ) {
+            parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+            return false ;
+        } else {
+            parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
+            return true ;
+        }
+    }
+
+    static public function city_text($user = null) {
+        parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
+        return true ;
+    }
+
+    static public function city_area_text($user = null) {
+        parent::generic_input_text('cityArea', (isset($user['s_city_area'])) ? $user['s_city_area'] : null) ;
+        return true ;
+    }
+
+    static public function address_text($user = null) {
+        parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null) ;
+        return true ;
+    }
+
+
+
+
+
 
 
     static public function js_validation() { ?>
@@ -163,6 +232,91 @@ function checkForm() {
 }
 </script>
     <?php } 
+
+    static public function location_javascript() {
+ ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#countryId").change(function(){
+            var pk_c_code = $(this).val();
+            var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
+            var result = '';
+
+            if(pk_c_code != '') {
+                $("#regionId").attr('disabled',false);
+                $("#cityId").attr('disabled',true);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: 'json',
+                    success: function(data){
+                        var length = data.length;
+                        if(length > 0) {
+                            result += '<option value=""><?php echo __("Select a region..."); ?></option>';
+                            for(key in data) {
+                                result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
+                            }
+                        } else {
+                            result += '<option value=""><?php echo __('No results') ?></option>';
+                        }
+                        $("#regionId").html(result);
+                    }
+                 });
+             } else {
+                $("#regionId").attr('disabled',true);
+                $("#cityId").attr('disabled',true);
+             }
+        });
+
+
+        $("#regionId").change(function(){
+            var pk_c_code = $(this).val();
+            var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + pk_c_code;
+            var result = '';
+
+            if(pk_c_code != '') {
+                $("#cityId").attr('disabled',false);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: 'json',
+                    success: function(data){
+                        var length = data.length;
+                        if(length > 0) {
+                            result += '<option value=""><?php echo __("Select a city..."); ?></option>';
+                            for(key in data) {
+                                result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
+                            }
+                        } else {
+                            result += '<option value=""><?php echo __('No results') ?></option>';
+                        }
+                        $("#cityId").html(result);
+                    }
+                 });
+             } else {
+                $("#cityId").attr('disabled',true);
+             }
+        });
+
+
+        if( $("#regionId").attr('value') == "")  {
+            $("#cityId").attr('disabled',true);
+        }
+        
+        if( $("#countryId").attr('type').match(/select-one/) ) {
+            if( $("#countryId").attr('value') == "")  {
+                $("#regionId").attr('disabled',true);
+            }
+        }
+        
+    });
+
+</script>
+<?php
+    }
+
+
+
     
    
 }

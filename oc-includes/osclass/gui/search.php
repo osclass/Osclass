@@ -20,7 +20,7 @@
  */
 
 
-require_once 'osclass/model/PluginCategory.php';
+require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 
 ?>
 <link href="<?php echo WEB_PATH; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -89,7 +89,7 @@ div.hh {
 </style>
 
 <div class="searchFormHolder" >
-<form action="search.php" method="POST" >
+<form action="<?php echo osc_createURL('search');?>" method="POST" >
 
 <?php
 foreach($_REQUEST as $k => $v) {

@@ -138,11 +138,25 @@ switch ($action) {
                 ));
                 $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
 
-                $thumbnailPath = APP_PATH . '/oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                ImageResizer::fromFile($tmpName)->resizeToMax(100)->saveToFile($thumbnailPath);
+                // Create thumbnail
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                $size = explode('x', $preferences['dimThumbnail']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                $path = APP_PATH . '/oc-content/uploads/' . $resourceId.'.png';
-                move_uploaded_file($tmpName, $path);
+                // Create preview
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                $size = explode('x', $preferences['dimPreview']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                // Create normal size
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                $size = explode('x', $preferences['dimNormal']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
+                    move_uploaded_file($tmpName, $path);
+                }
 
                 $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
                 $dao_itemResource->update(array(
@@ -183,7 +197,7 @@ switch ($action) {
             }
 
             if (isset($preferences['recaptchaPrivKey'])) {
-                require_once 'recaptchalib.php';
+                require_once LIB_PATH . 'recaptchalib.php';
                 if (!empty($_POST["recaptcha_challenge_field"])) {
                     $resp = recaptcha_check_answer(
                         $preferences['recaptchaPrivKey'],
@@ -214,6 +228,7 @@ switch ($action) {
         if ($userId != null) {
             if(isset($admin) && $admin==TRUE) {
                 $data = Admin::newInstance()->findByPrimaryKey($userId);
+                $userId = null;
             } else {
                 $data = User::newInstance()->findByPrimaryKey($userId);
             }
@@ -347,11 +362,26 @@ switch ($action) {
                     ));
                     $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
-                    $thumbnailPath = APP_PATH . '/oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    ImageResizer::fromFile($tmpName)->resizeToMax(100)->saveToFile($thumbnailPath);
+                // Create thumbnail
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                $size = explode('x', $preferences['dimThumbnail']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                    $path = APP_PATH . '/oc-content/uploads/' . $resourceId.'.png';
+                // Create preview
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                $size = explode('x', $preferences['dimPreview']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                // Create normal size
+                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                $size = explode('x', $preferences['dimNormal']);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
                     move_uploaded_file($tmpName, $path);
+                }
+
 
                     $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
                     $dao_itemResource->update(array(
@@ -398,7 +428,7 @@ switch ($action) {
 
                     $words = array();
                     $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
-                    $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                    $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -441,7 +471,7 @@ switch ($action) {
 
                     $words = array();
                     $words[] = array('{EDIT_LINK}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
-                    $words[] = array('<a href="' . ABS_WEB_URL . '/oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '" >' . ABS_WEB_URL . '/oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                    $words[] = array('<a href="' . ABS_WEB_URL . 'oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '" >' . ABS_WEB_URL . 'oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 

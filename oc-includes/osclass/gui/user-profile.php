@@ -1,5 +1,6 @@
 <div id="home_header"><div><?php _e('Update your profile'); ?></div></div>
-<form action="user.php" method="post">
+<form action="<?php echo osc_createURL('user');?>" method="post">
+<?php UserForm::location_javascript(); ?>
 <input type="hidden" name="action" value="profile_post" />
 
 <div align="center">
@@ -48,6 +49,31 @@
 		<p>
 		<label for="phoneLand"><?php _e('Land phone'); ?></label><br />
         <?php UserForm::phone_land_text($user); ?>
+		</p>
+		
+		<p>
+		<label for="country"><?php _e('Country'); ?></label><br />
+        <?php UserForm::country_select($countries, $user); ?>
+		</p>
+		
+		<p>
+		<label for="region"><?php _e('Region'); ?></label><br />
+        <?php UserForm::region_select($regions, $user); ?>
+		</p>
+		
+		<p>
+		<label for="city"><?php _e('City'); ?></label><br />
+        <?php UserForm::city_text($user); ?>
+		</p>
+		
+		<p>
+		<label for="city_area"><?php _e('City Area'); ?></label><br />
+        <?php UserForm::city_area_text($user); ?>
+		</p>
+		
+		<p>
+		<label for="address"><?php _e('Address'); ?></label><br />
+        <?php UserForm::address_text($user); ?>
 		</p>
 		
 		<p>

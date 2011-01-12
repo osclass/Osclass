@@ -1,5 +1,4 @@
 <?php
-require_once 'osclass/session.php';
 $catId = osc_pageInfo('category');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -61,7 +60,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                     <!-- left -->
                     <div id="header_left">
                         <div id="header_title_shadow">
-                            <div id="header_title"><a href="<?php echo WEB_PATH; ?>/"><?php echo osc_pageInfo('pageTitle'); ?></a></div>
+                            <div id="header_title"><a href="<?php echo WEB_PATH; ?>"><?php echo osc_pageInfo('pageTitle'); ?></a></div>
                         </div>
                     </div>
 
