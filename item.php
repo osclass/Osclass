@@ -67,7 +67,7 @@ switch ($action) {
         $item = $manager->findByPrimaryKey($_POST['id']);
         $item_url = osc_createItemURL($item, true);
 
-		$words = array();
+        $words = array();
         $words[] = array('{FRIEND_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{FRIEND_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}');
         $words[] = array($_POST['friendName'], $_POST['yourName'], $_POST['yourEmail'], $_POST['friendEmail'], ABS_WEB_URL, $item['s_title'], $_POST['message'], $item_url, $preferences['pageTitle']);
         $title = osc_mailBeauty($content['s_title'], $words);
@@ -92,11 +92,12 @@ switch ($action) {
             'body' => $body,
             'alt_body' => $body
         );
+
         if(osc_sendMail($params)) {
-			osc_addFlashMessage(__('We just send your message to ').$_POST['friendName'].".");
-		} else {
-			osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.'));
-		}
+            osc_addFlashMessage(__('We just send your message to ').$_POST['friendName'].".");
+        } else {
+            osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.'));
+        }
 
         osc_redirectTo($item_url);
     break;
@@ -155,8 +156,10 @@ switch ($action) {
             'to' => $item['s_contact_email'],
             'to_name' => $item['s_contact_name'],
             'body' => $body,
-            'alt_body' => $body
+            'alt_body' => $body,
+            'reply_to' => $_POST['yourEmail']
         );
+        
         osc_sendMail($params);
         osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.'));
         osc_redirectTo(osc_createItemURL($item));
