@@ -30,8 +30,8 @@ class Preference extends DAO {
 		return $this->conn->osc_dbFetchValue("SELECT s_value FROM %s WHERE s_name = '%s'", $this->getTableName(), $name);
 	}
 
-	public function findValueBySection($name) {
-		return $this->conn->osc_dbFetchValue("SELECT s_name, s_value FROM %s WHERE s_section = '%s'", $this->getTableName(), $name);
+	public function findBySection($name) {
+		return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE s_section = '%s'", $this->getTableName(), $name);
 	}
 
 	public function toArray($section = null) {
