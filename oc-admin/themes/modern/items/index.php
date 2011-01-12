@@ -49,7 +49,7 @@ if(isset($_GET)) {
 		oTable = $('#datatables_list').dataTable({
 			"bProcessing": true,
 			"bServerSide": true,
-			"sAjaxSource": "<?php echo ABS_WEB_URL?>/oc-admin/ajax/items_processing.php",
+			"sAjaxSource": "<?php echo ABS_WEB_URL?>oc-admin/ajax/items_processing.php",
                         <?php if($stat) { ?>
                             "fnServerData": function ( sSource, aoData, fnCallback ) {
                                     /* Add some extra data to the sender */

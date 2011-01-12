@@ -41,7 +41,7 @@ function get_absolute_url( ) {
  */
 function get_relative_url( ) {
     $url = $_SERVER['REQUEST_URI'];
-    return substr($url, 0, strpos($url, '/oc-includes'))."/";
+    return substr($url, 0, strpos($url, '/oc-includes')) . "/";
 }
 
 /*

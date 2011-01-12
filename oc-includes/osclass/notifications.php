@@ -101,7 +101,7 @@
             $body .= __('Region') . ': ' . $item['s_region'] . '<br/>';
             $body .= __('City') . ': ' . $item['s_city'] . '<br/>';
             $body .= __('Url') . ': ' . osc_createItemURL($item, true) . '<br/>';
-            $body .= __('You can validate your ad in this url') . ': <a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a><br/>';
+            $body .= __('You can validate your ad in this url') . ': <a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a><br/>';
             $body .= "<br/>--<br/>" . $preferences['pageTitle'];
 
             $params = array(

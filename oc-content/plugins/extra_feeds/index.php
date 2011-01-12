@@ -130,7 +130,7 @@ function feed_trovit_houses($items) {
         foreach($resources as $res) {
             if(strpos($res['s_content_type'], 'image')!==FALSE) {
                 $res_string .= '<picture>
-                                    <picture_url><![CDATA['.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
+                                    <picture_url><![CDATA['.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
                                     <picture_title><![CDATA['.$res['s_name'].']]></picture_title>
                                 </picture>';
             }
@@ -198,7 +198,7 @@ function feed_trovit_products($items) {
         foreach($resources as $res) {
             if(strpos($res['s_content_type'], 'image')!==FALSE) {
                 $res_string .= '<picture>
-                                    <picture_url><![CDATA['.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
+                                    <picture_url><![CDATA['.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
                                     <picture_title><![CDATA['.$res['s_name'].']]></picture_title>
                                 </picture>';
             }
@@ -329,7 +329,7 @@ function feed_trovit_cars($items) {
         foreach($resources as $res) {
             if(strpos($res['s_content_type'], 'image')!==FALSE) {
                 $res_string .= '<picture>
-                                    <picture_url><![CDATA['.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
+                                    <picture_url><![CDATA['.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).']]></picture_url>
                                     <picture_title><![CDATA['.$res['s_name'].']]></picture_title>
                                 </picture>';
             }
@@ -431,7 +431,7 @@ function feed_google_cars($items) {
         <g:publish_date>'.$date.'</g:publish_date> 
         <g:color>'.((isset($item['s_color']))?$item['s_color']:'').'</g:color> 
         <g:condition>'.((isset($item['b_new']) && $item['b_new']==1)?'new':'used').'</g:condition> 
-        <g:image_link>'.ABS_WEB_URL."/".str_replace('_thumbnail', '', $res['s_path']).'</g:image_link> 
+        <g:image_link>'.ABS_WEB_URL.str_replace('_thumbnail', '', $res['s_path']).'</g:image_link> 
         <g:make>'.((isset($item['s_make']))?$item['s_make']:'').'</g:make> 
         <g:mileage>'.((isset($item['i_mileage']))?$item['i_mileage']:'').'</g:mileage> 
         <g:model>'.((isset($item['s_model']))?$item['s_model']:'').'</g:model> 

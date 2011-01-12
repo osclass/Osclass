@@ -52,7 +52,7 @@
 			}
 			result.innerHTML = "<?php echo __('Backing up data... please wait'); ?>";
 
-				$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/tools.php?bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
+				$.get('<?php echo ABS_WEB_URL; ?>oc-admin/tools.php?bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
 					result.innerHTML = data;
 				});
 		});

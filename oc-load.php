@@ -101,7 +101,7 @@ define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
     $auto_cron = Preference::newInstance()->findValueByName('auto_cron');
     if($auto_cron) {
-        osc_doRequest(ABS_WEB_URL.'/oc-includes/osclass/cron.php', array());
+        osc_doRequest(ABS_WEB_URL.'oc-includes/osclass/cron.php', array());
     }
 };
 

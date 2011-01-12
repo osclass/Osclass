@@ -84,8 +84,8 @@ switch ($action) {
 
                     $content = Page::newInstance()->findByInternalName('email_user_validation');
                     if (!is_null($content)) {
-                        $validationLink = sprintf('%s/user.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
-				        $words = array();
+                        $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+                        $words = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
                         $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
                         $title = osc_mailBeauty($content['s_title'], $words);
@@ -128,7 +128,7 @@ switch ($action) {
 
             $content = Page::newInstance()->findByInternalName('email_user_validation');
             if (!is_null($content)) {
-                $validationLink = sprintf('%s/user.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $user['s_secret']);
+                $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $user['s_secret']);
 				$words = array();
                 $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
                 $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
@@ -503,7 +503,7 @@ switch ($action) {
                         array('pk_i_id' => $user['pk_i_id'])
                     );
 
-                    $password_link = sprintf('%s/user.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+                    $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
 
                     $content = Page::newInstance()->findByInternalName('email_user_forgot_password');
                     if (!is_null($content)) {

@@ -56,37 +56,37 @@
 
 				var tempAr = data.url.split('/');
 				fileToUnzip = tempAr.pop();
-				$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=download-file&file='+data.url, function(data) {
+				$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=download-file&file='+data.url, function(data) {
 				
 					steps.innerHTML += data+"<br/>";
 					steps.innerHTML += "<?php echo __('Unzipping file: '); ?>";
 
-					$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=unzip-file&file='+fileToUnzip, function(data) {
+					$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=unzip-file&file='+fileToUnzip, function(data) {
 					
 						steps.innerHTML += data+"<br/>";
 						steps.innerHTML += "<?php echo __('Copying new files: '); ?>";
 
-						$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=copy-files', function(data) {
+						$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=copy-files', function(data) {
 						
 							steps.innerHTML += data+"<br/>";
 							steps.innerHTML += "<?php echo __('Removing old files: '); ?>";
 
-							$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=remove-files', function(data) {
+							$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=remove-files', function(data) {
 							
 								steps.innerHTML += data+"<br/>";
 								steps.innerHTML += "<?php echo __('Executing SQL: '); ?>";
 
-								$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=execute-sql', function(data) {
+								$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=execute-sql', function(data) {
 								
 									steps.innerHTML += data+"<br/>";
 									steps.innerHTML += "<?php echo __('Executing additional actions: '); ?>";
 
-									$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=execute-actions', function(data) {
+									$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=execute-actions', function(data) {
 									
 										steps.innerHTML += data+"<br/>";
 										steps.innerHTML += "<?php echo __('Cleanning all the mesh: '); ?>";
 
-										$.get('<?php echo ABS_WEB_URL; ?>/oc-admin/upgrade.php?action=empty-temp', function(data) {
+										$.get('<?php echo ABS_WEB_URL; ?>oc-admin/upgrade.php?action=empty-temp', function(data) {
 										
 											steps.innerHTML += data+"<br/>";
 
