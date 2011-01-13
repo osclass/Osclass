@@ -77,7 +77,7 @@
 										</div>
 										<div id="available_theme_actions">
 											<a href="appearance.php?action=activate&amp;theme=<?php echo $theme; ?>"><?php echo __('Activate'); ?></a> | 
-											<a target="_blank" href="<?php echo ABS_WEB_URL; ?>/?action=testTheme&theme=<?php echo $theme; ?>"><?php echo __('Preview'); ?></a> | 
+											<a target="_blank" href="<?php echo ABS_WEB_URL; ?>?action=testTheme&theme=<?php echo $theme; ?>"><?php echo __('Preview'); ?></a> | 
 											<a id="theme_delete" onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="appearance.php?action=delete&amp;theme=<?php echo $theme; ?>"><?php echo __('Delete'); ?></a>
 										</div>
 										<div id="available_theme_pic"><img src="<?php echo WEB_PATH; ?>/oc-content/themes/<?php echo $theme; ?>/screenshot.png" style="width: 280px;" /></div>

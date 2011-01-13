@@ -14,8 +14,8 @@ if(isset($headerConf['javaScripts']))
 	<meta name="description" content="<?php echo osc_pageInfo('pageTitle'); ?>" />
 	<meta name="keywords" content="<?php echo osc_pageInfo('pageTitle'); ?>" />
 	<title><?php echo osc_pageInfo('pageTitle'); ?></title>
-	<link rel="icon" href="<?php echo ABS_WEB_URL; ?>/favicon.ico" type="image/x-icon" />
-	<link rel="shortcut icon" href="<?php echo ABS_WEB_URL; ?>/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="<?php echo ABS_WEB_URL; ?>favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo ABS_WEB_URL; ?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" href="<?php echo osc_createURL('feed'); ?>" title="<?php _e('Latest items added'); ?>" />
 	<?php foreach($javaScripts as $javaScript): ?>
 	<script type="text/javascript" src="<?php echo WEB_PATH, $javaScript; ?>"></script>

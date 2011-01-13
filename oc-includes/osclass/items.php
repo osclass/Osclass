@@ -428,7 +428,7 @@ switch ($action) {
 
                     $words = array();
                     $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
-                    $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                    $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -471,7 +471,7 @@ switch ($action) {
 
                     $words = array();
                     $words[] = array('{EDIT_LINK}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
-                    $words[] = array('<a href="' . ABS_WEB_URL . '/oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '" >' . ABS_WEB_URL . '/oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . '/' . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                    $words[] = array('<a href="' . ABS_WEB_URL . 'oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '" >' . ABS_WEB_URL . 'oc-admin/items.php?action=editItem&id=' . $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'], $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url, $preferences['pageTitle'], '<a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
