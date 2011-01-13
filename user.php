@@ -79,6 +79,7 @@ switch ($action) {
             if($username_taken==null) {
                 $manager->insert($input);
                 $userId = $manager->getConnection()->get_last_id();
+                osc_runHook('user_register_completed');
                 if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
                     $user = $manager->findByPrimaryKey($userId);
 
@@ -456,6 +457,7 @@ switch ($action) {
             }
 
             $_SESSION['userId'] = $user['pk_i_id'];
+            osc_runHook('user_login');
         } else if ($user && $user['b_enabled'] == '0') {
             osc_addFlashMessage(__('You have not validated your account yet.<br/> Should we resend you the validation email?').'<br/><a href="user.php?action=send-validation&userid='.$user['pk_i_id'].'">'.__('Yes, resend me the validation email.').'</a>');
             osc_redirectToReferer('user.php');
@@ -580,6 +582,7 @@ switch ($action) {
             osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
             osc_renderView('user-menu.php');
             osc_renderView('user-options.php');
+            osc_runHook('user_options');
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
@@ -592,11 +595,10 @@ switch ($action) {
 
         if(isset($_SESSION['userId'])) {
 
-            unset($_POST['action']);
-
-            $manager->updatePreferences($_POST, $_SESSION['userId']);
+            $manager->updatePreferences(array( 'show_phone' => $_POST['show_phone']), $_SESSION['userId']);
 
             osc_addFlashMessage(__('Options saved.'));
+            osc_runHook('user_options_post');
             osc_redirectTo(osc_createUserOptionsURL());
         } else {
             osc_addFlashMessage(__('You need to login first.'));

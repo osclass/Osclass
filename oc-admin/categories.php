@@ -28,7 +28,7 @@ $prefManager = Preference::newInstance();
 $preferences = $prefManager->toArray();
 
 $categoryManager = Category::newInstance();
-//$categories = $categoryManager->toTreeAll();
+$categories = $categoryManager->toTreeAll();
 
 $action = osc_readAction();
 switch ($action) 
