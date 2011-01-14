@@ -72,38 +72,60 @@
                                 <?php switch($htaccess_status) {
 
                                     case 0:
-                                        _e('Error. This should not happen.');
                                         break;
-
+                                        
                                     case 1:
-                                        _e('WARNING! Rewrite module isn\'t found on your server. You could still use nice urls if AllowPathInfo option is On in your Apache configuration (we can not know if it\'s enabled or not, but usually it is). With restricted nice url "index.php" will appear as a part of your URL (ie. http://www.yourdomain.com/index.php/nice/url)');
+                                        _e('HORRAY! mod_rewrite was found on your server.');
                                         break;
 
                                     case 2:
-                                        _e('Error. We could not write the .htaccess file on your server. Please create a file called .htaccess on the root of your OSClass installation with the following content.');
+                                        _e('WARNING! Rewrite module wasn\'t found on your server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use nice urls if AllowPathInfo option is On in your Apache configuration (we can not know if it\'s enabled or not, but usually it is). With restricted nice url "index.php" will appear as a part of your URL (ie. http://www.yourdomain.com/index.php/nice/url).');
+                                        ?>
+     <br />
+     <a href="settings.php?action=permalinks_post&enable_mod_rewrite=1"><button><?php _e('I have mod_rewrite.');?></button></a> <a href="settings.php?action=permalinks_post&enable_mod_rewrite=0"><button><?php _e('I don\'t have mod_rewrite.');?></button></a>                                        <?php
+                                        break;
+                                        
+                                    case 3:
+                                        _e('You selected to use AllowPathInfo option. You could change that at any moment from this same menu.');
+                                        break;
+                                        
+                                    case 4:
+                                        _e('You selected to use mod_rewrite option (We didn\'t find rewrite module on your server). If it doesn\'t work, maybe you don\'t have it enabled. You could change that at any moment from this same menu.');
+                                        break;
+                                        
+                                    }
+                                     ?>
+<br />
+<br />
+
+
+<?php
+                                    switch ($file_status) {
+                                    case 0:
                                         break;
 
                                     case 3:
+                                        _e('Error. We could not write the .htaccess file on your server. Please create a file called .htaccess on the root of your OSClass installation with the following content.');
+                                        break;
+
+                                    case 1:
                                         _e('File .htaccess already exists. Please, check that the .htaccess file has the following content.');
                                         break;
 
-                                    case 4:
+                                    case 2:
                                         _e('We create a .htaccess file on the root of your OSClass installation.');
-                                        break;
-
-                                    case 5:
-                                        _e('Error. We did not find the .htaccess file on your server. Please create a file called .htaccess on the root of your OSClass installation with the following content.');
                                         break;
 
                                 };
                                    
                                 echo "<br />";     
                                 echo "<br />";     
-                                _e('Content of the .htaccess file:');
+                                echo '<div style="float: left;">';
+                                _e('Content of .htaccess file should look like this:');
 
                                 ?>
                                 <br />
-			                    <textarea rows="8" cols="140">
+			                    <textarea rows="8" cols="67">
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase <?php echo REL_WEB_URL; ?>
@@ -112,9 +134,18 @@ RewriteRule ^index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . <?php echo REL_WEB_URL; ?>index.php [L]
-</IfModule>
-    		                    </textarea>
+</IfModule></textarea></div><div style="float: right;">
 
+                                <?php 
+                                if(file_exists(ABS_PATH.'.htaccess')) {
+                                    $htaccess_content = file_get_contents(ABS_PATH . '.htaccess');
+                                    if($htaccess_content) {
+                                        _e('Current content of YOUR .htaccess file:');
+                                        ?>
+                                        <br />
+			                            <textarea rows="8" cols="67"><?php echo $htaccess_content; ?></textarea></div>
+                                        <br />
+                                <?php };}; ?>
 							</fieldset>
 						</div>
 

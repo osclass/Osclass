@@ -329,84 +329,78 @@ switch ($action) {
         break;
     case 'permalinks':
         $htaccess_status = isset($_REQUEST['htaccess_status'])?$_REQUEST['htaccess_status']:0;
-
-        if($htaccess_status==0) {
-            if($preferences['rewriteEnabled']==1) {
-                $mods = apache_get_modules();
-                $htaccess_status = 1;
-                foreach($mods as $mod) {
-                    if($mod=='mod_rewrite') {
-                        $htaccess_status = 5;
-                        if(file_exists(ABS_PATH.'.htaccess')) {
-                            $htaccess_status = 3;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
+        $file_status = isset($_REQUEST['file_status'])?$_REQUEST['file_status']:0;
 
         osc_renderAdminSection('settings/permalinks.php', __('Settings'));
         break;
     case 'permalinks_post':
-    //print_r($_REQUEST);die;
+
         $htaccess_status = 0;
-        $prefManager->update(
-            array('s_value' => isset($_REQUEST['rewrite_enabled']) ? 1 : 0),
-            array('s_name' => 'rewriteEnabled')
-        );
-        if(isset($_REQUEST['rewrite_enabled'])) {
+        $file_status = 0;
+        if(!isset($_REQUEST['enable_mod_rewrite'])) {
+        
+            
 
-            generate_rewrite_rules();
-            if($_REQUEST['rewrite_enabled']=='on') {
-                if(function_exists('apache_get_modules')) {
-                    $mods = apache_get_modules();
+            $prefManager->update(
+                array('s_value' => isset($_REQUEST['rewrite_enabled']) ? 1 : 0),
+                array('s_name' => 'rewriteEnabled')
+            );
+            if(isset($_REQUEST['rewrite_enabled'])) {
+
+                generate_rewrite_rules();
+                $htaccess_text = '
+    <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase '.REL_WEB_URL.'
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . '.REL_WEB_URL.'index.php [L]
+    </IfModule>';
+
+                if(file_exists(ABS_PATH.'.htaccess')) {
+                    $file_status = 1;
+                } else if(file_put_contents(ABS_PATH . '.htaccess', $htaccess_text)) {
+                    $file_status = 2;
                 } else {
-                    $mods = array();
+                    $file_status = 3;
                 }
-                $htaccess_status = 1;
-                foreach($mods as $mod) {
-                    if($mod=='mod_rewrite') {
-                        $htaccess_status = 2;
-                        $htaccess_text = '
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase '.REL_WEB_URL.'
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . '.REL_WEB_URL.'index.php [L]
-</IfModule>';
 
-                            
-                        if(file_exists(ABS_PATH.'.htaccess')) {
-                            $htaccess_status = 3;
-                        } else {
-                            if(file_put_contents(ABS_PATH . '.htaccess', $htaccess_text)) {
-                                $htaccess_status = 4;
-                            }
-                        }
-                        break;
-                    }
-                }
-                if($htaccess_status==2) {
+                if(apache_mod_loaded('mod_rewrite')) {
+                    $htaccess_status = 1;
                     $prefManager->update(
-                            array('s_value' => 0),
-                            array('s_name' => 'mod_rewrite_loaded')
+                        array('s_value' => 1),
+                        array('s_name' => 'mod_rewrite_loaded')
                     );
                 } else {
+                    $htaccess_status = 2;
                     $prefManager->update(
-                            array('s_value' => 1),
-                            array('s_name' => 'mod_rewrite_loaded')
+                        array('s_value' => 0),
+                        array('s_name' => 'mod_rewrite_loaded')
                     );
-                };
+                }
+
             }
+
+
+        } else {
+        
+            
+            $prefManager->update(
+                array('s_value' => 1),
+                array('s_name' => 'rewriteEnabled')
+            );
+
+            $prefManager->update(
+                array('s_value' => $_REQUEST['enable_mod_rewrite']),
+                array('s_name' => 'mod_rewrite_loaded')
+            );
+            
+            $htaccess_status = 3+$_REQUEST['enable_mod_rewrite'];
+
         }
 
-
-
-
-        osc_redirectTo('settings.php?action=permalinks&htacess_status='.$htaccess_status);
+        osc_redirectTo('settings.php?action=permalinks&htaccess_status='.$htaccess_status.'&file_status='.$file_status);
     case 'items':
         osc_renderAdminSection('settings/items.php', __('Settings'));
         break;
