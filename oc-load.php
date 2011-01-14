@@ -39,10 +39,10 @@ require_once  LIB_PATH . 'osclass/web.php';
 require_once  LIB_PATH . 'osclass/db.php';
 require_once  LIB_PATH . 'osclass/classes/DAO.php';
 require_once  LIB_PATH . 'osclass/session.php';
+require_once  LIB_PATH . 'osclass/locale.php';
 require_once  LIB_PATH . 'osclass/plugins.php';
 require_once  LIB_PATH . 'osclass/themes.php';
 require_once  LIB_PATH . 'osclass/utils.php';
-require_once  LIB_PATH . 'osclass/locale.php';
 require_once  LIB_PATH . 'osclass/formatting.php';
 require_once  LIB_PATH . 'osclass/AdminThemes.php';
 
