@@ -581,8 +581,8 @@ switch ($action) {
 
             osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
             osc_renderView('user-menu.php');
-            osc_renderView('user-options.php');
-            osc_runHook('user_options');
+            //osc_renderView('user-options.php');
+            osc_runHook('user_options', ($_REQUEST['option'])?$_REQUEST['option']:'');
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));

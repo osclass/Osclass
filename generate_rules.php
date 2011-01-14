@@ -61,6 +61,8 @@ $rewrite->addRule('^user/forgot/password$', 'user.php?action=forgot');
 $rewrite->addRule('^user/forgot/password/done$', 'user.php?action=forgot_post');
 $rewrite->addRule('^user/change/password$', 'user.php?action=forgot_change');
 $rewrite->addRule('^user/change/password/done$', 'user.php?action=forgot_change_post');
+$rewrite->addRule('^user/options/(.*)', 'user.php?action=options&option=$1');
+$rewrite->addRule('^user/options_post/(.*)$', 'user.php?action=options_post&option=$1');
 $rewrite->addRule('^user/(.*)$', 'user.php?action=$1');
 $rewrite->addRule('^user$', 'user.php');
 
