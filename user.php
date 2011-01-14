@@ -466,7 +466,7 @@ switch ($action) {
             osc_redirectToReferer('user.php');
         }
 
-        osc_redirectTo('index.php');
+        osc_redirectTo(osc_createUserAccountURL());
         break;
     case 'logout':
         unset($_SESSION['userId']);
