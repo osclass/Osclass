@@ -209,7 +209,7 @@ switch ($action) {
             }
 
             osc_renderHeader(array('pageTitle' => __('Create your account')));
-            osc_renderView('user-menu.php');
+            nav_user_menu();
             osc_renderView('user-profile.php');
             osc_renderFooter();
         } else {
@@ -304,7 +304,7 @@ switch ($action) {
     case 'items':
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);
         osc_renderHeader(array('pageTitle' => __('Create your account')));
-        osc_renderView('user-menu.php');
+        nav_user_menu();
         osc_renderView('user-items.php');
         osc_renderFooter();
         break;
@@ -320,7 +320,7 @@ switch ($action) {
                 $alerts[$k]['items'] = $search->search();
             }
             osc_renderHeader(array('pageTitle' => __('Manage your alerts')));
-            osc_renderView('user-menu.php');
+            nav_user_menu();
             osc_renderView('user-alerts.php');
             osc_renderFooter();
 
@@ -336,7 +336,7 @@ switch ($action) {
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
             osc_renderHeader(array('pageTitle' => __('Manage your account')));
-            osc_renderView('user-menu.php');
+            nav_user_menu();
             osc_renderView('user-account.php');
             osc_renderFooter();
         } else {
@@ -460,10 +460,10 @@ switch ($action) {
             osc_runHook('user_login');
         } else if ($user && $user['b_enabled'] == '0') {
             osc_addFlashMessage(__('You have not validated your account yet.<br/> Should we resend you the validation email?').'<br/><a href="user.php?action=send-validation&userid='.$user['pk_i_id'].'">'.__('Yes, resend me the validation email.').'</a>');
-            osc_redirectToReferer('user.php');
+            osc_redirectToReferer(osc_createLoginURL());
         } else {
             osc_addFlashMessage(__('Wrong username or password.'));
-            osc_redirectToReferer('user.php');
+            osc_redirectToReferer(osc_createLoginURL());
         }
 
         osc_redirectTo(osc_createUserAccountURL());
@@ -474,7 +474,7 @@ switch ($action) {
         setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
         unset($_COOKIE['oc_userId']);
         unset($_COOKIE['oc_userSecret']);
-        osc_redirectTo('index.php');
+        osc_redirectTo(osc_createLoginURL());
         break;
 
     case 'unsub_alert':
@@ -580,9 +580,8 @@ switch ($action) {
             $user_prefs = $manager->preferences($_SESSION['userId']);
 
             osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
-            osc_renderView('user-menu.php');
-            //osc_renderView('user-options.php');
-            osc_runHook('user_options', ($_REQUEST['option'])?$_REQUEST['option']:'');
+            nav_user_menu();
+            osc_runHook('user_options', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));

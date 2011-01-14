@@ -539,3 +539,10 @@ a, a:hover, a:link, a:visited, a:active {
 	width: 70%;
 }
 
+.user_menu li
+{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+}
+

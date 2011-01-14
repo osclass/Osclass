@@ -24,7 +24,7 @@
 <?php if(count($items) == 0): ?>
 	<h3><?php _e('You do not have any items yet.'); ?></h3>
 <?php else: ?>
-<?php foreach($items as $i): ?>
+<?php foreach($items as $i) { ?>
 	<div class="userItem" >
 		<div><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></div>
 
@@ -33,8 +33,8 @@
 		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
 		</div>
 
-		<div class="userItemButtons" ><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="<?php echo osc_createURL('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']);?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_createURL('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']);?>"><?php _e('Edit'); ?></a></div>
+		<div class="userItemButtons" ><a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_createURL(array('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_createURL(array('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Edit'); ?></a></div>
 	</div>
 	<br />
-<?php endforeach; ?>
+<?php }; ?>
 <?php endif; ?>

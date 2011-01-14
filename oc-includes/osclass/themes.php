@@ -259,6 +259,64 @@ function osc_createItemURL($item, $absolute = false) {
 }
 
 /**
+ * Prints the user's account menu
+ *
+ * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
+ * 
+ * @return void
+ */
+function nav_user_menu($options = null) {
+
+    if($options==null) {
+        $options = array();
+        $options[] = array('name' => __('Dashboard'), 'url' => osc_createUserAccountURL());
+        $options[] = array('name' => __('Manage your items'), 'url' => osc_createUserItemsURL());
+        $options[] = array('name' => __('Manage your alerts'), 'url' => osc_createUserAlertsURL());
+        $options[] = array('name' => __('My account'), 'url' => osc_createProfileURL());
+        $options[] = array('name' => __('Logout'), 'url' => osc_createLogoutURL());
+    }
+    
+    
+    ?>
+    
+    <script type="text/javascript">
+        $(".user_menu > :first-child").addClass("first");
+        $(".user_menu > :last-child").addClass("last");
+    </script>
+    <ul class="user_menu" >
+    
+    <?php
+    
+    $var_l = count($options);
+    for($var_o=0;$var_o<$var_l;$var_o++) {
+        echo '<li><a href="'.$options[$var_o]['url'].'" >'.$options[$var_o]['name'].'</a></li> ';
+    }
+    
+    osc_runHook('user_menu');
+    echo '</ul>';
+
+}
+
+/**
+ * Prints the aditional options to the menu
+ *
+ * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
+ * 
+ * @return void
+ */
+function add_options_menu($options = null) {
+
+    if($options!=null) {
+        $var_l = count($options);
+        for($var_o=0;$var_o<$var_l;$var_o++) {
+            echo '<li><a href="'.$options[$var_o]['url'].'" >'.$options[$var_o]['name'].'</a></li> ';
+        }
+    }
+    
+}
+
+
+/**
  * This function returns an array of themes (those copied in the oc-content/themes folder)
  */
 function osc_listThemes() {

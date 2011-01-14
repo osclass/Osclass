@@ -639,3 +639,11 @@ a, a:hover, a:link, a:visited, a:active {
     font-size: 0.9em;
     padding-left: 10px;
 }
+
+.user_menu li
+{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+}
+
