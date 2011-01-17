@@ -21,7 +21,7 @@
  */
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-
+$preferences = Preference::newInstance()->toArray();
 switch ($action) {
 
 
