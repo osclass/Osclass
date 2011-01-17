@@ -37,7 +37,7 @@ switch($action) {
 		break;
 	case 'edit_post':
 		try {
-            if(isset($_REQUEST['autosave']) && $_REQUEST['autosave']=='yes') {
+            /*if(isset($_REQUEST['autosave']) && $_REQUEST['autosave']=='yes') {
                 $pageManager->insertDraft($_REQUEST['id'], $_REQUEST['s_internal_name']);
                 $data = array();
                 foreach($_REQUEST as $k => $v) {
@@ -49,7 +49,7 @@ switch($action) {
                     $pageManager->insertDescriptionDraft($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
                 }
                 die;
-            } else { 
+            } else { */
                 //$pageManager->updateInternalName($_REQUEST['id'], $_REQUEST['s_internal_name']);
 			    $data = array();
 			    foreach($_REQUEST as $k => $v) {
@@ -60,9 +60,9 @@ switch($action) {
 			    foreach($data as $k => $_data) {
 				    $pageManager->updateLocaleForce($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
 			    }
-                $pageManager->deleteDraft($_REQUEST['id']);
+                //$pageManager->deleteDraft($_REQUEST['id']);
 			    osc_addFlashMessage( __('The page has been updated.') );
-            }
+            //}
 		} catch (Exception $e) {
 			osc_addFlashMessage( __('Error: ') . $e->getMessage() );
 		}
@@ -107,7 +107,7 @@ switch($action) {
 	case 'add_post':
 
 		try {
-            if(isset($_REQUEST['autosave']) && $_REQUEST['autosave']=='yes') {
+            /*if(isset($_REQUEST['autosave']) && $_REQUEST['autosave']=='yes') {
                 $pageManager->insertDraft($_REQUEST['id'], $_REQUEST['s_internal_name']);
                 $data = array();
                 foreach($_REQUEST as $k => $v) {
@@ -119,7 +119,7 @@ switch($action) {
                     $pageManager->insertDescriptionDraft($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
                 }
                 die;
-            } else {
+            } else {*/
 
 			    if(isset($_REQUEST['s_internal_name'])) { $intName = $_REQUEST['s_internal_name']; } else { $intName = ""; };
                 $data = $pageManager->insert($intName);
@@ -138,7 +138,7 @@ switch($action) {
                 } else {
                     osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'));
                 }
-            }
+            //}
 		} catch (Exception $e) {
 			osc_addFlashMessage(__('Error: ') . $e->getMessage());
 		}

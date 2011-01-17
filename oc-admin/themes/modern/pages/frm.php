@@ -27,13 +27,15 @@
     if(isset($page['pk_i_id'])) {
         //editing...
         $edit = true ;
-        $title = "Edit page" ;
-        $action_frm = "edit_post" ;
+        $title = __("Edit page") ;
+        $action_frm = "edit_post";
+        $btn_text = __("Edit");
     } else {
         //adding...
         $edit = false ;
-        $title = "Add a page" ;
-        $action_frm = "add_post" ;
+        $title = __("Add a page");
+        $action_frm = "add_post";
+        $btn_text = __('Add');
     }
 
 ?>
@@ -126,7 +128,7 @@
 					<div class="FormElementName"></div>
 					<div class="FormElementInput">
 						<button class="formButton" type="button" onclick="window.location='pages.php';" ><?php echo __('Cancel'); ?></button>
-						<button class="formButton" type="submit"><?php echo __('Update'); ?></button>
+						<button class="formButton" type="submit"><?php echo $btn_text; ?></button>
 					</div>
 				</div>
 			</form>
