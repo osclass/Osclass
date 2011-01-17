@@ -218,20 +218,18 @@ switch ($action) {
         }
         break;
     case 'profile_post':
-
-        unset($_POST['action']);
-        if (empty($_POST['profile_password']))  {
-            unset($_POST['profile_password']);
-        } else {
+    
+            $s_password = '';
             if($_POST['profile_password']!=$_POST['profile_password2']) {
                 osc_addFlashMessage(__('Passwords don\'t match.'));
                 osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
             } else {
-                $_POST['s_password'] = sha1($_POST['profile_password']);
-                unset($_POST['profile_password']);
-                unset($_POST['profile_password2']);
+                if($_POST['profile_password']!='') {
+                    $s_password = sha1($_POST['profile_password']);
+                    unset($_POST['profile_password']);
+                    unset($_POST['profile_password2']);
+                }
             }
-        }
 
            //unset($_POST['profile_username']);
         //$manager->update($_POST, array('pk_i_id' => $_SESSION['userId']));
@@ -281,12 +279,12 @@ switch ($action) {
 
             $data = array(
                 's_name' => $_POST['s_name'],
-                's_username' => $_POST['s_username'],
-                's_password' => $_POST['s_password'],
+                //'s_username' => $_POST['s_username'],
+                //'s_password' => $_POST['s_password'],
                 's_email' => $_POST['s_email'],
                 's_website' => $_POST['s_website'],
                 's_info' => $_POST['s_info'],
-                's_phone_land' => $_POST[''],
+                's_phone_land' => $_POST['s_phone_land'],
                 's_phone_mobile' => $_POST['s_phone_mobile'],
                 'fk_c_country_code' => $countryId,
                 's_country' => $countryName,
@@ -298,6 +296,9 @@ switch ($action) {
                 's_address' => $_POST['address']
             );
         $manager->update($data, array('pk_i_id' => $_SESSION['userId']));
+        if($s_password!='') {
+            $manager->update(array('s_password' => $s_password), array('pk_i_id' => $_SESSION['userId']));
+        }
         osc_addFlashMessage(__('Your profile has been updated correctly'));
         osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
         break;
@@ -594,11 +595,8 @@ switch ($action) {
 
         if(isset($_SESSION['userId'])) {
 
-            $manager->updatePreferences(array( 'show_phone' => $_POST['show_phone']), $_SESSION['userId']);
-
-            osc_addFlashMessage(__('Options saved.'));
-            osc_runHook('user_options_post');
-            osc_redirectTo(osc_createUserOptionsURL());
+            osc_runHook('user_options_post', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
+            osc_redirectTo(osc_createUserAccountURL());
         } else {
             osc_addFlashMessage(__('You need to login first.'));
             osc_redirectTo(osc_createLoginURL());//'user.php?action=login');

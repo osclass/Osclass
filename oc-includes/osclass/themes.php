@@ -166,12 +166,40 @@ function osc_createUserItemsURL() {
         return WEB_PATH_URL . 'user.php?action=items';
 }
 
-function osc_createUserOptionsURL() {
+function osc_createUserOptionsURL($option = null) {
     global $preferences;
+
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH_URL . 'user/options';
-    } else
-        return WEB_PATH_URL . 'user.php?action=options';
+        if($option!=null) {
+            return WEB_PATH_URL . 'user/options/'.$option;
+        } else {
+            return WEB_PATH_URL . 'user/options';
+        }
+    } else {
+        if($option!=null) {
+            return WEB_PATH_URL . 'user.php?action=options&option='.$option;
+        } else {
+            return WEB_PATH_URL . 'user.php?action=options';
+        }
+    }
+}
+
+function osc_createUserOptionsPostURL($option = null) {
+    global $preferences;
+
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        if($option!=null) {
+            return WEB_PATH_URL . 'user/options_post/'.$option;
+        } else {
+            return WEB_PATH_URL . 'user/options_post';
+        }
+    } else {
+        if($option!=null) {
+            return WEB_PATH_URL . 'user.php?action=options_post&option='.$option;
+        } else {
+            return WEB_PATH_URL . 'user.php?action=options_post';
+        }
+    }
 }
 
 function osc_createURL($params = null) {
@@ -304,13 +332,10 @@ function nav_user_menu($options = null) {
  * 
  * @return void
  */
-function add_options_menu($options = null) {
+function add_option_menu($option = null) {
 
-    if($options!=null) {
-        $var_l = count($options);
-        for($var_o=0;$var_o<$var_l;$var_o++) {
-            echo '<li><a href="'.$options[$var_o]['url'].'" >'.$options[$var_o]['name'].'</a></li> ';
-        }
+    if($option!=null) {
+        echo '<li><a href="'.$option['url'].'" >'.$option['name'].'</a></li> ';
     }
     
 }

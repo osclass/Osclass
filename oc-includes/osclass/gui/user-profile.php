@@ -63,7 +63,7 @@
 		
 		<p>
 		<label for="city"><?php _e('City'); ?></label><br />
-        <?php UserForm::city_text($user); ?>
+        <?php UserForm::city_select($cities, $user); ?>
 		</p>
 		
 		<p>
