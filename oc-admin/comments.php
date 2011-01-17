@@ -97,7 +97,11 @@ switch ($action) {
                     array('e_status' => $value),
                     array('pk_i_id' => $id)
             );
-            osc_addFlashMessage(__('The comment has been activate.'));
+            if($value=='ACTIVE') {
+                osc_addFlashMessage(__('The comment has been activated.'));
+            } else {
+                osc_addFlashMessage(__('The comment has been deactivated.'));
+            }
         } catch (Exception $e) {
             osc_addFlashMessage(__('Error: ') . $e->getMessage());
         }

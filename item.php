@@ -173,7 +173,7 @@ switch ($action) {
 
         $item = $manager->findByPrimaryKey($itemId);
 
-        $itemURL = osc_createItemURL($item);
+        $itemURL = osc_createItemURL($item, true);
 
         if (isset($preferences['moderate_comments'])) {
             $status = 'INACTIVE';

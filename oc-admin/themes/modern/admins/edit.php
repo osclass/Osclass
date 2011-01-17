@@ -35,7 +35,7 @@
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;"><img src="<?php echo  $current_theme ?>/images/back_office/admin-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Add new administrator'); ?></div>
+					<div id="content_header_arrow">&raquo; <?php if($adminEdit['pk_i_id']==$_SESSION['adminId']) { echo __('Edit your profile'); } else { echo __('Edit administrator'); } ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				
