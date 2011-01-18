@@ -144,9 +144,9 @@ switch ($action) {
                 ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
                 // Create preview
-                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                /*$thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
                 $size = explode('x', $preferences['dimPreview']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);*/
 
                 // Create normal size
                 $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
@@ -368,9 +368,9 @@ switch ($action) {
                 ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
                 // Create preview
-                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                /*$thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
                 $size = explode('x', $preferences['dimPreview']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);*/
 
                 // Create normal size
                 $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';

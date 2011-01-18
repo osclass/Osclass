@@ -73,11 +73,6 @@
 							</p>
 							
 							<p>
-							<label for="preview"><?php echo __('Preview dimensions'); ?></label><br />
-							<input type="text" name="dimPreview" id="preview" value="<?php echo $preferences['dimPreview']; ?>" />
-							</p>
-							
-							<p>
 							<label for="normal"><?php echo __('Normal dimensions'); ?></label><br />
 							<input type="text" name="dimNormal" id="normal" value="<?php echo $preferences['dimNormal']; ?>" />
 							</p>

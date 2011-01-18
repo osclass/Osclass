@@ -57,6 +57,10 @@ class ImageResizer {
 		}
 
 		$newIm = imagecreatetruecolor($newW, $newH);
+        imagealphablending($newIm, false);
+        $colorTransparent = imagecolorallocatealpha($newIm, 0, 0, 0, 127);
+        imagefill($newIm, 0, 0, $colorTransparent);
+        imagesavealpha($newIm, true);
 		imagecopyresized($newIm, $this->im, 0, 0, 0, 0, $newW, $newH, $w, $h);
 		imagedestroy($this->im);
 
@@ -78,6 +82,10 @@ class ImageResizer {
 		}
 
 		$newIm = imagecreatetruecolor($width,$height);//$newW, $newH);
+        imagealphablending($newIm, false);
+        $colorTransparent = imagecolorallocatealpha($newIm, 0, 0, 0, 127);
+        imagefill($newIm, 0, 0, $colorTransparent);
+        imagesavealpha($newIm, true);
 		imagecopyresampled($newIm, $this->im, (($width-$newW)/2), (($height-$newH)/2), 0, 0, $newW, $newH, $w, $h);
 		imagedestroy($this->im);
 
