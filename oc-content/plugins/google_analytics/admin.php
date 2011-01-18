@@ -11,7 +11,7 @@
     if(isset($_REQUEST['option']) && $_REQUEST['option']=='stepone') 
     {
         $dao_preference->update(array("s_value" => $webid), array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")) ;
-        echo '<div><p>Congratulations. The plugin is now configured.</p></div>' ;
+        echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>Congratulations. The plugin is now configured.</p></div>' ;
     }
 
 ?>

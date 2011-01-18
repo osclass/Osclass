@@ -113,16 +113,16 @@ switch ($action) {
         if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])) $itemId = $_GET['id'];
 
         $comment = Comment::newInstance()->findByPrimaryKey($itemId);
-        osc_renderAdminSection('comments/comment_edit.php', __('Comments'));
+        osc_renderAdminSection('comments/frm.php', __('Comments'));
         break;
     case 'comment_edit_post':
-        import_request_variables('p', 'P');
+
         $manager->update(array(
-            's_title' => $Ptitle,
-            's_body' => $Pbody,
-            's_author_name' => $PauthorName,
-            's_author_email' => $PauthorEmail
-                ), array('pk_i_id' => $Pid));
+            's_title' => $_REQUEST['s_title'],
+            's_body' => $_REQUEST['s_body'],
+            's_author_name' => $_REQUEST['s_author_name'],
+            's_author_email' => $_REQUEST['s_author_email']
+                ), array('pk_i_id' => $_REQUEST['id']));
 
         osc_runHook('item_edit_post');
 
