@@ -123,8 +123,15 @@ switch ($action) {
             $default_lang = Preference::newInstance()->findValueByName('language');
             foreach ($_GET['code'] as $code) {
                 if($default_lang!=$code) {
-                    if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
-                        osc_addFlashMessage(__('Directory "%s" could not be removed.'), $code);
+                    try {
+                        Locale::newInstance()->deleteLocale($code);
+                        if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
+                            osc_addFlashMessage(__('Directory "%s" could not be removed.'), $code);
+                        }
+                    } catch (Exception $e) {
+                        if($e->getMessage()=='1451') {
+                            osc_addFlashMessage($code.__(' language pack can not be deleted it\'s being used.'));
+                        }
                     }
                 } else {
                         osc_addFlashMessage(__('Directory "%s" could not be removed, it\' the default language. Set another language as default first and try again.'), $code);

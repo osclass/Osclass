@@ -63,7 +63,13 @@ function osc_checkLocales() {
             }
         }
         if(!$found) {
-            Locale::newInstance()->deleteLocale($locale['pk_c_code']);
+            try {
+                Locale::newInstance()->deleteLocale($locale['pk_c_code']);
+            } catch (Exception $e) {
+                if($e->getMessage()=='1451') {
+                    osc_addFlashMessage(__('We are missing the ').$locale['pk_c_code'].__(' language pack and it was being. Please reinstall it.'));
+                }
+            }
         };
     }
 
