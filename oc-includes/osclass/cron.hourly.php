@@ -31,24 +31,53 @@ if(!defined('__OSC_LOADED__')) {
 	// INSERT HERE YOUR FUNCTIONS, DO NOT FORGET TO CALL THEM AT THE END
 	// THEY WILL RUN HOURLY
 
-function update_cat_stats() {
-    $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m")-1, date("d"),   date("Y")));
-	$sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date);
-	$conn = getConnection() ;
-    $items = $conn->osc_dbFetchResults($sql);
 
-	foreach($items as $stats) {
-		$category = $total = 0;
-		foreach($stats as $k => $v) {
-			if($k=="category") { $category = $v; }
-			if($k=="total") { $total = $v; }
-		}
-		CategoryStats::newInstance()->update(
-			array(
-				'i_num_items' => $total
-			), array('fk_i_category_id' => $category)
-		);
+function count_items_subcategories($category = null) {
+
+    $manager = CategoryStats::newInstance();
+    $total = $manager->countItemsFromCategory($category['pk_i_id']);
+    $categories = Category::newInstance()->isParentOf($category['pk_i_id']);
+    if($categories!=null) {
+    foreach($categories as $c) {
+        $total += count_items_subcategories($c);
+    }
+    }
+    return $total;
+
+}
+
+function update_cat_stats() {
+
+    $manager = CategoryStats::newInstance();
+
+	$conn = getConnection() ;
+	$sql_cats = "SELECT pk_i_id FROM ".DB_TABLE_PREFIX."t_category";
+	$cats = $conn->osc_dbFetchResults($sql_cats);
+	
+	foreach($cats as $c) {
+        $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m")-1, date("d"),   date("Y")));
+	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' AND fk_i_category_id = %d", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
+        $total = $conn->osc_dbFetchResult($sql);
+        $total = $total['total'];
+        
+        $manager->update(
+            array(
+                'i_num_items' => $total
+                ), array('fk_i_category_id' => $c['pk_i_id'])
+            );
 	}
+	
+	
+	$categories = Category::newInstance()->findRootCategories();
+	foreach($categories as $c) {
+        $manager->update(
+			array(
+				'i_num_items' => count_items_subcategories($c)
+			), array('fk_i_category_id' => $c['pk_i_id'])
+		);
+			
+	}
+	
 }
 
 update_cat_stats();
