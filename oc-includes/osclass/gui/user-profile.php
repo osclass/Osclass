@@ -1,18 +1,14 @@
 <div id="home_header"><div><?php _e('Update your profile'); ?></div></div>
 <form action="<?php echo osc_createURL('user');?>" method="post">
 <?php UserForm::location_javascript(); ?>
-<input type="hidden" name="action" value="profile_post" />
+<?php UserForm::js_validation(); ?>
+<input type="hidden" name="action" value="profile_post" onSubmit="return checkForm()"/>
 
 <div align="center">
 	<div id="register_form" style="width: 400px; margin-bottom: 20px;">
 		<p>
 		<label for="name"><?php _e('Name'); ?></label><br />
         <?php UserForm::name_text($user); ?>
-		</p>
-		
-		<p>
-		<label for="userName"><?php _e('User name'); ?></label><br />
-        <?php UserForm::username_text($user); ?>
 		</p>
 		
 		<p>
@@ -25,10 +21,12 @@
 		<label for="password2"><?php _e('Retype the password'); ?></label><br />
         <?php UserForm::check_password_text($user); ?>
 		</p>
-		
+		<p id="password-error" style="display:none;">
+                <?php _e('Passwords don\'t match.'); ?>
+            </p>
 		<p>
 		<label for="email"><?php _e('E-mail'); ?></label><br />
-        <?php UserForm::email_text($user); ?>
+        <?php echo $user['s_email']; ?>
 		</p>
 		
 		<p>

@@ -8,11 +8,6 @@
 		</p>
 		
 		<p>
-		<label for="userName"><?php _e('User name'); ?>: </label>
-        <?php echo $user['s_username']; ?>
-		</p>
-		
-		<p>
 		<label for="email"><?php _e('E-mail'); ?>: </label>
         <?php echo $user['s_email']; ?>
 		</p>

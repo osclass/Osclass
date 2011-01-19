@@ -13,8 +13,8 @@
                 <?php UserForm::name_text(); ?>
             </p>
             <p>
-		<label for="userName"><?php _e('User name'); ?></label><br />
-                <?php UserForm::username_register_text(); ?>
+                <label for="email"><?php _e('E-mail'); ?></label><br />
+                <?php UserForm::email_text(); ?>
             </p>
             <p>
 		<label for="password"><?php _e('Password'); ?></label><br />
@@ -26,10 +26,6 @@
             </p>
             <p id="password-error" style="display:none;">
                 <?php _e('Passwords don\'t match.'); ?>
-            </p>
-            <p>
-                <label for="email"><?php _e('E-mail'); ?></label><br />
-                <?php UserForm::email_text(); ?>
             </p>
             <?php
 		if(isset($preferences['recaptchaPubKey'])) {

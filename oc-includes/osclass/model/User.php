@@ -31,9 +31,20 @@ class User extends DAO {
 		return count($results) == 1 ? $results[0] : null;
 	}
 
-	public function findByCredentials($userName, $password) {
-		$results = $this->listWhere("s_userName = '%s' AND s_password = '%s'", $userName, sha1($password));
-		return count($results) == 1 ? $results[0] : null;
+	public function findByCredentials($key, $password) {
+		$results = $this->listWhere("s_email = '%s' AND s_password = '%s'", $key, sha1($password));
+		if(count($results)==1) {
+		    return $results[0];
+		} else {
+		    // For backwards-compatibility issues
+    		$results = $this->listWhere("s_username = '%s' AND s_password = '%s'", $key, sha1($password));
+    		if(count($results)==1) {
+    		    return $results[0];
+            } else {
+                return null;
+            }
+		}
+		return null;
 	}
 
 	public function findByUsername($userName) {

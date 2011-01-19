@@ -23,12 +23,13 @@ ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_i_city_id` int(10) unsigned DE
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_city` varchar(100) DEFAULT NULL;
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_i_city_area_id` int(10) unsigned DEFAULT NULL;
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_city_area` varchar(200) DEFAULT NULL;
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `i_permissions` varchar(2) DEFAULT 0;
 
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_c_country_code`) REFERENCES `/*TABLE_PREFIX*/t_country` (`pk_c_code`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_region_id`) REFERENCES `/*TABLE_PREFIX*/t_region` (`pk_i_id`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_id`) REFERENCES `/*TABLE_PREFIX*/t_city` (`pk_i_id`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_area_id`) REFERENCES `/*TABLE_PREFIX*/t_city_area` (`pk_i_id`);
-
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD UNIQUE (`s_email`)
 
 CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
     fk_i_user_id INT UNSIGNED NULL,
