@@ -28,40 +28,100 @@ $userManager = User::newInstance();
 $action = osc_readAction();
 switch($action) {
 	case 'create':
-		osc_renderAdminSection('users/add.php', __('Users'), __('Add'));
+	
+	    $user = null;
+        $countries = Country::newInstance()->listAll();
+        $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+	
+		osc_renderAdminSection('users/frm.php', __('Users'), __('Add'));
 		break;
 	case 'create_post':
-		$_POST['s_password'] = sha1($_POST['s_password']);
+		/*$_POST['s_password'] = sha1($_POST['s_password']);
 		try {
 			$userManager->insert($_POST);
 			osc_addFlashMessage(__('The item has been added.'));
 		} catch (Exception $e) {
 			osc_addFlashMessage(__('Error: ') . $e->getMessage());
-		}
+		}*/
+
+
+        require_once LIB_PATH . 'osclass/users.php';
+
+        switch($success) {
+        
+            case 0:
+                break;
+                
+            case 1:
+                osc_addFlashMessage(__('The account has been created. An activation email has been sent to the user\'s email address.'));
+                break;
+                
+            case 2:
+                osc_addFlashMessage(__('The account has been created and it was activated.'));
+                break;
+                
+            case 3:
+                osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
+                break;
+                
+            case 4:
+                osc_addFlashMessage(__('The user could not be registered, sorry.'));
+                break;
+                
+            default:
+                break;
+        }
+		
 		osc_redirectTo('users.php');
 		break;
 	case 'edit':
 		$user = $userManager->findByPrimaryKey($_GET['id']);
-		osc_renderAdminSection('users/edit.php', __('Users'), __('Edit'));
-		break;
-	case 'edit_post':
-		$conditions = array('pk_i_id' => $_POST['id']);
-		unset($_POST['id']);
-
-        if(!isset($_POST['b_enabled']) || $_POST['b_enabled']!=1) {
-            $_POST['b_enabled'] = 0;
+        $countries = Country::newInstance()->listAll();
+        $regions = array();
+        if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+            $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+        } else if( count($countries) > 0 ) {
+            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+        }
+        $cities = array();
+        if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+        } else if( count($regions) > 0 ) {
+            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
         }
 
-		if(empty($_POST['s_password']))
-			unset($_POST['s_password']);
-		else
-			$_POST['s_password'] = sha1($_POST['s_password']);
-		try {
-			$userManager->update($_POST, $conditions);
-			osc_addFlashMessage(__('The user has been updated.'));
-		} catch (Exception $e) {
-			osc_addFlashMessage(__('Error: ') . $e->getMessage());
-		}
+		
+		
+		osc_renderAdminSection('users/frm.php', __('Users'), __('Edit'));
+		break;
+	case 'edit_post':
+		/*$conditions = array('pk_i_id' => $_POST['id']);
+		unset($_POST['id']);*/
+
+        $userId = $_POST['id'];
+
+        require_once LIB_PATH . 'osclass/users.php';
+
+
+
+        if(!isset($_POST['b_enabled']) || $_POST['b_enabled']!=1) {
+            $manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId));
+        } else {
+            $manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId));
+        }
+
+        
+        if($success==0) {
+            osc_addFlashMessage(__('This should never happened.'));
+        } else if($success==1) {
+            osc_addFlashMessage(__('Passwords don\'t match.'));
+        } else {
+            osc_addFlashMessage(__('The user has been updated.'));
+        }
+			
+			
+			
 		osc_redirectTo('users.php');
 		break;
 	case 'activate':

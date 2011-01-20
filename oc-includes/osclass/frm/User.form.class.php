@@ -21,9 +21,9 @@
 
 class UserForm extends Form {
 
-    /*static public function primary_input_hidden($page) {
-        parent::generic_input_hidden("id", $page["pk_i_id"]) ;    
-    }*/
+    static public function primary_input_hidden($user) {
+        parent::generic_input_hidden("id", $user["pk_i_id"]) ;    
+    }
     
     static public function name_text($user = null) {
         parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
@@ -192,10 +192,7 @@ $(document).ready(function(){
         $('#s_password2').css('border', '');
         $('#password-error').css('display', 'none');
     });
-});    static public function password_text($user = null) {
-        parent::generic_password("profile_password", '', null, false);
-        return true ;
-    }
+});    
     
 
 
