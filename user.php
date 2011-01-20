@@ -54,7 +54,7 @@ switch ($action) {
             }
         }
 
-        $validations = array(
+        /*$validations = array(
             's_username' => array(
                 'filter' => FILTER_VALIDATE_REGEXP,
                 'options' => array('regexp' => '') // User Registration complete RegExp support with _, - and .
@@ -64,10 +64,10 @@ switch ($action) {
         if( !preg_match('/^[a-zA-Z0-9_\.\-]+$/i',$_POST['s_username']) ) {
             osc_addFlashMessage(__('Sorry, but the username can only contain alphanumeric characters.'));
             osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
-        }
+        }*/
 
         $input['s_name'] = $_POST['s_name'];
-        $input['s_username'] = $_POST['s_username'];
+        //$input['s_username'] = $_POST['s_username'];
         $input['s_email'] = $_POST['s_email'];
         $input['s_password'] = sha1($_POST['s_password']);
         $input['dt_reg_date'] = DB_FUNC_NOW;
@@ -75,8 +75,8 @@ switch ($action) {
         $code = osc_genRandomPassword();
         $input['s_secret'] = $code;
         try {
-            $username_taken = $manager->findByUsername($input['s_username']);
-            if($username_taken==null) {
+            $email_taken = $manager->findByEmail($input['s_email']);//Username($input['s_username']);
+            if($email_taken==null) {
                 $manager->insert($input);
                 $userId = $manager->getConnection()->get_last_id();
                 osc_runHook('user_register_completed');
@@ -111,7 +111,7 @@ switch ($action) {
                     osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
                 }
             } else {
-                osc_addFlashMessage(__('Sorry, but that username is already in use.'));
+                osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
                 osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
             }
         } catch (Exception $e) {
@@ -281,7 +281,7 @@ switch ($action) {
                 's_name' => $_POST['s_name'],
                 //'s_username' => $_POST['s_username'],
                 //'s_password' => $_POST['s_password'],
-                's_email' => $_POST['s_email'],
+                //'s_email' => $_POST['s_email'],
                 's_website' => $_POST['s_website'],
                 's_info' => $_POST['s_info'],
                 's_phone_land' => $_POST['s_phone_land'],
@@ -441,7 +441,7 @@ switch ($action) {
         break;
     case 'login_post':
         define('COOKIE_LIFE', 86400);
-        $user = $manager->findByCredentials($_POST['userName'], $_POST['password']);
+        $user = $manager->findByCredentials($_POST['s_email'], $_POST['password']);
         if ($user && $user['b_enabled'] == '1') {
             if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 1) {
                 $life = time() + COOKIE_LIFE;
@@ -463,7 +463,7 @@ switch ($action) {
             osc_addFlashMessage(__('You have not validated your account yet.<br/> Should we resend you the validation email?').'<br/><a href="user.php?action=send-validation&userid='.$user['pk_i_id'].'">'.__('Yes, resend me the validation email.').'</a>');
             osc_redirectToReferer(osc_createLoginURL());
         } else {
-            osc_addFlashMessage(__('Wrong username or password.'));
+            osc_addFlashMessage(__('Wrong email or password.'));
             osc_redirectToReferer(osc_createLoginURL());
         }
 
