@@ -546,3 +546,16 @@ list-style-type: none;
 padding-right: 20px;
 }
 
+
+
+
+#account_items {
+    width:650px;
+    padding-right:30px;
+    float: left;
+}
+
+#account_contact {
+    width:200px;
+    float: left;
+}

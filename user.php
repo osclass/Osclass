@@ -241,15 +241,41 @@ switch ($action) {
 
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            $items = Item::newInstance()->findByUserID($_SESSION['userId'], 3);
+
             osc_renderHeader(array('pageTitle' => __('Manage your account')));
             nav_user_menu();
             osc_renderView('user-account.php');
+            osc_runHook('user_account', $user);
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
             osc_redirectTo(osc_createLoginURL());
         }
         break;
+
+		case 'contact_post':
+    		$user = $manager->findByPrimaryKey($_SESSION['userId']);
+			$yourName = $user['s_name'];
+			$yourEmail = $user['s_email'];
+			$subject = $_POST['subject'];
+			$message = $_POST['message'];
+
+
+			$params = array(
+				'from' => $yourEmail,
+				'from_name' => $yourName,
+				'subject' => __('Contact form') . ': ' . $subject,
+				'to' => $preferences['contactEmail'],
+				'to_name' => __('Administrator'),
+				'body' => $message,
+				'alt_body' => $message
+			);
+			osc_sendMail($params);
+
+			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
+			osc_createUserAccountURL();
+			break;
 
 
     case 'deleteItem':

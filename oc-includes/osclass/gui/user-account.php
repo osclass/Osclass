@@ -1,36 +1,44 @@
-<div id="home_header"><div><?php _e('Your account'); ?></div></div>
+<div id="account_items">
+    <h1><?php _e('Latest items'); ?></h1>
 
-<div align="center">
-	<div id="register_form" style="text-align:left; width: 400px; margin-bottom: 20px;">
-		<p>
-		<label for="name"><?php _e('Name'); ?>: </label>
-        <?php echo $user['s_name']; ?>
-		</p>
-		
-		<p>
-		<label for="email"><?php _e('E-mail'); ?>: </label>
-        <?php echo $user['s_email']; ?>
-		</p>
-		
-		<p>
-		<label for="webSite"><?php _e('Web site'); ?>: </label>
-        <?php echo $user['s_website']; ?>
-		</p>
-		
-		<p>
-		<label for="info"><?php _e('Additional information'); ?>: </label><br />
-        <?php echo $user['s_info']; ?>
-		</p>
-		
-		<p>
-		<label for="phoneMobile"><?php _e('Mobile phone'); ?>: </label>
-        <?php echo $user['s_phone_mobile']; ?>
-		</p>
-		
-		<p>
-		<label for="phoneLand"><?php _e('Land phone'); ?>: </label>
-        <?php echo $user['s_phone_land']; ?>
-		</p>
-		
+    <?php if(isset($items) && count($items)>0) {
+    foreach($items as $i) { ?>
+	<div class="userItem" >
+		<div><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></div>
+
+		<div class="userItemData" >
+		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
+		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
+		</div>
+
+		<div class="userItemButtons" ><a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_createURL(array('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_createURL(array('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Edit'); ?></a></div>
 	</div>
+	<br />
+    <?php };
+    } else {
+        echo __('You do not have any items yet.');
+    };
+    ?>
+</div>
+<div id="account_contact">
+    <h1><?php _e('Contact form'); ?></h1>
+
+    <form action="<?php echo ABS_WEB_URL;?>user.php" method="post">
+    <input type="hidden" name="action" value="contact_post" />
+
+    <table>
+    <tr>
+	    <td><label for="subject"><?php _e('Subject'); ?></label></td>
+	    <td><?php ContactForm::the_subject(); ?></td>
+    </tr>
+    <tr>
+        <td><label for="message"><?php _e('Message'); ?></label></td>
+        <td><?php ContactForm::your_message(); ?></td>
+    </tr>
+    <tr>
+	    <td colspan="2" style="text-align: right;"><input type="submit" value="<?php _e('Send'); ?>" /></td>
+    </tr>
+    </table>
+
+    </form>
 </div>
