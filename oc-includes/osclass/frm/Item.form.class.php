@@ -210,8 +210,12 @@ class ItemForm extends Form {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#region").before('<select name="regionId" id="regionId" ></select>');
+                            $("#region").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#regionId").before('<input type="text" name="region" id="region" />');
+                            $("#regionId").remove();
                         }
                         $("#regionId").html(result);
                     }
@@ -241,8 +245,12 @@ class ItemForm extends Form {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#city").before('<select name="cityId" id="cityId" ></select>');
+                            $("#city").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#cityId").before('<input type="text" name="city" id="city" />');
+                            $("#cityId").remove();
                         }
                         $("#cityId").html(result);
                     }
@@ -273,6 +281,11 @@ class ItemForm extends Form {
 
         if(document.getElementById('cityId').value == "") {
             alert("<?php  _e('You have to select a city.');?>");
+            return false;
+        }
+
+        if(document.getElementById('city').value == "") {
+            alert("<?php  _e('You have to write a city.');?>");
             return false;
         }
 

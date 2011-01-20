@@ -241,7 +241,7 @@ switch ($action) {
 
         if (count($item) > 0) {
             $resources = Item::newInstance()->findResourcesByID($id);
-            osc_renderAdminSection('items/item-edit.php');
+            osc_renderAdminSection('items/frm.php');
         } else {
             osc_redirectTo('items.php');
         }
@@ -280,14 +280,14 @@ switch ($action) {
         $item = array();
         $resources = array();
         
-        osc_renderHeader(
+        /*osc_renderHeader(
                 array(
                     'pageTitle' => __('Publish your item') . ' - ' . $preferences['pageTitle'],
                     'noindex' => 'true'
                 )
-        );
+        );*/
         $new_item = TRUE;
-        osc_renderAdminSection('items/item-edit.php');
+        osc_renderAdminSection('items/frm.php');
         //osc_renderView('item-post.php');
         osc_renderFooter();
     break;
