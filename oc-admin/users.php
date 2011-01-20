@@ -72,7 +72,7 @@ switch($action) {
             default:
                 break;
         }
-		
+
 		osc_redirectTo('users.php');
 		break;
 	case 'edit':

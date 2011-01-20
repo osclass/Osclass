@@ -37,6 +37,66 @@ switch ($action) {
             $input['s_password'] = sha1($_POST['s_password']);
             $input['dt_reg_date'] = DB_FUNC_NOW;
             
+            // This line will be not needed when username is not required anymore
+            $input['s_username'] = $input['s_email'];
+            
+            
+                        // Location code from oc-includes/osclass/items.php
+            $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
+            if(count($country) > 0) {
+                $countryId = $country['pk_c_code'];
+                $countryName = $country['s_name'];
+            } else {
+                $countryId = null;
+                $countryName = null;
+            }
+
+            if( isset($_REQUEST['regionId']) ) {
+                if( intval($_REQUEST['regionId']) ) {
+                    $region = Region::newInstance()->findByPrimaryKey($_REQUEST['regionId']);
+                    if( count($region) > 0 ) {
+                        $regionId = $region['pk_i_id'];
+                        $regionName = $region['s_name'];
+                    }
+                }
+            } else {
+                $regionId = null;
+                $regionName = $_REQUEST['region'];
+            }
+
+            if( isset($_REQUEST['cityId']) ) {
+                if( intval($_REQUEST['cityId']) ) {
+                    $city = City::newInstance()->findByPrimaryKey($_REQUEST['cityId']);
+                    if( count($city) > 0 ) {
+                        $cityId = $city['pk_i_id'];
+                        $cityName = $city['s_name'];
+                    }
+                }
+            } else {
+                $cityId = null;
+                $cityName = $_REQUEST['city'];
+            }
+
+            if( empty($_REQUEST['cityArea']) )
+                $_POST['cityArea'] = null;
+
+            if( empty($_REQUEST['address']) )
+                $_POST['address'] = null;
+
+           
+                $input['fk_c_country_code'] = $countryId;
+                $input['s_country'] = $countryName;
+                $input['fk_i_region_id'] = $regionId;
+                $input['s_region'] = $regionName;
+                $input['fk_i_city_id'] = $cityId;
+                $input['s_city'] = $cityName;
+                $input['s_city_area'] = $_POST['cityArea'];
+                $input['s_address'] = $_POST['address'];
+
+
+            
+            
+            
             $code = osc_genRandomPassword();
             $input['s_secret'] = $code;
             try {
@@ -110,6 +170,7 @@ switch ($action) {
             }
 
 
+            // Location code from oc-includes/osclass/items.php
             $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
             if(count($country) > 0) {
                 $countryId = $country['pk_c_code'];
