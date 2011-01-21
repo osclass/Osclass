@@ -221,9 +221,12 @@ function osc_createURL($params = null) {
                     $params_string .= $k . '=' . $v . '&';
                 }
             }
-
             if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-                return WEB_PATH_URL . $params['file'] . "/" . $params_string;
+                if(count($params)==2 && isset($params['action'])) {
+                    return WEB_PATH_URL . $params['file'] . "/" . $params['action'];
+                } else {
+                    return WEB_PATH_URL . $params['file'] . "?" . $params_string;
+                }
             } else {
                 return WEB_PATH_URL . $params['file'] . ".php?" . $params_string;
             }

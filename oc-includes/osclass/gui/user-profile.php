@@ -11,22 +11,9 @@
         <?php UserForm::name_text($user); ?>
 		</p>
 		
-		<p>
-		<label for="password"><?php _e('Password'); ?></label><br />
-        <?php UserForm::password_text($user); ?><br />
-		<span style="font-size: 10px; "><?php _e('Leave it empty if you don\'t want to change it now.'); ?></span>
-		</p>
-		
-		<p>
-		<label for="password2"><?php _e('Retype the password'); ?></label><br />
-        <?php UserForm::check_password_text($user); ?>
-		</p>
-		<p id="password-error" style="display:none;">
-                <?php _e('Passwords don\'t match.'); ?>
-            </p>
-		<p>
 		<label for="email"><?php _e('E-mail'); ?></label><br />
-        <?php echo $user['s_email']; ?>
+        <?php echo $user['s_email']; ?><br />
+        <a><?php _e('Modify e-mail');?></a> <a><?php _e('Modify password');?></a>
 		</p>
 		
 		<p>
@@ -78,6 +65,8 @@
 			<button type="submit"><?php _e('Update profile'); ?></button>
 		</p>
 		<?php osc_runHook('user_form'); ?>
+        <div style="float:right;"><a onclick="javascript:return confirm('<?php echo __('WARNING: This will also delete the items and comments related to you. This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_createURL(array('file'=>'user', 'action'=>'delete_user'));?>"><?php echo __('Delete my user'); ?></a></div>
+        <div style="clear:both;"></div>
 	</div>
 </div>
 </form>

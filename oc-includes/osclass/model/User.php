@@ -78,6 +78,22 @@ class User extends DAO {
             }
         }
 	}
+	
+	public function deleteUser($id = null) {
+	    if($id!=null) {
+	        osc_runHook('delete_user', $id);
+	        $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
+	        $itemManager = Item::newInstance();
+	        foreach($items as $item) {
+    	        $itemManager->deleteByID($item['pk_i_id']);
+	        }
+            $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
+            $this->conn->osc_dbExec('DELETE FROM %st_user_preferences WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
+            $this->conn->osc_dbExec('DELETE FROM %st_user WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
+            return true;
+	    }
+	    return false;
+	}
 
 }
 

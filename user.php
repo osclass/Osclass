@@ -517,7 +517,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+            osc_redirectTo(osc_createLoginURL());
         }
         break;
 
@@ -530,13 +530,35 @@ switch ($action) {
             osc_redirectTo(osc_createUserAccountURL());
         } else {
             osc_addFlashMessage(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+            osc_redirectTo(osc_createLoginURL());
         };
+        break;
+
+    case 'delete_user':
+        if(isset($_SESSION['userId'])) {
+            try {
+                $manager->deleteUser($_SESSION['userId']);
+                osc_addFlashMessage(__('Success. The user has been deleted.'));
+                unset($_SESSION['userId']);
+                setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                unset($_COOKIE['oc_userId']);
+                unset($_COOKIE['oc_userSecret']);
+            } catch (Exception $e) {
+                osc_addFlashMessage(__('Error. The user can not be deleted. Please try again in a few moments, if the problem persists contact the administrator.'));
+                osc_redirectTo(osc_createUserAccountURL());
+            }
+            
+            osc_redirectTo(osc_createRegisterURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+        };
+        osc_redirectTo(osc_createLoginURL());
         break;
 
 
     default : 
-        osc_redirectTo('index.php');
+        osc_redirectTo(ABS_WEB_URL);
         break;
     
 }
