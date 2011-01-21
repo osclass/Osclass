@@ -63,7 +63,6 @@ function osc_paramRequest($name, $default = null) {
 /**
  * This functions return the web path to use resources available in oc-includes
  *
- * @param string $type Type of file: css, js, images
  * @param string $filename Name of the file to be included
  * @param bool $echo If you want to echo path. By default is false
  * @return string Web path of the resource

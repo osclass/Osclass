@@ -67,7 +67,6 @@ require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
-//require_once LIB_PATH . 'osclass/classes/DAOEntity.php';
 require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
@@ -86,8 +85,6 @@ require_once ABS_PATH . 'oc-admin/common.php';
 
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);
-$_COOKIE = add_slashes_extended($_COOKIE);
-$_SERVER = add_slashes_extended($_SERVER);
 $_REQUEST = add_slashes_extended($_REQUEST);
 
 
