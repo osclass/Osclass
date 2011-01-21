@@ -26,6 +26,10 @@
  */
 
 function add_slashes_extended( $array ) {
+    if(get_magic_quotes_gpc()) {
+        return $array;
+    }
+    
     foreach ( (array) $array as $k => $v ) {
         if( is_array($v) ) {
             $array[$k] = add_slashes_extended($v);
