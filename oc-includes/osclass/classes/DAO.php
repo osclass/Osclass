@@ -20,12 +20,9 @@
  */
 
 define('DB_FUNC_NOW', 'NOW()');
-
 define('DB_CONST_TRUE', 'TRUE');
 define('DB_CONST_FALSE', 'FALSE');
-
 define('DB_CONST_NULL', 'NULL');
-
 define('DB_CUSTOM_COND', 'DB_CUSTOM_COND');
 
 /**
@@ -40,19 +37,21 @@ abstract class DAO {
     /**
      * Make a new instance of the DAO from its name.
      */
-    public static function load($entityName) {
-        if(class_exists($entityName))
+    public static function load($entityName)
+    {
+        if(class_exists($entityName)) {
             return new $entityName;
-        else
+        } else {
             return null;
+        }
     }
 
     public function __construct() {
-       $this->conn = getConnection(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL) ;
+       $this->conn = getConnection(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL);
     }
     
-    function getConnection() {
-        return($this->conn) ;
+    public function getConnection() {
+        return $this->conn;
     } 
     
     /**
@@ -136,11 +135,12 @@ abstract class DAO {
         }
         $where = implode(' AND ', $where);
 
-        return $this->conn->osc_dbExec('DELETE FROM %s WHERE ' . $where, $this->getTableName());
+        $this->conn->osc_dbExec('DELETE FROM %s WHERE ' . $where, $this->getTableName());
+        return $this->conn->get_affected_rows();
     }
 
     /**
-     * @return the number of rows in the table represented by this object.
+     * @return int the number of rows in the table represented by this object.
      */
     public function count() {
         $result = $this->conn->osc_dbFetchResult('SELECT COUNT(*) AS count FROM %s', $this->getTableName());
@@ -179,7 +179,8 @@ abstract class DAO {
             trigger_error($sql) ;
         }
 
-        return $this->conn->osc_dbExec($sql) ;
+        $this->conn->osc_dbExec($sql) ;
+        return $this->conn->get_affected_rows();
     }
 
     public function insert($fields, $aFieldsDescription = null) {

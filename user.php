@@ -96,35 +96,43 @@ switch ($action) {
     case 'send-validation':
         unset($_POST['action']);
 
-		if(isset($_REQUEST['userid'])) {
-        try {
-            $userId = $_REQUEST['userid'];
-            $user = $manager->findByPrimaryKey($userId);
+        if(isset($_REQUEST['userid'])) {
+            try {
+                $userId = $_REQUEST['userid'];
+                $user = $manager->findByPrimaryKey($userId);
 
-            $content = Page::newInstance()->findByInternalName('email_user_validation');
-            if (!is_null($content)) {
-                $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $user['s_secret']);
-				$words = array();
-                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
-                $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_user_validation');
 
-                $params = array(
-                    'subject' => $title,
-                    'to' => $user['s_email'],
-                    'to_name' => $user['s_name'],
-                    'body' => $body,
-                    'alt_body' => $body
-                );
-                osc_sendMail($params);
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+                
+                if (!is_null($content)) {
+                    $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL,
+                                              $user['pk_i_id'], $user['s_secret']);
+                    $words   = array();
+                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
+                    $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+
+                    $emailParams = array('subject'  => $title,
+                                         'to'       => $user['s_email'],
+                                         'to_name'  => $user['s_name'],
+                                         'body'     => $body,
+                                         'alt_body' => $body);
+                    osc_sendMail($params);
+                }
+
+                osc_addFlashMessage(__('We resend you the validation email. If you don\'t recive it after a few minutes, please check your SPAM folder.'));
+            } catch (Exception $e) {
+                osc_addFlashMessage(__('The email couldn\'t be sent, sorry.'));
             }
-
-            osc_addFlashMessage(__('We resend you the validation email. If you don\'t recive it after a few minutes, please check your SPAM folder.'));
-        } catch (Exception $e) {
-            osc_addFlashMessage(__('The email couldn\'t be sent, sorry.'));
         }
-		}
         osc_redirectTo('index.php');
         break;
     case 'validate':
@@ -134,27 +142,36 @@ switch ($action) {
 
         if ($user) {
             if (!$user['b_enabled']) {
-                User::newInstance()->update(
-                        array('b_enabled' => '1'),
-                        array('pk_i_id' => $id, 's_secret' => $code)
-                );
+                $mUser = new User();
+                $mUser->update(array('b_enabled' => '1'),
+                               array('pk_i_id'   => $id,
+                                     's_secret'  => $code));
 
-                $content = Page::newInstance()->findByInternalName('email_user_registration');
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_user_registration');
+
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+                
                 if (!is_null($content)) {
-					$words = array();
+                    $words   = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}');
                     $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle']);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
-                    $params = array(
-                        'subject' => $title,
-                        'to' => $user['s_email'],
-                        'to_name' => $user['s_name'],
-                        'body' => $body,
+                    $emailParams = array(
+                        'subject'  => $title,
+                        'to'       => $user['s_email'],
+                        'to_name'  => $user['s_name'],
+                        'body'     => $body,
                         'alt_body' => $body
                     );
-                    osc_sendMail($params);
+                    osc_sendMail($emailParams);
                 }
                 osc_addFlashMessage(__('Your account is correctly validated. Thanks.'));
             } else {
@@ -437,27 +454,35 @@ switch ($action) {
                         array('pk_i_id' => $user['pk_i_id'])
                     );
 
-                    $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+                    $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', 
+                                             ABS_WEB_URL, $user['pk_i_id'], $code);
+                    
+                    $mPages = new Page();
+                    $aPage = $mPages->findByInternalName('email_user_forgot_password');
 
-                    $content = Page::newInstance()->findByInternalName('email_user_forgot_password');
+                    $content = array();
+                    if(isset($aPage['locale'][$locale]['s_title'])) {
+                        $content = $aPage['locale'][$locale];
+                    } else {
+                        $content = current($aPage['locale']);
+                    }
+
                     if (!is_null($content)) {
-					    $words = array();
-                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}', '{PASSWORD_LINK}', '{DATE_TIME}');
-                        $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'], $_SERVER['REMOTE_ADDR'], $password_link, $date2);
+                        $words   = array();
+                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
+                                         '{PASSWORD_LINK}', '{DATE_TIME}');
+                        $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'],
+                                         $_SERVER['REMOTE_ADDR'], $password_link, $date2);
                         $title = osc_mailBeauty($content['s_title'], $words);
                         $body = osc_mailBeauty($content['s_text'], $words);
 
-                        $params = array(
-                            'subject' => $title,
-                            'to' => $user['s_email'],
-                            'to_name' => $user['s_name'],
-                            'body' => $body,
-                            'alt_body' => $body
-                        );
-                        osc_sendMail($params);
+                        $emailParams = array('subject'  => $title,
+                                             'to'       => $user['s_email'],
+                                             'to_name'  => $user['s_name'],
+                                             'body'     => $body,
+                                             'alt_body' => $body);
+                        osc_sendMail($emailParams);
                     }
-
-
                 }
             }
             osc_addFlashMessage(__('Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive.'));

@@ -102,13 +102,22 @@ function osc_showWidgets($location) {
         echo $w['s_content'];
 }
 
-function osc_createPageURL($page) {
+function osc_createPageURL($page, $echo = false) {
     global $preferences;
+    $path = '';
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
         $sanitizedString = osc_sanitizeString($page['s_title']);
-        return sprintf(WEB_PATH_URL . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
-    } else
-        return sprintf(WEB_PATH_URL . 'page.php?id=%d', $page['pk_i_id']);
+        $path = sprintf(ABS_WEB_URL . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
+    } else {
+        $path = sprintf(ABS_WEB_URL . 'page.php?id=%d', $page['pk_i_id']);
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
 function osc_createLoginURL() {
@@ -269,18 +278,27 @@ function osc_createItemPostURL($cat = null) {
     }
 }
 
-function osc_createCategoryURL($cat, $absolute = false) {
+function osc_createCategoryURL($cat, $absolute = false, $echo = false) {
     $prefix = $absolute ? ABS_WEB_URL : REL_WEB_URL;
     global $preferences;
+    $path = '';
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
         $cat = Category::newInstance()->hierarchy($cat['pk_i_id']);
         $sanitized_category = "";
         for ($i = (count($cat)); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
         }
-        return sprintf($prefix . '%s', $sanitized_category);
-    } else
-        return sprintf(WEB_PATH_URL . 'search.php?catId=%d', $cat['pk_i_id']);
+        $path = sprintf($prefix . '%s', $sanitized_category);
+    } else {
+        $path = sprintf(WEB_PATH_URL . 'search.php?catId=%d', $cat['pk_i_id']);
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
 function osc_createItemURL($item, $absolute = false) {

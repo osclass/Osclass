@@ -297,12 +297,12 @@ function getConnection($dbHost = null, $dbUser = null, $dbPassword = null, $dbNa
     
     if(!isset($instance[$dbName . "_" . $dbHost])) {
         if(!isset($instance)) {
-            $instance = array() ;
+            $instance = array();
         }
         
-        $instance[$dbName . "_" . $dbHost] = new DB($dbHost, $dbUser, $dbPassword, $dbName, $dbLogLevel) ;
+        $instance[$dbName . "_" . $dbHost] = new DB($dbHost, $dbUser, $dbPassword, $dbName, $dbLogLevel);
     }
 
-    return ($instance[$dbName . "_" . $dbHost]) ;
+    return ($instance[$dbName . "_" . $dbHost]);
 }
 

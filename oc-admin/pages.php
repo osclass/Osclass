@@ -1,151 +1,141 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'oc-admin/oc-load.php';
 
-$pageManager = Page::newInstance();
+$pageManager = new Page();
 
 $action = osc_readAction();
 switch($action) {
-	case 'edit':
-		if(isset($_REQUEST['id'])) {
-			$page = $pageManager->findByIDObject($_REQUEST['id']);
-			osc_renderAdminSection('pages/frm.php', __('Pages'), __('Edit'));
-		} else {
-			osc_redirectTo('pages.php');
-		}
-		break;
-	case 'edit_post':
-		try {
-            /*if(isset($_REQUEST['autosave']) && $_REQUEST['autosave']=='yes') {
-                $pageManager->insertDraft($_REQUEST['id'], $_REQUEST['s_internal_name']);
-                $data = array();
-                foreach($_REQUEST as $k => $v) {
-                    if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                        $data[$m[1]][$m[2]] = $v;
-                    }
-                }
-                foreach($data as $k => $_data) {
-                    $pageManager->insertDescriptionDraft($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
-                }
-                die;
-            } else { */
-                //$pageManager->updateInternalName($_REQUEST['id'], $_REQUEST['s_internal_name']);
-			    $data = array();
-			    foreach($_REQUEST as $k => $v) {
-				    if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-					    $data[$m[1]][$m[2]] = $v;
-				    }
-			    }
-			    foreach($data as $k => $_data) {
-				    $pageManager->updateLocaleForce($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
-			    }
-                //$pageManager->deleteDraft($_REQUEST['id']);
-			    osc_addFlashMessage( __('The page has been updated.') );
-            //}
-		} catch (Exception $e) {
-			osc_addFlashMessage( __('Error: ') . $e->getMessage() );
-		}
-		osc_redirectTo('pages.php');
-	case 'delete':
-		$id = osc_paramRequest('id', false);
-        if(!is_array($id)) {
-		    try {
-			    if($id) {
-				    if($pageManager->deleteByID($id)) {
-					    osc_addFlashMessage(__('The item have been deleted.'));
-					    osc_redirectTo('pages.php');
-				    } else {
-					    osc_addFlashMessage( __('Error, this page can not be deleted.'));
-					    osc_redirectTo('pages.php');
-				    }
-			    }
-			    osc_addFlashMessage(__('The item have been deleted.'));
-		    } catch (Exception $e) {
-			    osc_addFlashMessage( __('Error: ') . $e->getMessage());
-		    }
-        } else {
-					    
-
-			    foreach($id as $_id) {
-					    osc_addFlashMessage(print_r($_id));
-				    if($pageManager->deleteByID($_id)) {
-					    osc_addFlashMessage(__('The item have been deleted.'));
-				    } else {
-					    osc_addFlashMessage( __('Error, this page can not be deleted.'));
-				    }
-    			    osc_addFlashMessage(__('The item have been deleted.'));
-                }
+    case 'edit':
+        if(!isset($_REQUEST['id'])) {
+            osc_redirectTo('pages.php');
         }
-		osc_redirectTo('pages.php');
-		break;
-	case 'add':
-        //$page = $pageManager->insert('');
+        $page = $pageManager->findByPrimaryKey($_REQUEST['id']);
+        osc_renderAdminSection('pages/frm.php', __('Pages'), __('Edit'));
+        break;
+    case 'edit_post':
+        $id = osc_paramRequest('id', false);
+        $s_internal_name = osc_paramRequest('s_internal_name', '');
+        
+        $aFieldsDescription = array();
+        foreach($_REQUEST as $k => $v) {
+            if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                $aFieldsDescription[$m[1]][$m[2]] = $v;
+            }
+        }
+
+        foreach($aFieldsDescription as $k => $_data) {
+            $pageManager->updateDescription($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
+        }
+        
+        if(!pageInternalNameExists($id, $s_internal_name)) {
+            if(!pageIsIndelible($id)) {
+                $pageManager->updateInternalName($id, $s_internal_name);
+            }
+            osc_addFlashMessage( __('The page has been updated.'), 'admin' );
+            osc_redirectTo('pages.php');
+        }
+        osc_addFlashMessage(__('You couldn\'t repeat internal name.'), 'admin');
+        osc_redirectTo( 'pages.php?action=edit&id=' . $id);
+        break;
+    case 'delete':
+        $id = osc_paramRequest('id', false);
+        $page_deleted_correcty = 0;
+        $page_deleted_error = 0;
+        $page_indelible = 0;
+        
+        if(!is_array($id)) {
+            $id = array($id);
+        }
+        
+        foreach($id as $_id) {
+            $result = pageDeleteById($_id);
+            switch ($result) {
+                case -1:
+                    $page_indelible++;
+                    break;
+                case 0:
+                    $page_deleted_error++;
+                    break;
+                case 1:
+                    $page_deleted_correcty++;
+            }
+        }
+
+        if($page_indelible > 0) {
+            if($page_indelible == 1) {
+                osc_addFlashMessage(__('1 page couldn\'t be deleted because it is indelible.'), 'admin');
+            } else {
+                osc_addFlashMessage($page_indelible . ' ' .__('pages couldn\'t be deleted because are indelible.'), 'admin');
+            }
+        }
+        if($page_deleted_error > 0) {
+            if($page_deleted_error == 1) {
+                osc_addFlashMessage(__('1 page couldn\'t be deleted.'), 'admin');
+            } else {
+                osc_addFlashMessage($page_deleted_error . ' ' .__('pages couldn\'t be deleted.'), 'admin');
+            }
+        }
+        if($page_deleted_correcty > 0) {
+            if($page_deleted_correcty == 1) {
+                osc_addFlashMessage(__('1 page has been deleted correctly.'), 'admin');
+            } else {
+                osc_addFlashMessage($page_deleted_correcty . ' ' .__('pages have been deleted correctly.'), 'admin');
+            }
+        }
+        osc_redirectTo('pages.php');
+        break;
+    case 'add':
         $page['s_internal_name'] = '';
-		osc_renderAdminSection('pages/frm.php', __('Pages'), __('Add'));
-		break;
-	case 'add_post':
+        osc_renderAdminSection('pages/frm.php', __('Pages'), __('Add'));
+        break;
+    case 'add_post':
+        if(!isset($_REQUEST['s_internal_name'])) {
+            osc_addFlashMessage(__('You have to put some internal name.'), 'admin');
+        }
 
-		try {
-            /*if(isset($_REQUEST['autosave']) && $_REQUEST['autosave']=='yes') {
-                $pageManager->insertDraft($_REQUEST['id'], $_REQUEST['s_internal_name']);
-                $data = array();
-                foreach($_REQUEST as $k => $v) {
-                    if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                        $data[$m[1]][$m[2]] = $v;
-                    }
-                }
-                foreach($data as $k => $_data) {
-                    $pageManager->insertDescriptionDraft($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
-                }
-                die;
-            } else {*/
+        $aFields = array('s_internal_name' => $_REQUEST['s_internal_name'], 'b_indelible' => '0');
+        $aFieldsDescription = array();
+        foreach($_REQUEST as $k => $v) {
+            if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                $aFieldsDescription[$m[1]][$m[2]] = $v;
+            }
+        }
 
-			    if(isset($_REQUEST['s_internal_name'])) { $intName = $_REQUEST['s_internal_name']; } else { $intName = ""; };
-                $data = $pageManager->insert($intName);
-                if(isset($data['pk_i_id']) && $data['pk_i_id']!="") {
-                    $id = $data['pk_i_id'];
-                    $data = array();
-			        foreach($_REQUEST as $k => $v) {
-                        if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                            $data[$m[1]][$m[2]] = $v;
-                        }
-                    }
-                    foreach($data as $k => $_data) {
-                        $pageManager->updateLocaleForce($id, $k, $_data['s_title'], $_data['s_text']);
-                    }
-                    osc_addFlashMessage(__('The item has been added.'));
-                } else {
-                    osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'));
-                }
-            //}
-		} catch (Exception $e) {
-			osc_addFlashMessage(__('Error: ') . $e->getMessage());
-		}
-	default:
-		$prefLocale = Preference::newInstance()->findValueByName('language');
-		$pages = $pageManager->listAllObject();
-		osc_renderAdminSection('pages/index.php', __('Pages'));
+        $result = $pageManager->insert($aFields, $aFieldsDescription);
+
+        if($result) {
+            osc_addFlashMessage(__('The page has been added.'), 'admin');
+        } else {
+            osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin');
+        }
+    default:
+        $prefLocale = null;
+        if(!isset($_SESSION['adminLocale'])) {
+            $prefLocale = Preference::newInstance()->findValueByName('language');
+        } else {
+            $prefLocale = $_SESSION['adminLocale'];
+        }
+        $pages = $pageManager->listAll();
+        osc_renderAdminSection('pages/index.php', __('Pages'));
 }
 
 ?>
