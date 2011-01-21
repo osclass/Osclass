@@ -10,20 +10,10 @@
 		<label for="name"><?php _e('Name'); ?></label><br />
         <?php UserForm::name_text($user); ?>
 		</p>
-		
+
 		<label for="email"><?php _e('E-mail'); ?></label><br />
         <?php echo $user['s_email']; ?><br />
-        <a><?php _e('Modify e-mail');?></a> <a><?php _e('Modify password');?></a>
-		</p>
-		
-		<p>
-		<label for="webSite"><?php _e('Web site'); ?></label><br />
-        <?php UserForm::website_text($user); ?>
-		</p>
-		
-		<p>
-		<label for="info"><?php _e('Additional information'); ?></label><br />
-        <?php UserForm::info_textarea($user); ?>
+        <a href="<?php echo osc_createURL(array('file' =>'user', 'action' => 'change_email'));?>" ><?php _e('Modify e-mail');?></a> <a href="<?php echo osc_createURL(array('file' =>'user', 'action' => 'change_password'));?>" ><?php _e('Modify password');?></a>
 		</p>
 		
 		<p>
@@ -60,7 +50,18 @@
 		<label for="address"><?php _e('Address'); ?></label><br />
         <?php UserForm::address_text($user); ?>
 		</p>
+
+		<p>
+		<label for="webSite"><?php _e('Web site'); ?></label><br />
+        <?php UserForm::website_text($user); ?>
+		</p>
 		
+		<p>
+		<label for="info"><?php _e('Additional information'); ?></label><br />
+        <?php UserForm::info_textarea($user); ?>
+		</p>
+		
+
 		<p>
 			<button type="submit"><?php _e('Update profile'); ?></button>
 		</p>

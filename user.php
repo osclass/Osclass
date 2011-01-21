@@ -581,6 +581,136 @@ switch ($action) {
         osc_redirectTo(osc_createLoginURL());
         break;
 
+    case 'change_email':
+
+        if(isset($_SESSION['userId'])) {
+            $user = $manager->findByPrimaryKey($_SESSION['userId']);
+
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            nav_user_menu();
+            ?>
+                <div id="home_header"><div><?php _e('Change your E-mail'); ?></div></div>
+                <form action="<?php echo osc_createURL('user');?>" method="post">
+                <input type="hidden" name="action" value="change_email_post" />
+                <div>
+	                <div id="change_email_form" >
+		                <p>
+		                <label for="name"><?php _e('Your current e-mail'); ?></label><br />
+                        <?php echo $user['s_email']; ?>
+		                </p>
+
+		                <p>
+		                <label for="phoneLand"><?php _e('New E-mail'); ?></label><br />
+                        <?php UserForm::email_text($user); ?>
+		                </p>
+		                
+		                <p>
+                        <?php _e('You are going to change your email address. You will received a confirmation on your new email address.');?>
+		                </p>
+		                
+		                <p>
+			                <button type="submit"><?php _e('Change e-mail'); ?></button>
+		                </p>
+                        <div style="clear:both;"></div>
+	                </div>
+                </div>
+                </form>    
+            
+            
+            <?php
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }
+        break;
+        
+    case 'change_password':
+
+
+        if(isset($_SESSION['userId'])) {
+            $user_prefs = $manager->preferences($_SESSION['userId']);
+
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            nav_user_menu();
+            ?>
+            <div id="home_header"><div><?php _e('Change your E-mail'); ?></div></div>
+            <form action="<?php echo osc_createURL('user');?>" method="post">
+            <input type="hidden" name="action" value="change_password_post" />
+            <div>
+	            <div id="change_password_form" >
+		            <p>
+		            <label for="name"><?php _e('Old password'); ?></label><br />
+                    <?php UserForm::old_password_text(); ?><br />
+		            </p>
+
+		            <p>
+		            <label for="password"><?php _e('Password'); ?></label><br />
+                    <?php UserForm::password_text(); ?><br />
+		            </p>
+		
+		            <p>
+		            <label for="password2"><?php _e('Retype the password'); ?></label><br />
+                    <?php UserForm::check_password_text(); ?>
+		            </p>
+		            
+		            <p>
+			            <button type="submit"><?php _e('Change password'); ?></button>
+		            </p>
+                    <div style="clear:both;"></div>
+	            </div>
+            </div>
+            </form>    
+        
+        
+        <?php 
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }
+        break;
+
+    case 'change_email_post':
+    
+        if(isset($_SESSION['userId'])) {
+            $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);die;
+            osc_addFlashMessage(__('We have send you an email, you need to confirm it.'));
+            osc_redirectTo(osc_createUserAccountURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }   
+        break;
+
+    case 'change_password_post':
+    
+        if(isset($_SESSION['userId'])) {
+            $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            if($user['s_password']!=sha1($_REQUEST['old_password'])) {
+                osc_addFlashMessage(__('Old password doesn\'t match.'));
+                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+            } else if($_REQUEST['profile_password']=='') {
+                osc_addFlashMessage(__('Passwords can not be empty.'));
+                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+            } else if($_REQUEST['profile_password']!=$_REQUEST['profile_password2']) {
+                osc_addFlashMessage(__('Passwords don\'t match.'));
+                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+            }
+            $manager->update(
+                        array('s_password' => sha1($_REQUEST['profile_password'])),
+                        array('pk_i_id' => $_SESSION['userId'])
+                );
+            osc_addFlashMessage(__('Password has been changed.'));
+            osc_redirectTo(osc_createUserAccountURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }   
+
+        break;
+
+
 
     default : 
         osc_redirectTo(ABS_WEB_URL);
