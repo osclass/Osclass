@@ -60,3 +60,19 @@ function osc_paramRequest($name, $default = null) {
 	return osc_param($_REQUEST, $name, $default);
 }
 
+/**
+ * This functions return the web path to use resources available in oc-includes
+ *
+ * @param string $filename Name of the file to be included
+ * @param bool $echo If you want to echo path. By default is false
+ * @return string Web path of the resource
+ */
+function osc_globalResource($filename, $echo = true) {
+    $path = ABS_WEB_URL . 'oc-includes/' . $filename;
+
+    if($echo) {
+        echo $path;
+    }
+
+    return $path;
+}
