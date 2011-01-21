@@ -68,13 +68,8 @@ function osc_paramRequest($name, $default = null) {
  * @param bool $echo If you want to echo path. By default is false
  * @return string Web path of the resource
  */
-function osc_globalResources($type, $filename, $echo = false) {
-    $valid_types = array('css', 'js', 'images');
-    if(!in_array($type, $valid_types)) {
-        return '';
-    }
-
-    $path = ABS_WEB_URL . 'oc-includes/' . $type . '/' . $filename;
+function osc_globalResource($filename, $echo = true) {
+    $path = ABS_WEB_URL . 'oc-includes/' . $filename;
 
     if($echo) {
         echo $path;
