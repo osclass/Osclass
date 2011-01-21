@@ -1,22 +1,19 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -62,7 +59,7 @@ function osc_formatDate($item) {
     return date($preferences['dateFormat'], $date) ;
 }
 
-function osc_pageInfo($property) {
+function osc_pageInfo($property, $echo = false) {
     global $preferences, $headerConf ;
     $conf = array(
         'pageTitle' => $preferences['pageTitle']
@@ -70,21 +67,33 @@ function osc_pageInfo($property) {
     if (isset($headerConf))
         $conf = array_merge($conf, $headerConf) ;
 
-    if (isset($conf[$property]))
-        return $conf[$property] ;
-    else
-        return null;
+    if (!isset($conf[$property])) {
+        return '';
+    }
+
+    if($echo) {
+        echo $conf[$property];
+        return '';
+    }
+
+    return $conf[$property] ;
 }
 
-function osc_themeResource($fileName) {
+function osc_themeResource($fileName, $echo = false) {
     global $preferences;
-    //echo WEB_PATH . '/oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
     $themePath = THEMES_PATH . $preferences['theme'] . '/' . $fileName;
+    $path = '';
     if (file_exists($themePath)) {
-        echo WEB_PATH . 'oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
+        $path = ABS_WEB_URL . 'oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
     } else {
-        echo WEB_PATH . 'oc-includes/osclass/gui/' . $fileName;
+        $path =  ABS_WEB_URL . 'oc-includes/osclass/gui/' . $fileName;
     }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+    return $path;
 }
 
 function osc_showWidgets($location) {
