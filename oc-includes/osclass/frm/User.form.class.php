@@ -40,6 +40,11 @@ class UserForm extends Form {
         return true ;
     }
     
+    static public function old_password_text($user = null) {
+        parent::generic_password("old_password", '', null, false);
+        return true ;
+    }
+    
     static public function password_login_text($user = null) {
         parent::generic_password("password", '', null, false);
         return true ;

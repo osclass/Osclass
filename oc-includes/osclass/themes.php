@@ -326,7 +326,8 @@ function nav_user_menu($options = null) {
     osc_runHook('user_menu');
     echo '</ul>';
 
-}
+} 
+
 
 /**
  * Prints the aditional options to the menu
