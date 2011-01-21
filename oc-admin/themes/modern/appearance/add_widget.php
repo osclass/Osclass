@@ -81,12 +81,12 @@ if(isset($action) && $action === "add_widget") {
 						<input type="hidden" name="location" value="<?php echo $_GET['location']; ?>" />
 						
 						<fieldset>
-							<legend><?php echo __('Description'); ?></legend>
+							<legend><?php echo __('Description (only for internal purpose)'); ?></legend>
 							<input type="text" name="description" id="description" />
 						</fieldset>
 						
 						<fieldset>
-							<legend><?php echo __('Content'); ?></legend>
+							<legend><?php echo __('HTML Code for the Widget'); ?></legend>
 							<textarea name="content" id="body" style="width: 100%; height: 300px;"></textarea>
 						</fieldset>
 						

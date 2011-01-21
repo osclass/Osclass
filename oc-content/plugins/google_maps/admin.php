@@ -11,7 +11,7 @@
     if ( isset($_REQUEST['option']) && $_REQUEST['option'] == 'stepone' ) 
     {
         $dao_preference->update(array("s_value" => $key), array("s_section" => "plugin-google_maps", "s_name" => "google_maps_key")) ;
-        echo '<div><p>Congratulations. The plugin is now configured.</p></div>';
+        echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>Congratulations. The plugin is now configured.</p></div>';
     }
     unset($dao_preference) ;
     

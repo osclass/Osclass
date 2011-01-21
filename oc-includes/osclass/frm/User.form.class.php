@@ -21,9 +21,9 @@
 
 class UserForm extends Form {
 
-    /*static public function primary_input_hidden($page) {
-        parent::generic_input_hidden("id", $page["pk_i_id"]) ;    
-    }*/
+    static public function primary_input_hidden($user) {
+        parent::generic_input_hidden("id", $user["pk_i_id"]) ;    
+    }
     
     static public function name_text($user = null) {
         parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
@@ -179,10 +179,6 @@ $(document).ready(function(){
         $('#s_name').css('border', '');
     });
 
-    $('#s_username').focus(function(){
-        $('#s_username').css('border', '');
-    });
-
     $('#s_email').focus(function(){
         $('#s_email').css('border', '');
     });
@@ -196,16 +192,14 @@ $(document).ready(function(){
         $('#s_password2').css('border', '');
         $('#password-error').css('display', 'none');
     });
-});
+});    
+    
+
 
 function checkForm() {
     var num_errors = 0;
     if( $('#s_name').val() == '' ) {
         $('#s_name').css('border', '1px solid red');
-        num_errors = num_errors + 1;
-    }
-    if( $('#s_username').val() == '' ) {
-        $('#s_username').css('border', '1px solid red');
         num_errors = num_errors + 1;
     }
     if( $('#s_email').val() == '' ) {
@@ -233,6 +227,56 @@ function checkForm() {
 </script>
     <?php } 
 
+
+
+    static public function js_validation_edit() { ?>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('#s_name').focus(function(){
+        $('#s_name').css('border', '');
+    });
+
+    $('#s_email').focus(function(){
+        $('#s_email').css('border', '');
+    });
+
+    $('#s_password').focus(function(){
+        $('#s_password').css('border', '');
+        $('#password-error').css('display', 'none');
+    });
+
+    $('#s_password2').focus(function(){
+        $('#s_password2').css('border', '');
+        $('#password-error').css('display', 'none');
+    });
+});
+
+function checkForm() {
+    var num_errors = 0;
+    if( $('#s_name').val() == '' ) {
+        $('#s_name').css('border', '1px solid red');
+        num_errors = num_errors + 1;
+    }
+    if( $('#s_email').val() == '' ) {
+        $('#s_email').css('border', '1px solid red');
+        num_errors = num_errors + 1;
+    }
+    if( $('#s_password').val() != $('#s_password2').val() ) {
+        $('#password-error').css('display', 'block');
+        num_errors = num_errors + 1;
+    }
+    if(num_errors > 0) {
+        return false;
+    }
+
+    return true;
+}
+</script>
+    <?php } 
+
+
+
     static public function location_javascript() {
  ?>
 <script type="text/javascript">
@@ -256,8 +300,12 @@ function checkForm() {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#region").before('<select name="regionId" id="regionId" ></select>');
+                            $("#region").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#regionId").before('<input type="text" name="region" id="region" />');
+                            $("#regionId").remove();
                         }
                         $("#regionId").html(result);
                     }
@@ -287,8 +335,12 @@ function checkForm() {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#city").before('<select name="cityId" id="cityId" ></select>');
+                            $("#city").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#cityId").before('<input type="text" name="city" id="city" />');
+                            $("#cityId").remove();
                         }
                         $("#cityId").html(result);
                     }

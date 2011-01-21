@@ -42,6 +42,15 @@ class CategoryStats extends DAO {
 		}
 	}
 
+	public function findByCategoryId($categoryId) {
+		return $this->conn->osc_dbFetchResult('SELECT * FROM %s WHERE fk_i_category_id = ', $this->getTableName(), $categoryId);
+	}
+
+	public function countItemsFromCategory($categoryId) {
+		$data = $this->conn->osc_dbFetchResult('SELECT i_num_items FROM %s WHERE fk_i_category_id = %d', $this->getTableName(), $categoryId);
+		if($data==null) { return 0; } else { return $data['i_num_items']; };
+	}
+
 	function getNumItems($cat) {
 		static $numItemsMap = null;
 		if(is_null($numItemsMap)) {

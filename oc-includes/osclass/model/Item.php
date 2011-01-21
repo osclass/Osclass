@@ -325,8 +325,15 @@ class Item extends DAO {
         return $this->listWhere("s_title LIKE '%%%s%%' OR s_description LIKE '%%%1\$s%%'", $pattern);
     }
 
-    public function findByUserID($userId) {
-        return $this->listWhere('i.fk_i_user_id = %d', $userId);
+    public function findByUserID($userId, $limit = null) {
+        if($limit==null) {
+            $limit_text = '';
+        } else {
+            $limit_text = ' LIMIT '.$limit;
+        }
+        $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id ASC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
+        return $this->extendData($items);
+        //return $this->listWhere('i.fk_i_user_id = %d', $userId);
     }
 
     /* findByItemStat()

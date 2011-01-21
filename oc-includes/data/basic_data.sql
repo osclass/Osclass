@@ -15,7 +15,6 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'allowedExt', 'png,gif,jpg', 'STRING'),
 
     ('osclass', 'dimThumbnail', '240x200', 'STRING'),
-    ('osclass', 'dimPreview', '320x200', 'STRING'),
     ('osclass', 'dimNormal', '640x480', 'STRING'),
     ('osclass', 'keep_original_image', '1', 'BOOLEAN'),
 

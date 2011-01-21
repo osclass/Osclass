@@ -1,3 +1,4 @@
+<div style="clear: both;"></div>
 <?php
 $pages = Page::newInstance()->listNotIndelibles();
 $numPages = count($pages);

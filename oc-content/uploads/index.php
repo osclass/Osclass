@@ -1,3 +1,1 @@
-<?php
-// blank page
-?>
+<?php /* So say we all */ ?>

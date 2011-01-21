@@ -125,9 +125,10 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_city_area VARCHAR(200) NULL,
     d_coord_lat DECIMAL(10, 6),
     d_coord_long DECIMAL(10, 6),
+    i_permissions VARCHAR(2) DEFAULT 0,
 
         PRIMARY KEY (pk_i_id),
-        UNIQUE KEY (s_username),
+        UNIQUE KEY (s_email),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
