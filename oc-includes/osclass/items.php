@@ -218,12 +218,12 @@ switch ($action) {
         // first of all, insert the item
         $code = osc_genRandomPassword();
 
-        $preferences_validation = false;
+        $has_to_validate = false;
         if(((isset($preferences['enabled_item_validation'])) && $preferences['enabled_item_validation'])) {
-            $preferences_validation = true;
+            $has_to_validate = true;
         }
 
-        if($is_admin OR $preferences_validation) {
+        if($is_admin || !$has_to_validate) {
             $active = 'ACTIVE';
         }
        
@@ -309,24 +309,23 @@ switch ($action) {
                 $cityName = $_POST['city'];
             }
 
-            if( empty($_POST['cityArea']) )
+            if( empty($_POST['cityArea']) ) {
                 $_POST['cityArea'] = null;
+            }
 
-            if( empty($_POST['address']) )
+            if( empty($_POST['address']) ) {
                 $_POST['address'] = null;
+            }
 
-            $location = array(
-                'fk_i_item_id' => $itemId,
-                'fk_c_country_code' => $countryId,
-                's_country' => $countryName,
-                'fk_i_region_id' => $regionId,
-                's_region' => $regionName,
-                'fk_i_city_id' => $cityId,
-                's_city' => $cityName,
-                's_city_area' => $_POST['cityArea'],
-                's_address' => $_POST['address']
-            );
-
+            $location = array('fk_i_item_id'      => $itemId,
+                              'fk_c_country_code' => $countryId,
+                              's_country'         => $countryName,
+                              'fk_i_region_id'    => $regionId,
+                              's_region'          => $regionName,
+                              'fk_i_city_id'      => $cityId,
+                              's_city'            => $cityName,
+                              's_city_area'       => $_POST['cityArea'],
+                              's_address'         => $_POST['address']);
             $locationManager = ItemLocation::newInstance();
             $locationManager->insert($location);
 
@@ -348,7 +347,7 @@ switch ($action) {
                 }
             }
 
-            if (isset($preferences['enabled_item_validation']) && !$preferences['enabled_item_validation']) {
+            if ($is_admin || !$has_to_validate) {
                 CategoryStats::newInstance()->increaseNumItems($PcatId);
             }
             
