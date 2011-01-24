@@ -141,10 +141,8 @@ switch ($action) {
                 $mUser->update(array('b_enabled' => '1'),
                                array('pk_i_id'   => $id,
                                      's_secret'  => $code));
-
                 $mPages = new Page();
                 $aPage = $mPages->findByInternalName('email_user_registration');
-
                 $content = array();
                 if(isset($aPage['locale'][$locale]['s_title'])) {
                     $content = $aPage['locale'][$locale];
@@ -651,6 +649,7 @@ switch ($action) {
 
     case 'change_email_post':
         if(isset($_SESSION['userId'])) {
+
             if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
                 $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);
                     $user = $manager->findByPrimaryKey($_SESSION['userId']);
