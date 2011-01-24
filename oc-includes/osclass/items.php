@@ -171,15 +171,18 @@ switch ($action) {
         osc_runHook('item_edit_post');
 
         osc_addFlashMessage(__('Great! We\'ve just update your item.'));
-        //osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         break;
 
     case 'post_item':
-
-
         $success = true;
-        import_request_variables('p', 'P');
+        $is_admin = false;
+        $active = 'INACTIVE';
 
+        if(isset($_SESSION['adminId'])) {
+            $is_admin = true;
+        }
+
+        import_request_variables('p', 'P');
 
         if(isset($admin) && $admin==TRUE) {
             $userId = $_SESSION['adminId'];
@@ -190,7 +193,7 @@ switch ($action) {
                 if ($preferences['reg_user_post']) {
                     if ($userId == null) {
                         osc_addFlashMessage(__('You new to log-in in order to post a new item.'));
-                        osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+                        osc_redirectTo(osc_createLoginURL());
                         break;
                     }
                 }
@@ -210,19 +213,20 @@ switch ($action) {
                     }
                 }
             }
-
-
-
         }
 
-
-        
-
         // first of all, insert the item
-
         $code = osc_genRandomPassword();
 
-        $active = (isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) ? 'INACTIVE' : 'ACTIVE' ;
+        $preferences_validation = false;
+        if(((isset($preferences['enabled_item_validation'])) && $preferences['enabled_item_validation'])) {
+            $preferences_validation = true;
+        }
+
+        if($is_admin OR $preferences_validation) {
+            $active = 'ACTIVE';
+        }
+       
         $show_email = isset($_POST['showEmail']) ? $_POST['showEmail'] : '0';
 
         if ($userId != null) {
@@ -362,31 +366,25 @@ switch ($action) {
                     ));
                     $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
-                // Create thumbnail
-                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                $size = explode('x', $preferences['dimThumbnail']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                    // Create thumbnail
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                    $size = explode('x', $preferences['dimThumbnail']);
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                // Create preview
-                /*$thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
-                $size = explode('x', $preferences['dimPreview']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);*/
+                    // Create normal size
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                    $size = explode('x', $preferences['dimNormal']);
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                // Create normal size
-                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
-                $size = explode('x', $preferences['dimNormal']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
-
-                if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
-                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
-                    move_uploaded_file($tmpName, $path);
-                }
-
+                    if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                        $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
+                        move_uploaded_file($tmpName, $path);
+                    }
 
                     $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    $dao_itemResource->update(array(
-                        's_path' => $s_path
-                            ), array('pk_i_id' => $resourceId, 'fk_i_item_id' => $itemId));
+                    $dao_itemResource->update(array('s_path'       => $s_path),
+                                              array('pk_i_id'      => $resourceId,
+                                                    'fk_i_item_id' => $itemId));
                 }
             }
             unset($dao_itemResource) ;
@@ -403,7 +401,7 @@ switch ($action) {
             $locale = osc_getActualLocale();
             
             // send an e-mail to the admin with the data of the new item
-            if(!isset($admin) || $admin!=TRUE) {
+            if(!$is_admin) {
                 if (isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
                     $aPage = $mPages->findByInternalName('email_item_validation');
 
@@ -523,15 +521,16 @@ switch ($action) {
             }
 
             osc_runHook('after_item_post');
-            // This should be called via HTTP so the user will not notice the lag
-            //osc_runAlertOnCategory($_REQUEST['catId']);
 
-            if (isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
-                osc_addFlashMessage(__('Great! You\'ll receive an e-mail to activate your item.'));
+            if($is_admin) {
+                osc_addFlashMessage(__('A new item has been added'));
             } else {
-                osc_addFlashMessage(__('Great! We\'ve just published your item.'));
+                if(isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
+                    osc_addFlashMessage(__('Great! You\'ll receive an e-mail to activate your item.'));
+                } else {
+                    osc_addFlashMessage(__('Great! We\'ve just published your item.'));
+                }
             }
-
         }
 
     break;

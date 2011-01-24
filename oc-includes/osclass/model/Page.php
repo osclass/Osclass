@@ -304,7 +304,7 @@ class Page extends DAO
     {
         $conditions = array('fk_c_locale_code' => $locale, 'fk_i_pages_id' => $id);
         $exist= $this->existDescription($conditions);
-        var_dump($exist);
+
         if(!$exist) {
             $result = $this->insertDescription($id, $locale, $title, $text);
             return $result;
