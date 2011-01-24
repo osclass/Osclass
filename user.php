@@ -649,14 +649,83 @@ switch ($action) {
     case 'change_email_post':
     
         if(isset($_SESSION['userId'])) {
-            $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);die;
-            osc_addFlashMessage(__('We have send you an email, you need to confirm it.'));
-            osc_redirectTo(osc_createUserAccountURL());
+            if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
+                $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);
+                    $user = $manager->findByPrimaryKey($_SESSION['userId']);
+                    $code = osc_genRandomPassword(50);
+                    $date = date('Y-m-d H:i:s');
+                    $manager->update(
+                        array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
+                        array('pk_i_id' => $_SESSION['userId'])
+                    );
+
+                $content = Page::newInstance()->findByInternalName('email_new_email');
+                if (!is_null($content)) {
+                    $validationLink = sprintf('%suser.php?action=change_email_confirm&id=%d&oe=%s&ne=%s&code=%s', ABS_WEB_URL, $_SESSION['userId'], $user['s_email'], $_REQUEST['s_email'], $code);
+                    $words = array();
+                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
+                    $words[] = array($user['s_name'], $_REQUEST['s_email'], ABS_WEB_URL, $preferences['pageTitle'], $validationLink);
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+				
+                    $params = array(
+                        'subject' => $title,
+                        'to' => $_REQUEST['s_email'],
+                        'to_name' => $user['s_name'],
+                        'body' => $body,
+                        'alt_body' => $body
+                    );
+                    osc_sendMail($params);
+                }
+                osc_addFlashMessage(__('We have send you an email, you need to confirm it.'));
+                osc_redirectTo(osc_createUserAccountURL());
+            } else {
+                $manager->update(
+                    array('s_email' => $_REQUEST['s_email'], 's_username' => $_REQUEST['s_email']),
+                    array('pk_i_id' => $_SESSION['userId'])
+                );
+                osc_addFlashMessage(__('We change your email. Please login with your new e-mail.'));
+                unset($_SESSION['userId']);
+                setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                unset($_COOKIE['oc_userId']);
+                unset($_COOKIE['oc_userSecret']);
+                osc_redirectTo(osc_createLoginURL());
+            }
         } else {
             osc_addFlashMessage(__('You need to login first.'));
             osc_redirectTo(osc_createLoginURL());
         }   
         break;
+
+    case 'change_email_confirm':
+            if(isset($_REQUEST['id']) && isset($_REQUEST['code']) && $_REQUEST['id']!='' && $_REQUEST['code']!='' && isset($_REQUEST['ne']) && isset($_REQUEST['oe']) && $_REQUEST['ne']!='' && $_REQUEST['oe']!='') {
+                $user = $manager->findByPrimaryKey($_REQUEST['id']);
+                $prefs = $manager->findPreferenceByUserAndName($_REQUEST['id'], 'new_email');
+                if($user!=null || $user['s_email']==$_REQUEST['oe'] || $user['s_pass_code']==$_REQUEST['code'] || $prefs['new_email']==$_REQUEST['ne']) {
+                    $manager->update(
+                        array('s_email' => $prefs['new_email'], 's_username' => $prefs['new_email']),
+                        array('pk_i_id' => $user['pk_i_id'])
+                    );
+                    $manager->deletePreference($user['pk_i_id'], 'new_email');
+                    unset($_SESSION['userId']);
+                    setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                    setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                    unset($_COOKIE['oc_userId']);
+                    unset($_COOKIE['oc_userSecret']);
+                    osc_addFlashMessage(__('E-mail change correctly, please login with your new email.'));
+                    osc_redirectTo(osc_createLoginURL());
+                } else {
+                    osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                    osc_redirectTo('index.php');
+                }
+            } else {
+                osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                osc_redirectTo('index.php');
+            }
+        break;
+
+
 
     case 'change_password_post':
     

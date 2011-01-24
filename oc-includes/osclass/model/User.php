@@ -103,6 +103,14 @@ class User extends DAO {
         }
 	}
 	
+	public function deletePreference($id = null, $name) {
+        if($id!=null) {
+            $this->conn->osc_dbExec("DELETE FROM %st_user_preferences WHERE fk_i_user_id = %d AND s_name = '%s'", DB_TABLE_PREFIX, $id, $name);
+            return true;
+        }
+        return false;
+	}
+	
 	public function deleteUser($id = null) {
 	    if($id!=null) {
 	        osc_runHook('delete_user', $id);
