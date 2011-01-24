@@ -1,25 +1,23 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 require_once  LIB_PATH . 'osclass/model/Preference.php';
+
 class Category extends DAO {
 
     private $language;
@@ -202,8 +200,6 @@ class Category extends DAO {
     //overwritten
     public function listAll() {
         return $this->listWhere('1 = 1');
-        //OLD
-        //return $this->conn->osc_dbFetchResults("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.fk_c_locale_code = '%s' ORDER BY a.i_position DESC", $this->getTableName(), $this->getTableDescriptionName(), $this->language);
     }
 
     public function findByPrimaryKey($pk, $lang = true) {
@@ -220,21 +216,6 @@ class Category extends DAO {
         } else {
             return null;
         }
-        // OLD
-        /*if( $lang ) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s' ORDER BY i_position DESC", $this->getTableName(), $this->getTableDescriptionName(), $pk, $this->language);
-        }
-
-        $data = $this->conn->osc_dbFetchResult('SELECT * FROM %s WHERE pk_i_id = %s ORDER BY pk_i_id', $this->getTableName(), $pk);
-
-        $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
-        $row = array();
-        foreach ($sub_rows as $sub_row) {
-            $row[$sub_row['fk_c_locale_code']] = $sub_row;
-        }
-        $data['locale'] = $row;
-
-        return $data;*/
     }
 
     public function listWhere() {

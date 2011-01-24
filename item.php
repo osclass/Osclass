@@ -18,7 +18,9 @@
 
 require_once 'oc-load.php';
 
-//$preferences = Preference::newInstance()->toArray();
+$mPreferences = new Preference();
+
+$preferences = $mPreferences->toArray();
 $manager = Item::newInstance();
 $theme = $preferences['theme'];
 $locales = Locale::newInstance()->listAllEnabled();
@@ -31,16 +33,21 @@ switch ($action) {
 
         $column = null;
         switch ($_GET['as']) {
-            case 'spam': $column = 'i_num_spam' ;
-            break;
-            case 'badcat': $column = 'i_num_bad_classified' ;
-            break;
-            case 'offensive': $column = 'i_num_offensive' ;
-            break;
-            case 'repeated': $column = 'i_num_repeated' ;
-            break;
-            case 'expired': $column = 'i_num_expired' ;
-            break;
+            case 'spam':
+                $column = 'i_num_spam';
+                break;
+            case 'badcat':
+                $column = 'i_num_bad_classified';
+                break;
+            case 'offensive':
+                $column = 'i_num_offensive';
+                break;
+            case 'repeated':
+                $column = 'i_num_repeated';
+                break;
+            case 'expired':
+                $column = 'i_num_expired';
+                break;
         }
         
         $dao_itemStats = new ItemStats() ;
@@ -49,14 +56,16 @@ switch ($action) {
         setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
         osc_addFlashMessage(__('Thanks! That helps us.'));
         osc_redirectTo(osc_createItemURL($item));
-    break;
+        break;
+
     case 'send_friend':
         $item = $manager->findByPrimaryKey($_GET['id']);
 
         osc_renderHeader();
         osc_renderView('item-send-friend.php');
         osc_renderFooter();
-    break;
+        break;
+
     case 'send_friend_post':
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_send_friend');
@@ -107,6 +116,7 @@ switch ($action) {
 
         osc_redirectTo($item_url);
         break;
+
     case 'contact':
         $item = $manager->findByPrimaryKey($_REQUEST['id']);
         $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
@@ -124,6 +134,7 @@ switch ($action) {
         osc_renderView('item-contact.php');
         osc_renderFooter();
         break;
+
     case 'contact_post':
         $item = $manager->findByPrimaryKey($_REQUEST['id']);
         $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
@@ -177,6 +188,7 @@ switch ($action) {
         osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.'));
         osc_redirectTo(osc_createItemURL($item));
         break;
+
     case 'add_comment':
         $authorName = $_POST['authorName'];
         $authorEmail = $_POST['authorEmail'];
@@ -263,6 +275,7 @@ switch ($action) {
 
         osc_redirectTo($itemURL);
         break;
+
     case 'post':
         $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
 
@@ -306,7 +319,8 @@ switch ($action) {
         );
         osc_renderView('item-post.php');
         osc_renderFooter();
-    break;
+        break;
+
     case 'post_item':
         require_once LIB_PATH . 'osclass/items.php';
 
@@ -360,6 +374,7 @@ switch ($action) {
             osc_redirectTo(osc_createItemPostURL());
         }
         break;
+
     case 'activate':
         if (isset($_GET['secret']) && isset($_GET['id'])) {
             $secret = $_GET['secret'];
@@ -384,7 +399,8 @@ switch ($action) {
                 }
             }
         }
-    break;
+        break;
+
     case 'update_cat_stats':
         $conn = getConnection() ;
         $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m") - 1, date("d"), date("Y")));
@@ -407,19 +423,19 @@ switch ($action) {
                     ), array('fk_i_category_id' => $category)
             );
         }
+        break;
 
-    break;
     default:
         if ( !isset($_GET['id']) ) {
             osc_redirectTo(ABS_WEB_URL);
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);
+
         global $osc_request;
         $osc_request['section'] = $item['s_title'];
         $osc_request['category'] = $item['fk_i_category_id'];
         $osc_request['item'] = $item;
-
 
         if ($item['e_status'] == 'ACTIVE') {
             $mStats = new ItemStats();
@@ -432,10 +448,10 @@ switch ($action) {
                 $item['locale'][$k]['s_title'] = osc_applyFilter('item_title',$v['s_title']);
                 $item['locale'][$k]['s_description'] = osc_applyFilter('item_description',$v['s_description']);
             }
-
+            
             $user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);
 
-            $headerConf = array('pageTitle' => $item['s_title']);
+            $headerConf = array('pageTitle' => $item['s_title'] . ' - '.$preferences['pageTitle'] );
             osc_renderHeader($headerConf);
             osc_renderView('item.php');
             osc_renderFooter();
@@ -444,8 +460,9 @@ switch ($action) {
                 $resources = $manager->findResourcesByID($_GET['id']);
                 $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 
-                $headerConf = array('pageTitle' => $item['s_title']);
-                osc_addFlashMessage('This item is NOT validated. You should validate it in order to show this item to the rest of the users. You could do that in your profile menu.');
+                $headerConf = array('pageTitle' => $item['s_title'] . ' - '.$preferences['pageTitle']);
+                osc_addFlashMessage('This item is NOT validated. You should validate it in order to show this item
+                    to the rest of the users. You could do that in your profile menu.');
                 osc_renderHeader($headerConf);
                 osc_renderView('item.php');
                 osc_renderFooter();

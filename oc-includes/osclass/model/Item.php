@@ -1,23 +1,19 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 class Item extends DAO {
@@ -104,15 +100,26 @@ class Item extends DAO {
                 $item['locale'][$desc['fk_c_locale_code']] = $desc;
             }
         }
-        if (isset($item['locale'][$prefLocale])) {
+        $is_itemLanguageAvailable = (!empty($item['locale'][$prefLocale]['s_title'])
+                                     && !empty($item['locale'][$prefLocale]['s_description']));
+        if (isset($item['locale'][$prefLocale]) && $is_itemLanguageAvailable) {
             $item['s_title'] = $item['locale'][$prefLocale]['s_title'];
             $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
-            $item['s_what'] = $item['locale'][$prefLocale]['s_what'];
         } else {
-            $data = current($item['locale']);
-            $item['s_title'] = $data['s_title'];
-            $item['s_description'] = $data['s_description'];
-            $item['s_what'] = $data['s_what'];
+            $mCategories = new Category();
+            $aCategory = $mCategories->findByPrimaryKey($item['fk_i_category_id']);
+
+            $title = $aCategory['s_name'];
+            $title .= __(' in ');
+            if(isset($item['s_city'])) {
+                $title .= $item['s_city'];
+            } else if(isset($item['s_region'])) {
+                $title .= $item['s_region'];
+            } else if(isset($item['s_country'])) {
+                $title .= $item['s_country'];
+            }
+            $item['s_title'] = $title;
+            $item['s_description'] = __('There\'s no description available in your language.');
             unset($data);
         }
         return $item;
