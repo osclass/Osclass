@@ -649,7 +649,6 @@ switch ($action) {
 
     case 'change_email_post':
         if(isset($_SESSION['userId'])) {
-
             if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
                 $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);
                     $user = $manager->findByPrimaryKey($_SESSION['userId']);
