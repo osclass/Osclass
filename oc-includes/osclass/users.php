@@ -40,8 +40,7 @@ switch ($action) {
             // This line will be not needed when username is not required anymore
             $input['s_username'] = $input['s_email'];
             
-            
-                        // Location code from oc-includes/osclass/items.php
+            // Location code from oc-includes/osclass/items.php
             $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
             if(count($country) > 0) {
                 $countryId = $country['pk_c_code'];
@@ -82,8 +81,6 @@ switch ($action) {
 
             if( empty($_REQUEST['address']) )
                 $_POST['address'] = null;
-
-           
                 $input['fk_c_country_code'] = $countryId;
                 $input['s_country'] = $countryName;
                 $input['fk_i_region_id'] = $regionId;
@@ -93,10 +90,6 @@ switch ($action) {
                 $input['s_city_area'] = $_POST['cityArea'];
                 $input['s_address'] = $_POST['address'];
 
-
-            
-            
-            
             $code = osc_genRandomPassword();
             $input['s_secret'] = $code;
             try {
@@ -108,45 +101,49 @@ switch ($action) {
                     if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
                         $user = $manager->findByPrimaryKey($userId);
 
-                        $content = Page::newInstance()->findByInternalName('email_user_validation');
+                        $mPages = new Page();
+                        $locale = osc_getActualLocale();
+
+                        $aPage = $mPages->findByInternalName('email_user_validation');
+
+                        $content = array();
+                        if(isset($aPage['locale'][$locale]['s_title'])) {
+                            $content = $aPage['locale'][$locale];
+                        } else {
+                            $content = current($aPage['locale']);
+                        }
+
                         if (!is_null($content)) {
-                            $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
-                            $words = array();
+                            $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL,
+                                                      $user['pk_i_id'], $code);
+                            $words   = array();
                             $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
                             $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
                             $title = osc_mailBeauty($content['s_title'], $words);
                             $body = osc_mailBeauty($content['s_text'], $words);
 				
-                            $params = array(
-                                'subject' => $title,
-                                'to' => $_POST['s_email'],
-                                'to_name' => $_POST['s_name'],
-                                'body' => $body,
-                                'alt_body' => $body
-                            );
-                            osc_sendMail($params);
+                            $emailParams = array('subject'  => $title,
+                                                 'to'       => $_POST['s_email'],
+                                                 'to_name'  => $_POST['s_name'],
+                                                 'body'     => $body,
+                                                 'alt_body' => $body);
+                            osc_sendMail($emailParams);
                         }
 
                         $success = 1;
-                        //osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
                     } else {
                         User::newInstance()->update(
                             array('b_enabled' => '1'),
                             array('pk_i_id' => $userId)
                         );
                         $success = 2;
-                        //osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
                     }
                 } else {
                     $success = 3;
-                    //osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
-                    //osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
                 }
             } catch (Exception $e) {
                 $success = 4;
-                //osc_addFlashMessage(__('The user could not be registered, sorry.'));
             }
-            //osc_redirectTo('index.php');
         }
         break;
 

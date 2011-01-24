@@ -22,7 +22,7 @@
  * @param string default value
  */
 function osc_param($method, $name, $default = null) {
-	return isset($method[$name]) ? $method[$name] : $default;
+    return isset($method[$name]) ? $method[$name] : $default;
 }
 
 /**
