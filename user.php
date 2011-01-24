@@ -38,8 +38,6 @@ switch ($action) {
         osc_renderFooter();
         break;
     case 'register_post':
-    
-    
         if (isset($preferences['recaptchaPrivKey'])) {
             require_once LIB_PATH . 'recaptchalib.php';
             $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
@@ -54,11 +52,8 @@ switch ($action) {
             }
         }
 
-    
         require_once LIB_PATH . 'osclass/users.php';
 
-
-        
         switch($success) {
         
             case 0:
@@ -209,10 +204,9 @@ switch ($action) {
         }
         break;
     case 'profile_post':
-    
         $userId = $_SESSION['userId'];
 
-            require_once LIB_PATH . 'osclass/users.php';
+        require_once LIB_PATH . 'osclass/users.php';
             
         if($success==0) {
             osc_addFlashMessage(__('This should never happened.'));
@@ -233,9 +227,7 @@ switch ($action) {
         break;
 
     case 'alerts':
-
         if(isset($_SESSION['userId'])) {
-
             $alerts = Alerts::newInstance()->getAlertsFromUser($_SESSION['userId']);
             foreach($alerts as $k => $a) {
                 $search = osc_unserialize(base64_decode($a['s_search']));
@@ -255,7 +247,6 @@ switch ($action) {
         break;
 
     case 'account':
-
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
             $items = Item::newInstance()->findByUserID($_SESSION['userId'], 3);
@@ -271,29 +262,25 @@ switch ($action) {
         }
         break;
 
-		case 'contact_post':
-    		$user = $manager->findByPrimaryKey($_SESSION['userId']);
-			$yourName = $user['s_name'];
-			$yourEmail = $user['s_email'];
-			$subject = $_POST['subject'];
-			$message = $_POST['message'];
+    case 'contact_post':
+        $user = $manager->findByPrimaryKey($_SESSION['userId']);
+        $yourName = $user['s_name'];
+        $yourEmail = $user['s_email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
 
+        $params = array('from'      => $yourEmail,
+                        'from_name' => $yourName,
+                        'subject'   => __('Contact form') . ': ' . $subject,
+                        'to'        => $preferences['contactEmail'],
+                        'to_name'   => __('Administrator'),
+                        'body'      => $message,
+                        'alt_body'  => $message);
+        osc_sendMail($params);
 
-			$params = array(
-				'from' => $yourEmail,
-				'from_name' => $yourName,
-				'subject' => __('Contact form') . ': ' . $subject,
-				'to' => $preferences['contactEmail'],
-				'to_name' => __('Administrator'),
-				'body' => $message,
-				'alt_body' => $message
-			);
-			osc_sendMail($params);
-
-			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
-			osc_createUserAccountURL();
-			break;
-
+        osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
+        osc_createUserAccountURL();
+        break;
 
     case 'deleteItem':
     case 'item_delete':
@@ -304,7 +291,7 @@ switch ($action) {
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
             osc_addFlashMessage(__('You could register and access every time to your items.'));
-            die;osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
+            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
         } else {
             Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
             osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
@@ -318,8 +305,6 @@ switch ($action) {
         $userId = intval(osc_paramSession('userId', 0));
         $locales = Locale::newInstance()->listAllEnabled();
 
-
-        
         $currencies = Currency::newInstance()->listAll();
 
         $item = Item::newInstance()->findByPrimaryKey($id);
@@ -348,10 +333,8 @@ switch ($action) {
         }
         break;
 
-
     case 'item_edit_post':
     case 'editItemPost':
-
         // The magic code
         require_once LIB_PATH . 'osclass/items.php';
 
@@ -387,6 +370,7 @@ switch ($action) {
         osc_renderView('user-login.php');
         osc_renderFooter();
         break;
+    
     case 'login_post':
         define('COOKIE_LIFE', 86400);
         $user = $manager->findByCredentials($_POST['s_email'], $_POST['password']);
@@ -417,6 +401,7 @@ switch ($action) {
 
         osc_redirectTo(osc_createUserAccountURL());
         break;
+        
     case 'logout':
         unset($_SESSION['userId']);
         setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
@@ -532,7 +517,6 @@ switch ($action) {
         break;
 
     case 'options':
-
         if(isset($_SESSION['userId'])) {
             $user_prefs = $manager->preferences($_SESSION['userId']);
 
@@ -548,7 +532,6 @@ switch ($action) {
 
 
     case 'options_post':
-
         if(isset($_SESSION['userId'])) {
 
             osc_runHook('user_options_post', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
@@ -582,7 +565,6 @@ switch ($action) {
         break;
 
     case 'change_email':
-
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
 
@@ -626,15 +608,13 @@ switch ($action) {
         break;
         
     case 'change_password':
-
-
         if(isset($_SESSION['userId'])) {
             $user_prefs = $manager->preferences($_SESSION['userId']);
 
             osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
             nav_user_menu();
             ?>
-            <div id="home_header"><div><?php _e('Change your E-mail'); ?></div></div>
+            <div id="home_header"><div><?php _e('Change your password'); ?></div></div>
             <form action="<?php echo osc_createURL('user');?>" method="post">
             <input type="hidden" name="action" value="change_password_post" />
             <div>
@@ -661,8 +641,6 @@ switch ($action) {
 	            </div>
             </div>
             </form>    
-        
-        
         <?php 
             osc_renderFooter();
         } else {
@@ -672,9 +650,8 @@ switch ($action) {
         break;
 
     case 'change_email_post':
-    
         if(isset($_SESSION['userId'])) {
-            $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);die;
+            $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);
             osc_addFlashMessage(__('We have send you an email, you need to confirm it.'));
             osc_redirectTo(osc_createUserAccountURL());
         } else {
@@ -684,7 +661,6 @@ switch ($action) {
         break;
 
     case 'change_password_post':
-    
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
             if($user['s_password']!=sha1($_REQUEST['old_password'])) {
@@ -709,8 +685,6 @@ switch ($action) {
         }   
 
         break;
-
-
 
     default : 
         osc_redirectTo(ABS_WEB_URL);
