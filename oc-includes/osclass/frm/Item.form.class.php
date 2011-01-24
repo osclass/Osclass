@@ -118,7 +118,7 @@ class ItemForm extends Form {
             parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select one region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
             return true ;
         } else if ( count($regions) == 1 ) {
-            parent::generic_input_hidden('countryId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+            parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
             echo '</span>' .$regions[0]['s_name'] . '</span>';
             return false ;
         } else {
