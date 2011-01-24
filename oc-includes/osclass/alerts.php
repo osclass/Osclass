@@ -69,10 +69,8 @@ function osc_runAlert($type = null) {
                 $mPages = new Page();
 
                 $prefLocale = Preference::newInstance()->findValueByName('language');
-                $_page = $mPages->findByInternalName($internal_name);
-                $page = array();
-                $data = osc_unserialize($_page['s_data']);
-                $page = $data[$prefLocale];
+                $page = $mPages->findByInternalName($internal_name);
+                $page = $page['locale'][$prefLocale];
                 unset($data);
                 unset($_page);
 
