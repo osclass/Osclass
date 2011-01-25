@@ -1,5 +1,6 @@
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'enabled_user_validation', true, 'BOOLEAN');
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'keep_original_image', '1', 'BOOLEAN');
+INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'enabled_users', '1', 'BOOLEAN');
 
 ALTER TABLE  /*TABLE_PREFIX*/t_user ADD  `s_pass_code` VARCHAR(100) NULL ,
 ADD  `s_pass_date` DATETIME NULL ,
@@ -13,8 +14,6 @@ INSERT INTO /*TABLE_PREFIX*/t_pages (pk_i_id, s_internal_name, b_indelible, dt_p
 
 INSERT INTO /*TABLE_PREFIX*/t_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (13, 'en_US', '{WEB_TITLE} Recover your password', '<p>Hi {USER_NAME},</p>\r\n<p> </p>\r\n<p>We sent this e-mail because you forgot your password. Follow the link to recover it : {PASSWORD_LINK}</p>\r\n<p>The link will be disabled in 24 hours.</p>\r\n<p> </p>\r\n<p>If you didn''t forget your password, ignore this message. This petition was made from IP : {IP_ADDRESS} on {DATE_TIME}</p>');
 INSERT INTO /*TABLE_PREFIX*/t_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (14, 'en_US', '[ {WEB_TITLE} ] You requested to change your email', '<p>\r\n<p>Dear {USER_NAME}</p>\r\n<p>You''re receiving this email because you requested to change your e-mail. You need to confirm this new e-mail address by clicking on the following validation link : {VALIDATION_LINK}</p>\r\n</p>');
-
-
 
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `fk_c_country_code` char(2) DEFAULT NULL;
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD COLUMN `s_country` varchar(40) DEFAULT NULL;

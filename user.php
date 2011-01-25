@@ -19,6 +19,14 @@
 require_once 'oc-load.php';
 
 $preferences = Preference::newInstance()->toArray();
+
+$enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']);
+
+if(!$enabled_users) {
+    osc_addFlashMessage(__('Users are not enable'));
+    osc_redirectTo(ABS_WEB_URL);
+}
+
 $manager = User::newInstance();
 $theme = $preferences['theme'];
 
@@ -275,7 +283,6 @@ switch ($action) {
         osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
         osc_createUserAccountURL();
         break;
-
     case 'deleteItem':
     case 'item_delete':
         $id = intval(osc_paramGet('id', 0));
@@ -723,8 +730,6 @@ switch ($action) {
                 osc_redirectTo('index.php');
             }
         break;
-
-
 
     case 'change_password_post':
         if(isset($_SESSION['userId'])) {
