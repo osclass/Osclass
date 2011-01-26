@@ -277,6 +277,13 @@ switch ($action) {
         break;
 
     case 'post':
+        $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']);
+
+        if(!$enabled_users) {
+            osc_addFlashMessage(__('Users are not enable'));
+            osc_redirectTo(ABS_WEB_URL);
+        }
+
         $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
 
         if (isset($preferences['reg_user_post'])) {
@@ -322,6 +329,13 @@ switch ($action) {
         break;
 
     case 'post_item':
+        $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']);
+
+        if(!$enabled_users) {
+            osc_addFlashMessage(__('Users are not enable'));
+            osc_redirectTo(ABS_WEB_URL);
+        }
+        
         require_once LIB_PATH . 'osclass/items.php';
 
         if($success) {

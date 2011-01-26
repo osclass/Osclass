@@ -255,11 +255,21 @@ switch ($action) {
         osc_renderAdminSection('settings/users.php', __('Functionalities'));
         break;
     case 'users_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_user_validation']) ? true : false),
-                array('s_name' => 'enabled_user_validation')
-        );
-        $preferences = $prefManager->toArray();
+        $enabled_user_validation = false;
+        if(isset($_POST['enabled_user_validation'])) {
+            $enabled_user_validation = true;
+        }
+        $enabled_users = false;
+        if(isset($_POST['enabled_users'])) {
+            $enabled_users = true;
+        }
+        
+        $prefManager->update(array('s_value' => $enabled_user_validation),
+                             array('s_name'  => 'enabled_user_validation'));
+        $prefManager->update(array('s_value' => $enabled_users) ,
+                             array('s_name'  => 'enabled_users'));
+
+         osc_addFlashMessage(__('Users settings have been updated.'), 'admin');
         osc_redirectTo('settings.php?action=users');
         break;
     case 'notifications':

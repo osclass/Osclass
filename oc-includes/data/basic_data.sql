@@ -30,6 +30,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'enabled_recaptcha_items', '0', 'BOOLEAN'),
     ('osclass', 'enabled_item_validation', '1', 'BOOLEAN'),
     ('osclass', 'enabled_user_validation', '1', 'BOOLEAN'),
+    ('osclass', 'enabled_users','1', 'BOOLEAN'),
     ('osclass', 'enabled_comments', '1', 'BOOLEAN'),
     ('osclass', 'mailserver_host', 'localhost', 'STRING'),
     ('osclass', 'mailserver_port', '', 'INTEGER'),
@@ -39,7 +40,6 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ('osclass', 'mailserver_auth', '', 'BOOLEAN'),
     ('osclass', 'mailserver_ssl', '', 'STRING'),
     ('osclass', 'currency', 'USD','STRING'),
-
     ('osclass', 'rewriteEnabled', '0', 'BOOLEAN'),
     ('osclass', 'mod_rewrite_loaded', '0', 'BOOLEAN'),
     ('osclass', 'rewrite_rules', '', 'STRING');
