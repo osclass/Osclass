@@ -157,7 +157,7 @@ switch($action) {
 		if(file_exists(ABS_PATH . 'oc-includes/data/struct.sql')) {
             $sql = file_get_contents(ABS_PATH . 'oc-includes/data/struct.sql');
     		$conn = getConnection();
-            $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+            $queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
 			$message = __('Tables updated correctly.') ;
 		} else {
 			$message = __('No tables update to execute.') ;

@@ -290,7 +290,7 @@ class DB
      * @param mixed array or string with the SQL queries.
      * @return BOOLEAN true on success, false on fail
      */
-    function osc_updateDB($queries = '', $debug = false) {
+    function osc_updateDB($queries = '') {
     
         if(!is_array($queries)) {
             $queries = explode(";", $queries);
@@ -327,6 +327,8 @@ class DB
                         if(preg_match('|([^ ]+)|', trim($field), $field_name)) {
                             switch (strtolower($field_name[1])) {
                                 case '':
+                                case 'on':
+                                case 'foreign':
                                 case 'primary':
                                 case 'index':
                                 case 'fulltext':
@@ -335,6 +337,7 @@ class DB
                                     $indexes[] = trim($field, ", \n");
                                     break;
                                 default :
+                                    
                                     $normal_fields[strtolower($field_name[1])] = trim($field, ", \n");
                                     break;
                             }
@@ -364,9 +367,9 @@ class DB
                     }
                     // For the rest of normal fields (they are not in the table) we add them.
                     foreach($normal_fields as $k => $v) {
-                        $struct_queries[] = "ALTER TABLE ".$table." ADD COLUM ".$v;
+                        $struct_queries[] = "ALTER TABLE ".$table." ADD COLUMN ".$v;
                     }
-                    
+
                     // Go for the index part
                     $tbl_indexes = $this->osc_dbFetchResults("SHOW INDEX FROM ".$table);
                     if($tbl_indexes) {
@@ -410,7 +413,11 @@ class DB
                     }
                     // For the rest of the indexes (they are in the new definition but not in the table installed
                     foreach($indexes as $index) {
-                        $struct_queries[] = "ALTER TABLE ".$table." ADD ".$index;
+                        if(strtolower(substr(trim($index),0,2))!='on') {// && strtolower(substr(trim($index),0,7))!='foreign') {
+                            $struct_queries[] = "ALTER TABLE ".$table." ADD ".$index;
+                        //} else {
+                            //$struct_queries[] = "ALTER TABLE ".$table." ".$index;
+                        }
 				    }
 				    // No need to create the table, so we delete it SQL
 				    unset($struct_queries[strtolower($table)]);
@@ -419,13 +426,11 @@ class DB
         }
 
         $queries = array_merge($struct_queries, $data_queries);
-        if(!$debug) {
-            foreach($queries as $query) {
-                $this->osc_dbExec($query);
-            }
-        } else {
-            return $queries;
+        foreach($queries as $query) {
+            $this->osc_dbExec($query);
         }
+
+        return $queries;
     }
     
 }

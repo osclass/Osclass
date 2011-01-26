@@ -11,8 +11,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_locale (
     s_currency_format VARCHAR(10) NOT NULL,
     s_date_format VARCHAR(20) NOT NULL,
     s_stop_words TEXT NULL,
-    b_enabled BOOLEAN NOT NULL DEFAULT TRUE, /* Enabled languages for the website */
-    b_enabled_bo BOOLEAN NOT NULL DEFAULT TRUE, /* Enabled languages for the oc-admin */
+    b_enabled BOOLEAN NOT NULL DEFAULT TRUE, 
+    b_enabled_bo BOOLEAN NOT NULL DEFAULT TRUE, 
 
         PRIMARY KEY (pk_c_code),
         UNIQUE KEY (s_short_name)
@@ -212,7 +212,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_description (
 CREATE TABLE /*TABLE_PREFIX*/t_item_location (
     fk_i_item_id INT UNSIGNED NOT NULL,
     fk_c_country_code CHAR(2) NULL,
-    s_country VARCHAR(40) NULL, -- readonly
+    s_country VARCHAR(40) NULL,
     s_address VARCHAR(100) NULL,
     s_zip VARCHAR(15) NULL,
     fk_i_region_id INT UNSIGNED NULL,

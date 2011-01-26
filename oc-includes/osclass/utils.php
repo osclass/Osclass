@@ -611,7 +611,7 @@ function apache_mod_loaded($mod) {
  *
  * @param mixed version
  */
-function osc_changeVersion($version = null) {
+function osc_changeVersionTo($version = null) {
 
     if($version!=null) {
         global $preferences;

@@ -63,7 +63,7 @@ ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_c_country_code`) REFEREN
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_region_id`) REFERENCES `/*TABLE_PREFIX*/t_region` (`pk_i_id`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_id`) REFERENCES `/*TABLE_PREFIX*/t_city` (`pk_i_id`);
 ALTER TABLE /*TABLE_PREFIX*/t_user ADD FOREIGN KEY (`fk_i_city_area_id`) REFERENCES `/*TABLE_PREFIX*/t_city_area` (`pk_i_id`);
-ALTER TABLE /*TABLE_PREFIX*/t_user ADD UNIQUE (`s_email`)
+ALTER TABLE /*TABLE_PREFIX*/t_user ADD UNIQUE (`s_email`);
 
 CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
     fk_i_user_id INT UNSIGNED NULL,
@@ -75,7 +75,11 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';";
         $conn = getConnection();
-        $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+        try {
+            $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+        } catch(Exception $e) {
+            echo "Error: ".$e->getMessage()."\n";
+        }
     }
 
 
