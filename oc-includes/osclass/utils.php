@@ -602,5 +602,20 @@ function apache_mod_loaded($mod) {
     return false;
 }
 
+/**
+ * Change version to param number
+ *
+ * @param mixed version
+ */
+function osc_changeVersion($version = null) {
+
+    if($version!=null) {
+        global $preferences;
+        $pref = Preference::newInstance();
+        $pref->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
+        $preferences = $pref->toArray();
+    }    
+}
+
 
 ?>
