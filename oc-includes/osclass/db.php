@@ -424,7 +424,6 @@ class DB
                 $this->osc_dbExec($query);
             }
         } else {
-            print_r($queries);
             return $queries;
         }
     }

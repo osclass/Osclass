@@ -123,18 +123,20 @@ switch($action) {
 			$fail = 0;
 			while (false !== ($_file = readdir($handle))) {
 				if($_file!='.' && $_file!='..' && $_file!='remove.list' && $_file!='upgrade.sql' && $_file!='customs.actions') {
-					$fail += osc_copy(ABS_PATH."oc-temp/".$_file, ABS_PATH.$_file);
+					$data = osc_copy(ABS_PATH."oc-temp/".$_file, ABS_PATH.$_file);
+					if($data==false) {
+					    $fail = 1;
+					};
 				}
 			}
-
 			closedir($handle);
 
 			if($fail==-1) {
 				$message = __('Nothing to copy.');
 			} else if($fail==0) {
-				$message = __('There were problems copying files.');
-			} else {
 				$message = __('Files copied.');
+			} else {
+				$message = __('There were problems copying files. Maybe the file permissions are not set correctly.');
 			}
 
 		} else {
@@ -155,7 +157,7 @@ switch($action) {
 		if(file_exists(ABS_PATH . 'oc-includes/data/struct.sql')) {
             $sql = file_get_contents(ABS_PATH . 'oc-includes/data/struct.sql');
     		$conn = getConnection();
-            $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql), true);
+            $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
 			$message = __('Tables updated correctly.') ;
 		} else {
 			$message = __('No tables update to execute.') ;

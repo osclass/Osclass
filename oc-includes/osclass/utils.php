@@ -275,7 +275,7 @@ function osc_mailBeauty($text, $params) {
 
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
-	$result=false;
+	$result =true;
 	if (is_file($source)) {
 		if ($dest[strlen($dest)-1]=='/') {
 			if (!file_exists($dest)) {
@@ -286,7 +286,7 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 			$__dest=$dest;
 		}
 		if(function_exists('copy')) {
-			$result=copy($source, $__dest);
+            $result = @copy($source, $__dest);
 		} else {
 			$result=osc_copyemz($source, $__dest);
 		}
@@ -315,6 +315,7 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 		}
 
 		$dirHandle=opendir($source);
+		$result = true;
 		while($file=readdir($dirHandle)) {
 			if($file!="." && $file!="..") {
 				if(!is_dir($source."/".$file)) {
@@ -323,13 +324,16 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 					$__dest=$dest."/".$file;
 				}
 				//echo "$source/$file ||| $__dest<br />";
-				$result=osc_copy($source."/".$file, $__dest, $options);
+				$data = osc_copy($source."/".$file, $__dest, $options);
+				if($data==false) {
+				    $result = false;
+				}
 			}
 		}
 		closedir($dirHandle);
 
 	} else {
-		$result=false;
+		$result=true;
 	}
 	return $result;
 }
