@@ -54,19 +54,33 @@
 
                 if($('.Header')) $('.Header').hide(); //XXX: remove it.
                 if($('.FlashMessage')) $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
-
-                var version = <?php echo $preferences['version']; ?>;
-
-                $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
-                    var update = document.getElementById('update_version');
-                    if(data.version > version) {
-                        var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>';
-                        update.innerHTML = text;
-                        update.setAttribute('style', '');
-                    }
-                });
             });
         </script>
+        
+        
+                <?php
+                    global $preferences;
+                    if(!isset($preferences['last_version_check']) || ((time()-(int)($preferences['last_version_check']))>(24*3600))) {
+                    ?>
+        <script>
+            $(function() {
+                        var version = <?php echo $preferences['version']; ?>;
+
+                        $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
+                            var update = document.getElementById('update_version');
+                            if(data.version > version) {
+                                var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>';
+                                update.innerHTML = text;
+                                update.setAttribute('style', '');
+                            }
+                        });
+                
+            });
+        </script>
+                <?php 
+                        
+                    }; ?>
+                
 
         <!-- style -->
         <script src="<?php echo  $current_theme; ?>/js/jquery.cookie.js"></script>

@@ -18,7 +18,7 @@
 
     global $preferences;
     $version = $preferences['version'];
-    
+    Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
     if($version<119) {
         osc_sql110();
         osc_changeVersionTo(119);
@@ -31,6 +31,7 @@
     
         $sql = "INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'enabled_user_validation', true, 'BOOLEAN');
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'keep_original_image', '1', 'BOOLEAN');
+INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'last_version_check', '".time()."', 'INTEGER');
 
 ALTER TABLE  /*TABLE_PREFIX*/t_user ADD  `s_pass_code` VARCHAR(100) NULL ,
 ADD  `s_pass_date` DATETIME NULL ,
