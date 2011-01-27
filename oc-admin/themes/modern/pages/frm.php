@@ -57,6 +57,12 @@
     theme_advanced_buttons1_add : "media"
     });
 </script>
+<?php
+    $fields = array(
+        array('name' => 's_internal_name', 'error_msg' => __('You have to write an unique internal name.'))
+    );
+    osc_check_form_js($fields);
+?>
 <div id="content">
     <div id="separator"></div>
     <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
@@ -70,7 +76,7 @@
         <?php osc_showFlashMessages('admin'); ?>
         <!-- add new page form -->
         <div id="settings_form">
-            <form name="pages_form" id="pages_form" action="pages.php" method="post">
+            <form name="pages_form" id="pages_form" action="pages.php" method="post" onSubmit="return checkForm()">
                 <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                 <?php PageForm::primary_input_hidden($page); ?>
                 <div class="FormElement">

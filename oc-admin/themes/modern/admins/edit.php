@@ -21,6 +21,14 @@
 ?>
 
 <?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
+<?php
+    $fields = array(
+        array('name' => 's_name', 'error_msg' => _e('You have to write a name.')),
+        array('name' => 's_email', 'error_msg' => _e('You have to write an e-mail.')),
+        array('name' => 's_username', 'error_msg' => _e('You have to write an username.'))
+    );
+    osc_check_form_js($fields);
+?>
 
 <script>
 	$(function() {
@@ -45,21 +53,21 @@
 				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
 					<div style="padding: 20px;">				
 								
-						<form action="admins.php" method="post">
+						<form action="admins.php" method="post" onSubmit="return checkForm()">
 						<input type="hidden" name="action" value="edit_post" />
 						<input type="hidden" name="id" value="<?php echo $adminEdit['pk_i_id']; ?>" />
 						
 						<div style="float: left; width: 50%;">
 						<fieldset>	
 							<legend><?php echo __('Real name'); ?> (<?php echo __('required'); ?>)</legend>	
-							<input type="text" name="s_name" id="name" value="<?php echo $adminEdit['s_name']; ?>" />
+							<input type="text" name="s_name" id="s_name" value="<?php echo $adminEdit['s_name']; ?>" />
 						</fieldset>
 						</div>
 											
 						<div style="float: left; width: 50%;">
 						<fieldset>	
 							<legend><?php echo __('E-mail'); ?></legend>	
-							<input type="text" name="s_email" id="email" value="<?php echo $adminEdit['s_email']; ?>" />
+							<input type="text" name="s_email" id="s_email" value="<?php echo $adminEdit['s_email']; ?>" />
 						</fieldset>
 						</div>
 						<div style="clear: both;"></div>
@@ -67,7 +75,7 @@
 						<div style="float: left; width: 50%;">
 						<fieldset>	
 							<legend><?php echo __('User name'); ?> (<?php echo __('required'); ?>)</legend>	
-							<input type="text" name="s_username" id="userName" value="<?php echo $adminEdit['s_username']; ?>" />
+							<input type="text" name="s_username" id="s_username" value="<?php echo $adminEdit['s_username']; ?>" />
 						</fieldset>
 						</div>
 						
@@ -76,7 +84,7 @@
 							<legend><?php echo __('Old password'); ?></legend>	
 							<input type="password" name="old_password" id="old_password" value="" />
 							<legend><?php echo __('New password'); ?></legend>	
-							<input type="password" name="s_password" id="password" value="" />
+							<input type="password" name="s_password" id="s_password" value="" />
 							<legend><?php echo __('Re-type new password'); ?></legend>	
 							<input type="password" name="s_password2" id="password2" value="" />
 						</fieldset>

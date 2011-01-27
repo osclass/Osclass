@@ -29,3 +29,21 @@ function osc_isValidEmail($email) {
 	return strpos($email, '@') !== false;
 }
 
+function osc_check_form_js($fields = null) {
+    if(is_array($fields)) {
+        echo "<script type=\"text/javascript\">\n";
+        echo "function checkForm() {\n";
+        foreach($fields as $field) {
+            echo "if(document.getElementById('".$field['name']."').value == \"\") {\n";
+                echo "alert(\"".$field['error_msg']."\");\n";
+                echo "return false;\n";
+            echo "}\n";
+        }
+        
+        echo "return true;\n";
+        echo "}\n";
+        echo "</script>\n";
+    }
+}
+
+?>
