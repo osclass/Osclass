@@ -244,6 +244,10 @@ function osc_sendMail($params) {
         if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
         if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
 
+        if( isset($params['attachment']) ) {
+            $mail->AddAttachment($params['attachment']);
+        }
+
         $mail->IsHTML(true);
         $mail->AddAddress($to, $to_name);
         $mail->Send();
