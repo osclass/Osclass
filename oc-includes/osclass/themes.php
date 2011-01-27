@@ -102,10 +102,18 @@ function osc_showWidgets($location) {
         echo $w['s_content'];
 }
 
+/**
+ * Create automatically the url of a page
+ *
+ * @param array $page An array with the page information
+ * @param bool $echo If you want to echo or not the path automatically
+ * @return string If $echo is false, it returns the path, if not it return blank string
+ */
 function osc_createPageURL($page, $echo = false) {
-    global $preferences;
+    $rewriteEnabled = osc_isRewriteEnabled();
     $path = '';
-    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+
+    if ($rewriteEnabled) {
         $sanitizedString = osc_sanitizeString($page['s_title']);
         $path = sprintf(ABS_WEB_URL . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
     } else {
@@ -220,34 +228,54 @@ function osc_createUserOptionsPostURL($option = null) {
     }
 }
 
-function osc_createURL($params = null) {
+function osc_createURL($params = null, $echo = false) {
     global $preferences;
-    if(is_array($params)) {
-        if (count($params) > 0 && isset($params['file']) && $params['file'] != "") {
-            $params_string = "";
-            foreach ($params as $k => $v) {
-                if ($k != 'file') {
-                    $params_string .= $k . '=' . $v . '&';
-                }
-            }
-            if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-                if(count($params)==2 && isset($params['action'])) {
-                    return WEB_PATH_URL . $params['file'] . "/" . $params['action'];
-                } else {
-                    return WEB_PATH_URL . $params['file'] . "?" . $params_string;
-                }
-            } else {
-                return WEB_PATH_URL . $params['file'] . ".php?" . $params_string;
-            }
-        }
-    } else if(is_string($params)) {
-        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . $params;
-        } else {
-            return WEB_PATH_URL . $params.".php";
-        }
+    $path = '';
+
+    $rewriteEnable = (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']);
+
+    if(!is_array($params)) {
+        return '';
     }
-    return '';
+
+    if(count($params) == 0) {
+        return '';
+    }
+
+    if(!isset($params['file'])) {
+        return '';
+    }
+
+
+    if ($rewriteEnable) {
+        if($params['file'] == 'index') {
+            $params['file'] = '';
+            $path = ABS_WEB_URL . $params['action'];
+        } else {
+            if(count($params) == 2 && isset($params['action'])) {
+                $path = ABS_WEB_URL . $params['file'] . "/" . $params['action'];
+            } else {
+                $path = ABS_WEB_URL . $params['file'] . "?" . $params_string;
+            }
+        }
+    } else {
+        $params_string = "";
+        foreach ($params as $k => $v) {
+            if ($k != 'file') {
+                $params_string .= $k . '=' . $v . '&';
+            }
+        }
+        $params_string = preg_replace('/\&$/','',$params_string);
+
+        $path = ABS_WEB_URL . $params['file'] . ".php?" . $params_string;
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
 function osc_createThumbnailURL($resource) {
@@ -265,30 +293,37 @@ function osc_createResourceURL($resource) {
 function osc_createItemPostURL($cat = null) {
     if (is_null($cat)) {
         if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . 'item/new';//sprintf(WEB_PATH_URL . 'item.php?action=post');
+            return WEB_PATH_URL . 'item/new';
         } else {
             return sprintf(WEB_PATH_URL . 'item.php?action=post');
         }
     } else {
         if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'];//sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
+            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'];
         } else {
             return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
         }
     }
 }
 
-function osc_createCategoryURL($cat, $absolute = false, $echo = false) {
-    $prefix = $absolute ? ABS_WEB_URL : REL_WEB_URL;
-    global $preferences;
+/**
+ * Create automatically the url of a category
+ *
+ * @param array $cat An array with the category information
+ * @param bool $echo If you want to echo or not the path automatically
+ * @return string If $echo is false, it returns the path, if not it return blank string
+ */
+function osc_createCategoryURL($cat, $echo = false) {
+    $rewriteEnabled = osc_isRewriteEnabled();
     $path = '';
-    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+
+    if ($rewriteEnabled) {
         $cat = Category::newInstance()->hierarchy($cat['pk_i_id']);
         $sanitized_category = "";
-        for ($i = (count($cat)); $i > 0; $i--) {
+        for ($i = count($cat); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
         }
-        $path = sprintf($prefix . '%s', $sanitized_category);
+        $path = ABS_WEB_URL . $sanitized_category;
     } else {
         $path = sprintf(WEB_PATH_URL . 'search.php?catId=%d', $cat['pk_i_id']);
     }
@@ -301,19 +336,35 @@ function osc_createCategoryURL($cat, $absolute = false, $echo = false) {
     return $path;
 }
 
-function osc_createItemURL($item, $absolute = false) {
-    $prefix = $absolute ? ABS_WEB_URL : REL_WEB_URL;
-    global $preferences;
-    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+/**
+ * Create automatically the url of an item
+ *
+ * @param array $item An array with the item information
+ * @param bool $echo If you want to echo or not the path automatically
+ * @return string If $echo is false, it returns the path, if not it return blank string
+ */
+function osc_createItemURL($item, $echo = false) {
+    $rewriteEnabled = osc_isRewriteEnabled();
+    $path = '';
+    
+    if ($rewriteEnabled) {
         $sanitized_title = osc_sanitizeString($item['s_title']);
         $sanitized_category = '';
         $cat = Category::newInstance()->hierarchy($item['fk_i_category_id']);
         for ($i = (count($cat)); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
         }
-        return sprintf($prefix . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
-    } else
-        return sprintf($prefix . 'item.php?id=%d', $item['pk_i_id']);
+        $path = sprintf($prefix . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
+    } else {
+        $path = sprintf($prefix . 'item.php?id=%d', $item['pk_i_id']);
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
 /**
@@ -439,3 +490,5 @@ function osc_renderView($name) {
             trigger_error("The view '$name' was not found.");
     }
 }
+
+?>

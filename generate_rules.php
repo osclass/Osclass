@@ -14,6 +14,9 @@ $rewrite->clearRules();
 // Clean archive files
 $rewrite->addRule('^(.+?).php(.*)$', '$1.php$2');
 
+// Contact rules
+$rewrite->addRule('^contact/?$', 'index.php?action=contact');
+
 // Feed rules
 $rewrite->addRule('^feed$', 'search?feed');
 $rewrite->addRule('^feed/(.+)$', 'search.php?feed=$1');

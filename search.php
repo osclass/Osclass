@@ -103,12 +103,8 @@ if($pattern!='') {
 }
 
 $priceMin = osc_paramRequest('priceMin', null);
-/*if(!is_null($priceMin) && $priceMin!="")
-	$conditions[] = sprintf("f_price >= %f", $priceMin);*/
 
 $priceMax = osc_paramRequest('priceMax', null);
-/*if(!is_null($priceMax) && $priceMax!="")
-	$conditions[] = sprintf("f_price <= %f", $priceMax);*/
 
 $search->priceRange($priceMin, $priceMax);
 
@@ -119,7 +115,15 @@ if(isset($_REQUEST['cities']) && count($_REQUEST['cities'])>0) {
     foreach($_REQUEST['cities'] as $city) {
         $search->addCity($city);
     }
-//ELSE IF COMPABILITY ISSUES
+} else if(isset($city) && $city!="") {
+    $search->addCity($city);
+}
+
+$city = osc_paramRequest('city');
+if(isset($_REQUEST['cities']) && count($_REQUEST['cities'])>0) {
+    foreach($_REQUEST['cities'] as $city) {
+        $search->addCity($city);
+    }
 } else if(isset($city) && $city!="") {
     $search->addCity($city);
 }
@@ -173,7 +177,7 @@ if(!isset($_REQUEST['feed'])) {
         foreach($items as $item) {
             $feed->addItem(array(
                 'title' => $item['s_title'],
-                'link' => osc_createItemURL($item, true),
+                'link' => osc_createItemURL($item),
                 'description' => $item['s_description']
             ));
         }

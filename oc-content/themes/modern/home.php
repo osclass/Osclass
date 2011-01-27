@@ -52,10 +52,10 @@ $i = 1;
 foreach($categories as $c) {
 ?>
     <div id="category" style="width: <?php echo $width ?>;">
-        <div class="category_header"><a href="<?php echo osc_createCategoryURL($c); ?>"><?php echo $c['s_name']; ?></a> <span style="color: #ccc;">[<?php echo CategoryStats::newInstance()->getNumItems($c); ?>]</span></div>
+        <div class="category_header"><a href="<?php osc_createCategoryURL($c, true); ?>"><?php echo $c['s_name']; ?></a> <span style="color: #ccc;">[<?php echo CategoryStats::newInstance()->getNumItems($c); ?>]</span></div>
         <div>
         <?php foreach($c['categories'] as $sc): ?>
-            <div class="category_body"><a href="<?php echo osc_createCategoryURL($sc); ?>"><?php echo $sc['s_name']; ?></a> <span style="color: #ccc;">[<?php echo CategoryStats::newInstance()->getNumItems($sc); ?>]</span></div>
+            <div class="category_body"><a href="<?php osc_createCategoryURL($sc, true); ?>"><?php echo $sc['s_name']; ?></a> <span style="color: #ccc;">[<?php echo CategoryStats::newInstance()->getNumItems($sc); ?>]</span></div>
         <?php endforeach; ?>
         </div>
     </div>

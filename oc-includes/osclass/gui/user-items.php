@@ -26,7 +26,7 @@
 <?php else: ?>
 <?php foreach($items as $i) { ?>
 	<div class="userItem" >
-		<div><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></div>
+		<div><a href="<?php osc_createItemURL($i, true); ?>"><?php echo $i['s_title']; ?></a></div>
 
 		<div class="userItemData" >
 		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />

@@ -19,6 +19,8 @@
 require_once 'oc-load.php';
 
 global $preferences;
+$mPreferences = new Preference();
+$preferences = $mPreferences->toArray();
 $categories = Category::newInstance()->toTree();
 if(isset($_GET['theme'])) $preferences['theme'] = $_GET['theme'];
 
@@ -52,7 +54,7 @@ switch($action) {
         $items = $items['items'];
         foreach($items as $item) {
             $feed->addItem(array('title'       => $item['s_title'],
-                                 'link'        => osc_createItemURL($item, true),
+                                 'link'        => osc_createItemURL($item),
                                  'description' => $item['s_description']));
         }
 
@@ -81,17 +83,37 @@ switch($action) {
         $yourEmail = $_POST['yourEmail'];
         $subject = $_POST['subject'];
         $message = $_POST['message'];
+        $path = '';
 
-        $params = array('from'      => $yourEmail,
-                        'from_name' => $yourName,
-                        'subject'   => __('Contact form') . ': ' . $subject,
-                        'to'        => $preferences['contactEmail'],
-                        'to_name'   => __('Administrator'),
-                        'body'      => $message,
-                        'alt_body'  => $message);
+        if($preferences['contact_attachment']) {
+            $resourceName = $_FILES['attachment']['name'];
+            $tmpName = $_FILES['attachment']['tmp_name'];
+            $resourceType = $_FILES['attachment']['type'];
+            $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName;
+
+            if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
+                osc_addFlashMessage('There has been some erro sending the message');
+                osc_redirectToReferer(ABS_WEB_URL);
+            }
+
+            move_uploaded_file($tmpName, $path);
+        }
+
+        $params = array('from'       => $yourEmail,
+                        'from_name'  => $yourName,
+                        'subject'    => __('Contact form') . ': ' . $subject,
+                        'to'         => $preferences['contactEmail'],
+                        'to_name'    => __('Administrator'),
+                        'body'       => $message,
+                        'alt_body'   => $message);
+
+        if(isset($path)) {
+            $params['attachment'] = $path;
+        }
+
         osc_sendMail($params);
         osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
-        osc_redirectToReferer(ABS_WEB_URL);
+        osc_redirectTo(ABS_WEB_URL);
         break;
     default:
         global $osc_request;

@@ -660,6 +660,9 @@ function generate_rewrite_rules() {
     // Category rules
     $rewrite->addRule('^(.+)$', 'search.php?category=$1');
 
+    // Contact rules
+    $rewrite->addRule('^contact/?$', 'index.php?action=contact');
+
     //Write rule to DB
     $rewrite->setRules();
 }

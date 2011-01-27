@@ -96,7 +96,7 @@ function osc_listLanguageCodes() {
  */
 function osc_getActualLocale($typeUser = 'user') {
     $locale = null;
-    if(!isset($_SESSION['locale'])) {
+    if(isset($_SESSION['locale'])) {
         return $_SESSION['locale'];
     }
 

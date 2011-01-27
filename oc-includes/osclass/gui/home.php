@@ -19,11 +19,11 @@ function doSearch() { document.location = '<?php echo WEB_PATH; ?>/search.php?pa
 
 <?php foreach($categories as $c): ?>
 	<div class="Category">
-	<div class="CategoryHead"><a href="<?php echo osc_createCategoryURL($c); ?>"><?php echo $c['s_name']; ?></a> (<?php printf(__('%d items'), CategoryStats::newInstance()->getNumItems($c)); ?>)</div>
+	<div class="CategoryHead"><a href="<?php osc_createCategoryURL($c, true); ?>"><?php echo $c['s_name']; ?></a> (<?php printf(__('%d items'), CategoryStats::newInstance()->getNumItems($c)); ?>)</div>
 		<div>
-		<?php foreach($c['categories'] as $sc): ?>
-			<a href="<?php echo osc_createCategoryURL($sc); ?>"><?php echo $sc['s_name']; ?></a><br />
-		<?php endforeach; ?>
+		<?php foreach($c['categories'] as $sc) { ?>
+			<a href="<?php osc_createCategoryURL($sc, true); ?>"><?php echo $sc['s_name']; ?></a><br />
+		<?php } ?>
 		</div>
 	</div>
 <?php endforeach; ?>
@@ -34,7 +34,7 @@ function doSearch() { document.location = '<?php echo WEB_PATH; ?>/search.php?pa
 	<h3><?php _e('Latest published items'); ?></h3>
 
 	<?php foreach($latestItems as $item): ?>
-		<a href="<?php echo osc_createItemURL($item); ?>"><?php echo $item['s_title']; ?></a> <span class="homeLastestItemsList" >(<?php echo osc_formatDate($item); ?>)</span><br />
+		<a href="<?php osc_createItemURL($item, true); ?>"><?php echo $item['s_title']; ?></a> <span class="homeLastestItemsList" >(<?php echo osc_formatDate($item); ?>)</span><br />
 	<?php endforeach; ?>
 </div>
 
