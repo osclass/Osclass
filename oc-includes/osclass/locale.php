@@ -52,3 +52,28 @@ function _e($key) {
 	echo $gt->translate($key);
         return true;
 }
+
+
+
+
+function osc_loadTranslation($dir = __DIR__) {
+
+    global $gt,$locale;
+    if(file_exists($dir.DIRECTORY_SEPARATOR.'translations'.DIRECTORY_SEPARATOR.$locale.'.mo')) {
+        $file = $dir.DIRECTORY_SEPARATOR.'translations'.DIRECTORY_SEPARATOR.$locale.'.mo';
+    } else if(file_exists($dir.DIRECTORY_SEPARATOR.'locales'.DIRECTORY_SEPARATOR.$locale.'.mo')) {
+        $file = $dir.DIRECTORY_SEPARATOR.'locales'.DIRECTORY_SEPARATOR.$locale.'.mo';
+    } else if(file_exists($dir.DIRECTORY_SEPARATOR.$locale.'.mo')) {
+        $file = $dir.DIRECTORY_SEPARATOR.$locale.'.mo';
+    } else {
+        return false;
+    }
+
+    $streamer = new FileReader($file);
+    if (isset($gt)) {
+        $gt->gettext_reader($streamer);
+    }
+}
+
+
+?>
