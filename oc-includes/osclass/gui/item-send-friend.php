@@ -90,7 +90,7 @@
 <table>
 <tr>
 	<td><?php _e('Item'); ?></td>
-	<td><a href="<?php echo osc_createItemURL($item); ?>"><?php echo $item['s_title']; ?></a></td>
+	<td><a href="<?php osc_createItemURL($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
 </tr>
 <tr>
 	<td><label for="yourName"><?php _e('Your name'); ?></label></td>

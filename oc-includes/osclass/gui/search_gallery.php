@@ -23,11 +23,11 @@
     <?php foreach ($items as $i) { ?>
     <div class="searchGalleryItem" >
     <?php if ( osc_itemHasThumbnail($i) ) { ?>
-        <a href="<?php echo osc_createItemURL($i); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" class="searchGalleryImageLink" /></a>
+        <a href="<?php osc_createItemURL($i, true); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" class="searchGalleryImageLink" /></a>
     <?php } ?>
         <div class="searchGalleryItemPrice"><?php echo osc_formatPrice($i); ?></div>
         <p>
-            <a href="<?php echo osc_createItemURL($i); ?>" class="searchGalleryLink" ><?php echo $i['s_title']; ?></a>
+            <a href="<?php osc_createItemURL($i, true); ?>" class="searchGalleryLink" ><?php echo $i['s_title']; ?></a>
         </p>
         <p><?php echo strip_tags($i['s_description']); ?></p>
     </div>

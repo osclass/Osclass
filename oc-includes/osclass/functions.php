@@ -27,7 +27,7 @@
  * @param string $message Error message
  * @param string $title Error title
  */
-function osc_die( $title, $message ) {
+function osc_die($title, $message) {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en-US">
@@ -42,6 +42,22 @@ function osc_die( $title, $message ) {
 </html>
 <?php
     die();
+}
+
+/**
+ * This function checks if rewrite is enabled in t_preferences
+ *
+ * @global array $preferences An array that contain all the values from t_preferences
+ * @return bool If rewrite is enabled it returns true, if not it is false
+ */
+function osc_isRewriteEnabled( ) {
+    global $preferences;
+    
+    if( isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled'] ) {
+        return true;
+    }
+
+    return false;
 }
 
 ?>

@@ -93,7 +93,7 @@
 				        $item = Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']);
 				        echo '<b>'.$item['s_title'].'</b>';?>
 				        
-				        <a href="<?php echo osc_createItemURL($item);?>"><button><?php echo __('View');?></button></a>
+				        <a href="<?php osc_createItemURL($item, true);?>"><button><?php echo __('View');?></button></a>
 				        <a href="items.php?action=editItem&id=<?php echo $item['pk_i_id'];?>"><button><?php echo __('Edit');?></button></a>
 					</div>
                 </div>

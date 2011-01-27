@@ -22,10 +22,10 @@
 foreach($items as $i): ?>
 <div class="searchListItem" >
 	<?php if(osc_itemHasThumbnail($i)): ?>
-		<a href="<?php echo osc_createItemURL($i); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" class="searchListImageLink" /></a>
+		<a href="<?php osc_createItemURL($i, true); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" class="searchListImageLink" /></a>
 	<?php endif; ?>
 	<div class="searchListItemData">
-		<p><a href="<?php echo osc_createItemURL($i); ?>" class="searchListLink"><?php echo $i['s_title']; ?></a></p>
+		<p><a href="<?php osc_createItemURL($i, true); ?>" class="searchListLink"><?php echo $i['s_title']; ?></a></p>
 
 		<p><?php echo strip_tags($i['s_description']); ?></p>
 	</div>

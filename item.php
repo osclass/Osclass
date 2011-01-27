@@ -72,7 +72,7 @@ switch ($action) {
         $locale = osc_getActualLocale();
 
         $item = $manager->findByPrimaryKey($_POST['id']);
-        $item_url = osc_createItemURL($item, true);
+        $item_url = osc_createItemURL($item);
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -198,7 +198,7 @@ switch ($action) {
 
         $item = $manager->findByPrimaryKey($itemId);
 
-        $itemURL = osc_createItemURL($item, true);
+        $itemURL = osc_createItemURL($item);
 
         if (isset($preferences['moderate_comments'])) {
             $status = 'INACTIVE';
@@ -351,7 +351,7 @@ switch ($action) {
                     $content = current($aPage['locale']);
                 }
 
-                $item_url = osc_createItemURL($item, true);
+                $item_url = osc_createItemURL($item);
                 $urlEdit = array('file'   => 'user',
                                  'action' => 'item_edit',
                                  'id'     => $itemId,
