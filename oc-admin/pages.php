@@ -112,17 +112,17 @@ switch($action) {
             osc_addFlashMessage(__('You have to put some internal name.'), 'admin');
         }
 
-        $aFields = array('s_internal_name' => $_REQUEST['s_internal_name'], 'b_indelible' => '0');
-        $aFieldsDescription = array();
-        foreach($_REQUEST as $k => $v) {
-            if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                $aFieldsDescription[$m[1]][$m[2]] = $v;
+        $page = $pageManager->findByInternalName($_REQUEST['s_internal_name']);
+        if(!isset($page['pk_i_id'])) {
+            $aFields = array('s_internal_name' => $_REQUEST['s_internal_name'], 'b_indelible' => '0');
+            $aFieldsDescription = array();
+            foreach($_REQUEST as $k => $v) {
+                if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                    $aFieldsDescription[$m[1]][$m[2]] = $v;
+                }
             }
-        }
 
-        $result = $pageManager->insert($aFields, $aFieldsDescription);
-
-        if($result) {
+            $result = $pageManager->insert($aFields, $aFieldsDescription);
             osc_addFlashMessage(__('The page has been added.'), 'admin');
         } else {
             osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin');
