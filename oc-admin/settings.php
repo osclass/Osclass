@@ -363,7 +363,8 @@ switch ($action) {
             );
             if(isset($_REQUEST['rewrite_enabled'])) {
 
-                generate_rewrite_rules();
+                //generate_rewrite_rules();
+                require ABS_PATH.'generate_rules.php'
                 $htaccess_text = '
     <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -594,7 +595,7 @@ function install_location_by_region() {
     }
 }
 
-function generate_rewrite_rules() {
+/*function generate_rewrite_rules() {
     $preferences = Preference::newInstance()->toArray();
 
     //create object
@@ -662,6 +663,7 @@ function generate_rewrite_rules() {
 
     // Page rules
     $rewrite->addRule('^page/([0-9]*)$', 'page.php?id=$1');
+    $rewrite->addRule('^page/(.*)$', 'page.php?slug=$1');
 
     // Category rules
     $rewrite->addRule('^(.+)$', 'search.php?category=$1');
@@ -671,6 +673,6 @@ function generate_rewrite_rules() {
 
     //Write rule to DB
     $rewrite->setRules();
-}
+}*/
 
 ?>

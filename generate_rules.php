@@ -71,6 +71,7 @@ $rewrite->addRule('^user$', 'user.php');
 
 // Page rules
 $rewrite->addRule('^page/([0-9]*)$', 'page.php?id=$1');
+$rewrite->addRule('^page/(.*)$', 'page.php?slug=$1');
 
 // Category rules
 $rewrite->addRule('^(.+)$', 'search.php?category=$1');
