@@ -39,6 +39,7 @@
         <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
             <div style="padding: 20px;">
                 <form action="settings.php" method="post">
+                    <?php $enabled_user_registration = (isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']); ?>
                     <?php $enabled_user_validation = (isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']); ?>
                     <?php $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']); ?>
                     <input type="hidden" name="action" value="users_post" />
@@ -50,6 +51,9 @@
                             <br/>
                             <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_validation" id="enabled_user_validation" <?php if($enabled_user_validation) { ?>checked<?php } ?>/>
                             <label for="enabled_user_validation"><?php _e('User validation'); ?></label>
+                            <br/>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_registration" id="enabled_user_registration" <?php if($enabled_user_registration) { ?>checked<?php } ?>/>
+                            <label for="enabled_user_registration"><?php _e('User registration'); ?></label>
                         </fieldset>
                     </div>
                     <div style="clear: both;"></div>

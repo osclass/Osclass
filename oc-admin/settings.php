@@ -259,6 +259,10 @@ switch ($action) {
         if(isset($_POST['enabled_user_validation'])) {
             $enabled_user_validation = true;
         }
+        $enabled_user_registration = false;
+        if(isset($_POST['enabled_user_registration'])) {
+            $enabled_user_registration = true;
+        }
         $enabled_users = false;
         if(isset($_POST['enabled_users'])) {
             $enabled_users = true;
@@ -266,6 +270,8 @@ switch ($action) {
         
         $prefManager->update(array('s_value' => $enabled_user_validation),
                              array('s_name'  => 'enabled_user_validation'));
+        $prefManager->update(array('s_value' => $enabled_user_registration),
+                             array('s_name'  => 'enabled_user_registration'));
         $prefManager->update(array('s_value' => $enabled_users) ,
                              array('s_name'  => 'enabled_users'));
 

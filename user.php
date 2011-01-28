@@ -33,66 +33,75 @@ $theme = $preferences['theme'];
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 switch ($action) {
     case 'register':
-        $headerConf = array(
-            'pageTitle' => __('Create your account'),
-            'javaScripts' => array('/oc-includes/js/FormValidator.js')
-        );
-        osc_renderHeader();
-        osc_renderView('user-register.php');
-        osc_renderFooter();
-        break;
+        if(isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']==1) {
+            $headerConf = array(
+                'pageTitle' => __('Create your account'),
+                'javaScripts' => array('/oc-includes/js/FormValidator.js')
+            );
+            osc_renderHeader();
+            osc_renderView('user-register.php');
+            osc_renderFooter();
+            break;
+        } else {
+            osc_addFlashMessage(__('User registration is not available.'));
+            osc_redirectTo(osc_indexURL());
+        }
     case 'register_post':
-        if (isset($preferences['recaptchaPrivKey'])) {
-            require_once LIB_PATH . 'recaptchalib.php';
-            $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
-                            $_SERVER["REMOTE_ADDR"],
-                            $_POST["recaptcha_challenge_field"],
-                            $_POST["recaptcha_response_field"]);
-            if (!$resp->is_valid) {
-                die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
-            } else {
-                unset($_POST["recaptcha_challenge_field"]);
-                unset($_POST["recaptcha_response_field"]);
+        if(isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']==1) {
+            if (isset($preferences['recaptchaPrivKey'])) {
+                require_once LIB_PATH . 'recaptchalib.php';
+                $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
+                                $_SERVER["REMOTE_ADDR"],
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+                if (!$resp->is_valid) {
+                    die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
+                } else {
+                    unset($_POST["recaptcha_challenge_field"]);
+                    unset($_POST["recaptcha_response_field"]);
+                }
             }
+
+            require_once LIB_PATH . 'osclass/users.php';
+
+            switch($success) {
+            
+                case 0:
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+                    
+                case 1:
+                    osc_runHook('register_user', $manager->findByPrimaryKey($userId));
+                    osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
+                    osc_redirectTo(osc_createLoginURL());
+                    break;
+                    
+                case 2:
+                    osc_runHook('register_user', $manager->findByPrimaryKey($userId));
+                    osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
+                    osc_redirectTo(osc_createLoginURL());
+                    break;
+                    
+                case 3:
+                    osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+                    
+                case 4:
+                    osc_addFlashMessage(__('The user could not be registered, sorry.'));
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+                    
+                default:
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+            }
+
+            osc_redirectTo(osc_createRegisterURL());
+        } else {
+            osc_addFlashMessage(__('User registration is not available.'));
+            osc_redirectTo(osc_indexURL());
         }
-
-        require_once LIB_PATH . 'osclass/users.php';
-
-        switch($success) {
-        
-            case 0:
-                osc_redirectTo(osc_createRegisterURL());
-                break;
-                
-            case 1:
-                osc_runHook('register_user', $manager->findByPrimaryKey($userId));
-                osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
-                osc_redirectTo(osc_createLoginURL());
-                break;
-                
-            case 2:
-                osc_runHook('register_user', $manager->findByPrimaryKey($userId));
-                osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
-                osc_redirectTo(osc_createLoginURL());
-                break;
-                
-            case 3:
-                osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
-                osc_redirectTo(osc_createRegisterURL());
-                break;
-                
-            case 4:
-                osc_addFlashMessage(__('The user could not be registered, sorry.'));
-                osc_redirectTo(osc_createRegisterURL());
-                break;
-                
-            default:
-                osc_redirectTo(osc_createRegisterURL());
-                break;
-        }
-
-        osc_redirectTo(osc_createRegisterURL());
-        
         break;
     case 'send-validation':
         unset($_POST['action']);

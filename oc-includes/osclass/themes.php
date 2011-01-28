@@ -136,6 +136,10 @@ function osc_createLoginURL() {
         return WEB_PATH_URL . 'user.php?action=login';
 }
 
+function osc_indexURL() {
+    return WEB_PATH_URL;
+}
+
 function osc_createUserAccountURL() {
     global $preferences;
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
