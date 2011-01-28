@@ -166,7 +166,7 @@ if(!isset($_REQUEST['feed'])) {
     if(isset($_REQUEST['showAs']) && in_array($_REQUEST['showAs'], $validShowValues))
 	    $showAs = $_REQUEST['showAs'];
 
-
+    osc_runHook('search', $search);
     osc_renderHeader(array('pageTitle' => sprintf(__('Search results for %s'), $pattern)));
     osc_renderView('search.php');
     osc_renderFooter();
@@ -190,6 +190,7 @@ if(!isset($_REQUEST['feed'])) {
             ));
         }
 
+        osc_runHook('feed', $feed);
         $feed->dumpXML();
     } else {
         osc_runHook('feed_'.$_REQUEST['feed'], $items);

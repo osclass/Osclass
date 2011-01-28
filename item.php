@@ -294,6 +294,7 @@ switch ($action) {
                                      'alt_body'  => $body_email);
                 osc_sendMail($emailParams);
             }
+            osc_runHook('add_comment', $item);
         } catch (Exception $e) {
             osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.'));
         }
@@ -343,6 +344,7 @@ switch ($action) {
         }
         
         $currencies = Currency::newInstance()->listAll();
+        osc_runHook('post_item');
         osc_renderHeader(
                 array(
                     'pageTitle' => __('Publish your item') . ' - ' . $preferences['pageTitle'],
@@ -407,6 +409,7 @@ switch ($action) {
                 osc_sendMail($params);
             }
 
+            osc_runHook('posted_item', $item);
             $category = Category::newInstance()->findByPrimaryKey($PcatId);
             osc_redirectTo(osc_createCategoryURL($category));
         } else {
@@ -429,6 +432,7 @@ switch ($action) {
                             array('e_status' => 'ACTIVE'),
                             array('s_secret' => $secret)
                     );
+                    osc_runHook('activate_item', $manager->findByPrimaryKey($id));
                     CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                     osc_addFlashMessage('Item validated');
                     osc_redirectTo(osc_createItemURL($item[0]));
@@ -491,6 +495,7 @@ switch ($action) {
             $user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);
 
             $headerConf = array('pageTitle' => $item['s_title'] . ' - '.$preferences['pageTitle'] );
+            osc_runHok('show_item', $item);
             osc_renderHeader($headerConf);
             osc_renderView('item.php');
             osc_renderFooter();
