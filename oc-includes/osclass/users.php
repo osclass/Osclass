@@ -1,33 +1,27 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-$manager = User::newInstance();
+$manager = new User();
 
 switch ($action) {
-
     case 'register_post':
     case 'create_post':
-
         $success = 0;
         $input['s_name'] = $_POST['s_name'];
         if(!isset($_POST['s_email']) || $_POST['s_email']=='') {
@@ -76,27 +70,40 @@ switch ($action) {
                 $cityName = $_REQUEST['city'];
             }
 
-            if( empty($_REQUEST['cityArea']) )
+            if( empty($_REQUEST['cityArea']) ) {
                 $_POST['cityArea'] = null;
+            }
 
-            if( empty($_REQUEST['address']) )
+            if( empty($_REQUEST['address']) ) {
                 $_POST['address'] = null;
-                $input['fk_c_country_code'] = $countryId;
-                $input['s_country'] = $countryName;
-                $input['fk_i_region_id'] = $regionId;
-                $input['s_region'] = $regionName;
-                $input['fk_i_city_id'] = $cityId;
-                $input['s_city'] = $cityName;
-                $input['s_city_area'] = $_POST['cityArea'];
-                $input['s_address'] = $_POST['address'];
+            }
+
+            $input['fk_c_country_code'] = $countryId;
+            $input['s_country'] = $countryName;
+            $input['fk_i_region_id'] = $regionId;
+            $input['s_region'] = $regionName;
+            $input['fk_i_city_id'] = $cityId;
+            $input['s_city'] = $cityName;
+            $input['s_city_area'] = $_POST['cityArea'];
+            $input['s_address'] = $_POST['address'];
 
             $code = osc_genRandomPassword();
             $input['s_secret'] = $code;
             try {
-                $email_taken = $manager->findByEmail($input['s_email']);//Username($input['s_username']);
+                $email_taken = $manager->findByEmail($input['s_email']);
                 if($email_taken==null) {
                     $manager->insert($input);
                     $userId = $manager->getConnection()->get_last_id();
+
+                    $data = array();
+                    foreach ($_REQUEST as $k => $v) {
+                        if (preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            $data[$m[1]][$m[2]] = $v;
+                        }
+                    }
+                    foreach ($data as $k => $_data) {
+                        $manager->updateDescription($userId, $k, $_data['s_info']);
+                    }
                     osc_runHook('user_register_completed');
                     if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
                         $user = $manager->findByPrimaryKey($userId);
@@ -147,91 +154,93 @@ switch ($action) {
         }
         break;
 
-
-	case 'edit_post':
+    case 'edit_post':
     case 'profile_post':
-        
+        $sucess = 0;
+        $s_password = '';
+        if($_POST['profile_password']!=$_POST['profile_password2']) {
+            $success = 1;
+        } else {
+            if($_POST['profile_password']!='') {
+                $s_password = sha1($_POST['profile_password']);
+                unset($_POST['profile_password']);
+                unset($_POST['profile_password2']);
+            }
+        }
 
-            $sucess = 0;
-            $s_password = '';
-            if($_POST['profile_password']!=$_POST['profile_password2']) {
-                $success = 1;
-                //osc_addFlashMessage(__('Passwords don\'t match.'));
-                //osc_redirectTo(osc_createProfileURL());
-            } else {
-                if($_POST['profile_password']!='') {
-                    $s_password = sha1($_POST['profile_password']);
-                    unset($_POST['profile_password']);
-                    unset($_POST['profile_password2']);
+        // Location code from oc-includes/osclass/items.php
+        $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
+        if(count($country) > 0) {
+            $countryId = $country['pk_c_code'];
+            $countryName = $country['s_name'];
+        } else {
+            $countryId = null;
+            $countryName = null;
+        }
+
+        if( isset($_REQUEST['regionId']) ) {
+            if( intval($_REQUEST['regionId']) ) {
+                $region = Region::newInstance()->findByPrimaryKey($_REQUEST['regionId']);
+                if( count($region) > 0 ) {
+                    $regionId = $region['pk_i_id'];
+                    $regionName = $region['s_name'];
                 }
             }
+        } else {
+            $regionId = null;
+            $regionName = $_REQUEST['region'];
+        }
 
-
-            // Location code from oc-includes/osclass/items.php
-            $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
-            if(count($country) > 0) {
-                $countryId = $country['pk_c_code'];
-                $countryName = $country['s_name'];
-            } else {
-                $countryId = null;
-                $countryName = null;
-            }
-
-            if( isset($_REQUEST['regionId']) ) {
-                if( intval($_REQUEST['regionId']) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($_REQUEST['regionId']);
-                    if( count($region) > 0 ) {
-                        $regionId = $region['pk_i_id'];
-                        $regionName = $region['s_name'];
-                    }
+        if( isset($_REQUEST['cityId']) ) {
+            if( intval($_REQUEST['cityId']) ) {
+                $city = City::newInstance()->findByPrimaryKey($_REQUEST['cityId']);
+                if( count($city) > 0 ) {
+                    $cityId = $city['pk_i_id'];
+                    $cityName = $city['s_name'];
                 }
-            } else {
-                $regionId = null;
-                $regionName = $_REQUEST['region'];
             }
+        } else {
+            $cityId = null;
+            $cityName = $_REQUEST['city'];
+        }
 
-            if( isset($_REQUEST['cityId']) ) {
-                if( intval($_REQUEST['cityId']) ) {
-                    $city = City::newInstance()->findByPrimaryKey($_REQUEST['cityId']);
-                    if( count($city) > 0 ) {
-                        $cityId = $city['pk_i_id'];
-                        $cityName = $city['s_name'];
-                    }
-                }
-            } else {
-                $cityId = null;
-                $cityName = $_REQUEST['city'];
-            }
+        if( empty($_REQUEST['cityArea']) )
+            $_POST['cityArea'] = null;
 
-            if( empty($_REQUEST['cityArea']) )
-                $_POST['cityArea'] = null;
+        if( empty($_REQUEST['address']) )
+            $_POST['address'] = null;
 
-            if( empty($_REQUEST['address']) )
-                $_POST['address'] = null;
-
-            $data = array(
-                's_name' => $_POST['s_name'],
-                's_website' => $_POST['s_website'],
-                's_info' => $_POST['s_info'],
-                's_phone_land' => $_POST['s_phone_land'],
-                's_phone_mobile' => $_POST['s_phone_mobile'],
-                'fk_c_country_code' => $countryId,
-                's_country' => $countryName,
-                'fk_i_region_id' => $regionId,
-                's_region' => $regionName,
-                'fk_i_city_id' => $cityId,
-                's_city' => $cityName,
-                's_city_area' => $_POST['cityArea'],
-                's_address' => $_POST['address']
-            );
+        $data = array(
+            's_name' => $_POST['s_name'],
+            's_website' => $_POST['s_website'],
+            's_phone_land' => $_POST['s_phone_land'],
+            's_phone_mobile' => $_POST['s_phone_mobile'],
+            'fk_c_country_code' => $countryId,
+            's_country' => $countryName,
+            'fk_i_region_id' => $regionId,
+            's_region' => $regionName,
+            'fk_i_city_id' => $cityId,
+            's_city' => $cityName,
+            's_city_area' => $_POST['cityArea'],
+            's_address' => $_POST['address']
+        );
         $manager->update($data, array('pk_i_id' => $userId));
+
+        $data = array();
+        foreach ($_REQUEST as $k => $v) {
+            if (preg_match('|(.+?)#(.+)|', $k, $m)) {
+                $data[$m[1]][$m[2]] = $v;
+            }
+        }
+        foreach ($data as $k => $_data) {
+            $manager->updateDescription($userId, $k, $_data['s_info']);
+        }
+
         if($s_password!='') {
             $manager->update(array('s_password' => $s_password), array('pk_i_id' => $userId));
         }
         $success = 2;
         break;
-
-
 
     default:
         break;

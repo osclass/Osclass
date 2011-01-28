@@ -96,7 +96,9 @@ switch($action) {
                 osc_redirectToReferer(ABS_WEB_URL);
             }
 
-            move_uploaded_file($tmpName, $path);
+            if(!move_uploaded_file($tmpName, $path)){
+                unset($path);
+            }
         }
 
         $params = array('from'       => $yourEmail,
@@ -112,6 +114,7 @@ switch($action) {
         }
 
         osc_sendMail($params);
+        @unlink($path);
         osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
         osc_redirectTo(ABS_WEB_URL);
         break;

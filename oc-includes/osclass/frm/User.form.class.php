@@ -1,22 +1,19 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 class UserForm extends Form {
@@ -100,11 +97,26 @@ class UserForm extends Form {
         return true ;
     }
     
-    static public function info_textarea($user = null) {
-        parent::generic_textarea("s_info", isset($user['s_info'])? $user['s_info'] : '');
+    static public function info_textarea($name, $locale = 'en_US', $value = '') {
+        parent::generic_textarea($locale . "#" . $name, $value);
         return true ;
     }
-    
+
+    static public function multilanguage_info($locales, $user = null) {
+        $num_locales = count($locales);
+        if($num_locales>1) { echo '<div class="tabber">'; };
+        foreach($locales as $locale) {
+            if($num_locales>1) { echo '<div class="tabbertab">'; };
+            if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
+            echo '<div class="description">';
+            echo '<div><label for="description">' . __('User Description') . '</label></div>';
+            self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
+            echo '</div>';
+            if($num_locales>1) { echo '</div>'; };
+         }
+         if($num_locales>1) { echo '</div>'; };
+    }
+
     static public function country_select($countries, $user = null) {
         if( count($countries) > 1 ) {
             parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select one country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;

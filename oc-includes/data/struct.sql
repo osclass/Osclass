@@ -104,7 +104,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_secret VARCHAR(40) NULL,
     s_email VARCHAR(100) NULL,
     s_website VARCHAR(100) NULL,
-    s_info TEXT NULL,
     s_phone_land VARCHAR(45),
     s_phone_mobile VARCHAR(45),
     b_enabled BOOLEAN NOT NULL DEFAULT FALSE,
@@ -133,6 +132,16 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
         FOREIGN KEY (fk_i_city_area_id) REFERENCES /*TABLE_PREFIX*/t_city_area (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_user_description (
+    fk_i_user_id INT UNSIGNED NOT NULL,
+    fk_c_locale_code CHAR(5) NOT NULL,
+    s_info TEXT NULL,
+
+        PRIMARY KEY (fk_i_user_id, fk_c_locale_code),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),
+        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category (
