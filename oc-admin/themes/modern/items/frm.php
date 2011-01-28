@@ -2,6 +2,20 @@
 <link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <script type="text/javascript">
 	document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+    $(document).ready(function(){
+        $("#userId").change(function(){
+            if($(this).val()=='') {
+                $("#contact_info").show();
+            } else {
+                $("#contact_info").hide();
+            }
+        });
+        if($($("#userId")).val()=='') {
+            $("#contact_info").show();
+        } else {
+            $("#contact_info").hide();
+        }
+    });
 </script>
 <?php ItemForm::location_javascript(); ?>
 <div id="content">
@@ -27,7 +41,6 @@
                         <h2>
                             <?php _e('General Information'); ?>
                         </h2>
-
                         <?php ItemForm::category_select($categories, $item); ?>
 
                         <?php ItemForm::multilanguage_title_description($locales, $item); ?>
@@ -105,6 +118,18 @@
 
                         <!-- right -->
                     <div class="right column">
+                        <div class="user-post">
+                            <h2><?php _e('User'); ?></h2>
+                            <?php _e('Item posted by'); ?>&nbsp;<?php ItemForm::user_select($users, $item, __('Non-registered user')); ?>
+                            <div  id="contact_info">
+                            <dl>
+                                <dt><?php _e('Name'); ?></dt>
+                                <dd><?php ItemForm::contact_name_text($item) ; ?></dd>
+                                <dt><?php _e('E-Mail'); ?></dt>
+                                <dd><?php ItemForm::contact_email_text($item) ; ?></dd>
+                            </dl>
+                            </div>
+                        </div>
                         <div class="location-post">
                             <!-- location info -->
                             <h2><?php _e('Location'); ?></h2>

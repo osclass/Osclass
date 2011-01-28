@@ -185,7 +185,11 @@ switch ($action) {
         import_request_variables('p', 'P');
 
         if(isset($admin) && $admin==TRUE) {
-            $userId = $_SESSION['adminId'];
+            if(isset($_REQUEST['userId']) && $_REQUEST['userId']!='') {
+                $userId = $_REQUEST['userId'];
+            } else {
+                $userId = $_SESSION['adminId'];
+            }
         } else {
             $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
 
@@ -231,8 +235,13 @@ switch ($action) {
 
         if ($userId != null) {
             if(isset($admin) && $admin==TRUE) {
-                $data = Admin::newInstance()->findByPrimaryKey($userId);
-                $userId = null;
+                if(isset($_REQUEST['contactName']) && $_REQUEST['contactName']!='' && isset($_REQUEST['contactEmail']) && $_REQUEST['contactEmail']!='') {
+                    $data['s_name'] = $_REQUEST['contactName'];
+                    $data['s_email'] = $_REQUEST['contactEmail'];
+                } else {
+                    $data = Admin::newInstance()->findByPrimaryKey($userId);
+                    $userId = null;
+                }
             } else {
                 $data = User::newInstance()->findByPrimaryKey($userId);
             }

@@ -33,8 +33,36 @@ class ItemForm extends Form {
             foreach($categories as $c) {
                 echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
-                    CategoryForm::subcategory_select($c['categories'], $item['fk_i_category_id'], $default_item, 1);
+                    ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                 }
+            }
+        echo '</select>' ;
+        return true ;
+    }
+    
+    static public function subcategory_select($categories, $item, $default_item = null, $deep = 0) {
+        $deep_string = "";
+        for($var = 0;$var<$deep;$var++) {
+            $deep_string .= '&nbsp;&nbsp;';
+        }
+        $deep++;
+        foreach($categories as $c) {
+            echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
+            if(isset($c['categories']) && is_array($c['categories'])) {
+                ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
+            }
+        }
+    }
+
+    
+
+    static public function user_select($users, $item, $default_item = null) {
+        echo '<select name="userId" id="userId">' ;
+            if(isset($default_item)) {
+                echo '<option value="">' . $default_item . '</option>' ;
+            }
+            foreach($users as $user) {
+                echo '<option value="' . $user['pk_i_id'] . '"' . ( ($item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['pk_i_id']." - ".$user['s_name'] . '</option>' ;
             }
         echo '</select>' ;
         return true ;

@@ -225,6 +225,8 @@ switch ($action) {
 
         $item = Item::newInstance()->findByPrimaryKey($id);
 
+        $users = User::newInstance()->listAll();
+
         $categories = Category::newInstance()->toTree();
         $countries = Country::newInstance()->listAll();
         $regions = array();
@@ -251,6 +253,23 @@ switch ($action) {
 
         require_once LIB_PATH . 'osclass/items.php';
 
+        if(isset($_REQUEST['userId'])) {
+            if($_REQUEST['userId']!='') {
+                $user = User::newInstance()->findByPrimaryKey($_REQUEST['userId']);
+                Item::newInstance()->update(array(
+                    'fk_i_user_id' => $_REQUEST['userId'],
+                    's_contact_name' => $user['s_name'],
+                    's_contact_email' => $user['s_email']
+                ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
+            } else {
+                Item::newInstance()->update(array(
+                    'fk_i_user_id' => NULL,
+                    's_contact_name' => $_REQUEST['contactName'],
+                    's_contact_email' => $_REQUEST['contactEmail']
+                ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
+            }
+        }
+
         osc_redirectTo('items.php');
         break;
     case 'deleteResource':
@@ -264,6 +283,7 @@ switch ($action) {
 
     case 'post':
 
+        $users = User::newInstance()->listAll();
         $categories = Category::newInstance()->toTree();
         $countries = Country::newInstance()->listAll();
         $regions = array();
@@ -297,6 +317,8 @@ switch ($action) {
         $manager = Item::newInstance();
 
         require_once LIB_PATH . 'osclass/items.php';
+
+        
         osc_redirectTo('items.php');
         break;
 
