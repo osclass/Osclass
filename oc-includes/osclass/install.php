@@ -32,7 +32,7 @@ require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 
 if( is_osclass_installed( ) ) {
     $message = 'You appear to have already installed OSClass. To reinstall please clear your old database tables first.';
-    osc_die('Wordpress &raquo; Error', $message);
+    osc_die('OSClass &raquo; Error', $message);
 }
 
 switch ($step) {

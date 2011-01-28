@@ -1,22 +1,19 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once 'oc-load.php';
@@ -38,6 +35,8 @@ $page = intval(osc_paramRequest('page', 0));
 
 // NOT SURE WHAT DOES THIS 
 $cats = array();
+$sCats = (isset($_REQUEST['catId'])) ? $_REQUEST['catId'] : array();
+if(!is_array($sCats)) { unset($sCats); $sCats[] = $_REQUEST['catId']; }
 foreach($categories as $cat)
 	$cats[] = $cat['pk_i_id'];
 if(isset($_REQUEST['cats']))
@@ -119,13 +118,22 @@ if(isset($_REQUEST['cities']) && count($_REQUEST['cities'])>0) {
     $search->addCity($city);
 }
 
-$city = osc_paramRequest('city');
-if(isset($_REQUEST['cities']) && count($_REQUEST['cities'])>0) {
-    foreach($_REQUEST['cities'] as $city) {
-        $search->addCity($city);
+$region = osc_paramRequest('region');
+if(isset($_REQUEST['regions']) && count($_REQUEST['regions'])>0) {
+    foreach($_REQUEST['regions'] as $region) {
+        $search->addRegion($region);
     }
-} else if(isset($city) && $city!="") {
-    $search->addCity($city);
+} else if(isset($region) && $region!="") {
+    $search->addRegion($region);
+}
+
+$country = osc_paramRequest('country');
+if(isset($_REQUEST['countries']) && count($_REQUEST['countries'])>0) {
+    foreach($_REQUEST['countries'] as $country) {
+        $search->addCountry($country);
+    }
+} else if(isset($country) && $country!="") {
+    $search->addCountry($country);
 }
 
 $search->addConditions(sprintf("%st_item.e_status = 'ACTIVE' ", DB_TABLE_PREFIX));

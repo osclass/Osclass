@@ -136,8 +136,11 @@ switch ($action) {
         break;
 
     case 'contact_post':
+        $path = '';
         $item = $manager->findByPrimaryKey($_REQUEST['id']);
+
         $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+
         if($category['i_expiration_days']>0) {
             $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
             $date = time();
@@ -184,7 +187,29 @@ switch ($action) {
                              'body'      => $body,
                              'alt_body'  => $body,
                              'reply_to'  => $_POST['yourEmail']);
+
+        if($preferences['item_attachment']) {
+            $resourceName = $_FILES['attachment']['name'];
+            $tmpName = $_FILES['attachment']['tmp_name'];
+            $resourceType = $_FILES['attachment']['type'];
+            $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName;
+
+            if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
+                osc_addFlashMessage('There has been some erro sending the message');
+                osc_redirectToReferer(ABS_WEB_URL);
+            }
+
+            if(!move_uploaded_file($tmpName, $path)){
+                unset($path);
+            }
+        }
+
+        if(isset($path)) {
+            $emailParams['attachment'] = $path;
+        }
+
         osc_sendMail($emailParams);
+        @unlink($path);
         osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.'));
         osc_redirectTo(osc_createItemURL($item));
         break;
