@@ -27,6 +27,7 @@ if(isset($_GET['theme'])) $preferences['theme'] = $_GET['theme'];
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 switch($action) {
     case 'sitemap':
+        osc_runHook('before_sitemap');
         $sm = new Sitemap();
         $mPages = new Page();
         $aPages = $mPages->listAll(false);
@@ -40,6 +41,7 @@ switch($action) {
             $sm->addURL(osc_createCategoryURL($c), 'daily', 0.9);
         }
         $sm->toStdout();
+        osc_runHook('after_sitemap');
         break;
     case 'feed':
         header('Content-type: text/xml; charset=utf-8');
@@ -61,9 +63,11 @@ switch($action) {
         $feed->dumpXML();
         break;
     case 'errorPage':
+        osc_runHook('before_error_page');
         osc_renderHeader();
         osc_renderView('errorPage.php');
         osc_renderFooter();
+        osc_runHook('after_error_page');
         break;
     case 'setlanguage':
         $languageCodes = osc_listLanguageCodes();

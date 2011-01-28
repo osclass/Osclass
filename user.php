@@ -65,11 +65,13 @@ switch ($action) {
                 break;
                 
             case 1:
+                osc_runHook('register_user', $manager->findByPrimaryKey($userId));
                 osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
                 osc_redirectTo(osc_createLoginURL());
                 break;
                 
             case 2:
+                osc_runHook('register_user', $manager->findByPrimaryKey($userId));
                 osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
                 osc_redirectTo(osc_createLoginURL());
                 break;
@@ -170,6 +172,7 @@ switch ($action) {
                     );
                     osc_sendMail($emailParams);
                 }
+                osc_runnHokk('validate_user', $user);
                 osc_addFlashMessage(__('Your account is correctly validated. Thanks.'));
             } else {
                 osc_addFlashMessage(__('Your account has been activated before.'));
@@ -404,6 +407,7 @@ switch ($action) {
         break;
         
     case 'logout':
+        osc_runHook('logout_user', $_COOKIE['oc_userId']);
         unset($_SESSION['userId']);
         setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
         setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
