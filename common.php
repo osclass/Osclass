@@ -40,6 +40,7 @@ if(defined('WEB_PATH')) {
 define('LOG_NONE', 0);
 define('LOG_WEB', 1);
 define('LOG_COMMENT', 2);
-define('DEBUG_LEVEL', LOG_NONE) ;
+define('LOG_AJAX', 3);
+define('DEBUG_LEVEL', LOG_WEB) ;
 
 ?>

@@ -1,4 +1,5 @@
 <?php
+    define('IS_AJAX', 1);
     define('ABS_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/');
 
     require_once  ABS_PATH . 'config.php';
