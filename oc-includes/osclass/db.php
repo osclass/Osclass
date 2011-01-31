@@ -82,7 +82,6 @@ class DB
     	$this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
         if ($this->db->connect_error) {
             $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
-            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->connect_errno  );
         }
         
         $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser . ' | [DBPWD] = ' . $this->dbPassword) ;
@@ -124,7 +123,6 @@ class DB
     	$result = $this->db->query($sql);
     	if(!$result) {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
-            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	} else {
     	    $this->debug($sql) ;
     	}
@@ -153,7 +151,6 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
-            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	
     	return $result;
@@ -183,7 +180,6 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
-            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	return $results;
     }
@@ -209,7 +205,6 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
-            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	
     	return $result;
@@ -236,7 +231,6 @@ class DB
     		$qry->free();
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
-            if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
     	}
     	
     	return $results;
@@ -257,7 +251,6 @@ class DB
                     $this->debug($s) ;
                 } else {
                     $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
-                    if ( $this->dbLogLevel == LOG_NONE ) throw new Exception( $this->db->errno );
                 }
             }
     	}
