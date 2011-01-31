@@ -384,9 +384,24 @@ function osc_dbdump($db_filename = null) {
 			if($result) {
 				fwrite($f, "/* OSCLASS MYSQL Autobackup (".date('Y-m-d H:i:s').") */\n");
 				fclose($f);
+				$tables = array();
 				while($row = mysql_fetch_row($result)) {
-					osc_dump_table_structure($row[0]);
-					osc_dump_table_data($row[0]);
+				    $tables[$row[0]] = $row[0];
+				}
+				
+                $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
+                // Backup default OSClass tables in order, so no problem when importing them back
+                foreach($tables_order as $table) {
+                    if(array_key_exists(DB_TABLE_PREFIX.$table, $tables)) {
+    					osc_dump_table_structure(DB_TABLE_PREFIX.$table);
+    					osc_dump_table_data(DB_TABLE_PREFIX.$table);
+    					unset($tables[DB_TABLE_PREFIX.$table]);
+                    }
+                }
+				// Backup the rest of tables
+				foreach($tables as $table) {
+					osc_dump_table_structure($table);
+					osc_dump_table_data($table);
 				}
 			} else {
 				fwrite($f, "/* no tables in ".DB_NAME." */\n");
