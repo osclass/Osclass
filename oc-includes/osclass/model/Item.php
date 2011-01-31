@@ -361,6 +361,17 @@ class Item extends DAO
         return $this->extendData($items);
     }
 
+    public function findByUserIDEnabled($userId, $limit = null)
+    {
+        if($limit==null) {
+            $limit_text = '';
+        } else {
+            $limit_text = ' LIMIT '.$limit;
+        }
+        $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.e_status = \'ACTIVE\' AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id ASC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
+        return $this->extendData($items);
+    }
+
     public function listLocations($scope)
     {
         $availabe_scopes = array('country', 'region', 'city');

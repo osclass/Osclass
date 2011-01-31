@@ -294,7 +294,7 @@ function osc_createResourceURL($resource) {
 }
 
 function osc_createItemPostURL($cat = null) {
-    if (is_null($cat)) {
+    if (!isset($cat) || !isset($cat['pk_i_id'])) {
         if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
             return WEB_PATH_URL . 'item/new';
         } else {

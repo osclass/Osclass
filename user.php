@@ -234,10 +234,22 @@ switch ($action) {
         break;
     case 'items':
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);
-        osc_renderHeader(array('pageTitle' => __('Create your account')));
+        osc_renderHeader(array('pageTitle' => __('Your Items')));
         nav_user_menu();
         osc_renderView('user-items.php');
         osc_renderFooter();
+        break;
+
+    case 'public-items':
+        if(isset($_REQUEST['user']) && $_REQUEST['user']!='') {
+            $user = User::newInstance()->findByPrimaryKey($_REQUEST['user']);
+            $items = Item::newInstance()->findByUserIDEnabled($user['pk_i_id']);
+            osc_renderHeader(array('pageTitle' => __('Items')));
+            osc_renderView('user-public-dashboard.php');
+            osc_renderFooter();
+        } else {
+            osc_redirectTo(osc_indexURL());
+        }
         break;
 
     case 'alerts':
