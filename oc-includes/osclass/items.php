@@ -227,7 +227,11 @@ switch ($action) {
         $show_email = isset($_POST['showEmail']) ? $_POST['showEmail'] : '0';
 
         if ($userId != null) {
-            if(isset($admin) && $admin==TRUE) {
+            if(isset($_POST['userId']) && (int) $_POST['userId'] > 0) {
+                $mUser = new User();
+                $data = $mUser->findByPrimaryKey((int)$_POST['userId']);
+                $userId = $_POST['userId'];
+            } else if(isset($admin) && $admin==TRUE) {
                 if(isset($_REQUEST['contactName']) && $_REQUEST['contactName']!='' && isset($_REQUEST['contactEmail']) && $_REQUEST['contactEmail']!='') {
                     $data['s_name'] = $_REQUEST['contactName'];
                     $data['s_email'] = $_REQUEST['contactEmail'];

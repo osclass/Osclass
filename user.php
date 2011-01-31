@@ -181,7 +181,7 @@ switch ($action) {
                     );
                     osc_sendMail($emailParams);
                 }
-                osc_runnHokk('validate_user', $user);
+                osc_runHok('validate_user', $user);
                 osc_addFlashMessage(__('Your account is correctly validated. Thanks.'));
             } else {
                 osc_addFlashMessage(__('Your account has been activated before.'));

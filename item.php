@@ -491,11 +491,19 @@ switch ($action) {
                 $item['locale'][$k]['s_title'] = osc_applyFilter('item_title',$v['s_title']);
                 $item['locale'][$k]['s_description'] = osc_applyFilter('item_description',$v['s_description']);
             }
-            
+
+            $mUser = new User();
             $user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);
+            $aUser = $mUser->findByPrimaryKey($item['fk_i_user_id']);
+            $actual_locale = osc_getActualLocale();
+            if(isset($aUser['locale'][$actual_locale]['s_info'])) {
+                $aUser['s_info'] = $aUser['locale'][$actual_locale]['s_info'];
+            } else {
+                $aUser['s_info'] = '';
+            }
 
             $headerConf = array('pageTitle' => $item['s_title'] . ' - '.$preferences['pageTitle'] );
-            osc_runHok('show_item', $item);
+            osc_runHook('show_item', $item);
             osc_renderHeader($headerConf);
             osc_renderView('item.php');
             osc_renderFooter();

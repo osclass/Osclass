@@ -122,7 +122,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
                 if(isset($aRow['num_total'])) {
                     $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['num_total'])).'",';
                 } else {
-                    $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['s_description'])).'",';
+                    $this->sOutput .= '"'.addslashes(substr(preg_replace('|\s+|',' ',$aRow['s_description']), 0, 200)).'",';
                 }
                 /* END OF - if $_GET['stat'] */
 

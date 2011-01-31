@@ -16,18 +16,20 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Item extends DAO {
-
-    public static function newInstance() {
+class Item extends DAO
+{
+    public static function newInstance()
+    {
         return new Item();
     }
 
-    public function getTableName() {
+    public function getTableName()
+    {
         return DB_TABLE_PREFIX . 't_item';
     }
 
-    public function extendCategoryName($items) {
-
+    public function extendCategoryName($items)
+    {
         if (isset($_SESSION['locale'])) {
             $prefLocale = $_SESSION['locale'];
         } else {
@@ -52,8 +54,8 @@ class Item extends DAO {
         return $results;
     }
 
-    public function extendData($items) {
-
+    public function extendData($items)
+    {
         if (isset($_SESSION['locale'])) {
             $prefLocale = $_SESSION['locale'];
         } else {
@@ -85,8 +87,8 @@ class Item extends DAO {
         return $results;
     }
 
-    public function extendDataSingle($item) {
-
+    public function extendDataSingle($item)
+    {
         if (isset($_SESSION['locale'])) {
             $prefLocale = $_SESSION['locale'];
         } else {
@@ -125,7 +127,8 @@ class Item extends DAO {
         return $item;
     }
 
-    public function listWhere() {
+    public function listWhere()
+    {
         $argv = func_get_args();
         $sql = null;
         switch (func_num_args ()) {
@@ -143,25 +146,30 @@ class Item extends DAO {
         return $this->extendData($items);
     }
 
-    public function findByPrimaryKey($id) {
+    public function findByPrimaryKey($id)
+    {
         $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.* FROM %s i JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id WHERE i.pk_i_id = %d', $this->getTableName(), DB_TABLE_PREFIX, $id);
 
         return $this->extendDataSingle($item);
     }
 
-    public function findResourcesByID($id) {
+    public function findResourcesByID($id)
+    {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
     }
 
-    public function findLocationByID($id) {
+    public function findLocationByID($id)
+    {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_item_location WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
     }
 
-    public function findByCategoryID($catId) {
+    public function findByCategoryID($catId)
+    {
         return $this->listWhere('fk_i_category_id = %d', $catId);
     }
 
-    public function list_items($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null) {
+    public function list_items($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null)
+    {
         $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS i.* FROM %st_item i, %st_category c WHERE c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
 
         $conditions = array();
@@ -212,10 +220,10 @@ class Item extends DAO {
         return array('found' => $found, 'items' => $items);
     }
 
-    public function list_items_conditions($category = null, $start = 0, $limit = 10, $conditions = array(), $active = null, $order_by = null, $search = null) {
+    public function list_items_conditions($category = null, $start = 0, $limit = 10, $conditions = array(), $active = null, $order_by = null, $search = null)
+    {
         $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS i.* FROM %st_item i, %st_category c WHERE AND c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
 
-        //$conditions = array();
         if (!is_null($category)) {
             $conditions[] = '(c.pk_i_id = ' . $category['pk_i_id'] . ' OR c.fk_i_parent_id = ' . $category['pk_i_id'] . ')';
             if ($category['i_expiration_days'] > 0) {
@@ -264,29 +272,34 @@ class Item extends DAO {
         return array('found' => $found, 'items' => $items);
     }
 
-    public function list_premiums($category = null, $start = 0, $limit = 2, $active = null, $order_by = null, $search = null) {
+    public function list_premiums($category = null, $start = 0, $limit = 2, $active = null, $order_by = null, $search = null)
+    {
         $condtions = array();
         $conditions[] = ' b_premium = 1 ';
         return list_items_conditions($category, $start, $limit, $conditions, $active, $order_by, $search);
     }
 
-    public function list_no_premiums($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null) {
+    public function list_no_premiums($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null)
+    {
         $condtions = array();
         $conditions[] = ' b_premium = 0 ';
         return list_items_conditions($category, $start, $limit, $conditions, $active, $order_by, $search);
     }
 
-    public function list_items_with_premiums($category = null, $start = 0, $limit = 10, $premium_start = 0, $premium_limit = 2, $active = null, $order_by = null, $search = null) {
+    public function list_items_with_premiums($category = null, $start = 0, $limit = 10, $premium_start = 0, $premium_limit = 2, $active = null, $order_by = null, $search = null)
+    {
         $premiums = list_premiums($category, $premium_start, $premium_limit, $active, $order_by, $search);
     }
 
-    public function found_rows() {
+    public function found_rows()
+    {
         $sql = "SELECT FOUND_ROWS() as total";
         $total_ads = $this->conn->osc_dbFetchResult($sql);
         return $total_ads['total'];
     }
 
-    public function total_items($category = null, $active = null) {
+    public function total_items($category = null, $active = null)
+    {
         $sql = sprintf('SELECT count(*) AS total FROM %st_item i JOIN
                 %st_category c ON c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
 
@@ -311,28 +324,34 @@ class Item extends DAO {
         return $total_ads['total'];
     }
 
-    public function listLatest($limit = 10) {
+    public function listLatest($limit = 10)
+    {
         return $this->listWhere(" e_status = 'ACTIVE' ORDER BY dt_pub_date DESC LIMIT " . $limit);
     }
 
-    public function insertLocale($id, $locale, $title, $description, $what) {
+    public function insertLocale($id, $locale, $title, $description, $what)
+    {
         $sql = sprintf("INSERT INTO %st_item_description (`fk_i_item_id`, `fk_c_locale_code`, `s_title`, `s_description`, `s_what`) VALUES ('%s', '%s', '%s', '%s', '%s')", DB_TABLE_PREFIX, $id, $locale, $title, $description, $what) ;
         return $this->conn->osc_dbExec($sql);
     }
 
-    public function listLatestExtended($limit = 10) {
+    public function listLatestExtended($limit = 10)
+    {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %s, %st_item_location WHERE %st_item.e_status = \'%s\' AND %st_item_location.fk_i_item_id = %st_item.pk_i_id  ORDER BY %st_item.dt_pub_date DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, 'ACTIVE', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit) ;
     }
 
-    public function listAllWithCategories() {
+    public function listAllWithCategories()
+    {
         return $this->conn->osc_dbFetchResults('SELECT i.*, cd.s_name AS s_category_name FROM %st_item i, %st_category c, %st_category_description cd WHERE c.pk_i_id = i.fk_i_category_id AND cd.fk_i_category_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX) ;
     }
 
-    public function search($pattern) {
+    public function search($pattern)
+    {
         return $this->listWhere("s_title LIKE '%%%s%%' OR s_description LIKE '%%%1\$s%%'", $pattern);
     }
 
-    public function findByUserID($userId, $limit = null) {
+    public function findByUserID($userId, $limit = null)
+    {
         if($limit==null) {
             $limit_text = '';
         } else {
@@ -340,14 +359,28 @@ class Item extends DAO {
         }
         $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id ASC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
         return $this->extendData($items);
-        //return $this->listWhere('i.fk_i_user_id = %d', $userId);
     }
 
-    /* findByItemStat()
-     * used for filter items in oc-admin
-     */
-    public function findByItemStat($stat) {
+    public function listLocations($scope)
+    {
+        $availabe_scopes = array('country', 'region', 'city');
+        $fields = array('country' => 'fk_c_country_code',
+                        'region'  => 'fk_i_region_id',
+                        'city'    => 'fk_i_city_id');
 
+        if(!in_array($scope, $availabe_scopes)) {
+            return array();
+        }
+
+        $sql = 'SELECT * FROM ' . DB_TABLE_PREFIX . 't_item_location WHERE ' . $fields[$scope] . ' IS NOT NULL';
+
+        $results = $this->conn->osc_dbFetchResults($sql);
+
+        return $results;
+    }
+
+    public function findByItemStat($stat)
+    {
         switch($stat) {
             case 'spam':
                 $sql = "SELECT i.*, s.i_num_spam as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_spam` > 0";
@@ -384,7 +417,8 @@ class Item extends DAO {
         return array('found' => $found, 'items' => $items);
     }
 
-    public function updateLocaleForce($id, $locale, $title, $text) {
+    public function updateLocaleForce($id, $locale, $title, $text)
+    {
         $sql = sprintf("REPLACE INTO %st_item_description SET `s_title` = '%s', `s_description` = '%s', `fk_c_locale_code` = '%s', `fk_i_item_id` = %s, `s_what` = '%s'", DB_TABLE_PREFIX, $title, $text, $locale, $id, $title . " " . $text);
         $this->conn->osc_dbExec($sql);
         $date = date('Y-m-d H:i:s');
@@ -392,7 +426,8 @@ class Item extends DAO {
         return $this->conn->osc_dbExec($sql);
     }
 
-    public function deleteByID($id) {
+    public function deleteByID($id)
+    {
         osc_runHook('delete_item', $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_comment WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
@@ -402,24 +437,26 @@ class Item extends DAO {
         $this->conn->osc_dbExec('DELETE FROM %st_item WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
     }
 
-    public function deleteByPrimaryKey($id) {
+    public function deleteByPrimaryKey($id)
+    {
         return $this->deleteByID($id);
     }
 
-	public function delete($conditions) {
-		$where = array();
-		foreach($conditions as $key => $value) {
-			if($key == DB_CUSTOM_COND)
-				$where[] = $value;
-			else
-				$where[] = $key . ' = ' . $this->formatValue($value);
-		}
-		$where = implode(' AND ', $where);
-		$items = $this->listWhere($where);
+    public function delete($conditions)
+    {
+        $where = array();
+        foreach($conditions as $key => $value) {
+            if($key == DB_CUSTOM_COND)
+                $where[] = $value;
+            else
+                $where[] = $key . ' = ' . $this->formatValue($value);
+        }
+        $where = implode(' AND ', $where);
+        $items = $this->listWhere($where);
         foreach($items as $item) {
             $this->deleteByID($item['pk_i_id']);
         }
-	}
-
-
+    }
 }
+
+?>
