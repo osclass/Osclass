@@ -134,7 +134,7 @@ switch($action) {
         } else {
             $prefLocale = $_SESSION['adminLocale'];
         }
-        $pages = $pageManager->listAll();
+        $pages = $pageManager->listAll(0);
         osc_renderAdminSection('pages/index.php', __('Pages'));
 }
 
