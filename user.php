@@ -240,7 +240,7 @@ switch ($action) {
         osc_renderFooter();
         break;
 
-    case 'public-items':
+    case 'public':
         if(isset($_REQUEST['user']) && $_REQUEST['user']!='') {
             $user = User::newInstance()->findByPrimaryKey($_REQUEST['user']);
             $items = Item::newInstance()->findByUserIDEnabled($user['pk_i_id']);

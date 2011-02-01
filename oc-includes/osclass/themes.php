@@ -370,6 +370,16 @@ function osc_createItemURL($item, $echo = false) {
     return $path;
 }
 
+function osc_createUserPublicDashboard($user = null) {
+    if ($user!=null || !isset($user['pk_i_id'])) {
+        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+            return WEB_PATH_URL . 'user/'.$user['pk_i_id'];
+        } else {
+            return WEB_PATH_URL . 'user.php?action=public&user='.$user['pk_i_id'];
+        }
+    }
+}
+
 /**
  * Prints the user's account menu
  *
