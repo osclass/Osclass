@@ -46,7 +46,7 @@ if(file_exists(ABS_PATH . 'oc-content/themes/' . $preferences['theme'] . '/' . $
             'pageTitle' => __('Page not found') . ' - '.$preferences['pageTitle'],
         );
         osc_renderHeader($headerConf);
-        osc_renderView('errorPage.php');
+        osc_renderView('404.php');
         osc_renderFooter();
     } else {
         if(isset($_SESSION['locale'])) {
