@@ -18,19 +18,22 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-    define('IS_AJAX', 1);
-    define('ABS_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/');
-
-    require_once  ABS_PATH . 'config.php';
-    require_once  ABS_PATH . 'common.php';
-    require_once  LIB_PATH . 'osclass/web.php';
-    require_once  LIB_PATH . 'osclass/db.php';
-    require_once  LIB_PATH . 'osclass/classes/DAO.php';
-    require_once  LIB_PATH . 'osclass/model/City.php';
-
-    $cities = City::newInstance()->listWhere("fk_i_region_id = %d", $_REQUEST['regionId']);
-
-    echo json_encode($cities);
-
 ?>
+<h2><?php echo __('Items from ').$user['s_name']; ?></h2>
+
+<?php if(count($items) == 0): ?>
+	<h3><?php _e('No items.'); ?></h3>
+<?php else: ?>
+<?php foreach($items as $i) { ?>
+	<div class="userItem" >
+		<div><a href="<?php osc_createItemURL($i, true); ?>"><?php echo $i['s_title']; ?></a></div>
+
+		<div class="userItemData" >
+		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
+		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
+		</div>
+
+	</div>
+	<br />
+<?php }; ?>
+<?php endif; ?>

@@ -1,1 +1,1 @@
-<?php /* So say we all */ ?>
+<?php /* They have a plan */ ?>

@@ -82,7 +82,11 @@ switch($action)
     case 'backup':          osc_renderAdminSection('tools/backup.php', __('Tools'));
 	break;
     case 'backup-sql':      if(isset($_REQUEST['bck_dir'])) {
-                            	$sql_name = $_REQUEST['bck_dir']."/OSClass_mysqlbackup.".date('YmdHis').".sql";
+                                if(substr(trim($_REQUEST['bck_dir']), -1, 1)=="/") {
+                                	$sql_name = trim($_REQUEST['bck_dir'])."/OSClass_mysqlbackup.".date('YmdHis').".sql";
+                                } else {
+                                	$sql_name = trim($_REQUEST['bck_dir'])."OSClass_mysqlbackup.".date('YmdHis').".sql";
+                                }
                             } else {
                             	$sql_name = ABS_PATH . "OSClass_mysqlbackup.".date('YmdHis').".sql";
                             }

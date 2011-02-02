@@ -30,7 +30,7 @@ switch($action) {
 
 
 	case 'check-update':
-		$message = "Checking for update files.";
+		$message = __("Checking for update files.");
 		break;
 
 	case 'download-file':
@@ -48,7 +48,7 @@ switch($action) {
 		break;
 
 	case 'empty-temp':
-		$message = "Removing temp-directory.";
+		$message = __("Removing temp-directory.");
 		$path = ABS_PATH . 'oc-temp';
 		$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
 		for ($dir->rewind(); $dir->valid(); $dir->next()) {

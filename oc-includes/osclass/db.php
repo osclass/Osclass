@@ -51,19 +51,24 @@ class DB
     {
         if($this->dbLogLevel != LOG_NONE) {
             $this->msg .= date("d/m/Y - H:i:s") . " " ;
-            if ($ok) $this->msg .= "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] " ;
-            else $this->msg .= "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] " ;
+            if($this->dbLogLevel == LOG_WEB) {
+                if ($ok) $this->msg .= "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] " ;
+                else $this->msg .= "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] " ;
+            }
             
             $this->msg .= str_replace("\n", " ", $msg) ;
             
-            if($this->dbLogLevel == LOG_WEB) $this->msg .= '</span><br />' ;
+            if($this->dbLogLevel == LOG_WEB) { $this->msg .= '</span><br />' ; }
             $this->msg .= "\n" ;
         }
     }
     
     function print_debug() {
         switch($this->dbLogLevel) {
-            case(LOG_WEB):      echo $this->msg ; 
+            case(LOG_WEB):
+                if(!defined('IS_AJAX')) {
+                    echo $this->msg ; 
+                }
             break;
             case(LOG_COMMENT):  echo '<!-- ' . $this->msg . ' -->' ;
             break;

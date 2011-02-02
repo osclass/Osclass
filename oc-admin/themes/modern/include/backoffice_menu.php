@@ -69,6 +69,14 @@
                 <a href="pages.php?action=add">&raquo; <?php _e('Create page'); ?></a>
             </li>
         </ul>
+        <h3>
+            <a href="#"><?php _e('Emails & Alerts'); ?></a>
+        </h3>
+        <ul>
+            <li>
+                <a href="emails.php">&raquo; <?php _e('Manage emails & alerts'); ?></a>
+            </li>
+        </ul>
 
         &nbsp;
 

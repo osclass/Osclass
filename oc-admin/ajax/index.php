@@ -1,1 +1,1 @@
-<?php /* So say we all */ ?>
+<?php /* Nothing but the rain */ ?>

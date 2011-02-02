@@ -64,7 +64,7 @@ switch($action) {
     case 'errorPage':
         osc_runHook('before_error_page');
         osc_renderHeader();
-        osc_renderView('errorPage.php');
+        osc_renderView('404.php');
         osc_renderFooter();
         osc_runHook('after_error_page');
         break;
