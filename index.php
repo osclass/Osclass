@@ -80,7 +80,6 @@ switch($action) {
         global $osc_request;
 
         $osc_request['location'] = 'contact';
-        $osc_request['section'] = __('Upload your CV');
         osc_renderHeader();
         osc_renderView('contact.php');
         osc_renderFooter();
