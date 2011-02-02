@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU Affero General Public
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 require_once 'oc-load.php';
 
 global $preferences;
@@ -78,6 +77,10 @@ switch($action) {
         osc_redirectToReferer($defaultURL);
         break;
     case 'contact':
+        global $osc_request;
+
+        $osc_request['location'] = 'contact';
+        $osc_request['section'] = __('Upload your CV');
         osc_renderHeader();
         osc_renderView('contact.php');
         osc_renderFooter();
@@ -109,7 +112,7 @@ switch($action) {
                         'from_name'  => $yourName,
                         'subject'    => __('Contact form') . ': ' . $subject,
                         'to'         => $preferences['contactEmail'],
-                        'to_name'    => __('Administrator'),
+                        'to_name'    => $preferences['pageTitle'],
                         'body'       => $message,
                         'alt_body'   => $message);
 
@@ -124,8 +127,20 @@ switch($action) {
         break;
     default:
         global $osc_request;
+        $mCategories = new Category();
+        $mCategoryStats = new CategoryStats();
+        $aCategories = $mCategories->toTree();
+        foreach($aCategories as $k => $v) {
+            $categoryNumItems = CategoryStats::newInstance()->getNumItems($v);
+            if($categoryNumItems > 0) {
+                $aCategories[$k]['total'] = $categoryNumItems;
+            } else {
+                unset($aCategories[$k]);
+            }
+        }
 
         if($osc_request['uri'] == null) {
+            $osc_request['location'] = 'home';
             osc_renderHeader();
             osc_renderView('home.php');
             osc_renderFooter();

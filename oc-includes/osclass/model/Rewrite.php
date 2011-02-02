@@ -20,17 +20,18 @@
  */
 
 
-class Rewrite {
-
+class Rewrite extends DAO
+{
     private $rules;
-    private $conn;
-
+    
     public function __construct() {
-        $this->conn = getConnection();
         $this->rules = $this->getRules();
+        parent::__construct() ;
     }
 
     public static function newInstance() { return new Rewrite; }
+
+    public function getTableName() {}
 
     public function getRules() {
         global $preferences;

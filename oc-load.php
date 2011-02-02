@@ -32,6 +32,7 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 
 require_once  ABS_PATH . 'config.php';
 require_once  ABS_PATH . 'common.php';
+require_once  LIB_PATH . 'osclass/classes/Params.php';
 require_once  LIB_PATH . 'osclass/web.php';
 require_once  LIB_PATH . 'osclass/db.php';
 require_once  LIB_PATH . 'osclass/classes/DAO.php';

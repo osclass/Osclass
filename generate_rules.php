@@ -18,7 +18,7 @@ $rewrite->addRule('^(.+?).php(.*)$', '$1.php$2');
 $rewrite->addRule('^contact/?$', 'index.php?action=contact');
 
 // Feed rules
-$rewrite->addRule('^feed$', 'search?feed');
+$rewrite->addRule('^feed$', 'search?feed=rss');
 $rewrite->addRule('^feed/(.+)$', 'search.php?feed=$1');
 
 // Search rules
@@ -71,10 +71,9 @@ $rewrite->addRule('^user$', 'user.php');
 
 // Page rules
 $rewrite->addRule('^page/([0-9]*)$', 'page.php?id=$1');
-$rewrite->addRule('^page/(.*)$', 'page.php?slug=$1');
 
 // Category rules
-$rewrite->addRule('^(.+)$', 'search.php?category=$1');
+$rewrite->addRule('^(.+)$', 'search.php?sCategory=$1');
 
 //Write rule to DB
 $rewrite->setRules();

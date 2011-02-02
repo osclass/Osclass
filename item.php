@@ -61,6 +61,12 @@ switch ($action) {
     case 'send_friend':
         $item = $manager->findByPrimaryKey($_GET['id']);
 
+        global $osc_request;
+        $osc_request['section'] = __('Send to a friend');
+        $osc_request['category'] = $item['fk_i_category_id'];
+        $osc_request['item'] = $item;
+        $osc_request['location'] = 'item_send_friend';
+
         osc_renderHeader();
         osc_renderView('item-send-friend.php');
         osc_renderFooter();
@@ -164,9 +170,9 @@ switch ($action) {
 
         $words   = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                         '{WEB_URL}', '{ITEM_NAME}', '{COMMENT}');
+                         '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
         $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'],
-                         $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], $_POST['message']);
+                         $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], osc_createItemURL($item), $_POST['message']);
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -479,7 +485,8 @@ switch ($action) {
         $osc_request['section'] = $item['s_title'];
         $osc_request['category'] = $item['fk_i_category_id'];
         $osc_request['item'] = $item;
-
+        $osc_request['location'] = 'item';
+        
         if ($item['e_status'] == 'ACTIVE') {
             $mStats = new ItemStats();
             $mStats->increase('i_num_views', $item['pk_i_id']);

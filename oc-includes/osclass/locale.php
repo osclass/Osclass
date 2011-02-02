@@ -32,33 +32,41 @@ if(defined('OC_ADMIN')) {
 }
 
 $streamer = new FileReader(ABS_PATH . 'oc-includes/translations/' . $locale . '/messages.mo');
-$gt = new gettext_reader($streamer);
+$gt['default'] = new gettext_reader($streamer);
 
 /**
  * @return string the default application language
  */
 function osc_getDefaultLanguage() {
-	require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-	return Preference::newInstance()->findValueByName('language');
+    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
+    return Preference::newInstance()->findValueByName('language');
 }
 
-function __($key) {
-	global $gt;
-	return $gt->translate($key);
+function __($key, $domain = 'default') {
+    global $gt;
+    if(!isset($gt[$domain])) {
+        return $key;
+    }
+    return $gt[$domain]->translate($key);
 }
 
-function _e($key) {
-	global $gt;
-	echo $gt->translate($key);
+function _e($key, $domain = 'default') {
+    global $gt;
+    if(!isset($gt[$domain])) {
+        echo $key;
         return true;
+    }
+    echo $gt[$domain]->translate($key);
+    return true;
 }
 
+function osc_loadTranslation($dir = '', $domain = null) {
+    global $gt, $locale;
 
+    if(is_null($domain)) {
+        return false;
+    }
 
-
-function osc_loadTranslation($dir = __DIR__) {
-
-    global $gt,$locale;
     if(file_exists($dir.DIRECTORY_SEPARATOR.'translations'.DIRECTORY_SEPARATOR.$locale.'.mo')) {
         $file = $dir.DIRECTORY_SEPARATOR.'translations'.DIRECTORY_SEPARATOR.$locale.'.mo';
     } else if(file_exists($dir.DIRECTORY_SEPARATOR.'locales'.DIRECTORY_SEPARATOR.$locale.'.mo')) {
@@ -68,10 +76,10 @@ function osc_loadTranslation($dir = __DIR__) {
     } else {
         return false;
     }
-
+    
     $streamer = new FileReader($file);
-    if (isset($gt)) {
-        $gt->gettext_reader($streamer);
+    if(!isset($gt[$domain])) {
+        $gt[$domain] = new gettext_reader($streamer);
     }
 }
 

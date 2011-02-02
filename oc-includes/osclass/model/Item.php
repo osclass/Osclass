@@ -364,15 +364,19 @@ class Item extends DAO
     public function listLocations($scope)
     {
         $availabe_scopes = array('country', 'region', 'city');
-        $fields = array('country' => 'fk_c_country_code',
-                        'region'  => 'fk_i_region_id',
-                        'city'    => 'fk_i_city_id');
+        $fields = array('country' => 's_country',
+                        'region'  => 's_region',
+                        'city'    => 's_city');
+        $stringFields = array('country' => 's_country',
+                              'region'  => 's_region',
+                              'city'    => 's_city');
 
         if(!in_array($scope, $availabe_scopes)) {
             return array();
         }
 
-        $sql = 'SELECT * FROM ' . DB_TABLE_PREFIX . 't_item_location WHERE ' . $fields[$scope] . ' IS NOT NULL';
+        $sql = 'SELECT *, count(*) as total FROM ' . DB_TABLE_PREFIX . 't_item_location WHERE ' . $fields[$scope] . ' IS NOT NULL';
+        $sql .= ' GROUP BY ' . $fields[$scope] . ' ORDER BY ' . $stringFields[$scope];
 
         $results = $this->conn->osc_dbFetchResults($sql);
 

@@ -169,7 +169,7 @@ function osc_createSearchURL($pattern) {
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
         return WEB_PATH_URL . 'search/' . $pattern;
     } else
-        return WEB_PATH_URL . 'search.php?pattern=' . $pattern;
+        return WEB_PATH_URL . 'search.php?sPattern=' . $pattern;
 }
 
 function osc_createProfileURL() {
@@ -324,11 +324,11 @@ function osc_createCategoryURL($cat, $echo = false) {
         $cat = Category::newInstance()->hierarchy($cat['pk_i_id']);
         $sanitized_category = "";
         for ($i = count($cat); $i > 0; $i--) {
-            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
+            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
         }
-        $path = ABS_WEB_URL . $sanitized_category;
+        $path = ABS_WEB_URL . $sanitized_category ;
     } else {
-        $path = sprintf(WEB_PATH_URL . 'search.php?catId=%d', $cat['pk_i_id']);
+        $path = sprintf(WEB_PATH_URL . 'search.php?sCategory=%d', $cat['pk_i_id']);
     }
 
     if($echo) {

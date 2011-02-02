@@ -53,7 +53,14 @@ abstract class DAO {
     public function getConnection() {
         return $this->conn;
     } 
-    
+
+    /*
+     * @return Array returns 0 if 'asc' or 1 if 'desc'
+     */
+    public static function getAllowedTypesForSorting() {
+        return ( array (0 => 'asc', 1 => 'desc') ) ;
+    }
+
     /**
      * Formats a value before being inserted in DB.
      */

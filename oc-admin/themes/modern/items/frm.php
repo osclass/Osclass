@@ -42,7 +42,7 @@
     <div id="right_column">
         <div id="home_header" style="margin-left: 40px;"><h2><?php if(isset($new_item) && $new_item==TRUE) { _e('New item');} else { _e('Update your item');}; ?></h2></div>
         <div align="center">
-            <div id="add_item_form">
+            <div id="add_item_form" class="item-form">
                 <form action="items.php" method="post" enctype="multipart/form-data">
                     <?php if(isset($new_item) && $new_item==TRUE) { ?>
                         <input type="hidden" name="action" value="post_item" />
@@ -51,129 +51,126 @@
                         <input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
                         <input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
                     <?php }; ?>
-
-                    <!-- left -->
-                    <div class="left column">
-                        <h2>
-                            <?php _e('General Information'); ?>
-                        </h2>
-                        <?php ItemForm::category_select($categories, $item); ?>
-
-                        <?php ItemForm::multilanguage_title_description($locales, $item); ?>
-
-                        <div>
-                            <h2><?php _e('Price'); ?></h2>
-                            <?php ItemForm::price_input_text($item); ?>
-                            <?php ItemForm::currency_select($currencies, $item); ?>
+                    <div class="user-post">
+                        <h2><?php _e('User'); ?></h2>
+                        <?php _e('Item posted by'); ?>&nbsp;<?php ItemForm::user_select($users, $item, __('Non-registered user')); ?>
+                        <div  id="contact_info">
+                            <label for="contactName"><?php _e('Name'); ?></label>
+                            <?php ItemForm::contact_name_text($item) ; ?><br/>
+                            <label for="contactEmail"><?php _e('E-Mail'); ?></label>
+                            <?php ItemForm::contact_email_text($item); ?>
                         </div>
+                    </div>
+                    <h2>
+                        <?php _e('General Information'); ?>
+                    </h2>
+                    <label for="catId">
+                        <?php _e('Category') ?>: 
+                        <?php ItemForm::category_select($categories, $item); ?>
+                    </label>
 
-                        <div>
-                            <script type="text/javascript">
-                                var photoIndex = 0;
-                                function gebi(id) { return document.getElementById(id); }
-                                function ce(name) { return document.createElement(name); }
-                                function re(id) {
-                                    var e = gebi(id);
-                                    e.parentNode.removeChild(e);
-                                }
-                                function addNewPhoto() {
-                                    var id = 'p-' + photoIndex++;
+                    <?php ItemForm::multilanguage_title_description($locales, $item); ?>
 
-                                    var i = ce('input');
-                                    i.setAttribute('type', 'file');
-                                    i.setAttribute('name', 'photos[]');
+                    <?php if($preferences['enableField#f_price@items']) { ?>
+                    <div>
+                        <h2><?php _e('Price'); ?></h2>
+                        <?php ItemForm::price_input_text($item); ?>
+                        <?php ItemForm::currency_select($currencies, $item); ?>
+                    </div>
+                    <?php } ?>
+                    <?php if($preferences['enableField#images@items']) { ?>
+                    <div>
+                        <script type="text/javascript">
+                            var photoIndex = 0;
+                            function gebi(id) { return document.getElementById(id); }
+                            function ce(name) { return document.createElement(name); }
+                            function re(id) {
+                                var e = gebi(id);
+                                e.parentNode.removeChild(e);
+                            }
+                            function addNewPhoto() {
+                                var id = 'p-' + photoIndex++;
 
-                                    var a = ce('a');
-                                    a.style.fontSize = 'x-small';
-                                    a.setAttribute('href', '#');
-                                    a.setAttribute('divid', id);
-                                    a.onclick = function() { re(this.getAttribute('divid')); return false; }
-                                    a.appendChild(document.createTextNode('<?php echo __('Remove'); ?>'));
+                                var i = ce('input');
+                                i.setAttribute('type', 'file');
+                                i.setAttribute('name', 'photos[]');
 
-                                    var d = ce('div');
-                                    d.setAttribute('id', id);
+                                var a = ce('a');
+                                a.style.fontSize = 'x-small';
+                                a.setAttribute('href', '#');
+                                a.setAttribute('divid', id);
+                                a.onclick = function() { re(this.getAttribute('divid')); return false; }
+                                a.appendChild(document.createTextNode('<?php echo __('Remove'); ?>'));
 
-                                    d.appendChild(i);
-                                    d.appendChild(a);
+                                var d = ce('div');
+                                d.setAttribute('id', id);
 
-                                    gebi('photos').appendChild(d);
-                                }
+                                d.appendChild(i);
+                                d.appendChild(a);
 
-                                $(document).ready(function() {
-                                    $('a.delete').click(function(e) {
-                                        e.preventDefault();
-                                        var parent = $(this).parent();
-                                        $.ajax({
-                                            type: 'get',
-                                            url: 'items.php',
-                                            data: 'action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
-                                            success: function() {
-                                                parent.slideUp(300,function() {
-                                                    parent.remove();
-                                                });
-                                            }
-                                        });
+                                gebi('photos').appendChild(d);
+                            }
+
+                            $(document).ready(function() {
+                                $('a.delete').click(function(e) {
+                                    e.preventDefault();
+                                    var parent = $(this).parent();
+                                    $.ajax({
+                                        type: 'get',
+                                        url: 'items.php',
+                                        data: 'action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
+                                        success: function() {
+                                            parent.slideUp(300,function() {
+                                                parent.remove();
+                                            });
+                                        }
                                     });
                                 });
-                            </script>
+                            });
+                        </script>
 
-                            <?php echo __('Photos'); ?><br />
-                            <div id="photos">
-                                <?php foreach($resources as $_r) {?>
-                                    <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                        <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="items.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php echo __('Delete'); ?></a>
-                                    </div>
-                                <?php } ?>
-                                <div>
-                                    <input type="file" name="photos[]" /> (<?php echo __('optional'); ?>)
+                        <?php echo __('Photos'); ?><br />
+                        <div id="photos">
+                            <?php foreach($resources as $_r) {?>
+                                <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
+                                    <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="items.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php echo __('Delete'); ?></a>
                                 </div>
-                            </div>
-                            <a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php echo __('Add new photo'); ?></a>
-                        </div>
-                    </div>
-
-                        <!-- right -->
-                    <div class="right column">
-                        <div class="user-post">
-                            <h2><?php _e('User'); ?></h2>
-                            <?php _e('Item posted by'); ?>&nbsp;<?php ItemForm::user_select($users, $item, __('Non-registered user')); ?>
-                            <div  id="contact_info">
-                            <dl>
-                                <dt><?php _e('Name'); ?></dt>
-                                <dd><?php ItemForm::contact_name_text($item) ; ?></dd>
-                                <dt><?php _e('E-Mail'); ?></dt>
-                                <dd><?php ItemForm::contact_email_text($item) ; ?></dd>
-                            </dl>
+                            <?php } ?>
+                            <div>
+                                <input type="file" name="photos[]" /> (<?php echo __('optional'); ?>)
                             </div>
                         </div>
-                        <div class="location-post">
-                            <!-- location info -->
-                            <h2><?php _e('Location'); ?></h2>
-                            <dl>
-                                <dt><?php _e('Country'); ?></dt>
-                                <dd><?php ItemForm::country_select($countries, $item) ; ?></dd>
-                                <dt><?php _e('Region'); ?></dt>
-                                <dd><?php ItemForm::region_select($regions, $item) ; ?></dd>
-                                <dt><?php _e('City'); ?></dt>
-                                <dd><?php ItemForm::city_select($cities, $item) ; ?></dd>
-                                <dt><?php _e('City area'); ?></dt>
-                                <dd><?php ItemForm::city_area_text($item) ; ?></dd>
-                                <dt><?php _e('Address'); ?></dt>
-                                <dd><?php ItemForm::address_text($item) ; ?></dd>
-                            </dl>
-                        </div>
-
-                        <?php if(isset($new_item) && $new_item==TRUE) {
-                                ItemForm::plugin_post_item($categories);
-                            } else {
-                                osc_runHook('item_edit', $item);
-                            };
-                        ?>
+                        <a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php echo __('Add new photo'); ?></a>
                     </div>
+                    <?php } ?>
+
+                    <div class="location-post">
+                        <!-- location info -->
+                        <h2><?php _e('Location'); ?></h2>
+                        <dl>
+                            <dt><?php _e('Country'); ?></dt>
+                            <dd><?php ItemForm::country_select($countries, $item) ; ?></dd>
+                            <dt><?php _e('Region'); ?></dt>
+                            <dd><?php ItemForm::region_select($regions, $item) ; ?></dd>
+                            <dt><?php _e('City'); ?></dt>
+                            <dd><?php ItemForm::city_select($cities, $item) ; ?></dd>
+                            <dt><?php _e('City area'); ?></dt>
+                            <dd><?php ItemForm::city_area_text($item) ; ?></dd>
+                            <dt><?php _e('Address'); ?></dt>
+                            <dd><?php ItemForm::address_text($item) ; ?></dd>
+                        </dl>
+                    </div>
+
+                    <?php if(isset($new_item) && $new_item==TRUE) {
+                            ItemForm::plugin_post_item($categories);
+                        } else {
+                            osc_runHook('item_edit', $item);
+                        };
+                    ?>
                     <div class="clear"></div>
                     <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
-                        <button style="background-color: orange; color: white;" type="button" onclick="window.location='items.php';" ><?php echo __('Cancel'); ?></button>
-                        <button style="background-color: orange; color: white;" type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
+                        <button type="button" onclick="window.location='items.php';" ><?php echo __('Cancel'); ?></button>
+                        <button type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
                     </div>
                 </div>
             </form>

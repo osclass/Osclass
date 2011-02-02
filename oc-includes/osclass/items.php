@@ -116,49 +116,51 @@ switch ($action) {
             Item::newInstance()->updateLocaleForce($Pid, $k, $_data['s_title'], $_data['s_description']);
         }
 
+        $filePhotos = Params::getFiles('photos');
+        if($filePhotos != '')
+        {
+            $dao_itemResource = new ItemResource() ;
+            foreach ($_FILES['photos']['error'] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $resourceName = $_FILES['photos']['name'][$key];
+                    $tmpName = $_FILES['photos']['tmp_name'][$key];
+                    $resourceType = $_FILES['photos']['type'][$key];
 
-        $dao_itemResource = new ItemResource() ;
-        foreach ($_FILES['photos']['error'] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $resourceName = $_FILES['photos']['name'][$key];
-                $tmpName = $_FILES['photos']['tmp_name'][$key];
-                $resourceType = $_FILES['photos']['type'][$key];
+                    $dao_itemResource->insert(array(
+                        'fk_i_item_id' => $Pid,
+                        's_name' => $resourceName,
+                        's_content_type' => $resourceType
+                    ));
+                    $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
 
-                $dao_itemResource->insert(array(
-                    'fk_i_item_id' => $Pid,
-                    's_name' => $resourceName,
-                    's_content_type' => $resourceType
-                ));
-                $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
+                    // Create thumbnail
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                    $size = explode('x', $preferences['dimThumbnail']);
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                // Create thumbnail
-                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                $size = explode('x', $preferences['dimThumbnail']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                    // Create preview
+                    /*$thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
+                    $size = explode('x', $preferences['dimPreview']);
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);*/
 
-                // Create preview
-                /*$thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
-                $size = explode('x', $preferences['dimPreview']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);*/
+                    // Create normal size
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                    $size = explode('x', $preferences['dimNormal']);
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                // Create normal size
-                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
-                $size = explode('x', $preferences['dimNormal']);
-                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                    if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                        $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
+                        move_uploaded_file($tmpName, $path);
+                    }
 
-                if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
-                    $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
-                    move_uploaded_file($tmpName, $path);
+                    $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                    $dao_itemResource->update(array(
+                        's_path' => $s_path
+                            ), array('pk_i_id' => $resourceId, 'fk_i_item_id' => $Pid));
                 }
-
-                $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                $dao_itemResource->update(array(
-                    's_path' => $s_path
-                        ), array('pk_i_id' => $resourceId, 'fk_i_item_id' => $Pid));
             }
+            unset($dao_itemResource) ;
         }
-        unset($dao_itemResource) ;
-
 
         $_POST['pk_i_id'] = $_POST['id'];
         osc_runHook('item_edit_post');
@@ -245,7 +247,10 @@ switch ($action) {
             $PcontactName = $data['s_name'];
             $PcontactEmail = $data['s_email'];
         }
-        
+
+        $Pprice = Params::getParam('price');
+        if($Pprice == '') $Pprice = null;
+
         if(!isset($PcontactName) || !isset($PcontactEmail) || $PcontactName==null || $PcontactEmail==null || $PcontactName=='' || $PcontactEmail=='') {
             osc_addFlashMessage(__('You need to input your name and email to be able to publish a new item.'));
             $success = false;
@@ -357,43 +362,48 @@ switch ($action) {
                 CategoryStats::newInstance()->increaseNumItems($PcatId);
             }
             
-            $dao_itemResource = new ItemResource() ;
-            foreach ($_FILES['photos']['error'] as $key => $error) {
-                if ($error == UPLOAD_ERR_OK) {
-                    $resourceName = $_FILES['photos']['name'][$key];
-                    $tmpName = $_FILES['photos']['tmp_name'][$key];
-                    $resourceType = $_FILES['photos']['type'][$key];
+            $filePhotos = Params::getFiles('photos');
+            if($filePhotos != '')
+            {
+                $dao_itemResource = new ItemResource() ;
 
-                    $dao_itemResource->insert(array(
-                        'fk_i_item_id' => $itemId,
-                        's_name' => $resourceName,
-                        's_content_type' => $resourceType
-                    ));
-                    $resourceId = $dao_itemResource->getConnection()->get_last_id();
+                foreach ($filePhotos['error'] as $key => $error) {
+                    if ($error == UPLOAD_ERR_OK) {
+                        $resourceName = $filePhotos['name'][$key];
+                        $tmpName = $filePhotos['tmp_name'][$key];
+                        $resourceType = $filePhotos['type'][$key];
 
-                    // Create thumbnail
-                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    $size = explode('x', $preferences['dimThumbnail']);
-                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                        $dao_itemResource->insert(array(
+                            'fk_i_item_id' => $itemId,
+                            's_name' => $resourceName,
+                            's_content_type' => $resourceType
+                        ));
+                        $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
-                    // Create normal size
-                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
-                    $size = explode('x', $preferences['dimNormal']);
-                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                        // Create thumbnail
+                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                        $size = explode('x', $preferences['dimThumbnail']);
+                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                    if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
-                        $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
-                        move_uploaded_file($tmpName, $path);
+                        // Create normal size
+                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
+                        $size = explode('x', $preferences['dimNormal']);
+                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                        if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
+                            $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
+                            move_uploaded_file($tmpName, $path);
+                        }
+
+                        $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                        $dao_itemResource->update(array('s_path'       => $s_path),
+                                                  array('pk_i_id'      => $resourceId,
+                                                        'fk_i_item_id' => $itemId));
                     }
-
-                    $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    $dao_itemResource->update(array('s_path'       => $s_path),
-                                              array('pk_i_id'      => $resourceId,
-                                                    'fk_i_item_id' => $itemId));
                 }
+                unset($dao_itemResource) ;
             }
-            unset($dao_itemResource) ;
-
+            
             if (!isset($_REQUEST['catId'])) {
                 $_REQUEST['catId'] = "";
             }
@@ -462,7 +472,6 @@ switch ($action) {
                     osc_sendMail($emailParams);
                 }
 
-
                 if (isset($preferences['notify_new_item']) && $preferences['notify_new_item']) {
                     $aPage = $mPages->findByInternalName('email_admin_new_item');
 
@@ -524,7 +533,7 @@ switch ($action) {
                 }
 
             }
-
+            
             osc_runHook('after_item_post');
 
             if($is_admin) {

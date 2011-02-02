@@ -18,11 +18,13 @@
 
 class ItemForm extends Form {
 
-    static public function primary_input_hidden($item) {
+    static public function primary_input_hidden($item)
+    {
         parent::generic_input_hidden("id", $item["pk_i_id"]) ;
     }
     
-    static public function category_select($categories, $item, $default_item = null) {
+    static public function category_select($categories, $item, $default_item = null)
+    {
         echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -37,7 +39,8 @@ class ItemForm extends Form {
         return true ;
     }
     
-    static public function subcategory_select($categories, $item, $default_item = null, $deep = 0) {
+    static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
+    {
         $deep_string = "";
         for($var = 0;$var<$deep;$var++) {
             $deep_string .= '&nbsp;&nbsp;';
@@ -51,26 +54,27 @@ class ItemForm extends Form {
         }
     }
 
-    
-
-    static public function user_select($users, $item, $default_item = null) {
+    static public function user_select($users, $item, $default_item = null)
+    {
         echo '<select name="userId" id="userId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
             }
             foreach($users as $user) {
-                echo '<option value="' . $user['pk_i_id'] . '"' . ( ($item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['pk_i_id']." - ".$user['s_name'] . '</option>' ;
+                echo '<option value="' . $user['pk_i_id'] . '"' . ( ($item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
             }
         echo '</select>' ;
         return true ;
     }
 
-    static public function title_input($name, $locale = 'en_US', $value = '') {
+    static public function title_input($name, $locale = 'en_US', $value = '')
+    {
         parent::generic_input_text($locale . "#" . $name, $value) ;
         return true ;
     }
 
-    static public function description_textarea($name, $locale = 'en_US', $value = '') {
+    static public function description_textarea($name, $locale = 'en_US', $value = '')
+    {
         parent::generic_textarea($locale . "#" . $name, $value) ;
         return true ;
     }
@@ -94,7 +98,8 @@ class ItemForm extends Form {
          if($num_locales>1) { echo '</div>'; };
     }
     
-    static public function price_input_text($item = null) {
+    static public function price_input_text($item = null)
+    {
         parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
     }
 

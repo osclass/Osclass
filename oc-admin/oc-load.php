@@ -26,6 +26,7 @@ require_once LIB_PATH . 'osclass/session.php';
 osc_checkAdminSession();
 
 require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/classes/Params.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
 require_once LIB_PATH . 'osclass/session.php';
 require_once LIB_PATH . 'osclass/locale.php';
