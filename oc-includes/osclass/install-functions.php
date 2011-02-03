@@ -472,7 +472,7 @@ function display_target() {
         <h2 class="title">Location</h2>
         <p class="space-left-25 left no-bottom">Choose countries/cities where your target users are located</p>
         <div id="location-question" class="left question">
-            <img class="vtip" src="<?php get_absolute_url(); ?>oc-includes/images/question.png" title="Worldwide install all the countries. However, if you choose 'Country' and you write one specific country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific." alt=""/>
+            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="Worldwide install all the countries. However, if you choose 'Country' and you write one specific country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific." alt=""/>
         </div>
         <div class="clear"></div>
         <div id="location">
@@ -564,7 +564,7 @@ function display_categories() {
                 <a href="#" onclick="check_all('category_form', false); return false;">Uncheck all</a>
             </div>
             <div class="left">
-                <h3>Select your classified categories <span style="font-size:11px;">or</span> <a href="install.php?step=5">Skip</a><img src="<?php get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="You can add/remove categories after the installation, using the admin dashboard." alt=""/></h3>
+                <h3>Select your classified categories <span style="font-size:11px;">or</span> <a href="install.php?step=5">Skip</a><img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="You can add/remove categories after the installation, using the admin dashboard." alt=""/></h3>
             </div>
         </div>
         <table class="list-categories">

@@ -23,9 +23,9 @@
 <?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 <?php
     $fields = array(
-        array('name' => 's_name', 'error_msg' => _e('You have to write a name.')),
-        array('name' => 's_email', 'error_msg' => _e('You have to write an e-mail.')),
-        array('name' => 's_username', 'error_msg' => _e('You have to write an username.'))
+        array('name' => 's_name', 'error_msg' => __('You have to write a name.')),
+        array('name' => 's_email', 'error_msg' => __('You have to write an e-mail.')),
+        array('name' => 's_username', 'error_msg' => __('You have to write an username.'))
     );
     osc_check_form_js($fields);
 ?>

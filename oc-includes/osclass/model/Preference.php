@@ -31,10 +31,8 @@ class Preference extends DAO
         return self::$instance ;
     }
 
-    private function __construct() {
+    public function __construct() {
         parent::__construct();
-
-        echo "llamando al constructor de Preference..." ;
         $this->pref = $this->toArray() ;
     }
 
