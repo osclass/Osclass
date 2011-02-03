@@ -22,60 +22,55 @@
 
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
-<script>
-	$(function() {
-		// Here we include specific jQuery, jQuery UI and Datatables functions.
-	});
-</script>
-		<div id="content">
-			<div id="separator"></div>	
-			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+<div id="content">
+    <div id="separator"></div>
 
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Spam and bots'); ?></div> 
-					<div style="clear: both;"></div>
-				</div>
-				
-				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
-				
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px;">
+    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
 
-						<form action="settings.php" method="post">
-							<input type="hidden" name="action" value="spamNbots_post" />
-							
-						<fieldset>
-							<legend><?php echo __('Akismet'); ?></legend>
-							<p>
-							<label for="akismetKey"><?php echo __('Akismet key (same as Wordpress.com)'); ?></label><br />
-							<input type="text" name="akismetKey" id="akismetKey" value="<?php echo isset($preferences['akismetKey']) ? $preferences['akismetKey'] : ''; ?>" /><br />
-							<span class="Explanation"><?php echo __('If the field is empty it is because the Akismet service is disabled'); ?>. <?php echo __('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
-							</p>
-						</fieldset>
-						
-						<fieldset>
-							<legend><?php echo __('Re-captcha'); ?></legend>							
-							
-							<p><?php echo __('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php echo __('Get your free keys at'); ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.</p>
-							
-							<p>
-							<label for="recaptchaPrivKey"><?php echo __('Re-captcha private key'); ?><br />
-							<input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo isset($preferences['recaptchaPrivKey']) ? $preferences['recaptchaPrivKey'] : ''; ?>" />
-							</p>
-							
-							<p>
-							<label for="recaptchaPubKey"><?php echo __('Re-captcha public key'); ?><br />
-							<input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php echo isset($preferences['recaptchaPubKey']) ? $preferences['recaptchaPubKey'] : ''; ?>" />
-							</p>
-						</fieldset>
-						
-						<input id="button_save" type="submit" value="<?php echo __('Update spam and bots configuration'); ?>" />
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div id="right_column">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo  $current_theme ; ?>/images/back_office/settings-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <div id="content_separator"></div>
+        <?php osc_showFlashMessages(); ?>
+
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+            <div style="padding: 20px;">
+
+                <form action="settings.php" method="post">
+                    <input type="hidden" name="action" value="spamNbots_post" />
+
+                    <fieldset>
+                        <legend><?php _e('Akismet'); ?></legend>
+                        <p>
+                        <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label><br />
+                        <input type="text" name="akismetKey" id="akismetKey" value="<?php ( osc_akismet_key() ) ? echo osc_akismet_key() : echo '' ; ?>" /><br />
+                        <span class="Explanation"><?php _e('If the field is empty it is because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
+                        </p>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><?php _e('Re-captcha') ; ?></legend>
+
+                        <p><?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.</p>
+
+                        <p>
+                            <label for="recaptchaPrivKey"><?php echo __('Re-captcha private key'); ?><br />
+                            <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php ( osc_recaptcha_private_key() ) ? echo osc_recaptcha_private_key() : echo '' ; ?>" />
+                        </p>
+
+                        <p>
+                            <label for="recaptchaPubKey"><?php echo __('Re-captcha public key'); ?><br />
+                            <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php ( osc_recaptcha_public_key() ) ? echo osc_recaptcha_public_key() : echo '' ; ?>" />
+                        </p>
+                    </fieldset>
+
+                    <input id="button_save" type="submit" value="<?php _e('Update spam and bots configuration'); ?>" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

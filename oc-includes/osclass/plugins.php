@@ -20,11 +20,10 @@
  */
 
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/utils.php';
 
-function osc_runHook($hook) {
-
+function osc_runHook($hook)
+{
 	$args = func_get_args();
 	array_shift($args);
 	global $active_plugins;
@@ -99,6 +98,7 @@ function osc_listAllPlugins() {
 	return $plugins;
 }
 
+/*
 //DEPRECATED
 function osc_listPlugins() {
 	$plugins = array();
@@ -125,7 +125,7 @@ function osc_listPlugins() {
 
 	return $plugins;
 }
-
+*/
 
 function osc_loadActivePlugins() {
 
@@ -133,7 +133,7 @@ function osc_loadActivePlugins() {
 
 	try {
 		
-		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
+		$data['s_value'] = osc_active_plugins() ;
 		$plugins_list = osc_unserialize($data['s_value']);
 
 		if(is_array($plugins_list)) {
@@ -158,8 +158,8 @@ function osc_listInstalledPlugins() {
 	$p_array = array();
 	try {
 		
-		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
-		$plugins_list = osc_unserialize($data['s_value']);
+		$data['s_value'] = osc_active_plugins() ;
+		$plugins_list = osc_unserialize($data['s_value']) ;
 
 		if(is_array($plugins_list)) {
 			foreach($plugins_list as $plugin_name) {
@@ -187,7 +187,7 @@ function osc_activatePlugin($path) {
 	$conn->autocommit(false);
 	try {
 		
-		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
+		$data['s_value'] = osc_active_plugins() ;
 		$plugins_list = osc_unserialize($data['s_value']);
 
 		$found_it = false;
@@ -235,7 +235,7 @@ function osc_activatePluginHook($path) {
 	$conn->autocommit(false) ;
 	try {
 		
-		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
+		$data['s_value'] = osc_active_plugins() ;
 		$plugins_list = osc_unserialize($data['s_value']);
 
 		$path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
@@ -254,7 +254,7 @@ function osc_activatePluginHook($path) {
 			$plugins_list[] = $path;
 			$data['s_value'] = osc_serialize($plugins_list);
 			$condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');		
-			Preference::newInstance()->update($data, $condition);
+			Preference::newInstance()->update($data, $condition) ;
 			unset($condition);
 			unset($data);
 			$conn->commit();
@@ -278,7 +278,7 @@ function osc_deactivatePlugin($path)
     $conn->autocommit(false);
 	try {
 		
-		$data['s_value'] = Preference::newInstance()->findValueByName('active_plugins');
+		$data['s_value'] = osc_active_plugins() ;
 		$plugins_list = osc_unserialize($data['s_value']);
 
 		$path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
@@ -291,8 +291,8 @@ function osc_deactivatePlugin($path)
 		
 
 			$data['s_value'] = osc_serialize($plugins_list);
-			$condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');		
-			Preference::newInstance()->update($data, $condition);
+			$condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
+			Preference::newInstance()->update($data, $condition) ;
 			unset($condition);
 			unset($data);
 			$conn->commit();
@@ -403,15 +403,14 @@ function osc_configurePlugin($path) {
 
 	$plugin = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 	if(stripos($plugin, ".php")===FALSE) {
-		$data = Preference::newInstance()->findValueByName('active_plugins');
-		$plugins_list = osc_unserialize($data);
+		$plugins_list = osc_unserialize(osc_active_plugins());
 
 		if(is_array($plugins_list)) {
 			foreach($plugins_list as $p){
 				$data = osc_getPluginInfo($p);
-				if($plugin==$data['plugin_name']){
-					$plugin = $p;
-					break;
+				if($plugin == $data['plugin_name']) {
+					$plugin = $p ;
+					break ;
 				}
 			}
 		}

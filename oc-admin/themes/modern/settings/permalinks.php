@@ -50,51 +50,44 @@
 						
 						<div style="float: left; width: 100%;">
 							<fieldset>
-								<legend><?php echo __('Nice URLs'); ?></legend>
-<div><?php echo __('By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started'); ?>.</div>
-<br />
-                                                                <?php if(isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']): ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="rewrite_enabled" id="rewrite_enabled"/>
-                                                                <?php else: ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="rewrite_enabled" id="rewrite_enabled"/>
-                                                                <?php endif; ?>
-                                                                <label><?php echo __('Enable nice URLs'); ?></label>
+								<legend><?php _e('Nice URLs') ; ?></legend>
+                                <div><?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started'); ?>.</div>
+                                <br />
+                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php ( osc_rewrite_enabled() ) ? echo 'checked="true"' : echo '' ; ?> name="rewrite_enabled" id="rewrite_enabled" />
+                                <label><?php _e('Enable nice URLs') ; ?></label>
 
-                                                                <br/>
+                                <br/>
 							</fieldset>
 						</div>
 
-                        <?php if(isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']): ?>
+                        <?php if(osc_rewrite_enabled()) { ?>
 
                         <div style="float: left; width: 100%;">
 							<fieldset>
 								<legend><?php echo __('.htaccess file'); ?></legend>
                                 <?php switch($htaccess_status) {
-
                                     case 0:
-                                        break;
-                                        
+                                    break;
                                     case 1:
                                         _e('HORRAY! mod_rewrite was found on your server.');
-                                        break;
-
+                                    break;
                                     case 2:
                                         _e('WARNING! Rewrite module wasn\'t found on your server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use nice urls if AllowPathInfo option is On in your Apache configuration (we can not know if it\'s enabled or not, but usually it is). With restricted nice url "index.php" will appear as a part of your URL (ie. http://www.yourdomain.com/index.php/nice/url).');
                                         ?>
-     <br />
-     <a href="settings.php?action=permalinks_post&enable_mod_rewrite=1"><button><?php _e('I have mod_rewrite.');?></button></a> <a href="settings.php?action=permalinks_post&enable_mod_rewrite=0"><button><?php _e('I don\'t have mod_rewrite.');?></button></a>                                        <?php
-                                        break;
-                                        
+                                         <br />
+                                         <a href="settings.php?action=permalinks_post&enable_mod_rewrite=1"><button><?php _e('I have mod_rewrite.');?></button></a>
+                                         <a href="settings.php?action=permalinks_post&enable_mod_rewrite=0"><button><?php _e('I don\'t have mod_rewrite.');?></button></a>                                        
+                                        <?php
+                                    break;
                                     case 3:
                                         _e('You selected to use AllowPathInfo option. You could change that at any moment from this same menu.');
-                                        break;
-                                        
+                                    break;
                                     case 4:
                                         _e('You selected to use mod_rewrite option (We didn\'t find rewrite module on your server). If it doesn\'t work, maybe you don\'t have it enabled. You could change that at any moment from this same menu.');
-                                        break;
+                                    break;
                                         
                                     }
-                                     ?>
+                                    ?>
 <br />
 <br />
 
@@ -143,7 +136,7 @@ RewriteRule . <?php echo REL_WEB_URL; ?>index.php [L]
                                         _e('Current content of YOUR .htaccess file:');
                                         ?>
                                         <br />
-			                            <textarea rows="8" cols="67"><?php echo $htaccess_content; ?></textarea></div>
+			                            <textarea rows="8" cols="67"><?php echo $htaccess_content ; ?></textarea></div>
                                         <br />
                                 <?php };}; ?>
 							</fieldset>
@@ -154,7 +147,7 @@ RewriteRule . <?php echo REL_WEB_URL; ?>index.php [L]
 
 						<div style="clear: both;"></div>
 												
-						<input id="button_save" type="submit" value="<?php echo __('Update'); ?>" />
+						<input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
 						
 						</form>
 

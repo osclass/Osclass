@@ -40,8 +40,7 @@ class Rewrite extends DAO
     }
 
     public function setRules() {
-        $_P = Preference::newInstance() ;
-        $_P->update(
+        Preference::newInstance()->update(
                 array('s_value' => osc_serialize($this->rules))
                 ,array('s_name' => 'rewrite_rules')
         );

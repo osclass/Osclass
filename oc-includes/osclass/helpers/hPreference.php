@@ -170,6 +170,10 @@
         return(getPreference('recaptchaPrivKey')) ;
     }
 
+    function osc_recaptcha_public_key() {
+        return(getPreference('recaptchaPubKey')) ;
+    }
+
     function osc_mailserver_type() {
         return(getPreference('mailserver_type')) ;
     }
@@ -193,6 +197,32 @@
     function osc_mailserver_ssl() {
         return(getPreference('mailserver_ssl')) ;
     }
+
+    function osc_active_plugins() {
+        return(getPreference('active_plugins')) ;
+    }
+
+    function osc_default_order_field_at_search() {
+        return(getPreference('defaultOrderField@search')) ;
+    }
+
+    function osc_default_order_type_at_search() {
+        return(getPreference('defaultOrderType@search')) ;
+    }
+    
+    function osc_default_show_as_at_search() {
+        return(getPreference('defaultShowAs@search')) ;
+    }
+
+    function osc_max_results_per_page_at_search() {
+        return(getPreference('maxResultsPerPage@search')) ;
+    }
+
+    function osc_default_results_per_page_at_search() {
+        return(getPreference('defaultResultsPerPage@search')) ;
+    }
+
+
     
 
     //PRIVATE FUNCTION (if there was a class :P)

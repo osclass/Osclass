@@ -40,17 +40,17 @@
             <form action="index.php" method="post">
                 <input type="hidden" name="action" value="recover_post" />
                 <p>
-                        <label><?php echo __('E-mail'); ?><br />
+                        <label><?php _e('E-mail') ; ?><br />
                         <input type="text" name="email" id="user_login" class="input" value="" size="20" tabindex="10" /></label>
                 </p>
-                <p class="submit"><input type="submit" name="submit" id="submit" value="<?php echo __('Get new password'); ?>" tabindex="100" /></p>
+                <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Get new password') ; ?>" tabindex="100" /></p>
             </form>
 
             <p id="nav">
-                <a title="<?php echo __('Log in'); ?>" href="index.php"><?php echo __('Log in'); ?></a>
+                <a title="<?php _e('Log in') ; ?>" href="index.php"><?php _e('Log in') ; ?></a>
             </p>
 
         </div>
-        <p id="backtoblog"><a href="<?php echo WEB_PATH; ?>/" title="<?php echo __('Have you lost?') ?>">&larr; <?php echo __('Back to'); ?> <?php echo $preferences['pageTitle']; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo WEB_PATH ; ?>/" title="<?php _e('Are you lost?') ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
     </body>
 </html>

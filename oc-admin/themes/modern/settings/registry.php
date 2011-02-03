@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -21,6 +22,7 @@
 ?>
 
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+
 <script>
 	$(function() {
 		// Remove border-bottom from last tr :)
@@ -29,55 +31,56 @@
 		});
 	});
 </script>
-		<div id="content">
-			<div id="separator"></div>	
+<div id="content">
+    <div id="separator"></div>
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once $absolute_path . '/include/backoffice_menu.php' ; ?>
 
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Registry'); ?></div> 
-					<div style="clear: both;"></div>
-				</div>
-				
-				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
-				
-				<!-- settings form -->
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
-					<div style="padding: 20px;">
+    <div id="right_column">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Registry') ; ?></div>
+            <div style="clear: both;"></div>
+        </div>
 
-						<div><?php echo __('The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table.'); ?></div>
-						<br />
-						
-						<table id="registry" cellpadding="2" cellspacing="2">
-						<thead>
-						<tr >
-							<th><?php echo __('Section'); ?></th>
-							<th><?php echo __('Name'); ?></th>
-							<th><?php echo __('Value'); ?></th>
-							<th><?php echo __('Type'); ?></th>
-						</tr>
-						</thead>
-						<?php foreach($preferencesTable as $pref): ?>
-						<tr>
-							<td style="font-weight: bold;"><?php echo $pref['s_section']; ?></td>
-							<td><?php echo $pref['s_name']; ?></td>
-							<td><?php echo $pref['s_value']; ?></td>
-							<td><?php echo $pref['e_type']; ?></td>
-						</tr>
-						<?php endforeach; ?>
-						<tfoot>
-						<tr> 
-							<th><?php echo __('Section'); ?></th>
-							<th><?php echo __('Name'); ?></th>
-							<th><?php echo __('Value'); ?></th>
-							<th><?php echo __('Type'); ?></th>
-						</tr>
-						</tfoot>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
+        <div id="content_separator"></div>
+
+        <?php osc_showFlashMessages(); ?>
+
+        <!-- settings form -->
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
+            <div style="padding: 20px;">
+
+                <div><?php _e('The registry is a place within OSClass where all the preferences from plugins, themes and more are saved. These values should be modified by the plugins or themes, this is just an informational table.'); ?></div>
+                <br />
+
+                <table id="registry" cellpadding="2" cellspacing="2">
+                    <thead>
+                        <tr >
+                            <th><?php _e('Section') ; ?></th>
+                            <th><?php _e('Name') ; ?></th>
+                            <th><?php _e('Value') ; ?></th>
+                            <th><?php _e('Type') ; ?></th>
+                        </tr>
+                    </thead>
+                    <?php foreach($preferencesTable as $pref) { ?>
+                        <tr>
+                            <td style="font-weight: bold;"><?php echo $pref['s_section'] ; ?></td>
+                            <td><?php echo $pref['s_name'] ; ?></td>
+                            <td><?php echo $pref['s_value'] ; ?></td>
+                            <td><?php echo $pref['e_type'] ; ?></td>
+                        </tr>
+                    <?php } ?>
+                    <tfoot>
+                        <tr>
+                            <th><?php _e('Section') ; ?></th>
+                            <th><?php _e('Name') ; ?></th>
+                            <th><?php _e('Value') ; ?></th>
+                            <th><?php _e('Type') ; ?></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

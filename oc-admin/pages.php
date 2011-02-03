@@ -122,20 +122,20 @@ switch($action) {
                 }
             }
 
-            $result = $pageManager->insert($aFields, $aFieldsDescription);
-            osc_addFlashMessage(__('The page has been added.'), 'admin');
+            $result = $pageManager->insert($aFields, $aFieldsDescription) ;
+            osc_addFlashMessage(__('The page has been added.'), 'admin') ;
         } else {
-            osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin');
+            osc_addFlashMessage(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin') ;
         }
     default:
         $prefLocale = null;
         if(!isset($_SESSION['adminLocale'])) {
-            $prefLocale = Preference::newInstance()->findValueByName('language');
+            $prefLocale = osc_language() ;
         } else {
-            $prefLocale = $_SESSION['adminLocale'];
+            $prefLocale = $_SESSION['adminLocale'] ;
         }
-        $pages = $pageManager->listAll(0);
-        osc_renderAdminSection('pages/index.php', __('Pages'));
+        $pages = $pageManager->listAll(0) ;
+        osc_renderAdminSection('pages/index.php', __('Pages')) ;
 }
 
 ?>
