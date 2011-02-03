@@ -17,15 +17,16 @@ function google_maps_call_after_install()
     $fields["s_value"] = '' ;
     $fields["e_type"] = 'STRING' ;
     
-    $dao_preference = new Preference() ;
-    $dao_preference->insert($fields) ;
-    unset($dao_preference) ;
+    Preference::newInstance()->insert($fields) ;
 }
 
 function google_maps_call_after_uninstall() {
-    $dao_preference = new Preference() ;
-    $dao_preference->delete( array("s_section" => "plugin-google_maps", "s_name" => "google_maps_key") ) ;
-    unset($dao_preference) ;
+    Preference::newInstance()->delete (
+        array(
+            "s_section" => "plugin-google_maps"
+            ,"s_name" => "google_maps_key"
+        )
+    ) ;
 }
 
 function google_maps_admin() {
@@ -33,11 +34,10 @@ function google_maps_admin() {
 }
 
 function google_maps_location() {
-	global $item;
-	$preferences = Preference::newInstance()->toArray();
-	if(isset($preferences['google_maps_key']) && !empty($preferences['google_maps_key'])) {
-		$key = $preferences['google_maps_key'];
-        require 'map.php';
+	global $item ;
+	if(osc_google_maps_key() != '') {
+		$key = osc_google_maps_key() ;
+        require 'map.php' ;
 	}
 }
 

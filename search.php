@@ -39,8 +39,6 @@ $mCategories = new Category();
 $aCategories = $mCategories->findRootCategories();
 $mCategoryStats = new CategoryStats();
 
-$preferences = Preference::newInstance()->toArray();
-
 ////////////////////////////////
 //GETTING AND FIXING SENT DATA//
 ////////////////////////////////
@@ -91,14 +89,14 @@ $p_sPriceMax  = Params::getParam('sPriceMax');
 //WE CAN ONLY USE THE FIELDS RETURNED BY Search::getAllowedColumnsForSorting()
 $p_sOrder     = Params::getParam('sOrder');
 if(!in_array($p_sOrder, Search::getAllowedColumnsForSorting())) {
-    $p_sOrder = $preferences['defaultOrderField@search'] ;
+    $p_sOrder = osc_default_order_field_at_search() ;
 }
 
 //ONLY 0 ( => 'asc' ), 1 ( => 'desc' ) AS ALLOWED VALUES
 $p_iOrderType = Params::getParam('iOrderType');
 $allowedTypesForSorting = Search::getAllowedTypesForSorting() ;
 if(!array_key_exists($p_iOrderType, $allowedTypesForSorting)) {
-    $p_iOrderType = $preferences['defaultOrderType@search'] ;
+    $p_iOrderType = osc_default_order_type_at_search() ;
 }
 
 $p_sFeed      = Params::getParam('sFeed');
@@ -111,15 +109,15 @@ if($p_sFeed != '') {
 $p_sShowAs    = Params::getParam('sShowAs');
 $aValidShowAsValues = array('list', 'gallery');
 if (!in_array($p_sShowAs, $aValidShowAsValues)) {
-    $p_sShowAs = $preferences['defaultShowAs@search'];
+    $p_sShowAs = osc_default_show_as_at_search() ;
 }
 
 // search results: it's blocked with the maxResultsPerPage@search defined in t_preferences
 $p_iPageSize  = intval(Params::getParam('iPagesize')) ;
 if($p_iPageSize > 0) {
-    if($p_iPageSize > $preferences['maxResultsPerPage@search']) $p_iPageSize = $preferences['maxResultsPerPage@search'] ;
+    if($p_iPageSize > osc_max_results_per_page_at_search()) $p_iPageSize = osc_max_results_per_page_at_search() ;
 } else {
-    $p_iPageSize = $preferences['defaultResultsPerPage@search'] ;
+    $p_iPageSize = osc_default_results_per_page_at_search() ;
 }
 
 //FILTERING CATEGORY
@@ -200,11 +198,11 @@ if($p_sFeed == '') {
     }
 
     osc_runHook('search', $mSearch);
-    osc_renderHeader(array('pageTitle' => sprintf(__('Search results for %s'), $pattern) . ' - ' . $preferences['pageTitle']));
-    osc_renderView('search.php');
-    osc_renderFooter();
+    osc_renderHeader(array('pageTitle' => sprintf(__('Search results for %s'), $pattern) . ' - ' . osc_page_title()));
+    osc_renderView('search.php') ;
+    osc_renderFooter() ;
 } else {
-    osc_runHook('feed_' . $p_sFeed, $aItems);
+    osc_runHook('feed_' . $p_sFeed, $aItems) ;
 }
 
 ?>

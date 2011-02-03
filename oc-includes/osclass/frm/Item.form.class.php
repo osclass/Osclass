@@ -106,11 +106,10 @@ class ItemForm extends Form {
     static public function currency_select($currencies, $item = null) {
         if(count($currencies) > 1 ) {
             $default_key = null;
-            $mPreference = new Preference();
-            $currency = $mPreference->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency'));
+            $currency = Preference::newInstance()->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency')) ;
             if ( isset($item['fk_c_currency_code']) ) {
                 $default_key = $item['fk_c_currency_code'];
-            } else if ( is_array($currency) ) {
+            } elseif ( is_array($currency) ) {
                 if ( isset($currency['s_value']) ) {
                     $default_key = $currency['s_value'];
                 }

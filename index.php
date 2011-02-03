@@ -21,85 +21,81 @@
 try {
 	require_once 'oc-load.php';
 
-    $_P = Preference::newInstance() ;
-
 	$categories = Category::newInstance()->toTree();
 
-    if(isset($_GET['theme'])) $_P->set('theme', $_GET['theme']);
+    if(isset($_GET['theme'])) Preference::newInstance()->set('theme', $_GET['theme']) ;
 
-	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null ;
 	switch($action) {
 		case 'sitemap':
-			$sm = new Sitemap;
-			$pages = Page::newInstance()->listAll();
+			$sm = new Sitemap ;
+			$pages = Page::newInstance()->listAll() ;
 			foreach($pages as $p)
-				$sm->addURL(ABS_WEB_URL . osc_createPageURL($p), 'weekly', 0.8);
+				$sm->addURL(ABS_WEB_URL . osc_createPageURL($p), 'weekly', 0.8) ;
 	
-			$categories = Category::newInstance()->listAll();
+			$categories = Category::newInstance()->listAll() ;
 			foreach($categories as $c)
-				$sm->addURL(ABS_WEB_URL . osc_createCategoryURL($c), 'daily', 0.9);
+				$sm->addURL(ABS_WEB_URL . osc_createCategoryURL($c), 'daily', 0.9) ;
 			$sm->toStdout();
 		break;
 		case 'feed':
 			header('Content-type: text/xml; charset=utf-8');
 
-			$feed = new RSSFeed;
-			$feed->setTitle(__('Latest items added') . ' - ' . $_P->get('pageTitle') ) ;
-			$feed->setLink(ABS_WEB_URL);
-			$feed->setDescription(__('Latest items added in') . ' ' . $_P->get('pageTitle') );
+			$feed = new RSSFeed ;
+			$feed->setTitle(__('Latest items added') . ' - ' . osc_page_title() ) ;
+			$feed->setLink(ABS_WEB_URL) ;
+			$feed->setDescription(__('Latest items added in') . ' ' . osc_page_title() ) ;
 
-            $num_items = $_P->get('num_rss_items') ;
-            $items = Item::newInstance()->list_items(null, 0, $num_items, 'ACTIVE');
-            $items = $items['items'];
+            $num_items = osc_num_rss_items() ;
+            $items = Item::newInstance()->list_items(null, 0, $num_items, 'ACTIVE') ;
+            $items = $items['items'] ;
 			foreach($items as $item) {
 				$feed->addItem(array(
-					'title' => $item['s_title'],
-					'link' => osc_createItemURL($item, true),
-					'description' => $item['s_description']
+					'title' => $item['s_title']
+					,'link' => osc_createItemURL($item, true)
+					,'description' => $item['s_description']
 				));
 			}
 
-			$feed->dumpXML();
+			$feed->dumpXML() ;
 		break;
 		case 'errorPage':
-			osc_renderHeader();
-			osc_renderView('errorPage.php');
-			osc_renderFooter();
+			osc_renderHeader() ;
+			osc_renderView('errorPage.php') ;
+			osc_renderFooter() ;
 		break;
 		case 'setlanguage':
-			$languageCodes = osc_listLanguageCodes();
+			$languageCodes = osc_listLanguageCodes() ;
 			if(isset($_GET['value']) && in_array($_GET['value'], $languageCodes)) {
-				$_SESSION['locale'] = $_GET['value'];
+				$_SESSION['locale'] = $_GET['value'] ;
 			}
-			$defaultURL = ABS_WEB_URL;
-			osc_redirectToReferer($defaultURL);
+			$defaultURL = ABS_WEB_URL ;
+			osc_redirectToReferer($defaultURL) ;
 		break;
 		case 'contact':
-			osc_renderHeader();
-			osc_renderView('contact.php');
-			osc_renderFooter();
+			osc_renderHeader() ;
+			osc_renderView('contact.php') ;
+			osc_renderFooter() ;
 		break;
 		case 'contact_post':
-			$yourName = $_POST['yourName'];
-			$yourEmail = $_POST['yourEmail'];
-			$subject = $_POST['subject'];
-			$message = $_POST['message'];
+			$yourName = $_POST['yourName'] ;
+			$yourEmail = $_POST['yourEmail'] ;
+			$subject = $_POST['subject'] ;
+			$message = $_POST['message'] ;
 
 
 			$params = array(
-				'from' => $yourEmail,
-				'from_name' => $yourName,
-				'subject' => __('Contact form') . ': ' . $subject,
-				'to' => $_P->get('contactEmail'),
-				'to_name' => __('Administrator'),
-				'body' => $message,
-				'alt_body' => $message
+				'from' => $yourEmail
+				,'from_name' => $yourName
+				,'subject' => __('Contact form') . ': ' . $subject
+				,'to' => osc_contact_email()
+				,'to_name' => __('Administrator')
+				,'body' => $message
+				,'alt_body' => $message
 			);
-			osc_sendMail($params);
-
-			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
-
-			osc_redirectToReferer(ABS_WEB_URL);
+			osc_sendMail($params) ;
+			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.')) ;
+			osc_redirectToReferer(ABS_WEB_URL) ;
         break;
         default:
 

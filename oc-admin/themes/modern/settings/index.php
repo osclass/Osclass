@@ -23,8 +23,8 @@
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <?php
-    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-    $timeFormats = array('g:i a', 'g:i A', 'H:i');
+    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y') ;
+    $timeFormats = array('g:i a', 'g:i A', 'H:i') ;
 ?>
 
 <div id="content">
@@ -34,17 +34,17 @@
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('General settings'); ?></div>
+            <div style="float: left;"><img src="<?php echo $current_theme ; ?>/images/back_office/settings-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
             <div style="clear: both;"></div>
         </div>
         
         <div id="content_separator"></div>
         
-        <?php osc_showFlashMessages(); ?>
+        <?php osc_showFlashMessages() ; ?>
         
         <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
             <div style="padding: 20px;">
                 <form action="settings.php" method="post">
                     <input type="hidden" name="action" value="update" />
@@ -98,9 +98,8 @@
                                         <label for="<?php echo $df; ?>"><?php echo date($df); ?></label><br />
                                 <?php } ?>
 
-                                <input type="radio" name="df" id="df_custom" value="-" <?php (!$checked) ? echo 'checked="checked"' : echo '' />
-
-                                <label for="df_custom"><?php _e('Custom'); ?>:</label> <input type="text" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
+                                <input type="radio" name="df" id="df_custom" value="-" <?php (!$checked) ? echo 'checked="checked"' : echo '' ; ?> />
+                                <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
                             </div>
                         </fieldset>
                     </div>
@@ -109,9 +108,9 @@
                         <fieldset>
                             <legend><?php _e('Default currency'); ?></legend>
                             <select name="currency" id="weekStart">
-                            <?php foreach($aCurrencies as $currency) { ?>
-                                <option value="<?php echo $currency['pk_c_code'] ?>" <?php if( $preferences['currency'] == $currency['pk_c_code'] ) { ?>selected="selected"<?php } ?>><?php echo $currency['pk_c_code'] ?></option>
-                            <?php } ?>
+                                <?php foreach($aCurrencies as $currency) { ?>
+                                    <option value="<?php echo $currency['pk_c_code'] ?>" <?php if( osc_currency() == $currency['pk_c_code'] ) { ?>selected="selected"<?php } ?>><?php echo $currency['pk_c_code'] ?></option>
+                                <?php } ?>
                             </select>
                         </fieldset>
                         

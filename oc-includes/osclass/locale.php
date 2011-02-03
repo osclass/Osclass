@@ -38,8 +38,7 @@ $gt['default'] = new gettext_reader($streamer);
  * @return string the default application language
  */
 function osc_getDefaultLanguage() {
-    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-    return Preference::newInstance()->findValueByName('language');
+    return osc_language() ;
 }
 
 function __($key, $domain = 'default') {

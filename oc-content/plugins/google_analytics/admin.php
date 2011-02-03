@@ -1,16 +1,14 @@
 <?php
 
-    $_P = Preference::newInstance() ;
-
     if(isset($_REQUEST['webid'])) {
         $webid = $_REQUEST['webid'] ;
     } else {
-        $webid = $_P->get('google_analytics_id') ;
+        $webid = osc_google_analytics_id() ;
     }
     
     if(isset($_REQUEST['option']) && $_REQUEST['option']=='stepone') 
     {
-        $_P->update (
+        Preference::newInstance()->update (
             array("s_value" => $webid)
             ,array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")
         ) ;

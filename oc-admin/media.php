@@ -22,8 +22,7 @@
 define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'oc-admin/oc-load.php';
-$prefManager = Preference::newInstance();
-$preferences = $prefManager->toArray();
+
 $resourcesManager = ItemResource::newInstance();
 
 $action = osc_readAction();
@@ -33,17 +32,19 @@ switch($action) {
 		break;
 	case 'config_post':
 
-        unset($_POST['action']);
-        if(!isset($_POST['keep_original_image'])) { $_POST['keep_original_image'] = 0; };
-        foreach($_POST as $k => $v) {
-            $prefManager->update(
-            array('s_value' => $v),
-            array('s_name' => $k)
-            );
+        unset($_POST['action']) ;
+        if(!isset($_POST['keep_original_image'])) { 
+            $_POST['keep_original_image'] = 0 ;
         }
-        $preferences = $prefManager->toArray();
-		osc_renderAdminSection('media/config.php', __('Media'), __('Settings'));
-		break;
+
+        foreach($_POST as $k => $v) {
+            Preference::newInstance()->update(
+                array('s_value' => $v)
+                ,array('s_name' => $k)
+            ) ;
+        }
+		osc_renderAdminSection('media/config.php', __('Media'), __('Settings')) ;
+		break ;
 	case 'delete':
 		if(isset($_REQUEST['id']) && is_array($_REQUEST['id'])) {
 			$resourcesManager->delete(array(

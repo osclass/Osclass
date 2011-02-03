@@ -16,28 +16,25 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once 'oc-load.php';
+require_once 'oc-load.php' ;
 
-$managePages = new Page();
-$managePreferences = new Preference();
+$managePages = new Page() ;
 
-$preferences = $managePreferences->toArray();
-
-$pageId = intval(osc_paramGet('id', 0));
-$page = $managePages->findByPrimaryKey($pageId);
+$pageId = intval(osc_paramGet('id', 0)) ;
+$page = $managePages->findByPrimaryKey($pageId) ;
 
 if( (count($page) == 0) || $page['b_indelible']) {
-    $headerConf = array(
-        'pageTitle' => __('Page not found') . ' - '.$preferences['pageTitle'],
+    $headerConf = array (
+        'pageTitle' => __('Page not found') . ' - ' . osc_page_title()
     );
     osc_renderHeader($headerConf);
     osc_renderView('errorPage.php');
     osc_renderFooter();
 } else {
     if(isset($_SESSION['locale'])) {
-        $locale = $_SESSION['locale'];
+        $locale = $_SESSION['locale'] ;
     } else {
-        $locale = $managePreferences->findValueByName('language');
+        $locale = osc_language() ;
     }
     
     if(isset($page['locale'][$locale])) {
@@ -53,12 +50,12 @@ if( (count($page) == 0) || $page['b_indelible']) {
     global $osc_request;
     $osc_request['section'] = $page['s_title'];
     
-    $headerConf = array(
-        'pageTitle' => $page['s_title'] . ' - '.$preferences['pageTitle'],
-    );
-    osc_renderHeader($headerConf);
-    osc_renderView('page.php');
-    osc_renderFooter();
+    $headerConf = array (
+        'pageTitle' => $page['s_title'] . ' - ' . osc_page_title()
+    ) ;
+    osc_renderHeader($headerConf) ;
+    osc_renderView('page.php') ;
+    osc_renderFooter() ;
 }
 
 ?>

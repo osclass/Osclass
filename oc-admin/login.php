@@ -20,10 +20,6 @@
  */
 ?>
 
-<?php
-    $preferences = Preference::newInstance()->toArray();
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -57,7 +53,7 @@
                                                             <option value="en_US" selected="selected">English</option>
                                                             <option>------------</option>
                                 <?php foreach ($locales as $locale): ?>
-                                    <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if ($preferences['admin_language'] == $locale['pk_c_code'])
+                                    <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if (osc_admin_language() == $locale['pk_c_code'])
                                         echo 'selected="selected"'; ?>><?php echo $locale['s_short_name']; ?></option>
                                         <?php endforeach; ?>
                             </select>
@@ -85,7 +81,7 @@
                 <a href="index.php?action=recover" title="<?php echo __('Lost your password?'); ?>"><?php echo __('Lost your password?'); ?></a>
             </p>
         </div>
-        <p id="backtoblog"><a href="<?php echo WEB_PATH; ?>/" title="<?php echo __('Have you lost?') ?>">&larr; <?php echo __('Back to'); ?> <?php echo $preferences['pageTitle']; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo WEB_PATH; ?>/" title="<?php echo __('Have you lost?') ?>">&larr; <?php echo __('Back to'); ?> <?php echo osc_page_title() ; ?></a></p>
         <script type="text/javascript">
             try{
                 document.getElementById('user_login').focus();

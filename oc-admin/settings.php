@@ -24,9 +24,6 @@ define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'oc-admin/oc-load.php';
 
-$prefManager = Preference::newInstance();
-$preferences = $prefManager->toArray();
-
 $action = osc_readAction();
 
 switch ($action) {
@@ -36,28 +33,27 @@ switch ($action) {
     case 'spamNbots_post':
         $akismetKey = trim($_POST['akismetKey']);
         if (empty($akismetKey)) {
-            $prefManager->delete(array('s_name' => 'akismetKey'));
+            Preference::newInstance()->delete(array('s_name' => 'akismetKey'));
         } else {
-            $prefManager->delete(array('s_name' => 'akismetKey')); // @TODO remove
-            $prefManager->insert(array('s_section' => 'osclass', 's_name' => 'akismetKey', 's_value' => $akismetKey, 'e_type' => 'STRING'));
+            Preference::newInstance()->delete(array('s_name' => 'akismetKey')); // @TODO remove
+            Preference::newInstance()->insert(array('s_section' => 'osclass', 's_name' => 'akismetKey', 's_value' => $akismetKey, 'e_type' => 'STRING'));
         }
 
         $recaptchaPrivKey = trim($_POST['recaptchaPrivKey']);
         $recaptchaPubKey = trim($_POST['recaptchaPubKey']);
         if (empty($recaptchaPrivKey) || empty($recaptchaPubKey)) {
-            $prefManager->delete(array('s_name' => 'recaptchaPrivKey'));
-            $prefManager->delete(array('s_name' => 'recaptchaPubKey'));
+            Preference::newInstance()->delete(array('s_name' => 'recaptchaPrivKey'));
+            Preference::newInstance()->delete(array('s_name' => 'recaptchaPubKey'));
         } else {
-            $prefManager->delete(array('s_name' => 'recaptchaPrivKey')); // @TODO remove
-            $prefManager->delete(array('s_name' => 'recaptchaPubKey')); // @TODO remove
-            $prefManager->insert(array('s_section' => 'osclass', 's_name' => 'recaptchaPrivKey', 's_value' => $recaptchaPrivKey, 'e_type' => 'STRING'));
-            $prefManager->insert(array('s_section' => 'osclass', 's_name' => 'recaptchaPubKey', 's_value' => $recaptchaPubKey, 'e_type' => 'STRING'));
+            Preference::newInstance()->delete(array('s_name' => 'recaptchaPrivKey')); // @TODO remove
+            Preference::newInstance()->delete(array('s_name' => 'recaptchaPubKey')); // @TODO remove
+            Preference::newInstance()->insert(array('s_section' => 'osclass', 's_name' => 'recaptchaPrivKey', 's_value' => $recaptchaPrivKey, 'e_type' => 'STRING'));
+            Preference::newInstance()->insert(array('s_section' => 'osclass', 's_name' => 'recaptchaPubKey', 's_value' => $recaptchaPubKey, 'e_type' => 'STRING'));
         }
 
         osc_redirectTo('settings.php?action=spamNbots');
         break;
     case 'registry':
-        $preferencesTable = $prefManager->listAll();
         osc_renderAdminSection('settings/registry.php', __('Settings'));
         break;
     case 'currencies':
@@ -80,7 +76,7 @@ switch ($action) {
                 } else {
                     $c_code = $_POST['c_country'] ;
                     $s_name = $_POST['country'] ;
-                    $c_language = $preferences['language'] ;
+                    $c_language = osc_language() ;
 
                     $data = array(
                         'pk_c_code' => $c_code,
@@ -119,8 +115,8 @@ switch ($action) {
                     $c_country_code = $_POST['country_c_parent'];
 
                     $data = array(
-                        'fk_c_country_code' => $c_country_code,
-                        's_name' => $s_name
+                        'fk_c_country_code' => $c_country_code
+                        ,'s_name' => $s_name
                     );
 
                     $mRegions->insert($data);
@@ -130,8 +126,8 @@ switch ($action) {
                 $new_s_region = $_POST['e_region'];
                 $region_id = $_POST['region_id'];
                 $mRegions->update(
-                        array('s_name' => $new_s_region),
-                        array('pk_i_id' => $region_id)
+                        array('s_name' => $new_s_region)
+                        ,array('pk_i_id' => $region_id)
                     );
                 break;
             case 'delete_region':
@@ -148,9 +144,9 @@ switch ($action) {
                 $new_s_city = $_POST['city'];
 
                 $data = array(
-                    'fk_i_region_id' => $region_id,
-                    's_name' => $new_s_city,
-                    'fk_c_country_code' => $c_country_code
+                    'fk_i_region_id' => $region_id
+                    ,'s_name' => $new_s_city
+                    ,'fk_c_country_code' => $c_country_code
                 );
                 $mCities->insert($data);
                 break;
@@ -158,8 +154,8 @@ switch ($action) {
                 $new_s_city = $_POST['e_city'];
                 $city_id = $_POST['city_id'];
                 $mCities->update(
-                        array('s_name' => $new_s_city),
-                        array('pk_i_id' => $city_id)
+                        array('s_name' => $new_s_city)
+                        ,array('pk_i_id' => $city_id)
                     );
                 break;
             case 'delete_city':
@@ -212,142 +208,150 @@ switch ($action) {
             Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
         } catch (Exception $e) {
             if($e->getMessage()=="1451") {
-                osc_addFlashMessage(__('This currency is currently being used in some items. It can not be deleted.'));
+                osc_addFlashMessage(__('This currency is currently being used in some items. It can not be deleted.')) ;
             } else {
-                osc_addFlashMessage($e->getMessage());
+                osc_addFlashMessage($e->getMessage()) ;
             }
         }
 
-        osc_redirectTo('settings.php?action=currencies');
+        osc_redirectTo('settings.php?action=currencies') ;
         break;
     case 'functionalities':
-        osc_renderAdminSection('settings/functionalities.php', __('Functionalities'));
+        osc_renderAdminSection('settings/functionalities.php', __('Functionalities')) ;
         break;
     case 'functionalities_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_comments']) ? true : false),
-                array('s_name' => 'enabled_comments')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_comments']) ? true : false)
+                ,array('s_name' => 'enabled_comments')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_recaptcha_items']) ? true : false),
-                array('s_name' => 'enabled_recaptcha_items')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_recaptcha_items']) ? true : false)
+                ,array('s_name' => 'enabled_recaptcha_items')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false),
-                array('s_name' => 'enabled_item_validation')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
+                ,array('s_name' => 'enabled_item_validation')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['moderate_comments']) ? true : false),
-                array('s_name' => 'moderate_comments')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['moderate_comments']) ? true : false)
+                ,array('s_name' => 'moderate_comments')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['reg_user_post']) ? true : false),
-                array('s_name' => 'reg_user_post')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['reg_user_post']) ? true : false)
+                ,array('s_name' => 'reg_user_post')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['auto_cron']) ? true : false),
-                array('s_name' => 'auto_cron')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['auto_cron']) ? true : false)
+                ,array('s_name' => 'auto_cron')
         );
-        $preferences = $prefManager->toArray();
-        osc_redirectTo('settings.php?action=functionalities');
+        //XXX: Maybe is not needed. We want to reload the values from Preference
+        Preference::newInstance()->toArray() ;
+        osc_redirectTo('settings.php?action=functionalities') ;
         break;
     case 'users':
-        osc_renderAdminSection('settings/users.php', __('Functionalities'));
+        osc_renderAdminSection('settings/users.php', __('Functionalities')) ;
         break;
     case 'users_post':
-        $enabled_user_validation = false;
+        $enabled_user_validation = false ;
         if(isset($_POST['enabled_user_validation'])) {
-            $enabled_user_validation = true;
+            $enabled_user_validation = true ;
         }
-        $enabled_user_registration = false;
+        $enabled_user_registration = false ;
         if(isset($_POST['enabled_user_registration'])) {
-            $enabled_user_registration = true;
+            $enabled_user_registration = true ;
         }
-        $enabled_users = false;
+        $enabled_users = false ;
         if(isset($_POST['enabled_users'])) {
-            $enabled_users = true;
+            $enabled_users = true ;
         }
         
-        $prefManager->update(array('s_value' => $enabled_user_validation),
-                             array('s_name'  => 'enabled_user_validation'));
-        $prefManager->update(array('s_value' => $enabled_user_registration),
-                             array('s_name'  => 'enabled_user_registration'));
-        $prefManager->update(array('s_value' => $enabled_users) ,
-                             array('s_name'  => 'enabled_users'));
+        Preference::newInstance()->update(
+                array('s_value' => $enabled_user_validation)
+                ,array('s_name'  => 'enabled_user_validation')
+        );
+        Preference::newInstance()->update(
+                array('s_value' => $enabled_user_registration)
+                ,array('s_name'  => 'enabled_user_registration')
+        );
+        Preference::newInstance()->update(
+                array('s_value' => $enabled_users)
+                ,array('s_name'  => 'enabled_users')
+        );
 
-         osc_addFlashMessage(__('Users settings have been updated.'), 'admin');
-        osc_redirectTo('settings.php?action=users');
+        osc_addFlashMessage(__('Users settings have been updated.'), 'admin') ;
+        osc_redirectTo('settings.php?action=users') ;
         break;
     case 'notifications':
-        osc_renderAdminSection('settings/notifications.php', __('Notifications'));
+        osc_renderAdminSection('settings/notifications.php', __('Notifications')) ;
         break;
     case 'notifications_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_new_item']) ? true : false),
-                array('s_name' => 'notify_new_item')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_new_item']) ? true : false)
+                ,array('s_name' => 'notify_new_item')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_contact_friends']) ? true : false),
-                array('s_name' => 'notify_contact_friends')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_contact_friends']) ? true : false)
+                ,array('s_name' => 'notify_contact_friends')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_new_comment']) ? true : false),
-                array('s_name' => 'notify_new_comment')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_new_comment']) ? true : false)
+                ,array('s_name' => 'notify_new_comment')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_contact_item']) ? true : false),
-                array('s_name' => 'notify_contact_item')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_contact_item']) ? true : false)
+                ,array('s_name' => 'notify_contact_item')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false),
-                array('s_name' => 'enabled_item_validation')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
+                ,array('s_name' => 'enabled_item_validation')
         );
-        $preferences = $prefManager->toArray();
-        osc_redirectTo('settings.php?action=notifications');
+        //XXX: Maybe is not needed. We want to reload the values from Preference
+        Preference::newInstance()->toArray() ;
+        osc_redirectTo('settings.php?action=notifications') ;
         break;
     case 'mailserver':
-        osc_renderAdminSection('settings/mailserver.php', __('Functionalities'));
+        osc_renderAdminSection('settings/mailserver.php', __('Functionalities')) ;
         break;
     case 'mailserver_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_auth']) ? true : false),
-                array('s_name' => 'mailserver_auth')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_auth']) ? true : false)
+                ,array('s_name' => 'mailserver_auth')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_type']) ? $_POST['mailserver_type'] : 'custom'),
-                array('s_name' => 'mailserver_type')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_type']) ? $_POST['mailserver_type'] : 'custom')
+                ,array('s_name' => 'mailserver_type')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_host']) ? $_POST['mailserver_host'] : ''),
-                array('s_name' => 'mailserver_host')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_host']) ? $_POST['mailserver_host'] : '')
+                ,array('s_name' => 'mailserver_host')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_port']) ? $_POST['mailserver_port'] : ''),
-                array('s_name' => 'mailserver_port')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_port']) ? $_POST['mailserver_port'] : '')
+                ,array('s_name' => 'mailserver_port')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_username']) ? $_POST['mailserver_username'] : ''),
-                array('s_name' => 'mailserver_username')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_username']) ? $_POST['mailserver_username'] : '')
+                ,array('s_name' => 'mailserver_username')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_password']) ? $_POST['mailserver_password'] : ''),
-                array('s_name' => 'mailserver_password')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_password']) ? $_POST['mailserver_password'] : '')
+                ,array('s_name' => 'mailserver_password')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['mailserver_ssl']) ? $_POST['mailserver_ssl'] : ''),
-                array('s_name' => 'mailserver_ssl')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['mailserver_ssl']) ? $_POST['mailserver_ssl'] : '')
+                ,array('s_name' => 'mailserver_ssl')
         );
-        $preferences = $prefManager->toArray();
-        osc_redirectTo('settings.php?action=mailserver');
+        Preference::newInstance()->toArray();
+        osc_redirectTo('settings.php?action=mailserver') ;
         break;
     case 'notifications':
-        osc_renderAdminSection('settings/notifications.php', __('Notifications'));
+        osc_renderAdminSection('settings/notifications.php', __('Notifications')) ;
         break;
     case 'permalinks':
-        $htaccess_status = isset($_REQUEST['htaccess_status'])?$_REQUEST['htaccess_status']:0;
-        $file_status = isset($_REQUEST['file_status'])?$_REQUEST['file_status']:0;
+        $htaccess_status = isset($_REQUEST['htaccess_status']) ? $_REQUEST['htaccess_status'] : 0 ;
+        $file_status = isset($_REQUEST['file_status']) ? $_REQUEST['file_status'] : 0 ;
 
-        osc_renderAdminSection('settings/permalinks.php', __('Settings'));
+        osc_renderAdminSection('settings/permalinks.php', __('Settings')) ;
         break;
     case 'permalinks_post':
 
@@ -355,13 +359,13 @@ switch ($action) {
         $file_status = 0;
         if(!isset($_REQUEST['enable_mod_rewrite'])) {
        
-            $prefManager->update(
-                array('s_value' => isset($_REQUEST['rewrite_enabled']) ? 1 : 0),
-                array('s_name' => 'rewriteEnabled')
+            Preference::newInstance()->update(
+                array('s_value' => isset($_REQUEST['rewrite_enabled']) ? 1 : 0)
+                ,array('s_name' => 'rewriteEnabled')
             );
             if(isset($_REQUEST['rewrite_enabled'])) {
                 
-                require ABS_PATH.'generate_rules.php';
+                require ABS_PATH.'generate_rules.php' ;
                 $htaccess_text = '
     <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -382,126 +386,123 @@ switch ($action) {
 
                 if(apache_mod_loaded('mod_rewrite')) {
                     $htaccess_status = 1;
-                    $prefManager->update(
-                        array('s_value' => 1),
-                        array('s_name' => 'mod_rewrite_loaded')
+                    Preference::newInstance()->update(
+                        array('s_value' => 1)
+                        ,array('s_name' => 'mod_rewrite_loaded')
                     );
                 } else {
                     $htaccess_status = 2;
-                    $prefManager->update(
-                        array('s_value' => 0),
-                        array('s_name' => 'mod_rewrite_loaded')
+                    Preference::newInstance()->update(
+                        array('s_value' => 0)
+                        ,array('s_name' => 'mod_rewrite_loaded')
                     );
                 }
 
             }
 
-
         } else {
         
-            
-            $prefManager->update(
-                array('s_value' => 1),
-                array('s_name' => 'rewriteEnabled')
+            Preference::newInstance()->update(
+                array('s_value' => 1)
+                ,array('s_name' => 'rewriteEnabled')
             );
 
-            $prefManager->update(
-                array('s_value' => $_REQUEST['enable_mod_rewrite']),
-                array('s_name' => 'mod_rewrite_loaded')
+            Preference::newInstance()->update(
+                array('s_value' => $_REQUEST['enable_mod_rewrite'])
+                ,array('s_name' => 'mod_rewrite_loaded')
             );
             
-            $htaccess_status = 3+$_REQUEST['enable_mod_rewrite'];
-
+            $htaccess_status = 3+$_REQUEST['enable_mod_rewrite'] ;
         }
 
-        osc_redirectTo('settings.php?action=permalinks&htaccess_status='.$htaccess_status.'&file_status='.$file_status);
+        osc_redirectTo('settings.php?action=permalinks&htaccess_status='.$htaccess_status.'&file_status='.$file_status) ;
     case 'items':
-        osc_renderAdminSection('settings/items.php', __('Settings'));
+        osc_renderAdminSection('settings/items.php', __('Settings')) ;
         break;
     case 'comments':
-        osc_renderAdminSection('settings/comments.php', __('Settings'));
+        osc_renderAdminSection('settings/comments.php', __('Settings')) ;
         break;
     case 'cron':
-        osc_renderAdminSection('settings/cron.php', __('Settings'));
+        osc_renderAdminSection('settings/cron.php', __('Settings')) ;
         break;
     case 'cron_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['auto_cron']) ? true : false),
-                array('s_name' => 'auto_cron')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['auto_cron']) ? true : false)
+                ,array('s_name' => 'auto_cron')
         );
-        $preferences = $prefManager->toArray();
-        osc_redirectTo('settings.php?action=cron');
+        Preference::newInstance()->toArray() ;
+        osc_redirectTo('settings.php?action=cron') ;
         break;
     case 'comments_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_comments']) ? true : false),
-                array('s_name' => 'enabled_comments')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_comments']) ? true : false)
+                ,array('s_name' => 'enabled_comments')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['moderate_comments']) ? true : false),
-                array('s_name' => 'moderate_comments')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['moderate_comments']) ? true : false)
+                ,array('s_name' => 'moderate_comments')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_new_comment']) ? true : false),
-                array('s_name' => 'notify_new_comment')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_new_comment']) ? true : false)
+                ,array('s_name' => 'notify_new_comment')
         );
-        $preferences = $prefManager->toArray();
+        Preference::newInstance()->toArray();
         osc_redirectTo('settings.php?action=comments');
         break;
     case 'items_post':
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_recaptcha_items']) ? true : false),
-                array('s_name' => 'enabled_recaptcha_items')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_recaptcha_items']) ? true : false)
+                ,array('s_name' => 'enabled_recaptcha_items')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false),
-                array('s_name' => 'enabled_item_validation')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
+                ,array('s_name' => 'enabled_item_validation')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['reg_user_post']) ? true : false),
-                array('s_name' => 'reg_user_post')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['reg_user_post']) ? true : false)
+                ,array('s_name' => 'reg_user_post')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_new_item']) ? true : false),
-                array('s_name' => 'notify_new_item')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_new_item']) ? true : false)
+                ,array('s_name' => 'notify_new_item')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_contact_friends']) ? true : false),
-                array('s_name' => 'notify_contact_friends')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_contact_friends']) ? true : false)
+                ,array('s_name' => 'notify_contact_friends')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['notify_contact_item']) ? true : false),
-                array('s_name' => 'notify_contact_item')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['notify_contact_item']) ? true : false)
+                ,array('s_name' => 'notify_contact_item')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false),
-                array('s_name' => 'enabled_item_validation')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
+                ,array('s_name' => 'enabled_item_validation')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enableField#f_price@items']) ? true : false),
-                array('s_name'  => 'enableField#f_price@items')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enableField#f_price@items']) ? true : false)
+                ,array('s_name'  => 'enableField#f_price@items')
         );
-        $prefManager->update(
-                array('s_value' => isset($_POST['enableField#images@items']) ? true : false),
-                array('s_name'  => 'enableField#images@items')
+        Preference::newInstance()->update(
+                array('s_value' => isset($_POST['enableField#images@items']) ? true : false)
+                ,array('s_name'  => 'enableField#images@items')
         );
-        $preferences = $prefManager->toArray();
-        osc_redirectTo('settings.php?action=items');
+        Preference::newInstance()->toArray() ;
+        osc_redirectTo('settings.php?action=items') ;
         break;
     case 'update':
         $required = array();
         foreach ($_POST as $key => $value) {
-            $prefManager->update(
-                    array('s_value' => $value),
-                    array('s_section' => 'osclass', 's_name' => $key)
+            Preference::newInstance()->update(
+                    array('s_value' => $value)
+                    ,array('s_section' => 'osclass', 's_name' => $key)
             );
         }
-        $preferences = $prefManager->toArray();
+        Preference::newInstance()->toArray() ;
     default:
-        $languages = Locale::newInstance()->listAllEnabled();
-        $mCurrencies = new Currency();
-        $aCurrencies = $mCurrencies->listAll();
-        osc_renderAdminSection('settings/index.php', __('General settings'));
+        $languages = Locale::newInstance()->listAllEnabled() ;
+        $mCurrencies = new Currency() ;
+        $aCurrencies = $mCurrencies->listAll() ;
+        osc_renderAdminSection('settings/index.php', __('General settings')) ;
 }
 
 
@@ -513,9 +514,9 @@ function install_location_by_country() {
     $countries = json_decode($countries_json);
     foreach($countries as $c) {
         $manager_country->insert(array(
-            "pk_c_code" => addslashes($c->id),
-            "fk_c_locale_code" => addslashes($c->locale_code),
-            "s_name" => addslashes($c->name)
+            "pk_c_code" => addslashes($c->id)
+            ,"fk_c_locale_code" => addslashes($c->locale_code)
+            ,"s_name" => addslashes($c->name)
         ));
     }
 
@@ -533,21 +534,21 @@ function install_location_by_country() {
 
     $manager_city = new City();
     foreach($countries as $c) {
-        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'');
+        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
         foreach($regions as $region) {
-            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all');
-            $cities = json_decode($cities_json);
+            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all') ;
+            $cities = json_decode($cities_json) ;
             if(!isset($cities->error)) {
                 foreach($cities as $ci) {
                     $manager_city->insert(array(
-                        "fk_i_region_id" => addslashes($region['pk_i_id']),
-                        "s_name" => addslashes($ci->name),
-                        "fk_c_country_code" => addslashes($ci->country_code)
+                        "fk_i_region_id" => addslashes($region['pk_i_id'])
+                        ,"s_name" => addslashes($ci->name)
+                        ,"fk_c_country_code" => addslashes($ci->country_code)
                     ));
                 }
             }
-            unset($cities);
-            unset($cities_json);
+            unset($cities) ;
+            unset($cities_json) ;
         }
     }
 }
@@ -559,9 +560,9 @@ function install_location_by_region() {
     if(!isset($_POST['region']))
         return false;
 
-    $manager_country = new Country();
+    $manager_country = new Country() ;
 
-    $aCountry = $manager_country->findByCode($_POST['country_c_parent']);
+    $aCountry = $manager_country->findByCode($_POST['country_c_parent']) ;
 
     $country = array();
     $region = array();

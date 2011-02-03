@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OSClass – software for creating and publishing online classified advertising platforms
  *
@@ -16,13 +17,13 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OC_ADMIN', true);
+define('OC_ADMIN', true) ;
 
 require_once ABS_PATH . 'config.php';
-require_once ABS_PATH . 'oc-includes/osclass/db.php';
-require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/model/Preference.php';
+require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/web.php';
 require_once LIB_PATH . 'osclass/session.php';
@@ -30,6 +31,7 @@ require_once LIB_PATH . 'osclass/session.php';
 osc_checkAdminSession();
 
 require_once LIB_PATH . 'osclass/classes/Params.php';
+require_once LIB_PATH . 'osclass/session.php';
 require_once LIB_PATH . 'osclass/locale.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/themes.php';
@@ -58,7 +60,6 @@ require_once LIB_PATH . 'osclass/model/ItemStats.php';
 require_once LIB_PATH . 'osclass/model/Locale.php';
 require_once LIB_PATH . 'osclass/model/Plugin.php';
 require_once LIB_PATH . 'osclass/model/PluginCategory.php';
-require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/model/Region.php';
 require_once LIB_PATH . 'osclass/model/Rewrite.php';
 require_once LIB_PATH . 'osclass/model/User.php';
@@ -85,9 +86,5 @@ require_once ABS_PATH . 'oc-admin/common.php';
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);
 $_REQUEST = add_slashes_extended($_REQUEST);
-
-
-global $preferences;
-$preferences = Preference::newInstance()->toArray();
 
 ?>

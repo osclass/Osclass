@@ -16,8 +16,7 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-$preferences = Preference::newInstance()->toArray();
+$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null ;
 switch ($action) {
     case 'item_edit_post':
     case 'editItemPost':
@@ -73,50 +72,56 @@ switch ($action) {
         $locationManager->update($location, array('fk_i_item_id' => $Pid));
 
         // If the Google Maps plugin is well configured, we can try to geodecode the address
-        if (isset($preferences['google_maps_key']) && !empty($preferences['google_maps_key'])) {
-            $key = $preferences['google_maps_key'];
+        if (osc_google_maps_key()) {
+            $key = osc_google_maps_key() ;
             $address = sprintf('%s, %s %s', $_POST['address'], $regionName, $cityName);
             $temp = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
             $temp = json_decode($temp);
             if (isset($temp->Placemark) && count($temp->Placemark[0]) > 0) {
                 $coord = $temp->Placemark[0]->Point->coordinates;
-                $locationManager->update(
+                $locationManager->update (
                         array(
-                            'd_coord_lat' => $coord[1],
-                            'd_coord_long' => $coord[0]
-                        ),
-                        array('fk_i_item_id' => $Pid)
+                            'd_coord_lat' => $coord[1]
+                            ,'d_coord_long' => $coord[0]
+                        )
+                        ,array('fk_i_item_id' => $Pid)
                 );
             }
         }
 
         // Update category numbers
-        $old_item = Item::newInstance()->findByPrimaryKey($Pid);
-        if($old_item['fk_i_category_id']!=$PcatId) {
-            CategoryStats::newInstance()->increaseNumItems($PcatId);
-            CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']);
+        $old_item = Item::newInstance()->findByPrimaryKey($Pid) ;
+        if($old_item['fk_i_category_id'] != $PcatId) {
+            CategoryStats::newInstance()->increaseNumItems($PcatId) ;
+            CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
         }
-        unset($old_item);
+        unset($old_item) ;
         
 
-        Item::newInstance()->update(array(
-            'dt_pub_date' => DB_FUNC_NOW,
-            'fk_i_category_id' => $PcatId,
-            'f_price' => $Pprice,
-            'fk_c_currency_code' => $Pcurrency
-                ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
+        Item::newInstance()->update (
+                                array(
+                                    'dt_pub_date' => DB_FUNC_NOW
+                                    ,'fk_i_category_id' => $PcatId
+                                    ,'f_price' => $Pprice
+                                    ,'fk_c_currency_code' => $Pcurrency
+                                )
+                                ,array(
+                                    'pk_i_id' => $Pid
+                                    ,'s_secret' => $Psecret
+                            )
+        ) ;
         
-        $data = array();
+        $data = array() ;
         foreach ($_REQUEST as $k => $v) {
             if (preg_match('|(.+?)#(.+)|', $k, $m)) {
-                $data[$m[1]][$m[2]] = $v;
+                $data[$m[1]][$m[2]] = $v ;
             }
         }
         foreach ($data as $k => $_data) {
-            Item::newInstance()->updateLocaleForce($Pid, $k, $_data['s_title'], $_data['s_description']);
+            Item::newInstance()->updateLocaleForce($Pid, $k, $_data['s_title'], $_data['s_description']) ;
         }
 
-        $filePhotos = Params::getFiles('photos');
+        $filePhotos = Params::getFiles('photos') ;
         if($filePhotos != '')
         {
             $dao_itemResource = new ItemResource() ;
@@ -134,29 +139,25 @@ switch ($action) {
                     $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
 
                     // Create thumbnail
-                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    $size = explode('x', $preferences['dimThumbnail']);
-                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
-
-                    // Create preview
-                    /*$thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_preview.png';
-                    $size = explode('x', $preferences['dimPreview']);
-                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);*/
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                    $size = explode('x', osc_thumbnail_dimensions()) ;
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
                     // Create normal size
-                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
-                    $size = explode('x', $preferences['dimNormal']);
+                    $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png' ;
+                    $size = explode('x', osc_normal_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
 
-                    if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
-                        $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
-                        move_uploaded_file($tmpName, $path);
+                    if(osc_keep_original_image()) {
+                        $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                        move_uploaded_file($tmpName, $path) ;
                     }
 
                     $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    $dao_itemResource->update(array(
-                        's_path' => $s_path
-                            ), array('pk_i_id' => $resourceId, 'fk_i_item_id' => $Pid));
+                    $dao_itemResource->update(
+                                            array('s_path' => $s_path)
+                                            ,array('pk_i_id' => $resourceId, 'fk_i_item_id' => $Pid)
+                    ) ;
                 }
             }
             unset($dao_itemResource) ;
@@ -188,27 +189,25 @@ switch ($action) {
         } else {
             $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
 
-            if (isset($preferences['reg_user_post'])) {
-                if ($preferences['reg_user_post']) {
-                    if ($userId == null) {
-                        osc_addFlashMessage(__('You new to log-in in order to post a new item.'));
-                        osc_redirectTo(osc_createLoginURL());
-                        break;
-                    }
+            if (osc_reg_user_post()) {
+                if ($userId == null) {
+                    osc_addFlashMessage(__('You new to log-in in order to post a new item.')) ;
+                    osc_redirectTo(osc_createLoginURL()) ;
+                    break ;
                 }
             }
 
-            if (isset($preferences['recaptchaPrivKey'])) {
+            if (osc_recaptcha_private_key()) {
                 require_once LIB_PATH . 'recaptchalib.php';
                 if (!empty($_POST["recaptcha_challenge_field"])) {
-                    $resp = recaptcha_check_answer(
-                        $preferences['recaptchaPrivKey'],
-                        $_SERVER["REMOTE_ADDR"],
-                        $_POST["recaptcha_challenge_field"],
-                        $_POST["recaptcha_response_field"]
+                    $resp = recaptcha_check_answer (
+                        osc_recaptcha_private_key()
+                        ,$_SERVER["REMOTE_ADDR"]
+                        ,$_POST["recaptcha_challenge_field"]
+                        ,$_POST["recaptcha_response_field"]
                     );
                     if (!$resp->is_valid) {
-                        die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
+                        die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")") ;
                     }
                 }
             }
@@ -217,9 +216,9 @@ switch ($action) {
         // first of all, insert the item
         $code = osc_genRandomPassword();
 
-        $has_to_validate = false;
-        if(((isset($preferences['enabled_item_validation'])) && $preferences['enabled_item_validation'])) {
-            $has_to_validate = true;
+        $has_to_validate = false ;
+        if(osc_enabled_item_validation()) {
+            $has_to_validate = true ;
         }
 
         if($is_admin || !$has_to_validate) {
@@ -341,8 +340,8 @@ switch ($action) {
             $locationManager->insert($location);
 
             // If the Google Maps plugin is well configured, we can try to geodecode the address
-            if (isset($preferences['google_maps_key']) && !empty($preferences['google_maps_key'])) {
-                $key = $preferences['google_maps_key'];
+            if (osc_google_maps_key()) {
+                $key = osc_google_maps_key() ;
                 $address = sprintf('%s, %s %s', $_POST['address'], $regionName, $cityName);
                 $temp = file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
                 $temp = json_decode($temp);
@@ -381,31 +380,35 @@ switch ($action) {
                         $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
                         // Create thumbnail
-                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                        $size = explode('x', $preferences['dimThumbnail']);
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                        $size = explode('x', osc_thumbnail_dimensions()) ;
+                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
                         // Create normal size
-                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png';
-                        $size = explode('x', $preferences['dimNormal']);
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png' ;
+                        $size = explode('x', osc_normal_dimensions()) ;
+                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
-                        if(isset($preferences['keep_original_image']) && $preferences['keep_original_image']==1) {
-                            $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png';
-                            move_uploaded_file($tmpName, $path);
+                        if(osc_keep_original_image()) {
+                            $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                            move_uploaded_file($tmpName, $path) ;
                         }
 
-                        $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                        $dao_itemResource->update(array('s_path'       => $s_path),
-                                                  array('pk_i_id'      => $resourceId,
-                                                        'fk_i_item_id' => $itemId));
+                        $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                        $dao_itemResource->update(
+                                                array('s_path' => $s_path)
+                                                ,array(
+                                                    'pk_i_id'      => $resourceId
+                                                    ,'fk_i_item_id' => $itemId
+                                                )
+                                           ) ;
                     }
                 }
                 unset($dao_itemResource) ;
             }
             
             if (!isset($_REQUEST['catId'])) {
-                $_REQUEST['catId'] = "";
+                $_REQUEST['catId'] = "" ;
             }
 
             osc_runHook('item_form_post', $_REQUEST['catId'], array('id' => $itemId));
@@ -417,8 +420,8 @@ switch ($action) {
             
             // send an e-mail to the admin with the data of the new item
             if(!$is_admin) {
-                if (isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
-                    $aPage = $mPages->findByInternalName('email_item_validation');
+                if (osc_enabled_item_validation()) {
+                    $aPage = $mPages->findByInternalName('email_item_validation') ;
 
                     $content = array();
                     if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -457,38 +460,40 @@ switch ($action) {
                     $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'], 
                                      $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                                      $item['s_contact_email'], ABS_WEB_URL, $item['s_title'], $item_url,
-                                     $preferences['pageTitle'], '<a href="' . ABS_WEB_URL .
+                                     osc_page_title(), '<a href="' . ABS_WEB_URL .
                                      'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' .
                                      $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' .
                                      $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
-                    $emailParams = array('subject'  => $title,
-                                         'to'       => $PcontactEmail,
-                                         'to_name'  => $PcontactName,
-                                         'body'     => $body,
-                                         'alt_body' => $body);
-                    osc_sendMail($emailParams);
+                    $emailParams =  array (
+                                        'subject'  => $title
+                                        ,'to'       => $PcontactEmail
+                                        ,'to_name'  => $PcontactName
+                                        ,'body'     => $body
+                                        ,'alt_body' => $body
+                                    );
+                    osc_sendMail($emailParams) ;
                 }
 
-                if (isset($preferences['notify_new_item']) && $preferences['notify_new_item']) {
-                    $aPage = $mPages->findByInternalName('email_admin_new_item');
+                if (osc_notify_new_item()) {
+                    $aPage = $mPages->findByInternalName('email_admin_new_item') ;
 
                     $content = array();
                     if(isset($aPage['locale'][$locale]['s_title'])) {
-                        $content = $aPage['locale'][$locale];
+                        $content = $aPage['locale'][$locale] ;
                     } else {
-                        $content = current($aPage['locale']);
+                        $content = current($aPage['locale']) ;
                     }
 
-                    $item_url = osc_createItemURL($item);
+                    $item_url = osc_createItemURL($item) ;
 
-                    $all = '';
+                    $all = '' ;
 
                     if (isset($item['locale'])) {
                         foreach ($item['locale'] as $locale => $data) {
-                            $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                            $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
                             $all .= '<br/>';
                             if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                                 $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -515,7 +520,7 @@ switch ($action) {
                                      $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
                                      $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                                      $item['s_contact_name'], $item['s_contact_email'], ABS_WEB_URL, $item['s_title'],
-                                     $item_url, $preferences['pageTitle'], '<a href="' .
+                                     $item_url, osc_page_title(), '<a href="' .
                                      ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] .
                                      '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL .
                                      'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' .
@@ -523,34 +528,34 @@ switch ($action) {
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
-                    $emailParams = array('subject'  => $title,
-                                         'to'       => $preferences['contactEmail'],
-                                         'to_name'  => 'admin',
-                                         'body'     => $body,
-                                         'alt_body' => $body
-                    );
-                    osc_sendMail($emailParams);
+                    $emailParams = array(
+                                        'subject'  => $title
+                                        ,'to'       => osc_contact_email()
+                                        ,'to_name'  => 'admin'
+                                        ,'body'     => $body
+                                        ,'alt_body' => $body
+                    ) ;
+                    osc_sendMail($emailParams) ;
                 }
 
             }
             
-            osc_runHook('after_item_post');
+            osc_runHook('after_item_post') ;
 
             if($is_admin) {
-                osc_addFlashMessage(__('A new item has been added'));
+                osc_addFlashMessage(__('A new item has been added')) ;
             } else {
-                if(isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
-                    osc_addFlashMessage(__('Great! You\'ll receive an e-mail to activate your item.'));
+                if(osc_enabled_item_validation()) {
+                    osc_addFlashMessage(__('Great! You\'ll receive an e-mail to activate your item.')) ;
                 } else {
-                    osc_addFlashMessage(__('Great! We\'ve just published your item.'));
+                    osc_addFlashMessage(__('Great! We\'ve just published your item.')) ;
                 }
             }
         }
 
     break;
-
     default:
-        break;
+    break;
 }
 
 ?>

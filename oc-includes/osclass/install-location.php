@@ -12,42 +12,48 @@ require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 require_once ABS_PATH . 'oc-includes/osclass/formatting.php';
 require_once ABS_PATH . 'oc-includes/osclass/utils.php';
 
-$_POST = add_slashes_extended($_POST);
+$_POST = add_slashes_extended($_POST) ;
 
-if( is_osclass_installed( ) ) {
-    die();
+if( is_osclass_installed() ) {
+    die() ;
 }
 
 basic_info();
 
 if( $_POST['skip-location-h'] == 0 ) {
-    install_locations();
+    install_locations() ;
 }
 
 function basic_info() {
-    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
+    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
 
-    Admin::newInstance()->insert(array(
-        's_name' => 'Administrator',
-        's_username' => 'admin',
-        's_password' => sha1('admin'),
-        's_email' => $_POST['email']
-    ));
+    Admin::newInstance()->insert(
+        array(
+            's_name' => 'Administrator'
+            ,'s_username' => 'admin'
+            ,'s_password' => sha1('admin')
+            ,'s_email' => $_POST['email']
+        )
+    ) ;
 
-    $preference_manager = Preference::newInstance();
-    $preference_manager->insert(array(
-        's_section' => 'osclass',
-        's_name' => 'pageTitle',
-        's_value' => $_POST['webtitle'],
-        'e_type' => 'STRING'
-    ));
-    $preference_manager->insert(array(
-        's_section' => 'osclass',
-        's_name' => 'contactEmail',
-        's_value' => $_POST['email'],
-        'e_type' => 'STRING'
-    ));
+    $mPreference = Preference::newInstance() ;
+    $mPreference->insert (
+        array(
+            's_section' => 'osclass'
+            ,'s_name' => 'pageTitle'
+            ,'s_value' => $_POST['webtitle']
+            ,'e_type' => 'STRING'
+        )
+    ) ;
+    $mPreference->insert (
+        array(
+            's_section' => 'osclass'
+            ,'s_name' => 'contactEmail'
+            ,'s_value' => $_POST['email']
+            ,'e_type' => 'STRING'
+        )
+    ) ;
 }
 
 function location_international() {
@@ -63,7 +69,7 @@ function location_international() {
             "pk_c_code" => addslashes($c->id),
             "fk_c_locale_code" => addslashes($c->locale_code),
             "s_name" => addslashes($c->name)
-        ));
+        )) ;
     }
     
     $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=all&term=all');

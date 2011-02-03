@@ -4,6 +4,10 @@
         return (getBoolPreference('enabled_comments')) ;
     }
 
+    function osc_users_enabled() {
+        return (getBoolPreference('enabled_users')) ;
+    }
+
     function osc_moderate_comments() {
         return (getBoolPreference('moderate_comments')) ;
     }
@@ -39,7 +43,38 @@
     function osc_reg_user_post() {
         return (getBoolPreference('reg_user_post')) ;
     }
-    
+
+    function osc_price_enabled_at_items() {
+        return (getBoolPreference('enableField#f_price@items')) ;
+    }
+
+    function osc_images_enabled_at_items() {
+        return (getBoolPreference('enableField#images@items')) ;
+    }
+
+    function osc_notify_contact_friends() {
+        return(getBoolPreference('notify_contact_friends')) ;
+    }
+
+    function osc_notify_contact_item() {
+        return(getBoolPreference('notify_contact_item')) ;
+    }
+
+    function osc_item_attachment() {
+        return(getBoolPreference('item_attachment')) ;
+    }
+
+    function osc_notify_new_comment() {
+        return(getBoolPreference('notify_new_comment')) ;
+    }
+
+    function osc_notify_new_item() {
+        return(getBoolPreference('notify_new_item')) ;
+    }
+
+    function osc_mailserver_auth() {
+        return(getBoolPreference('mailserver_auth')) ;
+    }
     
 
     //OTHER FUNCTIONS TO GET INFORMATION OF PREFERENCES
@@ -83,6 +118,10 @@
         return(getPreference('language')) ;
     }
 
+    function osc_admin_language() {
+        return(getPreference('admin_language')) ;
+    }
+
     function osc_theme() {
         return(getPreference('theme')) ;
     }
@@ -110,6 +149,80 @@
     function osc_num_rss_items() {
         return(getPreference('num_rss_items')) ;
     }
+
+    function osc_currency() {
+        return(getPreference('currency')) ;
+    }
+
+    function osc_google_analytics_id() {
+        return(getPreference('google_analytics_id')) ;
+    }
+
+    function osc_google_maps_key() {
+        return(getPreference('google_maps_key')) ;
+    }
+
+    function osc_akismet_key() {
+        return(getPreference('akismetKey')) ;
+    }
+
+    function osc_recaptcha_private_key() {
+        return(getPreference('recaptchaPrivKey')) ;
+    }
+
+    function osc_recaptcha_public_key() {
+        return(getPreference('recaptchaPubKey')) ;
+    }
+
+    function osc_mailserver_type() {
+        return(getPreference('mailserver_type')) ;
+    }
+
+    function osc_mailserver_host() {
+        return(getPreference('mailserver_host')) ;
+    }
+
+    function osc_mailserver_port() {
+        return(getPreference('mailserver_port')) ;
+    }
+
+    function osc_mailserver_username() {
+        return(getPreference('mailserver_username')) ;
+    }
+
+    function osc_mailserver_password() {
+        return(getPreference('mailserver_password')) ;
+    }
+
+    function osc_mailserver_ssl() {
+        return(getPreference('mailserver_ssl')) ;
+    }
+
+    function osc_active_plugins() {
+        return(getPreference('active_plugins')) ;
+    }
+
+    function osc_default_order_field_at_search() {
+        return(getPreference('defaultOrderField@search')) ;
+    }
+
+    function osc_default_order_type_at_search() {
+        return(getPreference('defaultOrderType@search')) ;
+    }
+    
+    function osc_default_show_as_at_search() {
+        return(getPreference('defaultShowAs@search')) ;
+    }
+
+    function osc_max_results_per_page_at_search() {
+        return(getPreference('maxResultsPerPage@search')) ;
+    }
+
+    function osc_default_results_per_page_at_search() {
+        return(getPreference('defaultResultsPerPage@search')) ;
+    }
+
+
     
 
     //PRIVATE FUNCTION (if there was a class :P)

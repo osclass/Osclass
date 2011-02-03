@@ -19,18 +19,19 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-    function alert_new_item($preferences, $item) {
-        if (isset($preferences['notify_new_item']) && $preferences['notify_new_item']) {
-            require_once LIB_PATH . 'phpmailer/class.phpmailer.php';
-            $mail = new PHPMailer;
-            $mail->CharSet = "utf-8";
-            $mail->Host = 'localhost';
-            $mail->From = ( isset($preferences['contactEmail']) ) ? $preferences['contactEmail'] : 'no-reply@osclass.org';
-            $mail->FromName = ( isset($preferences['pageTitle']) ) ? $preferences['pageTitle'] : __('OSClass application');
-            $mail->Subject = '[ ' . __('New item') . ' ] ' . $preferences['pageTitle'];
-            $mail->AddAddress($preferences['contactEmail'], $preferences['pageTitle']);
-            $mail->IsHTML(true);
-            $body = '';
+    function alert_new_item($item)
+    {
+        if (osc_notify_new_item()) {
+            require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
+            $mail = new PHPMailer ;
+            $mail->CharSet = "utf-8" ;
+            $mail->Host = 'localhost' ;
+            $mail->From = osc_contact_email() ;
+            $mail->FromName = osc_page_title() ;
+            $mail->Subject = '[ ' . __('New item') . ' ] ' . osc_page_title() ;
+            $mail->AddAddress(osc_contact_email(), osc_page_title()) ;
+            $mail->IsHTML(true) ;
+            $body = '' ;
             $body .= __('Contact Name') . ': ' . $item['s_contact_name'] . '<br/>';
             $body .= __('Contact E-mail') . ': ' . $item['s_contact_email'] . '<br/>';
             if (isset($item['locale'])) {
@@ -61,17 +62,13 @@
         }
     }
 
-    function mail_validation($preferences, $item) {
-        if (isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']) {
-            $from = ( isset($preferences['contactEmail']) ) ? $preferences['contactEmail'] : 'no-reply@osclass.org';
-            $from_name = ( isset($preferences['pageTitle']) ) ? $preferences['pageTitle'] : __('OSClass application');
-            $subject = __('Validate your ad') . ' - ' . $preferences['pageTitle'];
-            $body = '';
-            if (isset($preferences['pageTitle'])) {
-                $site = $preferences['pageTitle'];
-            } else {
-                $site = __('OSClass application');
-            }
+    function mail_validation($item) {
+        if (osc_enabled_item_validation()) {
+            $from = osc_contact_email() ;
+            $from_name = osc_page_title() ;
+            $subject = __('Validate your ad') . ' - ' . osc_page_title() ;
+            $body = '' ;
+            $site = osc_page_title() ;
             $body .= __('Dear ') . $item['s_contact_name'] . ',<br/>';
             $body .= __('You\'re receiving this email because an Ad is being placed at ' . $site . '. You are requested to validate this item with the link at the end of the email. If you didn\'t place this ad, please ignore this email. Details of the ads:') . '<br/>';
             $body .= __('Contact Name') . ': ' . $item['s_contact_name'] . '<br/>';
@@ -96,24 +93,24 @@
             }
 
 
-            $body .= __('Price') . ': ' . $item['f_price'] . ' ' . $item['fk_c_currency_code'] . '<br/>';
-            $body .= __('Country') . ': ' . $item['s_country'] . '<br/>';
-            $body .= __('Region') . ': ' . $item['s_region'] . '<br/>';
-            $body .= __('City') . ': ' . $item['s_city'] . '<br/>';
-            $body .= __('Url') . ': ' . osc_createItemURL($item) . '<br/>';
-            $body .= __('You can validate your ad in this url') . ': <a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a><br/>';
-            $body .= "<br/>--<br/>" . $preferences['pageTitle'];
+            $body .= __('Price') . ': ' . $item['f_price'] . ' ' . $item['fk_c_currency_code'] . '<br/>' ;
+            $body .= __('Country') . ': ' . $item['s_country'] . '<br/>' ;
+            $body .= __('Region') . ': ' . $item['s_region'] . '<br/>' ;
+            $body .= __('City') . ': ' . $item['s_city'] . '<br/>' ;
+            $body .= __('Url') . ': ' . osc_createItemURL($item) . '<br/>' ;
+            $body .= __('You can validate your ad in this url') . ': <a href="' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '" >' . ABS_WEB_URL . 'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a><br/>' ;
+            $body .= "<br/>--<br/>" . osc_page_title() ;
 
             $params = array(
-                'from' => $from,
-                'from_name' => $from_name,
-                'subject' => $subject,
-                'to' => $item['s_contact_email'],
-                'to_name' => $item['s_contact_name'],
-                'body' => $body,
-                'alt_body' => $body
-            );
-            osc_sendMail($params);
+                'from' => $from
+                ,'from_name' => $from_name
+                ,'subject' => $subject
+                ,'to' => $item['s_contact_email']
+                ,'to_name' => $item['s_contact_name']
+                ,'body' => $body
+                ,'alt_body' => $body
+            ) ;
+            osc_sendMail($params) ;
         }
     }
 ?>

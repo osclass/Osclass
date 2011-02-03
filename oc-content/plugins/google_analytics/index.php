@@ -1,12 +1,13 @@
 <?php
+
 /*
-Plugin Name: Google Analytics
-Plugin URI: http://www.osclass.org/
-Description: This plugin adds the Google Analytics script at the footer of every page.
-Version: 1.0
-Author: OSClass
-Author URI: http://www.osclass.org/
-Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.php
+    Plugin Name: Google Analytics
+    Plugin URI: http://www.osclass.org/
+    Description: This plugin adds the Google Analytics script at the footer of every page.
+    Version: 1.0
+    Author: OSClass
+    Author URI: http://www.osclass.org/
+    Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.php
 */
 
 function google_analytics_call_after_install() 
@@ -17,20 +18,20 @@ function google_analytics_call_after_install()
     $fields["s_value"] = '' ;
     $fields["e_type"] = 'STRING' ;
     
-    $dao_preference = new Preference() ;
-    $dao_preference->insert($fields) ;
-    unset($dao_preference) ;
+    Preference::newInstance()->insert($fields) ;
 }
 
 function google_analytics_call_after_uninstall() {
-    $dao_preference = new Preference() ;
-    $dao_preference->delete( array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id") ) ;
-    unset($dao_preference) ;
+    Preference::newInstance()->delete (
+        array(
+            "s_section" => "plugin-google_analytics"
+            ,"s_name" => "google_analytics_id"
+        )
+    ) ;
 }
 
 function google_analytics_admin() {
-	
-	osc_renderPluginView(dirname(__FILE__).'/admin.php') ;
+	osc_renderPluginView(dirname(__FILE__) . '/admin.php') ;
 }
 
 
@@ -38,9 +39,8 @@ function google_analytics_admin() {
  * This function is called every time the page footer is being rendered
  */
 function google_analytics_footer() {
-	$preferences = Preference::newInstance()->toArray() ;
-	if(isset($preferences['google_analytics_id']) && !empty($preferences['google_analytics_id'])) {
-		$id = $preferences['google_analytics_id'] ;
+	if(osc_google_analytics_id() != '') {
+		$id = osc_google_analytics_id() ;
 		require 'footer.php' ;
 	}
 }

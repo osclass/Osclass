@@ -19,25 +19,23 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$_P = Preference::newInstance() ;
-
 $category_manager = Category::newInstance();
 $item_manager = Item::newInstance();
 
-$theme = $_P->get('theme') ;
+$theme = osc_theme() ;
 
 $limit = 10 ;
 if (isset($_GET["page"])) {
     if ($_GET['page'] > 0) {
         $page = (int) $_GET["page"];
-        $start = ((int) $_GET["page"] - 1 ) * 10;
+        $start = ((int) $_GET["page"] - 1 ) * 10 ;
     } else {
-        $page = 1;
-        $start = 0;
+        $page = 1 ;
+        $start = 0 ;
     }
 } else {
-    $page = 1;
-    $start = 0;
+    $page = 1 ;
+    $start = 0 ;
 }
 
 if( isset($_GET['id']) ) {

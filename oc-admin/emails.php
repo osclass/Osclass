@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OSClass – software for creating and publishing online classified advertising platforms
  *
@@ -59,7 +60,7 @@ switch($action) {
     default:
         $prefLocale = null;
         if(!isset($_SESSION['adminLocale'])) {
-            $prefLocale = Preference::newInstance()->findValueByName('language');
+            $prefLocale = osc_language() ;
         } else {
             $prefLocale = $_SESSION['adminLocale'];
         }
