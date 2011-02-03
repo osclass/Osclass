@@ -53,7 +53,7 @@ if(count($categories) == 1) {
 
 <div id="home_item">
 		<div id="home_item_title">
-			<a href="<?php echo osc_createItemURL($a); ?>"><?php echo $a['s_title'] ?></a>
+                    <a href="<?php osc_createItemURL($a, true); ?>"><?php echo $a['s_title'] ?></a>
 		</div>
 		<div id="home_item_loc">
 			<?php 
@@ -82,7 +82,7 @@ if(count($categories) == 1) {
 				<?php _e('Price'); ?>: <?php echo $item_info['price']; ?>
  			</div>
 			<?php endif; ?>
-			<div id="search_result_title"><a href="<?php echo osc_createItemURL($a); ?>"><?php echo $item_info['title']; ?></a></div>
+			<div id="search_result_title"><a href="<?php osc_createItemURL($a, true); ?>"><?php echo $item_info['title']; ?></a></div>
 			<div class="clear"></div>
 		</div>
         <div id="search_result_desc">

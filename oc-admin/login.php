@@ -34,7 +34,7 @@
     </head>
     <body class="login">
         <div id="login">
-            <h1><a href="<?php echo WEB_PATH; ?>/" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
+            <h1><a href="<?php echo WEB_PATH; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
             <?php osc_showFlashMessages(); ?>
             <form name="loginform" id="loginform" action="index.php" method="post">
                 <input type="hidden" name="action" value="login_post" />

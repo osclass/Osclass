@@ -40,26 +40,9 @@
 			</div>
 			<!-- desc -->
 			<div style="-moz-border-radius: 4px; border: 1px solid white; background-color: #eee; padding: 20px; margin-top: 10px; font-family: Tahoma; font-size: 14px;">
-
-                            <?php $locales = Locale::newInstance()->listAllEnabled(); ?>
-			                <?php if(count($locales)==1) {
-                            $locale = $locales[0];?>
-                                <p>
-                                    <?php echo @$item['locale'][$locale['pk_c_code']]['s_description']; ?>
-                                </p>
-                            <?php } else { ?>
-                            <div class="tabber" >
-                            <?php foreach($locales as $locale) {?>
-                                <div class="tabbertab">
-                                    <h2><?php echo $locale['s_name']; ?></h2>	                  
-
-                                    <p>
-                                        <?php echo @$item['locale'][$locale['pk_c_code']]['s_description']; ?>
-                                    </p>
-                                </div>
-                                <?php };?>
-                            </div>
-                            <?php };?>
+                            <p>
+                                <?php echo @$item['s_description']; ?>
+                            </p>
                             <div style="padding: 2px;"><?php _e('Country'); ?> : <?php echo $item['s_country'] ?></div>
                             <div style="padding: 2px;"><?php _e('Region'); ?> : <?php echo $item['s_region'] ?></div>
                             <div style="padding: 2px;"><?php _e('City'); ?> : <?php echo $item['s_city'] ?></div>

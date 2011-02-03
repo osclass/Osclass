@@ -1,155 +1,148 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 require_once 'oc-load.php';
 
 $preferences = Preference::newInstance()->toArray();
+
+$enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']);
+
+if(!$enabled_users) {
+    osc_addFlashMessage(__('Users are not enable'));
+    osc_redirectTo(ABS_WEB_URL);
+}
+
 $manager = User::newInstance();
 $theme = $preferences['theme'];
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 switch ($action) {
     case 'register':
-        $headerConf = array(
-            'pageTitle' => __('Create your account'),
-            'javaScripts' => array('/oc-includes/js/FormValidator.js')
-        );
-        osc_renderHeader();
-        osc_renderView('user-register.php');
-        osc_renderFooter();
-        break;
+        if(isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']==1) {
+            $headerConf = array(
+                'pageTitle' => __('Create your account'),
+                'javaScripts' => array('/oc-includes/js/FormValidator.js')
+            );
+            osc_renderHeader();
+            osc_renderView('user-register.php');
+            osc_renderFooter();
+            break;
+        } else {
+            osc_addFlashMessage(__('User registration is not available.'));
+            osc_redirectTo(osc_indexURL());
+        }
     case 'register_post':
-        unset($_POST['action']);
-
-        if (isset($preferences['recaptchaPrivKey'])) {
-            require_once LIB_PATH . 'recaptchalib.php';
-            $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
-                            $_SERVER["REMOTE_ADDR"],
-                            $_POST["recaptcha_challenge_field"],
-                            $_POST["recaptcha_response_field"]);
-            if (!$resp->is_valid) {
-                die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
-            } else {
-                unset($_POST["recaptcha_challenge_field"]);
-                unset($_POST["recaptcha_response_field"]);
-            }
-        }
-
-        $validations = array(
-            's_username' => array(
-                'filter' => FILTER_VALIDATE_REGEXP,
-                'options' => array('regexp' => '') // User Registration complete RegExp support with _, - and .
-            )
-        );
-
-        if( !preg_match('/^[a-zA-Z0-9_\.\-]+$/i',$_POST['s_username']) ) {
-            osc_addFlashMessage(__('Sorry, but the username can only contain alphanumeric characters.'));
-            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
-        }
-
-        $input['s_name'] = $_POST['s_name'];
-        $input['s_username'] = $_POST['s_username'];
-        $input['s_email'] = $_POST['s_email'];
-        $input['s_password'] = sha1($_POST['s_password']);
-        $input['dt_reg_date'] = DB_FUNC_NOW;
-        
-        $code = osc_genRandomPassword();
-        $input['s_secret'] = $code;
-        try {
-            $username_taken = $manager->findByUsername($input['s_username']);
-            if($username_taken==null) {
-                $manager->insert($input);
-                $userId = $manager->getConnection()->get_last_id();
-                if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
-                    $user = $manager->findByPrimaryKey($userId);
-
-                    $content = Page::newInstance()->findByInternalName('email_user_validation');
-                    if (!is_null($content)) {
-                        $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
-                        $words = array();
-                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
-                        $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
-                        $title = osc_mailBeauty($content['s_title'], $words);
-                        $body = osc_mailBeauty($content['s_text'], $words);
-				
-                        $params = array(
-                            'subject' => $title,
-                            'to' => $_POST['s_email'],
-                            'to_name' => $_POST['s_name'],
-                            'body' => $body,
-                            'alt_body' => $body
-                        );
-                        osc_sendMail($params);
-                    }
-
-                    osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
+        if(isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']==1) {
+            if (isset($preferences['recaptchaPrivKey'])) {
+                require_once LIB_PATH . 'recaptchalib.php';
+                $resp = recaptcha_check_answer($preferences['recaptchaPrivKey'],
+                                $_SERVER["REMOTE_ADDR"],
+                                $_POST["recaptcha_challenge_field"],
+                                $_POST["recaptcha_response_field"]);
+                if (!$resp->is_valid) {
+                    die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")");
                 } else {
-                    User::newInstance()->update(
-                        array('b_enabled' => '1'),
-                        array('pk_i_id' => $userId)
-                    );
-                    osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
+                    unset($_POST["recaptcha_challenge_field"]);
+                    unset($_POST["recaptcha_response_field"]);
                 }
-            } else {
-                osc_addFlashMessage(__('Sorry, but that username is already in use.'));
-                osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
             }
-        } catch (Exception $e) {
-            osc_addFlashMessage(__('The user could not be registered, sorry.'));
+
+            require_once LIB_PATH . 'osclass/users.php';
+
+            switch($success) {
+            
+                case 0:
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+                    
+                case 1:
+                    osc_runHook('register_user', $manager->findByPrimaryKey($userId));
+                    osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.'));
+                    osc_redirectTo(osc_createLoginURL());
+                    break;
+                    
+                case 2:
+                    osc_runHook('register_user', $manager->findByPrimaryKey($userId));
+                    osc_addFlashMessage(__('Your account has been created. You\'re ready to go.'));
+                    osc_redirectTo(osc_createLoginURL());
+                    break;
+                    
+                case 3:
+                    osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+                    
+                case 4:
+                    osc_addFlashMessage(__('The user could not be registered, sorry.'));
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+                    
+                default:
+                    osc_redirectTo(osc_createRegisterURL());
+                    break;
+            }
+
+            osc_redirectTo(osc_createRegisterURL());
+        } else {
+            osc_addFlashMessage(__('User registration is not available.'));
+            osc_redirectTo(osc_indexURL());
         }
-        osc_redirectTo('index.php');
         break;
     case 'send-validation':
         unset($_POST['action']);
 
-		if(isset($_REQUEST['userid'])) {
-        try {
-            $userId = $_REQUEST['userid'];
-            $user = $manager->findByPrimaryKey($userId);
+        if(isset($_REQUEST['userid'])) {
+            try {
+                $userId = $_REQUEST['userid'];
+                $user = $manager->findByPrimaryKey($userId);
 
-            $content = Page::newInstance()->findByInternalName('email_user_validation');
-            if (!is_null($content)) {
-                $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $user['s_secret']);
-				$words = array();
-                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
-                $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_user_validation');
 
-                $params = array(
-                    'subject' => $title,
-                    'to' => $user['s_email'],
-                    'to_name' => $user['s_name'],
-                    'body' => $body,
-                    'alt_body' => $body
-                );
-                osc_sendMail($params);
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+                
+                if (!is_null($content)) {
+                    $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL,
+                                              $user['pk_i_id'], $user['s_secret']);
+                    $words   = array();
+                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
+                    $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+
+                    $emailParams = array('subject'  => $title,
+                                         'to'       => $user['s_email'],
+                                         'to_name'  => $user['s_name'],
+                                         'body'     => $body,
+                                         'alt_body' => $body);
+                    osc_sendMail($params);
+                }
+
+                osc_addFlashMessage(__('We resend you the validation email. If you don\'t recive it after a few minutes, please check your SPAM folder.'));
+            } catch (Exception $e) {
+                osc_addFlashMessage(__('The email couldn\'t be sent, sorry.'));
             }
-
-            osc_addFlashMessage(__('We resend you the validation email. If you don\'t recive it after a few minutes, please check your SPAM folder.'));
-        } catch (Exception $e) {
-            osc_addFlashMessage(__('The email couldn\'t be sent, sorry.'));
         }
-		}
         osc_redirectTo('index.php');
         break;
     case 'validate':
@@ -159,28 +152,36 @@ switch ($action) {
 
         if ($user) {
             if (!$user['b_enabled']) {
-                User::newInstance()->update(
-                        array('b_enabled' => '1'),
-                        array('pk_i_id' => $id, 's_secret' => $code)
-                );
-
-                $content = Page::newInstance()->findByInternalName('email_user_registration');
+                $mUser = new User();
+                $mUser->update(array('b_enabled' => '1'),
+                               array('pk_i_id'   => $id,
+                                     's_secret'  => $code));
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_user_registration');
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+                
                 if (!is_null($content)) {
-					$words = array();
+                    $words   = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}');
                     $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle']);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
-                    $params = array(
-                        'subject' => $title,
-                        'to' => $user['s_email'],
-                        'to_name' => $user['s_name'],
-                        'body' => $body,
+                    $emailParams = array(
+                        'subject'  => $title,
+                        'to'       => $user['s_email'],
+                        'to_name'  => $user['s_name'],
+                        'body'     => $body,
                         'alt_body' => $body
                     );
-                    osc_sendMail($params);
+                    osc_sendMail($emailParams);
                 }
+                osc_runHok('validate_user', $user);
                 osc_addFlashMessage(__('Your account is correctly validated. Thanks.'));
             } else {
                 osc_addFlashMessage(__('Your account has been activated before.'));
@@ -208,7 +209,7 @@ switch ($action) {
             }
 
             osc_renderHeader(array('pageTitle' => __('Create your account')));
-            osc_renderView('user-menu.php');
+            nav_user_menu();
             osc_renderView('user-profile.php');
             osc_renderFooter();
         } else {
@@ -217,101 +218,42 @@ switch ($action) {
         }
         break;
     case 'profile_post':
+        $userId = $_SESSION['userId'];
 
-        unset($_POST['action']);
-        if (empty($_POST['profile_password']))  {
-            unset($_POST['profile_password']);
+        require_once LIB_PATH . 'osclass/users.php';
+            
+        if($success==0) {
+            osc_addFlashMessage(__('This should never happened.'));
+        } else if($success==1) {
+            osc_addFlashMessage(__('Passwords don\'t match.'));
         } else {
-            if($_POST['profile_password']!=$_POST['profile_password2']) {
-                osc_addFlashMessage(__('Passwords don\'t match.'));
-                osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
-            } else {
-                $_POST['s_password'] = sha1($_POST['profile_password']);
-                unset($_POST['profile_password']);
-                unset($_POST['profile_password2']);
-            }
+            osc_addFlashMessage(__('Your profile has been updated correctly'));
         }
 
-           //unset($_POST['profile_username']);
-        //$manager->update($_POST, array('pk_i_id' => $_SESSION['userId']));
-
-
-            // insert location (copied from osclass/items.php)
-            $country = Country::newInstance()->findByCode($_REQUEST['countryId']);
-            if(count($country) > 0) {
-                $countryId = $country['pk_c_code'];
-                $countryName = $country['s_name'];
-            } else {
-                $countryId = null;
-                $countryName = null;
-            }
-
-            if( isset($_REQUEST['regionId']) ) {
-                if( intval($_REQUEST['regionId']) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($_REQUEST['regionId']);
-                    if( count($region) > 0 ) {
-                        $regionId = $region['pk_i_id'];
-                        $regionName = $region['s_name'];
-                    }
-                }
-            } else {
-                $regionId = null;
-                $regionName = $_REQUEST['region'];
-            }
-
-            if( isset($_REQUEST['cityId']) ) {
-                if( intval($_REQUEST['cityId']) ) {
-                    $city = City::newInstance()->findByPrimaryKey($_REQUEST['cityId']);
-                    if( count($city) > 0 ) {
-                        $cityId = $city['pk_i_id'];
-                        $cityName = $city['s_name'];
-                    }
-                }
-            } else {
-                $cityId = null;
-                $cityName = $_REQUEST['city'];
-            }
-
-            if( empty($_REQUEST['cityArea']) )
-                $_POST['cityArea'] = null;
-
-            if( empty($_REQUEST['address']) )
-                $_POST['address'] = null;
-
-            $data = array(
-                's_name' => $_POST['s_name'],
-                's_username' => $_POST['s_username'],
-                's_password' => $_POST['s_password'],
-                's_email' => $_POST['s_email'],
-                's_website' => $_POST['s_website'],
-                's_info' => $_POST['s_info'],
-                's_phone_land' => $_POST[''],
-                's_phone_mobile' => $_POST['s_phone_mobile'],
-                'fk_c_country_code' => $countryId,
-                's_country' => $countryName,
-                'fk_i_region_id' => $regionId,
-                's_region' => $regionName,
-                'fk_i_city_id' => $cityId,
-                's_city' => $cityName,
-                's_city_area' => $_POST['cityArea'],
-                's_address' => $_POST['address']
-            );
-        $manager->update($data, array('pk_i_id' => $_SESSION['userId']));
-        osc_addFlashMessage(__('Your profile has been updated correctly'));
         osc_redirectTo(osc_createProfileURL());//$_SERVER['HTTP_REFERER']);
         break;
     case 'items':
         $items = Item::newInstance()->findByUserID($_SESSION['userId']);
-        osc_renderHeader(array('pageTitle' => __('Create your account')));
-        osc_renderView('user-menu.php');
+        osc_renderHeader(array('pageTitle' => __('Your Items')));
+        nav_user_menu();
         osc_renderView('user-items.php');
         osc_renderFooter();
         break;
 
+    case 'public':
+        if(isset($_REQUEST['user']) && $_REQUEST['user']!='') {
+            $user = User::newInstance()->findByPrimaryKey($_REQUEST['user']);
+            $items = Item::newInstance()->findByUserIDEnabled($user['pk_i_id']);
+            osc_renderHeader(array('pageTitle' => __('Items')));
+            osc_renderView('user-public-dashboard.php');
+            osc_renderFooter();
+        } else {
+            osc_redirectTo(osc_indexURL());
+        }
+        break;
+
     case 'alerts':
-
         if(isset($_SESSION['userId'])) {
-
             $alerts = Alerts::newInstance()->getAlertsFromUser($_SESSION['userId']);
             foreach($alerts as $k => $a) {
                 $search = osc_unserialize(base64_decode($a['s_search']));
@@ -319,7 +261,7 @@ switch ($action) {
                 $alerts[$k]['items'] = $search->search();
             }
             osc_renderHeader(array('pageTitle' => __('Manage your alerts')));
-            osc_renderView('user-menu.php');
+            nav_user_menu();
             osc_renderView('user-alerts.php');
             osc_renderFooter();
 
@@ -331,12 +273,14 @@ switch ($action) {
         break;
 
     case 'account':
-
         if(isset($_SESSION['userId'])) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            $items = Item::newInstance()->findByUserID($_SESSION['userId'], 3);
+
             osc_renderHeader(array('pageTitle' => __('Manage your account')));
-            osc_renderView('user-menu.php');
+            nav_user_menu();
             osc_renderView('user-account.php');
+            osc_runHook('user_account', $user);
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
@@ -344,7 +288,25 @@ switch ($action) {
         }
         break;
 
+    case 'contact_post':
+        $user = $manager->findByPrimaryKey($_SESSION['userId']);
+        $yourName = $user['s_name'];
+        $yourEmail = $user['s_email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
 
+        $params = array('from'      => $yourEmail,
+                        'from_name' => $yourName,
+                        'subject'   => __('Contact form') . ': ' . $subject,
+                        'to'        => $preferences['contactEmail'],
+                        'to_name'   => __('Administrator'),
+                        'body'      => $message,
+                        'alt_body'  => $message);
+        osc_sendMail($params);
+
+        osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.'));
+        osc_createUserAccountURL();
+        break;
     case 'deleteItem':
     case 'item_delete':
         $id = intval(osc_paramGet('id', 0));
@@ -354,7 +316,7 @@ switch ($action) {
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
             osc_addFlashMessage(__('You could register and access every time to your items.'));
-            die;osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
+            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
         } else {
             Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
             osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
@@ -368,8 +330,6 @@ switch ($action) {
         $userId = intval(osc_paramSession('userId', 0));
         $locales = Locale::newInstance()->listAllEnabled();
 
-
-        
         $currencies = Currency::newInstance()->listAll();
 
         $item = Item::newInstance()->findByPrimaryKey($id);
@@ -398,10 +358,8 @@ switch ($action) {
         }
         break;
 
-
     case 'item_edit_post':
     case 'editItemPost':
-
         // The magic code
         require_once LIB_PATH . 'osclass/items.php';
 
@@ -437,9 +395,10 @@ switch ($action) {
         osc_renderView('user-login.php');
         osc_renderFooter();
         break;
+    
     case 'login_post':
         define('COOKIE_LIFE', 86400);
-        $user = $manager->findByCredentials($_POST['userName'], $_POST['password']);
+        $user = $manager->findByCredentials($_POST['s_email'], $_POST['password']);
         if ($user && $user['b_enabled'] == '1') {
             if (isset($_POST['rememberMe']) && $_POST['rememberMe'] == 1) {
                 $life = time() + COOKIE_LIFE;
@@ -456,23 +415,26 @@ switch ($action) {
             }
 
             $_SESSION['userId'] = $user['pk_i_id'];
+            osc_runHook('user_login');
         } else if ($user && $user['b_enabled'] == '0') {
             osc_addFlashMessage(__('You have not validated your account yet.<br/> Should we resend you the validation email?').'<br/><a href="user.php?action=send-validation&userid='.$user['pk_i_id'].'">'.__('Yes, resend me the validation email.').'</a>');
-            osc_redirectToReferer('user.php');
+            osc_redirectToReferer(osc_createLoginURL());
         } else {
-            osc_addFlashMessage(__('Wrong username or password.'));
-            osc_redirectToReferer('user.php');
+            osc_addFlashMessage(__('Wrong email or password.'));
+            osc_redirectToReferer(osc_createLoginURL());
         }
 
-        osc_redirectTo('index.php');
+        osc_redirectTo(osc_createUserAccountURL());
         break;
+        
     case 'logout':
+        osc_runHook('logout_user', $_COOKIE['oc_userId']);
         unset($_SESSION['userId']);
         setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
         setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
         unset($_COOKIE['oc_userId']);
         unset($_COOKIE['oc_userSecret']);
-        osc_redirectTo('index.php');
+        osc_redirectTo(osc_createLoginURL());
         break;
 
     case 'unsub_alert':
@@ -503,27 +465,35 @@ switch ($action) {
                         array('pk_i_id' => $user['pk_i_id'])
                     );
 
-                    $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', ABS_WEB_URL, $user['pk_i_id'], $code);
+                    $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', 
+                                             ABS_WEB_URL, $user['pk_i_id'], $code);
+                    
+                    $mPages = new Page();
+                    $aPage = $mPages->findByInternalName('email_user_forgot_password');
 
-                    $content = Page::newInstance()->findByInternalName('email_user_forgot_password');
+                    $content = array();
+                    if(isset($aPage['locale'][$locale]['s_title'])) {
+                        $content = $aPage['locale'][$locale];
+                    } else {
+                        $content = current($aPage['locale']);
+                    }
+
                     if (!is_null($content)) {
-					    $words = array();
-                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}', '{PASSWORD_LINK}', '{DATE_TIME}');
-                        $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'], $_SERVER['REMOTE_ADDR'], $password_link, $date2);
+                        $words   = array();
+                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
+                                         '{PASSWORD_LINK}', '{DATE_TIME}');
+                        $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'],
+                                         $_SERVER['REMOTE_ADDR'], $password_link, $date2);
                         $title = osc_mailBeauty($content['s_title'], $words);
                         $body = osc_mailBeauty($content['s_text'], $words);
 
-                        $params = array(
-                            'subject' => $title,
-                            'to' => $user['s_email'],
-                            'to_name' => $user['s_name'],
-                            'body' => $body,
-                            'alt_body' => $body
-                        );
-                        osc_sendMail($params);
+                        $emailParams = array('subject'  => $title,
+                                             'to'       => $user['s_email'],
+                                             'to_name'  => $user['s_name'],
+                                             'body'     => $body,
+                                             'alt_body' => $body);
+                        osc_sendMail($emailParams);
                     }
-
-
                 }
             }
             osc_addFlashMessage(__('Check your email inbox in a few moments. A message with instructions on how to recover your password should arrive.'));
@@ -573,40 +543,247 @@ switch ($action) {
         break;
 
     case 'options':
-
         if(isset($_SESSION['userId'])) {
             $user_prefs = $manager->preferences($_SESSION['userId']);
 
             osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
-            osc_renderView('user-menu.php');
-            osc_renderView('user-options.php');
+            nav_user_menu();
+            osc_runHook('user_options', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+            osc_redirectTo(osc_createLoginURL());
         }
         break;
 
 
     case 'options_post':
-
         if(isset($_SESSION['userId'])) {
 
-            unset($_POST['action']);
-
-            $manager->updatePreferences($_POST, $_SESSION['userId']);
-
-            osc_addFlashMessage(__('Options saved.'));
-            osc_redirectTo(osc_createUserOptionsURL());
+            osc_runHook('user_options_post', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
+            osc_redirectTo(osc_createUserAccountURL());
         } else {
             osc_addFlashMessage(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+            osc_redirectTo(osc_createLoginURL());
         };
         break;
 
+    case 'delete_user':
+        if(isset($_SESSION['userId'])) {
+            try {
+                $manager->deleteUser($_SESSION['userId']);
+                osc_addFlashMessage(__('Success. The user has been deleted.'));
+                unset($_SESSION['userId']);
+                setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                unset($_COOKIE['oc_userId']);
+                unset($_COOKIE['oc_userSecret']);
+            } catch (Exception $e) {
+                osc_addFlashMessage(__('Error. The user can not be deleted. Please try again in a few moments, if the problem persists contact the administrator.'));
+                osc_redirectTo(osc_createUserAccountURL());
+            }
+            
+            osc_redirectTo(osc_createRegisterURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+        };
+        osc_redirectTo(osc_createLoginURL());
+        break;
+
+    case 'change_email':
+        if(isset($_SESSION['userId'])) {
+            $user = $manager->findByPrimaryKey($_SESSION['userId']);
+
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            nav_user_menu();
+            ?>
+                <div id="home_header"><div><?php _e('Change your E-mail'); ?></div></div>
+                <form action="<?php echo osc_createURL('user');?>" method="post">
+                <input type="hidden" name="action" value="change_email_post" />
+                <div>
+	                <div id="change_email_form" >
+		                <p>
+		                <label for="name"><?php _e('Your current e-mail'); ?></label><br />
+                        <?php echo $user['s_email']; ?>
+		                </p>
+
+		                <p>
+		                <label for="phoneLand"><?php _e('New E-mail'); ?></label><br />
+                        <?php UserForm::email_text($user); ?>
+		                </p>
+		                
+		                <p>
+                        <?php _e('You are going to change your email address. You will received a confirmation on your new email address.');?>
+		                </p>
+		                
+		                <p>
+			                <button type="submit"><?php _e('Change e-mail'); ?></button>
+		                </p>
+                        <div style="clear:both;"></div>
+	                </div>
+                </div>
+                </form>    
+            
+            
+            <?php
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }
+        break;
+        
+    case 'change_password':
+        if(isset($_SESSION['userId'])) {
+            $user_prefs = $manager->preferences($_SESSION['userId']);
+
+            osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
+            nav_user_menu();
+            ?>
+            <div id="home_header"><div><?php _e('Change your password'); ?></div></div>
+            <form action="<?php echo osc_createURL('user');?>" method="post">
+            <input type="hidden" name="action" value="change_password_post" />
+            <div>
+	            <div id="change_password_form" >
+		            <p>
+		            <label for="name"><?php _e('Old password'); ?></label><br />
+                    <?php UserForm::old_password_text(); ?><br />
+		            </p>
+
+		            <p>
+		            <label for="password"><?php _e('Password'); ?></label><br />
+                    <?php UserForm::password_text(); ?><br />
+		            </p>
+		
+		            <p>
+		            <label for="password2"><?php _e('Retype the password'); ?></label><br />
+                    <?php UserForm::check_password_text(); ?>
+		            </p>
+		            
+		            <p>
+			            <button type="submit"><?php _e('Change password'); ?></button>
+		            </p>
+                    <div style="clear:both;"></div>
+	            </div>
+            </div>
+            </form>    
+        <?php 
+            osc_renderFooter();
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }
+        break;
+
+    case 'change_email_post':
+        if(isset($_SESSION['userId'])) {
+            if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
+                $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);
+                    $user = $manager->findByPrimaryKey($_SESSION['userId']);
+                    $code = osc_genRandomPassword(50);
+                    $date = date('Y-m-d H:i:s');
+                    $manager->update(
+                        array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
+                        array('pk_i_id' => $_SESSION['userId'])
+                    );
+
+                $content = Page::newInstance()->findByInternalName('email_new_email');
+                if (!is_null($content)) {
+                    $validationLink = sprintf('%suser.php?action=change_email_confirm&id=%d&oe=%s&ne=%s&code=%s', ABS_WEB_URL, $_SESSION['userId'], $user['s_email'], $_REQUEST['s_email'], $code);
+                    $words = array();
+                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}');
+                    $words[] = array($user['s_name'], $_REQUEST['s_email'], ABS_WEB_URL, $preferences['pageTitle'], $validationLink);
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+				
+                    $params = array(
+                        'subject' => $title,
+                        'to' => $_REQUEST['s_email'],
+                        'to_name' => $user['s_name'],
+                        'body' => $body,
+                        'alt_body' => $body
+                    );
+                    osc_sendMail($params);
+                }
+                osc_addFlashMessage(__('We have send you an email, you need to confirm it.'));
+                osc_redirectTo(osc_createUserAccountURL());
+            } else {
+                $manager->update(
+                    array('s_email' => $_REQUEST['s_email'], 's_username' => $_REQUEST['s_email']),
+                    array('pk_i_id' => $_SESSION['userId'])
+                );
+                osc_addFlashMessage(__('We change your email. Please login with your new e-mail.'));
+                unset($_SESSION['userId']);
+                setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                unset($_COOKIE['oc_userId']);
+                unset($_COOKIE['oc_userSecret']);
+                osc_redirectTo(osc_createLoginURL());
+            }
+            $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']);
+            osc_addFlashMessage(__('We have send you an email, you need to confirm it.'));
+            osc_redirectTo(osc_createUserAccountURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }   
+        break;
+
+    case 'change_email_confirm':
+            if(isset($_REQUEST['id']) && isset($_REQUEST['code']) && $_REQUEST['id']!='' && $_REQUEST['code']!='' && isset($_REQUEST['ne']) && isset($_REQUEST['oe']) && $_REQUEST['ne']!='' && $_REQUEST['oe']!='') {
+                $user = $manager->findByPrimaryKey($_REQUEST['id']);
+                $prefs = $manager->findPreferenceByUserAndName($_REQUEST['id'], 'new_email');
+                if($user!=null || $user['s_email']==$_REQUEST['oe'] || $user['s_pass_code']==$_REQUEST['code'] || $prefs['new_email']==$_REQUEST['ne']) {
+                    $manager->update(
+                        array('s_email' => $prefs['new_email'], 's_username' => $prefs['new_email']),
+                        array('pk_i_id' => $user['pk_i_id'])
+                    );
+                    $manager->deletePreference($user['pk_i_id'], 'new_email');
+                    unset($_SESSION['userId']);
+                    setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                    setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                    unset($_COOKIE['oc_userId']);
+                    unset($_COOKIE['oc_userSecret']);
+                    osc_addFlashMessage(__('E-mail change correctly, please login with your new email.'));
+                    osc_redirectTo(osc_createLoginURL());
+                } else {
+                    osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                    osc_redirectTo('index.php');
+                }
+            } else {
+                osc_addFlashMessage(__('Sorry, the link is not valid.'));
+                osc_redirectTo('index.php');
+            }
+        break;
+
+    case 'change_password_post':
+        if(isset($_SESSION['userId'])) {
+            $user = $manager->findByPrimaryKey($_SESSION['userId']);
+            if($user['s_password']!=sha1($_REQUEST['old_password'])) {
+                osc_addFlashMessage(__('Old password doesn\'t match.'));
+                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+            } else if($_REQUEST['profile_password']=='') {
+                osc_addFlashMessage(__('Passwords can not be empty.'));
+                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+            } else if($_REQUEST['profile_password']!=$_REQUEST['profile_password2']) {
+                osc_addFlashMessage(__('Passwords don\'t match.'));
+                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+            }
+            $manager->update(
+                        array('s_password' => sha1($_REQUEST['profile_password'])),
+                        array('pk_i_id' => $_SESSION['userId'])
+                );
+            osc_addFlashMessage(__('Password has been changed.'));
+            osc_redirectTo(osc_createUserAccountURL());
+        } else {
+            osc_addFlashMessage(__('You need to login first.'));
+            osc_redirectTo(osc_createLoginURL());
+        }   
+
+        break;
 
     default : 
-        osc_redirectTo('index.php');
+        osc_redirectTo(ABS_WEB_URL);
         break;
     
 }

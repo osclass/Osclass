@@ -50,6 +50,10 @@ class ContactForm extends Form {
         return true ;
     }
 
+    static public function your_attachment() {
+        echo '<input type="file" name="attachment" />';
+    }
+
     static public function js_validation() { ?>
 <script type="text/javascript">
     function validate_contact() {

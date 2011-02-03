@@ -1,13 +1,15 @@
+<div style="clear: both;"></div>
 <?php
-$pages = Page::newInstance()->listNotIndelibles();
+$mPages = new Page();
+$pages  = $mPages->listAll(false);
 $numPages = count($pages);
 ?>
 <?php osc_showWidgets('footer'); ?>
 
 <div class="footerPages" >
-<?php for($i = 0; $i < $numPages; $i++): $page = $pages[$i]; ?>
-	<a title="<?php echo $page['s_title']; ?>" href="<?php echo osc_createPageURL($page); ?>"><?php echo $page['s_title']; ?></a> - 
-<?php endfor; ?>
+<?php for($i = 0; $i < $numPages; $i++) { $page = $pages[$i]; ?>
+	<a title="<?php echo $page['s_title']; ?>" href="<?php osc_createPageURL($page, true); ?>"><?php echo $page['s_title']; ?></a> -
+<?php } ?>
 
 <a title="<?php _e('Contact form'); ?>" href="<?php echo WEB_PATH; ?>/contact.html"><?php _e('Contact form'); ?></a>
 

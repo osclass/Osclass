@@ -11,8 +11,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_locale (
     s_currency_format VARCHAR(10) NOT NULL,
     s_date_format VARCHAR(20) NOT NULL,
     s_stop_words TEXT NULL,
-    b_enabled BOOLEAN NOT NULL DEFAULT TRUE, /* Enabled languages for the website */
-    b_enabled_bo BOOLEAN NOT NULL DEFAULT TRUE, /* Enabled languages for the oc-admin */
+    b_enabled BOOLEAN NOT NULL DEFAULT TRUE, 
+    b_enabled_bo BOOLEAN NOT NULL DEFAULT TRUE, 
 
         PRIMARY KEY (pk_c_code),
         UNIQUE KEY (s_short_name)
@@ -104,7 +104,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_secret VARCHAR(40) NULL,
     s_email VARCHAR(100) NULL,
     s_website VARCHAR(100) NULL,
-    s_info TEXT NULL,
     s_phone_land VARCHAR(45),
     s_phone_mobile VARCHAR(45),
     b_enabled BOOLEAN NOT NULL DEFAULT FALSE,
@@ -125,13 +124,24 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_city_area VARCHAR(200) NULL,
     d_coord_lat DECIMAL(10, 6),
     d_coord_long DECIMAL(10, 6),
+    i_permissions VARCHAR(2) DEFAULT 0,
 
         PRIMARY KEY (pk_i_id),
-        UNIQUE KEY (s_username),
+        UNIQUE KEY (s_email),
         FOREIGN KEY (fk_c_country_code) REFERENCES /*TABLE_PREFIX*/t_country (pk_c_code),
         FOREIGN KEY (fk_i_region_id) REFERENCES /*TABLE_PREFIX*/t_region (pk_i_id),
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
         FOREIGN KEY (fk_i_city_area_id) REFERENCES /*TABLE_PREFIX*/t_city_area (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_user_description (
+    fk_i_user_id INT UNSIGNED NOT NULL,
+    fk_c_locale_code CHAR(5) NOT NULL,
+    s_info TEXT NULL,
+
+        PRIMARY KEY (fk_i_user_id, fk_c_locale_code),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id),
+        FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_category (
@@ -211,7 +221,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_description (
 CREATE TABLE /*TABLE_PREFIX*/t_item_location (
     fk_i_item_id INT UNSIGNED NOT NULL,
     fk_c_country_code CHAR(2) NULL,
-    s_country VARCHAR(40) NULL, -- readonly
+    s_country VARCHAR(40) NULL,
     s_address VARCHAR(100) NULL,
     s_zip VARCHAR(15) NULL,
     fk_i_region_id INT UNSIGNED NULL,

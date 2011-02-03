@@ -1,29 +1,26 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 class UserForm extends Form {
 
-    /*static public function primary_input_hidden($page) {
-        parent::generic_input_hidden("id", $page["pk_i_id"]) ;    
-    }*/
+    static public function primary_input_hidden($user) {
+        parent::generic_input_hidden("id", $user["pk_i_id"]) ;    
+    }
     
     static public function name_text($user = null) {
         parent::generic_input_text("s_name", isset($user['s_name'])? $user['s_name'] : '', null, false);
@@ -37,6 +34,11 @@ class UserForm extends Form {
     
     static public function username_login_text($user = null) {
         parent::generic_input_text("userName", isset($user['s_username'])? $user['s_username'] : '', null, false);
+        return true ;
+    }
+    
+    static public function old_password_text($user = null) {
+        parent::generic_password("old_password", '', null, false);
         return true ;
     }
     
@@ -95,11 +97,26 @@ class UserForm extends Form {
         return true ;
     }
     
-    static public function info_textarea($user = null) {
-        parent::generic_textarea("s_info", isset($user['s_info'])? $user['s_info'] : '');
+    static public function info_textarea($name, $locale = 'en_US', $value = '') {
+        parent::generic_textarea($locale . "#" . $name, $value);
         return true ;
     }
-    
+
+    static public function multilanguage_info($locales, $user = null) {
+        $num_locales = count($locales);
+        if($num_locales>1) { echo '<div class="tabber">'; };
+        foreach($locales as $locale) {
+            if($num_locales>1) { echo '<div class="tabbertab">'; };
+            if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
+            echo '<div class="description">';
+            echo '<div><label for="description">' . __('User Description') . '</label></div>';
+            self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
+            echo '</div>';
+            if($num_locales>1) { echo '</div>'; };
+         }
+         if($num_locales>1) { echo '</div>'; };
+    }
+
     static public function country_select($countries, $user = null) {
         if( count($countries) > 1 ) {
             parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select one country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
@@ -179,10 +196,6 @@ $(document).ready(function(){
         $('#s_name').css('border', '');
     });
 
-    $('#s_username').focus(function(){
-        $('#s_username').css('border', '');
-    });
-
     $('#s_email').focus(function(){
         $('#s_email').css('border', '');
     });
@@ -196,16 +209,14 @@ $(document).ready(function(){
         $('#s_password2').css('border', '');
         $('#password-error').css('display', 'none');
     });
-});
+});    
+    
+
 
 function checkForm() {
     var num_errors = 0;
     if( $('#s_name').val() == '' ) {
         $('#s_name').css('border', '1px solid red');
-        num_errors = num_errors + 1;
-    }
-    if( $('#s_username').val() == '' ) {
-        $('#s_username').css('border', '1px solid red');
         num_errors = num_errors + 1;
     }
     if( $('#s_email').val() == '' ) {
@@ -233,6 +244,56 @@ function checkForm() {
 </script>
     <?php } 
 
+
+
+    static public function js_validation_edit() { ?>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('#s_name').focus(function(){
+        $('#s_name').css('border', '');
+    });
+
+    $('#s_email').focus(function(){
+        $('#s_email').css('border', '');
+    });
+
+    $('#s_password').focus(function(){
+        $('#s_password').css('border', '');
+        $('#password-error').css('display', 'none');
+    });
+
+    $('#s_password2').focus(function(){
+        $('#s_password2').css('border', '');
+        $('#password-error').css('display', 'none');
+    });
+});
+
+function checkForm() {
+    var num_errors = 0;
+    if( $('#s_name').val() == '' ) {
+        $('#s_name').css('border', '1px solid red');
+        num_errors = num_errors + 1;
+    }
+    if( $('#s_email').val() == '' ) {
+        $('#s_email').css('border', '1px solid red');
+        num_errors = num_errors + 1;
+    }
+    if( $('#s_password').val() != $('#s_password2').val() ) {
+        $('#password-error').css('display', 'block');
+        num_errors = num_errors + 1;
+    }
+    if(num_errors > 0) {
+        return false;
+    }
+
+    return true;
+}
+</script>
+    <?php } 
+
+
+
     static public function location_javascript() {
  ?>
 <script type="text/javascript">
@@ -256,8 +317,12 @@ function checkForm() {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#region").before('<select name="regionId" id="regionId" ></select>');
+                            $("#region").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#regionId").before('<input type="text" name="region" id="region" />');
+                            $("#regionId").remove();
                         }
                         $("#regionId").html(result);
                     }
@@ -287,8 +352,12 @@ function checkForm() {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#city").before('<select name="cityId" id="cityId" ></select>');
+                            $("#city").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#cityId").before('<input type="text" name="city" id="city" />');
+                            $("#cityId").remove();
                         }
                         $("#cityId").html(result);
                     }

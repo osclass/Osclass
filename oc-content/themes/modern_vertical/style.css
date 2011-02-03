@@ -539,3 +539,23 @@ a, a:hover, a:link, a:visited, a:active {
 	width: 70%;
 }
 
+.user_menu li
+{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+}
+
+
+
+
+#account_items {
+    width:650px;
+    padding-right:30px;
+    float: left;
+}
+
+#account_contact {
+    width:200px;
+    float: left;
+}

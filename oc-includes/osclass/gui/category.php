@@ -28,7 +28,7 @@ $subCats = Category::newInstance()->findSubcategories($category);
 
 <div class="categoryList">
 <?php foreach($subCats as $cat): ?>
-	<a title="<?php echo $cat['s_description']; ?>" style="padding-right: 10px;" href="<?php echo osc_createCategoryURL($cat); ?>"><?php echo $cat['s_name']; ?></a>
+	<a title="<?php echo $cat['s_description']; ?>" style="padding-right: 10px;" href="<?php osc_createCategoryURL($cat, true); ?>"><?php echo $cat['s_name']; ?></a>
 <?php endforeach; ?>
 </div>
 
@@ -38,10 +38,10 @@ $subCats = Category::newInstance()->findSubcategories($category);
 	<?php foreach($ads as $i): ?>
 	<div class="itemInCategory" >
 	<?php if(osc_itemHasThumbnail($i)): ?>
-		<a href="<?php echo osc_createItemURL($i); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" style="border: 0px; float: left;" /></a>
+		<a href="<?php osc_createItemURL($i, true); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" style="border: 0px; float: left;" /></a>
 	<?php endif; ?>
 	<div class="itemInCategoryData" >
-		<p><a href="<?php echo osc_createItemURL($i); ?>" style="color: blue;"><?php echo $i['s_title']; ?></a></p>
+		<p><a href="<?php osc_createItemURL($i, true); ?>" style="color: blue;"><?php echo $i['s_title']; ?></a></p>
 		<p><?php echo strip_tags($i['s_description']); ?></p>
 	</div>
 	<div class="itemInCategoryPrice" ><?php echo osc_formatPrice($i); ?></div>

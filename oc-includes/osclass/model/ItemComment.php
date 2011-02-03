@@ -26,8 +26,12 @@ class ItemComment extends DAO {
 
 	public function getTableName() { return DB_TABLE_PREFIX . 't_item_comment'; }
 
-	public function findByItemID($id) {
+	public function findByItemIDAll($id) {
 		return $this->listWhere('fk_i_item_id = ' . $id);
+	}
+	
+	public function findByItemID($id) {
+		return $this->listWhere('fk_i_item_id = ' . $id . " AND e_status = 'ACTIVE'");
 	}
 	
 

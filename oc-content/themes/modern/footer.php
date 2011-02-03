@@ -1,3 +1,4 @@
+<div style="clear: both;"></div>
             <?php osc_showWidgets('footer'); ?>
 
             </div> <!-- content -->

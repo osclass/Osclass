@@ -244,6 +244,10 @@ function osc_sendMail($params) {
         if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
         if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
 
+        if( isset($params['attachment']) ) {
+            $mail->AddAttachment($params['attachment']);
+        }
+
         $mail->IsHTML(true);
         $mail->AddAddress($to, $to_name);
         $mail->Send();
@@ -275,7 +279,7 @@ function osc_mailBeauty($text, $params) {
 
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
-	$result=false;
+	$result =true;
 	if (is_file($source)) {
 		if ($dest[strlen($dest)-1]=='/') {
 			if (!file_exists($dest)) {
@@ -286,7 +290,7 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 			$__dest=$dest;
 		}
 		if(function_exists('copy')) {
-			$result=copy($source, $__dest);
+            $result = @copy($source, $__dest);
 		} else {
 			$result=osc_copyemz($source, $__dest);
 		}
@@ -315,6 +319,7 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 		}
 
 		$dirHandle=opendir($source);
+		$result = true;
 		while($file=readdir($dirHandle)) {
 			if($file!="." && $file!="..") {
 				if(!is_dir($source."/".$file)) {
@@ -323,13 +328,16 @@ function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'fileP
 					$__dest=$dest."/".$file;
 				}
 				//echo "$source/$file ||| $__dest<br />";
-				$result=osc_copy($source."/".$file, $__dest, $options);
+				$data = osc_copy($source."/".$file, $__dest, $options);
+				if($data==false) {
+				    $result = false;
+				}
 			}
 		}
 		closedir($dirHandle);
 
 	} else {
-		$result=false;
+		$result=true;
 	}
 	return $result;
 }
@@ -376,9 +384,24 @@ function osc_dbdump($db_filename = null) {
 			if($result) {
 				fwrite($f, "/* OSCLASS MYSQL Autobackup (".date('Y-m-d H:i:s').") */\n");
 				fclose($f);
+				$tables = array();
 				while($row = mysql_fetch_row($result)) {
-					osc_dump_table_structure($row[0]);
-					osc_dump_table_data($row[0]);
+				    $tables[$row[0]] = $row[0];
+				}
+				
+                $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
+                // Backup default OSClass tables in order, so no problem when importing them back
+                foreach($tables_order as $table) {
+                    if(array_key_exists(DB_TABLE_PREFIX.$table, $tables)) {
+    					osc_dump_table_structure(DB_TABLE_PREFIX.$table);
+    					osc_dump_table_data(DB_TABLE_PREFIX.$table);
+    					unset($tables[DB_TABLE_PREFIX.$table]);
+                    }
+                }
+				// Backup the rest of tables
+				foreach($tables as $table) {
+					osc_dump_table_structure($table);
+					osc_dump_table_data($table);
 				}
 			} else {
 				fwrite($f, "/* no tables in ".DB_NAME." */\n");
@@ -600,6 +623,21 @@ function apache_mod_loaded($mod) {
         ob_end_clean();
     }
     return false;
+}
+
+/**
+ * Change version to param number
+ *
+ * @param mixed version
+ */
+function osc_changeVersionTo($version = null) {
+
+    if($version!=null) {
+        global $preferences;
+        $pref = Preference::newInstance();
+        $pref->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
+        $preferences = $pref->toArray();
+    }    
 }
 
 

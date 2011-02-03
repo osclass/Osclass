@@ -19,4 +19,21 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<div class="user_menu" ><a href="<?php echo osc_createUserAccountURL(); ?>" ><?php _e('Menu'); ?></a> | <a href="<?php echo osc_createProfileURL(); ?>" ><?php _e('Manage your profile'); ?></a> | <a href="<?php echo osc_createUserItemsURL(); ?>" ><?php _e('Manage your items'); ?></a> | <a href="<?php echo osc_createUserOptionsURL(); ?>" ><?php _e('Options'); ?></a> | <a href="<?php echo osc_createUserAlertsURL(); ?>" ><?php _e('Manage your alerts'); ?></a> | <a href="<?php echo osc_createLogoutURL(); ?>" ><?php _e('Log-out'); ?></a></div>
+<h2><?php echo __('Items from ').$user['s_name']; ?></h2>
+
+<?php if(count($items) == 0): ?>
+	<h3><?php _e('No items.'); ?></h3>
+<?php else: ?>
+<?php foreach($items as $i) { ?>
+	<div class="userItem" >
+		<div><a href="<?php osc_createItemURL($i, true); ?>"><?php echo $i['s_title']; ?></a></div>
+
+		<div class="userItemData" >
+		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
+		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
+		</div>
+
+	</div>
+	<br />
+<?php }; ?>
+<?php endif; ?>

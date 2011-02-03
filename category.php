@@ -63,7 +63,7 @@ if( count($category) > 0 ) {
     osc_renderFooter();
 } else {
     osc_renderHeader($headerConf);
-    osc_renderView('errorPage.php');
+    osc_renderView('404.php');
     osc_renderFooter();
 }
 

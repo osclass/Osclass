@@ -1,31 +1,30 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 class ItemForm extends Form {
 
-    static public function primary_input_hidden($item) {
+    static public function primary_input_hidden($item)
+    {
         parent::generic_input_hidden("id", $item["pk_i_id"]) ;
     }
     
-    static public function category_select($categories, $item, $default_item = null) {
+    static public function category_select($categories, $item, $default_item = null)
+    {
         echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -33,19 +32,49 @@ class ItemForm extends Form {
             foreach($categories as $c) {
                 echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
-                    CategoryForm::subcategory_select($c['categories'], $item['fk_i_category_id'], $default_item, 1);
+                    ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                 }
             }
         echo '</select>' ;
         return true ;
     }
+    
+    static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
+    {
+        $deep_string = "";
+        for($var = 0;$var<$deep;$var++) {
+            $deep_string .= '&nbsp;&nbsp;';
+        }
+        $deep++;
+        foreach($categories as $c) {
+            echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
+            if(isset($c['categories']) && is_array($c['categories'])) {
+                ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
+            }
+        }
+    }
 
-    static public function title_input($name, $locale = 'en_US', $value = '') {
+    static public function user_select($users, $item, $default_item = null)
+    {
+        echo '<select name="userId" id="userId">' ;
+            if(isset($default_item)) {
+                echo '<option value="">' . $default_item . '</option>' ;
+            }
+            foreach($users as $user) {
+                echo '<option value="' . $user['pk_i_id'] . '"' . ( ($item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
+            }
+        echo '</select>' ;
+        return true ;
+    }
+
+    static public function title_input($name, $locale = 'en_US', $value = '')
+    {
         parent::generic_input_text($locale . "#" . $name, $value) ;
         return true ;
     }
 
-    static public function description_textarea($name, $locale = 'en_US', $value = '') {
+    static public function description_textarea($name, $locale = 'en_US', $value = '')
+    {
         parent::generic_textarea($locale . "#" . $name, $value) ;
         return true ;
     }
@@ -69,7 +98,8 @@ class ItemForm extends Form {
          if($num_locales>1) { echo '</div>'; };
     }
     
-    static public function price_input_text($item = null) {
+    static public function price_input_text($item = null)
+    {
         parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
     }
 
@@ -118,7 +148,7 @@ class ItemForm extends Form {
             parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select one region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
             return true ;
         } else if ( count($regions) == 1 ) {
-            parent::generic_input_hidden('countryId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+            parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
             echo '</span>' .$regions[0]['s_name'] . '</span>';
             return false ;
         } else {
@@ -210,8 +240,12 @@ class ItemForm extends Form {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#region").before('<select name="regionId" id="regionId" ></select>');
+                            $("#region").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#regionId").before('<input type="text" name="region" id="region" />');
+                            $("#regionId").remove();
                         }
                         $("#regionId").html(result);
                     }
@@ -241,8 +275,12 @@ class ItemForm extends Form {
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            $("#city").before('<select name="cityId" id="cityId" ></select>');
+                            $("#city").remove();
                         } else {
                             result += '<option value=""><?php echo __('No results') ?></option>';
+                            $("#cityId").before('<input type="text" name="city" id="city" />');
+                            $("#cityId").remove();
                         }
                         $("#cityId").html(result);
                     }
@@ -273,6 +311,11 @@ class ItemForm extends Form {
 
         if(document.getElementById('cityId').value == "") {
             alert("<?php  _e('You have to select a city.');?>");
+            return false;
+        }
+
+        if(document.getElementById('city').value == "") {
+            alert("<?php  _e('You have to write a city.');?>");
             return false;
         }
 

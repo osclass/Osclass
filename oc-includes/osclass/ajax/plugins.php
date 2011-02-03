@@ -19,6 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+define('IS_AJAX', 1);
 if( !defined('ABS_PATH') ) {
     define('ABS_PATH',dirname(dirname(dirname(dirname(__FILE__)))) . '/');
 };

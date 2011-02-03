@@ -60,18 +60,25 @@ switch ($action) {
     case 'enable_bo':
         $id = osc_paramRequest('id', false);
         $enabled = osc_paramRequest('enabled', false);
+        $default_lang = Preference::newInstance()->findValueByName('language');
         try {
             if ($id) {
                 switch($action) {
-                    case('enable'):     $msg = ($enabled == 1) ? __('The language has been enabled for the public website.') : __('The language has been disabled for the public website.') ;
+                    case('enable'):
+                        if($default_lang==$id && $enabled==0) {
+                            osc_addFlashMessage($id.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
+                        } else {
+                         $msg = ($enabled == 1) ? __('The language has been enabled for the public website.') : __('The language has been disabled for the public website.') ;
                                         $aValues = array('b_enabled' => $enabled) ;
+                                $localeManager->update($aValues, array('pk_c_code' => $id));
+                        }
                     break;
                     case('enable_bo'):  $msg = ($enabled == 1) ? __('The language has been enabled for the backoffice (oc-admin).') : __('The language has been disabled for the backoffice (oc-admin).');
                                         $aValues = array('b_enabled_bo' => $enabled) ;
+                                        $localeManager->update($aValues, array('pk_c_code' => $id));
                     break;
                 }
 
-                $localeManager->update($aValues, array('pk_c_code' => $id));
                 osc_addFlashMessage( $msg );
             } else {
                 osc_addFlashMessage(__('There was a problem updating the language. The ID of the language was lost.'));
@@ -104,8 +111,13 @@ switch ($action) {
                     break;
                 }
 
+                $default_lang = Preference::newInstance()->findValueByName('language');
                 foreach ($id as $i) {
-                    $localeManager->update($aValues, array('pk_c_code' => $i));
+                    if($default_lang==$i && $action=='disable_selected') {
+                        osc_addFlashMessage($i.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
+                    } else {
+                        $localeManager->update($aValues, array('pk_c_code' => $i));
+                    }
                 }
 
                 osc_addFlashMessage($msg);
@@ -123,8 +135,15 @@ switch ($action) {
             $default_lang = Preference::newInstance()->findValueByName('language');
             foreach ($_GET['code'] as $code) {
                 if($default_lang!=$code) {
-                    if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
-                        osc_addFlashMessage(__('Directory "%s" could not be removed.'), $code);
+                    try {
+                        Locale::newInstance()->deleteLocale($code);
+                        if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
+                            osc_addFlashMessage(__('Directory "%s" could not be removed.'), $code);
+                        }
+                    } catch (Exception $e) {
+                        if($e->getMessage()=='1451') {
+                            osc_addFlashMessage($code.__(' language pack can not be deleted it\'s being used.'));
+                        }
                     }
                 } else {
                         osc_addFlashMessage(__('Directory "%s" could not be removed, it\' the default language. Set another language as default first and try again.'), $code);

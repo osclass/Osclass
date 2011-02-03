@@ -11,7 +11,7 @@ $subCats = Category::newInstance()->findSubcategories($category);
             <div id="search_result_price">
                 <?php _e('Price'); ?>: <?php echo osc_formatPrice($a); ?>
             </div>
-            <div id="search_result_title"><a href="<?php echo osc_createItemURL($a); ?>"><?php echo $a['s_title']; ?></a></div>
+            <div id="search_result_title"><a href="<?php osc_createItemURL($a, true); ?>"><?php echo $a['s_title']; ?></a></div>
             <div class="clear"></div>
         </div>
         <div id="search_result_desc">

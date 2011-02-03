@@ -22,57 +22,43 @@
 
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
-<?php
-$dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-$timeFormats = array('g:i a', 'g:i A', 'H:i');
-?>
-<script>
-	$(function() {
-		// Here we include specific jQuery, jQuery UI and Datatables functions.
-	});
-</script>
-		<div id="content">
-                    <div id="separator"></div>
+<div id="content">
+    <div id="separator"></div>
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
 
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Users'); ?></div>
-					<div style="clear: both;"></div>
-				</div>
-				
-				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
-				<!-- settings form -->
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px;">
-
-						<form action="settings.php" method="post">
-						<input type="hidden" name="action" value="users_post" />
-						
-						<div style="float: left; width: 50%;">
-							<fieldset>
-								<legend><?php echo __('Settings'); ?></legend>
-                                                                <?php if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']): ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="enabled_user_validation" id="enabled_user_validation"/>
-                                                                <?php else: ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_validation" id="enabled_user_validation"/>
-                                                                <?php endif; ?>
-                                                                <label><?php echo __('User validation'); ?></label>
-
-																<br/>
-
-                                                                <?php _e('Users need to validation their account. After registering on the website, they will be sent an email with a validation link.'); ?>
-                                                        </fieldset>
-						</div>
-						<div style="clear: both;"></div>
-												
-						<input id="button_save" type="submit" value="<?php echo __('Update'); ?>" />
-						
-						</form>
-
-					</div>
-				</div>
-			</div> <!-- end of right column -->
+    <div id="right_column">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo $current_theme; ?>/images/back_office/settings-icon.png" alt="" title="" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
+            <div style="clear: both;"></div>
+        </div>
+        <div id="content_separator"></div>
+        <?php osc_showFlashMessages('admin'); ?>
+        <!-- settings form -->
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+            <div style="padding: 20px;">
+                <form action="settings.php" method="post">
+                    <?php $enabled_user_registration = (isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']); ?>
+                    <?php $enabled_user_validation = (isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']); ?>
+                    <?php $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']); ?>
+                    <input type="hidden" name="action" value="users_post" />
+                    <div style="float: left; width: 50%;">
+                        <fieldset>
+                            <legend><?php _e('Settings'); ?></legend>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_users" id="enabled_users" <?php if($enabled_users) { ?>checked<?php } ?>/>
+                            <label for="enabled_users"><?php _e('User enable'); ?></label>
+                            <br/>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_validation" id="enabled_user_validation" <?php if($enabled_user_validation) { ?>checked<?php } ?>/>
+                            <label for="enabled_user_validation"><?php _e('User validation'); ?></label>
+                            <br/>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_registration" id="enabled_user_registration" <?php if($enabled_user_registration) { ?>checked<?php } ?>/>
+                            <label for="enabled_user_registration"><?php _e('User registration'); ?></label>
+                        </fieldset>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                </form>
+            </div>
+        </div>
+    </div> <!-- end of right column -->

@@ -1,10 +1,14 @@
-<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<?php echo $key; ?>" type="text/javascript"></script>
-<div id="itemMap" style="width: 500px; height: 300px"></div>
 <script type="text/javascript">
 if(GBrowserIsCompatible()) {
     var map = new GMap2(document.getElementById("itemMap"));
     var geocoder = new GClientGeocoder();
-
+   map.addControl(new GSmallMapControl());
+    map.addControl(new GMapTypeControl());
+    var title_ad_googlemap = "<?= $item['s_title'] ?>";
+    var city_ad_googlemap = "<?= $item['s_city'] ?>";
+   var description_ad_googlemap = title_ad_googlemap + ', ' + city_ad_googlemap;
+   
+   
     function showAddress(address, region) {
         geocoder.getLatLng(
             address,
@@ -28,19 +32,9 @@ if(GBrowserIsCompatible()) {
                     map.setCenter(point, 13);
                     var marker = new GMarker(point);
                     map.addOverlay(marker);
-                    marker.openInfoWindowHtml(address);
+                    marker.openInfoWindowHtml(description_ad_googlemap);
                 }
             }
         );
     }
 }
-<?php 
-    if(isset($item['s_address'])) {
-        $address = sprintf('%s, %s %s, %s', $item['s_address'], $item['s_region'], $item['s_city'], $item['s_country']);
-    } else {
-        $address = sprintf('%s %s, %s', $item['s_region'], $item['s_city'], $item['s_country']);
-    }
-    echo 'showAddress(\''.$address.'\', \''.$item['s_region'].', '.$item['s_country'].'\');';
-?>
-</script>
-

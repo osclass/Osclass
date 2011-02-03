@@ -1,22 +1,19 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
@@ -62,7 +59,7 @@ function osc_formatDate($item) {
     return date($preferences['dateFormat'], $date) ;
 }
 
-function osc_pageInfo($property) {
+function osc_pageInfo($property, $echo = false) {
     global $preferences, $headerConf ;
     $conf = array(
         'pageTitle' => $preferences['pageTitle']
@@ -70,21 +67,33 @@ function osc_pageInfo($property) {
     if (isset($headerConf))
         $conf = array_merge($conf, $headerConf) ;
 
-    if (isset($conf[$property]))
-        return $conf[$property] ;
-    else
-        return null;
+    if (!isset($conf[$property])) {
+        return '';
+    }
+
+    if($echo) {
+        echo $conf[$property];
+        return '';
+    }
+
+    return $conf[$property] ;
 }
 
-function osc_themeResource($fileName) {
+function osc_themeResource($fileName, $echo = false) {
     global $preferences;
-    //echo WEB_PATH . '/oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
     $themePath = THEMES_PATH . $preferences['theme'] . '/' . $fileName;
+    $path = '';
     if (file_exists($themePath)) {
-        echo WEB_PATH . 'oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
+        $path = ABS_WEB_URL . 'oc-content/themes/' . $preferences['theme'] . '/' . $fileName;
     } else {
-        echo WEB_PATH . 'oc-includes/osclass/gui/' . $fileName;
+        $path =  ABS_WEB_URL . 'oc-includes/osclass/gui/' . $fileName;
     }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+    return $path;
 }
 
 function osc_showWidgets($location) {
@@ -93,13 +102,30 @@ function osc_showWidgets($location) {
         echo $w['s_content'];
 }
 
-function osc_createPageURL($page) {
-    global $preferences;
-    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+/**
+ * Create automatically the url of a page
+ *
+ * @param array $page An array with the page information
+ * @param bool $echo If you want to echo or not the path automatically
+ * @return string If $echo is false, it returns the path, if not it return blank string
+ */
+function osc_createPageURL($page, $echo = false) {
+    $rewriteEnabled = osc_isRewriteEnabled();
+    $path = '';
+
+    if ($rewriteEnabled) {
         $sanitizedString = osc_sanitizeString($page['s_title']);
-        return sprintf(WEB_PATH_URL . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
-    } else
-        return sprintf(WEB_PATH_URL . 'page.php?id=%d', $page['pk_i_id']);
+        $path = sprintf(ABS_WEB_URL . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
+    } else {
+        $path = sprintf(ABS_WEB_URL . 'page.php?id=%d', $page['pk_i_id']);
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
 function osc_createLoginURL() {
@@ -108,6 +134,10 @@ function osc_createLoginURL() {
         return WEB_PATH_URL . 'user/login';
     } else
         return WEB_PATH_URL . 'user.php?action=login';
+}
+
+function osc_indexURL() {
+    return WEB_PATH_URL;
 }
 
 function osc_createUserAccountURL() {
@@ -139,7 +169,7 @@ function osc_createSearchURL($pattern) {
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
         return WEB_PATH_URL . 'search/' . $pattern;
     } else
-        return WEB_PATH_URL . 'search.php?pattern=' . $pattern;
+        return WEB_PATH_URL . 'search.php?sPattern=' . $pattern;
 }
 
 function osc_createProfileURL() {
@@ -166,39 +196,89 @@ function osc_createUserItemsURL() {
         return WEB_PATH_URL . 'user.php?action=items';
 }
 
-function osc_createUserOptionsURL() {
+function osc_createUserOptionsURL($option = null) {
     global $preferences;
+
     if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-        return WEB_PATH_URL . 'user/options';
-    } else
-        return WEB_PATH_URL . 'user.php?action=options';
-}
-
-function osc_createURL($params = null) {
-    global $preferences;
-    if(is_array($params)) {
-        if (count($params) > 0 && isset($params['file']) && $params['file'] != "") {
-            $params_string = "";
-            foreach ($params as $k => $v) {
-                if ($k != 'file') {
-                    $params_string .= $k . '=' . $v . '&';
-                }
-            }
-
-            if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-                return WEB_PATH_URL . $params['file'] . "/" . $params_string;
-            } else {
-                return WEB_PATH_URL . $params['file'] . ".php?" . $params_string;
-            }
-        }
-    } else if(is_string($params)) {
-        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . $params;
+        if($option!=null) {
+            return WEB_PATH_URL . 'user/options/'.$option;
         } else {
-            return WEB_PATH_URL . $params.".php";
+            return WEB_PATH_URL . 'user/options';
+        }
+    } else {
+        if($option!=null) {
+            return WEB_PATH_URL . 'user.php?action=options&option='.$option;
+        } else {
+            return WEB_PATH_URL . 'user.php?action=options';
         }
     }
-    return '';
+}
+
+function osc_createUserOptionsPostURL($option = null) {
+    global $preferences;
+
+    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+        if($option!=null) {
+            return WEB_PATH_URL . 'user/options_post/'.$option;
+        } else {
+            return WEB_PATH_URL . 'user/options_post';
+        }
+    } else {
+        if($option!=null) {
+            return WEB_PATH_URL . 'user.php?action=options_post&option='.$option;
+        } else {
+            return WEB_PATH_URL . 'user.php?action=options_post';
+        }
+    }
+}
+
+function osc_createURL($params = null, $echo = false) {
+    global $preferences;
+    $path = '';
+
+    $rewriteEnable = (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']);
+
+    if(!is_array($params)) {
+        return '';
+    }
+
+    if(count($params) == 0) {
+        return '';
+    }
+
+    if(!isset($params['file'])) {
+        return '';
+    }
+
+    if ($rewriteEnable) {
+        if($params['file'] == 'index') {
+            $params['file'] = '';
+            $path = ABS_WEB_URL . $params['action'];
+        } else {
+            if(count($params) == 2 && isset($params['action'])) {
+                $path = ABS_WEB_URL . $params['file'] . "/" . $params['action'];
+            } else {
+                $path = ABS_WEB_URL . $params['file'] . "?" . $params_string;
+            }
+        }
+    } else {
+        $params_string = "";
+        foreach ($params as $k => $v) {
+            if ($k != 'file') {
+                $params_string .= $k . '=' . $v . '&';
+            }
+        }
+        $params_string = preg_replace('/\&$/','',$params_string);
+
+        $path = ABS_WEB_URL . $params['file'] . ".php?" . $params_string;
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
 function osc_createThumbnailURL($resource) {
@@ -214,49 +294,147 @@ function osc_createResourceURL($resource) {
 }
 
 function osc_createItemPostURL($cat = null) {
-    if (is_null($cat)) {
+    if (!isset($cat) || !isset($cat['pk_i_id'])) {
         if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . 'item/new';//sprintf(WEB_PATH_URL . 'item.php?action=post');
+            return WEB_PATH_URL . 'item/new';
         } else {
             return sprintf(WEB_PATH_URL . 'item.php?action=post');
         }
     } else {
         if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'];//sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
+            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'];
         } else {
             return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
         }
     }
 }
 
-function osc_createCategoryURL($cat, $absolute = false) {
-    $prefix = $absolute ? ABS_WEB_URL : REL_WEB_URL;
-    global $preferences;
-    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+/**
+ * Create automatically the url of a category
+ *
+ * @param array $cat An array with the category information
+ * @param bool $echo If you want to echo or not the path automatically
+ * @return string If $echo is false, it returns the path, if not it return blank string
+ */
+function osc_createCategoryURL($cat, $echo = false) {
+    $rewriteEnabled = osc_isRewriteEnabled();
+    $path = '';
+
+    if ($rewriteEnabled) {
         $cat = Category::newInstance()->hierarchy($cat['pk_i_id']);
         $sanitized_category = "";
-        for ($i = (count($cat)); $i > 0; $i--) {
-            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
+        for ($i = count($cat); $i > 0; $i--) {
+            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
         }
-        return sprintf($prefix . '%s', $sanitized_category);
-    } else
-        return sprintf(WEB_PATH_URL . 'search.php?catId=%d', $cat['pk_i_id']);
+        $path = ABS_WEB_URL . $sanitized_category ;
+    } else {
+        $path = sprintf(WEB_PATH_URL . 'search.php?sCategory=%d', $cat['pk_i_id']);
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
 
-function osc_createItemURL($item, $absolute = false) {
-    $prefix = $absolute ? ABS_WEB_URL : REL_WEB_URL;
-    global $preferences;
-    if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+/**
+ * Create automatically the url of an item
+ *
+ * @param array $item An array with the item information
+ * @param bool $echo If you want to echo or not the path automatically
+ * @return string If $echo is false, it returns the path, if not it return blank string
+ */
+function osc_createItemURL($item, $echo = false) {
+    $rewriteEnabled = osc_isRewriteEnabled();
+    $path = '';
+    
+    if ($rewriteEnabled) {
         $sanitized_title = osc_sanitizeString($item['s_title']);
         $sanitized_category = '';
         $cat = Category::newInstance()->hierarchy($item['fk_i_category_id']);
         for ($i = (count($cat)); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
         }
-        return sprintf($prefix . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
-    } else
-        return sprintf($prefix . 'item.php?id=%d', $item['pk_i_id']);
+        $path = sprintf(ABS_WEB_URL . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
+    } else {
+        $path = sprintf(ABS_WEB_URL . 'item.php?id=%d', $item['pk_i_id']);
+    }
+
+    if($echo) {
+        echo $path;
+        return '';
+    }
+
+    return $path;
 }
+
+function osc_createUserPublicDashboard($user = null) {
+    if ($user!=null || !isset($user['pk_i_id'])) {
+        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
+            return WEB_PATH_URL . 'user/'.$user['pk_i_id'];
+        } else {
+            return WEB_PATH_URL . 'user.php?action=public&user='.$user['pk_i_id'];
+        }
+    }
+}
+
+/**
+ * Prints the user's account menu
+ *
+ * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
+ * 
+ * @return void
+ */
+function nav_user_menu($options = null) {
+
+    if($options==null) {
+        $options = array();
+        $options[] = array('name' => __('Dashboard'), 'url' => osc_createUserAccountURL());
+        $options[] = array('name' => __('Manage your items'), 'url' => osc_createUserItemsURL());
+        $options[] = array('name' => __('Manage your alerts'), 'url' => osc_createUserAlertsURL());
+        $options[] = array('name' => __('My account'), 'url' => osc_createProfileURL());
+        $options[] = array('name' => __('Logout'), 'url' => osc_createLogoutURL());
+    }
+    
+    
+    ?>
+    
+    <script type="text/javascript">
+        $(".user_menu > :first-child").addClass("first");
+        $(".user_menu > :last-child").addClass("last");
+    </script>
+    <ul class="user_menu" >
+    
+    <?php
+    
+    $var_l = count($options);
+    for($var_o=0;$var_o<$var_l;$var_o++) {
+        echo '<li><a href="'.$options[$var_o]['url'].'" >'.$options[$var_o]['name'].'</a></li> ';
+    }
+    
+    osc_runHook('user_menu');
+    echo '</ul>';
+
+} 
+
+
+/**
+ * Prints the aditional options to the menu
+ *
+ * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
+ * 
+ * @return void
+ */
+function add_option_menu($option = null) {
+
+    if($option!=null) {
+        echo '<li><a href="'.$option['url'].'" >'.$option['name'].'</a></li> ';
+    }
+    
+}
+
 
 /**
  * This function returns an array of themes (those copied in the oc-content/themes folder)
@@ -325,3 +503,5 @@ function osc_renderView($name) {
             trigger_error("The view '$name' was not found.");
     }
 }
+
+?>

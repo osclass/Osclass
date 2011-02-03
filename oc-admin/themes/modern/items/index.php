@@ -98,7 +98,7 @@ if(isset($_GET)) {
 				 },
 				{"sTitle": "<?php echo __('Title') ?>",
                                  "bSortable": false,
-				 "sWidth": "40%"
+				 "sWidth": "25%"
 				},
                                 <?php if($stat) { ?>
                                     {"sTitle": "<?php echo __('Count') ?>",

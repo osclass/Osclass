@@ -23,7 +23,7 @@
 function validateLoginForm() {
 	var validator = new FormValidator();
 	try {
-		validator.addValidation('userName', FormValidator.TYPE_REGEX, '[a-zA-Z0-9_]{5}');
+		validator.addValidation('s_email', FormValidator.TYPE_REGEX, '[a-zA-Z0-9_\.@-]{5}');
 		validator.addValidation('password', FormValidator.TYPE_COMPLETED);
 		return validator.run();
 	} catch(e) {
@@ -39,8 +39,8 @@ function validateLoginForm() {
 <input type="hidden" name="action" value="login_post" />
 
 <p>
-<label for="userName"><?php _e('User name'); ?></label><br />
-<?php UserForm::username_login_text();?>
+<label for="email"><?php _e('E-mail'); ?></label><br />
+<?php UserForm::email_text();?>
 </p>
 
 <p>

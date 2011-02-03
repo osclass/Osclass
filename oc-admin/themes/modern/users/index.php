@@ -67,9 +67,8 @@ $last = end($users); $last_id = $last['pk_i_id']; ?>
 				<?php foreach($users as $u): ?>
 					[
 						"<input type='checkbox'  name='id[]' value='<?php echo $u['pk_i_id']; ?>' />",
-						"<?php echo $u['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><?php if($u['b_enabled']==0) {?><a href='users.php?action=activate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Activate user'); ?></a><?php } else {?><a href='users.php?action=deactivate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Deactivate user'); ?></a><?php }; ?> | <a href='users.php?action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php echo __('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='users.php?action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Delete'); ?></a></div>", 
+						"<?php echo $u['s_email']; ?>&nbsp;<div id='datatables_quick_edit'><?php if($u['b_enabled']==0) {?><a href='users.php?action=activate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Activate user'); ?></a><?php } else {?><a href='users.php?action=deactivate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Deactivate user'); ?></a><?php }; ?> | <a href='users.php?action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php echo __('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='users.php?action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php echo __('Delete'); ?></a></div>", 
 						"<?php echo $u['s_name']; ?>", 
-						"<?php echo $u['s_email']; ?>",
 						"<?php echo $u['s_info']; ?>"
 					] <?php echo $last_id != $u['pk_i_id'] ? ',' : ''; ?>
 				<?php endforeach; ?>
@@ -81,11 +80,10 @@ $last = end($users); $last_id = $last['pk_i_id']; ?>
 				 "sWidth": "10px",
 				 "bSearchable": false
 				 },
-				{"sTitle": "<?php echo __('Username'); ?>",
+				{"sTitle": "<?php echo __('E-mail'); ?>",
 				 "sWidth": "30%"
 				},
 				{"sTitle": "<?php echo __('Real name') ?>" },
-				{"sTitle": "<?php echo __('E-mail'); ?>"},
 				{"sTitle": "<?php echo __('Info'); ?>" }
 			]
 		});

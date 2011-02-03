@@ -100,8 +100,8 @@ $locales = Locale::newInstance()->listAllEnabled();
                             <input type="hidden" name="action" value="login_post" />
 
                             <div id="login_username">
-                                <label for="userName"><?php _e('User name'); ?></label>
-                                <input type="text" name="userName" id="userName" />
+                                <label for="s_email"><?php _e('E-mail'); ?></label>
+                                <input type="text" name="s_email" id="s_email" />
                             </div>
 
                             <div id="login_password">

@@ -20,8 +20,8 @@
  */
 
 
-class Search {
-
+class Search extends DAO
+{
     private $conditions;
     private $tables;
     private $sql;
@@ -32,9 +32,12 @@ class Search {
     private $cities;
     private $regions;
     private $countries;
-    private $conn;
     private $categories;
-    
+
+    public function  getTableName()
+    {
+        return '';
+    }
 
     public function __construct() {
         $this->cities = array();
@@ -46,10 +49,14 @@ class Search {
         $this->order();
         $this->limit();
         $this->results_per_page = 10;
-        $this->conn = getConnection();
+        parent::__construct();
     }
 
     public static function newInstance() { return new Search; }
+
+    public static function getAllowedColumnsForSorting() {
+        return( array('f_price', 'dt_pub_date') ) ;
+    }
 
     public function addConditions($conditions) {
         if(is_array($conditions)) {
@@ -221,18 +228,21 @@ class Search {
         }
     }
 
-    public function addCategory($category = null) {
-        if($category!=null) {
-            if(!is_int($category)) {
-                $category = Category::newInstance()->find_by_slug($category);
-                $category = $category['pk_i_id'];
-            }
-            $tree = Category::newInstance()->toSubTree($category);
-            if(!in_array($category, $this->categories)) {
-                $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category);
-            }
-            $this->pruneBranches($tree);
+    public function addCategory($category = null)
+    {
+        if($category == null) return '' ;
+        
+        if(!is_numeric($category)) {
+            $category = preg_replace('|/$|','',$category);
+            $aCategory = explode('/', $category) ;
+            $category = Category::newInstance()->find_by_slug($aCategory[count($aCategory)-1]) ;
+            $category = $category['pk_i_id'] ;
         }
+        $tree = Category::newInstance()->toSubTree($category) ;
+        if(!in_array($category, $this->categories)) {
+            $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $category) ;
+        }
+        $this->pruneBranches($tree) ;
     }
 
     public function makeSQL($count = false) {
@@ -259,9 +269,9 @@ class Search {
         }
 
         if($count) {
-            $this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions));
+            $this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s AND %st_item.pk_i_id = d.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX);
         } else {
-            $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s ORDER BY %st_item.%s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+            $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s AND %st_item.pk_i_id = d.fk_i_item_id ORDER BY %st_item.%s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
 
         }
         return $this->sql;
@@ -392,7 +402,5 @@ class Search {
             }
         }
     }
-        
-
 }
 

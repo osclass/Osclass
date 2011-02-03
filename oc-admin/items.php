@@ -1,23 +1,19 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
@@ -225,6 +221,8 @@ switch ($action) {
 
         $item = Item::newInstance()->findByPrimaryKey($id);
 
+        $users = User::newInstance()->listAll();
+
         $categories = Category::newInstance()->toTree();
         $countries = Country::newInstance()->listAll();
         $regions = array();
@@ -241,7 +239,7 @@ switch ($action) {
 
         if (count($item) > 0) {
             $resources = Item::newInstance()->findResourcesByID($id);
-            osc_renderAdminSection('items/item-edit.php');
+            osc_renderAdminSection('items/frm.php');
         } else {
             osc_redirectTo('items.php');
         }
@@ -250,6 +248,23 @@ switch ($action) {
     case 'editItemPost':
 
         require_once LIB_PATH . 'osclass/items.php';
+
+        if(isset($_REQUEST['userId'])) {
+            if($_REQUEST['userId']!='') {
+                $user = User::newInstance()->findByPrimaryKey($_REQUEST['userId']);
+                Item::newInstance()->update(array(
+                    'fk_i_user_id' => $_REQUEST['userId'],
+                    's_contact_name' => $user['s_name'],
+                    's_contact_email' => $user['s_email']
+                ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
+            } else {
+                Item::newInstance()->update(array(
+                    'fk_i_user_id' => NULL,
+                    's_contact_name' => $_REQUEST['contactName'],
+                    's_contact_email' => $_REQUEST['contactEmail']
+                ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
+            }
+        }
 
         osc_redirectTo('items.php');
         break;
@@ -264,6 +279,7 @@ switch ($action) {
 
     case 'post':
 
+        $users = User::newInstance()->listAll();
         $categories = Category::newInstance()->toTree();
         $countries = Country::newInstance()->listAll();
         $regions = array();
@@ -280,14 +296,14 @@ switch ($action) {
         $item = array();
         $resources = array();
         
-        osc_renderHeader(
+        /*osc_renderHeader(
                 array(
                     'pageTitle' => __('Publish your item') . ' - ' . $preferences['pageTitle'],
                     'noindex' => 'true'
                 )
-        );
+        );*/
         $new_item = TRUE;
-        osc_renderAdminSection('items/item-edit.php');
+        osc_renderAdminSection('items/frm.php');
         //osc_renderView('item-post.php');
         osc_renderFooter();
     break;
@@ -297,6 +313,8 @@ switch ($action) {
         $manager = Item::newInstance();
 
         require_once LIB_PATH . 'osclass/items.php';
+
+        
         osc_redirectTo('items.php');
         break;
 

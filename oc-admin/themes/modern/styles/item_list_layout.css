@@ -62,7 +62,7 @@
 .location-post dl dt,
 .contact-post dl dt{
     border-bottom: 1px solid #AAAAAA;
-    width: 72%;
+    width: 220px;
     margin-top: 6px;
     margin-bottom: 6px;
 }
@@ -76,5 +76,54 @@
 .location-post dl dd input,
 .contact-post dl dd select,
 .contact-post dl dd input {
-    width: 70%;
+    width: 200px;
+}
+
+.item-form h2 {
+    font-size: 16px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.item-form select {
+    font-size: 12px;
+    padding: 1px;
+}
+
+.item-form div.title,
+.item-form div.description{
+    margin-top: 10px;
+}
+
+.item-form .title input {
+    width: 500px;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+.item-form .description textarea {
+    width: 700px;
+}
+
+#contact_info {
+    margin-top:10px;
+}
+
+#contact_info input {
+    font-size: 12px;
+    width: 250px;
+}
+
+.item-form input {
+    width: 500px;
+}
+
+.item-form textarea {
+    width: 700px;
+}
+
+.item-form button {
+    background-color: orange;
+    color:white;
+    font-weight: bold;
+    padding: 5px 10px;
 }

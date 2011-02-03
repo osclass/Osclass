@@ -14,8 +14,11 @@ $rewrite->clearRules();
 // Clean archive files
 $rewrite->addRule('^(.+?).php(.*)$', '$1.php$2');
 
+// Contact rules
+$rewrite->addRule('^contact/?$', 'index.php?action=contact');
+
 // Feed rules
-$rewrite->addRule('^feed$', 'search?feed');
+$rewrite->addRule('^feed$', 'search?feed=rss');
 $rewrite->addRule('^feed/(.+)$', 'search.php?feed=$1');
 
 // Search rules
@@ -61,6 +64,8 @@ $rewrite->addRule('^user/forgot/password$', 'user.php?action=forgot');
 $rewrite->addRule('^user/forgot/password/done$', 'user.php?action=forgot_post');
 $rewrite->addRule('^user/change/password$', 'user.php?action=forgot_change');
 $rewrite->addRule('^user/change/password/done$', 'user.php?action=forgot_change_post');
+$rewrite->addRule('^user/options/(.*)', 'user.php?action=options&option=$1');
+$rewrite->addRule('^user/options_post/(.*)$', 'user.php?action=options_post&option=$1');
 $rewrite->addRule('^user/(.*)$', 'user.php?action=$1');
 $rewrite->addRule('^user$', 'user.php');
 
@@ -68,7 +73,7 @@ $rewrite->addRule('^user$', 'user.php');
 $rewrite->addRule('^page/([0-9]*)$', 'page.php?id=$1');
 
 // Category rules
-$rewrite->addRule('^(.+)$', 'search.php?category=$1');
+$rewrite->addRule('^(.+)$', 'search.php?sCategory=$1');
 
 //Write rule to DB
 $rewrite->setRules();

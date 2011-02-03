@@ -1,31 +1,32 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                         Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 /**
+ * Escape all the values of an array.
  *
  * @param array $array Array used to apply addslashes.
  * @return array $array after apply addslashes.
  */
-
 function add_slashes_extended( $array ) {
+    if(get_magic_quotes_gpc()) {
+        return $array;
+    }
+    
     foreach ( (array) $array as $k => $v ) {
         if( is_array($v) ) {
             $array[$k] = add_slashes_extended($v);
@@ -48,8 +49,8 @@ function osc_sanitizeString($string) {
     $string = strtolower($string);
     $string = preg_replace('/&.+?;/', '', $string);
     $string = str_replace('.', '-', $string);
-    $string = preg_replace('|[\p{P}\p{S}\p{Z}]+|u', '', $string);
-    //$string = preg_replace('/[^%a-z0-9 _-]/', '', $string);
+    //$string = preg_replace('|[\p{P}\p{S}\p{Z}]+|u', '', $string);
+    $string = preg_replace('/[^%a-z0-9 _-]/', '', $string);
     $string = preg_replace('/\s+/', '-', $string);
     $string = preg_replace('/-+/', '-', $string);
     $string = trim($string, '-');
