@@ -43,20 +43,20 @@ function osc_runAlert($type = null) {
     }
 
 
-    $searches = Alerts::newInstance()->getAlertsByTypeGroup($type);
+    $searches = Alerts::newInstance()->getAlertsByTypeGroup($type) ;
     foreach ($searches as $s_search) {
         $a_search = Search::newInstance();
 
         // Get if there're new ads on this search
-        $a_search = osc_unserialize(base64_decode($s_search['s_search']));
+        $a_search = osc_unserialize(base64_decode($s_search['s_search'])) ;
         $crons = Cron::newInstance()->getCronByType($type);
         if (isset($crons[0])) {
-            $last_exec = $crons[0]['d_last_exec'];
+            $last_exec = $crons[0]['d_last_exec'] ;
         } else {
-            $last_exec = '0000-00-00 00:00:00';
+            $last_exec = '0000-00-00 00:00:00' ;
         }
 
-        $a_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec));
+        $a_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec)) ;
 
         $totalItems = $a_search->count();
         $items = $a_search->search();
@@ -65,16 +65,14 @@ function osc_runAlert($type = null) {
         if (count($items) > 0) {
             //If we have new items from last check
             //Catch the user subscribed to this search
-            $users = Alerts::newInstance()->getUsersBySearchAndType($search['s_search'], $type);
+            $users = Alerts::newInstance()->getUsersBySearchAndType($search['s_search'], $type) ;
 
             if (count($users > 0)) {
-                $_P = Preference::newInstance();
-
-                $prefLocale = $_P->get('language');
-                $_page = Page::newInstance()->findByInternalName($internal_name);
+                $prefLocale = osc_language() ;
+                $_page = Page::newInstance()->findByInternalName($internal_name) ;
                 $page = array();
-                $data = osc_unserialize($_page['s_data']);
-                $page = $data[$prefLocale];
+                $data = osc_unserialize($_page['s_data']) ;
+                $page = $data[$prefLocale] ;
                 unset($data);
                 unset($_page);
 

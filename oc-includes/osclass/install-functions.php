@@ -308,12 +308,12 @@ function is_osclass_installed( ) {
         return false;
     }
 
-    require_once ABS_PATH . 'config.php';
+    require_once ABS_PATH . 'config.php' ;
 
     try {
-        $conn = getConnection();
-        $sql = sprintf('SELECT * FROM %st_preference WHERE s_name = \'osclass_installed\' AND s_value = \'1\'', DB_TABLE_PREFIX);
-        $results = $conn->osc_dbFetchResults($sql);
+        $conn = getConnection() ;
+        $sql = sprintf('SELECT * FROM %st_preference WHERE s_name = \'osclass_installed\' AND s_value = \'1\'', DB_TABLE_PREFIX) ;
+        $results = $conn->osc_dbFetchResults($sql) ;
         if( count($results) > 0 ) {
             return true;
         }
@@ -325,63 +325,63 @@ function is_osclass_installed( ) {
 }
 
 function finish_installation( ) {
-    require_once ABS_PATH . 'oc-includes/osclass/security.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
+    require_once ABS_PATH . 'oc-includes/osclass/security.php' ;
+    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
+    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
 
     $data = array();
-    $password = osc_genRandomPassword();
+    $password = osc_genRandomPassword() ;
 
-    $mAdmin = new Admin();
-    $mPreference = new Preference();
-    $admin_user = 'admin';
-    $admin = $mAdmin->update(
-        array('s_password' => sha1($password)),
-        array('s_username' => $admin_user)
-    );
+    $mAdmin = new Admin() ;
+    $admin_user = 'admin' ;
+    $admin = $mAdmin->update (
+        array('s_password' => sha1($password))
+        ,array('s_username' => $admin_user)
+    ) ;
 
-    $mPreference->insert(array(
-        's_section' => 'osclass',
-        's_name' => 'osclass_installed',
-        's_value' => '1',
-        'e_type' => 'BOOLEAN'
-    ));
+    $mPreference = Preference::newInstance() ;
+    $mPreference->insert (
+        array(
+            's_section' => 'osclass'
+            ,'s_name' => 'osclass_installed'
+            ,'s_value' => '1'
+            ,'e_type' => 'BOOLEAN'
+        )
+    ) ;
 
-    $admin = $mAdmin->findByPrimaryKey(1);
+    $admin = $mAdmin->findByPrimaryKey(1) ;
 
-    $preferences = $mPreference->toArray();
-
-    $data['s_email'] = $admin['s_email'];
-    $data['admin_user'] = $admin_user;
-    $data['password'] = $password;
+    $data['s_email'] = $admin['s_email'] ;
+    $data['admin_user'] = $admin_user ;
+    $data['password'] = $password ;
     
-    $body = 'Welcome ' . $preferences['pageTitle'] . ',<br/><br/>';
-    $body .= 'Your OSClass installation at ' . ABS_WEB_URL . ' is up and running. You can access to the administration panel with this data access:<br/>';
-    $body .= '<ul>';
-    $body .= '<li>username: ' . $admin_user . '</li>';
-    $body .= '<li>password: ' . $password . '</li>';
-    $body .= '</ul>';
-    $body .= 'Regards,<br/>';
-    $body .= 'The <a href=\'http://osclass.org/\'>OSClass</a> team';
+    $body = 'Welcome ' . $mPreference->get('pageTitle') . ',<br/><br/>' ;
+    $body .= 'Your OSClass installation at ' . ABS_WEB_URL . ' is up and running. You can access to the administration panel with this data access:<br/>' ;
+    $body .= '<ul>' ;
+    $body .= '<li>username: ' . $admin_user . '</li>' ;
+    $body .= '<li>password: ' . $password . '</li>' ;
+    $body .= '</ul>' ;
+    $body .= 'Regards,<br/>' ;
+    $body .= 'The <a href=\'http://osclass.org/\'>OSClass</a> team' ;
 
     $sitename = strtolower( $_SERVER['SERVER_NAME'] );
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-        $sitename = substr( $sitename, 4 );
+        $sitename = substr( $sitename, 4 ) ;
     }
-    require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php';
-    $mail = new PHPMailer;
-    $mail->CharSet="utf-8";
-    $mail->Host = "localhost";
-    $mail->From = 'osclass@' . $sitename;
-    $mail->FromName = 'OSClass';
-    $mail->Subject = 'OSClass successfully installed!';
-    $mail->AddAddress($admin['s_email'], 'OSClass administrator');
-    $mail->Body = $body;
-    $mail->AltBody = $body;
+    require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php' ;
+    $mail = new PHPMailer ;
+    $mail->CharSet="utf-8" ;
+    $mail->Host = "localhost" ;
+    $mail->From = 'osclass@' . $sitename ;
+    $mail->FromName = 'OSClass' ;
+    $mail->Subject = 'OSClass successfully installed!' ;
+    $mail->AddAddress($admin['s_email'], 'OSClass administrator') ;
+    $mail->Body = $body ;
+    $mail->AltBody = $body ;
     if (!$mail->Send())
-        echo $mail->ErrorInfo;
+        echo $mail->ErrorInfo ;
 
-    return $data;
+    return $data ;
 }
 
 /* Menus */

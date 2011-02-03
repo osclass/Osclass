@@ -100,7 +100,7 @@ switch($action) {
 
 			$data['s_value'] = $_POST['locale'];
 			$condition = array( 's_section' => 'osclass', 's_name' => 'admin_language');
-			Preference::newInstance()->update($data, $condition);
+			Preference::newInstance()->update($data, $condition) ;
 
 			osc_redirectTo('main.php');
 		} else {

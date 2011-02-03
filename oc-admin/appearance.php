@@ -24,8 +24,6 @@ define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'oc-admin/oc-load.php';
 
-$_P = Preference::newInstance();
-
 $action = osc_readAction();
 switch ($action)
 {
@@ -52,7 +50,7 @@ switch ($action)
         osc_redirectTo('appearance.php');
     break;
     case 'widgets':
-        $info = osc_loadThemeInfo($_P->get('theme'));
+        $info = osc_loadThemeInfo(osc_theme());
         osc_renderAdminSection('appearance/widgets.php', __('Appearance'));
     break;
     case 'add_widget':
@@ -76,13 +74,13 @@ switch ($action)
         osc_redirectTo('appearance.php?action=widgets');
     break;
     case 'activate':
-        $_P->update(
+        Preference::newInstance()->update(
                 array('s_value' => $_GET['theme'])
                 ,array('s_section' => 'osclass', 's_name' => 'theme')
         );
     default:
         $themes = osc_listThemes();
-        $info = osc_loadThemeInfo($_P->get('theme')) ;
+        $info = osc_loadThemeInfo(osc_theme()) ;
 
         osc_renderAdminSection('appearance/index.php', __('Appearance')) ;
 }

@@ -33,7 +33,7 @@ class Item extends DAO
         if (isset($_SESSION['locale'])) {
             $prefLocale = $_SESSION['locale'];
         } else {
-            $prefLocale = Preference::newInstance()->findValueByName('language');
+            $prefLocale = osc_language() ;
         }
 
         $results = array();
@@ -57,9 +57,9 @@ class Item extends DAO
     public function extendData($items)
     {
         if (isset($_SESSION['locale'])) {
-            $prefLocale = $_SESSION['locale'];
+            $prefLocale = $_SESSION['locale'] ;
         } else {
-            $prefLocale = Preference::newInstance()->findValueByName('language');
+            $prefLocale = osc_language() ;
         }
 
         $results = array();
@@ -90,9 +90,9 @@ class Item extends DAO
     public function extendDataSingle($item)
     {
         if (isset($_SESSION['locale'])) {
-            $prefLocale = $_SESSION['locale'];
+            $prefLocale = $_SESSION['locale'] ;
         } else {
-            $prefLocale = Preference::newInstance()->findValueByName('language');
+            $prefLocale = osc_language() ;
         }
 
         $descriptions = $this->conn->osc_dbFetchResults('SELECT * FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']);

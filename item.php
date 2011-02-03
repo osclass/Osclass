@@ -18,12 +18,9 @@
 
 require_once 'oc-load.php';
 
-$mPreferences = new Preference();
-
-$preferences = $mPreferences->toArray();
-$manager = Item::newInstance();
-$theme = $preferences['theme'];
-$locales = Locale::newInstance()->listAllEnabled();
+$manager = Item::newInstance() ;
+$theme = osc_theme() ;
+$locales = Locale::newInstance()->listAllEnabled() ;
 
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 

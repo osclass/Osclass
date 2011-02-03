@@ -110,6 +110,18 @@
     function osc_num_rss_items() {
         return(getPreference('num_rss_items')) ;
     }
+
+    function osc_currency() {
+        return(getPreference('currency')) ;
+    }
+
+    function osc_google_analytics_id() {
+        return(getPreference('google_analytics_id')) ;
+    }
+
+    function osc_google_maps_key() {
+        return(getPreference('google_maps_key')) ;
+    }
     
 
     //PRIVATE FUNCTION (if there was a class :P)
