@@ -66,6 +66,50 @@
     function osc_normal_dimensions() {
         return (getPreference('dimNormal')) ;
     }
+
+    function osc_last_version_check() {
+        return (getPreference('last_version_check')) ;
+    }
+
+    function osc_version() {
+        return (getPreference('version')) ;
+    }
+
+    function osc_page_title() {
+        return (getPreference('pageTitle')) ;
+    }
+
+    function osc_language() {
+        return(getPreference('language')) ;
+    }
+
+    function osc_theme() {
+        return(getPreference('theme')) ;
+    }
+
+    function osc_page_description() {
+        return(getPreference('pageDesc')) ;
+    }
+
+    function osc_contact_email() {
+        return(getPreference('contactEmail')) ;
+    }
+    
+    function osc_date_format() {
+        return(getPreference('dateFormat')) ;
+    }
+
+    function osc_time_format() {
+        return(getPreference('timeFormat')) ;
+    }
+
+    function osc_week_starts_at() {
+        return(getPreference('weekStart')) ;
+    }
+
+    function osc_num_rss_items() {
+        return(getPreference('num_rss_items')) ;
+    }
     
 
     //PRIVATE FUNCTION (if there was a class :P)
@@ -84,5 +128,4 @@
         $_P = Preference::newInstance() ;
         return($_P->get($key)) ;
     }
-    
 ?>

@@ -33,35 +33,32 @@ $locales = Locale::newInstance()->listAllEnabled();
 
 ?>
 
-<div id="header" class="header" >
-	<div class="headerTitle" >
-	<a href="<?php echo WEB_PATH; ?>/" class="headerTitleLink" ><?php echo $preferences['pageTitle']; ?></a>
+<div id="header" class="header">
+	<div class="headerTitle">
+        <a href="<?php echo WEB_PATH ; ?>/" class="headerTitleLink" ><?php echo osc_page_title() ; ?></a>
 	</div>
 	<div class="headerLocales" >
-		<select style="padding: 5px;" onchange="document.location = '<?php echo WEB_PATH; ?>/index.php?action=setlanguage&value=' + this.value">
-		<?php $i = 0; foreach($locales as $locale): ?>
-			<?php if($locale['pk_c_code'] == $GLOBALS['locale']): ?>
-			<option value="<?php echo $locale['pk_c_code']; ?>" selected="selected"><?php echo $locale['s_name']; ?></option>
-			<?php else: ?>
-			<option value="<?php echo $locale['pk_c_code']; ?>"><?php echo $locale['s_name']; ?></option>
-			<?php endif; ?>
-		<?php endforeach; ?>
+		<select style="padding: 5px;" onchange="javascript:document.location='<?php echo WEB_PATH ; ?>/index.php?action=setlanguage&value=' + this.value">
+            <?php $i = 0 ; ?>
+            <?php foreach($locales as $locale) { ?>
+                <option value="<?php echo $locale['pk_c_code'] ; ?>" <?php ($locale['pk_c_code'] == $GLOBALS['locale']) ? 'selected="selected"' : '' ; ?>><?php echo $locale['s_name'] ; ?></option>
+            <?php } ?>
 		</select>
 	</div>
 	<div style="clear: both;"></div>
 </div>
 
 <div class="headerOptions" >
-	<?php if(osc_isUserLoggedIn()): ?>
-	<?php printf('Hello %s!', osc_userInfo('s_name')); ?>
-	<?php _e('Manage from here your'); ?>
-	<a  href="<?php echo osc_createUserItemsURL(); ?>"><?php _e('items'); ?></a>
-	<?php _e('and '); ?>
-	<a  href="<?php echo osc_createProfileURL(); ?>"><?php _e('profile'); ?></a>.<br />
-	<a  href="<?php echo osc_createLogoutURL(); ?>"><?php _e('Logout'); ?></a>
-	<?php else: ?>
-	<a  href="<?php echo osc_createRegisterURL(); ?>"><?php _e('Register a free account'); ?></a> <?php _e('or'); ?> <a  href="<?php echo osc_createLoginURL(); ?>"><?php _e('login'); ?></a>
-	<?php endif; ?>
+	<?php if(osc_isUserLoggedIn()) { ?>
+        <?php printf(__('Hello %s!'), osc_userInfo('s_name')) ; ?>
+        <?php _e('Manage from here your'); ?>
+        <a  href="<?php echo osc_createUserItemsURL(); ?>"><?php _e('items') ; ?></a>
+        <?php _e('and '); ?>
+        <a  href="<?php echo osc_createProfileURL(); ?>"><?php _e('profile') ; ?></a>.<br />
+        <a  href="<?php echo osc_createLogoutURL(); ?>"><?php _e('Logout') ; ?></a>
+	<?php } else { ?>
+        <a  href="<?php echo osc_createRegisterURL() ; ?>"><?php _e('Register a free account') ; ?></a> <?php _e('or') ; ?> <a  href="<?php echo osc_createLoginURL() ; ?>"><?php _e('login') ; ?></a>
+	<?php } ?>
 </div>
 
-<?php osc_showWidgets('header'); ?>
+<?php osc_showWidgets('header') ; ?>

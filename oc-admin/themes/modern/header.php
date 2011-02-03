@@ -21,8 +21,7 @@
 
     $adminId = osc_paramSession('adminId', 0);
     $admin = Admin::newInstance()->findByPrimaryKey($adminId);
-    $preferences = Preference::newInstance()->toArray();
-
+    
     $admin_theme = new AdminThemes();
     $admin_theme->setCurrentTheme($adminTheme); // variable from common.php
 
@@ -58,149 +57,146 @@
         </script>
         
         
-                <?php
-                    global $preferences;
-                    if(!isset($preferences['last_version_check']) || ((time()-(int)($preferences['last_version_check']))>(24*3600))) {
-                    ?>
-        <script>
-            $(function() {
-                        var version = <?php echo $preferences['version']; ?>;
+        <?php
+            $lastCheck = (int)osc_last_version_check() ;
+            $hourInSecs = 24 * 3600 ;
+        ?>
+        <?php if ( (time() - $lastCheck) > $hourInSecs ) { ?>
+            <script>
+                $(function() {
+                    var version = <?php echo osc_version() ; ?> ;
 
-                        $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
-                            var update = document.getElementById('update_version');
-                            if(data.version > version) {
-                                var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>';
-                                update.innerHTML = text;
-                                update.setAttribute('style', '');
-                            }
-                        });
+                    $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
+                        var update = document.getElementById('update_version') ;
+                        if(data.version > version) {
+                            //var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>' ;
+                            var text = '<?php printf(__('OSClass %s is available!'), '\' + data.s_name + \'') ; ?> <a href="tools.php?action=upgrade"><?php _e('Please upgrade now') ; ?></a>' ;
+                            update.innerHTML = text ;
+                            update.setAttribute('style', '') ;
+                        }
+                    });
+                });
+            </script>
+        <?php } ?>
                 
-            });
-        </script>
-                <?php 
-                        
-                    }; ?>
-                
-
-        <!-- style -->
-        <script src="<?php echo  $current_theme; ?>/js/jquery.cookie.js"></script>
-        <script src="<?php echo  $current_theme; ?>/js/jquery.json.js"></script>
-        <link type="text/css" href="<?php echo  $current_styles; ?>/backoffice.css" media="screen" rel="stylesheet" />
+        <script src="<?php echo  $current_theme ; ?>/js/jquery.cookie.js"></script>
+        <script src="<?php echo  $current_theme ; ?>/js/jquery.json.js"></script>
+        <link type="text/css" href="<?php echo  $current_styles ; ?>/backoffice.css" media="screen" rel="stylesheet" />
         <link href="<?php echo WEB_PATH; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
             <?php
             // XXX: must be another way to include page specific stylesheets.
-            if(strstr($_SERVER["SCRIPT_NAME"],"items.php")) {
-                    ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/tabs.css" media="screen" rel="stylesheet" />
+            if(strstr($_SERVER["SCRIPT_NAME"], "items.php")) {
+            ?>
+                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
-                    	document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+                    	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
+                    </script>
+                    
+                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
+            <?php
+            }
+            if(strstr($_SERVER["SCRIPT_NAME"], "new_item.php")) {
+            ?>
+                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/new_item_layout.css" media="screen" rel="stylesheet" />
+            <?php
+            }
+            if(strstr($_SERVER["SCRIPT_NAME"], "categories.php")) {
+            ?>
+                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
+                    <script type="text/javascript">
+                    	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
                     <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/item_list_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/cat_list_layout.css" media="screen" rel="stylesheet" />
+            <?php
             }
-            if(strstr($_SERVER["SCRIPT_NAME"],"new_item.php")) {
-                    ?>
+            if(strstr($_SERVER["SCRIPT_NAME"], "media.php")) {
+            ?>
                     <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/new_item_layout.css" media="screen" rel="stylesheet" />
-                    <?php
-            }
-            if(strstr($_SERVER["SCRIPT_NAME"],"categories.php")) {
-                    ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/tabs.css" media="screen" rel="stylesheet" />
-                    <script type="text/javascript">
-                    	document.write('<style type="text/css">.tabber{display:none;}<\/style>');
-                    </script>
-                    
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/cat_list_layout.css" media="screen" rel="stylesheet" />
-                    <?php
-            }
-            if(strstr($_SERVER["SCRIPT_NAME"],"media.php")) {
-                    ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/media_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/media_layout.css" media="screen" rel="stylesheet" />
+            <?php
             }
 
-            if(strstr($_SERVER["SCRIPT_NAME"],"users.php")) {
+            if(strstr($_SERVER["SCRIPT_NAME"], "users.php")) {
                     ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/users_list_layout.css" media="screen" rel="stylesheet" />
+                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/users_list_layout.css" media="screen" rel="stylesheet" />
                     <?php
             }
-            if(strstr($_SERVER["SCRIPT_NAME"],"admins.php")) {
-                    ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/admins_list_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+            if(strstr($_SERVER["SCRIPT_NAME"], "admins.php")) {
+            ?>
+                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/admins_list_layout.css" media="screen" rel="stylesheet" />
+            <?php
             }
-            if(strstr($_SERVER["SCRIPT_NAME"],"comments.php")) {
-                    ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/item_list_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+            if(strstr($_SERVER["SCRIPT_NAME"], "comments.php")) {
+            ?>
+                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
+            <?php
             }
 
-            if(strstr($_SERVER["SCRIPT_NAME"],"appearance.php")) {
-                    ?>
-                    <link type="text/css" href="<?php echo $current_styles;?>/appearance_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+            if(strstr($_SERVER["SCRIPT_NAME"], "appearance.php")) {
+            ?>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/appearance_layout.css" media="screen" rel="stylesheet" />
+            <?php
             }
-            if(strstr($_SERVER["SCRIPT_NAME"],"plugins.php")) {
-                    ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/tabs.css" media="screen" rel="stylesheet" />
+            if(strstr($_SERVER["SCRIPT_NAME"], "plugins.php")) {
+            ?>
+                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
-                    	document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+                    	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
 
-                    <script type="text/javascript" src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/plugins_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <link type="text/css" href="<?php echo $current_styles ; ?>/plugins_layout.css" media="screen" rel="stylesheet" />
+            <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"],"pages.php")) {
-                    ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/tabs.css" media="screen" rel="stylesheet" />
-                    <script type="text/javascript">
-                    	document.write('<style type="text/css">.tabber{display:none;}</style>');
-                    </script>
+                ?>
+                <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
+                <script type="text/javascript">
+                    document.write('<style type="text/css">.tabber{display:none;}</style>') ;
+                </script>
 
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/pages_layout.css" media="screen" rel="stylesheet" />
-                    <?php
+                <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                <link type="text/css" href="<?php echo $current_styles ; ?>/pages_layout.css" media="screen" rel="stylesheet" />
+                <?php
             }
-            if(strstr($_SERVER["SCRIPT_NAME"],"languages.php")) {
-                    ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/languages_layout.css" media="screen" rel="stylesheet" />
-                    <?php
-            }
-
-            if(strstr($_SERVER["SCRIPT_NAME"],"settings.php")) {
-                    ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles;?>/settings_layout.css" media="screen" rel="stylesheet" />
-                    <?php
-            }
-            if(strstr($_SERVER["SCRIPT_NAME"],"tools.php")) {
-                    ?>
-                    <!-- styles goes here -->
-                    <link type="text/css" href="<?php echo $current_styles;?>/tools_layout.css" media="screen" rel="stylesheet" />
-                    <?php
-            }
-
-            if(!strstr($_SERVER["SCRIPT_NAME"],"main.php")) { // XXX: Dirty workaround, in theory it must be included only when we load Datatables.
+            if(strstr($_SERVER["SCRIPT_NAME"], "languages.php")) {
             ?>
-            <!-- must be changed to different file -->
-            <style type="text/css" title="currentStyle">
-                    @import "<?php echo $current_styles;?>/demo_table.css";
-            </style>
+                <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                <link type="text/css" href="<?php echo $current_styles ; ?>/languages_layout.css" media="screen" rel="stylesheet" />
+            <?php
+            }
+
+            if(strstr($_SERVER["SCRIPT_NAME"], "settings.php")) {
+            ?>
+                <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                <link type="text/css" href="<?php echo $current_styles ; ?>/settings_layout.css" media="screen" rel="stylesheet" />
+            <?php
+            }
+            if(strstr($_SERVER["SCRIPT_NAME"], "tools.php")) {
+            ?>
+                <!-- styles goes here -->
+                <link type="text/css" href="<?php echo $current_styles ; ?>/tools_layout.css" media="screen" rel="stylesheet" />
+            <?php
+            }
+
+            if(!strstr($_SERVER["SCRIPT_NAME"], "main.php")) { // XXX: Dirty workaround, in theory it must be included only when we load Datatables.
+            ?>
+                <!-- must be changed to different file -->
+                <style type="text/css" title="currentStyle">
+                    @import "<?php echo $current_styles ; ?>/demo_table.css";
+                </style>
             <?php
             }
             ?>
@@ -211,14 +207,9 @@
     <div id="header">
         <div id="logo"><?php _e('OSClass'); ?></div>
         <div id="arrow">&raquo;</div>
-        <?php if(isset($preferences)): ?>
-        <div id="hostname"><?php echo $preferences['pageTitle']; ?></div>
-        <?php endif; ?>
-        <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo WEB_PATH; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
-        <div id="user_links"><?php _e('Howdy'); ?>, <a title="<?php _e('Your profile'); ?>" href="admins.php?action=edit"><?php echo $admin['s_name']; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
-	
-		<?php osc_runHook('admin_header'); ?>
-
+        <div id="hostname"><?php echo osc_page_title() ; ?></div>
+        <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo WEB_PATH ; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
+        <div id="user_links"><?php _e('Howdy') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="admins.php?action=edit"><?php echo $admin['s_name'] ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
+        <?php osc_runHook('admin_header'); ?>
     </div>
-    <div id="update_version" style="display:none;">
-    </div>
+    <div id="update_version" style="display:none;"></div>

@@ -95,13 +95,9 @@ $_COOKIE = add_slashes_extended($_COOKIE);
 $_SERVER = add_slashes_extended($_SERVER);
 $_REQUEST = add_slashes_extended($_REQUEST);
 
-//Creating a singleton of Preference with the information of the database
-$_P = Preference::newInstance() ;
-
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
-    $auto_cron = $_P->get('auto_cron') ;
-    if($auto_cron) {
+    if(osc_auto_cron()) {
         osc_doRequest(ABS_WEB_URL . 'oc-includes/osclass/cron.php', array()) ;
     }
 }
