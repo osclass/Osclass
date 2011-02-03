@@ -293,19 +293,12 @@ switch ($action) {
         $currencies = Currency::newInstance()->listAll();
 
         $locales = Locale::newInstance()->listAllEnabled();
-        $item = array();
-        $resources = array();
+        $item = array() ;
+        $resources = array() ;
         
-        /*osc_renderHeader(
-                array(
-                    'pageTitle' => __('Publish your item') . ' - ' . $preferences['pageTitle'],
-                    'noindex' => 'true'
-                )
-        );*/
-        $new_item = TRUE;
-        osc_renderAdminSection('items/frm.php');
-        //osc_renderView('item-post.php');
-        osc_renderFooter();
+        $new_item = TRUE ;
+        osc_renderAdminSection('items/frm.php') ;
+        osc_renderFooter() ;
     break;
     case 'post_item':
 

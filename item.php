@@ -84,52 +84,52 @@ switch ($action) {
             $content = current($aPage['locale']);
         }
         
-        $words   = array();
+        $words   = array() ;
         $words[] = array('{FRIEND_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{FRIEND_EMAIL}', '{WEB_URL}',
-                         '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}');
+                         '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}') ;
         $words[] = array($_POST['friendName'], $_POST['yourName'], $_POST['yourEmail'], 
                          $_POST['friendEmail'], ABS_WEB_URL, $item['s_title'], $_POST['message'],
-                         $item_url, $preferences['pageTitle']);
-        $title = osc_mailBeauty($content['s_title'], $words);
-        $body  = osc_mailBeauty($content['s_text'], $words);
+                         $item_url, osc_page_title()) ;
+        $title = osc_mailBeauty($content['s_title'], $words) ;
+        $body  = osc_mailBeauty($content['s_text'], $words) ;
 
-        $from = ( isset($_POST['yourEmail']) ) ? $_POST['yourEmail'] : $preferences['contactEmail'];
+        $from = ( isset($_POST['yourEmail']) ) ? $_POST['yourEmail'] : osc_contact_email() ;
         $from_name = $_POST['yourName'];
 
-        if (isset($preferences['notify_contact_friends']) && $preferences['notify_contact_friends']) {
-            if (isset($preferences['contactEmail'])) {
-                $add_bbc = $preferences['contactEmail'];
-            }
+        if (osc_notify_contact_friends()) {
+            $add_bbc = osc_contact_email() ;
         }
 
-        $params = array('add_bcc'   => $add_bbc,
-                        'from'      => $from,
-                        'from_name' => $from_name,
-                        'subject'   => $title,
-                        'to'        => $_POST['friendEmail'],
-                        'to_name'   => $_POST['friendName'],
-                        'body'      => $body,
-                        'alt_body'  => $body);
+        $params = array(
+                    'add_bcc'   => $add_bbc
+                    ,'from'      => $from
+                    ,'from_name' => $from_name
+                    ,'subject'   => $title
+                    ,'to'        => $_POST['friendEmail']
+                    ,'to_name'   => $_POST['friendName']
+                    ,'body'      => $body
+                    ,'alt_body'  => $body
+                  ) ;
 
         if(osc_sendMail($params)) {
-            osc_addFlashMessage(__('We just send your message to ').$_POST['friendName'].".");
+            osc_addFlashMessage(__('We just send your message to ') . $_POST['friendName'] . ".") ;
         } else {
-            osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.'));
+            osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
         }
 
-        osc_redirectTo($item_url);
+        osc_redirectTo($item_url) ;
         break;
 
     case 'contact':
-        $item = $manager->findByPrimaryKey($_REQUEST['id']);
-        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
-        if($category['i_expiration_days']>0) {
-            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
-            $date = time();
-            if($item_date<$date) {
+        $item = $manager->findByPrimaryKey($_REQUEST['id']) ;
+        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']) ;
+        if($category['i_expiration_days'] > 0) {
+            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
+            $date = time() ;
+            if($item_date < $date) {
                 // The item is expired, we can not contact the seller
-                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.'));
-                osc_redirectTo(osc_createItemURL($item));
+                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                osc_redirectTo(osc_createItemURL($item)) ;
             }
         }
 
@@ -140,17 +140,17 @@ switch ($action) {
 
     case 'contact_post':
         $path = '';
-        $item = $manager->findByPrimaryKey($_REQUEST['id']);
+        $item = $manager->findByPrimaryKey($_REQUEST['id']) ;
 
         $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
 
-        if($category['i_expiration_days']>0) {
-            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600));
+        if($category['i_expiration_days'] > 0) {
+            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
             $date = time();
-            if($item_date<$date) {
+            if($item_date < $date) {
                 // The item is expired, we can not contact the seller
-                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.'));
-                osc_redirectTo(osc_createItemURL($item));
+                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                osc_redirectTo(osc_createItemURL($item)) ;
             }
         }
 
@@ -173,98 +173,99 @@ switch ($action) {
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
 
-        $from = ( isset($preferences['contactEmail']) ) ? $preferences['contactEmail'] : 'no-reply@osclass.org';
-        $from_name = $preferences['pageTitle'];
-        if (isset($preferences['notify_contact_item']) && $preferences['notify_contact_item']) {
-            if (isset($preferences['contactEmail'])) {
-                $add_bbc = $preferences['contactEmail'];
-            }
+        $from = osc_contact_email() ;
+        $from_name = osc_page_title() ;
+        if (osc_notify_contact_item()) {
+            $add_bbc = osc_contact_email() ;
         }
 
-        $emailParams = array('add_bcc'   => $add_bbc,
-                             'from'      => $from,
-                             'from_name' => $from_name,
-                             'subject'   => $title,
-                             'to'        => $item['s_contact_email'],
-                             'to_name'   => $item['s_contact_name'],
-                             'body'      => $body,
-                             'alt_body'  => $body,
-                             'reply_to'  => $_POST['yourEmail']);
+        $emailParams = array (
+                            'add_bcc'   => $add_bbc
+                            ,'from'      => $from
+                            ,'from_name' => $from_name
+                            ,'subject'   => $title
+                            ,'to'        => $item['s_contact_email']
+                            ,'to_name'   => $item['s_contact_name']
+                            ,'body'      => $body
+                            ,'alt_body'  => $body
+                            ,'reply_to'  => $_POST['yourEmail']
+                        ) ;
 
-        if($preferences['item_attachment']) {
-            $resourceName = $_FILES['attachment']['name'];
-            $tmpName = $_FILES['attachment']['tmp_name'];
-            $resourceType = $_FILES['attachment']['type'];
-            $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName;
+        if(osc_item_attachment()) {
+            $resourceName = $_FILES['attachment']['name'] ;
+            $tmpName = $_FILES['attachment']['tmp_name'] ;
+            $resourceType = $_FILES['attachment']['type'] ;
+            $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName ;
 
             if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
-                osc_addFlashMessage('There has been some erro sending the message');
-                osc_redirectToReferer(ABS_WEB_URL);
+                osc_addFlashMessage(__('There has been some erro sending the message')) ;
+                osc_redirectToReferer(ABS_WEB_URL) ;
             }
 
             if(!move_uploaded_file($tmpName, $path)){
-                unset($path);
+                unset($path) ;
             }
         }
 
         if(isset($path)) {
-            $emailParams['attachment'] = $path;
+            $emailParams['attachment'] = $path ;
         }
 
-        osc_sendMail($emailParams);
-        @unlink($path);
-        osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.'));
-        osc_redirectTo(osc_createItemURL($item));
+        osc_sendMail($emailParams) ;
+        @unlink($path) ;
+        osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.')) ;
+        osc_redirectTo(osc_createItemURL($item)) ;
         break;
 
     case 'add_comment':
-        $authorName = $_POST['authorName'];
-        $authorEmail = $_POST['authorEmail'];
-        $body = $_POST['body'];
-        $title = $_POST['title'];
-        $itemId = $_POST['id'];
+        $authorName = $_POST['authorName'] ;
+        $authorEmail = $_POST['authorEmail'] ;
+        $body = $_POST['body'] ;
+        $title = $_POST['title'] ;
+        $itemId = $_POST['id'] ;
 
-        $item = $manager->findByPrimaryKey($itemId);
+        $item = $manager->findByPrimaryKey($itemId) ;
 
-        $itemURL = osc_createItemURL($item);
+        $itemURL = osc_createItemURL($item) ;
 
-        if (isset($preferences['moderate_comments'])) {
-            $status = 'INACTIVE';
+        if (osc_moderate_comments()) {
+            $status = 'INACTIVE' ;
         } else {
-            $status = 'ACTIVE';
+            $status = 'ACTIVE' ;
         }
-        if (isset($preferences['akismetKey']) && !empty($preferences['akismetKey'])) {
-            require_once LIB_PATH . 'Akismet.class.php';
-            $akismet = new Akismet(ABS_WEB_URL, $preferences['akismetKey']);
-            $akismet->setCommentAuthor($authorName);
-            $akismet->setCommentAuthorEmail($authorEmail);
-            $akismet->setCommentContent($body);
-            $akismet->setPermalink($itemURL);
+        if (osc_akismet_key()) {
+            require_once LIB_PATH . 'Akismet.class.php' ;
+            $akismet = new Akismet(ABS_WEB_URL, osc_akismet_key()) ;
+            $akismet->setCommentAuthor($authorName) ;
+            $akismet->setCommentAuthorEmail($authorEmail) ;
+            $akismet->setCommentContent($body) ;
+            $akismet->setPermalink($itemURL) ;
 
-            $status = $akismet->isCommentSpam() ? 'SPAM' : $status;
+            $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
         }
 
         try {
-            $mComments = new Comment();
-            $aComment  = array('dt_pub_date'    => DB_FUNC_NOW,
-                               'fk_i_item_id'   => $itemId,
-                               's_author_name'  => $authorName,
-                               's_author_email' => $authorEmail,
-                               's_title'        => $title,
-                               's_body'         => $body,
-                               'e_status'       => $status);
-            $mComments->insert($aComment);
+            $mComments = new Comment() ;
+            $aComment  = array(
+                            'dt_pub_date'    => DB_FUNC_NOW
+                            ,'fk_i_item_id'   => $itemId
+                            ,'s_author_name'  => $authorName
+                            ,'s_author_email' => $authorEmail
+                            ,'s_title'        => $title
+                            ,'s_body'         => $body
+                            ,'e_status'       => $status
+                        );
+            $mComments->insert($aComment) ;
 
-            $prefManager = Preference::newInstance();
-            $notify = $prefManager->findValueByName('notify_new_comment');
-            $admin_email = $prefManager->findValueByName('contactEmail');
-            $prefLocale = $prefManager->findValueByName('language');
+            $notify = osc_notify_new_comment() ;
+            $admin_email = osc_contact_email() ;
+            $prefLocale = osc_language;
 
             //Notify admin
             if ($notify) {
-                $mPages = new Page();
-                $aPage = $mPages->findByInternalName('email_new_comment_admin');
-                $locale = osc_getActualLocale();
+                $mPages = new Page() ;
+                $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
+                $locale = osc_getActualLocale() ;
 
                 $content = array();
                 if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -280,53 +281,45 @@ switch ($action) {
                 $title_email = osc_mailBeauty($content['s_title'], $words);
                 $body_email = osc_mailBeauty($content['s_text'], $words);
 
-                $from = ( isset($preferences['contactEmail']) ) ? $preferences['contactEmail'] : 'no-reply@osclass.org';
-                $from_name = $preferences['pageTitle'];
-                if (isset($preferences['notify_contact_item']) && $preferences['notify_contact_item']) {
-                    if (isset($preferences['contactEmail'])) {
-                        $add_bbc = $preferences['contactEmail'];
-                    }
+                $from = osc_contact_email() ;
+                $from_name = osc_page_title ;
+                if (osc_notify_contact_item()) {
+                    $add_bbc = osc_contact_email() ;
                 }
 
-                $emailParams = array('from'      => $admin_email,
-                                     'from_name' => 'Admin mail system',
-                                     'subject'   => $title_email,
-                                     'to'        => $admin_email,
-                                     'to_name'   => 'Admin mail system',
-                                     'body'      => $body_email,
-                                     'alt_body'  => $body_email);
-                osc_sendMail($emailParams);
+                $emailParams = array(
+                                'from'      => $admin_email
+                                ,'from_name' => __('Admin mail system')
+                                ,'subject'   => $title_email
+                                ,'to'        => $admin_email
+                                ,'to_name'   => __('Admin mail system')
+                                ,'body'      => $body_email
+                                ,'alt_body'  => $body_email
+                                );
+                osc_sendMail($emailParams) ;
             }
             osc_runHook('add_comment', $item);
         } catch (Exception $e) {
-            osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.'));
+            osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.')) ;
         }
 
-        osc_redirectTo($itemURL);
+        osc_redirectTo($itemURL) ;
         break;
 
     case 'post':
-        $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']);
-
-        if(!$enabled_users) {
-            osc_addFlashMessage(__('Users are not enable'));
-            osc_redirectTo(ABS_WEB_URL);
+        if(!osc_users_enabled()) {
+            osc_addFlashMessage(__('Users are not enable')) ;
+            osc_redirectTo(ABS_WEB_URL) ;
         }
 
-        $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
+        $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null ;
 
-        if (isset($preferences['reg_user_post'])) {
-            if ($preferences['reg_user_post']) {
-                if ($userId != null) {
-                    //OK
-                } else {
-                    // NOT OK
-                    osc_addFlashMessage(__('You need to log-in in order to post a new item.'));
-                    osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
-                    break;
-                }
-            } else {
-                //OK
+        if (osc_reg_user_post()) {
+            if ($userId == null) {
+                // NOT OK
+                osc_addFlashMessage(__('You need to log-in in order to post a new item.')) ;
+                osc_redirectTo(osc_createLoginURL()) ;
+                break;
             }
         }
 
@@ -350,8 +343,8 @@ switch ($action) {
         osc_runHook('post_item');
         osc_renderHeader(
                 array(
-                    'pageTitle' => __('Publish your item') . ' - ' . $preferences['pageTitle'],
-                    'noindex' => 'true'
+                    'pageTitle' => __('Publish your item') . ' - ' . osc_page_title()
+                    ,'noindex' => 'true'
                 )
         );
         osc_renderView('item-post.php');
@@ -359,9 +352,7 @@ switch ($action) {
         break;
 
     case 'post_item':
-        $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']);
-
-        if(!$enabled_users) {
+        if(!osc_users_enabled()) {
             osc_addFlashMessage(__('Users are not enable'));
             osc_redirectTo(ABS_WEB_URL);
         }
@@ -382,33 +373,39 @@ switch ($action) {
                 }
 
                 $item_url = osc_createItemURL($item);
-                $urlEdit = array('file'   => 'user',
-                                 'action' => 'item_edit',
-                                 'id'     => $itemId,
-                                 'userId' => NULL,
-                                 'secret' => $item['s_secret']);
+                $urlEdit =  array(
+                                'file'   => 'user'
+                                ,'action' => 'item_edit'
+                                ,'id'     => $itemId
+                                ,'userId' => null
+                                ,'secret' => $item['s_secret']
+                            ) ;
                 $edit_link = osc_createURL($urlEdit);
 
-                $urlDelete = array('file'   => 'user',
-                                   'action' => 'item_delete',
-                                   'id'     => $itemId,
-                                   'userId' => NULL,
-                                   'secret' => $item['s_secret']);
-                $delete_link = osc_createURL($urlDelete);
+                $urlDelete =    array(
+                                    'file'   => 'user'
+                                    ,'action' => 'item_delete'
+                                    ,'id'     => $itemId
+                                    ,'userId' => null
+                                    ,'secret' => $item['s_secret']
+                                ) ;
+                $delete_link = osc_createURL($urlDelete) ;
 
                 $words   = array();
                 $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
                                  '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
                 $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'],
-                                 $item_url, $preferences['pageTitle'], $edit_link, $delete_link);
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
+                                 $item_url, osc_page_title(), $edit_link, $delete_link) ;
+                $title = osc_mailBeauty($content['s_title'], $words) ;
+                $body = osc_mailBeauty($content['s_text'], $words) ;
 
-                $emailParams = array('subject' => $title,
-                                     'to' => $PcontactEmail,
-                                     'to_name' => $PcontactName,
-                                     'body' => $body,
-                                     'alt_body' => $body);
+                $emailParams =  array(
+                                    'subject' => $title
+                                    ,'to' => $PcontactEmail
+                                    ,'to_name' => $PcontactName
+                                    ,'body' => $body
+                                    ,'alt_body' => $body
+                                );
                 osc_sendMail($params);
             }
 
@@ -506,7 +503,7 @@ switch ($action) {
                 $aUser['s_info'] = '';
             }
 
-            $headerConf = array('pageTitle' => $item['s_title'] . ' - '.$preferences['pageTitle'] );
+            $headerConf = array('pageTitle' => $item['s_title'] . ' - ' . osc_page_title()) ;
             osc_runHook('show_item', $item);
             osc_renderHeader($headerConf);
             osc_renderView('item.php');
@@ -516,7 +513,7 @@ switch ($action) {
                 $resources = $manager->findResourcesByID($_GET['id']);
                 $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 
-                $headerConf = array('pageTitle' => $item['s_title'] . ' - '.$preferences['pageTitle']);
+                $headerConf = array('pageTitle' => $item['s_title'] . ' - '.osc_page_title()) ;
                 osc_addFlashMessage('This item is NOT validated. You should validate it in order to show this item
                     to the rest of the users. You could do that in your profile menu.');
                 osc_renderHeader($headerConf);

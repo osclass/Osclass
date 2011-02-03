@@ -37,7 +37,7 @@ function basic_info() {
         )
     ) ;
 
-    $mPreference = Preference::newInstance();
+    $mPreference = Preference::newInstance() ;
     $mPreference->insert (
         array(
             's_section' => 'osclass'

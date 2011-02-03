@@ -4,6 +4,10 @@
         return (getBoolPreference('enabled_comments')) ;
     }
 
+    function osc_users_enabled() {
+        return (getBoolPreference('enabled_users')) ;
+    }
+
     function osc_moderate_comments() {
         return (getBoolPreference('moderate_comments')) ;
     }
@@ -39,7 +43,34 @@
     function osc_reg_user_post() {
         return (getBoolPreference('reg_user_post')) ;
     }
-    
+
+    function osc_price_enabled_at_items() {
+        return (getBoolPreference('enableField#f_price@items')) ;
+    }
+
+    function osc_images_enabled_at_items() {
+        return (getBoolPreference('enableField#images@items')) ;
+    }
+
+    function osc_notify_contact_friends() {
+        return(getBoolPreference('notify_contact_friends')) ;
+    }
+
+    function osc_notify_contact_item() {
+        return(getBoolPreference('notify_contact_item')) ;
+    }
+
+    function osc_item_attachment() {
+        return(getBoolPreference('item_attachment')) ;
+    }
+
+    function osc_notify_new_comment() {
+        return(getBoolPreference('notify_new_comment')) ;
+    }
+
+    function osc_notify_new_item() {
+        return(getBoolPreference('notify_new_item')) ;
+    }
     
 
     //OTHER FUNCTIONS TO GET INFORMATION OF PREFERENCES
@@ -122,6 +153,12 @@
     function osc_google_maps_key() {
         return(getPreference('google_maps_key')) ;
     }
+
+    function osc_akismet_key() {
+        return(getPreference('akismetKey')) ;
+    }
+    
+
     
 
     //PRIVATE FUNCTION (if there was a class :P)

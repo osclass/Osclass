@@ -16,7 +16,7 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null ;
 $preferences = Preference::newInstance()->toArray();
 switch ($action) {
     case 'item_edit_post':

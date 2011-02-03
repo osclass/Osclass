@@ -29,8 +29,7 @@ class Category extends DAO {
             if(isset($_SESSION['locale'])) {
                 $l = $_SESSION['locale'];
             } else {
-                $_P = Preference::newInstance() ;
-                $l = $_P->get('language') ;
+                $l = osc_language() ;
             }
         }
         
@@ -43,7 +42,7 @@ class Category extends DAO {
     }
 
     public function getTableName() {
-        return DB_TABLE_PREFIX . 't_category';
+        return DB_TABLE_PREFIX . 't_category' ;
     }
 
     public function getTableDescriptionName() {
@@ -51,52 +50,52 @@ class Category extends DAO {
     }
 
     public function getTableItemName() {
-        return DB_TABLE_PREFIX . 't_item';
+        return DB_TABLE_PREFIX . 't_item' ;
     }
 
     public function findRootCategories() {
-        $roots = $this->listWhere("a.fk_i_parent_id IS NULL");
-        return $roots;
+        $roots = $this->listWhere("a.fk_i_parent_id IS NULL") ;
+        return $roots ;
     }
 
     public function findRootCategoriesEnabled() {
-        $roots = $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1");
-        return $roots;
+        $roots = $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1") ;
+        return $roots ;
     }
 
     public function toSubTree($category = null) {
         if($category==null) {
-            return null;
+            return null ;
         } else {
-            $branches = $this->listWhere("a.fk_i_parent_id = ".$category." AND a.b_enabled = 1 ");
+            $branches = $this->listWhere("a.fk_i_parent_id = ".$category." AND a.b_enabled = 1 ") ;
             foreach($branches as &$branch) {
-                $branch['categories'] = $this->toSubTree($branch['pk_i_id']);
+                $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
             }
-            unset($branch);
-            return $branches;
+            unset($branch) ;
+            return $branches ;
         }
     }
 
     public function toSubTreeAll($category = null) {
         if($category==null) {
-            return null;
+            return null ;
         } else {
-            $branches = $this->listWhere("a.fk_i_parent_id = ".$category."");
+            $branches = $this->listWhere("a.fk_i_parent_id = ".$category."") ;
             foreach($branches as &$branch) {
-                $branch['categories'] = $this->toSubTree($branch['pk_i_id']);
+                $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
             }
-            unset($branch);
-            return $branches;
+            unset($branch) ;
+            return $branches ;
         }
     }
 
     public function toTree() {
-        $roots = $this->findRootCategoriesEnabled();
+        $roots = $this->findRootCategoriesEnabled() ;
         foreach ($roots as &$r) {
-            $r['categories'] = $this->toSubTree($r['pk_i_id']);//$this->listWhere("a.fk_i_parent_id = " . $r['pk_i_id'] . " AND a.b_enabled = 1 ");
+            $r['categories'] = $this->toSubTree($r['pk_i_id']) ;
         }
-        unset($r);
-        return $roots;
+        unset($r) ;
+        return $roots ;
     }
 
     public function toTreeAll() {

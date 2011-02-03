@@ -49,85 +49,46 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 
                     <div style="float: left; width: 50%;">
                         <fieldset>
-                            <legend><?php echo __('Settings'); ?></legend>
-                            <?php if(isset($preferences['enabled_recaptcha_items']) && $preferences['enabled_recaptcha_items']): ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="enabled_recaptcha_items" id="enabled_recaptcha_items"/>
-                            <?php else: ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_recaptcha_items" id="enabled_recaptcha_items"/>
-                            <?php endif; ?>
-                            <label><?php echo __('Enabled recaptcha'); ?></label>
-
+                            <legend><?php _e('Settings') ; ?></legend>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_enabled_recaptcha_items()) ? echo 'checked="true"' : echo '' ; ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" />
+                            <label><?php _e('Enabled recaptcha') ; ?></label>
                             <br/>
-
-                            <?php if(isset($preferences['enabled_item_validation']) && $preferences['enabled_item_validation']): ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="enabled_item_validation" id="enabled_item_validation"/>
-                            <?php else: ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_item_validation" id="enabled_item_validation"/>
-                            <?php endif; ?>
-                            <label><?php echo __('Enabled item validation'); ?></label>
-
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_enabled_item_validation()) ? echo 'checked="true"' : echo '' ; ?> name="enabled_item_validation" id="enabled_item_validation" />
+                            <label><?php _e('Enabled item validation') ; ?></label>
                             <br/>
-
-                            <?php if(isset($preferences['reg_user_post']) && $preferences['reg_user_post']): ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="reg_user_post" id="reg_user_post"/>
-                            <?php else: ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="reg_user_post" id="reg_user_post"/>
-                            <?php endif; ?>
-                            <label><?php echo __('Only allow registered users post items'); ?></label>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_reg_user_post()) ? echo 'checked="true"' : echo '' ; ?> name="reg_user_post" id="reg_user_post" />
+                            <label><?php _e('Only allow registered users post items') ; ?></label>
                         </fieldset>
                     </div>
 
                     <div style="float: left; width: 50%;">
                         <fieldset>
-                            <legend><?php echo __('Notifications'); ?></legend>
-                            <?php if(isset($preferences['notify_new_item']) && $preferences['notify_new_item']): ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="notify_new_item" id="notify_new_item"/>
-                            <?php else: ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="notify_new_item" id="notify_new_item"/>
-                            <?php endif; ?>
-                            <label><?php echo __('Notify new item to admin'); ?></label>
-
+                            <legend><?php _e('Notifications'); ?></legend>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_new_item()) ? echo 'checked="true"' : echo '' ; ?> name="notify_new_item" id="notify_new_item" />
+                            <label><?php _e('Notify new item to admin') ; ?></label>
                             <br/>
-                            <?php if(isset($preferences['notify_contact_item']) && $preferences['notify_contact_item']): ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="notify_contact_item" id="notify_contact_item"/>
-                            <?php else: ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="notify_contact_item" id="notify_contact_item"/>
-                            <?php endif; ?>
-                            <label><?php echo __('Notify contact item to admin'); ?></label>
-
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_contact_item()) ? echo 'checked="true"' : echo '' ; ?> name="notify_contact_item" id="notify_contact_item" />
+                            <label><?php _e('Notify contact item to admin') ; ?></label>
                             <br/>
-                            <?php if(isset($preferences['notify_contact_friends']) && $preferences['notify_contact_friends']): ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="notify_contact_friends" id="notify_contact_friends"/>
-                            <?php else: ?>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="notify_contact_friends" id="notify_contact_friends"/>
-                            <?php endif; ?>
-                            <label><?php echo __('Notify contact friends to admin'); ?></label>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_contact_friends()) ? echo 'checked="true"' : echo '' ; ?> name="notify_contact_friends" id="notify_contact_friends" />
+                            <label><?php _e('Notify contact friends to admin') ; ?></label>
                         </fieldset>
                     </div>
                     
                     <div style="float: left; width: 50%;">
                         <fieldset>
                             <legend><?php _e('Optional fields'); ?></legend>
-                            <?php if(isset($preferences['enableField#f_price@items']) && $preferences['enableField#f_price@items']) { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="enableField#f_price@items" />
-                            <?php } else { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enableField#f_price@items" />
-                            <?php } ?>
-                            <label><?php _e('Enable price'); ?></label>
-
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_price_enabled_at_items()) ? echo 'checked="true"' : echo '' ; ?> name="enableField#f_price@items" />
+                            <label><?php _e('Enable price') ; ?></label>
                             <br/>
-                            <?php if(isset($preferences['enableField#images@items']) && $preferences['enableField#images@items']) { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="enableField#images@items" />
-                            <?php } else { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enableField#images@items" />
-                            <?php } ?>
-                            <label><?php _e('Enable images'); ?></label>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_images_enabled_at_items()) ? echo 'checked="true"' : echo '' ; ?> name="enableField#images@items" />
+                            <label><?php _e('Enable images') ; ?></label>
                         </fieldset>
                     </div>
 
                     <div style="clear: both;"></div>
 												
-                    <input id="button_save" type="submit" value="<?php echo __('Update'); ?>" />
+                    <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
 						
                 </form>
             </div>

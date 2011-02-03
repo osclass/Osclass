@@ -38,9 +38,9 @@ class ItemComment extends DAO {
 	public function extendData($items) {
 
 		if(isset($_SESSION['locale'])) {
-			$prefLocale = $_SESSION['locale'];
+			$prefLocale = $_SESSION['locale'] ;
 		} else {
-			$prefLocale = Preference::newInstance()->findValueByName('language');
+			$prefLocale = osc_language() ;
 		}
 
 		$results = array();
@@ -80,15 +80,13 @@ class ItemComment extends DAO {
 	public function getLastComments($num) {
             if(!intval($num)) return false;
 
-            global $preferences;
-
-            $lang = $preferences['language'];
+            $lang = osc_language() ;
             return $this->conn->osc_dbFetchResults('SELECT i.*, d.s_title
                 FROM %st_item_comment i
                 JOIN %st_item c ON c.pk_i_id = i.fk_i_item_id
                 JOIN %st_item_description d ON d.fk_i_item_id = i.fk_i_item_id
                 GROUP BY d.fk_i_item_id 
-                ORDER BY pk_i_id DESC LIMIT 0, ' . $num . '', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                ORDER BY pk_i_id DESC LIMIT 0, ' . $num . '', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX) ;
 	}
 }
 

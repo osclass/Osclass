@@ -35,7 +35,6 @@ function google_maps_admin() {
 
 function google_maps_location() {
 	global $item ;
-	$preferences = Preference::newInstance()->toArray();
 	if(osc_google_maps_key() != '') {
 		$key = osc_google_maps_key() ;
         require 'map.php' ;

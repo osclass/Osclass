@@ -71,77 +71,78 @@
 
                     <?php ItemForm::multilanguage_title_description($locales, $item); ?>
 
-                    <?php if($preferences['enableField#f_price@items']) { ?>
-                    <div>
-                        <h2><?php _e('Price'); ?></h2>
-                        <?php ItemForm::price_input_text($item); ?>
-                        <?php ItemForm::currency_select($currencies, $item); ?>
-                    </div>
+                    <?php if(osc_price_enabled_at_items()) { ?>
+                        <div>
+                            <h2><?php _e('Price'); ?></h2>
+                            <?php ItemForm::price_input_text($item); ?>
+                            <?php ItemForm::currency_select($currencies, $item); ?>
+                        </div>
                     <?php } ?>
-                    <?php if($preferences['enableField#images@items']) { ?>
-                    <div>
-                        <script type="text/javascript">
-                            var photoIndex = 0;
-                            function gebi(id) { return document.getElementById(id); }
-                            function ce(name) { return document.createElement(name); }
-                            function re(id) {
-                                var e = gebi(id);
-                                e.parentNode.removeChild(e);
-                            }
-                            function addNewPhoto() {
-                                var id = 'p-' + photoIndex++;
+                    
+                    <?php if(osc_images_enabled_at_items()) { ?>
+                        <div>
+                            <script type="text/javascript">
+                                var photoIndex = 0;
+                                function gebi(id) { return document.getElementById(id); }
+                                function ce(name) { return document.createElement(name); }
+                                function re(id) {
+                                    var e = gebi(id);
+                                    e.parentNode.removeChild(e);
+                                }
+                                function addNewPhoto() {
+                                    var id = 'p-' + photoIndex++;
 
-                                var i = ce('input');
-                                i.setAttribute('type', 'file');
-                                i.setAttribute('name', 'photos[]');
+                                    var i = ce('input');
+                                    i.setAttribute('type', 'file');
+                                    i.setAttribute('name', 'photos[]');
 
-                                var a = ce('a');
-                                a.style.fontSize = 'x-small';
-                                a.setAttribute('href', '#');
-                                a.setAttribute('divid', id);
-                                a.onclick = function() { re(this.getAttribute('divid')); return false; }
-                                a.appendChild(document.createTextNode('<?php echo __('Remove'); ?>'));
+                                    var a = ce('a');
+                                    a.style.fontSize = 'x-small';
+                                    a.setAttribute('href', '#');
+                                    a.setAttribute('divid', id);
+                                    a.onclick = function() { re(this.getAttribute('divid')); return false; }
+                                    a.appendChild(document.createTextNode('<?php echo __('Remove'); ?>'));
 
-                                var d = ce('div');
-                                d.setAttribute('id', id);
+                                    var d = ce('div');
+                                    d.setAttribute('id', id);
 
-                                d.appendChild(i);
-                                d.appendChild(a);
+                                    d.appendChild(i);
+                                    d.appendChild(a);
 
-                                gebi('photos').appendChild(d);
-                            }
+                                    gebi('photos').appendChild(d);
+                                }
 
-                            $(document).ready(function() {
-                                $('a.delete').click(function(e) {
-                                    e.preventDefault();
-                                    var parent = $(this).parent();
-                                    $.ajax({
-                                        type: 'get',
-                                        url: 'items.php',
-                                        data: 'action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
-                                        success: function() {
-                                            parent.slideUp(300,function() {
-                                                parent.remove();
-                                            });
-                                        }
+                                $(document).ready(function() {
+                                    $('a.delete').click(function(e) {
+                                        e.preventDefault();
+                                        var parent = $(this).parent();
+                                        $.ajax({
+                                            type: 'get',
+                                            url: 'items.php',
+                                            data: 'action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
+                                            success: function() {
+                                                parent.slideUp(300,function() {
+                                                    parent.remove();
+                                                });
+                                            }
+                                        });
                                     });
                                 });
-                            });
-                        </script>
+                            </script>
 
-                        <?php echo __('Photos'); ?><br />
-                        <div id="photos">
-                            <?php foreach($resources as $_r) {?>
-                                <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                    <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="items.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php echo __('Delete'); ?></a>
+                            <?php _e('Photos') ; ?><br />
+                            <div id="photos">
+                                <?php foreach($resources as $_r) {?>
+                                    <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
+                                        <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="items.php?action=deleteResource&id=<?php echo $_r['pk_i_id'] ; ?>&fkid=<?php echo $_r['fk_i_item_id'] ; ?>&name=<?php echo $_r['s_name'] ; ?>" class="delete"><?php _e('Delete'); ?></a>
+                                    </div>
+                                <?php } ?>
+                                <div>
+                                    <input type="file" name="photos[]" /> (<?php _e('optional') ; ?>)
                                 </div>
-                            <?php } ?>
-                            <div>
-                                <input type="file" name="photos[]" /> (<?php echo __('optional'); ?>)
                             </div>
+                            <a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a>
                         </div>
-                        <a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php echo __('Add new photo'); ?></a>
-                    </div>
                     <?php } ?>
 
                     <div class="location-post">
@@ -169,7 +170,7 @@
                     ?>
                     <div class="clear"></div>
                     <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
-                        <button type="button" onclick="window.location='items.php';" ><?php echo __('Cancel'); ?></button>
+                        <button type="button" onclick="window.location='items.php';" ><?php _e('Cancel'); ?></button>
                         <button type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
                     </div>
                 </div>
