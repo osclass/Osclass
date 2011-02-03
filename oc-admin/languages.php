@@ -54,13 +54,13 @@ switch ($action) {
 
         Locale::newInstance()->update($_POST, array('pk_c_code' => $code));
 
-        osc_redirectTo('languages.php');
+        osc_redirectTo('languages.php') ;
     break;
     case 'enable':
     case 'enable_bo':
-        $id = osc_paramRequest('id', false);
-        $enabled = osc_paramRequest('enabled', false);
-        $default_lang = Preference::newInstance()->findValueByName('language');
+        $id = osc_paramRequest('id', false) ;
+        $enabled = osc_paramRequest('enabled', false) ;
+        $default_lang = osc_language() ;
         try {
             if ($id) {
                 switch($action) {
@@ -111,7 +111,7 @@ switch ($action) {
                     break;
                 }
 
-                $default_lang = Preference::newInstance()->findValueByName('language');
+                $default_lang = osc_language() ;
                 foreach ($id as $i) {
                     if($default_lang==$i && $action=='disable_selected') {
                         osc_addFlashMessage($i.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
@@ -132,11 +132,11 @@ switch ($action) {
     break;
     case 'delete':
         if (isset($_GET['code']) && is_array($_GET['code'])) {
-            $default_lang = Preference::newInstance()->findValueByName('language');
+            $default_lang = osc_language() ;
             foreach ($_GET['code'] as $code) {
-                if($default_lang!=$code) {
+                if($default_lang != $code) {
                     try {
-                        Locale::newInstance()->deleteLocale($code);
+                        Locale::newInstance()->deleteLocale($code) ;
                         if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
                             osc_addFlashMessage(__('Directory "%s" could not be removed.'), $code);
                         }

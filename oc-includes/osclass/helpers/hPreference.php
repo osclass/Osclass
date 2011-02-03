@@ -71,6 +71,10 @@
     function osc_notify_new_item() {
         return(getBoolPreference('notify_new_item')) ;
     }
+
+    function osc_mailserver_auth() {
+        return(getBoolPreference('mailserver_auth')) ;
+    }
     
 
     //OTHER FUNCTIONS TO GET INFORMATION OF PREFERENCES
@@ -112,6 +116,10 @@
 
     function osc_language() {
         return(getPreference('language')) ;
+    }
+
+    function osc_admin_language() {
+        return(getPreference('admin_language')) ;
     }
 
     function osc_theme() {
@@ -157,8 +165,34 @@
     function osc_akismet_key() {
         return(getPreference('akismetKey')) ;
     }
-    
 
+    function osc_recaptcha_private_key() {
+        return(getPreference('recaptchaPrivKey')) ;
+    }
+
+    function osc_mailserver_type() {
+        return(getPreference('mailserver_type')) ;
+    }
+
+    function osc_mailserver_host() {
+        return(getPreference('mailserver_host')) ;
+    }
+
+    function osc_mailserver_port() {
+        return(getPreference('mailserver_port')) ;
+    }
+
+    function osc_mailserver_username() {
+        return(getPreference('mailserver_username')) ;
+    }
+
+    function osc_mailserver_password() {
+        return(getPreference('mailserver_password')) ;
+    }
+
+    function osc_mailserver_ssl() {
+        return(getPreference('mailserver_ssl')) ;
+    }
     
 
     //PRIVATE FUNCTION (if there was a class :P)

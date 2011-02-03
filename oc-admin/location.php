@@ -24,9 +24,6 @@ define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'oc-admin/oc-load.php';
 
-$prefManager = Preference::newInstance();
-$preferences = $prefManager->toArray();
-
 $action = osc_readAction();
 
 

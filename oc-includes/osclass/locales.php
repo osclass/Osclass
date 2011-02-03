@@ -95,19 +95,18 @@ function osc_listLanguageCodes() {
  * @return string Locale Code
  */
 function osc_getActualLocale($typeUser = 'user') {
-    $locale = null;
+    $locale = null ;
     if(isset($_SESSION['locale'])) {
-        return $_SESSION['locale'];
+        return $_SESSION['locale'] ;
     }
 
-    $mPreferences = new Preference();
     if ($typeUser == 'user') {
-        $locale = $mPreferences->findValueByName('language');
+        $locale = osc_language() ;
     } else {
-        $locale = $mPreferences->findValueByName('admin_language');
+        $locale = osc_admin_language() ;
     }
 
-    return $locale;
+    return $locale ;
 }
 
 ?>
