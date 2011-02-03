@@ -1,11 +1,10 @@
 <?php
 
-require_once 'oc-load.php';
-$preferences = Preference::newInstance()->toArray();
+require_once 'oc-load.php' ;
 
 //create object
-$rewrite = Rewrite::newInstance();
-$rewrite->clearRules();
+$rewrite = Rewrite::newInstance() ;
+$rewrite->clearRules() ;
 
 /*****************************
  ********* Add rules *********

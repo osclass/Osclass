@@ -29,20 +29,21 @@ class Rewrite extends DAO
         parent::__construct() ;
     }
 
-    public static function newInstance() { return new Rewrite; }
+    public static function newInstance() { 
+        return new Rewrite;
+    }
 
     public function getTableName() {}
 
     public function getRules() {
-        global $preferences;
-        return osc_unserialize($preferences['rewrite_rules']);
+        return osc_unserialize(osc_rewrite_rules()) ;
     }
 
     public function setRules() {
-        global $preferences;
-        Preference::newInstance()->update(
-                array('s_value' => osc_serialize($this->rules)),
-                array('s_name' => 'rewrite_rules')
+        $_P = Preference::newInstance() ;
+        $_P->update(
+                array('s_value' => osc_serialize($this->rules))
+                ,array('s_name' => 'rewrite_rules')
         );
     }
 
@@ -71,12 +72,13 @@ class Rewrite extends DAO
     }
 
     public function init() {
-        global $osc_request, $preferences;
-        $osc_request['uri'] = null;
+        global $osc_request ;
+        $osc_request['uri'] = null ;
         if(isset($_SERVER['REQUEST_URI'])) {
             //$rules = Permalink::newInstance()->getRules();
             $request_uri = urldecode(str_replace(REL_WEB_URL, "", $_SERVER['REQUEST_URI']));
-            if(isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']==1) {
+            
+            if(osc_rewrite_enabled()) {
                 foreach($this->rules as $match => $uri) {
                     //echo '#'.$match.'#'.$request_uri."<br />";
                     if(preg_match('#'.$match.'#', $request_uri, $m)) {
