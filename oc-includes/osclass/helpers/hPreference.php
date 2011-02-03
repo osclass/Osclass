@@ -8,6 +8,14 @@
         return (getBoolPreference('enabled_users')) ;
     }
 
+    function osc_user_registration_enabled() {
+        return (getBoolPreference('enabled_user_registration')) ;
+    }
+
+    function osc_user_validation_enabled() {
+        return (getBoolPreference('enabled_user_validation')) ;
+    }
+
     function osc_moderate_comments() {
         return (getBoolPreference('moderate_comments')) ;
     }

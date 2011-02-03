@@ -217,25 +217,22 @@ function osc_doRequest($url, $_data) {
 function osc_sendMail($params) {
     require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php';
 
-    $mPreferences = new Preference();
-    $preferences = $mPreferences->toArray();
-
     $mail = new PHPMailer(true);
     try {
         $mail->CharSet = "utf-8";
 
-        if ( isset($preferences['mailserver_auth']) && $preferences['mailserver_auth']) {
-            $mail->IsSMTP();
-            $mail->SMTPAuth = true;
+        if (osc_mailserver_auth()) {
+            $mail->IsSMTP() ;
+            $mail->SMTPAuth = true ;
         }
 
-        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : $preferences['mailserver_ssl'];
-        $mail->Username = ( isset($params['username']) ) ? $params['username'] : $preferences['mailserver_username'];
-        $mail->Password = ( isset($params['password']) ) ? $params['password'] : $preferences['mailserver_password'];
-        $mail->Host = ( isset($params['host']) ) ? $params['host'] : $preferences['mailserver_host'];
-        $mail->Port = ( isset($params['port']) ) ? $params['port'] : $preferences['mailserver_port'];
-        $mail->From = ( isset($params['from']) ) ? $params['from'] : $preferences['contactEmail'];
-        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : $preferences['pageTitle'] ;
+        $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
+        $mail->Username = ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username() ;
+        $mail->Password = ( isset($params['password']) ) ? $params['password'] : osc_mailserver_password() ;
+        $mail->Host = ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host() ;
+        $mail->Port = ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port() ;
+        $mail->From = ( isset($params['from']) ) ? $params['from'] : osc_contact_email() ;
+        $mail->FromName = ( isset($params['from_name']) ) ? $params['from_name'] : osc_page_title() ;
         $mail->Subject = ( isset($params['subject']) ) ? $params['subject'] : '' ;
         $mail->Body = ( isset($params['body']) ) ? $params['body'] : '' ;
         $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
@@ -245,13 +242,13 @@ function osc_sendMail($params) {
         if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
 
         if( isset($params['attachment']) ) {
-            $mail->AddAttachment($params['attachment']);
+            $mail->AddAttachment($params['attachment']) ;
         }
 
-        $mail->IsHTML(true);
-        $mail->AddAddress($to, $to_name);
-        $mail->Send();
-        return true;
+        $mail->IsHTML(true) ;
+        $mail->AddAddress($to, $to_name) ;
+        $mail->Send() ;
+        return true ;
 
     } catch (phpmailerException $e) {
         return false;
@@ -264,15 +261,12 @@ function osc_sendMail($params) {
 
 function osc_mailBeauty($text, $params) {
 
-	$text = str_ireplace($params[0], $params[1], $text);
-
-	$preferences = Preference::newInstance()->toArray();
-	$kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}');
-	$rwords = array(ABS_WEB_URL, $preferences['pageTitle'], date('Y-m-d H:i:s'), date('H:i'));
-
-	$text = str_ireplace($kwords, $rwords, $text);
-	return $text;
-
+	$text = str_ireplace($params[0], $params[1], $text) ;
+	$kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
+	$rwords = array(ABS_WEB_URL, osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
+	$text = str_ireplace($kwords, $rwords, $text) ;
+    
+	return $text ;
 }
 
 
@@ -392,23 +386,23 @@ function osc_dbdump($db_filename = null) {
                 $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
                 // Backup default OSClass tables in order, so no problem when importing them back
                 foreach($tables_order as $table) {
-                    if(array_key_exists(DB_TABLE_PREFIX.$table, $tables)) {
-    					osc_dump_table_structure(DB_TABLE_PREFIX.$table);
-    					osc_dump_table_data(DB_TABLE_PREFIX.$table);
-    					unset($tables[DB_TABLE_PREFIX.$table]);
+                    if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
+    					osc_dump_table_structure(DB_TABLE_PREFIX . $table) ;
+    					osc_dump_table_data(DB_TABLE_PREFIX . $table) ;
+    					unset($tables[DB_TABLE_PREFIX . $table]) ;
                     }
                 }
 				// Backup the rest of tables
 				foreach($tables as $table) {
-					osc_dump_table_structure($table);
-					osc_dump_table_data($table);
+					osc_dump_table_structure($table) ;
+					osc_dump_table_data($table) ;
 				}
 			} else {
-				fwrite($f, "/* no tables in ".DB_NAME." */\n");
-				fclose();
+				fwrite($f, "/* no tables in " . DB_NAME . " */\n") ;
+				fclose() ;
 			}
-			mysql_free_result($result);
-			mysql_close();
+			mysql_free_result($result) ;
+			mysql_close() ;
 		}
 	}
 
@@ -417,23 +411,23 @@ function osc_dbdump($db_filename = null) {
 
 function osc_dump_table_structure($table) {
 
-	global $db_file;
-	$f = fopen($db_file, "a");
+	global $db_file ;
+	$f = fopen($db_file, "a") ;
 
-	fwrite($f, "/* Table structure for table `$table` */\n");
+	fwrite($f, "/* Table structure for table `$table` */\n") ;
 
 	// DANGEROUS LINE
 	//fwrite($f, "DROP TABLE IF EXISTS `$table`;\n\n";
 
-	$sql="show create table `$table`; ";
-	$result=mysql_query($sql);
+	$sql="show create table `$table`; " ;
+	$result=mysql_query($sql) ;
 	if($result) {
 		if($row = mysql_fetch_assoc($result)) {
-			fwrite($f, $row['Create Table'].";\n\n");
+			fwrite($f, $row['Create Table'].";\n\n") ;
 		}
 	}
-	mysql_free_result($result);
-	fclose($f);
+	mysql_free_result($result) ;
+	fclose($f) ;
 }
 
 function osc_dump_table_data($table) {
@@ -632,13 +626,11 @@ function apache_mod_loaded($mod) {
  */
 function osc_changeVersionTo($version = null) {
 
-    if($version!=null) {
-        global $preferences;
-        $pref = Preference::newInstance();
-        $pref->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
-        $preferences = $pref->toArray();
+    if($version != null) {
+        Preference::newInstance()->update(array('s_value' => $version), array( 's_section' => 'osclass', 's_name' => 'version'));
+        //XXX: I don't know if it's really needed. Only for reload the values of the preferences
+        Preference::newInstance()->toArray() ;
     }    
 }
-
 
 ?>

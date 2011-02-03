@@ -39,9 +39,9 @@
         <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
             <div style="padding: 20px;">
                 <form action="settings.php" method="post">
-                    <?php $enabled_user_registration = (isset($preferences['enabled_user_registration']) && $preferences['enabled_user_registration']); ?>
-                    <?php $enabled_user_validation = (isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']); ?>
-                    <?php $enabled_users = (isset($preferences['enabled_users']) && $preferences['enabled_users']); ?>
+                    <?php $enabled_user_registration = osc_user_registration_enabled() ; ?>
+                    <?php $enabled_user_validation = osc_user_validation_enabled() ; ?>
+                    <?php $enabled_users = osc_users_enabled() ; ?>
                     <input type="hidden" name="action" value="users_post" />
                     <div style="float: left; width: 50%;">
                         <fieldset>

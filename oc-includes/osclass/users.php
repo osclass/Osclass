@@ -104,20 +104,20 @@ switch ($action) {
                     foreach ($data as $k => $_data) {
                         $manager->updateDescription($userId, $k, $_data['s_info']);
                     }
-                    osc_runHook('user_register_completed');
-                    if(isset($preferences['enabled_user_validation']) && $preferences['enabled_user_validation']) {
-                        $user = $manager->findByPrimaryKey($userId);
+                    osc_runHook('user_register_completed') ;
+                    if(osc_user_validation_enabled()) {
+                        $user = $manager->findByPrimaryKey($userId) ;
 
-                        $mPages = new Page();
-                        $locale = osc_getActualLocale();
+                        $mPages = new Page() ;
+                        $locale = osc_getActualLocale() ;
 
-                        $aPage = $mPages->findByInternalName('email_user_validation');
+                        $aPage = $mPages->findByInternalName('email_user_validation') ;
 
-                        $content = array();
+                        $content = array() ;
                         if(isset($aPage['locale'][$locale]['s_title'])) {
-                            $content = $aPage['locale'][$locale];
+                            $content = $aPage['locale'][$locale] ;
                         } else {
-                            $content = current($aPage['locale']);
+                            $content = current($aPage['locale']) ;
                         }
 
                         if (!is_null($content)) {
