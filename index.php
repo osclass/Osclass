@@ -25,7 +25,7 @@ try {
 
 	$categories = Category::newInstance()->toTree();
 
-    if(isset($_GET['theme'])) $_P->set('theme') = $_GET['theme'];
+    if(isset($_GET['theme'])) $_P->set('theme', $_GET['theme']);
 
 	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 	switch($action) {
@@ -44,9 +44,9 @@ try {
 			header('Content-type: text/xml; charset=utf-8');
 
 			$feed = new RSSFeed;
-			$feed->setTitle(__('Latest items added') . ' - ' . $_P->get('pageTitle') ;
+			$feed->setTitle(__('Latest items added') . ' - ' . $_P->get('pageTitle') ) ;
 			$feed->setLink(ABS_WEB_URL);
-			$feed->setDescription(__('Latest items added in') . ' ' . $_P->get('pageTitle');
+			$feed->setDescription(__('Latest items added in') . ' ' . $_P->get('pageTitle') );
 
             $num_items = $_P->get('num_rss_items') ;
             $items = Item::newInstance()->list_items(null, 0, $num_items, 'ACTIVE');
