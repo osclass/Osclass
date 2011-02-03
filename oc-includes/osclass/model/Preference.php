@@ -19,12 +19,26 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+class Preference extends DAO
+{
+    private static $instance ;
+    private $pref ;
 
-class Preference extends DAO {
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
 
-	public static function newInstance() { return new Preference(); }
+    private function __construct() {
+        echo "llamando al constructor de Preference..." ;
+        $this->pref = $this->toArray() ;
+    }
 
-	public function getTableName() { return DB_TABLE_PREFIX . 't_preference'; }
+	public function getTableName() {
+        return DB_TABLE_PREFIX . 't_preference';
+    }
 
 	public function findValueByName($name) {
 		return $this->conn->osc_dbFetchValue("SELECT s_value FROM %s WHERE s_name = '%s'", $this->getTableName(), $name);
@@ -34,32 +48,23 @@ class Preference extends DAO {
 		return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE s_section = '%s'", $this->getTableName(), $name);
 	}
 
-	public function toArray($section = null) {
-		$array = array();
-		if($section==null) {
-    		$preferences = $this->listAll();
-        } else {
-    		$preferences = $this->findBySection($section);
-        }
-		foreach($preferences as $p) {
-			$array[$p['s_name']] = $p['s_value'];
+	public function toArray() {
+		$aTmpPref = $this->listAll() ;
+
+        foreach($aTmpPref as $tmpPref) {
+			$this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'] ;
 		}
-		return $array;
 	}
-	
-}
 
-function osc_comments_enabled($preferences = null) {
-    if(!$preferences) {
-        global $preferences;
+    public function get($key, $section = "osclass") {
+        if (!isset($this->pref[$section][$key])) {
+            return '' ;
+        }
+        return ($this->pref[$section][$key]) ;
     }
 
-    if(!isset($preferences['enabled_comments']))
-        return true;
-
-    if($preferences['enabled_comments']) {
-        return true;
-    } else {
-        return false;
+    public function set($key, $value, $section = "osclass") {
+        $this->pref[$section][$key] = $value ;
     }
 }
+
