@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -21,102 +22,90 @@
 
 function osc_runAlert($type = null) {
 
-	if($type==null) { return; };
+    if ($type == null) {
+        return;
+    }
 
-	$internal_name = 'alert_email_hourly';
-	switch($type) {
-		case 'HOURLY':
-			$internal_name = 'alert_email_hourly';
-			break;
-
-		case 'DAILY':
-			$internal_name = 'alert_email_daily';
-			break;
-
-		case 'WEEKLY':
-			$internal_name = 'alert_email_weekly';
-			break;
-
-		case 'INSTANT':
-			$internal_name = 'alert_email_instant';
-			break;
-
-	}
+    $internal_name = 'alert_email_hourly' ;
+    switch ($type) {
+        case 'HOURLY':
+            $internal_name = 'alert_email_hourly' ;
+        break;
+        case 'DAILY':
+            $internal_name = 'alert_email_daily' ;
+        break;
+        case 'WEEKLY':
+            $internal_name = 'alert_email_weekly' ;
+        break;
+        case 'INSTANT':
+            $internal_name = 'alert_email_instant' ;
+        break;
+    }
 
 
-	$searches = Alerts::newInstance()->getAlertsByTypeGroup($type);
-
-	foreach($searches as $s_search) {
-
+    $searches = Alerts::newInstance()->getAlertsByTypeGroup($type);
+    foreach ($searches as $s_search) {
         $a_search = Search::newInstance();
-		// Get if there're new ads on this search
-		$a_search = osc_unserialize(base64_decode($s_search['s_search']));
 
-		$crons = Cron::newInstance()->getCronByType($type);
-		if(isset($crons[0])) {
-			$last_exec = $crons[0]['d_last_exec'];
-		} else {
-			$last_exec = '0000-00-00 00:00:00';
-		}
+        // Get if there're new ads on this search
+        $a_search = osc_unserialize(base64_decode($s_search['s_search']));
+        $crons = Cron::newInstance()->getCronByType($type);
+        if (isset($crons[0])) {
+            $last_exec = $crons[0]['d_last_exec'];
+        } else {
+            $last_exec = '0000-00-00 00:00:00';
+        }
 
         $a_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec));
 
         $totalItems = $a_search->count();
         $items = $a_search->search();
 
-	
-		if(count($items)>0) {
-			//If we have new items from last check
-			// Catch the user subscribed to this search
-			$users = Alerts::newInstance()->getUsersBySearchAndType($search['s_search'], $type);
-			if(count($users>0)) {
 
-				$prefLocale = Preference::newInstance()->findValueByName('language');
-				$_page = Page::newInstance()->findByInternalName($internal_name);
-				$page = array();
-				$data = osc_unserialize($_page['s_data']);
-				$page = $data[$prefLocale];
-				unset($data);
-				unset($_page);
+        if (count($items) > 0) {
+            //If we have new items from last check
+            //Catch the user subscribed to this search
+            $users = Alerts::newInstance()->getUsersBySearchAndType($search['s_search'], $type);
 
-				$ads = "";
-				foreach($items as $item) {
-					$ads .= "<a>".$item['s_title']."</a><br/>";
-				}
+            if (count($users > 0)) {
+                $_P = Preference::newInstance();
 
-				foreach($users as $user) {
+                $prefLocale = $_P->get('language');
+                $_page = Page::newInstance()->findByInternalName($internal_name);
+                $page = array();
+                $data = osc_unserialize($_page['s_data']);
+                $page = $data[$prefLocale];
+                unset($data);
+                unset($_page);
 
-                    //$unsub_link = ABS_WEB_URL.'/user.php?action=unsub_alert&email='.$user['s_email'].'&alert='.$s_search['s_search'];
-                    $unsub_link = osc_createURL(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $user['s_email'], 'alert' => $s_search['s_search']));
+                $ads = "";
+                foreach ($items as $item) {
+                    $ads .= "<a>" . $item['s_title'] . "</a><br/>" ;
+                }
 
-					$words = array();
-					$words = array( '{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}' );
-					$words = array( $user['s_name'], $user['s_email'], $ads, $unsub_link );
-					$title = osc_mailBeauty($page['s_title'], $words);
-					$body = osc_mailBeauty($page['s_body'], $words);
+                foreach ($users as $user)
+                {
+                    $unsub_link = osc_createURL(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $user['s_email'], 'alert' => $s_search['s_search'])) ;
 
+                    $words = array() ;
+                    $words = array('{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}') ;
+                    $words = array($user['s_name'], $user['s_email'], $ads, $unsub_link) ;
+                    $title = osc_mailBeauty($page['s_title'], $words) ;
+                    $body = osc_mailBeauty($page['s_body'], $words) ;
 
-					$params = array(
-						'subject' => $title,
-						'to' => $user['s_email'],
-						'to_name' => $user['s_name'],
-						'body' => $body,
-						'alt_body' => $body
-					);
-					osc_sendMail($params);
-
-
-				}
-			}
-		}
-
-	}
-
-
-
+                    $params = array(
+                        'subject' => $title
+                        ,'to' => $user['s_email']
+                        ,'to_name' => $user['s_name']
+                        ,'body' => $body
+                        ,'alt_body' => $body
+                    ) ;
+                    
+                    osc_sendMail($params) ;
+                }
+            }
+        }
+    }
 }
-
-
-
 
 ?>

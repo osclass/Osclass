@@ -34,10 +34,12 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once  ABS_PATH . 'config.php';
-require_once  ABS_PATH . 'common.php';
-require_once  LIB_PATH . 'osclass/web.php';
 require_once  LIB_PATH . 'osclass/db.php';
 require_once  LIB_PATH . 'osclass/classes/DAO.php';
+require_once  LIB_PATH . 'osclass/model/Preference.php';
+require_once  LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once  ABS_PATH . 'common.php';
+require_once  LIB_PATH . 'osclass/web.php';
 require_once  LIB_PATH . 'osclass/session.php';
 require_once  LIB_PATH . 'osclass/locale.php';
 require_once  LIB_PATH . 'osclass/plugins.php';
@@ -45,7 +47,6 @@ require_once  LIB_PATH . 'osclass/themes.php';
 require_once  LIB_PATH . 'osclass/utils.php';
 require_once  LIB_PATH . 'osclass/formatting.php';
 require_once  LIB_PATH . 'osclass/AdminThemes.php';
-
 require_once  LIB_PATH . 'osclass/error.php';
 require_once  LIB_PATH . 'osclass/feeds.php';
 require_once  LIB_PATH . 'osclass/locales.php';
@@ -68,7 +69,6 @@ require_once  LIB_PATH . 'osclass/model/ItemStats.php';
 require_once  LIB_PATH . 'osclass/model/Page.php';
 require_once  LIB_PATH . 'osclass/model/Plugin.php';
 require_once  LIB_PATH . 'osclass/model/PluginCategory.php';
-require_once  LIB_PATH . 'osclass/model/Preference.php';
 require_once  LIB_PATH . 'osclass/model/Region.php';
 require_once  LIB_PATH . 'osclass/model/Rewrite.php';
 require_once  LIB_PATH . 'osclass/model/User.php';
@@ -76,7 +76,6 @@ require_once  LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once  LIB_PATH . 'osclass/model/Widget.php';
 require_once  LIB_PATH . 'osclass/model/Search.php';
 require_once  LIB_PATH . 'osclass/classes/Cache.php';
-//require_once  LIB_PATH . 'osclass/classes/DAOEntity.php';
 require_once  LIB_PATH . 'osclass/classes/HTML.php';
 require_once  LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once  LIB_PATH . 'osclass/classes/RSSFeed.php';
@@ -96,17 +95,17 @@ $_COOKIE = add_slashes_extended($_COOKIE);
 $_SERVER = add_slashes_extended($_SERVER);
 $_REQUEST = add_slashes_extended($_REQUEST);
 
+//Creating a singleton of Preference with the information of the database
+$_P = Preference::newInstance() ;
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
-    $auto_cron = Preference::newInstance()->findValueByName('auto_cron');
+    $auto_cron = $_P->get('auto_cron') ;
     if($auto_cron) {
-        osc_doRequest(ABS_WEB_URL.'oc-includes/osclass/cron.php', array());
+        osc_doRequest(ABS_WEB_URL . 'oc-includes/osclass/cron.php', array()) ;
     }
-};
+}
 
-global $preferences;
-$preferences = Preference::newInstance()->toArray();
 Rewrite::newInstance()->init();
 
 ?>

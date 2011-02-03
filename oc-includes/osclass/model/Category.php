@@ -19,24 +19,18 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-require_once  LIB_PATH . 'osclass/model/Preference.php';
+
 class Category extends DAO {
 
     private $language;
 
     public function __construct($l = "") {
-
-        global $preferences;
-        
-        if($l == "") {
+    if($l == "") {
             if(isset($_SESSION['locale'])) {
                 $l = $_SESSION['locale'];
             } else {
-                if(isset($preferences) && isset($preferences['language'])) {
-                    $l = $preferences['language'];
-                } else {
-                    $l = Preference::newInstance()->findValueByName('language');
-                }
+                $_P = Preference::newInstance() ;
+                $l = $_P->get('language') ;
             }
         }
         

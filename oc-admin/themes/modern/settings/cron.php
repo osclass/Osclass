@@ -23,58 +23,50 @@
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <?php
-$dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-$timeFormats = array('g:i a', 'g:i A', 'H:i');
+    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
+    $timeFormats = array('g:i a', 'g:i A', 'H:i');
 ?>
-<script>
-	$(function() {
-		// Here we include specific jQuery, jQuery UI and Datatables functions.
-	});
-</script>
-		<div id="content">
-                    <div id="separator"></div>
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+<div id="content">
+    <div id="separator"></div>
 
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Functionalities'); ?></div>
-					<div style="clear: both;"></div>
-				</div>
-				
-				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
-				<!-- settings form -->
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px;">
+    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
 
-						<form action="settings.php" method="post">
-						<input type="hidden" name="action" value="cron_post" />
+    <div id="right_column">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo $current_theme; ?>/images/back_office/settings-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
+            <div style="clear: both;"></div>
+        </div>
 
-                                                <div style="float: left; width: 100%;">
+        <div id="content_separator"></div>
 
-							<fieldset>
-								<legend><?php echo __('Cron System'); ?></legend>
-                                                                <?php if(isset($preferences['auto_cron']) && $preferences['auto_cron']): ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="auto_cron" id="auto_cron"/>
-                                                                <?php else: ?>
-                                                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="auto_cron" id="auto_cron"/>
-                                                                <?php endif; ?>
-                                                                <label><?php echo __('Auto-cron'); ?></label>
+        <?php osc_showFlashMessages(); ?>
 
-																<br/>
-                                                                <label><?php echo __('Some functionalities os OSClass requires a cron system to work. Check this if you don\'t know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass.'); ?></label>
-                                                        </fieldset>
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+            <div style="padding: 20px;">
 
-						</div>
+                <form action="settings.php" method="post">
+                    <input type="hidden" name="action" value="cron_post" />
 
-						<div style="clear: both;"></div>
-												
-						<input id="button_save" type="submit" value="<?php echo __('Update'); ?>" />
-						
-						</form>
+                    <div style="float: left; width: 100%;">
 
-					</div>
-				</div>
-			</div> <!-- end of right column -->
+                        <fieldset>
+                            <legend><?php _e('Cron System'); ?></legend>
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php ( osc_auto_cron() ) ? 'checked="true"' : '' ; ?> name="auto_cron" id="auto_cron" />
+                            <label><?php _e('Auto-cron'); ?></label>
+                            <br/>
+                            <label><?php _e('Some functionalities os OSClass requires a cron system to work. Check this if you don\'t know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass.'); ?></label>
+                        </fieldset>
+
+                    </div>
+
+                    <div style="clear: both;"></div>
+
+                    <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+
+                </form>
+
+            </div>
+        </div>
+    </div>

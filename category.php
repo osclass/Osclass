@@ -19,14 +19,14 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$preference_manager = Preference::newInstance();
+$_P = Preference::newInstance() ;
+
 $category_manager = Category::newInstance();
 $item_manager = Item::newInstance();
 
-$preferences = $preference_manager->toArray();
-$theme = $preferences['theme'];
+$theme = $_P->get('theme') ;
 
-$limit = 10;
+$limit = 10 ;
 if (isset($_GET["page"])) {
     if ($_GET['page'] > 0) {
         $page = (int) $_GET["page"];
