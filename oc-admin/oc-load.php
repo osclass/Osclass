@@ -20,10 +20,10 @@
 define('OC_ADMIN', true) ;
 
 require_once ABS_PATH . 'config.php';
-require_once LIB_PATH . 'osclass/db.php';
-require_once LIB_PATH . 'osclass/classes/DAO.php';
-require_once LIB_PATH . 'osclass/model/Preference.php';
-require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once ABS_PATH . 'oc-includes/osclass/db.php';
+require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
+require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/web.php';
 require_once LIB_PATH . 'osclass/session.php';
