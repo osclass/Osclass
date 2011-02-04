@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OSClass – software for creating and publishing online classified advertising platforms
  *
@@ -54,26 +55,25 @@ function osc_formatPrice($item) {
  * Formats the date using the appropiate format.
  */
 function osc_formatDate($item) {
-    global $preferences ;
     $date = strtotime($item['dt_pub_date']) ;
-    return date($preferences['dateFormat'], $date) ;
+    return date(osc_date_format(), $date) ;
 }
 
 function osc_pageInfo($property, $echo = false) {
-    global $preferences, $headerConf ;
+    global $headerConf ;
     $conf = array(
-        'pageTitle' => $preferences['pageTitle']
+        'pageTitle' => osc_page_title()
     );
     if (isset($headerConf))
         $conf = array_merge($conf, $headerConf) ;
 
     if (!isset($conf[$property])) {
-        return '';
+        return '' ;
     }
 
     if($echo) {
-        echo $conf[$property];
-        return '';
+        echo $conf[$property] ;
+        return '' ;
     }
 
     return $conf[$property] ;
@@ -98,7 +98,7 @@ function osc_themeResource($fileName, $echo = false) {
 function osc_showWidgets($location) {
     $widgets = Widget::newInstance()->findByLocation($location);
     foreach ($widgets as $w)
-        echo $w['s_content'];
+        echo $w['s_content'] ;
 }
 
 /**
@@ -271,21 +271,21 @@ function osc_createThumbnailURL($resource) {
 }
 
 function osc_createResourceURL($resource) {
-    return sprintf(WEB_PATH . 'oc-content/uploads/%d.png', $resource['pk_i_id']);
+    return sprintf(WEB_PATH . 'oc-content/uploads/%d.png', $resource['pk_i_id']) ;
 }
 
 function osc_createItemPostURL($cat = null) {
     if (!isset($cat) || !isset($cat['pk_i_id'])) {
         if (osc_rewrite_enabled()) {
-            return WEB_PATH_URL . 'item/new';
+            return WEB_PATH_URL . 'item/new' ;
         } else {
-            return sprintf(WEB_PATH_URL . 'item.php?action=post');
+            return sprintf(WEB_PATH_URL . 'item.php?action=post') ;
         }
     } else {
-        if (isset($preferences['rewriteEnabled']) && $preferences['rewriteEnabled']) {
-            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'];
+        if (osc_rewrite_enabled()) {
+            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'] ;
         } else {
-            return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']);
+            return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
         }
     }
 }
@@ -301,22 +301,22 @@ function osc_createCategoryURL($cat, $echo = false) {
     $path = '';
 
     if (osc_rewrite_enabled()) {
-        $cat = Category::newInstance()->hierarchy($cat['pk_i_id']);
-        $sanitized_category = "";
+        $cat = Category::newInstance()->hierarchy($cat['pk_i_id']) ;
+        $sanitized_category = "" ;
         for ($i = count($cat); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
         }
         $path = ABS_WEB_URL . $sanitized_category ;
     } else {
-        $path = sprintf(WEB_PATH_URL . 'search.php?sCategory=%d', $cat['pk_i_id']);
+        $path = sprintf(WEB_PATH_URL . 'search.php?sCategory=%d', $cat['pk_i_id']) ;
     }
 
     if($echo) {
-        echo $path;
+        echo $path ;
         return '';
     }
 
-    return $path;
+    return $path ;
 }
 
 /**
@@ -327,26 +327,26 @@ function osc_createCategoryURL($cat, $echo = false) {
  * @return string If $echo is false, it returns the path, if not it return blank string
  */
 function osc_createItemURL($item, $echo = false) {
-    $path = '';
+    $path = '' ;
     
     if (osc_rewrite_enabled()) {
-        $sanitized_title = osc_sanitizeString($item['s_title']);
-        $sanitized_category = '';
-        $cat = Category::newInstance()->hierarchy($item['fk_i_category_id']);
+        $sanitized_title = osc_sanitizeString($item['s_title']) ;
+        $sanitized_category = '' ;
+        $cat = Category::newInstance()->hierarchy($item['fk_i_category_id']) ;
         for ($i = (count($cat)); $i > 0; $i--) {
-            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/';
+            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
         }
-        $path = sprintf(ABS_WEB_URL . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']);
+        $path = sprintf(ABS_WEB_URL . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']) ;
     } else {
-        $path = sprintf(ABS_WEB_URL . 'item.php?id=%d', $item['pk_i_id']);
+        $path = sprintf(ABS_WEB_URL . 'item.php?id=%d', $item['pk_i_id']) ;
     }
 
     if($echo) {
-        echo $path;
-        return '';
+        echo $path ;
+        return '' ;
     }
 
-    return $path;
+    return $path ;
 }
 
 function osc_createUserPublicDashboard($user = null) {

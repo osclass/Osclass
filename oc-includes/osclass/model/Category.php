@@ -20,8 +20,8 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Category extends DAO {
-
+class Category extends DAO
+{
     private $language;
 
     public function __construct($l = "") {

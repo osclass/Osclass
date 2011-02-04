@@ -38,6 +38,7 @@ require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
 require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/web.php';
 require_once LIB_PATH . 'osclass/session.php';
