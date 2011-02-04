@@ -72,7 +72,7 @@ switch ($action) {
     case 'send_friend_post':
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_send_friend');
-        $locale = osc_getActualLocale();
+        $locale = osc_get_user_locale();
 
         $item = $manager->findByPrimaryKey($_POST['id']);
         $item_url = osc_createItemURL($item);
@@ -156,7 +156,7 @@ switch ($action) {
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_item_inquiry');
-        $locale = osc_getActualLocale();
+        $locale = osc_get_user_locale() ;
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -265,7 +265,7 @@ switch ($action) {
             if ($notify) {
                 $mPages = new Page() ;
                 $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
-                $locale = osc_getActualLocale() ;
+                $locale = osc_get_user_locale() ;
 
                 $content = array();
                 if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -361,9 +361,9 @@ switch ($action) {
 
         if($success) {
             if(!isset($_SESSION['userId'])) {
-                $mPages = new Page();
-                $aPage = $mPages->findByInternalName('email_new_item_non_register_user');
-                $locale = osc_getActualLocale();
+                $mPages = new Page() ;
+                $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
+                $locale = osc_get_user_locale() ;
 
                 $content = array();
                 if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -496,7 +496,7 @@ switch ($action) {
             $mUser = new User();
             $user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);
             $aUser = $mUser->findByPrimaryKey($item['fk_i_user_id']);
-            $actual_locale = osc_getActualLocale();
+            $actual_locale = osc_get_user_locale() ;
             if(isset($aUser['locale'][$actual_locale]['s_info'])) {
                 $aUser['s_info'] = $aUser['locale'][$actual_locale]['s_info'];
             } else {

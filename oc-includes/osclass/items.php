@@ -416,7 +416,7 @@ switch ($action) {
             $item = $manager->findByPrimaryKey($itemId);
 
             $mPages = new Page();
-            $locale = osc_getActualLocale();
+            $locale = osc_get_user_locale() ;
             
             // send an e-mail to the admin with the data of the new item
             if(!$is_admin) {

@@ -22,18 +22,28 @@
 
 class Locale extends DAO {
 
-	public static function newInstance() { return new Locale(); }
+	public static function newInstance() { return new Locale() ; }
 
-	public function getTableName() { return DB_TABLE_PREFIX . 't_locale'; }
+	public function getTableName() { return DB_TABLE_PREFIX . 't_locale' ; }
 
-	public function getPrimaryKey() { return 'pk_c_code'; }
+	public function getPrimaryKey() { return 'pk_c_code' ; }
 
-	public function listAllEnabled($is_bo = false) {
-            if($is_bo) {
-                return $this->listWhere('b_enabled_bo ORDER BY `s_name` ASC');
-            } else {
-                return $this->listWhere('b_enabled ORDER BY `s_name` ASC');
+	public function listAllEnabled($is_bo = false, $indexed_by_pk = false) {
+        if($is_bo) {
+            $aResults = $this->listWhere('b_enabled_bo ORDER BY `s_name` ASC') ;
+        } else {
+            $aResults = $this->listWhere('b_enabled ORDER BY `s_name` ASC') ;
+        }
+
+        if ($indexed_by_pk) {
+            $aTmp = array() ;
+            for ($i = 0 ; $i < count($aResults) ; $i++) {
+                $aTmp["pk_" . $aResults[$i][getPrimaryKey()]] = $aResults[$i] ;
             }
+            $aResults = $aTmp ;
+        }
+
+        return($aResults) ;
 	}
 
     public function deleteLocale($locale) {

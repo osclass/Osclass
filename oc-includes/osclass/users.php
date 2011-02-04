@@ -109,7 +109,7 @@ switch ($action) {
                         $user = $manager->findByPrimaryKey($userId) ;
 
                         $mPages = new Page() ;
-                        $locale = osc_getActualLocale() ;
+                        $locale = osc_get_user_locale() ;
 
                         $aPage = $mPages->findByInternalName('email_user_validation') ;
 
