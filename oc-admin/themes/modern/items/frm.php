@@ -165,7 +165,7 @@
                     <?php if(isset($new_item) && $new_item==TRUE) {
                             ItemForm::plugin_post_item($categories);
                         } else {
-                            osc_runHook('item_edit', $item);
+                            osc_run_hook('item_edit', $item);
                         };
                     ?>
                     <div class="clear"></div>

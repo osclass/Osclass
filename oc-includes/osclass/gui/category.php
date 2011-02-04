@@ -35,17 +35,17 @@ $subCats = Category::newInstance()->findSubcategories($category);
 <?php if(count($ads) == 0) { ?>
 	<p><?php _e('There are no results in this category yet.'); ?></p>
 <?php } else { ?>
-	<?php foreach($ads as $i): ?>
-	<div class="itemInCategory" >
-	<?php if(osc_itemHasThumbnail($i)): ?>
-		<a href="<?php osc_createItemURL($i, true); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" style="border: 0px; float: left;" /></a>
-	<?php endif; ?>
-	<div class="itemInCategoryData" >
-		<p><a href="<?php osc_createItemURL($i, true); ?>" style="color: blue;"><?php echo $i['s_title']; ?></a></p>
-		<p><?php echo strip_tags($i['s_description']); ?></p>
-	</div>
-	<div class="itemInCategoryPrice" ><?php echo osc_formatPrice($i); ?></div>
-	<div style="clear: both;"></div>
-	</div>
-	<?php endforeach; ?>
+	<?php foreach($ads as $i) { ?>
+        <div class="itemInCategory" >
+        <?php if(osc_item_has_thumbnail($i)) { ?>
+            <a href="<?php osc_create_item_url($i, true); ?>"><img src="<?php echo osc_create_item_thumbnail_url($i) ; ?>" style="border: 0px; float: left;" /></a>
+        <?php } ?>
+        <div class="itemInCategoryData" >
+            <p><a href="<?php osc_create_item_url($i, true); ?>" style="color: blue;"><?php echo $i['s_title'] ; ?></a></p>
+            <p><?php echo strip_tags($i['s_description']); ?></p>
+        </div>
+        <div class="itemInCategoryPrice" ><?php echo osc_format_price($i) ; ?></div>
+        <div style="clear: both;"></div>
+        </div>
+	<?php } ?>
 <?php } ?>

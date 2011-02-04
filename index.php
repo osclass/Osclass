@@ -52,7 +52,7 @@ try {
 			foreach($items as $item) {
 				$feed->addItem(array(
 					'title' => $item['s_title']
-					,'link' => osc_createItemURL($item, true)
+					,'link' => osc_create_item_url($item, true)
 					,'description' => $item['s_description']
 				));
 			}

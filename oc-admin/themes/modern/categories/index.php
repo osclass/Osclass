@@ -122,7 +122,7 @@
 					<div style="clear: both;"></div>
 				</div>
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<div id="TableToolsToolbar">
 				<select id="bulk_actions" class="display">

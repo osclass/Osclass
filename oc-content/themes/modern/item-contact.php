@@ -13,7 +13,7 @@
 		</tr>
 		<tr>
 			<td><?php _e('Item'); ?></td>
-			<td><a href="<?php osc_createItemURL($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
+			<td><a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
 		</tr>
 		<tr>
 			<td><label for="yourName"><?php _e('Your name'); ?></label> <?php _e('(optional)'); ?></td>

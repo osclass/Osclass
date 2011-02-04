@@ -22,7 +22,7 @@
 
 <?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 
-<script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
 tinyMCE.init({
 	mode : "textareas",
@@ -70,7 +70,7 @@ if(isset($action) && $action === "add_widget") {
 					<div id="content_header_arrow">&raquo; <?php echo __('Create widget on ') . $_GET['location']; ?></div>
 					<div style="clear: both;"></div>
 				</div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 
 				<!-- add new theme form -->
 				<div id="main_div" style="border: 1px solid #ccc; background: #eee; ">

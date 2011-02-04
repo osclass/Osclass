@@ -21,7 +21,7 @@
 ?>
 <div id="home_header"><div><?php _e('Contact seller'); ?></div></div>
 <?php ContactForm::js_validation(); ?>
-<form action="<?php echo osc_createURL('item');?>" method="post" onsubmit="return validate_contact();">
+<form action="<?php echo osc_create_url('item');?>" method="post" onsubmit="return validate_contact();">
 <input type="hidden" name="action" value="contact_post" />
 <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td><?php _e('Item'); ?></td>
-			<td><a href="<?php osc_createItemURL($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
+			<td><a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
 		</tr>
 		<tr>
 			<td><label for="yourName"><?php _e('Your name'); ?></label> <?php _e('(optional)'); ?></td>

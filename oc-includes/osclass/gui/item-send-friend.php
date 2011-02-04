@@ -83,14 +83,14 @@
         });
     });
 </script>
-<form id="send-friend" name = "send-friend" action="<?php echo osc_createURL('item');?>" method="post">
+<form id="send-friend" name = "send-friend" action="<?php echo osc_create_url('item');?>" method="post">
 <input type="hidden" name="action" value="send_friend_post" />
 <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 
 <table>
 <tr>
 	<td><?php _e('Item'); ?></td>
-	<td><a href="<?php osc_createItemURL($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
+	<td><a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title']; ?></a></td>
 </tr>
 <tr>
 	<td><label for="yourName"><?php _e('Your name'); ?></label></td>

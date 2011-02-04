@@ -21,28 +21,28 @@
 ?>
 <h2><?php _e('Your alerts'); ?></h2>
 
-<?php if(count($alerts) == 0): ?>
+<?php if(count($alerts) == 0) { ?>
 	<h3><?php _e('You do not have any alerts yet.'); ?></h3>
-<?php else: ?>
-<?php foreach($alerts as $a): ?>
-	<div class="userItem" >
-		<div><?php echo __('Alert'); ?> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="<?php echo osc_createURL(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $a['s_email'], 'alert' => $a['s_search'])); ?>"><?php echo __('Delete this alert'); ?></a></div>
+<?php } else { ?>
+    <?php foreach($alerts as $a) { ?>
+        <div class="userItem" >
+            <div><?php _e('Alert'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>');" href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $a['s_email'], 'alert' => $a['s_search'])); ?>"><?php _e('Delete this alert'); ?></a></div>
 
-        <div style="width: 75%; padding-left: 100px;" >
-        <?php foreach($a['items'] as $i) : ?>
-	        <div class="userItem" >
-		        <div><a href="<?php osc_createItemURL($i, true); ?>"><?php echo $i['s_title']; ?></a></div>
+            <div style="width: 75%; padding-left: 100px;">
+                <?php foreach($a['items'] as $i) { ?>
+                    <div class="userItem">
+                        <div><a href="<?php osc_create_item_url($i, true); ?>"><?php echo $i['s_title'] ; ?></a></div>
 
-		        <div class="userItemData" >
-		        <?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
-		        <?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
-		        </div>
+                        <div class="userItemData" >
+                        <?php _e('Publication date') ; ?>: <?php echo osc_formatDate($i) ; ?><br />
+                        <?php _e('Price') ; ?>: <?php echo osc_format_price($i) ; ?>
+                        </div>
 
-	        </div>
-	        <br />
-        <?php endforeach; ?>
+                    </div>
+                    <br />
+                <?php } ?>
+            </div>
         </div>
-	</div>
-	<br />
-<?php endforeach; ?>
-<?php endif; ?>
+        <br />
+    <?php } ?>
+<?php } ?>

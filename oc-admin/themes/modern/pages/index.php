@@ -114,7 +114,7 @@
         </div>
 
         <div id="content_separator"></div>
-        <?php osc_showFlashMessages('admin'); ?>
+        <?php osc_show_flash_messages('admin') ; ?>
 
         <div id="TableToolsToolbar">
             <select id="bulk_actions" class="display">

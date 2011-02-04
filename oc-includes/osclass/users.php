@@ -104,7 +104,7 @@ switch ($action) {
                     foreach ($data as $k => $_data) {
                         $manager->updateDescription($userId, $k, $_data['s_info']);
                     }
-                    osc_runHook('user_register_completed') ;
+                    osc_run_hook('user_register_completed') ;
                     if(osc_user_validation_enabled()) {
                         $user = $manager->findByPrimaryKey($userId) ;
 

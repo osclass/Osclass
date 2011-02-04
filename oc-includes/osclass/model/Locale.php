@@ -47,7 +47,7 @@ class Locale extends DAO {
 	}
 
     public function deleteLocale($locale) {
-        osc_runHook('delete_locale', $locale);
+        osc_run_hook('delete_locale', $locale);
         $this->conn->osc_dbExec("DELETE FROM %st_category_description WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
         $this->conn->osc_dbExec("DELETE FROM %st_locale WHERE pk_c_code = '" . $locale . "'", DB_TABLE_PREFIX);
     }

@@ -35,8 +35,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php _e('OSClass Admin Panel'); ?></title>
-        <script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery-1.4.2.js"></script>
-        <script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery-ui-1.8.5.js"></script>
+        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-1.4.2.js"></script>
+        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-ui-1.8.5.js"></script>
         <script>
             $(function() {
                 $("#menu").accordion({
@@ -82,61 +82,61 @@
         <script src="<?php echo  $current_theme ; ?>/js/jquery.cookie.js"></script>
         <script src="<?php echo  $current_theme ; ?>/js/jquery.json.js"></script>
         <link type="text/css" href="<?php echo  $current_styles ; ?>/backoffice.css" media="screen" rel="stylesheet" />
-        <link href="<?php echo WEB_PATH; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo osc_base_url() ; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
             <?php
             // XXX: must be another way to include page specific stylesheets.
             if(strstr($_SERVER["SCRIPT_NAME"], "items.php")) {
             ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                    <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
-                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "new_item.php")) {
             ?>
-                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/new_item_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "categories.php")) {
             ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                    <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/cat_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "media.php")) {
             ?>
-                    <script src="<?php echo WEB_PATH;?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/media_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
 
             if(strstr($_SERVER["SCRIPT_NAME"], "users.php")) {
                     ?>
-                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/users_list_layout.css" media="screen" rel="stylesheet" />
                     <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "admins.php")) {
             ?>
-                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/admins_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "comments.php")) {
             ?>
-                    <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
@@ -148,39 +148,39 @@
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "plugins.php")) {
             ?>
-                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                    <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
 
-                    <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                    <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                     <link type="text/css" href="<?php echo $current_styles ; ?>/plugins_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"],"pages.php")) {
                 ?>
-                <script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tabber-minimized.js"></script>
+                <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
                 <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
                 <script type="text/javascript">
                     document.write('<style type="text/css">.tabber{display:none;}</style>') ;
                 </script>
 
-                <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                 <link type="text/css" href="<?php echo $current_styles ; ?>/pages_layout.css" media="screen" rel="stylesheet" />
                 <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "languages.php")) {
             ?>
-                <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                 <link type="text/css" href="<?php echo $current_styles ; ?>/languages_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
 
             if(strstr($_SERVER["SCRIPT_NAME"], "settings.php")) {
             ?>
-                <script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
+                <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
                 <link type="text/css" href="<?php echo $current_styles ; ?>/settings_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
@@ -208,8 +208,8 @@
         <div id="logo"><?php _e('OSClass'); ?></div>
         <div id="arrow">&raquo;</div>
         <div id="hostname"><?php echo osc_page_title() ; ?></div>
-        <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo WEB_PATH ; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
+        <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo osc_base_url() ; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
         <div id="user_links"><?php _e('Howdy') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="admins.php?action=edit"><?php echo $admin['s_name'] ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
-        <?php osc_runHook('admin_header'); ?>
+        <?php osc_run_hook('admin_header') ; ?>
     </div>
     <div id="update_version" style="display:none;"></div>

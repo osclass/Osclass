@@ -54,7 +54,7 @@ function osc_addFlashMessage($msg, $section = 'pubMessages') {
 /**
  * Shows all the pending flash messages in session and cleans up the array.
  */
-function osc_showFlashMessages($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
+function osc_show_flash_messages($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
 	if(!isset($_SESSION[$section]) || !count($_SESSION[$section])) return;
 
 	echo "<div id='$id' class='$class'>";

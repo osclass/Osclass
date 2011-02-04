@@ -17,8 +17,8 @@
  */
 ?>
 <?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
-<script type="text/javascript" src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <?php UserForm::location_javascript(); ?>
 <?php 
     if(isset($user['pk_i_id'])) {
@@ -51,7 +51,7 @@
         </div>
 				
         <div id="content_separator"></div>
-        <?php osc_showFlashMessages(); ?>
+        <?php osc_show_flash_messages() ; ?>
 				
         <!-- add new item form -->
         <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">

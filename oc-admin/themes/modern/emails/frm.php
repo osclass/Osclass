@@ -37,9 +37,9 @@
         $btn_text = __('Add');
     }
 ?>
-<script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery.autosave.js"></script>
-<script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery.timers.js"></script>
+<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.autosave.js"></script>
+<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.timers.js"></script>
 <script type="text/javascript">
     tinyMCE.init({
         mode : "textareas",
@@ -73,7 +73,7 @@
             <div style="clear: both;"></div>
         </div>
         <div id="content_separator"></div>
-        <?php osc_showFlashMessages('admin'); ?>
+        <?php osc_show_flash_messages('admin') ; ?>
         <!-- add new page form -->
         <div id="settings_form">
             <form name="emails_form" id="emails_form" action="emails.php" method="post" onSubmit="return checkForm()">

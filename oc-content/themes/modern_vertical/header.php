@@ -1,5 +1,5 @@
 <?php
-$catId = osc_pageInfo('category');
+$catId = osc_page_info('category');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -7,11 +7,11 @@ $catId = osc_pageInfo('category');
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<title><?php echo osc_pageInfo('pageTitle'); ?></title>
-	<link href="<?php echo osc_themeResource('style.css'); ?>" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="<?php echo WEB_PATH; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
-	<script src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
-	<script src="<?php echo WEB_PATH; ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
+	<title><?php echo osc_page_info('pageTitle'); ?></title>
+	<link href="<?php echo osc_theme_resource('style.css'); ?>" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
+	<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
+	<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
 	<script>
         var locale = "<?php if(isset($_SESSION['locale']) && $_SESSION['locale'] != NULL) echo $_SESSION['locale']; ?>";
 		
@@ -44,12 +44,12 @@ $catId = osc_pageInfo('category');
             });
         });
     </script>
-    <?php osc_runHook('header'); ?>
+    <?php osc_run_hook('header') ; ?>
 </head>
 <body>
 
 <?php
-osc_showFlashMessages();
+osc_show_flash_messages() ;
 $locales = Locale::newInstance()->listAllEnabled();
 ?>
     <div id="container" align="center">
@@ -60,7 +60,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                     <!-- left -->
                     <div id="header_left">
                         <div id="header_title_shadow">
-                            <div id="header_title"><a href="<?php echo WEB_PATH; ?>"><?php echo osc_pageInfo('pageTitle'); ?></a></div>
+                            <div id="header_title"><a href="<?php echo osc_base_url() ; ?>"><?php echo osc_page_info('pageTitle') ; ?></a></div>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                             <div id="langs">
                                 <?php $i = 0; foreach($locales as $locale): ?>
                                     <div id="lang_container">
-                                        <a id="<?php echo  $locale['pk_c_code'] ?>" href="<?php echo WEB_PATH; ?>/index.php?action=setlanguage&value=<?php echo $locale['pk_c_code']; ?>"><?php echo $locale['s_name']; ?></a>
+                                        <a id="<?php echo  $locale['pk_c_code'] ?>" href="<?php echo osc_base_url() ; ?>/index.php?action=setlanguage&value=<?php echo $locale['pk_c_code']; ?>"><?php echo $locale['s_name']; ?></a>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
@@ -122,7 +122,7 @@ $locales = Locale::newInstance()->listAllEnabled();
             <div id="search_content">
                 <div id="search_left">
                     <script type="text/javascript">
-                        function doSearch() { document.location = '<?php echo WEB_PATH; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
+                        function doSearch() { document.location = '<?php echo osc_base_url() ; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
                     </script>
 
                     <div style="padding-top: 8px;">
@@ -139,4 +139,4 @@ $locales = Locale::newInstance()->listAllEnabled();
         </div>
 
         <div id="content" align="left">
-        <?php osc_showWidgets('header'); ?>
+        <?php osc_show_widgets('header') ; ?>

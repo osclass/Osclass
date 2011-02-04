@@ -19,7 +19,7 @@
 				<?php _e('Price'); ?>: <?php echo $a['price']; ?>
  			</div>
 			<?php endif; ?>
-			<div id="search_result_title"><a href="<?php osc_createItemURL($a, true); ?>"><?php echo $a['s_title']; ?></a></div>
+			<div id="search_result_title"><a href="<?php osc_create_item_url($a, true); ?>"><?php echo $a['s_title']; ?></a></div>
 			<div class="clear"></div>
 		</div>
         <div id="search_result_desc">

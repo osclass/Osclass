@@ -68,13 +68,13 @@ switch ($action) {
                     break ;
                     
                 case 1:
-                    osc_runHook('register_user', $manager->findByPrimaryKey($userId)) ;
+                    osc_run_hook('register_user', $manager->findByPrimaryKey($userId)) ;
                     osc_addFlashMessage(__('Your account has been created. An activation email has been sent to your email address.')) ;
                     osc_redirectTo(osc_createLoginURL()) ;
                     break ;
                     
                 case 2:
-                    osc_runHook('register_user', $manager->findByPrimaryKey($userId)) ;
+                    osc_run_hook('register_user', $manager->findByPrimaryKey($userId)) ;
                     osc_addFlashMessage(__('Your account has been created. You\'re ready to go.')) ;
                     osc_redirectTo(osc_createLoginURL()) ;
                     break;
@@ -277,7 +277,7 @@ switch ($action) {
             osc_renderHeader(array('pageTitle' => __('Manage your account')));
             nav_user_menu();
             osc_renderView('user-account.php');
-            osc_runHook('user_account', $user);
+            osc_run_hook('user_account', $user);
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
@@ -412,7 +412,7 @@ switch ($action) {
             }
 
             $_SESSION['userId'] = $user['pk_i_id'];
-            osc_runHook('user_login');
+            osc_run_hook('user_login');
         } else if ($user && $user['b_enabled'] == '0') {
             osc_addFlashMessage(__('You have not validated your account yet.<br/> Should we resend you the validation email?').'<br/><a href="user.php?action=send-validation&userid='.$user['pk_i_id'].'">'.__('Yes, resend me the validation email.').'</a>');
             osc_redirectToReferer(osc_createLoginURL());
@@ -425,7 +425,7 @@ switch ($action) {
         break;
         
     case 'logout':
-        osc_runHook('logout_user', $_COOKIE['oc_userId']);
+        osc_run_hook('logout_user', $_COOKIE['oc_userId']);
         unset($_SESSION['userId']);
         setcookie('oc_userId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
         setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
@@ -545,7 +545,7 @@ switch ($action) {
 
             osc_renderHeader(array('pageTitle' => __('Retrieve your password')));
             nav_user_menu();
-            osc_runHook('user_options', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
+            osc_run_hook('user_options', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
             osc_renderFooter();
         } else {
             osc_addFlashMessage(__('You need to login first.'));
@@ -557,7 +557,7 @@ switch ($action) {
     case 'options_post':
         if(isset($_SESSION['userId'])) {
 
-            osc_runHook('user_options_post', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
+            osc_run_hook('user_options_post', (isset($_REQUEST['option']))?$_REQUEST['option']:'');
             osc_redirectTo(osc_createUserAccountURL());
         } else {
             osc_addFlashMessage(__('You need to login first.'));
@@ -595,7 +595,7 @@ switch ($action) {
             nav_user_menu();
             ?>
                 <div id="home_header"><div><?php _e('Change your E-mail'); ?></div></div>
-                <form action="<?php echo osc_createURL('user');?>" method="post">
+                <form action="<?php echo osc_create_url('user') ; ?>" method="post">
                 <input type="hidden" name="action" value="change_email_post" />
                 <div>
 	                <div id="change_email_form" >
@@ -638,7 +638,7 @@ switch ($action) {
             nav_user_menu();
             ?>
             <div id="home_header"><div><?php _e('Change your password'); ?></div></div>
-            <form action="<?php echo osc_createURL('user');?>" method="post">
+            <form action="<?php echo osc_create_url('user') ; ?>" method="post">
             <input type="hidden" name="action" value="change_password_post" />
             <div>
 	            <div id="change_password_form" >
@@ -758,13 +758,13 @@ switch ($action) {
             $user = $manager->findByPrimaryKey($_SESSION['userId']);
             if($user['s_password']!=sha1($_REQUEST['old_password'])) {
                 osc_addFlashMessage(__('Old password doesn\'t match.'));
-                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+                osc_redirectTo(osc_create_url(array('file' => 'user', 'action' => 'change_password'))) ;
             } else if($_REQUEST['profile_password']=='') {
                 osc_addFlashMessage(__('Passwords can not be empty.'));
-                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+                osc_redirectTo(osc_create_url(array('file' => 'user', 'action' => 'change_password')));
             } else if($_REQUEST['profile_password']!=$_REQUEST['profile_password2']) {
                 osc_addFlashMessage(__('Passwords don\'t match.'));
-                osc_redirectTo(osc_createURL(array('file' => 'user', 'action' => 'change_password')));
+                osc_redirectTo(osc_create_url(array('file' => 'user', 'action' => 'change_password')));
             }
             $manager->update(
                         array('s_password' => sha1($_REQUEST['profile_password'])),

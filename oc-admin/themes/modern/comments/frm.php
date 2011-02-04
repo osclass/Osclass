@@ -79,7 +79,7 @@
 		</div>
 		
 		<div id="content_separator"></div>
-		<?php osc_showFlashMessages(); ?>
+		<?php osc_show_flash_messages(); ?>
 		
 		<!-- add new page form -->
 		<div id="settings_form">
@@ -93,7 +93,7 @@
 				        $item = Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']);
 				        echo '<b>'.$item['s_title'].'</b>';?>
 				        
-				        <a href="<?php osc_createItemURL($item, true);?>"><button><?php echo __('View');?></button></a>
+				        <a href="<?php osc_create_item_url($item, true);?>"><button><?php echo __('View');?></button></a>
 				        <a href="items.php?action=editItem&id=<?php echo $item['pk_i_id'];?>"><button><?php echo __('Edit');?></button></a>
 					</div>
                 </div>

@@ -83,9 +83,9 @@
 				{"sTitle": "<?php echo __('Username'); ?>",
 				 "sWidth": "30%"
 				},
-				{"sTitle": "<?php echo __('Real name'); ?>" ,
+				{"sTitle": "<?php _e('Real name'); ?>" ,
 				 "sWidth": "40%" },
-				{"sTitle": "<?php echo __('E-mail'); ?>" }
+				{"sTitle": "<?php _e('E-mail'); ?>" }
 			]
 		});
 	});
@@ -105,7 +105,7 @@
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<div id="TableToolsToolbar">
 				<select id="bulk_actions" class="display">

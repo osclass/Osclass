@@ -178,7 +178,7 @@
 
         &nbsp;
 
-        <?php osc_runHook('admin_menu'); ?>
+        <?php osc_run_hook('admin_menu'); ?>
 
         &nbsp;
 

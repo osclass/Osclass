@@ -53,7 +53,7 @@ if(count($categories) == 1) {
 
 <div id="home_item">
 		<div id="home_item_title">
-                    <a href="<?php osc_createItemURL($a, true); ?>"><?php echo $a['s_title'] ?></a>
+                    <a href="<?php osc_create_item_url($a, true); ?>"><?php echo $a['s_title'] ?></a>
 		</div>
 		<div id="home_item_loc">
 			<?php 
@@ -67,7 +67,7 @@ if(count($categories) == 1) {
 			<strong><?php _e('Contact'); ?></strong>:
 			<?php 
 			if($a['s_contact_name']) {
-			?><a href="<?php echo WEB_PATH; ?>/item.php?action=contact&amp;id=<?php echo $a['pk_i_id']; ?>"><?php echo $a['s_contact_name']; ?></a>	
+			?><a href="<?php echo osc_base_url() ; ?>/item.php?action=contact&amp;id=<?php echo $a['pk_i_id']; ?>"><?php echo $a['s_contact_name']; ?></a>
 			<?php
 			} 
 			?>
@@ -82,7 +82,7 @@ if(count($categories) == 1) {
 				<?php _e('Price'); ?>: <?php echo $item_info['price']; ?>
  			</div>
 			<?php endif; ?>
-			<div id="search_result_title"><a href="<?php osc_createItemURL($a, true); ?>"><?php echo $item_info['title']; ?></a></div>
+			<div id="search_result_title"><a href="<?php osc_create_item_url($a, true); ?>"><?php echo $item_info['title']; ?></a></div>
 			<div class="clear"></div>
 		</div>
         <div id="search_result_desc">

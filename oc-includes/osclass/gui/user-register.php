@@ -6,7 +6,7 @@
 <?php UserForm::js_validation() ; ?>
 <div align="center">
     <div id="register_form">
-        <form action="<?php echo osc_createURL('user') ; ?>" method="post" onSubmit="javascript:return checkForm();">
+        <form action="<?php echo osc_create_url('user') ; ?>" method="post" onSubmit="javascript:return checkForm();">
             <input type="hidden" name="action" value="register_post" />
             <p>
 		<label for="name"><?php _e('Name') ; ?></label><br />
@@ -36,7 +36,7 @@
             <p>
                 <button type="submit"><?php _e('Create user') ; ?></button>
             </p>
-            <?php osc_runHook('user_register_form') ; ?>
+            <?php osc_run_hook('user_register_form') ; ?>
         </form>
     </div>
 </div>

@@ -21,15 +21,15 @@
 
 foreach($items as $i): ?>
 <div class="searchListItem" >
-	<?php if(osc_itemHasThumbnail($i)): ?>
-		<a href="<?php osc_createItemURL($i, true); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" class="searchListImageLink" /></a>
+	<?php if(osc_item_has_thumbnail($i)): ?>
+		<a href="<?php osc_create_item_url($i, true); ?>"><img src="<?php echo osc_create_item_thumbnail_url($i) ; ?>" class="searchListImageLink" /></a>
 	<?php endif; ?>
 	<div class="searchListItemData">
-		<p><a href="<?php osc_createItemURL($i, true); ?>" class="searchListLink"><?php echo $i['s_title']; ?></a></p>
+		<p><a href="<?php osc_create_item_url($i, true); ?>" class="searchListLink"><?php echo $i['s_title']; ?></a></p>
 
 		<p><?php echo strip_tags($i['s_description']); ?></p>
 	</div>
-	<div class="searchListItemPrice"><?php echo osc_formatPrice($i); ?></div>
+	<div class="searchListItemPrice"><?php echo osc_format_price($i) ; ?></div>
 	<div style="clear: both;"></div>
 </div>
 <?php endforeach; ?>

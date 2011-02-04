@@ -45,7 +45,7 @@
 					<a href="?action=add" id="button_open"><?php _e('Add a new theme') ; ?></a>
 					<div style="clear: both;"></div>
 				</div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<!-- list themes -->
 				<div id="content_separator"></div>
@@ -54,7 +54,7 @@
 
 						<div id="current_theme"><?php _e('Current theme'); ?></div>
 						<div id="current_theme_pic">
-							<img src="<?php echo WEB_PATH; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" style="width: 280px;" />
+							<img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo osc_theme() ; ?>/screenshot.png" style="width: 280px;" />
 						</div>
 						<div id="current_theme_info">
 							<strong><?php echo $info['name']; ?> <?php echo $info['version']; ?>. <?php _e('Author'); ?> <a target="_blank" href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
@@ -80,7 +80,7 @@
 											<a target="_blank" href="<?php echo ABS_WEB_URL; ?>?action=testTheme&theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a> |
 											<a id="theme_delete" onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="appearance.php?action=delete&amp;theme=<?php echo $theme ; ?>"><?php _e('Delete'); ?></a>
 										</div>
-										<div id="available_theme_pic"><img src="<?php echo WEB_PATH ; ?>/oc-content/themes/<?php echo $theme; ?>/screenshot.png" style="width: 280px;" /></div>
+										<div id="available_theme_pic"><img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px;" /></div>
 										<div id="available_theme_desc"><?php echo $info['description'] ; ?></div>
 										<div style="clear: both;"></div>
 									</div>

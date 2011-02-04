@@ -104,7 +104,7 @@ $last = end($users); $last_id = $last['pk_i_id']; ?>
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<form id="datatablesForm" action="users.php" method="post">
 				<div id="TableToolsToolbar">

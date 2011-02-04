@@ -115,7 +115,7 @@
 				<a href="?action=add" id="button_open"><?php echo osc_lowerCase(__('Add a new plugin')); ?></a>
 				<div style="clear: both;"></div>
 			</div>
-			<?php osc_showFlashMessages(); ?>
+			<?php osc_show_flash_messages() ; ?>
 
 			<div id="content_separator"></div>
 			<div id="TableToolsToolbar">

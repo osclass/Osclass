@@ -1,11 +1,11 @@
-<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <?php ItemForm::location_javascript(); ?>
 <?php if(!isset($_GET['catId'])) { $_GET['catId'] = -1; }; ?>
 <div id="home_header" class="sectionHeader"><?php _e('Post your item'); ?></div>
     <div class="itemFormHolder">
 	<div id="add_item_form" class="itemForm">
-		<form action="<?php echo osc_createURL('item');?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
+		<form action="<?php echo osc_create_url('item');?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
 		<input type="hidden" name="action" value="post_item" />
                 
 		<!-- left -->

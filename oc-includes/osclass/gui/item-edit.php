@@ -1,10 +1,10 @@
-<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <?php ItemForm::location_javascript(); ?>
 <div id="home_header" class="sectionHeader"><?php _e('Update your item'); ?></div>
 <div class="itemFormHolder">
 	<div id="add_item_form" class="itemForm">
-		<form action="<?php echo osc_createURL('user');?>" method="post" enctype="multipart/form-data">
+		<form action="<?php echo osc_create_url('user');?>" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="item_edit_post" />
 		<input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
 		<input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
@@ -57,7 +57,7 @@
                     </div>
 
 			<?php
-                            osc_runHook('item_edit', $item);
+                            osc_run_hook('item_edit', $item) ;
 			?>
 		</div>
 		<div class="clear"></div>

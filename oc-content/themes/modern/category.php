@@ -9,9 +9,9 @@ $subCats = Category::newInstance()->findSubcategories($category);
     <?php foreach($ads as $a) { ?>
         <div id="search_result_item">
             <div id="search_result_price">
-                <?php _e('Price'); ?>: <?php echo osc_formatPrice($a); ?>
+                <?php _e('Price'); ?>: <?php echo osc_format_price($a) ; ?>
             </div>
-            <div id="search_result_title"><a href="<?php osc_createItemURL($a, true); ?>"><?php echo $a['s_title']; ?></a></div>
+            <div id="search_result_title"><a href="<?php osc_create_item_url($a, true); ?>"><?php echo $a['s_title']; ?></a></div>
             <div class="clear"></div>
         </div>
         <div id="search_result_desc">
