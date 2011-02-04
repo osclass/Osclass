@@ -5,12 +5,12 @@ $latestItems = Item::newInstance()->listLatest(10);
 
 <div class="homeSearch" >
 <script type="text/javascript">
-function doSearch() { document.location = '<?php echo WEB_PATH; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
+function doSearch() { document.location = '<?php echo osc_base_url() ; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
 </script>
 <input onkeyup="if(event.keyCode == 13) doSearch();" type="text" name="pattern" id="searchPattern" /> <input type="button" value="<?php _e('Search'); ?>" onclick="doSearch();" /> or <a href="<?php echo osc_createItemPostURL(); ?>"><?php _e('Publish your item'); ?></a>
 </div>
 
-<?php osc_showWidgets('categories'); ?>
+<?php osc_show_widgets('categories') ; ?>
 
 <div>
 
@@ -34,7 +34,7 @@ function doSearch() { document.location = '<?php echo WEB_PATH; ?>/search.php?pa
 	<h3><?php _e('Latest published items'); ?></h3>
 
 	<?php foreach($latestItems as $item): ?>
-		<a href="<?php osc_createItemURL($item, true); ?>"><?php echo $item['s_title']; ?></a> <span class="homeLastestItemsList" >(<?php echo osc_formatDate($item); ?>)</span><br />
+		<a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title']; ?></a> <span class="homeLastestItemsList" >(<?php echo osc_formatDate($item); ?>)</span><br />
 	<?php endforeach; ?>
 </div>
 

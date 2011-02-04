@@ -430,7 +430,7 @@ switch ($action) {
                         $content = current($aPage['locale']);
                     }
 
-                    $item_url = osc_createItemURL($item);
+                    $item_url = osc_create_item_url($item);
 
                     $all = '';
 
@@ -487,7 +487,7 @@ switch ($action) {
                         $content = current($aPage['locale']) ;
                     }
 
-                    $item_url = osc_createItemURL($item) ;
+                    $item_url = osc_create_item_url($item) ;
 
                     $all = '' ;
 

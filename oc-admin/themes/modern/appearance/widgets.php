@@ -34,12 +34,12 @@
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/widget-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Widgets'); ?></div> 
+					<div id="content_header_arrow">&raquo; <?php _e('Widgets') ; ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
 					<div style="padding: 20px;">

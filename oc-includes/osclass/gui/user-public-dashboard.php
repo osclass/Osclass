@@ -19,21 +19,21 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<h2><?php echo __('Items from ').$user['s_name']; ?></h2>
+<h2><?php _e('Items from ').$user['s_name'] ; ?></h2>
 
-<?php if(count($items) == 0): ?>
-	<h3><?php _e('No items.'); ?></h3>
-<?php else: ?>
-<?php foreach($items as $i) { ?>
-	<div class="userItem" >
-		<div><a href="<?php osc_createItemURL($i, true); ?>"><?php echo $i['s_title']; ?></a></div>
+<?php if(count($items) == 0) { ?>
+	<h3><?php _e('No items.') ; ?></h3>
+<?php } else { ?>
+    <?php foreach($items as $i) { ?>
+        <div class="userItem" >
+            <div><a href="<?php osc_create_item_url($i, true); ?>"><?php echo $i['s_title'] ; ?></a></div>
 
-		<div class="userItemData" >
-		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
-		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
-		</div>
+            <div class="userItemData" >
+            <?php _e('Publication date'); ?>: <?php echo osc_formatDate($i) ; ?><br />
+            <?php _e('Price'); ?>: <?php echo osc_format_price($i) ; ?>
+            </div>
 
-	</div>
-	<br />
-<?php }; ?>
-<?php endif; ?>
+        </div>
+        <br />
+    <?php } ?>
+<?php } ?>

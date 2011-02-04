@@ -32,66 +32,66 @@
 			}
 			return anRows;
 		};
-		sSearchName = "<?php echo __('Search'); ?>...";
+		sSearchName = "<?php _e('Search'); ?>...";
 		oTable = $('#datatables_list').dataTable({
 	       	"bAutoWidth": false,
 			"sDom": '<"top"fl>rt<"bottom"ip<"clear">',
 			"oLanguage": {
-					"sProcessing":   "<?php echo __('Processing'); ?>...",
-					"sLengthMenu":   "<?php echo __('Show _MENU_ entries'); ?>",
-					"sZeroRecords":  "<?php echo __('No matching records found'); ?>",
-					"sInfo":         "<?php echo __('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
-					"sInfoEmpty":    "<?php echo __('Showing 0 to 0 of 0 entries'); ?>",
-					"sInfoFiltered": "(<?php echo __('filtered from _MAX_ total entries'); ?>)",
+					"sProcessing":   "<?php _e('Processing'); ?>...",
+					"sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>",
+					"sZeroRecords":  "<?php _e('No matching records found'); ?>",
+					"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
+					"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>",
+					"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)",
 					"sInfoPostFix":  "",
-					"sSearch":       "<?php echo __('Search'); ?>:",
+					"sSearch":       "<?php _e('Search'); ?>:",
 					"sUrl":          "",
 					"oPaginate": {
-						"sFirst":    "<?php echo __('First'); ?>",
-						"sPrevious": "<?php echo __('Previous'); ?>",
-						"sNext":     "<?php echo __('Next'); ?>",
-						"sLast":     "<?php echo __('Last'); ?>"
+						"sFirst":    "<?php _e('First'); ?>",
+						"sPrevious": "<?php _e('Previous'); ?>",
+						"sNext":     "<?php _e('Next'); ?>",
+						"sLast":     "<?php _e('Last'); ?>"
 					},
 			        "sLengthMenu": '<div style="float:left;"><?php echo __('Show'); ?> <select class="display" id="select_range">'+
 			        '<option value="10">10</option>'+
 			        '<option value="15">15</option>'+
 			        '<option value="20">20</option>'+
 			        '<option value="100">100</option>'+
-					'</select> <?php echo __('entries'); ?>',
-			        "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
-			 },
-			"sPaginationType": "full_numbers",
-			"aaData": [
-				<?php foreach($comments as $c): ?>
+					'</select> <?php _e('entries'); ?>'
+			        ,"sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
+			 }
+			,"sPaginationType": "full_numbers"
+			,"aaData": [
+				<?php foreach($comments as $c) { ?>
 					[
-						"<input type='checkbox' name='id[]' value='<?php echo $c['pk_i_id']; ?>' />",
-						"<?php echo $c['s_author_name']; ?> <?php echo __('on'); ?> <a target='_blank' href='<?php echo WEB_PATH . '/item.php?id=' . $c['fk_i_item_id'] ?>' id='dt_link'><?php echo $c['s_title']; ?></a> item<div id='datatables_quick_edit'><a href='comments.php?action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_edit'><?php echo __('Edit'); ?></a><?php 
+						"<input type='checkbox' name='id[]' value='<?php echo $c['pk_i_id']; ?>' />"
+						,"<?php echo $c['s_author_name']; ?> <?php _e('on'); ?> <a target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ?>' id='dt_link'><?php echo $c['s_title']; ?></a> item<div id='datatables_quick_edit'><a href='comments.php?action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_edit'><?php _e('Edit'); ?></a><?php
 							if(isset($c['e_status']) && ($c['e_status'] == 'ACTIVE')) {
                             	echo ' | <a href=\'comments.php?action=status&amp;id='. $c['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
                         	} else if (isset($c['e_status']) && ($c['e_status'] == 'INACTIVE')) {
                             	echo ' | <a href=\'comments.php?action=status&amp;id='. $c['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
-                        	}?> | <a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='comments.php?action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php echo __('Delete'); ?></a></div>",
-						"<?php echo $c['s_body']; ?>", 
-						"<?php echo $c['dt_pub_date']; ?>"
+                        	}?> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='comments.php?action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></div>"
+						,"<?php echo $c['s_body']; ?>"
+						,"<?php echo $c['dt_pub_date']; ?>"
 					] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
-				<?php endforeach; ?>
-			], 
+				<?php } ?>
+			] 
 			
-			"aoColumns": [
-				{"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>", 
-				 "bSortable": false, 
-				 "sClass": "center", 
-				 "sWidth": "10px",
-				 "bSearchable": false
-				 },
-				{"sTitle": "<?php echo __('Author'); ?>",
-				 "sWidth": "auto"
-				},
-				{"sTitle": "<?php echo __('Comment'); ?>"},
-				{"sTitle": "<?php echo __('Date'); ?>",
-				 "sWidth": "100px",
-				 "sClass": "center",
-				 "bSearchable": false
+			,"aoColumns": [
+				{"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
+				 ,"bSortable": false
+				 ,"sClass": "center"
+				 ,"sWidth": "10px"
+				 ,"bSearchable": false
+				 }
+				,{"sTitle": "<?php _e('Author'); ?>"
+				 ,"sWidth": "auto"
+				}
+				,{"sTitle": "<?php _e('Comment'); ?>"}
+				,{"sTitle": "<?php _e('Date'); ?>"
+				 ,"sWidth": "100px"
+				 ,"sClass": "center"
+				 ,"bSearchable": false
 				}
 			]
 		});
@@ -106,22 +106,22 @@
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;"><img src="<?php echo  $current_theme;?>/images/back_office/comments-icon2.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Manage Comments'); ?></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Manage Comments'); ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<form id="datatablesForm" action="comments.php" method="post">
 				<div id="TableToolsToolbar">
 				<select id="bulk_actions" name="bulk_actions" class="display">
 					<option value=""><?php echo __('Bulk Actions'); ?></option>
-					<option value="delete_all"><?php echo __('Delete') ?></option>
-					<option value="activate_all"><?php echo __('Activate') ?></option>
-					<option value="deactivate_all"><?php echo __('Deactivate') ?></option>
+					<option value="delete_all"><?php _e('Delete') ?></option>
+					<option value="activate_all"><?php _e('Activate') ?></option>
+					<option value="deactivate_all"><?php _e('Deactivate') ?></option>
 				</select>
-				&nbsp;<button id="bulk_apply" class="display"><?php echo __('Apply') ?></button>
+				&nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
 				</div>
 				<input type="hidden" name="action" value="bulk_actions" />
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>

@@ -20,7 +20,7 @@
 /**
  * @return true if the item has uploaded a thumbnail.
  */
-function osc_itemHasThumbnail($item) {
+function osc_item_has_thumbnail($item) {
     $conn = getConnection() ;
     $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
     return!is_null($resource) ;
@@ -29,7 +29,7 @@ function osc_itemHasThumbnail($item) {
 /**
  * Returns the URL to the thumbnail of the item passed by paramater.
  */
-function osc_itemThumbnail($item) {
+function osc_create_item_thumbnail_url($item) {
     $conn = getConnection() ;
     $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
     echo osc_createThumbnailURL($resource) ;
@@ -38,7 +38,7 @@ function osc_itemThumbnail($item) {
 /**
  * Formats the price using the appropiate currency.
  */
-function osc_formatPrice($item) {
+function osc_format_price($item) {
     if (!isset($item['f_price']))
         return __('Consult') ;
 
@@ -95,7 +95,7 @@ function osc_themeResource($fileName, $echo = false) {
     return $path ;
 }
 
-function osc_showWidgets($location) {
+function osc_show_widgets($location) {
     $widgets = Widget::newInstance()->findByLocation($location);
     foreach ($widgets as $w)
         echo $w['s_content'] ;
@@ -128,76 +128,76 @@ function osc_createPageURL($page, $echo = false) {
 
 function osc_createLoginURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/login';
+        return osc_base_url_noperm() . 'user/login';
     } else
-        return WEB_PATH_URL . 'user.php?action=login';
+        return osc_base_url_noperm() . 'user.php?action=login';
 }
 
 function osc_indexURL() {
-    return WEB_PATH_URL;
+    return osc_base_url_noperm() ;
 }
 
 function osc_createUserAccountURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/account';
+        return osc_base_url_noperm() . 'user/account';
     } else
-        return WEB_PATH_URL . 'user.php?action=account';
+        return osc_base_url_noperm() . 'user.php?action=account';
 }
 
 function osc_createUserAlertsURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/alerts';
+        return osc_base_url_noperm() . 'user/alerts';
     } else
-        return WEB_PATH_URL . 'user.php?action=alerts';
+        return osc_base_url_noperm() . 'user.php?action=alerts';
 }
 
 function osc_createLogoutURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/logout';
+        return osc_base_url_noperm() . 'user/logout';
     } else
-        return WEB_PATH_URL . 'user.php?action=logout';
+        return osc_base_url_noperm() . 'user.php?action=logout';
 }
 
 function osc_createSearchURL($pattern) {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'search/' . $pattern;
+        return osc_base_url_noperm() . 'search/' . $pattern;
     } else
-        return WEB_PATH_URL . 'search.php?sPattern=' . $pattern;
+        return osc_base_url_noperm() . 'search.php?sPattern=' . $pattern;
 }
 
 function osc_createProfileURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/profile';
+        return osc_base_url_noperm() . 'user/profile';
     } else
-        return WEB_PATH_URL . 'user.php?action=profile';
+        return osc_base_url_noperm() . 'user.php?action=profile';
 }
 
 function osc_createRegisterURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/register';
+        return osc_base_url_noperm() . 'user/register';
     } else
-        return WEB_PATH_URL . 'user.php?action=register';
+        return osc_base_url_noperm() . 'user.php?action=register';
 }
 
 function osc_createUserItemsURL() {
     if (osc_rewrite_enabled()) {
-        return WEB_PATH_URL . 'user/items';
+        return osc_base_url_noperm() . 'user/items';
     } else
-        return WEB_PATH_URL . 'user.php?action=items';
+        return osc_base_url_noperm() . 'user.php?action=items';
 }
 
 function osc_createUserOptionsURL($option = null) {
     if (osc_rewrite_enabled()) {
         if($option != null) {
-            return WEB_PATH_URL . 'user/options/'.$option;
+            return osc_base_url_noperm() . 'user/options/'.$option;
         } else {
-            return WEB_PATH_URL . 'user/options';
+            return osc_base_url_noperm() . 'user/options';
         }
     } else {
         if($option != null) {
-            return WEB_PATH_URL . 'user.php?action=options&option='.$option;
+            return osc_base_url_noperm() . 'user.php?action=options&option='.$option;
         } else {
-            return WEB_PATH_URL . 'user.php?action=options';
+            return osc_base_url_noperm() . 'user.php?action=options';
         }
     }
 }
@@ -205,15 +205,15 @@ function osc_createUserOptionsURL($option = null) {
 function osc_createUserOptionsPostURL($option = null) {
     if (osc_rewrite_enabled()) {
         if($option != null) {
-            return WEB_PATH_URL . 'user/options_post/' . $option ;
+            return osc_base_url_noperm() . 'user/options_post/' . $option ;
         } else {
-            return WEB_PATH_URL . 'user/options_post';
+            return osc_base_url_noperm() . 'user/options_post';
         }
     } else {
         if($option != null) {
-            return WEB_PATH_URL . 'user.php?action=options_post&option=' . $option ;
+            return osc_base_url_noperm() . 'user.php?action=options_post&option=' . $option ;
         } else {
-            return WEB_PATH_URL . 'user.php?action=options_post' ;
+            return osc_base_url_noperm() . 'user.php?action=options_post' ;
         }
     }
 }
@@ -264,28 +264,28 @@ function osc_createURL($params = null, $echo = false) {
 
 function osc_createThumbnailURL($resource) {
     if(isset($resource['pk_i_id'])) {
-        return sprintf(WEB_PATH . 'oc-content/uploads/%d_thumbnail.png', $resource['pk_i_id']);
+        return sprintf(osc_base_url() . 'oc-content/uploads/%d_thumbnail.png', $resource['pk_i_id']);
     } else {
         return osc_themeResource('images/no-image.png');
     }
 }
 
 function osc_createResourceURL($resource) {
-    return sprintf(WEB_PATH . 'oc-content/uploads/%d.png', $resource['pk_i_id']) ;
+    return sprintf(osc_base_url() . 'oc-content/uploads/%d.png', $resource['pk_i_id']) ;
 }
 
 function osc_createItemPostURL($cat = null) {
     if (!isset($cat) || !isset($cat['pk_i_id'])) {
         if (osc_rewrite_enabled()) {
-            return WEB_PATH_URL . 'item/new' ;
+            return osc_base_url_noperm() . 'item/new' ;
         } else {
-            return sprintf(WEB_PATH_URL . 'item.php?action=post') ;
+            return sprintf(osc_base_url_noperm() . 'item.php?action=post') ;
         }
     } else {
         if (osc_rewrite_enabled()) {
-            return WEB_PATH_URL . 'item/new/' . $cat['pk_i_id'] ;
+            return osc_base_url_noperm() . 'item/new/' . $cat['pk_i_id'] ;
         } else {
-            return sprintf(WEB_PATH_URL . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
+            return sprintf(osc_base_url_noperm() . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
         }
     }
 }
@@ -308,7 +308,7 @@ function osc_createCategoryURL($cat, $echo = false) {
         }
         $path = ABS_WEB_URL . $sanitized_category ;
     } else {
-        $path = sprintf(WEB_PATH_URL . 'search.php?sCategory=%d', $cat['pk_i_id']) ;
+        $path = sprintf(osc_base_url_noperm() . 'search.php?sCategory=%d', $cat['pk_i_id']) ;
     }
 
     if($echo) {
@@ -326,7 +326,7 @@ function osc_createCategoryURL($cat, $echo = false) {
  * @param bool $echo If you want to echo or not the path automatically
  * @return string If $echo is false, it returns the path, if not it return blank string
  */
-function osc_createItemURL($item, $echo = false) {
+function osc_create_item_url($item, $echo = false) {
     $path = '' ;
     
     if (osc_rewrite_enabled()) {
@@ -352,9 +352,9 @@ function osc_createItemURL($item, $echo = false) {
 function osc_createUserPublicDashboard($user = null) {
     if ($user != null || !isset($user['pk_i_id'])) {
         if (osc_rewrite_enabled()) {
-            return WEB_PATH_URL . 'user/'.$user['pk_i_id'] ;
+            return osc_base_url_noperm() . 'user/'.$user['pk_i_id'] ;
         } else {
-            return WEB_PATH_URL . 'user.php?action=public&user='.$user['pk_i_id'] ;
+            return osc_base_url_noperm() . 'user.php?action=public&user='.$user['pk_i_id'] ;
         }
     }
 }

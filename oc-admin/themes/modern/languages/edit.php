@@ -46,7 +46,7 @@ $enabledCtrl->setValue(1);
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
 				<!-- add new plugin form -->
 				<div id="settings_form">

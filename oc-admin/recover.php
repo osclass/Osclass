@@ -30,11 +30,11 @@
 
     <body class="login">
         <div id="login">
-            <h1><a href="<?php echo WEB_PATH; ?>/" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
+            <h1><a href="<?php echo osc_base_url() ; ?>/" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
 
             <div class="FlashMessage" style="text-align:center;">
-                <?php echo __('Please enter your username or e-mail address.'); ?><br />
-                <?php echo __('You will receive a new password via e-mail.'); ?>
+                <?php _e('Please enter your username or e-mail address.'); ?><br />
+                <?php _e('You will receive a new password via e-mail.'); ?>
             </div>
 
             <form action="index.php" method="post">
@@ -51,6 +51,6 @@
             </p>
 
         </div>
-        <p id="backtoblog"><a href="<?php echo WEB_PATH ; ?>/" title="<?php _e('Are you lost?') ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>/" title="<?php _e('Are you lost?') ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
     </body>
 </html>

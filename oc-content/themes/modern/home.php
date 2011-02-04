@@ -20,11 +20,11 @@
 
 <div id="home_header">
     <div>
-        <?php _e('Categories'); ?>
+        <?php _e('Categories') ; ?>
     </div>
 </div>
 
-<?php osc_showWidgets('categories'); ?> <?php /* XXX: must be moved in a better place */ ?>
+<?php osc_show_widgets('categories') ; ?> <?php /* XXX: must be moved in a better place */ ?>
 
 <div>
 <?php 

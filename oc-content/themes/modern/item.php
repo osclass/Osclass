@@ -1,11 +1,11 @@
-<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <div style="width: 100%; border: 0px solid black; margin-top: 20px;">
 	<!-- item header + contact button -->
 	<div id="user_item">
 		<div id="item_title"><?php echo $item['s_title']; ?></div>
-		<div id="item_contact_seller"><a href="<?php echo WEB_PATH; ?>/item.php?action=contact&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Contact seller'); ?></a></div>
-                <div id="item_send_friend"><a href="<?php echo WEB_PATH; ?>/item.php?action=send_friend&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Send to a friend'); ?></a></div>
+		<div id="item_contact_seller"><a href="<?php echo osc_base_url() ; ?>/item.php?action=contact&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Contact seller'); ?></a></div>
+                <div id="item_send_friend"><a href="<?php echo osc_base_url() ; ?>/item.php?action=send_friend&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Send to a friend'); ?></a></div>
 		<div class="clear"></div>
 	</div>
 	
@@ -28,15 +28,15 @@
 		<!-- price and description -->
 		<div id="item_desc">
 			<!-- price  and options -->
-			<?php /* _e('Price:'); */ ?><div id="item_price"> <?php echo osc_formatPrice($item); ?></div>
+			<?php /* _e('Price:'); */ ?><div id="item_price"> <?php echo osc_format_price($item) ; ?></div>
 			<div class="clear"></div>
 			<div id="item_actions">
 				<?php _e('Mark as '); ?>
-				<a id="item_spam" href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=spam&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('spam'); ?></a>,
-				<a id="item_bad_category" href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=badcat&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('bad category'); ?></a>,
-				<a id="item_repeated" href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=repeated&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('repeated'); ?></a>,
-				<a id="item_expired" href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=expired&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('expired'); ?></a>,
-				<a id="item_offensive" href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=offensive&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('offensive'); ?></a>.
+				<a id="item_spam" href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=spam&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('spam'); ?></a>,
+				<a id="item_bad_category" href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=badcat&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('bad category'); ?></a>,
+				<a id="item_repeated" href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=repeated&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('repeated'); ?></a>,
+				<a id="item_expired" href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=expired&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('expired'); ?></a>,
+				<a id="item_offensive" href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=offensive&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('offensive'); ?></a>.
 			</div>
 			<!-- desc -->
 			<div style="-moz-border-radius: 4px; border: 1px solid white; background-color: #eee; padding: 20px; margin-top: 10px; font-family: Tahoma; font-size: 14px;">
@@ -61,7 +61,7 @@
 	</div>
 </div>
 
-<form action="<?php echo WEB_PATH; ?>/item.php" method="post">
+<form action="<?php echo osc_base_url() ; ?>/item.php" method="post">
 <input type="hidden" name="action" value="add_comment" />
 <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 

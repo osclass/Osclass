@@ -22,7 +22,7 @@ global $mSearch, $osc_request;
 
 function osc_updateSearchURL($params, $delimiter = '&amp;') {
     $merged = array_merge($_REQUEST, $params);
-    return WEB_PATH . '/search.php?' . http_build_query($merged, '', $delimiter);
+    return osc_base_url() . '/search.php?' . http_build_query($merged, '', $delimiter);
 }
 
 function osc_isCategoryChecked($aCategory, $aCategories) {

@@ -1,5 +1,5 @@
-<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <?php ItemForm::location_javascript(); ?>
 <?php if(!isset($_GET['catId'])) { $_GET['catId'] = -1; }; ?>
 <div id="home_header"><div><?php _e('Post your item'); ?></div></div>

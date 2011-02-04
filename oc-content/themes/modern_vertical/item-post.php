@@ -1,10 +1,10 @@
-<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <script type="text/javascript">
     $(document).ready(function(){
         $("#countryId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
+            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
             var result = '';
             
             $.ajax({
@@ -24,7 +24,7 @@
                     $("#regionId").html(result);
     
                     var region_id = $("#regionId option:first").val();
-                    var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + region_id;
+                    var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + region_id;
                     var result = '';
     
                     $.ajax({
@@ -51,7 +51,7 @@
 
         $("#regionId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + pk_c_code;
+            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + pk_c_code;
             var result = '';
     
             $.ajax({

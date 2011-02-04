@@ -30,38 +30,37 @@
     </head>
     <body class="login">
         <div id="login">
-            <h1><a href="<?php echo WEB_PATH; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
-            <?php osc_showFlashMessages(); ?>
+            <h1><a href="<?php echo osc_base_url() ; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
+            <?php osc_show_flash_messages() ; ?>
             <form name="loginform" id="loginform" action="index.php" method="post">
                 <input type="hidden" name="action" value="login_post" />
                 <p>
                     <label>
-                        <?php echo __('Username'); ?><br />
+                        <?php _e('Username'); ?><br />
                         <input type="text" name="userName" id="user_login" class="input" value="" size="20" tabindex="10" />
                     </label>
                 </p>
                 <p>
                     <label>
-                        <?php echo __('Password'); ?><br />
+                        <?php _e('Password'); ?><br />
                         <input type="password" name="password" id="user_pass" class="input" value="" size="20" tabindex="20" />
                     </label>
                 </p>
                 <?php if(count($locales) > 1) {?>
                     <p>
-                        <label><?php echo __('Language'); ?><br />
+                        <label><?php _e('Language'); ?><br />
                             <select name="locale" id="user_language">
-                                                            <option value="en_US" selected="selected">English</option>
-                                                            <option>------------</option>
-                                <?php foreach ($locales as $locale): ?>
-                                    <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if (osc_admin_language() == $locale['pk_c_code'])
-                                        echo 'selected="selected"'; ?>><?php echo $locale['s_short_name']; ?></option>
-                                        <?php endforeach; ?>
+                                <option value="en_US" selected="selected"><?php _e('English') ; ?></option>
+                                <option>------------</option>
+                                <?php foreach ($locales as $locale) { ?>
+                                    <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if (osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"'; ?>><?php echo $locale['s_short_name'] ; ?></option>
+                                <?php } ?>
                             </select>
                         </label>
                     </p>
                 <?php } ?>
                 <p>
-                    <label><?php echo __('Theme'); ?><br />
+                    <label><?php _e('Theme'); ?><br />
                         <select name="theme" id="user_theme" disabled="disabled">
                             <option value="modern">Modern</option>
                         </select>
@@ -69,24 +68,23 @@
                 </p>
                 <p class="forgetmenot">
                     <label>
-                        <input name="rememberMe" type="checkbox" id="rememberMe" value="forever" tabindex="90" /> <?php echo __('Remember me'); ?>
+                        <input name="rememberMe" type="checkbox" id="rememberMe" value="forever" tabindex="90" /> <?php _e('Remember me') ; ?>
                     </label>
                 </p>
                 <p class="submit">
-                    <input type="submit" name="submit" id="submit" value="<?php echo __('Log in'); ?>" tabindex="100" />
+                    <input type="submit" name="submit" id="submit" value="<?php _e('Log in') ; ?>" tabindex="100" />
                 </p>
             </form>
 
             <p id="nav">
-                <a href="index.php?action=recover" title="<?php echo __('Lost your password?'); ?>"><?php echo __('Lost your password?'); ?></a>
+                <a href="index.php?action=recover" title="<?php _e('Lost your password?') ; ?>"><?php _e('Lost your password?'); ?></a>
             </p>
         </div>
-        <p id="backtoblog"><a href="<?php echo WEB_PATH; ?>/" title="<?php echo __('Have you lost?') ?>">&larr; <?php echo __('Back to'); ?> <?php echo osc_page_title() ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>/" title="<?php _e('Are you lost?') ?>">&larr; <?php _e('Back to'); ?> <?php echo osc_page_title() ; ?></a></p>
         <script type="text/javascript">
             try{
                 document.getElementById('user_login').focus();
             }catch(e){}
         </script>
-
     </body>
 </html>

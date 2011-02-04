@@ -19,13 +19,13 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <div>
         <h2><?php echo $item['s_title']; ?></h2>
         <div class="itemContent">
         <div class="itemDate" >
-        <?php _e('Price:'); ?> <?php echo osc_formatPrice($item) ?><br />
+        <?php _e('Price:'); ?> <?php echo osc_format_price($item) ; ?><br />
         <?php _e('Publication date:'); ?> <?php echo osc_formatDate($item) ?>
         </div>
         <div>
@@ -50,13 +50,18 @@ $locale=$locales[0];?>
 <?php }; ?>
         </div>
         </div>
-        <div class="itemContact" >
-        <a href="<?php echo WEB_PATH; ?>/item.php?action=contact&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Contact seller'); ?></a><br />
-        <a href="<?php echo WEB_PATH; ?>/item.php?action=send_friend&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Send to a friend'); ?></a><br />
-        <br />
-        <div class="itemButtons" >
-        <?php _e('Mark as'); ?> <a href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=spam&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('spam'); ?></a>, <a href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=badcat&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('bad category'); ?></a>, <a href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=offensive&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('offensive'); ?></a>, <a href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=repeated&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('repeated'); ?></a>, <a href="<?php echo WEB_PATH; ?>/item.php?action=mark&amp;as=expired&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('expired'); ?></a>.
-        </div>
+        <div class="itemContact">
+            <a href="<?php echo osc_base_url() ; ?>/item.php?action=contact&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Contact seller'); ?></a><br />
+            <a href="<?php echo osc_base_url() ; ?>/item.php?action=send_friend&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('Send to a friend'); ?></a><br />
+            <br />
+            <div class="itemButtons" >
+                <?php _e('Mark as'); ?>
+                <a href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=spam&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('spam'); ?></a>, 
+                <a href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=badcat&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('bad category'); ?></a>,
+                <a href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=offensive&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('offensive'); ?></a>,
+                <a href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=repeated&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('repeated'); ?></a>,
+                <a href="<?php echo osc_base_url() ; ?>/item.php?action=mark&amp;as=expired&amp;id=<?php echo $item['pk_i_id']; ?>"><?php _e('expired'); ?></a>.
+            </div>
         </div>
         <div style="clear: both;"></div>
 </div>
@@ -75,7 +80,7 @@ osc_runHook('item_detail', $item);
         <?php endforeach; ?>
 <?php endif; ?>
 
-<form action="<?php echo WEB_PATH; ?>/item.php" method="post">
+<form action="<?php echo osc_base_url() ; ?>/item.php" method="post">
 <input type="hidden" name="action" value="add_comment" />
 <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 

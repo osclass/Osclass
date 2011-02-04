@@ -222,7 +222,7 @@ class ItemForm extends Form {
     $(document).ready(function(){
         $("#countryId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
+            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
             var result = '';
 
             if(pk_c_code != '') {
@@ -258,7 +258,7 @@ class ItemForm extends Form {
 
         $("#regionId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + pk_c_code;
+            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + pk_c_code;
             var result = '';
 
             if(pk_c_code != '') {
@@ -392,7 +392,7 @@ class ItemForm extends Form {
 <script type="text/javascript">
     $("#catId").change(function(){
         var cat_id = $(this).val();
-        var url = '<?php echo WEB_PATH . "/oc-includes/osclass/ajax/plugins.php"; ?>';
+        var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/plugins.php"; ?>';
         var result = '';
 
         if(cat_id != '') {

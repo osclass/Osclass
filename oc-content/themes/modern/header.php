@@ -7,9 +7,9 @@
 	<title><?php echo osc_pageInfo('pageTitle') ; ?></title>
     <meta name="generator" content="OSClass <?php echo OSCLASS_VERSION ; ?>" />
 	<link href="<?php echo osc_themeResource('style.css'); ?>" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="<?php echo WEB_PATH ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
-	<script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
-	<script src="<?php echo WEB_PATH ; ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
+	<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
+	<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
 	<script>
         var locale = "<?php if(isset($_SESSION['locale']) && $_SESSION['locale'] != NULL) echo $_SESSION['locale'] ; ?>" ;
 		
@@ -52,8 +52,8 @@
 <body>
 
 <?php
-osc_showFlashMessages();
-$locales = Locale::newInstance()->listAllEnabled();
+osc_show_flash_messages() ;
+$locales = Locale::newInstance()->listAllEnabled() ;
 ?>
     <div id="container" align="center">
         <div id="header" align="center">
@@ -63,7 +63,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                 <div id="header_left">
                     <div id="header_title_shadow">
                         <div id="header_title">
-                            <a href="<?php echo WEB_PATH ; ?>"><?php echo osc_page_title() ; ?></a>
+                            <a href="<?php echo osc_base_url() ; ?>"><?php echo osc_page_title() ; ?></a>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                             <?php $i = 0 ; ?>
                             <?php foreach($locales as $locale) { ?>
                                 <div id="lang_container">
-                                    <a id="<?php echo $locale['pk_c_code'] ?>" href="<?php echo WEB_PATH ; ?>/index.php?action=setlanguage&value=<?php echo $locale['pk_c_code'] ; ?>"><?php echo $locale['s_name'] ; ?></a>
+                                    <a id="<?php echo $locale['pk_c_code'] ?>" href="<?php echo osc_base_url() ; ?>/index.php?action=setlanguage&value=<?php echo $locale['pk_c_code'] ; ?>"><?php echo $locale['s_name'] ; ?></a>
                                 </div>
                             <?php } ?>
                         </div>
@@ -119,4 +119,4 @@ $locales = Locale::newInstance()->listAllEnabled();
         </div>
 
         <div id="content" align="left">
-            <?php osc_showWidgets('header') ; ?>
+            <?php osc_show_widgets('header') ; ?>

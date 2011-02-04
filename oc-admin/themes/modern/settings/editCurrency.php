@@ -41,15 +41,15 @@
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_showFlashMessages(); ?>
+				<?php osc_show_flash_messages() ; ?>
 				
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+				<div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
 					<div style="padding: 20px;">
 
 						<form action="settings.php" method="post">
 
 						<fieldset>
-						<legend><?php echo __('Create'); ?></legend>
+						<legend><?php _e('Create') ; ?></legend>
 
 							<input type="hidden" name="action" value="editCurrency_post" />
 							<input type="hidden" name="pk_c_code" value="<?php echo $currency['pk_c_code'];?>" />

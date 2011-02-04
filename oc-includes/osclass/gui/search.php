@@ -23,7 +23,7 @@
 require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 
 ?>
-<link href="<?php echo WEB_PATH; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo osc_base_url() ; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<script>
 	$(function() {
 		function log( message ) {
@@ -32,7 +32,7 @@ require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 		}
 
 		$( "#city" ).autocomplete({
-			source: "<?php echo WEB_PATH; ?>/oc-includes/osclass/ajax/location.php",
+			source: "<?php echo osc_base_url() ; ?>/oc-includes/osclass/ajax/location.php",
 			minLength: 2,
 			select: function( event, ui ) {
 				log( ui.item ?
@@ -165,7 +165,7 @@ foreach($_REQUEST as $k => $v) {
 
 	<div>
 	<script type="text/javascript">
-	function doSearch() { document.location = '<?php echo WEB_PATH; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
+	function doSearch() { document.location = '<?php echo osc_base_url() ; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
 	</script>
 	<input onkeyup="if(event.keyCode == 13) doSearch();" type="text" name="pattern" id="searchPattern" value="<?php echo $pattern; ?>" /> <input type="button" value="<?php _e('Search'); ?>" onclick="doSearch();" />
 	</div>

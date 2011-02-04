@@ -42,7 +42,7 @@ class AdminThemes {
 	/* PRIVATE */
 	private function setCurrentThemePath() {
 		if(is_null($this->theme)) return false;
-		$this->theme_path = WEB_PATH . '/oc-admin/themes/' . $this->theme;
+		$this->theme_path = osc_base_url() . '/oc-admin/themes/' . $this->theme ;
 	}
 	
 	private function setCurrentThemeAbsolutePath() {

@@ -1,5 +1,5 @@
 <div style="clear: both;"></div>
-            <?php osc_showWidgets('footer'); ?>
+            <?php osc_show_widgets('footer') ; ?>
 
             </div> <!-- content -->
             <div id="footer">

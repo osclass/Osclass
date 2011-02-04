@@ -52,7 +52,7 @@
 
         <div id="content_separator"></div>
         
-        <?php osc_showFlashMessages(); ?>
+        <?php osc_show_flash_messages() ; ?>
 
         <div id="settings_form">
 			

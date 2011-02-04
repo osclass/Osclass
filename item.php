@@ -52,7 +52,7 @@ switch ($action) {
         unset($dao_itemStats) ;
         setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
         osc_addFlashMessage(__('Thanks! That helps us.'));
-        osc_redirectTo(osc_createItemURL($item));
+        osc_redirectTo(osc_create_item_url($item));
         break;
 
     case 'send_friend':
@@ -75,7 +75,7 @@ switch ($action) {
         $locale = osc_get_user_locale();
 
         $item = $manager->findByPrimaryKey($_POST['id']);
-        $item_url = osc_createItemURL($item);
+        $item_url = osc_create_item_url($item);
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -129,7 +129,7 @@ switch ($action) {
             if($item_date < $date) {
                 // The item is expired, we can not contact the seller
                 osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
-                osc_redirectTo(osc_createItemURL($item)) ;
+                osc_redirectTo(osc_create_item_url($item)) ;
             }
         }
 
@@ -150,7 +150,7 @@ switch ($action) {
             if($item_date < $date) {
                 // The item is expired, we can not contact the seller
                 osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
-                osc_redirectTo(osc_createItemURL($item)) ;
+                osc_redirectTo(osc_create_item_url($item)) ;
             }
         }
 
@@ -169,7 +169,7 @@ switch ($action) {
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
                          '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
         $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'],
-                         $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], osc_createItemURL($item), $_POST['message']);
+                         $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], osc_create_item_url($item), $_POST['message']);
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -214,7 +214,7 @@ switch ($action) {
         osc_sendMail($emailParams) ;
         @unlink($path) ;
         osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.')) ;
-        osc_redirectTo(osc_createItemURL($item)) ;
+        osc_redirectTo(osc_create_item_url($item)) ;
         break;
 
     case 'add_comment':
@@ -226,7 +226,7 @@ switch ($action) {
 
         $item = $manager->findByPrimaryKey($itemId) ;
 
-        $itemURL = osc_createItemURL($item) ;
+        $itemURL = osc_create_item_url($item) ;
 
         if (osc_moderate_comments()) {
             $status = 'INACTIVE' ;
@@ -372,7 +372,7 @@ switch ($action) {
                     $content = current($aPage['locale']);
                 }
 
-                $item_url = osc_createItemURL($item);
+                $item_url = osc_create_item_url($item) ;
                 $urlEdit =  array(
                                 'file'   => 'user'
                                 ,'action' => 'item_edit'
@@ -435,10 +435,10 @@ switch ($action) {
                     osc_runHook('activate_item', $manager->findByPrimaryKey($id));
                     CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                     osc_addFlashMessage('Item validated');
-                    osc_redirectTo(osc_createItemURL($item[0]));
+                    osc_redirectTo(osc_create_item_url($item[0]));
                 } else {
                     osc_addFlashMessage('The item was validated before');
-                    osc_redirectTo(osc_createItemURL($item[0]));
+                    osc_redirectTo(osc_create_item_url($item[0]));
                 }
             }
         }

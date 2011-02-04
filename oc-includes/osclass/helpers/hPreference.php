@@ -234,6 +234,10 @@
         return(getPreference('defaultResultsPerPage@search')) ;
     }
 
+    function osc_max_latest_items() {
+        return(getPreference('maxLatestItems@home')) ;
+    }
+
 
     
 
