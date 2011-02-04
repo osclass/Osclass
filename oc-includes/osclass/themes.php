@@ -59,7 +59,7 @@ function osc_formatDate($item) {
     return date(osc_date_format(), $date) ;
 }
 
-function osc_pageInfo($property, $echo = false) {
+function osc_page_info($property, $echo = false) {
     global $headerConf ;
     $conf = array(
         'pageTitle' => osc_page_title()
@@ -79,7 +79,7 @@ function osc_pageInfo($property, $echo = false) {
     return $conf[$property] ;
 }
 
-function osc_themeResource($fileName, $echo = false) {
+function osc_theme_resource($fileName, $echo = false) {
     $themePath = THEMES_PATH . osc_theme() . '/' . $fileName ;
     $path = '' ;
     if (file_exists($themePath)) {
@@ -264,9 +264,9 @@ function osc_create_url($params = null, $echo = false) {
 
 function osc_createThumbnailURL($resource) {
     if(isset($resource['pk_i_id'])) {
-        return sprintf(osc_base_url() . 'oc-content/uploads/%d_thumbnail.png', $resource['pk_i_id']);
+        return sprintf(osc_base_url() . 'oc-content/uploads/%d_thumbnail.png', $resource['pk_i_id']) ;
     } else {
-        return osc_themeResource('images/no-image.png');
+        return osc_theme_resource('images/no-image.png') ;
     }
 }
 

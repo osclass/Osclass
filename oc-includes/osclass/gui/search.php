@@ -54,9 +54,9 @@ require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 <?php
 for($i = 0; $i < $numPages; $i++) {
 	if($i == $page)
-		printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_updateSearchURL(array('page' => $i)), ($i + 1));
+		printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_update_search_url(array('page' => $i)), ($i + 1));
 	else
-		printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_updateSearchURL(array('page' => $i)), ($i + 1));
+		printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_update_search_url(array('page' => $i)), ($i + 1));
 }
 ?>
 </div>
@@ -64,18 +64,18 @@ for($i = 0; $i < $numPages; $i++) {
 <div class="searchShowing" ><?php printf('Showing from %d to %d %s of a total of %d results.', ($start + 1), $end, $pattern, $totalItems); ?></div>
 <div class="searchOptions" >
 	<div class="searchGalleryList" >
-		<?php _e('Show as:'); ?> <a href="<?php echo osc_updateSearchURL(array('showAs' => 'list')); ?>"><?php _e('List'); ?></a> or <a href="<?php echo osc_updateSearchURL(array('showAs' => 'gallery', 'onlyPic' => 1)); ?>"><?php _e('image gallery'); ?></a>.
+		<?php _e('Show as:'); ?> <a href="<?php echo osc_update_search_url(array('showAs' => 'list')); ?>"><?php _e('List'); ?></a> or <a href="<?php echo osc_update_search_url(array('showAs' => 'gallery', 'onlyPic' => 1)); ?>"><?php _e('image gallery'); ?></a>.
 	</div>
 	<div class="searchOrder">
 		<?php _e('Sort by:'); ?>
 		<select name="sort" onchange="document.location = this.value;">
-		<?php foreach($orders as $label => $params): ?>
-			<?php if($orderColumn == $params['orderColumn'] && $orderDirection == $params['orderDirection']): ?>
-			<option selected="selected" value="<?php echo osc_updateSearchURL($params); ?>"><?php echo $label; ?></option>
-			<?php else: ?>
-			<option value="<?php echo osc_updateSearchURL($params); ?>"><?php echo $label; ?></option>
-			<?php endif; ?>
-		<?php endforeach; ?>
+            <?php foreach($orders as $label => $params) { ?>
+                <?php if($orderColumn == $params['orderColumn'] && $orderDirection == $params['orderDirection']) { ?>
+                    <option selected="selected" value="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></option>
+                <?php } else { ?>
+                    <option value="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></option>
+                <?php } ?>
+            <?php } ?>
 		</select>
 	</div>
 	<div style="clear: both;"></div>
@@ -84,97 +84,93 @@ for($i = 0; $i < $numPages; $i++) {
 <style type="text/css">
 div.hh {
 	padding: 4px;
-	background: url('<?php echo osc_themeResource('images/gradient.png'); ?>') repeat-x;
+	background: url('<?php echo osc_theme_resource('images/gradient.png'); ?>') repeat-x;
 }
 </style>
 
 <div class="searchFormHolder" >
-<form action="<?php echo osc_create_url('search');?>" method="POST" >
+    <form action="<?php echo osc_create_url('search');?>" method="POST" >
 
-<?php
-foreach($_REQUEST as $k => $v) {
-    if($k!='osclass') {
-        echo '<input type="hidden" name="'.$k.'" value="'.$v.'">';
-    }
-}
-?>
-
-
-<div class="searchForm" >
-    <?php $search->alertForm(); ?>
-	<div class="hh"><label for="city"><?php _e('City'); ?></label></div>
-	<div id="d_city" name="d_city" >
-	<input type="text" id="city" name="city" value="<?php echo $city; ?>" />
-	</div>
-
-	<div class="hh"><?php _e('Price'); ?></div>
-	<div>
-	<label for="priceMin"><?php _e('Minimum'); ?></label><br />
-	<input type="text" id="priceMin" name="priceMin" value="<?php echo $priceMin; ?>" size="6" maxlength="6" /><br />
-	<label for="priceMax"><?php _e('Maximum'); ?></label><br />
-	<input type="text" id="priceMax" name="priceMax" value="<?php echo $priceMax; ?>" size="6" maxlength="6" /><br />
-	</div>
-
-	<div class="hh"><?php _e('Pictures'); ?></div>
-	<div>
-	<?php if($onlyPic): ?>
-	<input type="checkbox" name="withPicture" id="withPicture" onchange="document.location = '<?php echo osc_updateSearchURL(array('onlyPic' => 0)); ?>';" checked="checked" />
-	<?php else: ?>
-	<input type="checkbox" name="withPicture" id="withPicture" value="false" onchange="document.location = '<?php echo osc_updateSearchURL(array('onlyPic' => 1)); ?>';" />
-	<?php endif; ?>
-	<label for="withPicture"><?php _e('Show only items with pictures'); ?></label></div>
-
-	<div class="hh"><?php _e('Category'); ?></div>
-	<div>
-	<?php foreach($categories as $cat): ?>
-	<?php if(in_array($cat['pk_i_id'], $cats)): ?>
-	<input onchange="updateFilter();" type="checkbox" checked="checked" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><?php echo $cat['s_name']; ?></label><br />
-	<?php else: ?>
-	<input onchange="updateFilter();" type="checkbox" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><?php echo $cat['s_name']; ?></label><br />
-	<?php endif; ?>
-	<?php endforeach; ?>
-	</div>
+        <?php
+        foreach($_REQUEST as $k => $v) {
+            if($k!='osclass') {
+                echo '<input type="hidden" name="'.$k.'" value="'.$v.'">';
+            }
+        }
+        ?>
 
 
+        <div class="searchForm" >
+            <?php $search->alertForm(); ?>
+            <div class="hh"><label for="city"><?php _e('City'); ?></label></div>
+            <div id="d_city" name="d_city" >
+                <input type="text" id="city" name="city" value="<?php echo $city; ?>" />
+            </div>
 
-	<div>
-<?php
+            <div class="hh"><?php _e('Price'); ?></div>
+            <div>
+                <label for="priceMin"><?php _e('Minimum'); ?></label><br />
+                <input type="text" id="priceMin" name="priceMin" value="<?php echo $priceMin; ?>" size="6" maxlength="6" /><br />
+                <label for="priceMax"><?php _e('Maximum'); ?></label><br />
+                <input type="text" id="priceMax" name="priceMax" value="<?php echo $priceMax; ?>" size="6" maxlength="6" /><br />
+            </div>
 
-    if(isset($_REQUEST['catId'])) {
-    	osc_run_hook('search_form', $_REQUEST['catId']);
-    } else {
-    	osc_run_hook('search_form');
-    } 
+            <div class="hh"><?php _e('Pictures'); ?></div>
+            <div>
+                <?php if($onlyPic) { ?>
+                    <input type="checkbox" name="withPicture" id="withPicture" onchange="document.location = '<?php echo osc_update_search_url(array('onlyPic' => 0)); ?>';" checked="checked" />
+                <?php } else { ?>
+                    <input type="checkbox" name="withPicture" id="withPicture" value="false" onchange="document.location = '<?php echo osc_update_search_url(array('onlyPic' => 1)); ?>';" />
+                <?php } ?>
+                <label for="withPicture"><?php _e('Show only items with pictures'); ?></label>
+            </div>
 
-?>
-</div>
-<input type="submit" value="<?php _e('Apply'); ?>" />
-</form>
+            <div class="hh"><?php _e('Category'); ?></div>
+            <div>
+                <?php foreach($categories as $cat) { ?>
+                    <?php if(in_array($cat['pk_i_id'], $cats)) { ?>
+                        <input onchange="updateFilter();" type="checkbox" checked="checked" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><?php echo $cat['s_name']; ?></label><br />
+                    <?php } else { ?>
+                        <input onchange="updateFilter();" type="checkbox" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><?php echo $cat['s_name']; ?></label><br />
+                    <?php } ?>
+                <?php } ?>
+            </div>
+            <div>
+                <?php
 
-</div>
+                    if(isset($_REQUEST['catId'])) {
+                        osc_run_hook('search_form', $_REQUEST['catId']);
+                    } else {
+                        osc_run_hook('search_form');
+                    }
+                ?>
+            </div>
+            <input type="submit" value="<?php _e('Apply'); ?>" />
+        </form>
+    </div>
 
-<?php if(!isset($items) || !is_array($items) || count($items) == 0): ?>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#search_no_result').animate({ backgroundColor: "white"}, 3000);
-			$('#search_no_result').animate({ color: "blue"}, 100);
-		});
-	</script>
-	<div id="search_no_result" class="searchResults" ><?php printf(__('There are no results matching "%s".'), $pattern); ?></div>
+    <?php if(!isset($items) || !is_array($items) || count($items) == 0) { ?>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#search_no_result').animate({ backgroundColor: "white"}, 3000);
+                $('#search_no_result').animate({ color: "blue"}, 100);
+            });
+        </script>
+        <div id="search_no_result" class="searchResults" ><?php printf(__('There are no results matching "%s".'), $pattern); ?></div>
 
-	<div>
-	<script type="text/javascript">
-	function doSearch() { document.location = '<?php echo osc_base_url() ; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
-	</script>
-	<input onkeyup="if(event.keyCode == 13) doSearch();" type="text" name="pattern" id="searchPattern" value="<?php echo $pattern; ?>" /> <input type="button" value="<?php _e('Search'); ?>" onclick="doSearch();" />
-	</div>
-<?php else: ?>
-<div class="searchResults" >
-<?php osc_renderView($showAs == 'list' ? 'search_list.php' : 'search_gallery.php'); ?>
-</div>
-<?php endif; ?>
+        <div>
+        <script type="text/javascript">
+        function doSearch() { document.location = '<?php echo osc_base_url() ; ?>/search.php?pattern=' + encodeURIComponent(document.getElementById('searchPattern').value); }
+        </script>
+        <input onkeyup="if(event.keyCode == 13) doSearch();" type="text" name="pattern" id="searchPattern" value="<?php echo $pattern; ?>" /> <input type="button" value="<?php _e('Search'); ?>" onclick="doSearch();" />
+        </div>
+    <?php } else { ?>
+        <div class="searchResults" >
+            <?php osc_renderView($showAs == 'list' ? 'search_list.php' : 'search_gallery.php'); ?>
+        </div>
+    <?php } ?>
 
-<div style="clear: both;"></div>
+    <div style="clear: both;"></div>
 
 </div>

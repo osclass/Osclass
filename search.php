@@ -20,7 +20,7 @@ require_once 'oc-load.php';
 
 global $mSearch, $osc_request;
 
-function osc_updateSearchURL($params, $delimiter = '&amp;') {
+function osc_update_search_url($params, $delimiter = '&amp;') {
     $merged = array_merge($_REQUEST, $params);
     return osc_base_url() . '/search.php?' . http_build_query($merged, '', $delimiter);
 }

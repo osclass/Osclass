@@ -87,7 +87,7 @@
                     <?php _e('Be the first to comment on this item!'); ?>
                  <?php } ?>
             </div>
-            <div style="border-top: 1px solid #ccc; padding: 15px; background-image: url('<?php echo osc_themeResource('images/pattern.gif'); ?>'); font-size: small;">
+            <div style="border-top: 1px solid #ccc; padding: 15px; background-image: url('<?php echo osc_theme_resource('images/pattern.gif'); ?>'); font-size: small;">
                 <p><?php _e('Leave your comment (spam and offensive messages will be removed)'); ?></p>
 
                 <p>
@@ -114,7 +114,7 @@
 
 <div style="border: 1px solid #ccc; -moz-border-radius: 3px; margin-bottom: 20px;">
 	<div style="border-bottom: 1px solid green; font-weight: bold; padding: 5px;"><?php _e('Helpful information'); ?></div>
-	<div style="border-top: 1px solid #ccc; padding: 5px; background-image: url('<?php echo osc_themeResource('images/pattern.gif'); ?>'); font-size: small;">
+	<div style="border-top: 1px solid #ccc; padding: 5px; background-image: url('<?php echo osc_theme_resource('images/pattern.gif'); ?>'); font-size: small;">
         <ul>
             <li><?php _e('Avoid scams by dealing locally or paying with PayPal.'); ?></li>
             <li><?php _e('Never pay with Western Union, Moneygram or other anonymous payment services.'); ?></li>

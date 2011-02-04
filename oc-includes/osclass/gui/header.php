@@ -11,9 +11,9 @@ if(isset($headerConf['javaScripts']))
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<meta name="description" content="<?php echo osc_pageInfo('pageTitle'); ?>" />
-	<meta name="keywords" content="<?php echo osc_pageInfo('pageTitle'); ?>" />
-	<title><?php echo osc_pageInfo('pageTitle'); ?></title>
+	<meta name="description" content="<?php echo osc_page_info('pageTitle'); ?>" />
+	<meta name="keywords" content="<?php echo osc_page_info('pageTitle'); ?>" />
+	<title><?php echo osc_page_info('pageTitle'); ?></title>
 	<link rel="icon" href="<?php echo ABS_WEB_URL; ?>favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="<?php echo ABS_WEB_URL; ?>favicon.ico" type="image/x-icon" />
 	<link rel="alternate" type="application/rss+xml" href="<?php echo osc_create_url('feed') ; ?>" title="<?php _e('Latest items added') ; ?>" />

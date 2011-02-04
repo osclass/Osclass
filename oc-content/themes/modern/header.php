@@ -1,12 +1,12 @@
-<?php $catId = osc_pageInfo('category'); ?>
+<?php $catId = osc_page_info('category') ; ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-	<title><?php echo osc_pageInfo('pageTitle') ; ?></title>
+	<title><?php echo osc_page_info('pageTitle') ; ?></title>
     <meta name="generator" content="OSClass <?php echo OSCLASS_VERSION ; ?>" />
-	<link href="<?php echo osc_themeResource('style.css'); ?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo osc_theme_resource('style.css'); ?>" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
 	<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
 	<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
