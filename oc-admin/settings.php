@@ -1,23 +1,19 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
@@ -450,18 +446,21 @@ switch ($action) {
         osc_redirectTo('settings.php?action=comments');
         break;
     case 'items_post':
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_recaptcha_items']) ? true : false)
-                ,array('s_name' => 'enabled_recaptcha_items')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
-                ,array('s_name' => 'enabled_item_validation')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['reg_user_post']) ? true : false)
-                ,array('s_name' => 'reg_user_post')
-        );
+        $enabledRecaptchaItems = Params::getParam('enabled_recaptcha_items');
+        $enabledRecaptchaItems = (($enabledRecaptchaItems != '') ? true : false);
+        $enabledItemValidation = Params::getParams('enabled_item_validation');
+        $enabledItemValidation = (($enabledItemValidation != '') ? true : false);
+        $regUserPost           = Params::getParam('reg_user_post');
+        $regUserPost           = (($regUserPost != '') ? true : false);
+        
+        Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
+                                         ,array('s_name'  => 'enabled_recaptcha_items'));
+        Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
+                                         ,array('s_name'  => 'enabled_item_validation'));
+        Preference::newInstance()->update(array('s_value' => $regUserPost)
+                                         ,array('s_name'  => 'reg_user_post'));
+
+
         Preference::newInstance()->update(
                 array('s_value' => isset($_POST['notify_new_item']) ? true : false)
                 ,array('s_name' => 'notify_new_item')
@@ -490,13 +489,37 @@ switch ($action) {
         osc_redirectTo('settings.php?action=items') ;
         break;
     case 'update':
-        $required = array();
-        foreach ($_POST as $key => $value) {
-            Preference::newInstance()->update(
-                    array('s_value' => $value)
-                    ,array('s_section' => 'osclass', 's_name' => $key)
-            );
-        }
+        $sPageTitle    = Params::getParam('pageTitle');
+        $sPageDesc     = Params::getParam('pageDesc');
+        $sContactEmail = Params::getParam('contactEmail');
+        $sLanguage     = Params::getParam('language');
+        $sDateFormat   = Params::getParam('dateFormat');
+        $sCurrency     = Params::getParam('currency');
+        $sWeekStart    = Params::getParam('weekStart');
+        $sTimeFormat   = Params::getParam('tf');
+        $sTimeFormat   = Params::getParam('timeFormat');
+        $sNumRssItems  = Params::getParam('num_rss_items');
+
+        Preference::newInstance()->update(array('s_value'   => $sPageTitle)
+                                         ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
+        Preference::newInstance()->update(array('s_value'   => $sPageDesc)
+                                         ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
+        Preference::newInstance()->update(array('s_value'   => $sContactEmail)
+                                         ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+        Preference::newInstance()->update(array('s_value'   => $sLanguage)
+                                         ,array('s_section' => 'osclass', 's_name' => 'language'));
+        Preference::newInstance()->update(array('s_value'   => $sDateFormat)
+                                         ,array('s_section' => 'osclass', 's_name' => 'dateFormat'));
+        Preference::newInstance()->update(array('s_value'   => $sCurrency)
+                                         ,array('s_section' => 'osclass', 's_name' => 'currency'));
+        Preference::newInstance()->update(array('s_value'   => $sWeekStart)
+                                         ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
+        Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
+                                         ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
+        Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
+                                         ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+
+        osc_redirectTo('settings.php?action=items');
         Preference::newInstance()->toArray() ;
     default:
         $languages = Locale::newInstance()->listAllEnabled() ;

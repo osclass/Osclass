@@ -39,7 +39,7 @@
     <div id="right_column">
         <div id="content_header" class="content_header">
             <div style="float: left;"><img src="<?php echo  $current_theme ?>/images/back_office/admin-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php echo __('Add new administrator'); ?></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Add new administrator'); ?></div>
             <div style="clear: both;"></div>
         </div>
 
@@ -54,14 +54,14 @@
 
                 <div style="float: left; width: 50%;">
                 <fieldset>
-                    <legend><?php echo __('Real name'); ?> (<?php echo __('required'); ?>)</legend>
+                    <legend><?php _e('Real name'); ?> (<?php _e('required'); ?>)</legend>
                     <input type="text" name="s_name" id="s_name" />
                 </fieldset>
                 </div>
 
                 <div style="float: left; width: 50%;">
                 <fieldset>
-                    <legend><?php echo __('E-mail'); ?></legend>
+                    <legend><?php _e('E-mail'); ?></legend>
                     <input type="text" name="s_email" id="s_email" />
                 </fieldset>
                 </div>
@@ -69,20 +69,20 @@
 
                 <div style="float: left; width: 50%;">
                 <fieldset>
-                    <legend><?php echo __('User name'); ?> (<?php echo __('required'); ?>)</legend>
+                    <legend><?php _e('User name'); ?> (<?php _e('required'); ?>)</legend>
                     <input type="text" name="s_username" id="s_username" />
                 </fieldset>
                 </div>
 
                 <div style="float: left; width: 50%;">
                 <fieldset>
-                    <legend><?php echo __('Password'); ?> (<?php echo __('required'); ?>)</legend>
+                    <legend><?php _e('Password'); ?> (<?php _e('required'); ?>)</legend>
                     <input type="password" name="s_password" id="s_password" />
                 </fieldset>
                 </div>
                 <div style="clear: both;"></div>
 
-                <input id="button_save" type="submit" value="<?php echo __('Create administrator'); ?>" />
+                <input id="button_save" type="submit" value="<?php _e('Create administrator'); ?>" />
 
                 </form>
 

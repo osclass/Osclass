@@ -1,30 +1,25 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-?>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+    defined('ABS_PATH') or die(__('Invalid OSClass request.'));
 
-<?php
-$dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-$timeFormats = array('g:i a', 'g:i A', 'H:i');
+    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
+    $timeFormats = array('g:i a', 'g:i A', 'H:i');
 ?>
 <div id="content">
     <div id="separator"></div>
@@ -33,8 +28,10 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php echo __('Items'); ?></div>
+            <div style="float: left;">
+                <img src="<?php echo $current_theme; ?>/images/back_office/settings-icon.png" title="" alt="" />
+            </div>
+            <div id="content_header_arrow">&raquo; <?php _e('Items'); ?></div>
             <div style="clear: both;"></div>
         </div>
 				

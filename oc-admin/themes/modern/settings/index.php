@@ -1,28 +1,23 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
  *
- *                        Copyright (C) 2010 OSCLASS
+ * Copyright (C) 2010 OSCLASS
  *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
  *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-?>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+    defined('ABS_PATH') or die(__('Invalid OSClass request.'));
 
-<?php
     $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y') ;
     $timeFormats = array('g:i a', 'g:i A', 'H:i') ;
 ?>
@@ -34,7 +29,9 @@
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo $current_theme ; ?>/images/back_office/settings-icon.png" /></div>
+            <div style="float: left;">
+                <img src="<?php echo $current_theme ; ?>/images/back_office/settings-icon.png" alt="" title=""/>
+            </div>
             <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
             <div style="clear: both;"></div>
         </div>
@@ -77,7 +74,7 @@
                             <select name="language" id="language">
                                 <?php foreach($languages as $lang) { ?>
                                     <?php $sLanguage = osc_language(); ?>
-                                    <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo (osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : '' ; ?>><?php echo $lang['s_name'] ; ?></option>
+                                    <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo ((osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $lang['s_name'] ; ?></option>
                                 <?php } ?>
                             </select>
                         </fieldset>
@@ -90,17 +87,20 @@
                             <legend><?php _e('Date format'); ?></legend>
                             <div style="font-size: small; margin: 0px;">
                                 <?php
-                                    $checked = false;
+                                    $custom_checked = true;
                                     foreach($dateFormats as $df) {
+                                        $checked = false;
                                         if($df == osc_date_format()) {
+                                            $custom_checked = false;
                                             $checked = true ;
                                         } ?>
-                                        <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo ($checked) ? 'checked="checked"' : '' ; ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;"/>
+                                        <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo (($checked) ? 'checked="checked"' : ''); ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;"/>
                                         <label for="<?php echo $df; ?>"><?php echo date($df); ?></label><br />
                                 <?php } ?>
 
-                                <input type="radio" name="df" id="df_custom" value="-" <?php echo (!$checked) ? 'checked="checked"' : '' ; ?> />
-                                <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
+                                <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
+                                <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_date_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('dateFormat').value = this.value;"/>
+                                <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format(); ?>" />
                             </div>
                         </fieldset>
                     </div>
@@ -108,9 +108,10 @@
                     <div style="float: left; width: 50%;">
                         <fieldset>
                             <legend><?php _e('Default currency'); ?></legend>
-                            <select name="currency" id="weekStart">
+                            <select name="currency" id="currency">
+                                <?php $currentCurrency = osc_currency(); ?>
                                 <?php foreach($aCurrencies as $currency) { ?>
-                                    <option value="<?php echo $currency['pk_c_code'] ?>" <?php if( osc_currency() == $currency['pk_c_code'] ) { ?>selected="selected"<?php } ?>><?php echo $currency['pk_c_code'] ?></option>
+                                    <option value="<?php echo $currency['pk_c_code'] ?>" <?php echo (($currentCurrency == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
                                 <?php } ?>
                             </select>
                         </fieldset>
@@ -134,20 +135,22 @@
                     <div style="float: left; width: 50%;">
                         <fieldset>
                             <legend><?php _e('Time format') ; ?></legend>
-                            <label for="timeFormat"><?php _e('Time format') ; ?></label><br />
                             <div style="font-size: small; margin: 0px;">
                                 <?php
-                                    $checked = false;
+                                    $custom_checked = true;
                                     foreach($timeFormats as $tf) {
+                                        $checked = false;
                                         if($tf == osc_time_format()) {
+                                            $custom_checked = false;
                                             $checked = true;
                                         } ?>
-                                        <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo ($checked) ? 'checked="checked"' : '' ; ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
+                                        <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo (($checked) ? 'checked="checked"' : ''); ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
                                         <label for="<?php echo $tf; ?>"><?php echo date($tf) ; ?></label>
                                         <br />
                                     <?php } ?>
-                                <input type="radio" name="tf" id="tf_custom" value="-" <?php echo (!$checked) ? 'checked="checked"' : '' ; ?> />
-                                <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" name="timeFormat" id="timeFormat" value="<?php echo osc_time_format() ; ?>" />
+                                <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
+                                <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_time_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('timeFormat').value = this.value;"/>
+                                <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_time_format(); ?>" />
                             </div>
                         </fieldset>
                     </div>
