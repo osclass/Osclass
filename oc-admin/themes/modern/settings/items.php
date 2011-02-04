@@ -50,13 +50,13 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
                     <div style="float: left; width: 50%;">
                         <fieldset>
                             <legend><?php _e('Settings') ; ?></legend>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_enabled_recaptcha_items()) ? echo 'checked="true"' : echo '' ; ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_enabled_recaptcha_items() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" />
                             <label><?php _e('Enabled recaptcha') ; ?></label>
                             <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_enabled_item_validation()) ? echo 'checked="true"' : echo '' ; ?> name="enabled_item_validation" id="enabled_item_validation" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_enabled_item_validation() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" />
                             <label><?php _e('Enabled item validation') ; ?></label>
                             <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_reg_user_post()) ? echo 'checked="true"' : echo '' ; ?> name="reg_user_post" id="reg_user_post" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" />
                             <label><?php _e('Only allow registered users post items') ; ?></label>
                         </fieldset>
                     </div>
@@ -64,13 +64,13 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
                     <div style="float: left; width: 50%;">
                         <fieldset>
                             <legend><?php _e('Notifications'); ?></legend>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_new_item()) ? echo 'checked="true"' : echo '' ; ?> name="notify_new_item" id="notify_new_item" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_item() ? 'checked="true"' : ''); ?> name="notify_new_item" id="notify_new_item" />
                             <label><?php _e('Notify new item to admin') ; ?></label>
                             <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_contact_item()) ? echo 'checked="true"' : echo '' ; ?> name="notify_contact_item" id="notify_contact_item" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_contact_item() ? 'checked="true"' : ''); ?> name="notify_contact_item" id="notify_contact_item" />
                             <label><?php _e('Notify contact item to admin') ; ?></label>
                             <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_contact_friends()) ? echo 'checked="true"' : echo '' ; ?> name="notify_contact_friends" id="notify_contact_friends" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_contact_friends() ? 'checked="true"' : ''); ?> name="notify_contact_friends" id="notify_contact_friends" />
                             <label><?php _e('Notify contact friends to admin') ; ?></label>
                         </fieldset>
                     </div>
@@ -78,10 +78,10 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
                     <div style="float: left; width: 50%;">
                         <fieldset>
                             <legend><?php _e('Optional fields'); ?></legend>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_price_enabled_at_items()) ? echo 'checked="true"' : echo '' ; ?> name="enableField#f_price@items" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_price_enabled_at_items() ? 'checked="true"' : ''); ?> name="enableField#f_price@items" />
                             <label><?php _e('Enable price') ; ?></label>
                             <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_images_enabled_at_items()) ? echo 'checked="true"' : echo '' ; ?> name="enableField#images@items" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_images_enabled_at_items() ?  'checked="true"' : ''); ?> name="enableField#images@items" />
                             <label><?php _e('Enable images') ; ?></label>
                         </fieldset>
                     </div>

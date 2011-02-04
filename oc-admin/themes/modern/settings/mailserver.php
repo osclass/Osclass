@@ -23,19 +23,19 @@
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <?php
-$dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-$timeFormats = array('g:i a', 'g:i A', 'H:i');
+    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
+    $timeFormats = array('g:i a', 'g:i A', 'H:i');
 ?>
 <script type="text/javascript">
     function changeServer( box ) {
-	if( box.value == 'gmail' ) {
+        if( box.value == 'gmail' ) {
             document.getElementById("mailserver_host").value = 'smtp.gmail.com';
             document.getElementById("mailserver_host").readOnly = true;
             document.getElementById("mailserver_port").readOnly = true;
             document.getElementById("mailserver_port").value = '465';
             document.getElementById("mailserver_auth").checked = 'true';
             document.getElementById("mailserver_ssl").value = 'ssl';
-	}
+        }
     }
 </script>
 <div id="content">
@@ -64,8 +64,8 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
                             <legend><?php _e('Configuration'); ?></legend>
                             <label><?php _e('Type of server'); ?></label>
                             <select name="mailserver_type" id="mailserver_type" onChange="changeServer(this)">
-                                <option value="custom" <?php (osc_mailserver_type() == 'custom') ? echo 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
-                                <option value="gmail" <?php (osc_mailserver_type() == 'gmail') ? echo 'selected="true"' : '' ; ?>><?php _e('GMail Server'); ?></option>
+                                <option value="custom" <?php echo (osc_mailserver_type() == 'custom') ? 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
+                                <option value="gmail" <?php echo (osc_mailserver_type() == 'gmail') ? 'selected="true"' : '' ; ?>><?php _e('GMail Server'); ?></option>
                             </select>
                             <br/>
                             <br/>
@@ -87,7 +87,7 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
                             <br/>
                             <small><?php _e('leave it empty if there isn\'t encryption, ssl or tls'); ?></small>
                             <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_mailserver_auth()) ? echo 'checked="true"' : echo '' ; ?> name="mailserver_auth" id="mailserver_auth" />
+                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
                             <label><?php _e('Enable SMTP authentication'); ?></label>
                         </fieldset>
                     </div>

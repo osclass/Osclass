@@ -76,7 +76,8 @@
                             <legend><?php _e('Default language'); ?></legend>
                             <select name="language" id="language">
                                 <?php foreach($languages as $lang) { ?>
-                                    <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php (osc_language() == $lang['pk_c_code']) ? echo 'selected="selected"' : '' ; ?>><?php echo $lang['s_name'] ; ?></option>
+                                    <?php $sLanguage = osc_language(); ?>
+                                    <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo (osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : '' ; ?>><?php echo $lang['s_name'] ; ?></option>
                                 <?php } ?>
                             </select>
                         </fieldset>
@@ -94,11 +95,11 @@
                                         if($df == osc_date_format()) {
                                             $checked = true ;
                                         } ?>
-                                        <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php ($checked) ? echo 'checked="checked"' : echo '' ; ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;"/>
+                                        <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo ($checked) ? 'checked="checked"' : '' ; ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;"/>
                                         <label for="<?php echo $df; ?>"><?php echo date($df); ?></label><br />
                                 <?php } ?>
 
-                                <input type="radio" name="df" id="df_custom" value="-" <?php (!$checked) ? echo 'checked="checked"' : echo '' ; ?> />
+                                <input type="radio" name="df" id="df_custom" value="-" <?php echo (!$checked) ? 'checked="checked"' : '' ; ?> />
                                 <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format() ; ?>" />
                             </div>
                         </fieldset>
@@ -141,11 +142,11 @@
                                         if($tf == osc_time_format()) {
                                             $checked = true;
                                         } ?>
-                                        <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php ($checked) ? echo 'checked="checked"' : echo '' ; ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
+                                        <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo ($checked) ? 'checked="checked"' : '' ; ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
                                         <label for="<?php echo $tf; ?>"><?php echo date($tf) ; ?></label>
                                         <br />
                                     <?php } ?>
-                                <input type="radio" name="tf" id="tf_custom" value="-" <?php (!$checked) ? echo 'checked="checked"' : echo '' ; ?> />
+                                <input type="radio" name="tf" id="tf_custom" value="-" <?php echo (!$checked) ? 'checked="checked"' : '' ; ?> />
                                 <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" name="timeFormat" id="timeFormat" value="<?php echo osc_time_format() ; ?>" />
                             </div>
                         </fieldset>
@@ -155,13 +156,13 @@
                         <fieldset>
                             <legend><?php _e('Number of items in the RSS') ; ?></legend>
                             <select name="num_rss_items" id="num_rss_items">
-                                <option value="10" selected="selected">10</option>
-                                <option value="25" <?php if(osc_num_rss_items() == '25') { ?>selected="selected"<?php } ?>>25</option>
-                                <option value="50" <?php if(osc_num_rss_items() == '50') { ?>selected="selected"<?php } ?>>50</option>
-                                <option value="75" <?php if(osc_num_rss_items() == '75') { ?>selected="selected"<?php } ?>>75</option>
-                                <option value="100" <?php if(osc_num_rss_items() == '100') { ?>selected="selected"<?php } ?>>100</option>
-                                <option value="150" <?php if(osc_num_rss_items() == '150') { ?>selected="selected"<?php } ?>>150</option>
-                                <option value="200" <?php if(osc_num_rss_items() == '200') { ?>selected="selected"<?php } ?>>200</option>
+                                <option value="10" <?php echo (osc_num_rss_items() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
+                                <option value="25" <?php echo (osc_num_rss_items() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
+                                <option value="50" <?php echo (osc_num_rss_items() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
+                                <option value="75" <?php echo (osc_num_rss_items() == '75') ? 'selected="selected"' : '' ; ?>>75</option>
+                                <option value="100" <?php echo (osc_num_rss_items() == '100') ? 'selected="selected"' : '' ; ?>>100</option>
+                                <option value="150" <?php echo (osc_num_rss_items() == '150') ? 'selected="selected"' : '' ; ?>>150</option>
+                                <option value="200" <?php echo (osc_num_rss_items() == '200') ? 'selected="selected"' : '' ; ?>>200</option>
                             </select>
                         </fieldset>
                     </div>
