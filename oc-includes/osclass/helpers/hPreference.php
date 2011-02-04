@@ -76,10 +76,6 @@
         return(getBoolPreference('contact_attachment')) ;
     }
 
-    function osc_notify_new_comment() {
-        return(getBoolPreference('notify_new_comment')) ;
-    }
-
     function osc_notify_new_item() {
         return(getBoolPreference('notify_new_item')) ;
     }
