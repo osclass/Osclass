@@ -38,7 +38,7 @@ switch ($_POST['action']) {
                 if(!isset($_POST['catId']))
                     return false;
                 
-                osc_runHook('item_form', $_POST['catId']);
+                osc_run_hook('item_form', $_POST['catId']);
                 break;
         }
 

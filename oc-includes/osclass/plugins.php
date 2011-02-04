@@ -22,7 +22,7 @@
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/utils.php';
 
-function osc_runHook($hook)
+function osc_run_hook($hook)
 {
 	$args = func_get_args();
 	array_shift($args);
@@ -59,8 +59,8 @@ function osc_applyFilter($hook, $content) {
     return $content;
 }
 
-function osc_runHooks($hook) {
-	osc_runHook($hook);
+function osc_run_hooks($hook) {
+	osc_run_hook($hook);
 }
 
 function osc_isPluginInstalled($plugin) {

@@ -66,73 +66,67 @@ $locale=$locales[0];?>
         <div style="clear: both;"></div>
 </div>
 
-<?php
-osc_runHook('item_detail', $item);
-?>
+<?php osc_run_hook('item_detail', $item) ; ?>
 
-<?php osc_runHooks('location'); ?>
+<?php osc_run_hooks('location') ; ?>
 
-<?php if(count($resources)): ?>
-        <h3><?php _e('Images'); ?></h3>
+<?php if(count($resources)) { ?>
+        <h3><?php _e('Images') ; ?></h3>
         
-        <?php foreach($resources as $r): ?>
-		<img src="<?php echo osc_createResourceURL($r); ?>" style="width: 150px;" />
-        <?php endforeach; ?>
-<?php endif; ?>
+        <?php foreach($resources as $r) { ?>
+            <img src="<?php echo osc_createResourceURL($r); ?>" style="width: 150px;" />
+        <?php } ?>
+<?php } ?>
 
 <form action="<?php echo osc_base_url() ; ?>/item.php" method="post">
-<input type="hidden" name="action" value="add_comment" />
-<input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
+    <input type="hidden" name="action" value="add_comment" />
+    <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
 
-<div class="commentHolder" >
+    <div class="commentHolder" >
         <div class="commentHeader" ><?php _e('Comments'); ?></div>
 
-        <?php if(osc_comments_enabled()) : ?>
-        
-        <div class="commentData" >
-        <?php if(isset($comments) && count($comments)): ?>
-        <?php foreach($comments as $c): ?>
-		<div><p><i><?php echo $c['s_title']; ?></i> by <i><?php echo $c['s_author_name']; ?></i>:</p><p><?php echo  $c['s_body'] ?></p><hr></div>
-        <?php endforeach; ?>
-        <?php else: ?>
-		<?php _e('Be the first to comment on this item!'); ?>
-        <?php endif; ?>
-        </div>
-        <div class="commentContent" >
-        <p><?php _e('Leave your comment (spam and offensive messages will be removed)'); ?></p>
+        <?php if(osc_comments_enabled()) { ?>
+            <div class="commentData" >
+                <?php if(isset($comments) && count($comments)) { ?>
+                    <?php foreach($comments as $c) { ?>
+                        <div><p><i><?php echo $c['s_title'] ; ?></i> by <i><?php echo $c['s_author_name'] ; ?></i>:</p><p><?php echo  $c['s_body'] ; ?></p><hr></div>
+                    <?php } ?>
+                <?php } else { ?>
+                    <?php _e('Be the first to comment on this item!'); ?>
+                <?php } ?>
+            </div>
+            <div class="commentContent" >
+                <p><?php _e('Leave your comment (spam and offensive messages will be removed)') ; ?></p>
+                <p>
+                    <label for="authorName"><?php _e('Your name'); ?>:</label> <input type="text" name="authorName" id="authorName" /><br />
+                    <label for="authorEmail"><?php _e('Your email'); ?>:</label> <input type="text" name="authorEmail" id="authorEmail" /><br />
+                </p>
+                <p>
+                    <label for="title"><?php _e('Title'); ?>:</label><br /><input type="text" name="title" id="title" /><br />
+                    <label for="body"><?php _e('Comment'); ?>:</label><br /><textarea name="body" id="body" rows="3" cols="60"></textarea>
+                </p>
+                <p><input type="submit" value="<?php _e('Send comment') ; ?>" /></p>
+            </div>
 
-        <p>
-        <label for="authorName"><?php _e('Your name'); ?>:</label> <input type="text" name="authorName" id="authorName" /><br />
-        <label for="authorEmail"><?php _e('Your email'); ?>:</label> <input type="text" name="authorEmail" id="authorEmail" /><br />
-        </p>
-
-        <p>
-        <label for="title"><?php _e('Title'); ?>:</label><br /><input type="text" name="title" id="title" /><br />
-        <label for="body"><?php _e('Comment'); ?>:</label><br /><textarea name="body" id="body" rows="3" cols="60"></textarea>
-        </p>
-
-        <p><input type="submit" value="<?php _e('Send comment'); ?>" /></p>
-        </div>
-
-        <?php else: ?>
-        <div class="commentContent" >
-        <?php _e('Comments are not enabled.'); ?>
-        </div>
-        <?php endif; ?>
-</div>
+        <?php } else { ?>
+                <div class="commentContent" >
+                    <?php _e('Comments are not enabled.'); ?>
+                </div>
+        <?php } ?>
+    </div>
 
 </form>
 
-<div class="helpHolder" >
-        <div class="helpHeader" ><?php _e('Helpful information'); ?></div>
-        <div class="helpContent" >
+<div class="helpHolder">
+    <div class="helpHeader"><?php _e('Helpful information') ; ?></div>
+    <div class="helpContent">
         <ul>
-                <li><?php _e('Avoid scams by dealing locally or paying with PayPal.'); ?></li>
-                <li><?php _e('Never pay with Western Union, Moneygram or other anonymous payment services.'); ?></li>
-                <li><?php _e("Don't buy or sell outside of your country. Don't accept cashier check from outside your country."); ?></li>
-                <li><?php _e('This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer "buyer protection" or "seller certification".'); ?></li>
+            <li><?php _e('Avoid scams by dealing locally or paying with PayPal.'); ?></li>
+            <li><?php _e('Never pay with Western Union, Moneygram or other anonymous payment services.'); ?></li>
+            <li><?php _e("Don't buy or sell outside of your country. Don't accept cashier check from outside your country."); ?></li>
+            <li><?php _e('This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer "buyer protection" or "seller certification".'); ?></li>
         </ul>
-        </div>
+    </div>
 </div>
 
 

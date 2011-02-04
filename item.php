@@ -298,7 +298,7 @@ switch ($action) {
                                 );
                 osc_sendMail($emailParams) ;
             }
-            osc_runHook('add_comment', $item);
+            osc_run_hook('add_comment', $item);
         } catch (Exception $e) {
             osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.')) ;
         }
@@ -340,7 +340,7 @@ switch ($action) {
         }
         
         $currencies = Currency::newInstance()->listAll();
-        osc_runHook('post_item');
+        osc_run_hook('post_item');
         osc_renderHeader(
                 array(
                     'pageTitle' => __('Publish your item') . ' - ' . osc_page_title()
@@ -380,7 +380,7 @@ switch ($action) {
                                 ,'userId' => null
                                 ,'secret' => $item['s_secret']
                             ) ;
-                $edit_link = osc_createURL($urlEdit);
+                $edit_link = osc_create_url($urlEdit);
 
                 $urlDelete =    array(
                                     'file'   => 'user'
@@ -389,7 +389,7 @@ switch ($action) {
                                     ,'userId' => null
                                     ,'secret' => $item['s_secret']
                                 ) ;
-                $delete_link = osc_createURL($urlDelete) ;
+                $delete_link = osc_create_url($urlDelete) ;
 
                 $words   = array();
                 $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
@@ -409,7 +409,7 @@ switch ($action) {
                 osc_sendMail($params);
             }
 
-            osc_runHook('posted_item', $item);
+            osc_run_hook('posted_item', $item);
             $category = Category::newInstance()->findByPrimaryKey($PcatId);
             osc_redirectTo(osc_createCategoryURL($category));
         } else {
@@ -432,7 +432,7 @@ switch ($action) {
                             array('e_status' => 'ACTIVE'),
                             array('s_secret' => $secret)
                     );
-                    osc_runHook('activate_item', $manager->findByPrimaryKey($id));
+                    osc_run_hook('activate_item', $manager->findByPrimaryKey($id));
                     CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                     osc_addFlashMessage('Item validated');
                     osc_redirectTo(osc_create_item_url($item[0]));
@@ -504,7 +504,7 @@ switch ($action) {
             }
 
             $headerConf = array('pageTitle' => $item['s_title'] . ' - ' . osc_page_title()) ;
-            osc_runHook('show_item', $item);
+            osc_run_hook('show_item', $item);
             osc_renderHeader($headerConf);
             osc_renderView('item.php');
             osc_renderFooter();

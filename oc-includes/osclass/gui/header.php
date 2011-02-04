@@ -16,7 +16,7 @@ if(isset($headerConf['javaScripts']))
 	<title><?php echo osc_pageInfo('pageTitle'); ?></title>
 	<link rel="icon" href="<?php echo ABS_WEB_URL; ?>favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" href="<?php echo ABS_WEB_URL; ?>favicon.ico" type="image/x-icon" />
-	<link rel="alternate" type="application/rss+xml" href="<?php echo osc_createURL('feed') ; ?>" title="<?php _e('Latest items added') ; ?>" />
+	<link rel="alternate" type="application/rss+xml" href="<?php echo osc_create_url('feed') ; ?>" title="<?php _e('Latest items added') ; ?>" />
 	<?php foreach($javaScripts as $javaScript) { ?>
         <script type="text/javascript" src="<?php echo osc_base_url() . $javaScript ; ?>"></script>
 	<?php } ?>
@@ -26,7 +26,7 @@ if(isset($headerConf['javaScripts']))
 
 <?php
 
-osc_runHooks('header') ;
+osc_run_hooks('header') ;
 osc_show_flash_messages() ;
 
 $locales = Locale::newInstance()->listAllEnabled();

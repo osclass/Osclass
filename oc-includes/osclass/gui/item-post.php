@@ -5,7 +5,7 @@
 <div id="home_header" class="sectionHeader"><?php _e('Post your item'); ?></div>
     <div class="itemFormHolder">
 	<div id="add_item_form" class="itemForm">
-		<form action="<?php echo osc_createURL('item');?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
+		<form action="<?php echo osc_create_url('item');?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
 		<input type="hidden" name="action" value="post_item" />
                 
 		<!-- left -->

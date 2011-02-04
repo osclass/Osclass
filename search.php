@@ -165,7 +165,7 @@ $mSearch->order($p_sOrder, $allowedTypesForSorting[$p_iOrderType]) ;
 //SET PAGE
 $mSearch->page($p_iPage, $p_sPageSize);
 
-osc_runHook('search_conditions', Params::getParamsAsArray());
+osc_run_hook('search_conditions', Params::getParamsAsArray());
 
 $mSearch->addConditions(sprintf("%st_item.e_status = 'ACTIVE' ", DB_TABLE_PREFIX));
 
@@ -197,12 +197,12 @@ if($p_sFeed == '') {
         }
     }
 
-    osc_runHook('search', $mSearch);
+    osc_run_hook('search', $mSearch);
     osc_renderHeader(array('pageTitle' => sprintf(__('Search results for %s'), $pattern) . ' - ' . osc_page_title()));
     osc_renderView('search.php') ;
     osc_renderFooter() ;
 } else {
-    osc_runHook('feed_' . $p_sFeed, $aItems) ;
+    osc_run_hook('feed_' . $p_sFeed, $aItems) ;
 }
 
 ?>

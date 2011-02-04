@@ -89,7 +89,7 @@ div.hh {
 </style>
 
 <div class="searchFormHolder" >
-<form action="<?php echo osc_createURL('search');?>" method="POST" >
+<form action="<?php echo osc_create_url('search');?>" method="POST" >
 
 <?php
 foreach($_REQUEST as $k => $v) {
@@ -141,9 +141,9 @@ foreach($_REQUEST as $k => $v) {
 <?php
 
     if(isset($_REQUEST['catId'])) {
-    	osc_runHook('search_form', $_REQUEST['catId']);
+    	osc_run_hook('search_form', $_REQUEST['catId']);
     } else {
-    	osc_runHook('search_form');
+    	osc_run_hook('search_form');
     } 
 
 ?>

@@ -411,12 +411,12 @@ class ItemForm extends Form {
 <div id="plugin-hook">
 <?php
     if (isset($_GET['catId'])) {
-        osc_runHook('item_form', $_GET['catId']);
+        osc_run_hook('item_form', $_GET['catId']);
     } else {
         if(is_array($categories)) {
-            osc_runHook('item_form', $categories[0]['pk_i_id']);
+            osc_run_hook('item_form', $categories[0]['pk_i_id']);
         } else {
-            osc_runHook('item_form', $categories);
+            osc_run_hook('item_form', $categories);
         }
     }
 ?>

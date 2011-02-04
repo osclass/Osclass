@@ -443,7 +443,7 @@ class Item extends DAO
 
     public function deleteByID($id)
     {
-        osc_runHook('delete_item', $id);
+        osc_run_hook('delete_item', $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_comment WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);

@@ -164,7 +164,7 @@ switch ($action) {
         }
 
         $_POST['pk_i_id'] = $_POST['id'];
-        osc_runHook('item_edit_post');
+        osc_run_hook('item_edit_post');
 
         osc_addFlashMessage(__('Great! We\'ve just update your item.'));
         break;
@@ -411,7 +411,7 @@ switch ($action) {
                 $_REQUEST['catId'] = "" ;
             }
 
-            osc_runHook('item_form_post', $_REQUEST['catId'], array('id' => $itemId));
+            osc_run_hook('item_form_post', $_REQUEST['catId'], array('id' => $itemId));
 
             $item = $manager->findByPrimaryKey($itemId);
 
@@ -540,7 +540,7 @@ switch ($action) {
 
             }
             
-            osc_runHook('after_item_post') ;
+            osc_run_hook('after_item_post') ;
 
             if($is_admin) {
                 osc_addFlashMessage(__('A new item has been added')) ;

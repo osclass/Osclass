@@ -19,7 +19,7 @@ $numPages = count($pages);
 	This web is proudly using the <a title="OSClass' web" href="http://osclass.org">open source classifieds</a> software <strong>OSClass</strong>.
 </div>
 
-<?php osc_runHooks('footer'); ?>
+<?php osc_run_hooks('footer'); ?>
 
 </body>
 </html>

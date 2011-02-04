@@ -40,16 +40,16 @@ switch($action) {
 		//Re-load the plugins
 		osc_loadActivePlugins();
 		//run this after installing the plugin
-		osc_runHooks('install_'.$pn);
+		osc_run_hooks('install_'.$pn) ;
 
         osc_addFlashMessage(__('Plugin installed.'));
-		osc_redirectTo('plugins.php');
+		osc_redirectTo('plugins.php') ;
 		break;
 	case 'uninstall':
 		$pn = $_GET['plugin'];
 
 		osc_deactivatePlugin($pn);
-		osc_runHooks($pn.'_uninstall');
+		osc_run_hooks($pn.'_uninstall') ;
 		//Re-load the plugins
 		osc_loadActivePlugins();
 
@@ -59,11 +59,11 @@ switch($action) {
 	case 'admin':
 		global $active_plugins;
 		if(isset($_GET['plugin']) && $_GET['plugin']!="") {
-			osc_runHook($_GET['plugin'].'_configure');
+			osc_run_hook($_GET['plugin'].'_configure');
 		}
 		break;
 	case 'admin_post':
-		osc_runHook('admin_post');
+		osc_run_hook('admin_post');
 
 	case 'renderplugin':
 		global $active_plugins;

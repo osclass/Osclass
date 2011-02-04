@@ -35,12 +35,12 @@ function validateLoginForm() {
 
 <h2><?php _e('Access to your account'); ?></h2>
 
-<form action="<?php echo osc_createURL('user');?>" method="post" onsubmit="return validateLoginForm();">
+<form action="<?php echo osc_create_url('user') ; ?>" method="post" onsubmit="return validateLoginForm();">
 <input type="hidden" name="action" value="login_post" />
 
 <p>
 <label for="email"><?php _e('E-mail'); ?></label><br />
-<?php UserForm::email_text();?>
+<?php UserForm::email_text() ; ?>
 </p>
 
 <p>

@@ -287,9 +287,9 @@ function checkForm() {
 
                     <?php
                         if(isset($_GET['catId'])) {
-                            osc_runHook('item_form', $_GET['catId']);
+                            osc_run_hook('item_form', $_GET['catId']) ;
                         } else {
-                            osc_runHook('item_form');
+                            osc_run_hook('item_form') ;
                         }
                     ?>
 		</div>

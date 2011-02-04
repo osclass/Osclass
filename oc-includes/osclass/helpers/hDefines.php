@@ -7,5 +7,5 @@
     function osc_base_url_noperm() {
         return(WEB_PATH_URL) ;
     }
-
+    
 ?>

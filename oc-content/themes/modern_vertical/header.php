@@ -44,7 +44,7 @@ $catId = osc_pageInfo('category');
             });
         });
     </script>
-    <?php osc_runHook('header'); ?>
+    <?php osc_run_hook('header') ; ?>
 </head>
 <body>
 

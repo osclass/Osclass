@@ -218,7 +218,7 @@ function osc_createUserOptionsPostURL($option = null) {
     }
 }
 
-function osc_createURL($params = null, $echo = false) {
+function osc_create_url($params = null, $echo = false) {
     $path = '';
     if(!is_array($params)) {
         return '';
@@ -387,7 +387,7 @@ function nav_user_menu($options = null) {
                 echo '<li><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
             }
 
-            osc_runHook('user_menu');
+            osc_run_hook('user_menu');
         ?>
     </ul>
 <?php } ?>

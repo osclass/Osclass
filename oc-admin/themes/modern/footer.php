@@ -24,7 +24,7 @@
         </div> <!-- end of container -->
         <div style="clear: both;"></div>
         <div id="footer">
-            <?php osc_runHook('admin_footer'); ?>
+            <?php osc_run_hook('admin_footer'); ?>
             <div id="footer_left">
                 <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank"><?php _e('OSClass'); ?></a> |
                 <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> |

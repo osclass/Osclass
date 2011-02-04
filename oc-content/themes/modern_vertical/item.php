@@ -62,9 +62,9 @@
 			</div>
 			
 			<!-- plugins -->
-			<?php osc_runHook('item_detail', $item) ; ?>
+			<?php osc_run_hook('item_detail', $item) ; ?>
 
-			<?php osc_runHook('location') ; ?>
+			<?php osc_run_hook('location') ; ?>
 		</div>
 		<div class="clear"></div>
 	</div>

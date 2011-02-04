@@ -19,22 +19,21 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<h2><?php _e('Retrieve your password'); ?></h2>
+<h2><?php _e('Retrieve your password') ; ?></h2>
 
-<form action="<?php echo osc_createURL('user');?>" method="post" >
-<input type="hidden" name="action" value="forgot_post" />
+<form action="<?php echo osc_create_url('user') ; ?>" method="post">
+    <input type="hidden" name="action" value="forgot_post" />
 
-<p>
-<label for="email"><?php _e('E-mail'); ?></label><br />
-<?php UserForm::email_text(); ?>
-</p>
+    <p>
+        <label for="email"><?php _e('E-mail') ; ?></label><br />
+        <?php UserForm::email_text(); ?>
+    </p>
 
-<p>
-<?php echo __('If you forgot your password, enter your e-mail and we\'ll send you an e-mail to recover it.'); ?>
-</p>
+    <p>
+        <?php _e('If you forgot your password, enter your e-mail and we\'ll send you an e-mail to recover it.') ; ?>
+    </p>
 
-<p>
-<input type="submit" value="<?php echo __('I forgot my password');?>" />
-</p>
-
+    <p>
+        <input type="submit" value="<?php _e('I forgot my password') ; ?>" />
+    </p>
 </form>

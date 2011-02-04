@@ -124,7 +124,7 @@ switch ($action) {
             's_author_email' => $_REQUEST['s_author_email']
                 ), array('pk_i_id' => $_REQUEST['id']));
 
-        osc_runHook('item_edit_post');
+        osc_run_hook('item_edit_post');
 
         osc_addFlashMessage(__('Great! We\'ve just update your item.'));
         osc_redirectTo('comments.php');
