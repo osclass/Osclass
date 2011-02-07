@@ -249,10 +249,9 @@ define('DB_HOST', '$dbhost');
 /** Database Table prefix */
 define('DB_TABLE_PREFIX', '$tableprefix');
 
-define('ABS_WEB_URL', '$abs_url');
 define('REL_WEB_URL', '$rel_url');
 
-define('WEB_PATH', ABS_WEB_URL);
+define('WEB_PATH', '$abs_url');
 
 CONFIG;
 
@@ -356,7 +355,7 @@ function finish_installation( ) {
     $data['password'] = $password ;
     
     $body = 'Welcome ' . $mPreference->get('pageTitle') . ',<br/><br/>' ;
-    $body .= 'Your OSClass installation at ' . ABS_WEB_URL . ' is up and running. You can access to the administration panel with this data access:<br/>' ;
+    $body .= 'Your OSClass installation at ' . WEB_PATH . ' is up and running. You can access to the administration panel with this data access:<br/>' ;
     $body .= '<ul>' ;
     $body .= '<li>username: ' . $admin_user . '</li>' ;
     $body .= '<li>password: ' . $password . '</li>' ;

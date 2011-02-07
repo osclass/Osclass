@@ -263,7 +263,7 @@ function osc_mailBeauty($text, $params) {
 
 	$text = str_ireplace($params[0], $params[1], $text) ;
 	$kwords = array('{WEB_URL}', '{WEB_TITLE}', '{CURRENT_DATE}', '{HOUR}') ;
-	$rwords = array(ABS_WEB_URL, osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
+	$rwords = array(osc_base_url(), osc_page_title(), date('Y-m-d H:i:s'), date('H:i')) ;
 	$text = str_ireplace($kwords, $rwords, $text) ;
     
 	return $text ;

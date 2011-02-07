@@ -46,13 +46,13 @@
 		bck_dir = document.forms['bckform'].backup_dir.value;
 		$(function() {
 			if(typ=='zip') {
-				var result = document.getElementById('steps_zip');
+				var result = document.getElementById('steps_zip') ;
 			} else {
-				var result = document.getElementById('steps_sql');
+				var result = document.getElementById('steps_sql') ;
 			}
-			result.innerHTML = "<?php echo __('Backing up data... please wait'); ?>";
+			result.innerHTML = "<?php _e('Backing up data... please wait') ; ?>";
 
-				$.get('<?php echo ABS_WEB_URL; ?>oc-admin/tools.php?bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
+				$.get('<?php echo osc_base_url() ; ?>oc-admin/tools.php?bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
 					result.innerHTML = data;
 				});
 		});

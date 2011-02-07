@@ -83,9 +83,9 @@ function osc_theme_resource($fileName, $echo = false) {
     $themePath = THEMES_PATH . osc_theme() . '/' . $fileName ;
     $path = '' ;
     if (file_exists($themePath)) {
-        $path = ABS_WEB_URL . 'oc-content/themes/' . osc_theme() . '/' . $fileName ;
+        $path = osc_base_url() . 'oc-content/themes/' . osc_theme() . '/' . $fileName ;
     } else {
-        $path =  ABS_WEB_URL . 'oc-includes/osclass/gui/' . $fileName ;
+        $path =  osc_base_url() . 'oc-includes/osclass/gui/' . $fileName ;
     }
 
     if($echo) {
@@ -113,9 +113,9 @@ function osc_createPageURL($page, $echo = false) {
 
     if (osc_rewrite_enabled()) {
         $sanitizedString = osc_sanitizeString($page['s_title']);
-        $path = sprintf(ABS_WEB_URL . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
+        $path = sprintf(osc_base_url() . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']);
     } else {
-        $path = sprintf(ABS_WEB_URL . 'page.php?id=%d', $page['pk_i_id']);
+        $path = sprintf(osc_base_url() . 'page.php?id=%d', $page['pk_i_id']);
     }
 
     if($echo) {
@@ -128,76 +128,76 @@ function osc_createPageURL($page, $echo = false) {
 
 function osc_createLoginURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/login';
+        return osc_base_url() . 'user/login';
     } else
-        return osc_base_url_noperm() . 'user.php?action=login';
+        return osc_base_url() . 'user.php?action=login';
 }
 
 function osc_indexURL() {
-    return osc_base_url_noperm() ;
+    return osc_base_url() ;
 }
 
 function osc_createUserAccountURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/account';
+        return osc_base_url() . 'user/account';
     } else
-        return osc_base_url_noperm() . 'user.php?action=account';
+        return osc_base_url() . 'user.php?action=account';
 }
 
 function osc_createUserAlertsURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/alerts';
+        return osc_base_url() . 'user/alerts';
     } else
-        return osc_base_url_noperm() . 'user.php?action=alerts';
+        return osc_base_url() . 'user.php?action=alerts';
 }
 
 function osc_createLogoutURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/logout';
+        return osc_base_url() . 'user/logout';
     } else
-        return osc_base_url_noperm() . 'user.php?action=logout';
+        return osc_base_url() . 'user.php?action=logout';
 }
 
 function osc_createSearchURL($pattern) {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'search/' . $pattern;
+        return osc_base_url() . 'search/' . $pattern;
     } else
-        return osc_base_url_noperm() . 'search.php?sPattern=' . $pattern;
+        return osc_base_url() . 'search.php?sPattern=' . $pattern;
 }
 
 function osc_createProfileURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/profile';
+        return osc_base_url() . 'user/profile';
     } else
-        return osc_base_url_noperm() . 'user.php?action=profile';
+        return osc_base_url() . 'user.php?action=profile';
 }
 
 function osc_createRegisterURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/register';
+        return osc_base_url() . 'user/register';
     } else
-        return osc_base_url_noperm() . 'user.php?action=register';
+        return osc_base_url() . 'user.php?action=register';
 }
 
 function osc_createUserItemsURL() {
     if (osc_rewrite_enabled()) {
-        return osc_base_url_noperm() . 'user/items';
+        return osc_base_url() . 'user/items';
     } else
-        return osc_base_url_noperm() . 'user.php?action=items';
+        return osc_base_url() . 'user.php?action=items';
 }
 
 function osc_createUserOptionsURL($option = null) {
     if (osc_rewrite_enabled()) {
         if($option != null) {
-            return osc_base_url_noperm() . 'user/options/'.$option;
+            return osc_base_url() . 'user/options/'.$option;
         } else {
-            return osc_base_url_noperm() . 'user/options';
+            return osc_base_url() . 'user/options';
         }
     } else {
         if($option != null) {
-            return osc_base_url_noperm() . 'user.php?action=options&option='.$option;
+            return osc_base_url() . 'user.php?action=options&option='.$option;
         } else {
-            return osc_base_url_noperm() . 'user.php?action=options';
+            return osc_base_url() . 'user.php?action=options';
         }
     }
 }
@@ -205,15 +205,15 @@ function osc_createUserOptionsURL($option = null) {
 function osc_createUserOptionsPostURL($option = null) {
     if (osc_rewrite_enabled()) {
         if($option != null) {
-            return osc_base_url_noperm() . 'user/options_post/' . $option ;
+            return osc_base_url() . 'user/options_post/' . $option ;
         } else {
-            return osc_base_url_noperm() . 'user/options_post';
+            return osc_base_url() . 'user/options_post';
         }
     } else {
         if($option != null) {
-            return osc_base_url_noperm() . 'user.php?action=options_post&option=' . $option ;
+            return osc_base_url() . 'user.php?action=options_post&option=' . $option ;
         } else {
-            return osc_base_url_noperm() . 'user.php?action=options_post' ;
+            return osc_base_url() . 'user.php?action=options_post' ;
         }
     }
 }
@@ -235,12 +235,12 @@ function osc_create_url($params = null, $echo = false) {
     if (osc_rewrite_enabled()) {
         if($params['file'] == 'index') {
             $params['file'] = '';
-            $path = ABS_WEB_URL . $params['action'];
+            $path = osc_base_url() . $params['action'];
         } else {
             if(count($params) == 2 && isset($params['action'])) {
-                $path = ABS_WEB_URL . $params['file'] . "/" . $params['action'];
+                $path = osc_base_url() . $params['file'] . "/" . $params['action'];
             } else {
-                $path = ABS_WEB_URL . $params['file'] . "?" . $params_string;
+                $path = osc_base_url() . $params['file'] . "?" . $params_string;
             }
         }
     } else {
@@ -251,7 +251,7 @@ function osc_create_url($params = null, $echo = false) {
             }
         }
         $params_string = preg_replace('/\&$/','',$params_string);
-        $path = ABS_WEB_URL . $params['file'] . ".php?" . $params_string;
+        $path = osc_base_url() . $params['file'] . ".php?" . $params_string;
     }
 
     if($echo) {
@@ -277,15 +277,15 @@ function osc_createResourceURL($resource) {
 function osc_createItemPostURL($cat = null) {
     if (!isset($cat) || !isset($cat['pk_i_id'])) {
         if (osc_rewrite_enabled()) {
-            return osc_base_url_noperm() . 'item/new' ;
+            return osc_base_url() . 'item/new' ;
         } else {
-            return sprintf(osc_base_url_noperm() . 'item.php?action=post') ;
+            return sprintf(osc_base_url() . 'item.php?action=post') ;
         }
     } else {
         if (osc_rewrite_enabled()) {
-            return osc_base_url_noperm() . 'item/new/' . $cat['pk_i_id'] ;
+            return osc_base_url() . 'item/new/' . $cat['pk_i_id'] ;
         } else {
-            return sprintf(osc_base_url_noperm() . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
+            return sprintf(osc_base_url() . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
         }
     }
 }
@@ -306,9 +306,9 @@ function osc_createCategoryURL($cat, $echo = false) {
         for ($i = count($cat); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
         }
-        $path = ABS_WEB_URL . $sanitized_category ;
+        $path = osc_base_url() . $sanitized_category ;
     } else {
-        $path = sprintf(osc_base_url_noperm() . 'search.php?sCategory=%d', $cat['pk_i_id']) ;
+        $path = sprintf(osc_base_url() . 'search.php?sCategory=%d', $cat['pk_i_id']) ;
     }
 
     if($echo) {
@@ -336,9 +336,9 @@ function osc_create_item_url($item, $echo = false) {
         for ($i = (count($cat)); $i > 0; $i--) {
             $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
         }
-        $path = sprintf(ABS_WEB_URL . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']) ;
+        $path = sprintf(osc_base_url() . '%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']) ;
     } else {
-        $path = sprintf(ABS_WEB_URL . 'item.php?id=%d', $item['pk_i_id']) ;
+        $path = sprintf(osc_base_url() . 'item.php?id=%d', $item['pk_i_id']) ;
     }
 
     if($echo) {
@@ -352,9 +352,9 @@ function osc_create_item_url($item, $echo = false) {
 function osc_createUserPublicDashboard($user = null) {
     if ($user != null || !isset($user['pk_i_id'])) {
         if (osc_rewrite_enabled()) {
-            return osc_base_url_noperm() . 'user/'.$user['pk_i_id'] ;
+            return osc_base_url() . 'user/'.$user['pk_i_id'] ;
         } else {
-            return osc_base_url_noperm() . 'user.php?action=public&user='.$user['pk_i_id'] ;
+            return osc_base_url() . 'user.php?action=public&user='.$user['pk_i_id'] ;
         }
     }
 }

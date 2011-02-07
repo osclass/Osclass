@@ -121,11 +121,11 @@ switch ($action) {
                         }
 
                         if (!is_null($content)) {
-                            $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL,
+                            $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', osc_base_url(),
                                                       $user['pk_i_id'], $code);
                             $words   = array();
                             $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
-                            $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
+                            $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), $validationLink);
                             $title = osc_mailBeauty($content['s_title'], $words);
                             $body = osc_mailBeauty($content['s_text'], $words);
 				

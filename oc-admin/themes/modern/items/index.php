@@ -47,98 +47,90 @@ if(isset($_GET)) {
 		};
 		sSearchName = "<?php echo __('Search'); ?>...";
 		oTable = $('#datatables_list').dataTable({
-			"bProcessing": true,
-			"bServerSide": true,
-			"sAjaxSource": "<?php echo ABS_WEB_URL?>oc-admin/ajax/items_processing.php",
-                        <?php if($stat) { ?>
-                            "fnServerData": function ( sSource, aoData, fnCallback ) {
-                                    /* Add some extra data to the sender */
-                                    aoData.push( { "name": "stat", "value": "<?php echo $stat ?>" } );
-                                    $.getJSON( sSource, aoData, function (json) {
-                                            /* Do whatever additional processing you want on the callback, then tell DataTables */
-                                            fnCallback(json)
-                                    } );
-                            },
-                        <?php } ?>
-                        "bAutoWidth": false,
-			"sDom": '<"top"fl>rt<"bottom"ip<"clear">',
-			//"bJQueryUI": true,
-			"oLanguage": {
-					"sProcessing":   "<?php echo __('Processing'); ?>...",
-					"sLengthMenu":   "<?php echo __('Show _MENU_ entries'); ?>",
-					"sZeroRecords":  "<?php echo __('No matching records found'); ?>",
-					"sInfo":         "<?php echo __('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
-					"sInfoEmpty":    "<?php echo __('Showing 0 to 0 of 0 entries'); ?>",
-					"sInfoFiltered": "(<?php echo __('filtered from _MAX_ total entries'); ?>)",
-					"sInfoPostFix":  "",
-					"sSearch":       "<?php echo __('Search'); ?>:",
-					"sUrl":          "",
-					"oPaginate": {
-						"sFirst":    "<?php echo __('First'); ?>",
-						"sPrevious": "<?php echo __('Previous'); ?>",
-						"sNext":     "<?php echo __('Next'); ?>",
-						"sLast":     "<?php echo __('Last'); ?>"
-					},
-			        "sLengthMenu": '<div style="float:left;"><?php echo __('Show'); ?> <select class="display" id="select_range">'+
-			        '<option value="10">10</option>'+
-			        '<option value="15">15</option>'+
-			        '<option value="20">20</option>'+
-			        '<option value="100">100</option>'+
-					'</select> <?php echo __('entries'); ?>',
-			        "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
-			 },
-			"sPaginationType": "full_numbers",
-
-			"aoColumns": [
-				{"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>", 
-				 "bSortable": false, 
-				 "sClass": "center", 
-				 "sWidth": "10px",
-				 "bSearchable": false
-				 },
-				{"sTitle": "<?php echo __('Title') ?>",
-                                 "bSortable": false,
-				 "sWidth": "25%"
-				},
-                                <?php if($stat) { ?>
-                                    {"sTitle": "<?php echo __('Count') ?>",
-                                     "bSortable": false
-                                    },
-                                <?php } else { ?>
-                                    {"sTitle": "<?php echo __('Description') ?>",
-                                     "bSortable": false
-                                    },
-                                <?php } ?>
-				{"sTitle": "<?php echo __('Category') ?>",
-				 "sWidth": "20%",
-				 "bSortable": false 
-				},
-				/*{"sTitle": "<img src='<?php echo  $current_theme ?>/images/back_office/comments-icon.png />",
-				 "sWidth": "10px", 
-				 "bSortable": false, 
-				 "sClass": "center",
-				 "bSearchable": false
-				},*/
-				{"sTitle": "<?php echo __('Date') ?>",
-				 "sWidth": "100px",
-				 "bSearchable": false
-				}
-			]
-		});
+                    "bProcessing": true
+                    ,"bServerSide": true
+                    ,"sAjaxSource": "<?php echo osc_base_url() ; ?>oc-admin/ajax/items_processing.php"
+                                    ,<?php if($stat) { ?>
+                                        "fnServerData": function ( sSource, aoData, fnCallback ) {
+                                                /* Add some extra data to the sender */
+                                                aoData.push( { "name": "stat", "value": "<?php echo $stat ; ?>" } );
+                                                $.getJSON( sSource, aoData, function (json) {
+                                                        /* Do whatever additional processing you want on the callback, then tell DataTables */
+                                                        fnCallback(json)
+                                                } );
+                                        }
+                                    <?php } ?>
+                                    ,"bAutoWidth": false
+                                    ,"sDom": '<"top"fl>rt<"bottom"ip<"clear">'
+                                    ,"oLanguage": {
+                                            "sProcessing":   "<?php _e('Processing') ; ?>..."
+                                            ,"sLengthMenu":   "<?php _e('Show _MENU_ entries') ; ?>"
+                                            ,"sZeroRecords":  "<?php _e('No matching records found') ; ?>"
+                                            ,"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
+                                            ,"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries') ; ?>"
+                                            ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries') ; ?>)"
+                                            ,"sInfoPostFix":  ""
+                                            ,"sSearch":       "<?php _e('Search') ; ?>:"
+                                            ,"sUrl":          ""
+                                            "oPaginate": {
+                                                "sFirst":    "<?php _e('First') ; ?>",
+                                                "sPrevious": "<?php _e('Previous') ; ?>",
+                                                "sNext":     "<?php _e('Next') ; ?>",
+                                                "sLast":     "<?php _e('Last') ; ?>"
+                                            }
+                                            ,"sLengthMenu": '<div style="float:left;"><?php _e('Show') ; ?> <select class="display" id="select_range">'+
+                                                                                                                '<option value="10">10</option>'+
+                                                                                                                '<option value="15">15</option>'+
+                                                                                                                '<option value="20">20</option>'+
+                                                                                                                '<option value="100">100</option>'+
+                                                                                                           '</select> <?php _e('entries') ; ?>'
+                                            ,"sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
+                                    }
+                                    ,"sPaginationType": "full_numbers"
+                                    ,"aoColumns": [
+                                        {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
+                                         ,"bSortable": false
+                                         ,"sClass": "center"
+                                         ,"sWidth": "10px"
+                                         ,"bSearchable": false
+                                        }
+                                        ,{"sTitle": "<?php _e('Title') ; ?>"
+                                          ,"bSortable": false
+                                          ,"sWidth": "25%"
+                                         }
+                                        <?php if($stat) { ?>
+                                            ,{"sTitle": "<?php _e('Count') ; ?>"
+                                             ,"bSortable": false
+                                            }
+                                        <?php } else { ?>
+                                            ,{"sTitle": "<?php _e('Description') ; ?>"
+                                             ,"bSortable": false
+                                            }
+                                        <?php } ?>
+                                        ,{"sTitle": "<?php _e('Category') ; ?>"
+                                         ,"sWidth": "20%"
+                                         ,"bSortable": false
+                                        }
+                                        ,{"sTitle": "<?php _e('Date') ; ?>"
+                                         ,"sWidth": "100px"
+                                         ,"bSearchable": false
+                                        }
+                                    ]
+                });
                 oTable.fnSort ( [[0, 'desc']] );
-               // console.log(oTable);
 	});
 </script>
 <script type="text/javascript" src="<?php echo  $current_theme ?>/js/datatables.post_init.js"></script>
+
 <div id="content">
 	<div id="separator"></div>	
 
-	<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+	<?php include_once $absolute_path . '/include/backoffice_menu.php' ; ?>
 
     <div id="right_column">
 	    <div id="content_header" class="content_header">
-			<div style="float: left;"><img src="<?php echo  $current_theme;?>/images/back_office/new-folder-icon.png" /></div>
-			<div id="content_header_arrow">&raquo; <?php echo __('Manage items'); ?></div>
+			<div style="float: left;"><img src="<?php echo  $current_theme ; ?>/images/back_office/new-folder-icon.png" /></div>
+			<div id="content_header_arrow">&raquo; <?php _e('Manage items'); ?></div>
 			<!-- <a href="new_item.php" id="button_open"><?php echo osc_lowerCase( __('Add New Item') ); ?></a> -->
 			<div style="clear: both;"></div>
 		</div>

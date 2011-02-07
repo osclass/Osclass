@@ -31,13 +31,13 @@
     define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
     define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
 
-    if(defined('WEB_PATH')) {
+    /*if(defined('WEB_PATH')) {
         if(osc_rewrite_enabled() && osc_mod_rewrite_loaded()) {
             define('WEB_PATH_URL', WEB_PATH . "index.php/") ;
         } else {
             define('WEB_PATH_URL', WEB_PATH) ;
         }
-    }
+    }*/
 
     /** Defines for error reporting */
     define('LOG_NONE', 0) ;

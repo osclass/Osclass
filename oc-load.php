@@ -99,7 +99,7 @@ $_REQUEST = add_slashes_extended($_REQUEST);
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
     if(osc_auto_cron()) {
-        osc_doRequest(ABS_WEB_URL . 'oc-includes/osclass/cron.php', array()) ;
+        osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
     }
 }
 
