@@ -30,8 +30,10 @@ $page = Params::getParam('page') ;
 
 
 switch($page) {
-    case('items'):  include_once(osc_admin_base_path() . 'items.php') ;
-                    doModel($action) ;
+    case('items'):  require_once(osc_admin_base_path() . 'items.php') ;
+                    $items = new CAdminItems() ;
+                    $items->doModel($action) ;
+                    die("EOF") ;
     break;
 }
 

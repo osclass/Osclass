@@ -24,7 +24,7 @@
     $adminTheme = osc_paramSession('adminTheme', 'modern') ;
     AdminThemes::newInstance()->setCurrentTheme($adminTheme) ;
 
-    function osc_renderAdminSection($file, $title = null, $subTitle = null) {
+    /*function osc_renderAdminSection($file, $title = null, $subTitle = null) {
         global $adminTheme;
 
         extract($GLOBALS);
@@ -39,7 +39,7 @@
 
         require 'themes/' . $adminTheme . '/' . $file;
         require 'themes/' . $adminTheme . '/footer.php';
-    }
+    }*/
 
     function osc_renderPluginSection($file) {
         $file = '../../..'.str_replace(ABS_PATH , '', $file);
