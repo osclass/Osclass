@@ -24,12 +24,7 @@
     $last_item = end( $this->_get("items") );
     $last_id = $last_item['pk_i_id'];
     
-    $stat = FALSE;
-    if(isset($_GET)) {
-        if(isset($_GET['stat'])) {
-            $stat = $_GET['stat'];
-        }
-    }
+    
 ?>
 
 <script type="text/javascript">

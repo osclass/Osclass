@@ -314,18 +314,15 @@ class CAdminItems
                                     osc_redirectTo('items.php');
             break;
             default:                //default
-                                    $catId = null;
+                                    $catId = Params::getParam('catId') ;
 
-                                    if (isset($_REQUEST['catId']) && !empty($_REQUEST['catId'])) {
-                                        $catId = $_GET['catId'];
-                                    }
-                                    if (!is_null($catId)) {
-                                        $this->_exportVariableToView("items", $this->itemManager->findByCategoryID($catId) ) ;
-                                    } else {
-                                        $this->_exportVariableToView("items", $this->itemManager->listAllWithCategories() ) ;
-                                    }
+                                    //preparing variables for the view
+                                    $this->_exportVariableToView("items", ( ($catId) ? $this->itemManager->findByCategoryID($catId) : $this->itemManager->listAllWithCategories() ) ) ;
+                                    $this->_exportVariableToView("catId", $catId) ;
+                                    $this->_exportVariableToView("stat", Params::getParam('stat')) ;
 
                                     //osc_renderAdminSection('items/index.php', __('Items')) ;
+                                    //calling the view...
                                     $this->doView('items/index.php', __('Items')) ;
         }
     }
