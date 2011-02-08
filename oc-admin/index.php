@@ -31,10 +31,34 @@ $page = Params::getParam('page') ;
 
 switch($page) {
     case('items'):  require_once(osc_admin_base_path() . 'items.php') ;
-                    $items = new CAdminItems() ;
-                    $items->doModel($action) ;
-                    die("EOF") ;
+                    $do = new CAdminItems() ;
+                    $do->doModel($action) ;
     break;
+    default:        //login of oc-admin
+                    require_once(osc_admin_base_path() . 'main.php') ;
+                    $do = new CAdminMain() ;
+                    $do->doModel($action) ;
+        /*
+                    if(isset($_SESSION['adminId'])) {
+                        //osc_redirectTo('main.php');
+                        include('main.php') ;
+                        exit();
+                    } else {
+                        if(isset($_COOKIE['oc_adminId']) && isset($_COOKIE['oc_adminSecret'])) {
+                            $admin = Admin::newInstance()->findByIdSecret($_COOKIE['oc_adminId'], $_COOKIE['oc_adminSecret']);
+                            if($admin) {
+                                $_SESSION['adminId'] = $_COOKIE['oc_adminId'];
+                                //osc_redirectTo('main.php');
+                                include('main.php') ;
+                                exit();
+                            }
+                        }
+                    }
+
+                    require_once LIB_PATH . 'osclass/model/Locale.php';
+                    $locales = Locale::newInstance()->listAllEnabled(true);
+
+                    require_once 'login.php';*/
 }
 
 
@@ -121,27 +145,7 @@ switch($action) {
 		setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
 		osc_redirectTo('index.php');
 		break;
-	default:
-		if(isset($_SESSION['adminId'])) {
-			//osc_redirectTo('main.php');
-            include('main.php') ;
-            exit();
-		} else {
-            if(isset($_COOKIE['oc_adminId']) && isset($_COOKIE['oc_adminSecret'])) {
-                $admin = Admin::newInstance()->findByIdSecret($_COOKIE['oc_adminId'], $_COOKIE['oc_adminSecret']);
-                if($admin) {
-                    $_SESSION['adminId'] = $_COOKIE['oc_adminId'];
-                    //osc_redirectTo('main.php');
-                    include('main.php') ;
-                    exit();
-                }
-            }
-        }
-        
-		require_once LIB_PATH . 'osclass/model/Locale.php';
-		$locales = Locale::newInstance()->listAllEnabled(true);
-
-		require_once 'login.php';
+	
 }
 
 ?>

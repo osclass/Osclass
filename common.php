@@ -21,8 +21,7 @@
      */
 
     /* SOME STUFF FOR OC-ADMIN */
-    $adminTheme = osc_paramSession('adminTheme', 'modern') ;
-    AdminThemes::newInstance()->setCurrentTheme($adminTheme) ;
+    AdminThemes::newInstance()->setCurrentTheme("modern") ;
 
     /*function osc_renderAdminSection($file, $title = null, $subTitle = null) {
         global $adminTheme;

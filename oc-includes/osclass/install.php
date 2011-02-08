@@ -21,9 +21,10 @@
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 
-require_once ABS_PATH . 'common.php';
+//require_once ABS_PATH . 'common.php';
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
+require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'oc-includes/osclass/web.php';

@@ -48,6 +48,7 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 
 require_once ABS_PATH . 'config.php';
 
+require_once ABS_PATH . 'oc-includes/osclass/classes/BaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/Params.php';

@@ -20,77 +20,103 @@
  */
 ?>
 
-<script>
-	$.extend({
-		initDashboard: function(args) {
-			$.isArray(args) ? true : false;
-			$.each(args, function(i, val) {
-				$("#" + val.substr(3)).show();
-				$("#" + val).attr('checked', 'checked');
-			}); 			
-		},
-		setCookie: function(args) {
-			$.isArray(args) ? true : false;
-			$.cookie.set("osc_admin_main", args, {json: true});
-		}
-	});
-	
-	$(function() {
-		if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) { // create cookies if admin is a first timer...
-			var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
-			$.initDashboard(sections);
-			$.setCookie(sections);
+<?php
 
-		} else { // else read it and apply it!
-			var enabled_sections = $.cookie.get("osc_admin_main", true);
-			$.initDashboard(enabled_sections);
-			$.setCookie(enabled_sections);
-		}
-		
-		// save settings
-		$("#button_save").click(function() {
-			var sections = [];
-			$('#checkboxes input:checkbox:checked').each(function() {
-				sections.push($(this).attr('id'));
-			});
-			
-			$.setCookie(sections);
-			$('#main_div').hide();						
-		});
+    //getting variables for this view
+    $numUsers = $this->_get("numUsers") ;
+    $numAdmins = $this->_get("numAdmins") ;
+    $numItems = $this->_get("numItems") ;
+    $numItemsPerCategory = $this->_get("numItemsPerCategory") ;
+    $categories = $this->_get("categories") ;
+    $newsList = $this->_get("newsList") ;
+    $comments = $this->_get("comments") ;
 
-		
-		$('#button_open').click(function() {
-			$('#main_div').toggle();
-		});
-							
-		$("#checkboxes input[type='checkbox']").click(function() {
-			var val = $(this).attr('id');
-			$("#" + val.substr(3)).toggle();
-		});
-	});
-</script>
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header">Dashboard</div>
+
+        <script>
+            $.extend({
+                initDashboard: function(args) {
+                    $.isArray(args) ? true : false;
+                    $.each(args, function(i, val) {
+                        $("#" + val.substr(3)).show();
+                        $("#" + val).attr('checked', 'checked');
+                    });
+                },
+                setCookie: function(args) {
+                    $.isArray(args) ? true : false;
+                    $.cookie.set("osc_admin_main", args, {json: true});
+                }
+            });
+
+            $(function() {
+                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) { // create cookies if admin is a first timer...
+                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
+                    $.initDashboard(sections);
+                    $.setCookie(sections);
+
+                } else { // else read it and apply it!
+                    var enabled_sections = $.cookie.get("osc_admin_main", true);
+                    $.initDashboard(enabled_sections);
+                    $.setCookie(enabled_sections);
+                }
+
+                // save settings
+                $("#button_save").click(function() {
+                    var sections = [];
+                    $('#checkboxes input:checkbox:checked').each(function() {
+                        sections.push($(this).attr('id'));
+                    });
+
+                    $.setCookie(sections);
+                    $('#main_div').hide();
+                });
+
+
+                $('#button_open').click(function() {
+                    $('#main_div').toggle();
+                });
+
+                $("#checkboxes input[type='checkbox']").click(function() {
+                    var val = $(this).attr('id');
+                    $("#" + val.substr(3)).toggle();
+                });
+            });
+        </script>
+        
 		<div id="content">
 			<div id="separator"></div>	
 			
 			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
-<script>
-	
-	// this must be loaded after backoffice menu is loaded.
-	$(function() {
-		// other tweaks
-		$('#sortable_left').sortable({
-			connectWith: ["#sortable_right"], placeholder: 'widget-placeholder', containment: 'body'
-		});
-		$('#sortable_right').sortable({
-			connectWith: ["#sortable_left"], placeholder: 'widget-placeholder', containment: 'body'
-		});
-	});
-</script>			
+
+            <script>
+
+                // this must be loaded after backoffice menu is loaded.
+                $(function() {
+                    // other tweaks
+                    $('#sortable_left').sortable({
+                        connectWith: ["#sortable_right"], placeholder: 'widget-placeholder', containment: 'body'
+                    });
+                    $('#sortable_right').sortable({
+                        connectWith: ["#sortable_left"], placeholder: 'widget-placeholder', containment: 'body'
+                    });
+                });
+            </script>
+            
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ;?>/images/back_office/home.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo _e('Dashboard'); ?></div>
-					<div id="button_open"><?php echo osc_lowerCase( _e('Settings') ); ?></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Dashboard'); ?></div>
+					<div id="button_open"><?php echo osc_lowerCase( __('Settings') ); ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				<?php osc_show_flash_messages() ; ?>
@@ -103,13 +129,13 @@
 						<label for="cb_last_items"><?php _e('Last Items'); ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_statistics" type="checkbox" />
-						<label for="cb_statistics"><?php _e('Statistics') ?></label>							
+						<label for="cb_statistics"><?php _e('Statistics'); ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_comments" type="checkbox" />
-						<label for="cb_last_comments"><?php _e('Last Comments') ?></label>							
+						<label for="cb_last_comments"><?php _e('Last Comments'); ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_news" type="checkbox" />
-						<label for="cb_last_news"><?php _e('Last News from OSClass') ?></label>							
+						<label for="cb_last_news"><?php _e('Last News from OSClass'); ?></label>
 					</form>
 					<br />
 					<a href="#" id="button_save"><?php echo osc_lowerCase( __('Save') ); ?></a><br />
@@ -182,5 +208,17 @@
 						</div>
 					</div>
 					<div style="clear: both;"></div>
-				</div> <!-- end of sortable divs -->
-			</div> <!-- end of right column -->
+
+                </div> <!-- end of sortable divs -->
+
+            </div> <!-- end of right column -->
+            
+            <div style="clear: both;"></div>
+
+        </div> <!-- end of container -->
+
+        <?php $this->osc_print_footer() ; ?>
+
+    </body>
+    
+</html>

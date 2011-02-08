@@ -48,14 +48,14 @@ class BaseModel
     }
 
     function osc_print_head() {
-        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/header.php' ;
+        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/head.php' ;
     }
     
     function osc_print_header() {
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/header.php' ;
     }
 
-    function osc_print_html() {
+    function osc_print_html($file) {
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/' . $file ;
     }
 
