@@ -20,7 +20,7 @@
  */
 
 ?>
-        <div style="clear: both;"></div>
+            <div style="clear: both;"></div>
         </div> <!-- end of container -->
         <div style="clear: both;"></div>
         <div id="footer">

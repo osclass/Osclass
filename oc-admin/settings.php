@@ -452,40 +452,33 @@ switch ($action) {
         $enabledItemValidation = (($enabledItemValidation != '') ? true : false);
         $regUserPost           = Params::getParam('reg_user_post');
         $regUserPost           = (($regUserPost != '') ? true : false);
-        
+        $notifyNewItem         = Params::getParam('notify_new_item');
+        $notifyNewItem         = (($notifyNewItem != '') ? true : false);
+        $notifyContactFriends  = Params::getParam('notify_contact_friends');
+        $notifyContactFriends  = (($notifyContactFriends != ''));
+
+
+
         Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                          ,array('s_name'  => 'enabled_recaptcha_items'));
         Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
                                          ,array('s_name'  => 'enabled_item_validation'));
         Preference::newInstance()->update(array('s_value' => $regUserPost)
                                          ,array('s_name'  => 'reg_user_post'));
+        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                         ,array('s_name'  => 'notify_new_item'));
 
+        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                         ,array('s_name'  => 'notify_contact_friends'));
+        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                         ,array('s_name'  => 'notify_contact_item'));
+        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                         ,array('s_name'  => 'enabled_item_validation'));
+        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                         ,array('s_name'  => 'enableField#f_price@items'));
+        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                         ,array('s_name'  => 'enableField#images@items'));
 
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_new_item']) ? true : false)
-                ,array('s_name' => 'notify_new_item')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_contact_friends']) ? true : false)
-                ,array('s_name' => 'notify_contact_friends')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_contact_item']) ? true : false)
-                ,array('s_name' => 'notify_contact_item')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
-                ,array('s_name' => 'enabled_item_validation')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enableField#f_price@items']) ? true : false)
-                ,array('s_name'  => 'enableField#f_price@items')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enableField#images@items']) ? true : false)
-                ,array('s_name'  => 'enableField#images@items')
-        );
-        Preference::newInstance()->toArray() ;
         osc_redirectTo('settings.php?action=items') ;
         break;
     case 'update':
