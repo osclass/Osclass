@@ -20,17 +20,18 @@ class BaseModel
         $this->action = Params::getParam('action') ;
         $this->aExported = array() ;
     }
-    //generic in all the classes
+
+    //to export variables at the business layer
     function _exportVariableToView($key, $value) {
         $this->aExported[$key] = $value ;
     }
 
-    //generic in all the classes
+    //to get the exported variables for the view
     function _get($key) {
         return($this->aExported[$key]) ;
     }
 
-    //generic in all the classes
+    //only for debug
     function _view($key = null) {
         if ($key) {
             print_r($this->aExported[$key]) ;
@@ -40,21 +41,31 @@ class BaseModel
     }
 
     function doModel() {
-        //generic things to do...
+        //sistema de seguridad para el caso en que estamos en el backoffice (tambien controla grantings)
+        /* if(granting guardado no corresponde al de esta clase) {
+            die("") || redirect
+        } */
     }
 
-    function doView() {
-        //generic things to do...
+    function osc_print_head() {
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/header.php' ;
-        if(!is_null($title)) {
-            $header = $title ;
-            if(!is_null($subTitle))
-                $header .= ': ' . $subTitle ;
-            echo '<div class="Header">' . $header . '</div>' ;
-        }
+    }
+    
+    function osc_print_header() {
+        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/header.php' ;
+    }
 
+    function osc_print_html() {
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/' . $file ;
+    }
+
+    function osc_print_footer() {
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/footer.php' ;
+    }
+
+    function doView($file) {
+        //generic things to do...
+        $this->osc_print_html($file) ;
     }
 }
 ?>
