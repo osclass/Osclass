@@ -16,7 +16,7 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CAdminItems extends BaseModel
+class CAdminItems extends AdminSecBaseModel
 {
     //specific for this class
     private $itemManager ;

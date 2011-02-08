@@ -16,7 +16,7 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CAdminMain extends BaseModel
+class CAdminMain extends AdminSecBaseModel
 {
 
     function __construct() {

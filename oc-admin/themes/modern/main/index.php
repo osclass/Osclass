@@ -180,28 +180,28 @@
 					<div id="sortable_right" class="sortable_div">
 
 						<div id="last_comments" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php _e('Last Comments') ?></h3>
+							<h3 class="ui-state-default"><?php _e('Last Comments') ; ?></h3>
 							<div id="statistics_body">
-								<?php foreach($comments as $c): ?>
-									<strong><?php echo $c['s_author_name']; ?></strong> <?php echo osc_lowerCase( __('Commented') ) ." ". osc_lowerCase( __('on') ) ." ". osc_lowerCase( __('Item') ); ?> <i><a title="<?php echo $c['s_body']; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ?>' id='dt_link'><?php echo $c['s_title']; ?></a></i><br />
-								<?php endforeach; ?>
+								<?php foreach($comments as $c) { ?>
+									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php echo osc_lowerCase( __('Commented on Item') ) ; ?> <i><a title="<?php echo $c['s_body']; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
+								<?php } ?>
 							</div>
 						</div>
 
 						<div id="last_news" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php _e('Latest News from OSClass') ?></h3>
+							<h3 class="ui-state-default"><?php _e('Latest News from OSClass') ; ?></h3>
 							<div id="last_news_body">
 							<?php
-								$xml = @osc_file_get_contents('http://osclass.org/feed');
+								$xml = @osc_file_get_contents('http://osclass.org/feed') ;
 								if($xml) {
-	 								$xml = simplexml_load_string($xml);
+	 								$xml = simplexml_load_string($xml) ;
 									echo '<ul>';
-									foreach($xml->channel->item as $item) {
-										printf('<li><a href="%s">%s</a></li>', $item->link, $item->title);
-									}
+                                        foreach($xml->channel->item as $item) {
+                                            printf('<li><a href="%s">%s</a></li>', $item->link, $item->title) ;
+                                        }
 									echo '</ul>';
 								} else {
-									_e('Unable to fetch news from') . ' OSClass. ' . __('Please try again later') . '.' ;
+                                    _e('Unable to fetch news from OSClass. Please try again later.') ;
 								}
 							?>								
 							</div>

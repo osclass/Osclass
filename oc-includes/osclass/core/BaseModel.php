@@ -11,9 +11,9 @@
  */
 class BaseModel
 {
-    //generic in all the classes
+    //action to execute
     private $action ;
-    //generic in all the classes
+    //array for variables needed at the view layer
     private $aExported ;
 
     function  __construct() {
@@ -45,6 +45,7 @@ class BaseModel
         /* if(granting guardado no corresponde al de esta clase) {
             die("") || redirect
         } */
+
     }
 
     function osc_print_head() {
