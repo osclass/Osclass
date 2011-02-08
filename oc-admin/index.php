@@ -37,6 +37,13 @@ switch($page) {
     break;
 }
 
+
+
+
+
+
+
+
 switch($action) {
 	case 'recover':
 		require_once 'recover.php';

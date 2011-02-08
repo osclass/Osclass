@@ -16,27 +16,16 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-//define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
-
-//require_once ABS_PATH . 'oc-admin/oc-load.php';
-
-class CAdminItems
+class CAdminItems extends BaseModel
 {
-    //generic in all the classes
-    private $action ;
-    //generic in all the classes
-    private $aExported ;
     //specific for this class
     private $itemManager ;
     
     function __construct() {
-        //generic in all the classes
-        //here we can control granting (generic in all the classes)
-        $this->action = Params::getParam('action') ;
-        //generic in all the classes
-        $this->aExported = array() ;
         $this->itemManager = Item::newInstance() ;
-        
+
+        //calling the parent construct
+        parent::__construct() ;
     }
 
     //Business Layer...
@@ -327,42 +316,9 @@ class CAdminItems
         }
     }
 
-    //generic in all the classes
-    function _exportVariableToView($key, $value) {
-        $this->aExported[$key] = $value ;
-    }
-
-    //generic in all the classes
-    function _get($key) {
-        return($this->aExported[$key]) ;
-    }
-
-    //generic in all the classes
-    function _view($key = null) {
-        if ($key) {
-            print_r($this->aExported[$key]) ;
-        } else {
-            print_r($this->aExported) ;
-        }
-    }
-
     //hopefully generic...
     function doView($file, $title = null, $subTitle = null) {
-        switch($this->action)
-        {
-            default:                //doView
-                                    require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/header.php' ;
-                                    if(!is_null($title)) {
-                                        $header = $title ;
-                                        if(!is_null($subTitle))
-                                            $header .= ': ' . $subTitle ;
-                                        echo '<div class="Header">' . $header . '</div>' ;
-                                    }
-
-                                    require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/' . $file ;
-                                    require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/footer.php' ;
-
-        }
+        parent::doView() ;
     }
 }
 
