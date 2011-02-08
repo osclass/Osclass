@@ -46,21 +46,21 @@
 		var steps = document.getElementById('steps');
 		var version = <?php echo $info['version']; ?>;
 		var fileToUnzip = '';
-		steps.innerHTML += "<?php echo __('Checking for update (installed version: '); ?>"+version+"): ";
+		steps.innerHTML += "<?php _e('Checking for update (installed version: '); ?>"+version+"): ";
 
 		$.getJSON("<?php echo $info['plugin_update_uri']; ?>", function(data) {
 			if(data.version <= version) {
-				steps.innerHTML += "<?php echo __('HORRAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
+				steps.innerHTML += "<?php _e('HORRAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
 			} else {
-				steps.innerHTML += "<?php echo __('current version: '); ?>"+data.version+"<br/>";
-				steps.innerHTML += "<?php echo __('Downloading update file: '); ?>";
+				steps.innerHTML += "<?php _e('current version: '); ?>"+data.version+"<br/>";
+				steps.innerHTML += "<?php _e('Downloading update file: '); ?>";
 
 				var tempAr = data.url.split('/');
 				fileToUnzip = tempAr.pop();
 				$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=download-file&file='+data.url, function(data) {
 				
 					steps.innerHTML += data+"<br/>";
-					steps.innerHTML += "<?php echo __('Unzipping file: '); ?>";
+					steps.innerHTML += "<?php _e('Unzipping file: '); ?>";
 
 					$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=unzip-file&file='+fileToUnzip, function(data) {
 					
@@ -109,11 +109,11 @@
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php' ; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php' ; ?>
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/tools-icon.png" /></div>
+            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/tools-icon.png" /></div>
             <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass') ; ?></div>
             <div style="clear: both;"></div>
         </div>

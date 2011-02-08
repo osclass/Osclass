@@ -45,7 +45,7 @@ if(isset($_GET)) {
                     }
                     return anRows;
 		};
-		sSearchName = "<?php echo __('Search'); ?>...";
+		sSearchName = "<?php _e('Search'); ?>...";
 		oTable = $('#datatables_list').dataTable({
                     "bProcessing": true
                     ,"bServerSide": true
@@ -120,16 +120,16 @@ if(isset($_GET)) {
                 oTable.fnSort ( [[0, 'desc']] );
 	});
 </script>
-<script type="text/javascript" src="<?php echo  $current_theme ?>/js/datatables.post_init.js"></script>
+<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>/js/datatables.post_init.js"></script>
 
 <div id="content">
 	<div id="separator"></div>	
 
-	<?php include_once $absolute_path . '/include/backoffice_menu.php' ; ?>
+	<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php' ; ?>
 
     <div id="right_column">
 	    <div id="content_header" class="content_header">
-			<div style="float: left;"><img src="<?php echo  $current_theme ; ?>/images/back_office/new-folder-icon.png" /></div>
+			<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/new-folder-icon.png" /></div>
 			<div id="content_header_arrow">&raquo; <?php _e('Manage items'); ?></div>
 			<!-- <a href="new_item.php" id="button_open"><?php echo osc_lowerCase( __('Add New Item') ); ?></a> -->
 			<div style="clear: both;"></div>
@@ -141,23 +141,23 @@ if(isset($_GET)) {
 		<form id="datatablesForm" action="items.php" method="post">
                     <div id="TableToolsToolbar">
                         <select id="bulk_actions" name="bulk_actions" class="display">
-                                <option value=""><?php echo __('Bulk Actions'); ?></option>
-                                <option value="delete_all"><?php echo __('Delete') ?></option>
-                                <option value="activate_all"><?php echo __('Activate') ?></option>
-                                <option value="deactivate_all"><?php echo __('Deactivate') ?></option>
-                                <option value="premium_all"><?php echo __('Make Premium') ?></option>
-                                <option value="depremium_all"><?php echo __('Demake Premium') ?></option>
+                                <option value=""><?php _e('Bulk Actions'); ?></option>
+                                <option value="delete_all"><?php _e('Delete') ?></option>
+                                <option value="activate_all"><?php _e('Activate') ?></option>
+                                <option value="deactivate_all"><?php _e('Deactivate') ?></option>
+                                <option value="premium_all"><?php _e('Make Premium') ?></option>
+                                <option value="depremium_all"><?php _e('Demake Premium') ?></option>
                         </select>
-                        &nbsp;<button id="bulk_apply" class="display"><?php echo __('Apply') ?></button>
+                        &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
                     </div>
                     <div id="TableToolsLinks">
-                        <strong><?php echo __('Filter by') ?>:</strong> <a href="items.php"><?php echo __('All') ?></a> |
-                        <a href="?stat=pending"><?php echo __('Pending') ?></a> |
-                        <a href="?stat=spam"><?php echo __('Spam') ?></a> |
-                        <a href="?stat=duplicated"><?php echo __('Duplicated') ?></a> |
-                        <a href="?stat=bad"><?php echo __('Bad classified') ?></a> |
-                        <a href="?stat=offensive"><?php echo __('Offensive') ?></a> |
-                        <a href="?stat=expired"><?php echo __('Expired') ?></a>
+                        <strong><?php _e('Filter by') ?>:</strong> <a href="items.php"><?php _e('All') ?></a> |
+                        <a href="?stat=pending"><?php _e('Pending') ?></a> |
+                        <a href="?stat=spam"><?php _e('Spam') ?></a> |
+                        <a href="?stat=duplicated"><?php _e('Duplicated') ?></a> |
+                        <a href="?stat=bad"><?php _e('Bad classified') ?></a> |
+                        <a href="?stat=offensive"><?php _e('Offensive') ?></a> |
+                        <a href="?stat=expired"><?php _e('Expired') ?></a>
                     </div>
 		<input type="hidden" name="action" value="bulk_actions" />
 			<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>

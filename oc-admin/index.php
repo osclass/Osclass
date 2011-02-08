@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -19,28 +20,21 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+require_once '../oc-load.php' ;
 
-require_once ABS_PATH . 'config.php';
-require_once ABS_PATH . 'oc-includes/osclass/db.php';
-require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
-require_once ABS_PATH . 'common.php';
+define('OC_ADMIN', true) ;
 
-define('OC_ADMIN', true);
+$login = true ;
+$action = Params::getParam('action') ;
+$page = Params::getParam('page') ;
 
-require_once LIB_PATH . 'osclass/web.php';
-require_once LIB_PATH . 'osclass/session.php';
-require_once LIB_PATH . 'osclass/locale.php';
-require_once LIB_PATH . 'osclass/utils.php';
-require_once LIB_PATH . 'osclass/model/Admin.php';
-require_once ABS_PATH . 'oc-admin/common.php';
 
-$login = true;
+switch($page) {
+    case('items'):  include_once(osc_admin_base_url() . 'items.php') ;
+                    doModel($action) ;
+    break;
+}
 
-$action = osc_readAction();
 switch($action) {
 	case 'recover':
 		require_once 'recover.php';
@@ -104,8 +98,11 @@ switch($action) {
 			$data['s_value'] = $_POST['locale'];
 			$condition = array( 's_section' => 'osclass', 's_name' => 'admin_language');
 			Preference::newInstance()->update($data, $condition) ;
-
-			osc_redirectTo('main.php');
+            echo "hola" ;
+			//osc_redirectTo('main.php');
+            include('main.php') ;
+            exit();
+            
 		} else {
 			osc_addFlashMessage(__('Wrong username or password.'));
 		}
@@ -117,16 +114,21 @@ switch($action) {
 		break;
 	default:
 		if(isset($_SESSION['adminId'])) {
-			osc_redirectTo('main.php');
-		} else
-		if(isset($_COOKIE['oc_adminId']) && isset($_COOKIE['oc_adminSecret'])) {
-			$admin = Admin::newInstance()->findByIdSecret($_COOKIE['oc_adminId'], $_COOKIE['oc_adminSecret']);
-			if($admin) {
-				$_SESSION['adminId'] = $_COOKIE['oc_adminId'];
-				osc_redirectTo('main.php');
-			}
-		}
-
+			//osc_redirectTo('main.php');
+            include('main.php') ;
+            exit();
+		} else {
+            if(isset($_COOKIE['oc_adminId']) && isset($_COOKIE['oc_adminSecret'])) {
+                $admin = Admin::newInstance()->findByIdSecret($_COOKIE['oc_adminId'], $_COOKIE['oc_adminSecret']);
+                if($admin) {
+                    $_SESSION['adminId'] = $_COOKIE['oc_adminId'];
+                    //osc_redirectTo('main.php');
+                    include('main.php') ;
+                    exit();
+                }
+            }
+        }
+        
 		require_once LIB_PATH . 'osclass/model/Locale.php';
 		$locales = Locale::newInstance()->listAllEnabled(true);
 

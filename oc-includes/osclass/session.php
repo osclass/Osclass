@@ -20,7 +20,7 @@
  */
 
 if(defined('OC_SESSION_INC')) {
-	echo __('defined session');
+	_e('defined session');
 	return;
 } else
 	define('OC_SESSION_INC', true);

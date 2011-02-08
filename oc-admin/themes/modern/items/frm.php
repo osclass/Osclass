@@ -37,7 +37,7 @@
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <div id="home_header" style="margin-left: 40px;"><h2><?php if(isset($new_item) && $new_item==TRUE) { _e('New item');} else { _e('Update your item');}; ?></h2></div>
@@ -101,7 +101,7 @@
                                     a.setAttribute('href', '#');
                                     a.setAttribute('divid', id);
                                     a.onclick = function() { re(this.getAttribute('divid')); return false; }
-                                    a.appendChild(document.createTextNode('<?php echo __('Remove'); ?>'));
+                                    a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
 
                                     var d = ce('div');
                                     d.setAttribute('id', id);

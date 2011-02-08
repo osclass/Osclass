@@ -9,7 +9,7 @@ $(document).ready(function(){
 </script>
 
 <div name="alert-form">
-    <?php echo __('Subscribe to this search'); ?><br />
+    <?php _e('Subscribe to this search'); ?><br />
     <form  method="post" name="sub_alert" id="sub_alert">
         <input type="hidden" id="alert" name="alert" value="<?php echo $search_alert; ?>" >
         <?php if(osc_isUserLoggedIn()) {
@@ -20,7 +20,7 @@ $(document).ready(function(){
             <input type="hidden" id="email" name="email" value="<?php echo $user['s_email']; ?>" />
         <?php } else { ?>
             <input type="hidden" id="userId" name="userId" value="" />
-            <input type="text" id="email" name="email" value="<?php echo __('Enter your e-mail'); ?>" />
+            <input type="text" id="email" name="email" value="<?php _e('Enter your e-mail'); ?>" />
         <?php }; ?>
         <button type="submit" class="sub_button" ><?php _e('Subscribe');?></button>
     </form>

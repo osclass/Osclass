@@ -24,24 +24,22 @@
 
 <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
-tinyMCE.init({
-	mode : "textareas",
-	theme : "advanced",
-	theme_advanced_buttons1 : "bold,italic,underline,code",
-	theme_advanced_buttons2 : "",
-	theme_advanced_buttons3 : "",
-	theme_advanced_toolbar_location : "top",
-	theme_advanced_toolbar_align : "left",
-	theme_advanced_statusbar_location : "bottom"
-});
+    tinyMCE.init({
+        mode : "textareas",
+        theme : "advanced",
+        theme_advanced_buttons1 : "bold,italic,underline,code",
+        theme_advanced_buttons2 : "",
+        theme_advanced_buttons3 : "",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_statusbar_location : "bottom"
+    });
 </script>
-<?php
-if(isset($action) && $action === "add_widget") {
-?>
+<?php if(isset($action) && $action === "add_widget") { ?>
 	<script>
 		$(function() {
 			// change title of the page
-			$(this).attr("title", "<?php echo __('Dashboard - Add New Widget'); ?>");
+			$(this).attr("title", "<?php _e('Dashboard - Add New Widget'); ?>") ;
 			
 			// remove stuff that we don't need
 			$('#button_open').remove();
@@ -58,41 +56,42 @@ if(isset($action) && $action === "add_widget") {
 <?php
 }
 ?>
-		<div id="content">
-			<div id="separator"></div>	
+<div id="content">
+    <div id="separator"></div>
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
-			
-		    <div id="right_column">
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/plugins-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Create widget on ') . $_GET['location']; ?></div>
-					<div style="clear: both;"></div>
-				</div>
-				<?php osc_show_flash_messages() ; ?>
+    <div id="right_column">
 
-				<!-- add new theme form -->
-				<div id="main_div" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px; padding-top: 10px;">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/plugins-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Create widget on ') . $_GET['location'] ; ?></div>
+            <div style="clear: both;"></div>
+        </div>
+        
+        <?php osc_show_flash_messages() ; ?>
 
-						<form action="appearance.php" method="post">
-						<input type="hidden" name="action" value="add_widget_post" />
-						<input type="hidden" name="location" value="<?php echo $_GET['location']; ?>" />
-						
-						<fieldset>
-							<legend><?php echo __('Description (only for internal purpose)'); ?></legend>
-							<input type="text" name="description" id="description" />
-						</fieldset>
-						
-						<fieldset>
-							<legend><?php echo __('HTML Code for the Widget'); ?></legend>
-							<textarea name="content" id="body" style="width: 100%; height: 300px;"></textarea>
-						</fieldset>
-						
-						<input id="button_save" type="submit" value="<?php echo __('Publish widget'); ?>" />
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+        <!-- add new theme form -->
+        <div id="main_div" style="border: 1px solid #ccc; background: #eee; ">
+            <div style="padding: 20px; padding-top: 10px;">
+
+                <form action="appearance.php" method="post">
+                    <input type="hidden" name="action" value="add_widget_post" />
+                    <input type="hidden" name="location" value="<?php echo $_GET['location'] ; ?>" />
+
+                    <fieldset>
+                        <legend><?php _e('Description (only for internal purpose)'); ?></legend>
+                        <input type="text" name="description" id="description" />
+                    </fieldset>
+
+                    <fieldset>
+                        <legend><?php _e('HTML Code for the Widget'); ?></legend>
+                        <textarea name="content" id="body" style="width: 100%; height: 300px;"></textarea>
+                    </fieldset>
+
+                    <input id="button_save" type="submit" value="<?php _e('Publish widget') ; ?>" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

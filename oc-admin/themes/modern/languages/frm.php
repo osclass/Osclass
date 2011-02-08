@@ -48,12 +48,12 @@
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/icon-language.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Edit language'); ?></div> 
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/icon-language.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Edit language'); ?></div> 
 					<div style="clear: both;"></div>
 				</div>
 				
@@ -70,37 +70,37 @@
                         } ?>
 						
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Name'); ?></div>
+						    <div class="FormElementName"><?php _e('Name'); ?></div>
                             <div class="FormElementInput">
                                 <?php LanguageForm::name_input_text($locale) ; ?>
                             </div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Short name'); ?></div>
+						    <div class="FormElementName"><?php _e('Short name'); ?></div>
 							<div class="FormElementInput">
                                 <?php LanguageForm::short_name_input_text($locale) ; ?>
                             </div>
 						</div>
     					<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Description'); ?></div>
+						    <div class="FormElementName"><?php _e('Description'); ?></div>
 							<div class="FormElementInput">
                                 <?php LanguageForm::description_input_text($locale) ; ?>
                             </div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Currency format'); ?></div>
+						    <div class="FormElementName"><?php _e('Currency format'); ?></div>
 							<div class="FormElementInput">
                                 <?php LanguageForm::currency_format_input_text($locale) ; ?>
                             </div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Date format'); ?></div>
+						    <div class="FormElementName"><?php _e('Date format'); ?></div>
 							<div class="FormElementInput">
                                 <?php LanguageForm::date_format_input_text($locale) ; ?>
                             </div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Stop words'); ?></div>
+						    <div class="FormElementName"><?php _e('Stop words'); ?></div>
 							<div class="FormElementInput">
                                 <?php LanguageForm::description_textarea($locale); ?>
                             </div>
@@ -108,20 +108,20 @@
 						<div class="FormElement">
 						    <div class="FormElementName"></div>
 							<div class="FormElementInput">
-                                <?php LanguageForm::enabled_input_checkbox($locale); ?>&nbsp;<?php echo __('Enabled for the public website'); ?>
+                                <?php LanguageForm::enabled_input_checkbox($locale); ?>&nbsp;<?php _e('Enabled for the public website'); ?>
 							</div>
 						</div>
                         <div class="FormElement">
 						    <div class="FormElementName"></div>
 							<div class="FormElementInput">
-                                <?php LanguageForm::enabled_bo_input_checkbox($locale); ?>&nbsp;<?php echo __('Enabled for the backoffice (oc-admin)'); ?>
+                                <?php LanguageForm::enabled_bo_input_checkbox($locale); ?>&nbsp;<?php _e('Enabled for the backoffice (oc-admin)'); ?>
 							</div>
 						</div>
 						<div class="FormElement">
 							<div class="FormElementName"></div>
 							<div class="FormElementInput">
-								<button class="formButton" type="button" onclick="window.location='languages.php';" ><?php echo __('Cancel'); ?></button>
-								<button class="formButton" type="submit"><?php echo __('Save'); ?></button>
+								<button class="formButton" type="button" onclick="window.location='languages.php';" ><?php _e('Cancel'); ?></button>
+								<button class="formButton" type="submit"><?php _e('Save'); ?></button>
 							</div>
 						</div>
 					</form>

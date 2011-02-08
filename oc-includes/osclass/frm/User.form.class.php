@@ -313,14 +313,14 @@ function checkForm() {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php echo __("Select a region..."); ?></option>';
+                            result += '<option value=""><?php _e("Select a region..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
                         } else {
-                            result += '<option value=""><?php echo __('No results') ?></option>';
+                            result += '<option value=""><?php _e('No results') ?></option>';
                             $("#regionId").before('<input type="text" name="region" id="region" />');
                             $("#regionId").remove();
                         }
@@ -348,14 +348,14 @@ function checkForm() {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php echo __("Select a city..."); ?></option>';
+                            result += '<option value=""><?php _e("Select a city..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
                         } else {
-                            result += '<option value=""><?php echo __('No results') ?></option>';
+                            result += '<option value=""><?php _e('No results') ?></option>';
                             $("#cityId").before('<input type="text" name="city" id="city" />');
                             $("#cityId").remove();
                         }

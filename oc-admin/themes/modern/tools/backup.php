@@ -66,12 +66,12 @@
 		<div id="content">
 			<div id="separator"></div>	
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 			
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/tools-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Upgrade OSClass'); ?></div> 
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/tools-icon.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass'); ?></div> 
 					<div style="clear: both;"></div>
 				</div>
 				
@@ -81,26 +81,26 @@
 				<!-- add new item form -->
 				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
 					<div style="padding: 20px;">
-						<?php echo __('From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass.'); ?>.
+						<?php _e('From here you can backup OSClass. WARNING: Backup files will be created on the root of your installation OSClass.'); ?>.
 						
 						<form action="tools.php" method="post" id="bckform" name="bckform" >
 						<input type="hidden" name="action" value="backup_post" />
 						
 						<p>
-						<label for="data"><?php echo __('Backup Folder'); ?></label>
+						<label for="data"><?php _e('Backup Folder'); ?></label>
 						<input id="backup_dir" type="text" value="<?php echo ABS_PATH; ?>" />
-						<?php echo __('This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass\' documentation.')?>
+						<?php _e('This is the folder in which your backups will be created. We recommend you to choose a non-public path. For more information, please refer to OSClass\' documentation.')?>
 						</p>
 						
 						<p>
-						<label for="data"><?php echo __('Backup Database'); ?> (.sql)</label>
-						<button class="formButton" type="button" onclick="submitForm('sql')" ><?php echo __('backup'); ?></button>
+						<label for="data"><?php _e('Backup Database'); ?> (.sql)</label>
+						<button class="formButton" type="button" onclick="submitForm('sql')" ><?php _e('backup'); ?></button>
 						<div id="steps_sql" name="steps_sql"></div>
 						</p>
 						
 						<p>
-						<label for="data"><?php echo __('Backup OSClass installation'); ?> (.zip)</label>
-						<button class="formButton" type="button" onclick="submitForm('zip')" ><?php echo __('backup'); ?></button>
+						<label for="data"><?php _e('Backup OSClass installation'); ?> (.zip)</label>
+						<button class="formButton" type="button" onclick="submitForm('zip')" ><?php _e('backup'); ?></button>
 						<div id="steps_zip" name="steps_zip"></div>
 						</p>
 						

@@ -37,11 +37,11 @@
 </p>
 
 <p>
-<?php echo __('If you forgot your password, enter your e-mail and we\'ll send you an e-mail to recover it.'); ?>
+<?php _e('If you forgot your password, enter your e-mail and we\'ll send you an e-mail to recover it.'); ?>
 </p>
 
 <p>
-<input type="submit" value="<?php echo __('I forgot my password');?>" />
+<input type="submit" value="<?php _e('I forgot my password');?>" />
 </p>
 
 </form>

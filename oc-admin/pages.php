@@ -22,7 +22,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $pageManager = new Page();
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch($action) {
     case 'edit':
         if(!isset($_REQUEST['id'])) {

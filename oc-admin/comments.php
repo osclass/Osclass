@@ -26,7 +26,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $manager = ItemComment::newInstance();
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch ($action) {
     case 'bulk_actions':
         switch ($_POST['bulk_actions']) {

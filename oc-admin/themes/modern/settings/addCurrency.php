@@ -31,12 +31,12 @@
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Currencies'); ?></div> 
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/settings-icon.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Currencies'); ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				
@@ -49,29 +49,29 @@
 						<form action="settings.php" method="post">
 
 						<fieldset>
-						<legend><?php echo __('Create'); ?></legend>
+						<legend><?php _e('Create'); ?></legend>
 
 							<input type="hidden" name="action" value="addCurrency_post" />
 							
 							<p>
-							<label for="code"><?php echo __('Code'); ?></label><br />
+							<label for="code"><?php _e('Code'); ?></label><br />
 							<input type="text" name="pk_c_code" id="code" />
 							</p>
 							
 							<p>
-							<label for="name"><?php echo __('Name'); ?></label><br />
+							<label for="name"><?php _e('Name'); ?></label><br />
 							<input type="text" name="s_name" id="name" />
 							</p>
 							
 							<p>
-							<label for="description"><?php echo __('Description'); ?></label><br />
+							<label for="description"><?php _e('Description'); ?></label><br />
 							<input type="text" name="s_description" id="description" />
 							</p>
 							
 						</fieldset>
 
-						<input id="button_save" onclick="javascript:history.back();" value="<?php echo __('Cancel'); ?>" />
-						<input id="button_save" type="submit" value="<?php echo __('Create currency'); ?>" />
+						<input id="button_save" onclick="javascript:history.back();" value="<?php _e('Cancel'); ?>" />
+						<input id="button_save" type="submit" value="<?php _e('Create currency'); ?>" />
 						</form>
 					
 					</div>

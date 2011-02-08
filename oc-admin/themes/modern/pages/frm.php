@@ -65,10 +65,10 @@
 ?>
 <div id="content">
     <div id="separator"></div>
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo $current_theme; ?>/images/back_office/pages-icon.png" /></div>
+            <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>/images/back_office/pages-icon.png" /></div>
             <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
             <div style="clear: both;"></div>
         </div>
@@ -95,7 +95,7 @@
                 <div class="FormElement">
                     <div class="FormElementName"></div>
                     <div class="FormElementInput">
-                        <button class="formButton" type="button" onclick="window.location='pages.php';" ><?php echo __('Cancel'); ?></button>
+                        <button class="formButton" type="button" onclick="window.location='pages.php';" ><?php _e('Cancel'); ?></button>
                         <button class="formButton" type="submit"><?php echo $btn_text; ?></button>
                     </div>
                 </div>

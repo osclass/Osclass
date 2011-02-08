@@ -22,14 +22,14 @@
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <?php
             /* this is header for right side. */
         ?>
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo $current_theme; ?>/images/back_office/pages-icon.png" alt="" title=""/></div>
+            <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>/images/back_office/pages-icon.png" alt="" title=""/></div>
             <div id="content_header_arrow">&raquo; <?php _e('Emails & Alerts'); ?></div>
             <div style="clear: both;"></div>
         </div>
@@ -41,8 +41,8 @@
         <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list">
             <thead>
                 <tr>
-                    <th style="width: 30%; " class="sorting"><?php echo __('Name'); ?></th>
-                    <th class="sorting" style="border-right-width: 1px; border-right-style: solid; border-right-color: rgb(170, 170, 170); "><?php echo __('Description'); ?></th>
+                    <th style="width: 30%; " class="sorting"><?php _e('Name'); ?></th>
+                    <th class="sorting" style="border-right-width: 1px; border-right-style: solid; border-right-color: rgb(170, 170, 170); "><?php _e('Description'); ?></th>
                 </tr>
             </thead>
             <tbody>

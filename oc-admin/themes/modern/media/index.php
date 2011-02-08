@@ -33,7 +33,7 @@
 			}
 			return anRows;
 		};		
-		sSearchName = "<?php echo __('Search'); ?>...";
+		sSearchName = "<?php _e('Search'); ?>...";
 		oTable = $('#datatables_list').dataTable({
 	       	"bAutoWidth": false,
 			"sDom": '<"top"fl>rt<"bottom"ip<"clear">',
@@ -53,7 +53,7 @@
 						"sNext":     "<?php _e('Next'); ?>",
 						"sLast":     "<?php _e('Last'); ?>"
 					},
-			        "sLengthMenu": '<div style="float:left;"><?php echo __('Show'); ?> <select class="display" id="select_range">'+
+			        "sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
 			        '<option value="10">10</option>'+
 			        '<option value="15">15</option>'+
 			        '<option value="20">20</option>'+
@@ -66,7 +66,7 @@
 				<?php foreach($resources as $r) { ?>
 					[
 						"<input type='checkbox' name='id[]' value='<?php echo $r['pk_i_id']; ?>' />",
-						"<div id='media_list_pic'><img src='<?php echo osc_createResourceURL($r) ; ?>' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'><?php echo $r['s_content_type']; ?><br /><span id='datatables_quick_edit'><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='media.php?action=delete&amp;id[]=<?php echo $r['pk_i_id']; ?>' id='dt_link_delete'><?php echo __('Delete'); ?></a></span></div>", 
+						"<div id='media_list_pic'><img src='<?php echo osc_createResourceURL($r) ; ?>' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'><?php echo $r['s_content_type']; ?><br /><span id='datatables_quick_edit'><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='media.php?action=delete&amp;id[]=<?php echo $r['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></span></div>", 
 						"<a target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $r['fk_i_item_id'] ?>'><?php echo $r['s_title']; ?></a>",
 						"<?php echo $r['dt_pub_date']; ?>"
 					] <?php echo $last_id != $r['pk_i_id'] ? ',' : ''; ?>
@@ -93,18 +93,18 @@
 
 	});
 </script>
-<script type="text/javascript" src="<?php echo  $current_theme ; ?>/js/datatables.post_init.js"></script>
+<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>/js/datatables.post_init.js"></script>
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 		    
 			<div id="right_column">
 			    <?php
 				/* this is header for right side. */ 
 				?>
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme;?>/images/back_office/media-icon.png" /></div>
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ;?>/images/back_office/media-icon.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Media'); ?></div>
 					<a href="?action=config" id="button_open"><?php echo osc_lowerCase( __('Settings') ); ?></a>
 					<div style="clear: both;"></div>

@@ -23,7 +23,7 @@ define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
 require_once ABS_PATH . 'oc-admin/oc-load.php';
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 $message = "";
 switch($action) {
 

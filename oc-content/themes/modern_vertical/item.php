@@ -28,7 +28,7 @@
 		<!-- price and description -->
 		<div id="item_desc">
 			<!-- price  and options -->
-			<?php /* echo __('Price:'); */ ?><div id="item_price"> <?php echo osc_format_price($item) ; ?></div>
+			<?php /* _e('Price:'); */ ?><div id="item_price"> <?php echo osc_format_price($item) ; ?></div>
 			<div class="clear"></div>
 			<div id="item_actions">
 				<?php _e('Mark as '); ?>

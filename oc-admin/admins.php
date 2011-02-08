@@ -25,7 +25,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $adminManager = Admin::newInstance();
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch($action) {
     case 'add':
         osc_renderAdminSection('admins/add.php', __('Administrators'), __('Add'));

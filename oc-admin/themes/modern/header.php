@@ -19,15 +19,9 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-    $adminId = osc_paramSession('adminId', 0);
-    $admin = Admin::newInstance()->findByPrimaryKey($adminId);
+    $adminId = osc_paramSession('adminId', 0) ;
+    $admin = Admin::newInstance()->findByPrimaryKey($adminId) ;
     
-    $admin_theme = new AdminThemes();
-    $admin_theme->setCurrentTheme($adminTheme); // variable from common.php
-
-    $current_theme = $admin_theme->getCurrentThemePath();
-    $current_styles = $admin_theme->getCurrentThemeStyles();
-    $absolute_path = $admin_theme->getCurrentThemeAbsolutePath();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
@@ -56,7 +50,6 @@
             });
         </script>
         
-        
         <?php
             $lastCheck = (int)osc_last_version_check() ;
             $hourInSecs = 24 * 3600 ;
@@ -79,115 +72,115 @@
             </script>
         <?php } ?>
                 
-        <script src="<?php echo  $current_theme ; ?>/js/jquery.cookie.js"></script>
-        <script src="<?php echo  $current_theme ; ?>/js/jquery.json.js"></script>
-        <link type="text/css" href="<?php echo  $current_styles ; ?>/backoffice.css" media="screen" rel="stylesheet" />
+        <script src="<?php echo  osc_current_admin_theme_url() ; ?>/js/jquery.cookie.js"></script>
+        <script src="<?php echo  osc_current_admin_theme_url() ; ?>/js/jquery.json.js"></script>
+        <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/backoffice.css" media="screen" rel="stylesheet" />
         <link href="<?php echo osc_base_url() ; ?>/oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
             <?php
             // XXX: must be another way to include page specific stylesheets.
             if(strstr($_SERVER["SCRIPT_NAME"], "items.php")) {
             ?>
                     <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "new_item.php")) {
             ?>
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/new_item_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/new_item_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "categories.php")) {
             ?>
                     <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/cat_list_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/cat_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "media.php")) {
             ?>
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/media_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/media_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
 
             if(strstr($_SERVER["SCRIPT_NAME"], "users.php")) {
                     ?>
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/users_list_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/users_list_layout.css" media="screen" rel="stylesheet" />
                     <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "admins.php")) {
             ?>
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/admins_list_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/admins_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "comments.php")) {
             ?>
                     <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/item_list_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
 
             if(strstr($_SERVER["SCRIPT_NAME"], "appearance.php")) {
             ?>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/appearance_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/appearance_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "plugins.php")) {
             ?>
                     <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/tabs.css" media="screen" rel="stylesheet" />
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
 
                     <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo $current_styles ; ?>/plugins_layout.css" media="screen" rel="stylesheet" />
+                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/plugins_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"],"pages.php")) {
                 ?>
                 <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
-                <link type="text/css" href="<?php echo $current_styles ; ?>/tabs.css" media="screen" rel="stylesheet" />
+                <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/tabs.css" media="screen" rel="stylesheet" />
                 <script type="text/javascript">
                     document.write('<style type="text/css">.tabber{display:none;}</style>') ;
                 </script>
 
                 <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                <link type="text/css" href="<?php echo $current_styles ; ?>/pages_layout.css" media="screen" rel="stylesheet" />
+                <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/pages_layout.css" media="screen" rel="stylesheet" />
                 <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "languages.php")) {
             ?>
                 <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                <link type="text/css" href="<?php echo $current_styles ; ?>/languages_layout.css" media="screen" rel="stylesheet" />
+                <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/languages_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
 
             if(strstr($_SERVER["SCRIPT_NAME"], "settings.php")) {
             ?>
                 <script src="<?php echo osc_base_url() ; ?>/oc-includes/js/jquery.dataTables.min.js"></script>
-                <link type="text/css" href="<?php echo $current_styles ; ?>/settings_layout.css" media="screen" rel="stylesheet" />
+                <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/settings_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "tools.php")) {
             ?>
                 <!-- styles goes here -->
-                <link type="text/css" href="<?php echo $current_styles ; ?>/tools_layout.css" media="screen" rel="stylesheet" />
+                <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>/tools_layout.css" media="screen" rel="stylesheet" />
             <?php
             }
 
@@ -195,21 +188,19 @@
             ?>
                 <!-- must be changed to different file -->
                 <style type="text/css" title="currentStyle">
-                    @import "<?php echo $current_styles ; ?>/demo_table.css";
+                    @import "<?php echo osc_current_admin_theme_styles_url() ; ?>/demo_table.css";
                 </style>
             <?php
             }
             ?>
     </head>
     <body>
-
-    <!-- let's go! -->
-    <div id="header">
-        <div id="logo"><?php _e('OSClass'); ?></div>
-        <div id="arrow">&raquo;</div>
-        <div id="hostname"><?php echo osc_page_title() ; ?></div>
-        <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo osc_base_url() ; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
-        <div id="user_links"><?php _e('Howdy') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="admins.php?action=edit"><?php echo $admin['s_name'] ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
-        <?php osc_run_hook('admin_header') ; ?>
-    </div>
-    <div id="update_version" style="display:none;"></div>
+        <div id="header">
+            <div id="logo"><?php _e('OSClass'); ?></div>
+            <div id="arrow">&raquo;</div>
+            <div id="hostname"><?php echo osc_page_title() ; ?></div>
+            <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo osc_base_url() ; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
+            <div id="user_links"><?php _e('Howdy') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="admins.php?action=edit"><?php echo $admin['s_name'] ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
+            <?php osc_run_hook('admin_header') ; ?>
+        </div>
+        <div id="update_version" style="display:none;"></div>

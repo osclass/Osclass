@@ -25,7 +25,7 @@ define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $localeManager = Locale::newInstance();
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch ($action) {
     case 'add':
         osc_renderAdminSection('languages/add.php', __('Languages'), __('Upload'));

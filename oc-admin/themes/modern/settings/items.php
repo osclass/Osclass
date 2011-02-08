@@ -29,12 +29,12 @@ $timeFormats = array('g:i a', 'g:i A', 'H:i');
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php echo __('Items'); ?></div>
+            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/settings-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Items'); ?></div>
             <div style="clear: both;"></div>
         </div>
 				

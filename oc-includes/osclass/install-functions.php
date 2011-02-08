@@ -73,7 +73,7 @@ function get_requirements( ) {
         if (is_writable(ABS_PATH) ) {
             $root_writable = true;
         }
-        $array['Root direcotry is writable'] = $root_writable;
+        $array['Root directory is writable'] = $root_writable;
 
         if( file_exists(ABS_PATH . 'config-sample.php') ) {
             $config_sample = true;

@@ -212,7 +212,7 @@ class ItemForm extends Form {
     static public function show_email_checkbox($item = null) {
         echo '<label for="showEmail">';
         parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );
-        echo __('Show email publically within the item page') . '</label>';
+        _e('Show email publically within the item page') . '</label>';
         return true ;
     }
 
@@ -235,14 +235,14 @@ class ItemForm extends Form {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php echo __("Select a region..."); ?></option>';
+                            result += '<option value=""><?php _e("Select a region..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
                         } else {
-                            result += '<option value=""><?php echo __('No results') ?></option>';
+                            result += '<option value=""><?php _e('No results') ?></option>';
                             $("#regionId").before('<input type="text" name="region" id="region" />');
                             $("#regionId").remove();
                         }
@@ -270,14 +270,14 @@ class ItemForm extends Form {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php echo __("Select a city..."); ?></option>';
+                            result += '<option value=""><?php _e("Select a city..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
                         } else {
-                            result += '<option value=""><?php echo __('No results') ?></option>';
+                            result += '<option value=""><?php _e('No results') ?></option>';
                             $("#cityId").before('<input type="text" name="city" id="city" />');
                             $("#cityId").remove();
                         }
@@ -344,7 +344,7 @@ class ItemForm extends Form {
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php echo __('Delete'); ?></a>
+                    <img src="<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
                 </div>						
             <?php }
         }

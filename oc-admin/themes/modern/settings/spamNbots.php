@@ -25,11 +25,11 @@
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme ; ?>/images/back_office/settings-icon.png" /></div>
+            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/settings-icon.png" /></div>
             <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
             <div style="clear: both;"></div>
         </div>
@@ -58,12 +58,12 @@
                         <p><?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.</p>
 
                         <p>
-                            <label for="recaptchaPrivKey"><?php echo __('Re-captcha private key'); ?><br />
+                            <label for="recaptchaPrivKey"><?php _e('Re-captcha private key'); ?><br />
                             <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php ( osc_recaptcha_private_key() ) ? echo osc_recaptcha_private_key() : echo '' ; ?>" />
                         </p>
 
                         <p>
-                            <label for="recaptchaPubKey"><?php echo __('Re-captcha public key'); ?><br />
+                            <label for="recaptchaPubKey"><?php _e('Re-captcha public key'); ?><br />
                             <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php ( osc_recaptcha_public_key() ) ? echo osc_recaptcha_public_key() : echo '' ; ?>" />
                         </p>
                     </fieldset>

@@ -69,12 +69,12 @@
 <div id="content">
 	<div id="separator"></div>	
 	
-	<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+	<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
 		<div id="content_header" class="content_header">
-			<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/comments-icon2.png" /></div>
-			<div id="content_header_arrow">&raquo; <?php echo __($title); ?></div> 
+			<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/comments-icon2.png" /></div>
+			<div id="content_header_arrow">&raquo; <?php _e($title); ?></div> 
 			<div style="clear: both;"></div>
 		</div>
 		
@@ -88,39 +88,39 @@
 				<?php PageForm::primary_input_hidden($comment); ?>
 
 				<div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Edit a comment on item:'); ?> 
+				    <div class="FormElementName"><?php _e('Edit a comment on item:'); ?> 
 				    <?php
 				        $item = Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']);
 				        echo '<b>'.$item['s_title'].'</b>';?>
 				        
-				        <a href="<?php osc_create_item_url($item, true);?>"><button><?php echo __('View');?></button></a>
-				        <a href="items.php?action=editItem&id=<?php echo $item['pk_i_id'];?>"><button><?php echo __('Edit');?></button></a>
+				        <a href="<?php osc_create_item_url($item, true);?>"><button><?php _e('View');?></button></a>
+				        <a href="items.php?action=editItem&id=<?php echo $item['pk_i_id'];?>"><button><?php _e('Edit');?></button></a>
 					</div>
                 </div>
 
 				<div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Title'); ?> <?php CommentForm::title_input_text($comment); ?>
+				    <div class="FormElementName"><?php _e('Title'); ?> <?php CommentForm::title_input_text($comment); ?>
 					</div>
                 </div>
                 <div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Author'); ?> <?php CommentForm::author_input_text($comment); ?>
+				    <div class="FormElementName"><?php _e('Author'); ?> <?php CommentForm::author_input_text($comment); ?>
 				    <?php if(isset($comment['fk_i_user_id']) && $comment['fk_i_user_id']!='') { 
-				    echo __("It's a registered user.");?>
-				    <a href="users.php?action=edit&id=<?php echo $comment['fk_i_user_id'];?>"><button><?php echo __('Edit user');?></button></a>
+				    _e("It's a registered user.");?>
+				    <a href="users.php?action=edit&id=<?php echo $comment['fk_i_user_id'];?>"><button><?php _e('Edit user');?></button></a>
 				    <?php }?>
 					</div>
                 </div>
                 <div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Author\'s e-mail'); ?> <?php CommentForm::email_input_text($comment); ?>
+				    <div class="FormElementName"><?php _e('Author\'s e-mail'); ?> <?php CommentForm::email_input_text($comment); ?>
 					</div>
                 </div>
                 <div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Status'); ?>: <?php echo $comment['e_status']; ?><a href="comments.php?action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['e_status']=='ACTIVE')?'INACTIVE':'ACTIVE');?>"><button><?php echo (($comment['e_status']=='ACTIVE')?__('De-activate'):__('Activate'));?></button></a>
+				    <div class="FormElementName"><?php _e('Status'); ?>: <?php echo $comment['e_status']; ?><a href="comments.php?action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['e_status']=='ACTIVE')?'INACTIVE':'ACTIVE');?>"><button><?php echo (($comment['e_status']=='ACTIVE')?__('De-activate'):__('Activate'));?></button></a>
 					</div>
 				</div>
 			
 				<div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Comment'); ?></div>
+				    <div class="FormElementName"><?php _e('Comment'); ?></div>
 					<div class="FormElementInput">
 					   <?php CommentForm::body_input_textarea($comment); ?>
 					</div>
@@ -131,7 +131,7 @@
 				<div class="FormElement">
 					<div class="FormElementName"></div>
 					<div class="FormElementInput">
-						<button class="formButton" type="button" onclick="window.location='pages.php';" ><?php echo __('Cancel'); ?></button>
+						<button class="formButton" type="button" onclick="window.location='pages.php';" ><?php _e('Cancel'); ?></button>
 						<button class="formButton" type="submit"><?php echo $btn_text; ?></button>
 					</div>
 				</div>

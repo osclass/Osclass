@@ -41,13 +41,13 @@
 </script>
 	<div id="content">
 		<div id="separator"></div>	
-		<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+		<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 		
 	    <div id="right_column">
 
 			<div id="content_header" class="content_header">
-				<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/plugins-icon.png" /></div>
-				<div id="content_header_arrow">&raquo; <?php echo __('Plugins'); ?></div>
+				<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/plugins-icon.png" /></div>
+				<div id="content_header_arrow">&raquo; <?php _e('Plugins'); ?></div>
 				<a href="?action=add" id="button_open"><?php echo osc_lowerCase(__('Add a new plugin')); ?></a>
 				<div style="clear: both;"></div>
 			</div>
@@ -77,7 +77,7 @@
 			<p>
 			<?php echo "<b>".$plugin_data['plugin_name']."</b>,<br/>".$plugin_data['description']; ?>
 			<br/>
-			<?php echo __('Select the categories you want to apply those attributes:'); ?>
+			<?php _e('Select the categories you want to apply those attributes:'); ?>
 			</p>
 			<p>
 			<table>
@@ -110,8 +110,8 @@
 			</p>
 
 			<p>
-			<input class="Button" type="button" onclick="window.history.go(-1);" value="<?php echo __('Cancel'); ?>" />
-			<input class="Button" type="submit" value="<?php echo __('Save'); ?>" />
+			<input class="Button" type="button" onclick="window.history.go(-1);" value="<?php _e('Cancel'); ?>" />
+			<input class="Button" type="submit" value="<?php _e('Save'); ?>" />
 			</p>
 
 			</form>
