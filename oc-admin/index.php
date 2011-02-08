@@ -30,7 +30,7 @@ $page = Params::getParam('page') ;
 
 
 switch($page) {
-    case('items'):  include_once(osc_admin_base_url() . 'items.php') ;
+    case('items'):  include_once(osc_admin_base_path() . 'items.php') ;
                     doModel($action) ;
     break;
 }

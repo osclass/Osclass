@@ -1,5 +1,6 @@
 <?php
 
+    //URL Helpers
     function osc_base_url($with_index = false) {
         $path = WEB_PATH ;
         if ($with_index) $path . "index.php" ;
@@ -10,6 +11,31 @@
         $path = WEB_PATH . "oc-admin/" ;
         if ($with_index) $path . "index.php" ;
         return($path) ;
+    }
+
+    //Path Helpers
+    function osc_base_path() {
+        return(ABS_PATH) ;
+    }
+
+    function osc_admin_base_path() {
+        return(ABS_PATH . "oc-admin/") ;
+    }
+
+    function osc_lib_path() {
+        return(LIB_PATH) ;
+    }
+
+    function osc_themes_path() {
+        return(THEMES_PATH) ;
+    }
+
+    function osc_plugins_path() {
+        return(PLUGINS_PATH) ;
+    }
+
+    function osc_translations_path() {
+        return(TRANSLATIONS_PATH) ;
     }
 
     //ONLY USED AT OC-ADMIN

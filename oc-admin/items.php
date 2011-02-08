@@ -20,7 +20,7 @@
 
 //require_once ABS_PATH . 'oc-admin/oc-load.php';
 
-class AdminItems {
+class CAdminItems {
 
     function __construct() {}
 
