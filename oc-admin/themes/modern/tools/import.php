@@ -30,12 +30,12 @@
 		<div id="content">
 			<div id="separator"></div>	
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 			
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/tools-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Import data'); ?></div> 
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/tools-icon.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Import data'); ?></div> 
 					<div style="clear: both;"></div>
 				</div>
 				
@@ -45,17 +45,17 @@
 				<!-- add new item form -->
 				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
 					<div style="padding: 20px;">
-						<?php echo __("This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"); ?>.
+						<?php _e("This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"); ?>.
 						
 						<form action="tools.php" method="post">
 						<input type="hidden" name="action" value="import_post" />
 						
 						<p>
-						<label for="sql"><?php echo __('Data'); ?> (.sql)</label>
+						<label for="sql"><?php _e('Data'); ?> (.sql)</label>
 						<input type="file" name="sql" id="sql" />
 						</p>
 						
-						<input id="button_save" type="submit" value="<?php echo __('Import data'); ?>" />
+						<input id="button_save" type="submit" value="<?php _e('Import data'); ?>" />
 						
 						</form>					
 					</div>

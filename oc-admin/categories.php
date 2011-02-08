@@ -27,7 +27,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 $categoryManager = Category::newInstance();
 $categories = $categoryManager->toTreeAll();
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch ($action) 
 {
     case 'add':

@@ -20,29 +20,42 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('OSCLASS_VERSION', '1.2 Delta') ;
+    /* SOME STUFF FOR OC-ADMIN */
+    $adminTheme = osc_paramSession('adminTheme', 'modern') ;
+    AdminThemes::newInstance()->setCurrentTheme($adminTheme) ;
 
-    if( !defined('ABS_PATH') ) {
-        define( 'ABS_PATH', dirname(__FILE__) . '/' ) ;
-    }
+    /*function osc_renderAdminSection($file, $title = null, $subTitle = null) {
+        global $adminTheme;
 
-    define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
-    define('THEMES_PATH', ABS_PATH . 'oc-content/themes/') ;
-    define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
-    define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
+        extract($GLOBALS);
+        require 'themes/' . $adminTheme . '/header.php';
 
-    if(defined('WEB_PATH')) {
-        if(osc_rewrite_enabled() && osc_mod_rewrite_loaded()) {
-            define('WEB_PATH_URL', WEB_PATH . "index.php/") ;
-        } else {
-            define('WEB_PATH_URL', WEB_PATH) ;
+        if(!is_null($title)) {
+            $header = $title;
+            if(!is_null($subTitle))
+                $header .= ': ' . $subTitle;
+            echo '<div class="Header">', $header, '</div>';
         }
+
+        require 'themes/' . $adminTheme . '/' . $file;
+        require 'themes/' . $adminTheme . '/footer.php';
+    }*/
+
+    function osc_renderPluginSection($file) {
+        $file = '../../..'.str_replace(ABS_PATH , '', $file);
+        osc_renderAdminSection($file, __('Plugins'), __('Configuration'));
     }
 
-    /** Defines for error reporting */
-    define('LOG_NONE', 0) ;
-    define('LOG_WEB', 1) ;
-    define('LOG_COMMENT', 2) ;
-    define('DEBUG_LEVEL', LOG_NONE) ;
+    function osc_renderPluginView($file) {
+        global $adminTheme;
+
+        extract($GLOBALS);
+        require 'themes/' . $adminTheme . '/header.php';
+
+        $header = __('Plugins').': '.__('Configuration');
+        echo '<div class="Header">', $header, '</div>';
+        require 'themes/' . $adminTheme . '/plugins/view.php';
+        require 'themes/' . $adminTheme . '/footer.php';
+    }
 
 ?>

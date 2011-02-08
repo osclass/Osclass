@@ -26,55 +26,64 @@
 $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
 $timeFormats = array('g:i a', 'g:i A', 'H:i');
 ?>
-<div id="content">
-    <div id="separator"></div>
+<script>
+	$(function() {
+		// Here we include specific jQuery, jQuery UI and Datatables functions.
+	});
+</script>
+		<div id="content">
+                    <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme ; ?>/images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('Notifications'); ?></div>
-            <div style="clear: both;"></div>
-        </div>
+		    <div id="right_column">
+				<div id="content_header" class="content_header">
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/settings-icon.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Notifications'); ?></div>
+					<div style="clear: both;"></div>
+				</div>
 				
-        <div id="content_separator"></div>
-        <?php osc_showFlashMessages() ; ?>
-        <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
-            <div style="padding: 20px;">
-                <form action="settings.php" method="post">
-                    <input type="hidden" name="action" value="notifications_post" />
+				<div id="content_separator"></div>
+				<?php osc_show_flash_messages() ; ?>
+				<!-- settings form -->
+				<div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
+					<div style="padding: 20px;">
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Items'); ?></legend>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_item() ? 'checked="true"' : ''); ?> name="notify_new_item" id="notify_new_item" />
-                            <label><?php _e('Notify new item to admin') ; ?></label>
-                            <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_contact_item() ? 'checked="true"' : ''); ?> name="notify_contact_item" id="notify_contact_item" />
-                            <label><?php _e('Notify contact item to admin') ; ?></label>
-                            <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_contact_friends() ? 'checked="true"' : ''); ?> name="notify_contact_friends" id="notify_contact_friends" />
-                            <label><?php _e('Notify contact friends to admin') ; ?></label>
-                            <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_enabled_item_validation() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" />
-                            <label><?php _e('Enable item validation') ; ?></label>
-                        </fieldset>
-                    </div>
+						<form action="settings.php" method="post">
+                            <input type="hidden" name="action" value="notifications_post" />
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Comments') ; ?></legend>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_comment() ? 'checked="true"' : ''); ?> name="notify_new_comment" id="notify_new_comment" />
-                            <label><?php _e('Notify new comment') ; ?></label>
-                        </fieldset>
-                    </div>
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Items'); ?></legend>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_new_item()) ? echo 'checked="true"' : echo '' ; ?> name="notify_new_item" id="notify_new_item" />
+                                    <label><?php _e('Notify new item to admin') ; ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_contact_item()) ? echo 'checked="true"' : echo '' ; ?> name="notify_contact_item" id="notify_contact_item" />
+                                    <label><?php _e('Notify contact item to admin') ; ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_contact_friends()) ? echo 'checked="true"' : echo '' ; ?> name="notify_contact_friends" id="notify_contact_friends" />
+                                    <label><?php _e('Notify contact friends to admin') ; ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_enabled_item_validation()) ? echo 'checked="true"' : echo '' ; ?> name="enabled_item_validation" id="enabled_item_validation" />
+                                    <label><?php _e('Enable item validation') ; ?></label>
+                                </fieldset>
+                            </div>
 
-                    <div style="clear: both;"></div>
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Comments') ; ?></legend>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php (osc_notify_new_comment()) ? echo 'checked="true"' : echo '' ; ?> name="notify_new_comment" id="notify_new_comment" />
+                                    <label><?php _e('Notify new comment') ; ?></label>
+                                </fieldset>
+                            </div>
 
-                    <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
-                </form>
-            </div>
-    </div>
-</div> <!-- end of right column -->
+                            <div style="clear: both;"></div>
+
+                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+						</form>
+                        
+					</div>
+
+				</div>
+                
+			</div> <!-- end of right column -->

@@ -19,9 +19,22 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+define('OSCLASS_VERSION', '1.2 Delta') ;
+
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
 }
+
+define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
+define('THEMES_PATH', ABS_PATH . 'oc-content/themes/') ;
+define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
+define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
+
+/** Defines for error reporting */
+define('LOG_NONE', 0) ;
+define('LOG_WEB', 1) ;
+define('LOG_COMMENT', 2) ;
+define('DEBUG_LEVEL', LOG_NONE) ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once ABS_PATH . 'oc-includes/osclass/functions.php';
@@ -34,20 +47,25 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
+
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
+require_once ABS_PATH . 'oc-includes/osclass/classes/Params.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
-require_once ABS_PATH . 'common.php';
+require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/web.php';
+require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/session.php';
+
+osc_checkAdminSession();
+
 require_once LIB_PATH . 'osclass/locale.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/themes.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
-require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/error.php';
 require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
@@ -99,7 +117,7 @@ $_REQUEST = add_slashes_extended($_REQUEST);
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
     if(osc_auto_cron()) {
-        osc_doRequest(ABS_WEB_URL . 'oc-includes/osclass/cron.php', array()) ;
+        osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
     }
 }
 

@@ -35,32 +35,32 @@
 			return anRows;
 		};
 		
-		sSearchName = "<?php echo __('Search'); ?>...";	
+		sSearchName = "<?php _e('Search'); ?>...";	
 		oTable = $('#datatables_list').dataTable({
 	       	"bAutoWidth": false,
 			"sDom": '<"top"fl>rt<"bottom"ip<"clear">',
 			"oLanguage": {
-					"sProcessing":   "<?php echo __('Processing'); ?>...",
-					"sLengthMenu":   "<?php echo __('Show _MENU_ entries'); ?>",
-					"sZeroRecords":  "<?php echo __('No matching records found'); ?>",
-					"sInfo":         "<?php echo __('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
-					"sInfoEmpty":    "<?php echo __('Showing 0 to 0 of 0 entries'); ?>",
-					"sInfoFiltered": "(<?php echo __('filtered from _MAX_ total entries'); ?>)",
+					"sProcessing":   "<?php _e('Processing'); ?>...",
+					"sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>",
+					"sZeroRecords":  "<?php _e('No matching records found'); ?>",
+					"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
+					"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>",
+					"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)",
 					"sInfoPostFix":  "",
-					"sSearch":       "<?php echo __('Search'); ?>:",
+					"sSearch":       "<?php _e('Search'); ?>:",
 					"sUrl":          "",				
 					"oPaginate": {
-						"sFirst":    "<?php echo __('First'); ?>",
-						"sPrevious": "<?php echo __('Previous'); ?>",
-						"sNext":     "<?php echo __('Next'); ?>",
-						"sLast":     "<?php echo __('Last'); ?>"
+						"sFirst":    "<?php _e('First'); ?>",
+						"sPrevious": "<?php _e('Previous'); ?>",
+						"sNext":     "<?php _e('Next'); ?>",
+						"sLast":     "<?php _e('Last'); ?>"
 					},
-			       	"sLengthMenu": '<div style="float:left;"><?php echo __('Show'); ?> <select class="display" id="select_range">'+
+			       	"sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
 			        '<option value="10">10</option>'+
 			        '<option value="15">15</option>'+
 			        '<option value="20">20</option>'+
 			        '<option value="100">100</option>'+
-					'</select> <?php echo __('entries'); ?>',
+					'</select> <?php _e('entries'); ?>',
 			        "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
 			 },
 			"sPaginationType": "full_numbers",
@@ -68,7 +68,7 @@
 				<?php foreach($currencies as $c): ?>
 				[
 					"<input type='checkbox' name='id[]' value='<?php echo $c['pk_c_code']; ?>' />",
-					"<?php echo $c['pk_c_code']; ?> <div><a onclick=\"javascript:return confirm('<?php echo __('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='settings.php?action=deleteCurrency&amp;code[]=<?php echo $c['pk_c_code']; ?>'><?php echo __('Delete'); ?></a> | <a href='settings.php?action=editCurrency&amp;code=<?php echo $c['pk_c_code']; ?>'><?php echo __('Edit'); ?></a></div>",
+					"<?php echo $c['pk_c_code']; ?> <div><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='settings.php?action=deleteCurrency&amp;code[]=<?php echo $c['pk_c_code']; ?>'><?php _e('Delete'); ?></a> | <a href='settings.php?action=editCurrency&amp;code=<?php echo $c['pk_c_code']; ?>'><?php _e('Edit'); ?></a></div>",
 					"<?php echo $c['s_name']; ?>",
 					"<?php echo $c['s_description']; ?>"
 				]  <?php echo $last_id != $c['pk_c_code'] ? ',' : ''; ?>
@@ -81,27 +81,27 @@
 				 "sWidth": "10px",
 				 "bSearchable": false
 				 },
-				{"sTitle": "<?php echo __('Code'); ?>",
+				{"sTitle": "<?php _e('Code'); ?>",
 				 "sWidth": "150px" },
-				{"sTitle": "<?php echo __('Name'); ?>" },
-				{"sTitle": "<?php echo __('Description'); ?>" },
+				{"sTitle": "<?php _e('Name'); ?>" },
+				{"sTitle": "<?php _e('Description'); ?>" },
 			]
 		});
 		
 	});
 </script>
-<script type="text/javascript" src="<?php echo  $current_theme ?>/js/datatables.post_init.js"></script>
+<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>/js/datatables.post_init.js"></script>
 	<div id="content">
 		<div id="separator"></div>	
 
-		<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+		<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 		
 	    <div id="right_column">
 
 			<div id="content_header" class="content_header">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/currencies.gif" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Currencies'); ?></div> 
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/currencies.gif" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Currencies'); ?></div> 
 					<a href="settings.php?action=addCurrency" id="button_open"><?php echo osc_lowerCase(__('Add')); ?></a>
 					<div style="clear: both;"></div>
 				</div>
@@ -112,10 +112,10 @@
 
 			<div id="TableToolsToolbar">
 			<select id="bulk_actions" class="display">
-				<option value=""><?php echo __('Bulk Actions'); ?></option>
-				<option value="delete_all"><?php echo __('Delete') ?></option>
+				<option value=""><?php _e('Bulk Actions'); ?></option>
+				<option value="delete_all"><?php _e('Delete') ?></option>
 			</select>
-			&nbsp;<button id="bulk_apply" class="display"><?php echo __('Apply') ?></button>
+			&nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
 			</div>
 			
 			<form id="datatablesForm" action="settings.php" method="post">

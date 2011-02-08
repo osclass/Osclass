@@ -29,11 +29,11 @@
 		<div id="content">
 			<div id="separator"></div>	
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 			
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/widget-icon.png" /></div>
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/widget-icon.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Widgets') ; ?></div>
 					<div style="clear: both;"></div>
 				</div>
@@ -50,7 +50,7 @@
 					<?php foreach($info['locations'] as $location): ?>
 						<div>
 							<div style="font-weight: bold; background-color: white; padding: 5px;">
-								<?php echo $location; ?> <a href="appearance.php?action=add_widget&amp;location=<?php echo $location; ?>"><?php echo __('Add HTML widget'); ?></a>
+								<?php echo $location; ?> <a href="appearance.php?action=add_widget&amp;location=<?php echo $location; ?>"><?php _e('Add HTML widget'); ?></a>
 								<br />
 								<?php
 								$widgets = Widget::newInstance()->findByLocation($location);

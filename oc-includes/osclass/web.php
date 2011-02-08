@@ -64,7 +64,7 @@ function osc_paramRequest($name, $default = null) {
  * @return string Web path of the resource
  */
 function osc_global_resource($filename, $echo = false) {
-    $path = ABS_WEB_URL . 'oc-includes/' . $filename ;
+    $path = osc_base_url() . 'oc-includes/' . $filename ;
 
     if($echo) {
         echo $path ;

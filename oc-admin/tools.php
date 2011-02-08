@@ -24,7 +24,7 @@ define('ABS_PATH', dirname(dirname(__FILE__)) . '/') ;
 
 require_once ABS_PATH . 'oc-admin/oc-load.php' ;
 
-$action = osc_readAction() ;
+$action = Params::getParam('action') ;
 switch($action) 
 {
     case 'import':          osc_renderAdminSection('tools/import.php', __('Tools')) ;
@@ -102,7 +102,7 @@ switch($action)
                             $archive_folder = ABS_PATH ;
                             
                             if (osc_zipFolder($archive_folder, $archive_name)) _e('Archiving is sucessful!') ;
-                            else echo __('Error, can\'t create a zip file!') ;
+                            else _e('Error, can\'t create a zip file!') ;
 	break;
     case 'backup_post':     print_r($_REQUEST);
                             osc_renderAdminSection('tools/backup.php', __('Tools')) ;

@@ -34,32 +34,32 @@
 			return anRows;
 		};
 		
-		sSearchName = "<?php echo __('Search'); ?>...";	
+		sSearchName = "<?php _e('Search'); ?>...";	
 		oTable = $('#datatables_list').dataTable({
 	       	"bAutoWidth": false,
 			"sDom": '<"top"fl>rt<"bottom"ip<"clear">',
 			"oLanguage": {
-					"sProcessing":   "<?php echo __('Processing'); ?>...",
-					"sLengthMenu":   "<?php echo __('Show _MENU_ entries'); ?>",
-					"sZeroRecords":  "<?php echo __('No matching records found'); ?>",
-					"sInfo":         "<?php echo __('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
-					"sInfoEmpty":    "<?php echo __('Showing 0 to 0 of 0 entries'); ?>",
-					"sInfoFiltered": "(<?php echo __('filtered from _MAX_ total entries'); ?>)",
+					"sProcessing":   "<?php _e('Processing'); ?>...",
+					"sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>",
+					"sZeroRecords":  "<?php _e('No matching records found'); ?>",
+					"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
+					"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>",
+					"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)",
 					"sInfoPostFix":  "",
-					"sSearch":       "<?php echo __('Search'); ?>:",
+					"sSearch":       "<?php _e('Search'); ?>:",
 					"sUrl":          "",				
 					"oPaginate": {
-						"sFirst":    "<?php echo __('First'); ?>",
-						"sPrevious": "<?php echo __('Previous'); ?>",
-						"sNext":     "<?php echo __('Next'); ?>",
-						"sLast":     "<?php echo __('Last'); ?>"
+						"sFirst":    "<?php _e('First'); ?>",
+						"sPrevious": "<?php _e('Previous'); ?>",
+						"sNext":     "<?php _e('Next'); ?>",
+						"sLast":     "<?php _e('Last'); ?>"
 					},
-			       	"sLengthMenu": '<div style="float:left;"><?php echo __('Show'); ?> <select class="display" id="select_range">'+
+			       	"sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
 			        '<option value="10">10</option>'+
 			        '<option value="15">15</option>'+
 			        '<option value="20">20</option>'+
 			        '<option value="100">100</option>'+
-					'</select> <?php echo __('entries'); ?>',
+					'</select> <?php _e('entries'); ?>',
 			        "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
 			 },
 			"sPaginationType": "full_numbers",
@@ -71,7 +71,7 @@
 				<?php osc_isPluginInstalled($p) ? $installed = 1 : $installed = 0; ?>
 					[
 						"<input type='hidden' name='installed' value='<?php echo $installed ?>' /><input type='checkbox' name='id[]' value='<?php echo $p; ?>' />",
-						"<?php echo $p_info['plugin_name']; ?>&nbsp;<div id='datatables_quick_edit'><?php if(osc_isPluginInstalled($p)) { ?><?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='plugins.php?action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php echo __('Configure'); ?></a> | <?php }; ?><?php if(osc_checkUpdate($p_info['filename'])) { ?><a href='upgrade-plugin.php?plugin=<?php echo $p_info['filename']; ?>'><?php echo __('There\'s a new version. You should update!'); ?></a> | <?php }; ?><a href='plugins.php?action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php echo __('Uninstall'); ?></a><?php } else { ?><a href='plugins.php?action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php echo __('Install'); ?></a><?php }; ?></div>", 
+						"<?php echo $p_info['plugin_name']; ?>&nbsp;<div id='datatables_quick_edit'><?php if(osc_isPluginInstalled($p)) { ?><?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='plugins.php?action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a> | <?php }; ?><?php if(osc_checkUpdate($p_info['filename'])) { ?><a href='upgrade-plugin.php?plugin=<?php echo $p_info['filename']; ?>'><?php _e('There\'s a new version. You should update!'); ?></a> | <?php }; ?><a href='plugins.php?action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='plugins.php?action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?></div>", 
 						'<?php echo $p_info['description']; ?>'
 					] <?php echo $p != end($plugins) ? ',' : ''; ?>
 				<?php endforeach; ?>
@@ -83,9 +83,9 @@
 				 "sWidth": "10px",
 				 "bSearchable": false
 				 },
-				{"sTitle": "<?php echo __('Name'); ?>",
+				{"sTitle": "<?php _e('Name'); ?>",
 				 "sWidth": "auto" },
-				{"sTitle": "<?php echo __('Description'); ?>" }
+				{"sTitle": "<?php _e('Description'); ?>" }
 			]
 		});
 		
@@ -101,17 +101,17 @@
 		});
 	});
 </script>
-<script type="text/javascript" src="<?php echo  $current_theme ?>/js/datatables.post_init.js"></script>
+<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>/js/datatables.post_init.js"></script>
 	<div id="content">
 		<div id="separator"></div>	
 
-		<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+		<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 		
 	    <div id="right_column">
 
 			<div id="content_header" class="content_header">
-				<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/plugins-icon.png" /></div>
-				<div id="content_header_arrow">&raquo; <?php echo __('Plugins'); ?></div>
+				<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/plugins-icon.png" /></div>
+				<div id="content_header_arrow">&raquo; <?php _e('Plugins'); ?></div>
 				<a href="?action=add" id="button_open"><?php echo osc_lowerCase(__('Add a new plugin')); ?></a>
 				<div style="clear: both;"></div>
 			</div>

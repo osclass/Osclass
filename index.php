@@ -31,11 +31,11 @@ try {
 			$sm = new Sitemap ;
 			$pages = Page::newInstance()->listAll() ;
 			foreach($pages as $p)
-				$sm->addURL(ABS_WEB_URL . osc_createPageURL($p), 'weekly', 0.8) ;
+				$sm->addURL(osc_base_url() . osc_createPageURL($p), 'weekly', 0.8) ;
 	
 			$categories = Category::newInstance()->listAll() ;
 			foreach($categories as $c)
-				$sm->addURL(ABS_WEB_URL . osc_createCategoryURL($c), 'daily', 0.9) ;
+				$sm->addURL(osc_base_url() . osc_createCategoryURL($c), 'daily', 0.9) ;
 			$sm->toStdout();
 		break;
 		case 'feed':
@@ -43,7 +43,7 @@ try {
 
 			$feed = new RSSFeed ;
 			$feed->setTitle(__('Latest items added') . ' - ' . osc_page_title() ) ;
-			$feed->setLink(ABS_WEB_URL) ;
+			$feed->setLink(osc_base_url()) ;
 			$feed->setDescription(__('Latest items added in') . ' ' . osc_page_title() ) ;
 
             $num_items = osc_num_rss_items() ;
@@ -69,7 +69,7 @@ try {
 			if(isset($_GET['value']) && in_array($_GET['value'], $languageCodes)) {
 				$_SESSION['locale'] = $_GET['value'] ;
 			}
-			$defaultURL = ABS_WEB_URL ;
+			$defaultURL = osc_base_url() ;
 			osc_redirectToReferer($defaultURL) ;
 		break;
 		case 'contact':
@@ -95,7 +95,7 @@ try {
 			);
 			osc_sendMail($params) ;
 			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.')) ;
-			osc_redirectToReferer(ABS_WEB_URL) ;
+			osc_redirectToReferer(osc_base_url()) ;
         break;
         default:
 

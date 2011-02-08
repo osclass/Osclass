@@ -22,7 +22,7 @@
 
 <?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
-<h2><?php echo __('Export'); ?></h2>
+<h2><?php _e('Export'); ?></h2>
 
-<a class="Button" href="tools.php?action=post-export"><?php echo __('Export now'); ?></a>
+<a class="Button" href="tools.php?action=post-export"><?php _e('Export now'); ?></a>
 

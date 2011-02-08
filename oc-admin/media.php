@@ -25,7 +25,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $resourcesManager = ItemResource::newInstance();
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch($action) {
 	case 'config':
 		osc_renderAdminSection('media/config.php', __('Media'), __('Settings'));

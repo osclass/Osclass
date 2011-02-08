@@ -38,12 +38,12 @@
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme ?>/images/back_office/admin-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php if($adminEdit['pk_i_id']==$_SESSION['adminId']) { echo __('Edit your profile'); } else { echo __('Edit administrator'); } ?></div>
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/admin-icon.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php if($adminEdit['pk_i_id']==$_SESSION['adminId']) { _e('Edit your profile'); } else { _e('Edit administrator'); } ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				
@@ -59,14 +59,14 @@
 						
 						<div style="float: left; width: 50%;">
 						<fieldset>	
-							<legend><?php echo __('Real name'); ?> (<?php echo __('required'); ?>)</legend>	
+							<legend><?php _e('Real name'); ?> (<?php _e('required'); ?>)</legend>	
 							<input type="text" name="s_name" id="s_name" value="<?php echo $adminEdit['s_name']; ?>" />
 						</fieldset>
 						</div>
 											
 						<div style="float: left; width: 50%;">
 						<fieldset>	
-							<legend><?php echo __('E-mail'); ?></legend>	
+							<legend><?php _e('E-mail'); ?></legend>	
 							<input type="text" name="s_email" id="s_email" value="<?php echo $adminEdit['s_email']; ?>" />
 						</fieldset>
 						</div>
@@ -74,25 +74,25 @@
 						
 						<div style="float: left; width: 50%;">
 						<fieldset>	
-							<legend><?php echo __('User name'); ?> (<?php echo __('required'); ?>)</legend>	
+							<legend><?php _e('User name'); ?> (<?php _e('required'); ?>)</legend>	
 							<input type="text" name="s_username" id="s_username" value="<?php echo $adminEdit['s_username']; ?>" />
 						</fieldset>
 						</div>
 						
 						<div style="float: left; width: 50%;">
 						<fieldset>	
-							<legend><?php echo __('Old password'); ?></legend>	
+							<legend><?php _e('Old password'); ?></legend>	
 							<input type="password" name="old_password" id="old_password" value="" />
-							<legend><?php echo __('New password'); ?></legend>	
+							<legend><?php _e('New password'); ?></legend>	
 							<input type="password" name="s_password" id="s_password" value="" />
-							<legend><?php echo __('Re-type new password'); ?></legend>	
+							<legend><?php _e('Re-type new password'); ?></legend>	
 							<input type="password" name="s_password2" id="password2" value="" />
 						</fieldset>
-						<div style="margin-left: 10px; width: 95%; padding: 4px; background: #FFD2CF;"><?php echo __('Leave it blank if you do not want to change your password now'); ?>.</div>
+						<div style="margin-left: 10px; width: 95%; padding: 4px; background: #FFD2CF;"><?php _e('Leave it blank if you do not want to change your password now'); ?>.</div>
 						</div>
 						<div style="clear: both;"></div>
 						
-						<input id="button_save" type="submit" value="<?php echo __('Update administrator'); ?>" /> 						
+						<input id="button_save" type="submit" value="<?php _e('Update administrator'); ?>" /> 						
 						</form>
 					</div>
 				</div>

@@ -23,8 +23,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><?php echo __('OSClass Admin Panel Login') ?></title>
-        <script type="text/javascript" src="<?php echo ABS_WEB_URL; ?>oc-includes/js/jquery.js"></script>
+        <title><?php _e('OSClass Admin Panel Login') ?></title>
+        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
 

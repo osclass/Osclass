@@ -25,11 +25,11 @@
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  $current_theme ; ?>/images/back_office/settings-icon.png" /></div>
+            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/settings-icon.png" /></div>
             <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
             <div style="clear: both;"></div>
         </div>
@@ -46,27 +46,25 @@
                     <fieldset>
                         <legend><?php _e('Akismet'); ?></legend>
                         <p>
-                            <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label>
-                            <br />
-                            <input type="text" name="akismetKey" id="akismetKey" value="<?php echo (osc_akismet_key() ? osc_akismet_key() : ''); ?>" />
-                            <br />
-                            <span class="Explanation"><?php _e('If the field is empty it is because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
+                        <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label><br />
+                        <input type="text" name="akismetKey" id="akismetKey" value="<?php ( osc_akismet_key() ) ? echo osc_akismet_key() : echo '' ; ?>" /><br />
+                        <span class="Explanation"><?php _e('If the field is empty it is because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
                         </p>
                     </fieldset>
 
                     <fieldset>
                         <legend><?php _e('Re-captcha') ; ?></legend>
+
+                        <p><?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.</p>
+
                         <p>
-                            <?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.
-                        </p>
-                        <p>
-                            <label for="recaptchaPrivKey"><?php _e('Re-captcha private key'); ?></label><br />
-                            <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
+                            <label for="recaptchaPrivKey"><?php _e('Re-captcha private key'); ?><br />
+                            <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php ( osc_recaptcha_private_key() ) ? echo osc_recaptcha_private_key() : echo '' ; ?>" />
                         </p>
 
                         <p>
-                            <label for="recaptchaPubKey"><?php _e('Re-captcha public key'); ?></label><br />
-                            <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
+                            <label for="recaptchaPubKey"><?php _e('Re-captcha public key'); ?><br />
+                            <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php ( osc_recaptcha_public_key() ) ? echo osc_recaptcha_public_key() : echo '' ; ?>" />
                         </p>
                     </fieldset>
 

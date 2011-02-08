@@ -81,7 +81,7 @@
 
     function show_region(c_code, s_country) {
         $.ajax({
-            "url": "<?php echo ABS_WEB_URL; ?>oc-includes/osclass/ajax/region.php?countryId=" + c_code,
+            "url": "<?php echo osc_base_url() ; ?>oc-includes/osclass/ajax/region.php?countryId=" + c_code,
             "dataType": 'json',
             success: function( json ) {
                 var div_regions = $("#i_regions").html('');
@@ -93,7 +93,7 @@
                     var more_region = $('<div>').css('float','right');
                     var link = $('<a>');
 
-                    s_country.append('<a class="close" href="<?php echo ABS_WEB_URL; ?>oc-admin/settings.php?action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="<?php echo ABS_WEB_URL ?>oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
+                    s_country.append('<a class="close" href="<?php echo osc_base_url() ; ?>oc-admin/settings.php?action=locations&type=delete_region&id=' + val.pk_i_id + '"><img src="<?php echo osc_base_url() ; ?>oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
                     s_country.append('<a href="javascript:void(0);" class="edit" onclick="edit_region($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
                     link.attr('href', 'javascript:void(0)');
                     link.click(function(){
@@ -116,7 +116,7 @@
 
     function show_city(id_region) {
         $.ajax({
-            "url": "<?php echo ABS_WEB_URL; ?>oc-includes/osclass/ajax/city.php?regionId=" + id_region,
+            "url": "<?php echo osc_base_url() ; ?>oc-includes/osclass/ajax/city.php?regionId=" + id_region,
             "dataType": 'json',
             success: function( json ) {
                 var div_regions = $("#i_cities").html('');
@@ -125,7 +125,7 @@
                     var container = $('<div>').css('padding','4px').css('width','90%');
                     var s_region = $('<div>').css('float','left');
 
-                    s_region.append('<a class="close" href="<?php echo ABS_WEB_URL; ?>oc-admin/settings.php?action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="<?php echo ABS_WEB_URL ?>oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
+                    s_region.append('<a class="close" href="<?php echo osc_base_url() ; ?>oc-admin/settings.php?action=locations&type=delete_city&id=' + val.pk_i_id + '"><img src="<?php echo osc_base_url() ; ?>oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>');
                     s_region.append('<a href="javascript:void(0);" class="edit" onclick="edit_city($(this), ' + val.pk_i_id + ');" style="padding-right: 15px;">' + val.s_name + '</a>');
                     container.append(s_region);
                     div_regions.append(container);
@@ -305,16 +305,16 @@
     }
 
     a.edit:hover{
-        background: url('<?php echo ABS_WEB_URL; ?>oc-admin/images/edit.png') no-repeat right;
+        background: url('<?php echo osc_base_url() ; ?>oc-admin/images/edit.png') no-repeat right;
     }
 </style>
 <div id="content">
     <div id="separator"></div>
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
     <div id="right_column">
         <div id="content_header" class="content_header">
             <div style="float: left;">
-                <img src="<?php echo $current_theme; ?>/images/back_office/settings-icon.png" alt="" title=""/>
+                <img src="<?php echo osc_current_admin_theme_url() ; ?>/images/back_office/settings-icon.png" alt="" title=""/>
             </div>
             <div id="content_header_arrow">&raquo; <?php _e('Locations'); ?></div>
             <div style="clear: both;"></div>
@@ -342,11 +342,11 @@
                     <div style="padding: 4px; width: 90%;">
                         <div style="float:left;">
                             <div>
-                                <a class="close" href="<?php echo ABS_WEB_URL; ?>oc-admin/settings.php?action=locations&type=delete_country&id=<?php echo $country['pk_c_code']; ?>"><img src="<?php echo ABS_WEB_URL ?>oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>
-                                <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));"><?php echo $country['s_name']; ?></a>
+                                <a class="close" href="<?php echo osc_base_url() ; ?>oc-admin/settings.php?action=locations&type=delete_country&id=<?php echo $country['pk_c_code'] ; ?>"><img src="<?php echo osc_base_url() ; ?>oc-admin/images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" /></a>
+                                <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));"><?php echo $country['s_name'] ; ?></a>
                             </div>
                         </div>
-                        <div style="float:right"><a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo $country['s_name']; ?>')"><?php _e('View more'); ?> &raquo;</a></div>
+                        <div style="float:right"><a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo $country['s_name'] ; ?>')"><?php _e('View more'); ?> &raquo;</a></div>
                     </div>
                     <div style="clear:both;"></div>
                     <?php } ?>

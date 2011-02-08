@@ -85,11 +85,28 @@ switch ($action) {
         }
         
         $words   = array() ;
-        $words[] = array('{FRIEND_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{FRIEND_EMAIL}', '{WEB_URL}',
-                         '{ITEM_NAME}', '{COMMENT}', '{ITEM_URL}', '{WEB_TITLE}') ;
-        $words[] = array($_POST['friendName'], $_POST['yourName'], $_POST['yourEmail'], 
-                         $_POST['friendEmail'], ABS_WEB_URL, $item['s_title'], $_POST['message'],
-                         $item_url, osc_page_title()) ;
+        $words[] = array(
+                            '{FRIEND_NAME}'
+                            ,'{USER_NAME}'
+                            ,'{USER_EMAIL}'
+                            ,'{FRIEND_EMAIL}'
+                            ,'{WEB_URL}'
+                            ,'{ITEM_NAME}'
+                            ,'{COMMENT}'
+                            ,'{ITEM_URL}'
+                            ,'{WEB_TITLE}'
+                    ) ;
+        $words[] = array(
+                            $_POST['friendName']
+                            ,$_POST['yourName']
+                            ,$_POST['yourEmail']
+                            ,$_POST['friendEmail']
+                            ,osc_base_url()
+                            ,$item['s_title']
+                            ,$_POST['message']
+                            ,$item_url
+                            ,osc_page_title()
+                    ) ;
         $title = osc_mailBeauty($content['s_title'], $words) ;
         $body  = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -169,7 +186,7 @@ switch ($action) {
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
                          '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
         $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'],
-                         $_POST['phoneNumber'], ABS_WEB_URL, $item['s_title'], osc_create_item_url($item), $_POST['message']);
+                         $_POST['phoneNumber'], osc_base_url(), $item['s_title'], osc_create_item_url($item), $_POST['message']);
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -199,7 +216,7 @@ switch ($action) {
 
             if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
                 osc_addFlashMessage(__('There has been some erro sending the message')) ;
-                osc_redirectToReferer(ABS_WEB_URL) ;
+                osc_redirectToReferer(osc_base_url()) ;
             }
 
             if(!move_uploaded_file($tmpName, $path)){
@@ -235,7 +252,7 @@ switch ($action) {
         }
         if (osc_akismet_key()) {
             require_once LIB_PATH . 'Akismet.class.php' ;
-            $akismet = new Akismet(ABS_WEB_URL, osc_akismet_key()) ;
+            $akismet = new Akismet(osc_base_url(), osc_akismet_key()) ;
             $akismet->setCommentAuthor($authorName) ;
             $akismet->setCommentAuthorEmail($authorEmail) ;
             $akismet->setCommentContent($body) ;
@@ -309,7 +326,7 @@ switch ($action) {
     case 'post':
         if(!osc_users_enabled()) {
             osc_addFlashMessage(__('Users are not enable')) ;
-            osc_redirectTo(ABS_WEB_URL) ;
+            osc_redirectTo(osc_base_url()) ;
         }
 
         $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null ;
@@ -354,7 +371,7 @@ switch ($action) {
     case 'post_item':
         if(!osc_users_enabled()) {
             osc_addFlashMessage(__('Users are not enable'));
-            osc_redirectTo(ABS_WEB_URL);
+            osc_redirectTo(osc_base_url());
         }
         
         require_once LIB_PATH . 'osclass/items.php';
@@ -394,7 +411,7 @@ switch ($action) {
                 $words   = array();
                 $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
                                  '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
-                $words[] = array($itemId, $PcontactName, $PcontactEmail, ABS_WEB_URL, $item['s_title'],
+                $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
                                  $item_url, osc_page_title(), $edit_link, $delete_link) ;
                 $title = osc_mailBeauty($content['s_title'], $words) ;
                 $body = osc_mailBeauty($content['s_text'], $words) ;
@@ -470,7 +487,7 @@ switch ($action) {
 
     default:
         if ( !isset($_GET['id']) ) {
-            osc_redirectTo(ABS_WEB_URL);
+            osc_redirectTo(osc_base_url());
         }
 
         $item = $manager->findByPrimaryKey($_GET['id']);

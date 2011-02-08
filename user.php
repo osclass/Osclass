@@ -20,7 +20,7 @@ require_once 'oc-load.php' ;
 
 if(!osc_users_enabled()) {
     osc_addFlashMessage(__('Users are not enable')) ;
-    osc_redirectTo(ABS_WEB_URL) ;
+    osc_redirectTo(osc_base_url()) ;
 }
 
 $manager = User::newInstance();
@@ -119,11 +119,11 @@ switch ($action) {
                 }
                 
                 if (!is_null($content)) {
-                    $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', ABS_WEB_URL,
+                    $validationLink = sprintf('%suser.php?action=validate&id=%d&code=%s', osc_base_url(),
                                               $user['pk_i_id'], $user['s_secret']);
                     $words   = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}');
-                    $words[] = array($user['s_name'], $user['s_email'], ABS_WEB_URL, $validationLink);
+                    $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), $validationLink);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -463,7 +463,7 @@ switch ($action) {
                     );
 
                     $password_link = sprintf('%suser.php?action=forgot_change&id=%d&code=%s', 
-                                             ABS_WEB_URL, $user['pk_i_id'], $code) ;
+                                             osc_base_url(), $user['pk_i_id'], $code) ;
                     
                     $mPages = new Page();
                     $aPage = $mPages->findByInternalName('email_user_forgot_password') ;
@@ -686,10 +686,10 @@ switch ($action) {
 
                 $content = Page::newInstance()->findByInternalName('email_new_email') ;
                 if (!is_null($content)) {
-                    $validationLink = sprintf('%suser.php?action=change_email_confirm&id=%d&oe=%s&ne=%s&code=%s', ABS_WEB_URL, $_SESSION['userId'], $user['s_email'], $_REQUEST['s_email'], $code);
+                    $validationLink = sprintf('%suser.php?action=change_email_confirm&id=%d&oe=%s&ne=%s&code=%s', osc_base_url(), $_SESSION['userId'], $user['s_email'], $_REQUEST['s_email'], $code);
                     $words = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}') ;
-                    $words[] = array($user['s_name'], $_REQUEST['s_email'], ABS_WEB_URL, osc_page_title(), $validationLink) ;
+                    $words[] = array($user['s_name'], $_REQUEST['s_email'], osc_base_url(), osc_page_title(), $validationLink) ;
                     $title = osc_mailBeauty($content['s_title'], $words) ;
                     $body = osc_mailBeauty($content['s_text'], $words) ;
 				
@@ -780,7 +780,7 @@ switch ($action) {
         break;
 
     default : 
-        osc_redirectTo(ABS_WEB_URL);
+        osc_redirectTo(osc_base_url());
         break;
     
 }

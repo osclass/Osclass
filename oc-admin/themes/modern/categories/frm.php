@@ -41,12 +41,12 @@
     
     <div id="separator"></div>
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <div id="content_header" class="content_header">
-                <div style="float: left;"><img src="<?php echo $current_theme; ?>/images/back_office/cat-icon.png" /></div>
-                <div id="content_header_arrow">&raquo; <?php echo __($title); ?></div>
+                <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>/images/back_office/cat-icon.png" /></div>
+                <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
                 <div style="clear: both;"></div>
         </div>
 
@@ -63,19 +63,19 @@
                 } ?>
 				
 				<div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Parent category'); ?></div>
+				    <div class="FormElementName"><?php _e('Parent category'); ?></div>
 					<div class="FormElementInput">
 					   <?php CategoryForm::parent_category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
 					</div>
 				</div>
 				<div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Expirations days'); ?> <?php echo __('(0 = no expiration)'); ?></div>
+				    <div class="FormElementName"><?php _e('Expirations days'); ?> <?php _e('(0 = no expiration)'); ?></div>
 					<div class="FormElementInput">
 					   <?php CategoryForm::expiration_days_input_text($category); ?>
 					</div>
 				</div>
 				<div class="FormElement">
-				    <div class="FormElementName"><?php echo __('Position (order in relation to other categories)'); ?></div>
+				    <div class="FormElementName"><?php _e('Position (order in relation to other categories)'); ?></div>
 					<div class="FormElementInput">
 					   <?php CategoryForm::position_input_text($category); ?>
                     </div>
@@ -84,7 +84,7 @@
 				<div class="FormElement">
 				    <div class="FormElementName"></div>
 					<div class="FormElementInput">
-					   <?php CategoryForm::enabled_input_checkbox($category); ?>&nbsp;<?php echo __('Enabled'); ?>
+					   <?php CategoryForm::enabled_input_checkbox($category); ?>&nbsp;<?php _e('Enabled'); ?>
 					</div>
 				</div>
 				
@@ -98,8 +98,8 @@
                 <div class="FormElement">
 					<div class="FormElementName"></div>
 					<div class="FormElementInput">
-						<button class="formButton" type="button" onclick="window.location='categories.php';" ><?php echo __('Cancel'); ?></button>
-						<button class="formButton" type="submit"><?php echo __('Save'); ?></button>
+						<button class="formButton" type="button" onclick="window.location='categories.php';" ><?php _e('Cancel'); ?></button>
+						<button class="formButton" type="submit"><?php _e('Save'); ?></button>
 					</div>
 				</div>
 				

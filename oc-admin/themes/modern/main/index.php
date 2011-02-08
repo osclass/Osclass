@@ -72,7 +72,7 @@
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 <script>
 	
 	// this must be loaded after backoffice menu is loaded.
@@ -88,9 +88,9 @@
 </script>			
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme;?>/images/back_office/home.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Dashboard'); ?></div>
-					<div id="button_open"><?php echo osc_lowerCase( __('Settings') ); ?></div>
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ;?>/images/back_office/home.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php echo _e('Dashboard'); ?></div>
+					<div id="button_open"><?php echo osc_lowerCase( _e('Settings') ); ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				<?php osc_show_flash_messages() ; ?>
@@ -98,18 +98,18 @@
 				<!-- settings div -->
 				<div id="main_div">
 					<form id="checkboxes">
-						<div style="margin-bottom: 8px; font-weight: bold;"><?php echo __('Which of the following content do you want to see on your dashboard'); ?>:</div>
+						<div style="margin-bottom: 8px; font-weight: bold;"><?php _e('Which of the following content do you want to see on your dashboard'); ?>:</div>
 						<input id="cb_last_items" type="checkbox" />
-						<label for="cb_last_items"><?php echo __('Last Items'); ?></label>
+						<label for="cb_last_items"><?php _e('Last Items'); ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_statistics" type="checkbox" />
-						<label for="cb_statistics"><?php echo __('Statistics') ?></label>							
+						<label for="cb_statistics"><?php _e('Statistics') ?></label>							
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_comments" type="checkbox" />
-						<label for="cb_last_comments"><?php echo __('Last Comments') ?></label>							
+						<label for="cb_last_comments"><?php _e('Last Comments') ?></label>							
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_news" type="checkbox" />
-						<label for="cb_last_news"><?php echo __('Last News from OSClass') ?></label>							
+						<label for="cb_last_news"><?php _e('Last News from OSClass') ?></label>							
 					</form>
 					<br />
 					<a href="#" id="button_save"><?php echo osc_lowerCase( __('Save') ); ?></a><br />
@@ -121,7 +121,7 @@
 					<div id="sortable_left" class="sortable_div">
 
 						<div id="last_items" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php echo __('Items by Category'); ?></h3>
+							<h3 class="ui-state-default"><?php _e('Items by Category'); ?></h3>
 							<div id="last_items_body">
 							<?php foreach($categories as $c) { ?>
 								<?php $totalWithItems = 0 ; ?>
@@ -134,17 +134,17 @@
 							<?php } //end foreach ?>
 							
 							<?php if ($totalWithItems == 0) {
-								echo __('There aren\'t any uploaded items yet');
+								_e('There aren\'t any uploaded items yet');
 							 } ?>
 							</div>					
 						</div>
 
 						<div id="statistics" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php echo __('Statistics'); ?></h3>
+							<h3 class="ui-state-default"><?php _e('Statistics'); ?></h3>
 							<div id="statistics_body">
-								<?php echo __('Number of items'); ?>: <?php echo $numItems; ?><br />
-								<?php echo __('Number of public users'); ?>: <?php echo $numUsers; ?><br />
-								<?php echo __('Number of administrators'); ?>: <?php echo $numAdmins; ?><br />
+								<?php _e('Number of items') ; ?>: <?php echo $numItems; ?><br />
+								<?php _e('Number of public users') ; ?>: <?php echo $numUsers; ?><br />
+								<?php _e('Number of administrators') ; ?>: <?php echo $numAdmins; ?><br />
 							</div>							
 						</div>
 
@@ -154,7 +154,7 @@
 					<div id="sortable_right" class="sortable_div">
 
 						<div id="last_comments" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php echo __('Last Comments') ?></h3>
+							<h3 class="ui-state-default"><?php _e('Last Comments') ?></h3>
 							<div id="statistics_body">
 								<?php foreach($comments as $c): ?>
 									<strong><?php echo $c['s_author_name']; ?></strong> <?php echo osc_lowerCase( __('Commented') ) ." ". osc_lowerCase( __('on') ) ." ". osc_lowerCase( __('Item') ); ?> <i><a title="<?php echo $c['s_body']; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ?>' id='dt_link'><?php echo $c['s_title']; ?></a></i><br />
@@ -163,7 +163,7 @@
 						</div>
 
 						<div id="last_news" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php echo __('Latest News from OSClass') ?></h3>
+							<h3 class="ui-state-default"><?php _e('Latest News from OSClass') ?></h3>
 							<div id="last_news_body">
 							<?php
 								$xml = @osc_file_get_contents('http://osclass.org/feed');
@@ -175,7 +175,7 @@
 									}
 									echo '</ul>';
 								} else {
-									echo __('Unable to fetch news from') . ' OSClass. ' . __('Please try again later') . '.';
+									_e('Unable to fetch news from') . ' OSClass. ' . __('Please try again later') . '.' ;
 								}
 							?>								
 							</div>

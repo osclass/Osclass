@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -27,51 +28,59 @@
  *
  * @author Max <max.podumal@gmail.com>
  */
+
 class AdminThemes {
 	
-	private $theme;
-	private $theme_path;
-	private $absolute_path;
+	private static $instance ;
+    private $theme ;
+	private $theme_url ;
+	private $theme_path ;
 
+    public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+    
 	public function __construct() {
-		$this->theme = null;
-		$this->theme_path = null;
-		$this->absolute_path = null;
+		$this->theme = null ;
+		$this->theme_url = null ;
+		$this->theme_path = null ;
 	}
 
 	/* PRIVATE */
-	private function setCurrentThemePath() {
-		if(is_null($this->theme)) return false;
-		$this->theme_path = osc_base_url() . '/oc-admin/themes/' . $this->theme ;
+	private function setCurrentThemeUrl() {
+		if(is_null($this->theme)) return false ;
+		$this->theme_url = osc_base_url() . '/oc-admin/themes/' . $this->theme ;
 	}
 	
-	private function setCurrentThemeAbsolutePath() {
-		if(is_null($this->theme)) return false;
-		$this->absolute_path = realpath(dirname(__FILE__)) . "/../../oc-admin/themes/" . $this->theme; //XXX: must take data from defined global var.
-	}
+	private function setCurrentThemePath() {
+		if(is_null($this->theme)) return false ;
+		$this->theme_path = realpath(dirname(__FILE__)) . "/../../oc-admin/themes/" . $this->theme ; //XXX: must take data from defined global var.
+    }
 	
 	/* PUBLIC */
 	public function setCurrentTheme($theme) {
-		if(intval($theme) || floatval($theme)) return false; //XXX: not sure if this check is really needed.
-		$this->theme = $theme;
-		$this->setCurrentThemePath();
-		$this->setCurrentThemeAbsolutePath();
+		$this->theme = $theme ;
+		$this->setCurrentThemeUrl() ;
+		$this->setCurrentThemePath() ;
 	}
 	
 	public function getCurrentTheme() {
-		return $this->theme;
+		return $this->theme ;
+	}
+	
+	public function getCurrentThemeUrl() {
+		return $this->theme_url ;
 	}
 	
 	public function getCurrentThemePath() {
-		return $this->theme_path;
-	}
-	
-	public function getCurrentThemeAbsolutePath() {
-		return $this->absolute_path;
+		return $this->theme_path ;
 	}
 	
 	public function getCurrentThemeStyles() {
-		return $this->theme_path . '/styles';
+		return $this->theme_url . '/styles' ;
 	}
 }
 

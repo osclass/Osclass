@@ -22,7 +22,7 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 
 $userManager = User::newInstance();
 
-$action = osc_readAction();
+$action = Params::getParam('action');
 switch($action) {
     case 'create':
         $user = null;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -45,52 +46,52 @@
 		var steps = document.getElementById('steps');
 		var version = <?php echo $info['version']; ?>;
 		var fileToUnzip = '';
-		steps.innerHTML += "<?php echo __('Checking for update (installed version: '); ?>"+version+"): ";
+		steps.innerHTML += "<?php _e('Checking for update (installed version: '); ?>"+version+"): ";
 
 		$.getJSON("<?php echo $info['plugin_update_uri']; ?>", function(data) {
 			if(data.version <= version) {
-				steps.innerHTML += "<?php echo __('HORRAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
+				steps.innerHTML += "<?php _e('HORRAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
 			} else {
-				steps.innerHTML += "<?php echo __('current version: '); ?>"+data.version+"<br/>";
-				steps.innerHTML += "<?php echo __('Downloading update file: '); ?>";
+				steps.innerHTML += "<?php _e('current version: '); ?>"+data.version+"<br/>";
+				steps.innerHTML += "<?php _e('Downloading update file: '); ?>";
 
 				var tempAr = data.url.split('/');
 				fileToUnzip = tempAr.pop();
-				$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=download-file&file='+data.url, function(data) {
+				$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=download-file&file='+data.url, function(data) {
 				
 					steps.innerHTML += data+"<br/>";
-					steps.innerHTML += "<?php echo __('Unzipping file: '); ?>";
+					steps.innerHTML += "<?php _e('Unzipping file: '); ?>";
 
-					$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=unzip-file&file='+fileToUnzip, function(data) {
+					$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=unzip-file&file='+fileToUnzip, function(data) {
 					
 						steps.innerHTML += data+"<br/>";
-						steps.innerHTML += "<?php echo __('Copying old files: '); ?>";
+						steps.innerHTML += "<?php _e('Copying old files: '); ?>";
 
-						$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=copy-files', function(data) {
+						$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=copy-files', function(data) {
 						
 							steps.innerHTML += data+"<br/>";
-							steps.innerHTML += "<?php echo __('Removing new files: '); ?>";
+							steps.innerHTML += "<?php _e('Removing new files: '); ?>";
 
-							$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=remove-files', function(data) {
+							$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=remove-files', function(data) {
 							
 								steps.innerHTML += data+"<br/>";
-								steps.innerHTML += "<?php echo __('Executing SQL: '); ?>";
+								steps.innerHTML += "<?php _e('Executing SQL: '); ?>";
 
-								$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=execute-sql', function(data) {
+								$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=execute-sql', function(data) {
 								
 									steps.innerHTML += data+"<br/>";
-									steps.innerHTML += "<?php echo __('Executing additional actions: '); ?>";
+									steps.innerHTML += "<?php _e('Executing additional actions: '); ?>";
 
-									$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=execute-actions', function(data) {
+									$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=execute-actions', function(data) {
 									
 										steps.innerHTML += data+"<br/>";
-										steps.innerHTML += "<?php echo __('Cleanning all the mesh: '); ?>";
+										steps.innerHTML += "<?php _e('Cleanning all the mesh: '); ?>";
 
-										$.get('<?php echo ABS_WEB_URL; ?>oc-admin/plugins-update.php?action=empty-temp', function(data) {
+										$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=empty-temp', function(data) {
 										
 											steps.innerHTML += data+"<br/>";
 
-											steps.innerHTML += "<?php echo __('Satisfaying user with awesome and easy auto-upgrade: Done!'); ?><br/><br/>";
+											steps.innerHTML += "<?php _e('Satisfaying user with awesome and easy auto-upgrade: Done!'); ?><br/><br/>";
 										});
 									});
 								});
@@ -103,36 +104,27 @@
 	});
 </script>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')) ; ?>
 
-<script>
-	$(function() {
-		// Here we include specific jQuery, jQuery UI and Datatables functions.
-	});
-</script>
-		<div id="content">
-			<div id="separator"></div>	
+<div id="content">
+    <div id="separator"></div>
 
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
-			
-		    <div id="right_column">
-				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/tools-icon.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Upgrade OSClass'); ?></div> 
-					<div style="clear: both;"></div>
-				</div>
-				
-				<div id="content_separator"></div>
-				<?php osc_show_flash_messages() ; ?>
-				
-				<!-- add new item form -->
-				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-					<div style="padding: 20px;">
-						<div id="steps" name="steps">
-<br/>
-</div>				
-					</div>
-			</div>
-			</div> <!-- end of right column -->
+    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php' ; ?>
 
+    <div id="right_column">
+        <div id="content_header" class="content_header">
+            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/tools-icon.png" /></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass') ; ?></div>
+            <div style="clear: both;"></div>
+        </div>
 
+        <div id="content_separator"></div>
+        <?php osc_show_flash_messages() ; ?>
+
+        <!-- add new item form -->
+        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+            <div style="padding: 20px;">
+            <div id="steps" name="steps"><br/></div>
+        </div>
+    </div>
+</div> <!-- end of right column -->

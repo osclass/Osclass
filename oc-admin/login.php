@@ -24,13 +24,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><?php echo __('OSClass Admin Panel Login') ?></title>
-        <script type="text/javascript" src="<?php echo ABS_WEB_URL; ?>oc-includes/js/jquery.js"></script>
+        <title><?php _e('OSClass Admin Panel Login') ?></title>
+        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
     <body class="login">
         <div id="login">
-            <h1><a href="<?php echo osc_base_url() ; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0"></a></h1>
+            <h1><a href="<?php echo osc_base_url() ; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0" /></a></h1>
             <?php osc_show_flash_messages() ; ?>
             <form name="loginform" id="loginform" action="index.php" method="post">
                 <input type="hidden" name="action" value="login_post" />
@@ -53,7 +53,7 @@
                                 <option value="en_US" selected="selected"><?php _e('English') ; ?></option>
                                 <option>------------</option>
                                 <?php foreach ($locales as $locale) { ?>
-                                    <option value="<?php echo $locale ['pk_c_code']; ?>" <?php if (osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"'; ?>><?php echo $locale['s_short_name'] ; ?></option>
+                                    <option value="<?php echo $locale ['pk_c_code'] ; ?>" <?php if (osc_admin_language() == $locale['pk_c_code']) echo 'selected="selected"' ; ?>><?php echo $locale['s_short_name'] ; ?></option>
                                 <?php } ?>
                             </select>
                         </label>

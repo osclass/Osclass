@@ -36,12 +36,12 @@ $enabledCtrl->setValue(1);
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
 
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  $current_theme; ?>/images/back_office/icon-language.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php echo __('Edit language'); ?></div> 
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/icon-language.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Edit language'); ?></div> 
 					<div style="clear: both;"></div>
 				</div>
 				
@@ -56,46 +56,46 @@ $enabledCtrl->setValue(1);
 						
 						
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Name'); ?></div>
+						    <div class="FormElementName"><?php _e('Name'); ?></div>
 							<div class="FormElementInput"><input type="text" name="s_name" id="name" value="<?php echo $locale['s_name']; ?>" /></div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Short name'); ?></div>
+						    <div class="FormElementName"><?php _e('Short name'); ?></div>
 							<div class="FormElementInput"><input type="text" name="s_short_name" id="shortName" value="<?php echo $locale['s_short_name']; ?>" /></div>
 						</div>
     					<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Description'); ?></div>
+						    <div class="FormElementName"><?php _e('Description'); ?></div>
 							<div class="FormElementInput"><input type="text" name="s_description" id="description" value="<?php echo $locale['s_description']; ?>" /></div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Currency format'); ?></div>
+						    <div class="FormElementName"><?php _e('Currency format'); ?></div>
 							<div class="FormElementInput"><input type="text" name="s_currency_format" id="currencyFormat" value="<?php echo $locale['s_currency_format']; ?>" /></div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Date format'); ?></div>
+						    <div class="FormElementName"><?php _e('Date format'); ?></div>
 							<div class="FormElementInput"><input type="text" name="s_date_format" id="dateFormat" value="<?php echo $locale['s_date_format']; ?>" /></div>
 						</div>
 						<div class="FormElement">
-						    <div class="FormElementName"><?php echo __('Stop words'); ?></div>
+						    <div class="FormElementName"><?php _e('Stop words'); ?></div>
 							<div class="FormElementInput"><textarea name="s_stop_words" id="stopWords"><?php echo $locale['s_stop_words']; ?></textarea></div>
 						</div>
 						<div class="FormElement">
 						    <div class="FormElementName"></div>
 							<div class="FormElementInput">
-							    <input type="checkbox" name="b_enabled" id="enabled" value="1" <?php if($locale['b_enabled']){?>checked="checked"<?php }?> />&nbsp;<?php echo __('Enabled for the public website'); ?>
+							    <input type="checkbox" name="b_enabled" id="enabled" value="1" <?php if($locale['b_enabled']){?>checked="checked"<?php }?> />&nbsp;<?php _e('Enabled for the public website'); ?>
 							</div>
 						</div>
                                                 <div class="FormElement">
 						    <div class="FormElementName"></div>
 							<div class="FormElementInput">
-							    <input type="checkbox" name="b_enabled_bo" id="enabled" value="1" <?php if($locale['b_enabled_bo']){?>checked="checked"<?php }?> />&nbsp;<?php echo __('Enabled for the backoffice (oc-admin)'); ?>
+							    <input type="checkbox" name="b_enabled_bo" id="enabled" value="1" <?php if($locale['b_enabled_bo']){?>checked="checked"<?php }?> />&nbsp;<?php _e('Enabled for the backoffice (oc-admin)'); ?>
 							</div>
 						</div>
 						<div class="FormElement">
 							<div class="FormElementName"></div>
 							<div class="FormElementInput">
-								<button class="formButton" type="button" onclick="window.location='languages.php';" ><?php echo __('Cancel'); ?></button>
-								<button class="formButton" type="submit"><?php echo __('Save'); ?></button>
+								<button class="formButton" type="button" onclick="window.location='languages.php';" ><?php _e('Cancel'); ?></button>
+								<button class="formButton" type="submit"><?php _e('Save'); ?></button>
 							</div>
 						</div>
 					</form>
