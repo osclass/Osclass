@@ -97,15 +97,15 @@
 		});
 	});
 </script>
-<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>/js/datatables.post_init.js"></script>
+<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
 		<div id="content">
 			<div id="separator"></div>	
 			
-			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 		    
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ;?>/images/back_office/comments-icon2.png" /></div>
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/comments-icon2.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Manage Comments'); ?></div>
 					<div style="clear: both;"></div>
 				</div>

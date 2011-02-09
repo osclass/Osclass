@@ -89,15 +89,15 @@ $last = end($users); $last_id = $last['pk_i_id']; ?>
 		});
 	});
 </script>
-<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>/js/datatables.post_init.js"></script>
+<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
 		<div id="content">
 			<div id="separator"></div>	
 
-			<?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
+			<?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 			
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/user-group-icon.png" /></div>
+					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/user-group-icon.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
 					<a href="users.php?action=create" id="button_open"><?php echo osc_lowerCase(__('Add a new user')); ?></a>
 					<div style="clear: both;"></div>

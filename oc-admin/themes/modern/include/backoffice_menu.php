@@ -23,7 +23,7 @@
 <!-- menu -->
 <div id="left_column"> 
     <div style="padding-top: 9px;">
-        <div style="float: left; padding-left: 5px; padding-top: 5px;"><img src="<?php echo osc_current_admin_theme_url(); ?>/images/back_office/home_icon.gif" /></div>
+        <div style="float: left; padding-left: 5px; padding-top: 5px;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/home_icon.gif" /></div>
         <div style="float: left; padding-top: 5px; padding-left: 5px;">&raquo; <a href="<?php echo osc_admin_base_url(); ?>"><?php _e('Dashboard'); ?></a></div>
         <div style="clear: both;"></div>
         <div style="border-top: 1px solid #ccc; width: 99%;">&nbsp;</div>

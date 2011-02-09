@@ -72,7 +72,7 @@ form p { margin-bottom: 24px; }
 #login { width: 320px; margin: 3em auto; } 
 
 .FlashMessage, .message {
-	margin: 0 0 16px 8px;
+	margin: 0 0 16px 0px;
 	border-width: 1px;
 	border-style: solid;
 	padding: 12px;
@@ -83,7 +83,6 @@ form p { margin-bottom: 24px; }
 }
 
 .FlashMessage {
-    margin-left: 0;
     background-color:#FFEBE8;
     border-color:#CC0000;
 }

@@ -3,13 +3,13 @@
     //URL Helpers
     function osc_base_url($with_index = false) {
         $path = WEB_PATH ;
-        if ($with_index) $path . "index.php" ;
+        if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
 
     function osc_admin_base_url($with_index = false) {
         $path = WEB_PATH . "oc-admin/" ;
-        if ($with_index) $path . "index.php" ;
+        if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
 
@@ -53,6 +53,23 @@
 
     function osc_current_admin_theme_styles_url() {
         return( AdminThemes::newInstance()->getCurrentThemeStyles() ) ;
+    }
+
+    //ONLY USED AT PUBLIC WEBSITE
+    function osc_current_web_theme() {
+        return( WebThemes::newInstance()->getCurrentTheme() ) ;
+    }
+
+    function osc_current_web_theme_url() {
+        return( WebThemes::newInstance()->getCurrentThemeUrl() ) ;
+    }
+
+    function osc_current_web_theme_path() {
+        return( WebThemes::newInstance()->getCurrentThemePath() ) ;
+    }
+
+    function osc_current_web_theme_styles_url() {
+        return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
     }
     
 ?>

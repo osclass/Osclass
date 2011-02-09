@@ -1,44 +1,104 @@
 <?php
 
-/**
- * OSClass – software for creating and publishing online classified advertising platforms
- *
- * Copyright (C) 2010 OSCLASS
- *
- * This program is free software: you can redistribute it and/or modify it under the terms
- * of the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public
- * License along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
+
+     class WebThemes {
+
+        private static $instance ;
+        private $theme ;
+        private $theme_url ;
+        private $theme_path ;
+
+        public static function newInstance() {
+            if(!self::$instance instanceof self) {
+                self::$instance = new self ;
+            }
+            return self::$instance ;
+        }
+
+        public function __construct() {
+            $this->theme = null ;
+            $this->theme_url = null ;
+            $this->theme_path = null ;
+        }
+
+        /* PRIVATE */
+        private function setCurrentThemeUrl() {
+            if(is_null($this->theme)) return false ;
+            $this->theme_url = osc_base_url() . '/oc-content/themes/' . $this->theme . '/' ;
+        }
+
+        private function setCurrentThemePath() {
+            if(is_null($this->theme)) return false ;
+            $this->theme_path = realpath(dirname(__FILE__)) . '/../../oc-content/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
+        }
+
+        /* PUBLIC */
+        public function setCurrentTheme($theme) {
+            $this->theme = $theme ;
+            $this->setCurrentThemeUrl() ;
+            $this->setCurrentThemePath() ;
+        }
+
+        public function getCurrentTheme() {
+            return $this->theme ;
+        }
+
+        public function getCurrentThemeUrl() {
+            return $this->theme_url ;
+        }
+
+        public function getCurrentThemePath() {
+            return $this->theme_path ;
+        }
+
+        public function getCurrentThemeStyles() {
+            return $this->theme_url . '/styles/' ;
+        }
+    }
+
+
+
+
 
 /**
  * @return true if the item has uploaded a thumbnail.
  */
+/*
 function osc_item_has_thumbnail($item) {
     $conn = getConnection() ;
     $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
     return!is_null($resource) ;
-}
+}*/
 
 /**
  * Returns the URL to the thumbnail of the item passed by paramater.
  */
-function osc_create_item_thumbnail_url($item) {
+/*function osc_create_item_thumbnail_url($item) {
     $conn = getConnection() ;
     $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
     echo osc_createThumbnailURL($resource) ;
-}
+}*/
 
 /**
  * Formats the price using the appropiate currency.
  */
-function osc_format_price($item) {
+/*function osc_format_price($item) {
     if (!isset($item['f_price']))
         return __('Consult') ;
 
@@ -49,17 +109,17 @@ function osc_format_price($item) {
         return sprintf('%.02f %s', $item['f_price'], $item['fk_c_currency_code']) ;
 
     return __('Consult') ;
-}
+}*/
 
 /**
  * Formats the date using the appropiate format.
  */
-function osc_formatDate($item) {
+/*function osc_formatDate($item) {
     $date = strtotime($item['dt_pub_date']) ;
     return date(osc_date_format(), $date) ;
-}
+}*/
 
-function osc_page_info($property, $echo = false) {
+/*function osc_page_info($property, $echo = false) {
     global $headerConf ;
     $conf = array(
         'pageTitle' => osc_page_title()
@@ -77,9 +137,9 @@ function osc_page_info($property, $echo = false) {
     }
 
     return $conf[$property] ;
-}
+}*/
 
-function osc_theme_resource($fileName, $echo = false) {
+/*function osc_theme_resource($fileName, $echo = false) {
     $themePath = THEMES_PATH . osc_theme() . '/' . $fileName ;
     $path = '' ;
     if (file_exists($themePath)) {
@@ -93,13 +153,13 @@ function osc_theme_resource($fileName, $echo = false) {
         return '' ;
     }
     return $path ;
-}
+}*/
 
-function osc_show_widgets($location) {
+/*function osc_show_widgets($location) {
     $widgets = Widget::newInstance()->findByLocation($location);
     foreach ($widgets as $w)
         echo $w['s_content'] ;
-}
+}*/
 
 /**
  * Create automatically the url of a page
@@ -108,7 +168,7 @@ function osc_show_widgets($location) {
  * @param bool $echo If you want to echo or not the path automatically
  * @return string If $echo is false, it returns the path, if not it return blank string
  */
-function osc_createPageURL($page, $echo = false) {
+/*function osc_createPageURL($page, $echo = false) {
     $path = '' ;
 
     if (osc_rewrite_enabled()) {
@@ -288,7 +348,7 @@ function osc_createItemPostURL($cat = null) {
             return sprintf(osc_base_url() . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
         }
     }
-}
+}*/
 
 /**
  * Create automatically the url of a category
@@ -297,7 +357,7 @@ function osc_createItemPostURL($cat = null) {
  * @param bool $echo If you want to echo or not the path automatically
  * @return string If $echo is false, it returns the path, if not it return blank string
  */
-function osc_createCategoryURL($cat, $echo = false) {
+/*function osc_createCategoryURL($cat, $echo = false) {
     $path = '';
 
     if (osc_rewrite_enabled()) {
@@ -317,7 +377,7 @@ function osc_createCategoryURL($cat, $echo = false) {
     }
 
     return $path ;
-}
+}*/
 
 /**
  * Create automatically the url of an item
@@ -326,7 +386,7 @@ function osc_createCategoryURL($cat, $echo = false) {
  * @param bool $echo If you want to echo or not the path automatically
  * @return string If $echo is false, it returns the path, if not it return blank string
  */
-function osc_create_item_url($item, $echo = false) {
+/*function osc_create_item_url($item, $echo = false) {
     $path = '' ;
     
     if (osc_rewrite_enabled()) {
@@ -357,7 +417,7 @@ function osc_createUserPublicDashboard($user = null) {
             return osc_base_url() . 'user.php?action=public&user='.$user['pk_i_id'] ;
         }
     }
-}
+}*/
 
 /**
  * Prints the user's account menu
@@ -366,7 +426,7 @@ function osc_createUserPublicDashboard($user = null) {
  * 
  * @return void
  */
-function nav_user_menu($options = null) {
+/* function nav_user_menu($options = null) {
     if($options == null) {
         $options = array();
         $options[] = array('name' => __('Dashboard'), 'url' => osc_createUserAccountURL()) ;
@@ -374,23 +434,23 @@ function nav_user_menu($options = null) {
         $options[] = array('name' => __('Manage your alerts'), 'url' => osc_createUserAlertsURL()) ;
         $options[] = array('name' => __('My account'), 'url' => osc_createProfileURL()) ;
         $options[] = array('name' => __('Logout'), 'url' => osc_createLogoutURL()) ;
-    } ?>
+    } 
 
     <script type="text/javascript">
         $(".user_menu > :first-child").addClass("first");
         $(".user_menu > :last-child").addClass("last");
     </script>
     <ul class="user_menu">
-        <?php
+        
             $var_l = count($options) ;
             for($var_o=0;$var_o<$var_l;$var_o++) {
                 echo '<li><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
             }
 
             osc_run_hook('user_menu');
-        ?>
+       
     </ul>
-<?php }
+} */
 
 
 /**
@@ -400,18 +460,18 @@ function nav_user_menu($options = null) {
  * 
  * @return void
  */
-function add_option_menu($option = null) {
+/*function add_option_menu($option = null) {
     if($option!=null) {
         echo '<li><a href="' . $option['url'] . '" >' . $option['name'] . '</a></li>' ;
     }
     
-}
+}*/
 
 
 /**
  * This function returns an array of themes (those copied in the oc-content/themes folder)
  */
-function osc_listThemes() {
+/*function osc_listThemes() {
     $themes = array();
     $dir = opendir(ABS_PATH . 'oc-content/themes');
     while ($file = readdir($dir)) {
@@ -436,33 +496,33 @@ function osc_loadThemeInfo($theme) {
     $result['int_name'] = $theme;
 
     return $result;
-}
+}*/
 
 /**
  * This function renders the page header
  */
-function osc_renderHeader($headerConf = array()) {
+/*function osc_renderHeader($headerConf = array()) {
     global $categories ;
     $themePath = THEMES_PATH . osc_theme() . '/header.php' ;
     if (file_exists($themePath)) {
         require_once $themePath ;
     }
-}
+}*/
 
 /**
  * This function renders the page footer
  */
-function osc_renderFooter() {
+/*function osc_renderFooter() {
     $themePath = THEMES_PATH . osc_theme() . '/footer.php' ;
     if (file_exists($themePath)) {
         require_once $themePath ;
     }
-}
+}*/
 
 /**
  * This functions tries to render a view from the current theme, or using the generic UI if the former does not exist.
  */
-function osc_renderView($name) {
+/*function osc_renderView($name) {
     extract($GLOBALS);
     $themePath = THEMES_PATH . osc_theme() . '/' . $name ;
     if (file_exists($themePath)) {
@@ -475,6 +535,6 @@ function osc_renderView($name) {
             trigger_error("The view '$name' was not found.") ;
         }
     }
-}
+}*/
 
 ?>

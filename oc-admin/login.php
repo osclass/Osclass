@@ -25,45 +25,81 @@ class CAdminLogin extends BaseModel
 
     //Business Layer...
     function doModel() {
-       $admin = Admin::newInstance()->findByUsername( Params::getParam('user') ) ;
-        if ($admin) {
-            if ( $admin["s_password"] == sha1( Params::getParam('password') ) ) {
-                if ( Params::getParam('remember') ) {
-                    $life = time() + COOKIE_LIFE ;
+        switch( $this->action ) {
+            case('login_post'):     //post execution for the login
+                                    $admin = Admin::newInstance()->findByUsername( Params::getParam('user') ) ;
+                                    if ($admin) {
+                                        if ( $admin["s_password"] == sha1( Params::getParam('password') ) ) {
+                                            if ( Params::getParam('remember') ) {
+                                                $life = time() + COOKIE_LIFE ;
 
-                    //this include contains de osc_genRandomPassword function
-                    require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
-                    $secret = osc_genRandomPassword() ;
+                                                //this include contains de osc_genRandomPassword function
+                                                require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
+                                                $secret = osc_genRandomPassword() ;
 
-                    Admin::newInstance()->update(
-                        array('s_secret' => $secret)
-                        ,array('pk_i_id' => $admin['pk_i_id'])
-                    );
+                                                Admin::newInstance()->update(
+                                                    array('s_secret' => $secret)
+                                                    ,array('pk_i_id' => $admin['pk_i_id'])
+                                                );
 
-                    //setcookie('oc_adminId', $admin['pk_i_id'], $life, '/', $_SERVER['SERVER_NAME']);
-                    //setcookie('oc_adminSecret', $secret, $life, '/', $_SERVER['SERVER_NAME']);
-                } else {
-                    //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                    //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                }
+                                                //setcookie('oc_adminId', $admin['pk_i_id'], $life, '/', $_SERVER['SERVER_NAME']);
+                                                //setcookie('oc_adminSecret', $secret, $life, '/', $_SERVER['SERVER_NAME']);
+                                            } else {
+                                                //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                                //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                            }
 
-                //we are logged in... let's go!
-                //Session::newInstance()->_view() ;
-                Session::newInstance()->_set('adminId', $admin['pk_i_id']) ;
-                Session::newInstance()->_set('adminTheme', Params::getParam('theme')) ;
-                Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
-                //Session::newInstance()->_view() ;
+                                            //we are logged in... let's go!
+                                            Session::newInstance()->_set('adminId', $admin['pk_i_id']) ;
+                                            Session::newInstance()->_set('adminTheme', Params::getParam('theme')) ;
+                                            Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
-            } else {
-                osc_add_flash_message(__('The password is incorrect')) ;
-            }
-            
-        } else {
-            osc_add_flash_message(__('The username does not exists')) ;
+                                        } else {
+                                            osc_add_flash_message(__('The password is incorrect')) ;
+                                        }
+
+                                    } else {
+                                        osc_add_flash_message(__('The username does not exists')) ;
+                                    }
+
+                                    //returning logged in to the main page...
+                                    $this->redirectTo( osc_admin_base_url() ) ;
+            break ;
+            case('recover'):        //form to recover the password (in this case we have the form in /gui/)
+                                    $this->doView( osc_admin_base_path() . 'gui/recover.php' ) ;
+            break ;
+            case('recover_post'):   //post execution to recover the password
+                                    $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
+                                    if($admin) {
+                                        require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
+                                        $newPassword = osc_genRandomPassword() ;
+                                        $body = sprintf( __('Your new password is "%s"'), $newPassword) ;
+
+                                        Admin::newInstance()->update(
+                                            array('s_password' => sha1($newPassword))
+                                            ,array('pk_i_id' => $admin['pk_i_id'])
+                                        );
+
+                                        $params = array(
+                                            'from_name' => __('OSClass application')
+                                            ,'subject' => __('Recover your password')
+                                            ,'to' => $admin['s_email']
+                                            ,'to_name' => __('OSClass administrator')
+                                            ,'body' => $body
+                                            ,'alt_body' => $body
+                                        );
+                                        osc_sendMail($params) ;
+
+                                        osc_add_flash_message(__('A new password has been sent to your account.')) ;
+                                    } else {
+                                        osc_add_flash_message(__('The email you have entered does not belong to a valid administrator.')) ;
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=login&action=recover') ;
+                                    }
+
+                                    $this->redirectTo( osc_admin_base_url() ) ;
+            break ;
         }
-
-        //returning logged in to the main page...
-        $this->redirectTo( osc_admin_base_url() ) ;
+       
     }
 
     //hopefully generic...

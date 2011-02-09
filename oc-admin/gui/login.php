@@ -33,7 +33,7 @@
         <div id="login">
             <h1><a href="<?php echo osc_base_url() ; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0" /></a></h1>
             <?php osc_show_flash_message() ; ?>
-            <form name="loginform" id="loginform" action="<?php osc_admin_base_url(true) ; ?>" method="post">
+            <form name="loginform" id="loginform" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="login_post" />
                 <p>
@@ -86,7 +86,7 @@
             </form>
 
             <p id="nav">
-                <a href="index.php?action=recover" title="<?php _e('Lost your password?') ; ?>"><?php _e('Lost your password?') ; ?></a>
+                <a href="index.php?page=login&action=recover" title="<?php _e('Lost your password?') ; ?>"><?php _e('Lost your password?') ; ?></a>
             </p>
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Are you lost?') ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>

@@ -37,7 +37,7 @@
 <div id="content">
     <div id="separator"></div>
 
-    <?php include_once osc_current_admin_theme_path() . '/include/backoffice_menu.php'; ?>
+    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
     <div id="right_column">
         <div id="home_header" style="margin-left: 40px;"><h2><?php if(isset($new_item) && $new_item==TRUE) { _e('New item');} else { _e('Update your item');}; ?></h2></div>
@@ -171,7 +171,7 @@
                     <div class="clear"></div>
                     <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
                         <button type="button" onclick="window.location='items.php';" ><?php _e('Cancel'); ?></button>
-                        <button type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
+                        <button type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Save');}; ?></button>
                     </div>
                 </div>
             </form>

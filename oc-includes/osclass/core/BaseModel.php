@@ -42,22 +42,6 @@ abstract class BaseModel
         }
     }
 
-    function osc_print_head() {
-        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/head.php' ;
-    }
-    
-    function osc_print_header() {
-        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/header.php' ;
-    }
-
-    function osc_print_html($file) {
-        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/' . $file ;
-    }
-
-    function osc_print_footer() {
-        require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/footer.php' ;
-    }
-
     //Funciones que se tendran que reescribir en la clase que extienda de esta
     protected abstract function doModel() ;
     protected abstract function doView($file) ;
@@ -65,6 +49,22 @@ abstract class BaseModel
     function redirectTo($url) {
         header('Location: ' . $url) ;
         exit ;
+    }
+
+    function osc_print_head() {
+        require osc_current_web_theme_path() . 'head.php' ;
+    }
+
+    function osc_print_header() {
+        require osc_current_web_theme_path() . 'header.php' ;
+    }
+
+    function osc_print_html($file) {
+        require osc_current_web_theme_path() . $file ;
+    }
+
+    function osc_print_footer() {
+        require osc_current_web_theme_path() . 'footer.php' ;
     }
 }
 

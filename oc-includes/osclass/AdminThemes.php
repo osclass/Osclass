@@ -52,12 +52,12 @@ class AdminThemes {
 	/* PRIVATE */
 	private function setCurrentThemeUrl() {
 		if(is_null($this->theme)) return false ;
-		$this->theme_url = osc_base_url() . '/oc-admin/themes/' . $this->theme ;
+		$this->theme_url = osc_base_url() . '/oc-admin/themes/' . $this->theme . '/' ;
 	}
 	
 	private function setCurrentThemePath() {
 		if(is_null($this->theme)) return false ;
-		$this->theme_path = realpath(dirname(__FILE__)) . "/../../oc-admin/themes/" . $this->theme ; //XXX: must take data from defined global var.
+		$this->theme_path = realpath(dirname(__FILE__)) . '/../../oc-admin/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
     }
 	
 	/* PUBLIC */
@@ -80,7 +80,7 @@ class AdminThemes {
 	}
 	
 	public function getCurrentThemeStyles() {
-		return $this->theme_url . '/styles' ;
+		return $this->theme_url . '/styles/' ;
 	}
 }
 
