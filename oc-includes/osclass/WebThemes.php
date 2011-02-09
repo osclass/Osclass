@@ -40,12 +40,12 @@
         /* PRIVATE */
         private function setCurrentThemeUrl() {
             if(is_null($this->theme)) return false ;
-            $this->theme_url = osc_base_url() . '/oc-content/themes/' . $this->theme . '/' ;
+            $this->theme_url = osc_base_url() . 'oc-content/themes/' . $this->theme . '/' ;
         }
 
         private function setCurrentThemePath() {
             if(is_null($this->theme)) return false ;
-            $this->theme_path = realpath(dirname(__FILE__)) . '/../../oc-content/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
+            $this->theme_path = osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
         }
 
         /* PUBLIC */
@@ -68,7 +68,7 @@
         }
 
         public function getCurrentThemeStyles() {
-            return $this->theme_url . '/styles/' ;
+            return $this->theme_url . 'styles/' ;
         }
     }
 

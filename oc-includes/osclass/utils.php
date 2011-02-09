@@ -33,11 +33,11 @@ function osc_lowerCase($string) {
 
 /**
  * Makes an HTTP redirection and ensures the correct script abortion.
- */
+ *//*
 function osc_redirectTo($url) {
     header('Location: ' . $url);
     exit;
-}
+}*/
 
 /**
  * Tries to redirect to the previous page and falls to the one passed by parameter if the referer does not exist.

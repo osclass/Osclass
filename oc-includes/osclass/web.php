@@ -21,40 +21,40 @@
  * @param string parameter name
  * @param string default value
  */
-function osc_param($method, $name, $default = null) {
+/*function osc_param($method, $name, $default = null) {
     return isset($method[$name]) ? $method[$name] : $default;
-}
+}*/
 
 /**
  * This function gets a GET parameter by name and having a default value.
  * @param string parameter name
  * @param string default value
  */
-function osc_paramGet($name, $default = null) {
+/*function osc_paramGet($name, $default = null) {
 	return osc_param($_GET, $name, $default);
-}
+}*/
 
 /**
  * This function gets a POST parameter by name and having a default value.
  * @param string parameter name
  * @param string default value
  */
-function osc_paramPost($name, $default = null) {
+/*function osc_paramPost($name, $default = null) {
 	return osc_param($_POST, $name, $default);
 }
 
 function osc_paramSession($name, $default = null) {
 	return osc_param($_SESSION, $name, $default);
-}
+}*/
 
 /**
  * This function gets a REQUEST parameter by name and having a default value.
  * @param string parameter name
  * @param string default value
  */
-function osc_paramRequest($name, $default = null) {
+/*function osc_paramRequest($name, $default = null) {
 	return osc_param($_REQUEST, $name, $default);
-}
+}*/
 
 /**
  * This functions return the web path to use resources available in oc-includes
@@ -63,7 +63,7 @@ function osc_paramRequest($name, $default = null) {
  * @param bool $echo If you want to echo path. By default is false
  * @return string Web path of the resource
  */
-function osc_global_resource($filename, $echo = false) {
+/*function osc_global_resource($filename, $echo = false) {
     $path = osc_base_url() . 'oc-includes/' . $filename ;
 
     if($echo) {
@@ -72,4 +72,4 @@ function osc_global_resource($filename, $echo = false) {
     }
 
     return $path ;
-}
+}*/

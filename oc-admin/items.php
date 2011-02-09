@@ -36,122 +36,122 @@ class CAdminItems extends AdminSecBaseModel
         switch ($this->action)
         {
             case 'bulk_actions':    echo "BULK ACTIONS (to change): " . Params::getParam('bulk_actions') ;
-                                    switch ($_POST['bulk_actions'])
+                                    switch ( Params::getParam('bulk_actions') )
                                     {
                                         case 'activate_all':
-                                            $id = osc_paramRequest('id', false);
-                                            $value = 'ACTIVE';
+                                            $id = Params::getParam('id') ;
+                                            $value = 'ACTIVE' ;
                                             try {
                                                 if ($id) {
                                                     foreach ($id as $_id) {
                                                         $this->itemManager->update(
-                                                                array('e_status' => $value),
-                                                                array('pk_i_id' => $_id)
-                                                        );
-                                                        $item = $this->itemManager->findByPrimaryKey($_id);
-                                                        CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                                                                array('e_status' => $value)
+                                                                ,array('pk_i_id' => $_id)
+                                                        ) ;
+                                                        $item = $this->itemManager->findByPrimaryKey($_id) ;
+                                                        CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been activated.'));
+                                                osc_add_flash_message(__('The items have been activated')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'deactivate_all':
-                                            $id = osc_paramRequest('id', false);
+                                            $id = Params::getParam('id') ;
                                             $value = 'INACTIVE';
                                             try {
                                                 if ($id) {
                                                     foreach ($id as $_id) {
                                                         $this->itemManager->update(
-                                                                array('e_status' => $value),
-                                                                array('pk_i_id' => $_id)
-                                                        );
-                                                        $item = $this->itemManager->findByPrimaryKey($_id);
-                                                        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                                                                array('e_status' => $value)
+                                                                ,array('pk_i_id' => $_id)
+                                                        ) ;
+                                                        $item = $this->itemManager->findByPrimaryKey($_id) ;
+                                                        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been deactivated.'));
+                                                osc_add_flash_message(__('The items have been deactivated')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'premium_all':
-                                            $id = osc_paramRequest('id', false);
-                                            $value = 1;
+                                            $id = Params::getParam('id') ;
+                                            $value = 1 ;
                                             try {
                                                 if ($id) {
                                                     foreach ($id as $_id) {
                                                         $this->itemManager->update(
-                                                                array('b_premium' => $value),
-                                                                array('pk_i_id' => $_id)
-                                                        );
+                                                                array('b_premium' => $value)
+                                                                ,array('pk_i_id' => $_id)
+                                                        ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been made premium.'));
+                                                osc_add_flash_message(__('The items have been made premium')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'depremium_all':
-                                            $id = osc_paramRequest('id', false);
-                                            $value = 0;
+                                            $id = Params::getParam('id') ;
+                                            $value = 0 ;
                                             try {
                                                 if ($id) {
                                                     foreach ($id as $_id) {
                                                         $this->itemManager->update(
-                                                                array('b_premium' => $value),
-                                                                array('pk_i_id' => $_id)
-                                                        );
+                                                                array('b_premium' => $value)
+                                                                ,array('pk_i_id' => $_id)
+                                                        ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The chages have been made.'));
+                                                osc_add_flash_message(__('The changes have been made')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'delete_all':
-                                            $id = osc_paramRequest('id', false);
+                                            $id = Params::getParam('id') ;
                                             try {
                                                 foreach($id as $i) {
                                                     if ($i) {
-                                                        $item = $this->itemManager->findByPrimaryKey($i);
+                                                        $item = $this->itemManager->findByPrimaryKey($i) ;
                                                         if( $item['e_status'] == 'ACTIVE' ) {
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                         }
                                                         $this->itemManager->deleteByID($i);
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been deleted.'));
+                                                osc_add_flash_message(__('The items have been deleted')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                             }
-                                            osc_redirectTo('items.php');
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         break;
                                     }
-                                    osc_redirectTo('items.php');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'delete':          //delete
-                                    $id = osc_paramRequest('id', false);
+                                    $id = Params::getParam('id') ;
                                     try {
                                         foreach($id as $i) {
                                             if ($i) {
-                                                $item = $this->itemManager->findByPrimaryKey($i);
+                                                $item = $this->itemManager->findByPrimaryKey($i) ;
                                                 if( $item['e_status'] == 'ACTIVE' ) {
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                 }
-                                                $this->itemManager->deleteByID($i);
+                                                $this->itemManager->deleteByID($i) ;
                                             }
                                         }
-                                        osc_add_flash_message(__('The items have been deleted.'));
+                                        osc_add_flash_message(__('The items have been deleted.')) ;
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                        osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                     }
-                                    osc_redirectTo('items.php');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'status':          //status
-                                    $id = osc_paramRequest('id', false);
-                                    $value = osc_paramRequest('value', false);
+                                    $id = Params::getParam('id') ;
+                                    $value = Params::getParam('value') ;
 
                                     if (!$id)
                                         return false;
@@ -184,7 +184,7 @@ class CAdminItems extends AdminSecBaseModel
                                     } catch (Exception $e) {
                                         osc_add_flash_message(__('Error: ') . $e->getMessage());
                                     }
-                                    osc_redirectTo('items.php');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'status_premium':  //status premium
                                     $id = osc_paramRequest('id', false);
@@ -210,7 +210,7 @@ class CAdminItems extends AdminSecBaseModel
                                     } catch (Exception $e) {
                                         osc_add_flash_message(__('Error: ') . $e->getMessage());
                                     }
-                                    osc_redirectTo('items.php');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'item_edit':
             case 'editItem':        //item edit
@@ -237,9 +237,9 @@ class CAdminItems extends AdminSecBaseModel
 
                                     if (count($item) > 0) {
                                         $resources = Item::newInstance()->findResourcesByID($id);
-                                        osc_renderAdminSection('items/frm.php');
+                                        $this->doView('items/frm.php') ;
                                     } else {
-                                        osc_redirectTo('items.php');
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                     }
             break;
             case 'item_edit_post':
@@ -263,7 +263,7 @@ class CAdminItems extends AdminSecBaseModel
                                         }
                                     }
 
-                                    osc_redirectTo('items.php');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'deleteResource':  //delete resource
                                     $id = osc_paramGet('id', -1);
@@ -271,7 +271,7 @@ class CAdminItems extends AdminSecBaseModel
                                     $fkid = osc_paramGet('fkid', -1);
 
                                     ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
-                                    osc_redirectTo('items.php?action=items');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'post':            //post
                                     $users = User::newInstance()->listAll();
@@ -292,8 +292,9 @@ class CAdminItems extends AdminSecBaseModel
                                     $resources = array() ;
 
                                     $new_item = TRUE ;
-                                    osc_renderAdminSection('items/frm.php') ;
-                                    osc_renderFooter() ;
+                                    //osc_renderAdminSection('items/frm.php') ;
+                                    //osc_renderFooter() ;
+                                    $this->doView('items/frm.php') ;
             break;
             case 'post_item':       //post item
                                     $admin = TRUE;
@@ -301,8 +302,7 @@ class CAdminItems extends AdminSecBaseModel
 
                                     require_once LIB_PATH . 'osclass/items.php';
 
-
-                                    osc_redirectTo('items.php');
+                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             default:                //default
                                     $catId = Params::getParam('catId') ;
@@ -312,7 +312,6 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->_exportVariableToView("catId", $catId) ;
                                     $this->_exportVariableToView("stat", Params::getParam('stat')) ;
 
-                                    //osc_renderAdminSection('items/index.php', __('Items')) ;
                                     //calling the view...
                                     $this->doView('items/index.php') ;
         }

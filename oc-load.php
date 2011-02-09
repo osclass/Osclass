@@ -61,7 +61,8 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hMessages.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
-require_once LIB_PATH . 'osclass/web.php';
+//Here we are the same functions as in Params.php (commented by dev.conquer)
+//require_once LIB_PATH . 'osclass/web.php';
 require_once ABS_PATH . 'common.php';
 
 //osc_checkAdminSession();
