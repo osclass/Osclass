@@ -81,7 +81,11 @@ class Session {
 
     function _getMessage($key) {
         $messages = $this->_get('messages') ;
-        return ($messages[$key]) ;
+        if ( isset($messages[$key]) ) {
+            return ( $messages[$key] ) ;
+        } else {
+            return ( '' ) ;
+        }
     }
 
     function _dropMessage($key) {
