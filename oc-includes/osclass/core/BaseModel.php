@@ -1,4 +1,5 @@
 <?php
+
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,7 +10,7 @@
  *
  * @author danielo
  */
-class BaseModel
+abstract class BaseModel
 {
     //action to execute
     private $action ;
@@ -17,7 +18,6 @@ class BaseModel
     private $aExported ;
 
     function  __construct() {
-        echo "construct del base Model" ;
         $this->action = Params::getParam('action') ;
         $this->aExported = array() ;
     }
@@ -41,10 +41,6 @@ class BaseModel
         }
     }
 
-    function doModel() {
-
-    }
-
     function osc_print_head() {
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/head.php' ;
     }
@@ -61,9 +57,9 @@ class BaseModel
         require 'themes/' . AdminThemes::newInstance()->getCurrentTheme() . '/footer.php' ;
     }
 
-    function doView($file) {
-        //generic things to do...
-        $this->osc_print_html($file) ;
-    }
+    //Funciones que se tendran que reescribir en la clase que extienda de esta
+    protected abstract function doModel() ;
+    protected abstract function doView($file) ;
 }
+
 ?>

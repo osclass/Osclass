@@ -25,8 +25,6 @@ class CAdminMain extends AdminSecBaseModel
 
     //Business Layer...
     function doModel() {
-        parent::doModel() ;
-
         $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
         $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
 
@@ -36,15 +34,13 @@ class CAdminMain extends AdminSecBaseModel
         $this->_exportVariableToView( "newsList", osc_listNews() ) ;
         $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
 
-        echo "EN EL DOMODEL..." ;
         //calling the view...
         $this->doView('main/index.php') ;
     }
 
     //hopefully generic...
     function doView($file) {
-        echo "EN EL DOVIEW..." ;
-        parent::doView($file) ;
+        $this->osc_print_html($file) ;
     }
 }
 
