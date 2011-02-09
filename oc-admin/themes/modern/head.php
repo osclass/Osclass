@@ -24,8 +24,16 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php _e('OSClass Admin Panel'); ?></title>
-        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery-1.4.2.js"></script>
-        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery-ui-1.8.5.js"></script>
+        <?php foreach ($this->get_css() as $css) { ?>
+            <link href="<?php echo $css ; ?>" rel="stylesheet" type="text/css" />
+        <?php } ?>
+
+        <?php foreach ($this->get_js() as $js) { ?>
+            <script type="text/javascript" src="<?php echo $js ; ?>"></script>
+        <?php } ?>
+            
+        <!-- <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery-1.4.2.js"></script>
+        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery-ui-1.8.5.js"></script> -->
         <script>
             $(function() {
                 $("#menu").accordion({
@@ -67,28 +75,31 @@
             </script>
         <?php } ?>
                 
-        <script src="<?php echo  osc_current_admin_theme_url() ; ?>js/jquery.cookie.js"></script>
-        <script src="<?php echo  osc_current_admin_theme_url() ; ?>js/jquery.json.js"></script>
-        <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>backoffice.css" media="screen" rel="stylesheet" />
-        <link href="<?php echo osc_base_url() ; ?>oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-            <?php
+        <!-- <script src="<?php echo  osc_current_admin_theme_url() ; ?>js/jquery.cookie.js"></script> -->
+        <!-- <script src="<?php echo  osc_current_admin_theme_url() ; ?>js/jquery.json.js"></script> -->
+        <!-- <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>backoffice.css" media="screen" rel="stylesheet" /> -->
+        <!-- <link href="<?php echo osc_base_url() ; ?>oc-includes/css/jquery-ui.css" rel="stylesheet" type="text/css" /> -->
+
+        
+
+        <?php
             // XXX: must be another way to include page specific stylesheets.
             if(strstr($_SERVER["SCRIPT_NAME"], "items.php")) {
             ?>
-                    <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/tabber-minimized.js"></script>
-                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>tabs.css" media="screen" rel="stylesheet" />
+                    <!-- <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/tabber-minimized.js"></script> -->
+                    <!-- <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>tabs.css" media="screen" rel="stylesheet" /> -->
                     <script type="text/javascript">
                     	document.write('<style type="text/css">.tabber{display:none;}<\/style>') ;
                     </script>
                     
-                    <script src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>item_list_layout.css" media="screen" rel="stylesheet" />
+                    <!-- <script src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.dataTables.min.js"></script> -->
+                    <!-- <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>item_list_layout.css" media="screen" rel="stylesheet" /> -->
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "new_item.php")) {
             ?>
-                    <script src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>new_item_layout.css" media="screen" rel="stylesheet" />
+                    <!-- <script src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.dataTables.min.js"></script> -->
+                    <!-- <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>new_item_layout.css" media="screen" rel="stylesheet" /> -->
             <?php
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "categories.php")) {
@@ -179,12 +190,12 @@
             <?php
             }
 
-            if(!strstr($_SERVER["SCRIPT_NAME"], "main.php")) { // XXX: Dirty workaround, in theory it must be included only when we load Datatables.
-            ?>
+            /*if(!strstr($_SERVER["SCRIPT_NAME"], "main.php")) { // XXX: Dirty workaround, in theory it must be included only when we load Datatables.
+            
                 <!-- must be changed to different file -->
                 <style type="text/css" title="currentStyle">
                     @import "<?php echo osc_current_admin_theme_styles_url() ; ?>demo_table.css";
                 </style>
-            <?php
-            }
+            
+            }*/
             ?>

@@ -19,7 +19,7 @@
     }
 
     function osc_admin_base_path() {
-        return(ABS_PATH . "oc-admin/") ;
+        return(osc_base_path() . "oc-admin/") ;
     }
 
     function osc_lib_path() {
@@ -36,6 +36,14 @@
 
     function osc_translations_path() {
         return(TRANSLATIONS_PATH) ;
+    }
+
+    function osc_css_url() {
+        return(osc_base_url() . 'oc-includes/css/') ;
+    }
+
+    function osc_js_url() {
+        return(osc_base_url() . 'oc-includes/js/') ;
     }
 
     //ONLY USED AT OC-ADMIN
@@ -55,6 +63,10 @@
         return( AdminThemes::newInstance()->getCurrentThemeStyles() ) ;
     }
 
+    function osc_current_admin_theme_js_url() {
+        return( AdminThemes::newInstance()->getCurrentThemeJs() ) ;
+    }
+
     //ONLY USED AT PUBLIC WEBSITE
     function osc_current_web_theme() {
         return( WebThemes::newInstance()->getCurrentTheme() ) ;
@@ -69,6 +81,10 @@
     }
 
     function osc_current_web_theme_styles_url() {
+        return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
+    }
+
+    function osc_current_web_theme_js_url() {
         return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
     }
     

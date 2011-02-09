@@ -16,11 +16,18 @@ abstract class BaseModel
     private $aExported ;
     //action to execute
     protected $action ;
+    //array of css
+    protected $aCss ;
+    //array of js
+    protected $aJs ;
+    
 
     function  __construct() {
         Session::newInstance()->session_start() ;
         $this->action = Params::getParam('action') ;
         $this->aExported = array() ;
+        $this->aCss = array() ;
+        $this->aJs = array() ;
     }
 
     //to export variables at the business layer
@@ -65,6 +72,30 @@ abstract class BaseModel
 
     function osc_print_footer() {
         require osc_current_web_theme_path() . 'footer.php' ;
+    }
+
+    function add_css($css_filename) {
+        $this->aCss[] = osc_current_admin_theme_styles_url() . $css_filename ;
+    }
+
+    function add_js($js_filename) {
+        $this->aJs[] = osc_current_admin_theme_js_url() . $js_filename ;
+    }
+
+    function add_global_css($css_filename) {
+        $this->aCss[] = osc_css_url() . $css_filename ;
+    }
+
+    function add_global_js($js_filename) {
+        $this->aJs[] = osc_js_url() . $js_filename ;
+    }
+
+    function get_css() {
+        return ( $this->aCss ) ;
+    }
+
+    function get_js() {
+        return ( $this->aJs ) ;
     }
 }
 

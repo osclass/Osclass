@@ -70,6 +70,10 @@
         public function getCurrentThemeStyles() {
             return $this->theme_url . 'styles/' ;
         }
+
+        public function getCurrentThemeJs() {
+            return $this->theme_url . 'js/' ;
+        }
     }
 
 
