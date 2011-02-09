@@ -320,7 +320,7 @@ class CAdminItems extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        parent::doView($file) ;
+        $this->osc_print_html($file) ;
     }
 }
 

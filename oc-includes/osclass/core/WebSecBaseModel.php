@@ -1,13 +1,13 @@
 <?php
 
-    class AdminSecBaseModel extends SecBaseModel
+    class WebSecBaseModel extends SecBaseModel
     {
 	    function __construct() {
 		    parent::__construct() ;
 	    }
 
 	    function isLogged() {
-            if (Session::newInstance()->_get("adminId") == '') return false ;
+            if (Session::newInstance()->_get("userId") == '') return false ;
             return true ;
 	    }
 
@@ -17,19 +17,19 @@
         }
 
         function osc_print_head() {
-            require osc_current_admin_theme_path() . 'head.php' ;
+            require osc_current_web_theme_path() . 'head.php' ;
         }
 
         function osc_print_header() {
-            require osc_current_admin_theme_path() . 'header.php' ;
+            require osc_current_web_theme_path() . 'header.php' ;
         }
 
         function osc_print_html($file) {
-            require osc_current_admin_theme_path() . $file ;
+            require osc_current_web_theme_path() . $file ;
         }
 
         function osc_print_footer() {
-            require osc_current_admin_theme_path() . 'footer.php' ;
+            require osc_current_web_theme_path() . 'footer.php' ;
         }
     }
 
