@@ -16,21 +16,23 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CAdminItems extends BaseModel
+class CAdminItems extends AdminSecBaseModel
 {
     //specific for this class
     private $itemManager ;
     
     function __construct() {
-        $this->itemManager = Item::newInstance() ;
-
-        //calling the parent construct
         parent::__construct() ;
+
+        //specific things for this class
+        $this->itemManager = Item::newInstance() ;
     }
 
     //Business Layer...
-    function doModel()
-    {
+    function doModel() {
+        parent::doModel() ;
+
+        //specific things for this class
         switch ($this->action)
         {
             case 'bulk_actions':    echo "BULK ACTIONS (to change): " . Params::getParam('bulk_actions') ;
@@ -312,13 +314,13 @@ class CAdminItems extends BaseModel
 
                                     //osc_renderAdminSection('items/index.php', __('Items')) ;
                                     //calling the view...
-                                    $this->doView('items/index.php', __('Items')) ;
+                                    $this->doView('items/index.php') ;
         }
     }
 
     //hopefully generic...
-    function doView($file, $title = null, $subTitle = null) {
-        parent::doView() ;
+    function doView($file) {
+        parent::doView($file) ;
     }
 }
 

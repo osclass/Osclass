@@ -20,7 +20,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+//require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
 /**
  * Converts a string to lowercase respecting the charset.

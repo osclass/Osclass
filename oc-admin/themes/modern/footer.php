@@ -20,19 +20,16 @@
  */
 
 ?>
-            <div style="clear: both;"></div>
-        </div> <!-- end of container -->
-        <div style="clear: both;"></div>
-        <div id="footer">
-            <?php osc_run_hook('admin_footer'); ?>
-            <div id="footer_left">
-                <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank"><?php _e('OSClass'); ?></a> |
-                <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> |
-                <a title="<?php _e('Feedback'); ?>" href="http://forums.osclass.org" target="_blank"><?php _e('Feedback'); ?></a>
-            </div>
-            <div id="footer_right">
-                <?php _e('OSClass'); ?> <?php echo OSCLASS_VERSION; ?>
-            </div>
-        </div>
-    </body>
-</html>
+        
+<div style="clear: both;"></div>
+<div id="footer">
+    <?php osc_run_hook('admin_footer'); ?>
+    <div id="footer_left">
+        <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank"><?php _e('OSClass'); ?></a> |
+        <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> |
+        <a title="<?php _e('Feedback'); ?>" href="http://forums.osclass.org" target="_blank"><?php _e('Feedback'); ?></a>
+    </div>
+    <div id="footer_right">
+        <?php _e('OSClass'); ?> <?php echo OSCLASS_VERSION; ?>
+    </div>
+</div>

@@ -30,7 +30,7 @@
     <div id="right_column">
         <div id="content_header" class="content_header">
             <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>/images/back_office/pages-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php echo _e('Add New Page') ; ?></div>
+            <div id="content_header_arrow">&raquo; <?php _e('Add New Page') ; ?></div>
             <div style="clear: both;"></div>
         </div>
 

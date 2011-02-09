@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -18,6 +19,48 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+class Session {
+    //attributes
+    private $session ;
+    private $instance ;
+
+    public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+
+    public function __construct() {
+        $this->session = $_SESSION ;
+    }
+    
+    function session_start() {
+        session_start() ;
+    }
+
+    function session_destroy() {
+        session_destroy() ;
+    }
+
+    function _set($key, $value) {
+        $_SESSION[$key] = $this->session[$key] = $value ;
+        
+    }
+
+    function _get($key) {
+        if (!isset($this->session[$key])) {
+            return '' ;
+        }
+
+        return ($this->session[$key]) ;
+    }
+}
+
+
+
+
 
 if(defined('OC_SESSION_INC')) {
 	_e('defined session');
