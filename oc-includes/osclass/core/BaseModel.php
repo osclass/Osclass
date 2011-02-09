@@ -12,10 +12,10 @@
  */
 abstract class BaseModel
 {
-    //action to execute
-    private $action ;
     //array for variables needed at the view layer
     private $aExported ;
+    //action to execute
+    protected $action ;
 
     function  __construct() {
         $this->action = Params::getParam('action') ;

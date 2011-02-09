@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The base MySQL settings of OSClass
  */
@@ -18,7 +19,8 @@ define('DB_HOST', 'localhost');
 /** Database Table prefix */
 define('DB_TABLE_PREFIX', 'oc_');
 
-define('ABS_WEB_URL', 'http://localhost');
 define('REL_WEB_URL', 'rel_here');
 
-define('WEB_PATH', ABS_WEB_URL);
+define('WEB_PATH', 'http://localhost');
+
+?>

@@ -22,22 +22,22 @@
 
 require_once '../oc-load.php' ;
 
-define('OC_ADMIN', true) ;
+//define('OC_ADMIN', true) ;
 
-$login = true ;
-$action = Params::getParam('action') ;
-$page = Params::getParam('page') ;
+//$login = true ;
+//$page = Params::getParam('page') ;
 
 
-switch($page) {
+switch( Params::getParam('page') )
+{
     case('items'):  require_once(osc_admin_base_path() . 'items.php') ;
                     $do = new CAdminItems() ;
-                    $do->doModel($action) ;
+                    $do->doModel() ;
     break;
     default:        //login of oc-admin
                     require_once(osc_admin_base_path() . 'main.php') ;
                     $do = new CAdminMain() ;
-                    $do->doModel($action) ;
+                    $do->doModel() ;
         /*
                     if(isset($_SESSION['adminId'])) {
                         //osc_redirectTo('main.php');
@@ -61,7 +61,7 @@ switch($page) {
                     require_once 'login.php';*/
 }
 
-
+/*
 
 
 
@@ -131,8 +131,7 @@ switch($action) {
 			$data['s_value'] = $_POST['locale'];
 			$condition = array( 's_section' => 'osclass', 's_name' => 'admin_language');
 			Preference::newInstance()->update($data, $condition) ;
-            echo "hola" ;
-			//osc_redirectTo('main.php');
+            //osc_redirectTo('main.php');
             include('main.php') ;
             exit();
             
@@ -146,6 +145,6 @@ switch($action) {
 		osc_redirectTo('index.php');
 		break;
 	
-}
+}*/
 
 ?>

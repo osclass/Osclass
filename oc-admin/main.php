@@ -25,17 +25,25 @@ class CAdminMain extends AdminSecBaseModel
 
     //Business Layer...
     function doModel() {
-        $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
-        $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
+        switch($this->action) {
+            case('logout'):     //unset($_SESSION['adminId']);
+                                //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                Session::newInstance()->session_destroy() ;
+                                osc_redirectTo( osc_admin_base_url(true) ) ;
+            break;
+            default:            $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
+                                $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
 
-        $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
-        $this->_exportVariableToView( "numItemsPerCategory", CategoryStats::newInstance()->toNumItemsMap() ) ;
-        $this->_exportVariableToView( "categories", Category::newInstance()->listAll() ) ;
-        $this->_exportVariableToView( "newsList", osc_listNews() ) ;
-        $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
+                                $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
+                                $this->_exportVariableToView( "numItemsPerCategory", CategoryStats::newInstance()->toNumItemsMap() ) ;
+                                $this->_exportVariableToView( "categories", Category::newInstance()->listAll() ) ;
+                                $this->_exportVariableToView( "newsList", osc_listNews() ) ;
+                                $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
 
-        //calling the view...
-        $this->doView('main/index.php') ;
+                                //calling the view...
+                                $this->doView('main/index.php') ;
+        }   
     }
 
     //hopefully generic...

@@ -13,13 +13,13 @@ class SecBaseModel extends BaseModel
 {
     function __construct()
     {
+        parent::__construct () ;
+        
         //Checking granting...
         if (!$this->isLogged()) {
             //If we are not logged or we do not have permissions -> go to the login page
             $this->showAuthFailPage() ;
         }
-
-        parent::__construct () ;
     }
     
     //granting methods

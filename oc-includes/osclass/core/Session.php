@@ -56,6 +56,12 @@ class Session {
 
         return ($this->session[$key]) ;
     }
+
+    function _view() {
+        print_r($this->session) ;
+        echo "\n" ;
+        print_r($_SESSION) ;
+    }
 }
 
 
@@ -148,3 +154,5 @@ function osc_checkAdminSession() {
 }
 
 */
+
+?>

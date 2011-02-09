@@ -14,7 +14,7 @@
 	    }
 
 	    function showAuthFailPage() {
-	    	osc_redirectTo(osc_admin_base_url (true)) ;
+            osc_redirectTo( osc_admin_base_url() . "login.php" ) ;
 	    }
     }
 
