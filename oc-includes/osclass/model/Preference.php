@@ -33,7 +33,7 @@ class Preference extends DAO
 
     public function __construct() {
         parent::__construct();
-        $this->pref = $this->toArray() ;
+        $this->toArray() ;
     }
 
 	public function getTableName() {

@@ -38,7 +38,7 @@ class Locale extends DAO {
         if ($indexed_by_pk) {
             $aTmp = array() ;
             for ($i = 0 ; $i < count($aResults) ; $i++) {
-                $aTmp["pk_" . $aResults[$i][getPrimaryKey()]] = $aResults[$i] ;
+                $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
             }
             $aResults = $aTmp ;
         }
