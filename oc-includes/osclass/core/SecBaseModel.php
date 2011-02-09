@@ -26,6 +26,7 @@ class SecBaseModel extends BaseModel
 		*/
 		function __construct($comprobar = true)
 		{
+            echo "constructor de SecBaseModel" ;
 			//Checking granting...
             if (!$this->isLogged()) {
                 //If we are not logged or we do not have permissions -> go to the login page
@@ -35,8 +36,8 @@ class SecBaseModel extends BaseModel
 			parent::__construct () ;
 		}
 
-		abstract function isLogged() ;
-		abstract function showAuthFailPage() ;
+		//abstract function isLogged() ;
+		//abstract function showAuthFailPage() ;
 
 		//granting methods
 		function setGranting($grant) {
@@ -44,9 +45,10 @@ class SecBaseModel extends BaseModel
 		}
 
 	    //destroying current session
-		function system_logout() {
+		function logout() {
 			//destroying session
-			$this->session->session_expire() ;
+			echo "logout de SecBaseModel" ;
+            Session::newInstance()->session_destroy() ;
 		}
 
         function doModel() {}

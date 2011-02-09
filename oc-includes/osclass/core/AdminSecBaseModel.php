@@ -12,17 +12,15 @@
 
 	    function isLogged()
 	    {
+            echo "isLogged de AdminSecBaseModel" ;
 	    	if (Session::newInstance()->_get("adminId") == '') return false ;
             return true ;
 	    }
 
 	    function showAuthFailPage() {
-	    	osc_redirectTo(osc_admin_base_url (true)) ;
+	    	echo "isLogged de showAuthFailPage" ;
+            osc_redirectTo(osc_admin_base_url (true)) ;
 	    }
-
-		function logout() {
-            Session::newInstance()->session_destroy() ;
-		}
     }
 
 ?>

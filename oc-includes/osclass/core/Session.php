@@ -23,7 +23,7 @@
 class Session {
     //attributes
     private $session ;
-    private $instance ;
+    private static $instance ;
 
     public static function newInstance() {
         if(!self::$instance instanceof self) {
@@ -60,7 +60,7 @@ class Session {
 
 
 
-
+/*
 
 if(defined('OC_SESSION_INC')) {
 	_e('defined session');
@@ -73,9 +73,7 @@ session_start();
 
 $adminTheme = osc_paramSession('adminTheme', 'default');
 
-/**
- * Adds an ephemeral message to the session.
- */
+// Adds an ephemeral message to the session.
 function osc_addFlashMessage($msg, $section = 'pubMessages') {
 	if(!isset($_SESSION[$section]))
 		$_SESSION[$section] = array();
@@ -94,9 +92,7 @@ function osc_addFlashMessage($msg, $section = 'pubMessages') {
 	$_SESSION[$section][] = $msg;
 }
 
-/**
- * Shows all the pending flash messages in session and cleans up the array.
- */
+//Shows all the pending flash messages in session and cleans up the array.
 function osc_show_flash_messages($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
 	if(!isset($_SESSION[$section]) || !count($_SESSION[$section])) return;
 
@@ -109,9 +105,7 @@ function osc_show_flash_messages($section = 'pubMessages', $class = "FlashMessag
 	unset($_SESSION[$section]);
 }
 
-/**
- * Shows all the pending flash messages in session and cleans up the array.
- */
+//Shows all the pending flash messages in session and cleans up the array.
 function osc_hasFlashMessages($section = 'pubMessages') {
 	if(!isset($_SESSION[$section]) || !count($_SESSION[$section])) {
         return false;
@@ -120,9 +114,7 @@ function osc_hasFlashMessages($section = 'pubMessages') {
     }
 }
 
-/**
- * @return true if the user has logged in.
- */
+//@return true if the user has logged in.
 function osc_isUserLoggedIn() {
 	if(isset($_SESSION['userId'])) return true;
 
@@ -155,3 +147,4 @@ function osc_checkAdminSession() {
 	}
 }
 
+*/

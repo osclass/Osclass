@@ -17,6 +17,7 @@ class BaseModel
     private $aExported ;
 
     function  __construct() {
+        echo "construct del base Model" ;
         $this->action = Params::getParam('action') ;
         $this->aExported = array() ;
     }
@@ -41,10 +42,6 @@ class BaseModel
     }
 
     function doModel() {
-        //sistema de seguridad para el caso en que estamos en el backoffice (tambien controla grantings)
-        /* if(granting guardado no corresponde al de esta clase) {
-            die("") || redirect
-        } */
 
     }
 

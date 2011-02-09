@@ -47,11 +47,11 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
-
-require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
