@@ -166,7 +166,7 @@ switch ($action) {
         $_POST['pk_i_id'] = $_POST['id'];
         osc_run_hook('item_edit_post');
 
-        osc_addFlashMessage(__('Great! We\'ve just update your item.'));
+        osc_add_flash_message(__('Great! We\'ve just update your item.'));
         break;
 
     case 'post_item':
@@ -191,7 +191,7 @@ switch ($action) {
 
             if (osc_reg_user_post()) {
                 if ($userId == null) {
-                    osc_addFlashMessage(__('You new to log-in in order to post a new item.')) ;
+                    osc_add_flash_message(__('You new to log-in in order to post a new item.')) ;
                     osc_redirectTo(osc_createLoginURL()) ;
                     break ;
                 }
@@ -251,7 +251,7 @@ switch ($action) {
         if($Pprice == '') $Pprice = null;
 
         if(!isset($PcontactName) || !isset($PcontactEmail) || $PcontactName==null || $PcontactEmail==null || $PcontactName=='' || $PcontactEmail=='') {
-            osc_addFlashMessage(__('You need to input your name and email to be able to publish a new item.'));
+            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
             $success = false;
         } else {
             $dao_item = new Item() ;
@@ -543,12 +543,12 @@ switch ($action) {
             osc_run_hook('after_item_post') ;
 
             if($is_admin) {
-                osc_addFlashMessage(__('A new item has been added')) ;
+                osc_add_flash_message(__('A new item has been added')) ;
             } else {
                 if(osc_enabled_item_validation()) {
-                    osc_addFlashMessage(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
                 } else {
-                    osc_addFlashMessage(__('Great! We\'ve just published your item.')) ;
+                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
                 }
             }
         }

@@ -32,12 +32,16 @@ class Session {
         return self::$instance ;
     }
 
-    public function __construct() {
-        $this->session = $_SESSION ;
-    }
+    public function __construct() {}
     
     function session_start() {
+        session_name('osclass') ;
         session_start() ;
+
+        $this->session = $_SESSION ;
+        if ($this->_get('messages') == '') {
+            $this->_set( 'messages', array() ) ;
+        }
     }
 
     function session_destroy() {
@@ -45,8 +49,8 @@ class Session {
     }
 
     function _set($key, $value) {
-        $_SESSION[$key] = $this->session[$key] = $value ;
-        
+        $_SESSION[$key] = $value ;
+        $this->session[$key] = $value ;
     }
 
     function _get($key) {
@@ -57,102 +61,40 @@ class Session {
         return ($this->session[$key]) ;
     }
 
+    function _drop($key) {
+        unset($_SESSION[$key]) ;
+        unset($this->session[$key]) ;
+
+    }
+
     function _view() {
         print_r($this->session) ;
         echo "\n" ;
         print_r($_SESSION) ;
     }
-}
 
+    function _setMessage($key, $value) {
+        $messages = $this->_get('messages') ;
+        $messages[$key] = $value ;
+        $this->_set('messages', $messages) ;
+    }
 
+    function _getMessage($key) {
+        $messages = $this->_get('messages') ;
+        return ($messages[$key]) ;
+    }
 
-/*
+    function _dropMessage($key) {
+        $messages = $this->_get('messages') ;
+        unset($messages[$key]) ;
+        $this->_set('messages', $messages) ;
+    }
 
-if(defined('OC_SESSION_INC')) {
-	_e('defined session');
-	return;
-} else
-	define('OC_SESSION_INC', true);
-
-session_name('osclass');
-session_start();
-
-$adminTheme = osc_paramSession('adminTheme', 'default');
-
-// Adds an ephemeral message to the session.
-function osc_addFlashMessage($msg, $section = 'pubMessages') {
-	if(!isset($_SESSION[$section]))
-		$_SESSION[$section] = array();
-
-	$msg = null;
-	$argv = func_get_args();
-	switch(func_num_args()) {
-		case 0: return; break;
-		case 1: $msg = $argv[0]; break;
-		default:
-			$format = array_shift($argv);
-			$msg = vsprintf($format, $argv);
-			break;
-	}
-
-	$_SESSION[$section][] = $msg;
-}
-
-//Shows all the pending flash messages in session and cleans up the array.
-function osc_show_flash_messages($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
-	if(!isset($_SESSION[$section]) || !count($_SESSION[$section])) return;
-
-	echo "<div id='$id' class='$class'>";
-	foreach($_SESSION[$section] as $msg) {
-		echo $msg . '<br />';
-	}
-	echo '</div>';
-
-	unset($_SESSION[$section]);
-}
-
-//Shows all the pending flash messages in session and cleans up the array.
-function osc_hasFlashMessages($section = 'pubMessages') {
-	if(!isset($_SESSION[$section]) || !count($_SESSION[$section])) {
-        return false;
-    } else {
-        return true;
+    function _viewMessage() {
+        print_r($this->session['messages']) ;
+        echo "\n" ;
+        print_r($_SESSION['messages']) ;
     }
 }
-
-//@return true if the user has logged in.
-function osc_isUserLoggedIn() {
-	if(isset($_SESSION['userId'])) return true;
-
-	if(isset($_COOKIE['oc_userId']) && isset($_COOKIE['oc_userSecret'])) {
-		$user = User::newInstance()->findByIdSecret($_COOKIE['oc_userId'], $_COOKIE['oc_userSecret']);
-		if($user) {
-			$_SESSION['userId'] = $_COOKIE['oc_userId'];
-			return true;
-		}
-	}
-
-	return false;
-}
-
-function osc_userInfo($property) {
-	static $user = null;
-	if(is_null($user)) {
-		require_once LIB_PATH . 'osclass/model/User.php';
-		$manager = User::newInstance();
-		$user = $manager->findByPrimaryKey($_SESSION['userId']);
-	}
-	return $user[$property];
-}
-
-function osc_checkAdminSession() {
-	// This is a simply but effective security check
-	if(!isset($_SESSION) || !isset($_SESSION['adminId'])) {
-		header('Location: index.php');
-		exit;
-	}
-}
-
-*/
 
 ?>

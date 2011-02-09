@@ -52,7 +52,7 @@
 <body>
 
 <?php
-osc_show_flash_messages() ;
+osc_show_flash_message() ;
 $locales = Locale::newInstance()->listAllEnabled() ;
 ?>
     <div id="container" align="center">

@@ -42,19 +42,19 @@ switch($action) {
                 break;
                 
             case 1:
-                osc_addFlashMessage(__('The account has been created. An activation email has been sent to the user\'s email address.'));
+                osc_add_flash_message(__('The account has been created. An activation email has been sent to the user\'s email address.'));
                 break;
                 
             case 2:
-                osc_addFlashMessage(__('The account has been created and it was activated.'));
+                osc_add_flash_message(__('The account has been created and it was activated.'));
                 break;
                 
             case 3:
-                osc_addFlashMessage(__('Sorry, but that email is already in use. Did you forget your password?'));
+                osc_add_flash_message(__('Sorry, but that email is already in use. Did you forget your password?'));
                 break;
                 
             case 4:
-                osc_addFlashMessage(__('The user could not be registered, sorry.'));
+                osc_add_flash_message(__('The user could not be registered, sorry.'));
                 break;
                 
             default:
@@ -95,11 +95,11 @@ switch($action) {
         }
         
         if($success==0) {
-            osc_addFlashMessage(__('This should never happened.'));
+            osc_add_flash_message(__('This should never happened.'));
         } else if($success==1) {
-            osc_addFlashMessage(__('Passwords don\'t match.'));
+            osc_add_flash_message(__('Passwords don\'t match.'));
         } else {
-            osc_addFlashMessage(__('The user has been updated.'));
+            osc_add_flash_message(__('The user has been updated.'));
         }
 			
         osc_redirectTo('users.php');
@@ -111,9 +111,9 @@ switch($action) {
             $values = array('b_enabled' => 1);
             try {
                 $userManager->update($values, $conditions);
-                osc_addFlashMessage(__('The user has been activated.'));
+                osc_add_flash_message(__('The user has been activated.'));
             } catch (Exception $e) {
-                osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                osc_add_flash_message(__('Error: ') . $e->getMessage());
             }
         }
         osc_redirectTo('users.php');
@@ -125,9 +125,9 @@ switch($action) {
             $values = array('b_enabled' => 0);
             try {
                 $userManager->update($values, $conditions);
-                osc_addFlashMessage(__('The user has been deactivated.'));
+                osc_add_flash_message(__('The user has been deactivated.'));
             } catch (Exception $e) {
-                osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                osc_add_flash_message(__('Error: ') . $e->getMessage());
             }
         }
         osc_redirectTo('users.php');

@@ -35,9 +35,9 @@ switch($action) {
         try {
             $adminManager->insert($_POST);
 
-            osc_addFlashMessage(__('The item has been added.'));
+            osc_add_flash_message(__('The item has been added.'));
         } catch (Exception $e) {
-            osc_addFlashMessage( __('The administrator could not be created.') . ' (' . $e->getMessage() . ')');
+            osc_add_flash_message( __('The administrator could not be created.') . ' (' . $e->getMessage() . ')');
         }
         osc_redirectTo('admins.php');
         break;
@@ -61,11 +61,11 @@ switch($action) {
                     $_POST['s_password'] = sha1($_POST['s_password']);
                 } else {
                     unset($_POST['s_password']);
-                    osc_addFlashMessage(__('Password didn\'t update. Passwords don\'t match.'));
+                    osc_add_flash_message(__('Password didn\'t update. Passwords don\'t match.'));
                 }
             } else {
                 unset($_POST['s_password']);
-                osc_addFlashMessage(__('Password didn\'t update. "Old password" didn\'t match with our records in the database.'));
+                osc_add_flash_message(__('Password didn\'t update. "Old password" didn\'t match with our records in the database.'));
             }
         }
         unset($_POST['old_password']);
@@ -74,7 +74,7 @@ switch($action) {
         try {
             $adminManager->update($_POST, $conditions);
         } catch (Exception $e) {
-            osc_addFlashMessage( __('Error: ') . $e->getMessage());
+            osc_add_flash_message( __('Error: ') . $e->getMessage());
         }
         osc_redirectTo('admins.php');
         break;
@@ -83,12 +83,12 @@ switch($action) {
         if($id) {
             // Verification to avoid an administrator trying to remove to itself
             if(in_array($_SESSION['adminId'], $id)) {
-                osc_addFlashMessage( __('The operation was not completed. You were trying to remove yourself!') );
+                osc_add_flash_message( __('The operation was not completed. You were trying to remove yourself!') );
             } else {
                 try {
                     $adminManager->delete(array('pk_i_id IN (' . implode(', ', $id) . ')'));
                 } catch (Exception $e) {
-                    osc_addFlashMessage( __('Error: ') . $e->getMessage());
+                    osc_add_flash_message( __('Error: ') . $e->getMessage());
                 }
             }
         }

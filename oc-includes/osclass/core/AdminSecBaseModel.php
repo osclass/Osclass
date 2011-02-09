@@ -14,8 +14,9 @@
 	    }
 
 	    function showAuthFailPage() {
-            osc_redirectTo( osc_admin_base_url() . "login.php" ) ;
-	    }
+            require( osc_admin_base_path() . 'gui/login.php' ) ;
+            exit ;
+        }
     }
 
 ?>

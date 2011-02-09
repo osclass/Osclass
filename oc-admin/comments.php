@@ -38,9 +38,9 @@ switch ($action) {
                             DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $id) . ')'
                         ));
                     }
-                    osc_addFlashMessage(__('The comments have been deleted.'));
+                    osc_add_flash_message(__('The comments have been deleted.'));
                 } catch (Exception $e) {
-                    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
                 break;
 
@@ -56,9 +56,9 @@ switch ($action) {
                             );
                         }
                     }
-                    osc_addFlashMessage(__('The comments have been activated.'));
+                    osc_add_flash_message(__('The comments have been activated.'));
                 } catch (Exception $e) {
-                    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
                 break;
 
@@ -74,9 +74,9 @@ switch ($action) {
                             );
                         }
                     }
-                    osc_addFlashMessage(__('The comments have been deactivated.'));
+                    osc_add_flash_message(__('The comments have been deactivated.'));
                 } catch (Exception $e) {
-                    osc_addFlashMessage(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
                 break;
         }
@@ -98,12 +98,12 @@ switch ($action) {
                     array('pk_i_id' => $id)
             );
             if($value=='ACTIVE') {
-                osc_addFlashMessage(__('The comment has been activated.'));
+                osc_add_flash_message(__('The comment has been activated.'));
             } else {
-                osc_addFlashMessage(__('The comment has been deactivated.'));
+                osc_add_flash_message(__('The comment has been deactivated.'));
             }
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('comments.php');
         break;
@@ -126,7 +126,7 @@ switch ($action) {
 
         osc_run_hook('item_edit_post');
 
-        osc_addFlashMessage(__('Great! We\'ve just update your item.'));
+        osc_add_flash_message(__('Great! We\'ve just update your item.'));
         osc_redirectTo('comments.php');
         break;
     case 'delete':

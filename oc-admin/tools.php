@@ -75,7 +75,7 @@ switch($action)
 
 	    }
 	    closedir($dir) ;
-        osc_addFlashMessage(__('Re-generation complete.')) ;
+        osc_add_flash_message(__('Re-generation complete.')) ;
         osc_redirectTo('tools.php?action=images') ;
 	break;
     case 'upgrade':         osc_renderAdminSection('tools/upgrade.php', __('Tools')) ;

@@ -32,7 +32,8 @@ class CAdminMain extends AdminSecBaseModel
                                 Session::newInstance()->session_destroy() ;
                                 osc_redirectTo( osc_admin_base_url(true) ) ;
             break;
-            default:            $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
+            default:            //default dashboard page (main page at oc-admin)
+                                $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
                                 $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
 
                                 $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;

@@ -106,7 +106,7 @@
 					<div style="clear: both;"></div>
 				</div>
 			</div>
-			<?php osc_show_flash_messages() ; ?>
+			<?php osc_show_flash_message() ; ?>
 
 			<div id="content_separator"></div>
 

@@ -171,7 +171,7 @@ switch ($action) {
         try {
             Currency::newInstance()->insert($_POST);
         } catch (Exception $e) {
-            osc_addFlashMessage($e->getMessage());
+            osc_add_flash_message($e->getMessage());
         }
         osc_redirectTo('settings.php?action=currencies');
         break;
@@ -187,7 +187,7 @@ switch ($action) {
         try {
             Currency::newInstance()->update(array('s_name' => $_POST['s_name'], 's_description' => $_POST['s_description']), array('pk_c_code' => $_POST['pk_c_code']));
         } catch (Exception $e) {
-            osc_addFlashMessage($e->getMessage());
+            osc_add_flash_message($e->getMessage());
         }
         osc_redirectTo('settings.php?action=currencies');
         break;
@@ -204,9 +204,9 @@ switch ($action) {
             Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
         } catch (Exception $e) {
             if($e->getMessage()=="1451") {
-                osc_addFlashMessage(__('This currency is currently being used in some items. It can not be deleted.')) ;
+                osc_add_flash_message(__('This currency is currently being used in some items. It can not be deleted.')) ;
             } else {
-                osc_addFlashMessage($e->getMessage()) ;
+                osc_add_flash_message($e->getMessage()) ;
             }
         }
 
@@ -274,7 +274,7 @@ switch ($action) {
                 ,array('s_name'  => 'enabled_users')
         );
 
-        osc_addFlashMessage(__('Users settings have been updated.'), 'admin') ;
+        osc_add_flash_message(__('Users settings have been updated.'), 'admin') ;
         osc_redirectTo('settings.php?action=users') ;
         break;
     case 'notifications':

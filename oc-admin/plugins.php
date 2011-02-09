@@ -42,7 +42,7 @@ switch($action) {
 		//run this after installing the plugin
 		osc_run_hooks('install_'.$pn) ;
 
-        osc_addFlashMessage(__('Plugin installed.'));
+        osc_add_flash_message(__('Plugin installed.'));
 		osc_redirectTo('plugins.php') ;
 		break;
 	case 'uninstall':
@@ -53,7 +53,7 @@ switch($action) {
 		//Re-load the plugins
 		osc_loadActivePlugins();
 
-        osc_addFlashMessage(__('Plugin uninstalled.'));
+        osc_add_flash_message(__('Plugin uninstalled.'));
 		osc_redirectTo('plugins.php');
 		break;
 	case 'admin':
@@ -100,10 +100,10 @@ switch($action) {
 				osc_addToCategoryPlugin($_POST['categories'], $_REQUEST['plugin_short_name']);
 			}
 		} else {
-			osc_addFlashMessage(__('No plugin selected'));
+			osc_add_flash_message(__('No plugin selected'));
 			osc_renderAdminSection('plugins/index.php', __('Plugins'));
 		}
-		osc_addFlashMessage(__('Configuration was saved'));
+		osc_add_flash_message(__('Configuration was saved'));
 		osc_redirectTo('plugins.php');
 		break;
 	default:

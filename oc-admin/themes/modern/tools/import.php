@@ -40,7 +40,7 @@
 				</div>
 				
 				<div id="content_separator"></div>
-				<?php osc_show_flash_messages() ; ?>
+				<?php osc_show_flash_message() ; ?>
 				
 				<!-- add new item form -->
 				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">

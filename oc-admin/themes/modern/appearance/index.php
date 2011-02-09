@@ -47,7 +47,7 @@
             <div style="clear: both;"></div>
         </div>
         
-        <?php osc_show_flash_messages() ; ?>
+        <?php osc_show_flash_message() ; ?>
 
         <!-- list themes -->
         <div id="content_separator"></div>

@@ -69,7 +69,7 @@
             <div style="clear: both;"></div>
         </div>
         
-        <?php osc_show_flash_messages() ; ?>
+        <?php osc_show_flash_message() ; ?>
 
         <!-- add new theme form -->
         <div id="main_div" style="border: 1px solid #ccc; background: #eee; ">

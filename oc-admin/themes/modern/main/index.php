@@ -119,7 +119,7 @@
 					<div id="button_open"><?php echo osc_lowerCase( __('Settings') ); ?></div>
 					<div style="clear: both;"></div>
 				</div>
-				<?php osc_show_flash_messages() ; ?>
+				<?php osc_show_flash_message() ; ?>
 				
 				<!-- settings div -->
 				<div id="main_div">

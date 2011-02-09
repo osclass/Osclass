@@ -50,9 +50,9 @@ switch ($action)
             }
             $categoryManager->insert($fields, $aFieldsDescription);
 
-            osc_addFlashMessage(__('The category has been added.'));
+            osc_add_flash_message(__('The category has been added.'));
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
     break;
@@ -77,9 +77,9 @@ switch ($action)
         
         try {
             $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
-            osc_addFlashMessage(__('The item has been updated.'));
+            osc_add_flash_message(__('The item has been updated.'));
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         if( !is_null( $fields['fk_i_parent_id'] ) ) {
             osc_redirectTo( 'categories.php?parentId=' . $fields['fk_i_parent_id'] ) ;
@@ -95,9 +95,9 @@ switch ($action)
                     $categoryManager->deleteByPrimaryKey($i);
                 }
             }
-            osc_addFlashMessage(__('The items have been deleted.'));
+            osc_add_flash_message(__('The items have been deleted.'));
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
     break;
@@ -115,9 +115,9 @@ switch ($action)
             } else {
                 $msg = __('There was a problem with this page. The ID for the category is not set.') ;
             }
-            osc_addFlashMessage($msg) ;
+            osc_add_flash_message($msg) ;
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
     break;
@@ -130,9 +130,9 @@ switch ($action)
                     $categoryManager->update(array('b_enabled' => 1), array('pk_i_id' => $id));
                 }
             }
-            osc_addFlashMessage(__('The categories have been enabled.'));
+            osc_add_flash_message(__('The categories have been enabled.'));
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
     break;
@@ -145,9 +145,9 @@ switch ($action)
                     $categoryManager->update(array('b_enabled' => 0), array('pk_i_id' => $id));
                 }
             }
-            osc_addFlashMessage(__('Selected categories have been disabled.'));
+            osc_add_flash_message(__('Selected categories have been disabled.'));
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('categories.php');
     break;

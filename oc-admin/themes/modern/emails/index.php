@@ -35,7 +35,7 @@
         </div>
 
         <div id="content_separator"></div>
-        <?php osc_show_flash_messages('admin') ; ?>
+        <?php osc_show_flash_message('admin') ; ?>
 
     <div class="dataTables_wrapper">
         <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list">

@@ -18,6 +18,7 @@ abstract class BaseModel
     protected $action ;
 
     function  __construct() {
+        Session::newInstance()->session_start() ;
         $this->action = Params::getParam('action') ;
         $this->aExported = array() ;
     }
@@ -60,6 +61,11 @@ abstract class BaseModel
     //Funciones que se tendran que reescribir en la clase que extienda de esta
     protected abstract function doModel() ;
     protected abstract function doView($file) ;
+
+    function redirectTo($url) {
+        header('Location: ' . $url) ;
+        exit ;
+    }
 }
 
 ?>

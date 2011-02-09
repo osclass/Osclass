@@ -94,7 +94,7 @@ try {
 				,'alt_body' => $message
 			);
 			osc_sendMail($params) ;
-			osc_addFlashMessage(__('Your message has been sent and will be answered soon, thank you.')) ;
+			osc_add_flash_message(__('Your message has been sent and will be answered soon, thank you.')) ;
 			osc_redirectToReferer(osc_base_url()) ;
         break;
         default:

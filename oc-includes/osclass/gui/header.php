@@ -28,7 +28,7 @@
 
         <?php
             osc_run_hooks('header') ;
-            osc_show_flash_messages() ;
+            osc_show_flash_message() ;
             $locales = Locale::newInstance()->listAllEnabled();
         ?>
 

@@ -39,13 +39,13 @@ switch ($action)
         if (isset($_GET['theme']) && is_array($_GET['theme'])) {
             foreach ($_GET['theme'] as $theme) {
                 if (!osc_deleteDir(THEMES_PATH . $theme))
-                    osc_addFlashMessage(__('Directory "%s" could not be removed.'), $theme);
+                    osc_add_flash_message(__('Directory "%s" could not be removed.'), $theme);
             }
         } else if (isset($_GET['theme'])) {
             if (!osc_deleteDir(THEMES_PATH . $_GET['theme']))
-                osc_addFlashMessage(__('Directory "%s" could not be removed.'), $_GET['theme']);
+                osc_add_flash_message(__('Directory "%s" could not be removed.'), $_GET['theme']);
         } else {
-            osc_addFlashMessage(__('No theme selected.'));
+            osc_add_flash_message(__('No theme selected.'));
         }
         osc_redirectTo('appearance.php');
     break;

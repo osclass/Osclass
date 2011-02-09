@@ -51,7 +51,7 @@ switch ($action) {
         $dao_itemStats->increase($column, $_GET['id']) ;
         unset($dao_itemStats) ;
         setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
-        osc_addFlashMessage(__('Thanks! That helps us.'));
+        osc_add_flash_message(__('Thanks! That helps us.'));
         osc_redirectTo(osc_create_item_url($item));
         break;
 
@@ -129,9 +129,9 @@ switch ($action) {
                   ) ;
 
         if(osc_sendMail($params)) {
-            osc_addFlashMessage(__('We just send your message to ') . $_POST['friendName'] . ".") ;
+            osc_add_flash_message(__('We just send your message to ') . $_POST['friendName'] . ".") ;
         } else {
-            osc_addFlashMessage(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
+            osc_add_flash_message(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
         }
 
         osc_redirectTo($item_url) ;
@@ -145,7 +145,7 @@ switch ($action) {
             $date = time() ;
             if($item_date < $date) {
                 // The item is expired, we can not contact the seller
-                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                osc_add_flash_message(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
                 osc_redirectTo(osc_create_item_url($item)) ;
             }
         }
@@ -166,7 +166,7 @@ switch ($action) {
             $date = time();
             if($item_date < $date) {
                 // The item is expired, we can not contact the seller
-                osc_addFlashMessage(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                osc_add_flash_message(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
                 osc_redirectTo(osc_create_item_url($item)) ;
             }
         }
@@ -215,7 +215,7 @@ switch ($action) {
             $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName ;
 
             if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
-                osc_addFlashMessage(__('There has been some erro sending the message')) ;
+                osc_add_flash_message(__('There has been some erro sending the message')) ;
                 osc_redirectToReferer(osc_base_url()) ;
             }
 
@@ -230,7 +230,7 @@ switch ($action) {
 
         osc_sendMail($emailParams) ;
         @unlink($path) ;
-        osc_addFlashMessage(__('We\'ve just sent an e-mail to the seller.')) ;
+        osc_add_flash_message(__('We\'ve just sent an e-mail to the seller.')) ;
         osc_redirectTo(osc_create_item_url($item)) ;
         break;
 
@@ -317,7 +317,7 @@ switch ($action) {
             }
             osc_run_hook('add_comment', $item);
         } catch (Exception $e) {
-            osc_addFlashMessage(__('We are very sorry but could not save your comment. Try again later.')) ;
+            osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
         }
 
         osc_redirectTo($itemURL) ;
@@ -325,7 +325,7 @@ switch ($action) {
 
     case 'post':
         if(!osc_users_enabled()) {
-            osc_addFlashMessage(__('Users are not enable')) ;
+            osc_add_flash_message(__('Users are not enable')) ;
             osc_redirectTo(osc_base_url()) ;
         }
 
@@ -334,7 +334,7 @@ switch ($action) {
         if (osc_reg_user_post()) {
             if ($userId == null) {
                 // NOT OK
-                osc_addFlashMessage(__('You need to log-in in order to post a new item.')) ;
+                osc_add_flash_message(__('You need to log-in in order to post a new item.')) ;
                 osc_redirectTo(osc_createLoginURL()) ;
                 break;
             }
@@ -370,7 +370,7 @@ switch ($action) {
 
     case 'post_item':
         if(!osc_users_enabled()) {
-            osc_addFlashMessage(__('Users are not enable'));
+            osc_add_flash_message(__('Users are not enable'));
             osc_redirectTo(osc_base_url());
         }
         
@@ -451,10 +451,10 @@ switch ($action) {
                     );
                     osc_run_hook('activate_item', $manager->findByPrimaryKey($id));
                     CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
-                    osc_addFlashMessage('Item validated');
+                    osc_add_flash_message('Item validated');
                     osc_redirectTo(osc_create_item_url($item[0]));
                 } else {
-                    osc_addFlashMessage('The item was validated before');
+                    osc_add_flash_message('The item was validated before');
                     osc_redirectTo(osc_create_item_url($item[0]));
                 }
             }
@@ -531,7 +531,7 @@ switch ($action) {
                 $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 
                 $headerConf = array('pageTitle' => $item['s_title'] . ' - '.osc_page_title()) ;
-                osc_addFlashMessage('This item is NOT validated. You should validate it in order to show this item
+                osc_add_flash_message('This item is NOT validated. You should validate it in order to show this item
                     to the rest of the users. You could do that in your profile menu.');
                 osc_renderHeader($headerConf);
                 osc_renderView('item.php');

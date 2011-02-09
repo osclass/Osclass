@@ -390,9 +390,9 @@ function nav_user_menu($options = null) {
             osc_run_hook('user_menu');
         ?>
     </ul>
-<?php } ?>
+<?php }
 
-<?
+
 /**
  * Prints the aditional options to the menu
  *

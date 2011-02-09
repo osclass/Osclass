@@ -33,9 +33,9 @@ switch ($action) {
     case 'add_post':
         $path = TRANSLATIONS_PATH . pathinfo($_FILES['package']['name'], PATHINFO_FILENAME);
         if(osc_packageExtract($_FILES['package']['tmp_name'], $path)) {
-            osc_addFlashMessage(__('The language has been installed correctly.'));
+            osc_add_flash_message(__('The language has been installed correctly.'));
         } else {
-            osc_addFlashMessage(__('There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH.'));
+            osc_add_flash_message(__('There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH.'));
         }
         osc_redirectTo('languages.php');
     break;
@@ -66,7 +66,7 @@ switch ($action) {
                 switch($action) {
                     case('enable'):
                         if($default_lang==$id && $enabled==0) {
-                            osc_addFlashMessage($id.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
+                            osc_add_flash_message($id.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
                         } else {
                          $msg = ($enabled == 1) ? __('The language has been enabled for the public website.') : __('The language has been disabled for the public website.') ;
                                         $aValues = array('b_enabled' => $enabled) ;
@@ -79,13 +79,13 @@ switch ($action) {
                     break;
                 }
 
-                osc_addFlashMessage( $msg );
+                osc_add_flash_message( $msg );
             } else {
-                osc_addFlashMessage(__('There was a problem updating the language. The ID of the language was lost.'));
+                osc_add_flash_message(__('There was a problem updating the language. The ID of the language was lost.'));
             }
             
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('languages.php');
     break;
@@ -114,19 +114,19 @@ switch ($action) {
                 $default_lang = osc_language() ;
                 foreach ($id as $i) {
                     if($default_lang==$i && $action=='disable_selected') {
-                        osc_addFlashMessage($i.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
+                        osc_add_flash_message($i.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
                     } else {
                         $localeManager->update($aValues, array('pk_c_code' => $i));
                     }
                 }
 
-                osc_addFlashMessage($msg);
+                osc_add_flash_message($msg);
             } else {
-                osc_addFlashMessage(__('There was a problem updating the languages. The IDs of the languages were lost.'));
+                osc_add_flash_message(__('There was a problem updating the languages. The IDs of the languages were lost.'));
             }
             
         } catch (Exception $e) {
-            osc_addFlashMessage(__('Error: ') . $e->getMessage());
+            osc_add_flash_message(__('Error: ') . $e->getMessage());
         }
         osc_redirectTo('languages.php');
     break;
@@ -138,15 +138,15 @@ switch ($action) {
                     try {
                         Locale::newInstance()->deleteLocale($code) ;
                         if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
-                            osc_addFlashMessage(__('Directory "%s" could not be removed.'), $code);
+                            osc_add_flash_message(__('Directory "%s" could not be removed.'), $code);
                         }
                     } catch (Exception $e) {
                         if($e->getMessage()=='1451') {
-                            osc_addFlashMessage($code.__(' language pack can not be deleted it\'s being used.'));
+                            osc_add_flash_message($code.__(' language pack can not be deleted it\'s being used.'));
                         }
                     }
                 } else {
-                        osc_addFlashMessage(__('Directory "%s" could not be removed, it\' the default language. Set another language as default first and try again.'), $code);
+                        osc_add_flash_message(__('Directory "%s" could not be removed, it\' the default language. Set another language as default first and try again.'), $code);
                 }
             }
         }

@@ -36,7 +36,7 @@
         </div>
 
         <div id="content_separator"></div>
-        <?php osc_show_flash_messages() ; ?>
+        <?php osc_show_flash_message() ; ?>
 
         <div style="border: 1px solid #ccc; background: #eee;">
             <div style="padding: 20px;">

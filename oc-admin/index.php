@@ -20,18 +20,16 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once '../oc-load.php' ;
-
-//define('OC_ADMIN', true) ;
-
-//$login = true ;
-//$page = Params::getParam('page') ;
-
+require_once '../oc-load.php' ;                
 
 switch( Params::getParam('page') )
 {
     case('items'):  require_once(osc_admin_base_path() . 'items.php') ;
                     $do = new CAdminItems() ;
+                    $do->doModel() ;
+    break;
+    case ('login'): require_once(osc_admin_base_path() . 'login.php') ;
+                    $do = new CAdminLogin() ;
                     $do->doModel() ;
     break;
     default:        //login of oc-admin
@@ -95,9 +93,9 @@ switch($action) {
 			);
 			osc_sendMail($params);
 
-			osc_addFlashMessage(__('A new password has been sent to your account.'));
+			osc_add_flash_message(__('A new password has been sent to your account.'));
 		} else {
-			osc_addFlashMessage(__('The email you have entered does not belong to a valid administrator.'));
+			osc_add_flash_message(__('The email you have entered does not belong to a valid administrator.'));
 		}
 
 		osc_redirectTo('index.php');
@@ -136,14 +134,8 @@ switch($action) {
             exit();
             
 		} else {
-			osc_addFlashMessage(__('Wrong username or password.'));
+			osc_add_flash_message(__('Wrong username or password.'));
 		}
-	case 'logout':
-		unset($_SESSION['adminId']);
-		setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-		setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-		osc_redirectTo('index.php');
-		break;
 	
 }*/
 

@@ -58,6 +58,9 @@ class Params
         }
     }
 
+    static function _view() {
+        print_r(self::getParamsAsArray()) ;
+    }
 }
 
 ?>

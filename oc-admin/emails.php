@@ -51,10 +51,10 @@ switch($action) {
             if(!pageIsIndelible($id)) {
                 $pageManager->updateInternalName($id, $s_internal_name);
             }
-            osc_addFlashMessage( __('The email/alert has been updated.'), 'admin' );
+            osc_add_flash_message( __('The email/alert has been updated.'), 'admin' );
             osc_redirectTo('emails.php');
         }
-        osc_addFlashMessage(__('You couldn\'t repeat internal name.'), 'admin');
+        osc_add_flash_message(__('You couldn\'t repeat internal name.'), 'admin');
         osc_redirectTo( 'emails.php?action=edit&id=' . $id);
         break;
     default:

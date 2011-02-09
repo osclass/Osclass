@@ -138,7 +138,7 @@
                 </div>
 
                 <div id="content_separator"></div>
-                <?php osc_show_flash_messages() ; ?>
+                <?php osc_show_flash_message() ; ?>
 
                 <form id="datatablesForm" action="items.php" method="post">
                             <div id="TableToolsToolbar">

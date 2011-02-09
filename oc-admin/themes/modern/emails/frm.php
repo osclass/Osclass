@@ -73,7 +73,7 @@
             <div style="clear: both;"></div>
         </div>
         <div id="content_separator"></div>
-        <?php osc_show_flash_messages('admin') ; ?>
+        <?php osc_show_flash_message('admin') ; ?>
         <!-- add new page form -->
         <div id="settings_form">
             <form name="emails_form" id="emails_form" action="emails.php" method="post" onSubmit="return checkForm()">

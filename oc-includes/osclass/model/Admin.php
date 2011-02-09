@@ -21,13 +21,24 @@
 
 
 class Admin extends DAO {
+    private static $instance ;
 
-	public static function newInstance() { return new Admin(); }
+	public static function newInstance() { 
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
 
 	public function getTableName() { return DB_TABLE_PREFIX . 't_admin'; }
 
 	public function findByEmail($email) {
 		$results = $this->listWhere("s_email = '%s'", $email);
+		return count($results) == 1 ? $results[0] : null;
+	}
+
+    public function findByUsername($username) {
+		$results = $this->listWhere("s_username = '%s'", $username);
 		return count($results) == 1 ? $results[0] : null;
 	}
 

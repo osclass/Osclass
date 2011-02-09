@@ -79,7 +79,7 @@
 		</div>
 		
 		<div id="content_separator"></div>
-		<?php osc_show_flash_messages(); ?>
+		<?php osc_show_flash_message(); ?>
 		
 		<!-- add new page form -->
 		<div id="settings_form">

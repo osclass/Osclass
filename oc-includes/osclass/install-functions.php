@@ -285,11 +285,11 @@ function copy_config_file($dbname, $username, $password, $dbhost, $tableprefix) 
             case "define('DB_TABLE":
                 $config_sample[$line_num] = str_replace('oc_', $tableprefix, $line);
                 break;
-            case "define('ABS_WEB_":
-                $config_sample[$line_num] = str_replace('http://localhost', $abs_url, $line);
-                break;
             case "define('REL_WEB_":
                 $config_sample[$line_num] = str_replace('rel_here', $rel_url, $line);
+                break;
+            case "define('WEB_PATH":
+                $config_sample[$line_num] = str_replace('http://localhost', $abs_url, $line);
                 break;
         }
     }
@@ -324,7 +324,7 @@ function is_osclass_installed( ) {
 }
 
 function finish_installation( ) {
-    require_once ABS_PATH . 'oc-includes/osclass/security.php' ;
+    require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
     require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
     require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
 
