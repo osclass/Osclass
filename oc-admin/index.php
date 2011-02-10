@@ -28,6 +28,10 @@
                             $do = new CAdminItems() ;
                             $do->doModel() ;
         break;
+        case('comments'):   require_once(osc_admin_base_path() . 'comments.php') ;
+                            $do = new CAdminItemComments() ;
+                            $do->doModel() ;
+        break;
         case ('login'):     require_once(osc_admin_base_path() . 'login.php') ;
                             $do = new CAdminLogin() ;
                             $do->doModel() ;

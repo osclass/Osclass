@@ -38,16 +38,15 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CCommentsItems extends AdminSecBaseModel
+class CAdminItemComments extends AdminSecBaseModel
 {
-    //specific for this class
-    private $itemManager ;
-
+    private $itemCommentManager ;
+    
     function __construct() {
         parent::__construct() ;
 
         //specific things for this class
-        $this->itemManager = Item::newInstance() ;
+        $this->itemCommentManager = ItemComment::newInstance() ;
     }
 
     //Business Layer...
