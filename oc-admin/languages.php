@@ -20,7 +20,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CAdminItems extends AdminSecBaseModel
+class CAdminLanguages extends AdminSecBaseModel
 {
     //specific for this class
     private $localeManager ;
