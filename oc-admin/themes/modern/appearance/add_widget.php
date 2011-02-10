@@ -84,7 +84,7 @@
                 <?php osc_show_flash_message() ; ?>
 
                 <!-- add new theme form -->
-                <div id="main_div" style="border: 1px solid #ccc; background: #eee; ">
+                <div id="main_div" style="border: 1px solid #ccc; background: #eee; display:block;">
                     <div style="padding: 20px; padding-top: 10px;">
 
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
