@@ -67,7 +67,7 @@
 
                 <div id="settings_form">
 			
-			        <form action="index.php?page=categories" method="post">
+			        <form action="<?php echo osc_admin_base_url(true); ?>?page=categories" method="post">
 				        <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
 				        <?php if ($edit) {
                             CategoryForm::primary_input_hidden($category) ;
@@ -109,7 +109,7 @@
                         <div class="FormElement">
 					        <div class="FormElementName"></div>
 					        <div class="FormElementInput">
-						        <button class="formButton" type="button" onclick="window.location='index.php?page=categories';" ><?php _e('Cancel'); ?></button>
+						        <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true); ?>?page=categories';" ><?php _e('Cancel'); ?></button>
 						        <button class="formButton" type="submit"><?php _e('Save'); ?></button>
 					        </div>
 				        </div>

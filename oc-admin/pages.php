@@ -16,126 +16,163 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+class CAdminPages extends AdminSecBaseModel
+{
+    //specific for this class
+    private $pageManager ;
+    
+    function __construct() {
+        parent::__construct() ;
 
-require_once ABS_PATH . 'oc-admin/oc-load.php';
+        //specific things for this class
+        $this->pageManager = Page::newInstance() ;
+    }
 
-$pageManager = new Page();
+    //Business Layer...
+    function doModel() {
+        parent::doModel() ;
 
-$action = Params::getParam('action');
-switch($action) {
-    case 'edit':
-        if(!isset($_REQUEST['id'])) {
-            osc_redirectTo('pages.php');
-        }
-        $page = $pageManager->findByPrimaryKey($_REQUEST['id']);
-        osc_renderAdminSection('pages/frm.php', __('Pages'), __('Edit'));
-        break;
-    case 'edit_post':
-        $id = osc_paramRequest('id', false);
-        $s_internal_name = osc_paramRequest('s_internal_name', '');
-        
-        $aFieldsDescription = array();
-        foreach($_REQUEST as $k => $v) {
-            if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                $aFieldsDescription[$m[1]][$m[2]] = $v;
-            }
-        }
+        //specific things for this class
+        switch ($this->action)
+        {
 
-        foreach($aFieldsDescription as $k => $_data) {
-            $pageManager->updateDescription($_REQUEST['id'], $k, $_data['s_title'], $_data['s_text']);
-        }
-        
-        if(!pageInternalNameExists($id, $s_internal_name)) {
-            if(!pageIsIndelible($id)) {
-                $pageManager->updateInternalName($id, $s_internal_name);
-            }
-            osc_add_flash_message( __('The page has been updated.'), 'admin' );
-            osc_redirectTo('pages.php');
-        }
-        osc_add_flash_message(__('You couldn\'t repeat internal name.'), 'admin');
-        osc_redirectTo( 'pages.php?action=edit&id=' . $id);
-        break;
-    case 'delete':
-        $id = osc_paramRequest('id', false);
-        $page_deleted_correcty = 0;
-        $page_deleted_error = 0;
-        $page_indelible = 0;
-        
-        if(!is_array($id)) {
-            $id = array($id);
-        }
-        
-        foreach($id as $_id) {
-            $result = pageDeleteById($_id);
-            switch ($result) {
-                case -1:
-                    $page_indelible++;
-                    break;
-                case 0:
-                    $page_deleted_error++;
-                    break;
-                case 1:
-                    $page_deleted_correcty++;
-            }
-        }
-
-        if($page_indelible > 0) {
-            if($page_indelible == 1) {
-                osc_add_flash_message(__('1 page couldn\'t be deleted because it is indelible.'), 'admin');
-            } else {
-                osc_add_flash_message($page_indelible . ' ' .__('pages couldn\'t be deleted because are indelible.'), 'admin');
-            }
-        }
-        if($page_deleted_error > 0) {
-            if($page_deleted_error == 1) {
-                osc_add_flash_message(__('1 page couldn\'t be deleted.'), 'admin');
-            } else {
-                osc_add_flash_message($page_deleted_error . ' ' .__('pages couldn\'t be deleted.'), 'admin');
-            }
-        }
-        if($page_deleted_correcty > 0) {
-            if($page_deleted_correcty == 1) {
-                osc_add_flash_message(__('1 page has been deleted correctly.'), 'admin');
-            } else {
-                osc_add_flash_message($page_deleted_correcty . ' ' .__('pages have been deleted correctly.'), 'admin');
-            }
-        }
-        osc_redirectTo('pages.php');
-        break;
-    case 'add':
-        $page['s_internal_name'] = '';
-        osc_renderAdminSection('pages/frm.php', __('Pages'), __('Add'));
-        break;
-    case 'add_post':
-        if(!isset($_REQUEST['s_internal_name'])) {
-            osc_add_flash_message(__('You have to put some internal name.'), 'admin');
-        }
-
-        $page = $pageManager->findByInternalName($_REQUEST['s_internal_name']);
-        if(!isset($page['pk_i_id'])) {
-            $aFields = array('s_internal_name' => $_REQUEST['s_internal_name'], 'b_indelible' => '0');
-            $aFieldsDescription = array();
-            foreach($_REQUEST as $k => $v) {
-                if(preg_match('|(.+?)#(.+)|', $k, $m)) {
-                    $aFieldsDescription[$m[1]][$m[2]] = $v;
+            case 'edit':
+                if(Params::getParam("id")=='') {
+                    $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                 }
-            }
+                $this->add_css('tabs.css') ;
+                $this->add_global_js('tabber-minimized.js') ;
+                $this->add_global_js('tiny_mce/tiny_mce.js') ;
+                $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
+                $this->doView("pages/frm.php");
+                break;
+            case 'edit_post':
+                $id = Params::getParam("id");
+                $s_internal_name = Params::getParam("s_internal_name");
+                
+                $aFieldsDescription = array();
+                $postParams = Params::getParamsAsArray();
+                foreach ($postParams as $k => $v) {
+                    if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                        $aFieldsDescription[$m[1]][$m[2]] = $v;
+                    }
+                }
 
-            $result = $pageManager->insert($aFields, $aFieldsDescription) ;
-            osc_add_flash_message(__('The page has been added.'), 'admin') ;
-        } else {
-            osc_add_flash_message(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin') ;
+                foreach($aFieldsDescription as $k => $_data) {
+                    $this->pageManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
+                }
+                
+                if(!pageInternalNameExists($id, $s_internal_name)) {
+                    if(!pageIsIndelible($id)) {
+                        $this->pageManager->updateInternalName($id, $s_internal_name);
+                    }
+                    osc_add_flash_message( __('The page has been updated.'), 'admin' );
+                    $this->redirectTo(osc_admin_base_url(true)."?page=pages");
+                }
+                osc_add_flash_message(__('You couldn\'t repeat internal name.'), 'admin');
+                $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
+                break;
+            case 'add':
+                $this->add_css('tabs.css') ;
+                $this->add_global_js('tabber-minimized.js') ;
+                $this->add_global_js('tiny_mce/tiny_mce.js') ;
+                $this->_exportVariableToView("page", array());
+                $this->doView("pages/frm.php");
+                break;   
+            case 'add_post':
+                $s_internal_name = Params::getParam("s_internal_name");
+                if($s_internal_name=='') {
+                    osc_add_flash_message(__('You have to put some internal name.'), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
+                }
+
+                $page = $this->pageManager->findByInternalName($s_internal_name);
+                if(!isset($page['pk_i_id'])) {
+                    $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
+                    $aFieldsDescription = array();
+                    $postParams = Params::getParamsAsArray();
+                    foreach ($postParams as $k => $v) {
+                        if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            $aFieldsDescription[$m[1]][$m[2]] = $v;
+                        }
+                    }
+
+                    $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
+                    osc_add_flash_message(__('The page has been added.'), 'admin') ;
+                } else {
+                    osc_add_flash_message(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin') ;
+                }
+                $this->redirectTo(osc_admin_base_url(true)."?page=pages");
+                break;
+            case 'delete':
+                $id = Params::getParam("id");
+                $page_deleted_correcty = 0;
+                $page_deleted_error = 0;
+                $page_indelible = 0;
+                
+                if(!is_array($id)) {
+                    $id = array($id);
+                }
+                
+                foreach($id as $_id) {
+                    $result = pageDeleteById($_id);
+                    switch ($result) {
+                        case -1:
+                            $page_indelible++;
+                            break;
+                        case 0:
+                            $page_deleted_error++;
+                            break;
+                        case 1:
+                            $page_deleted_correcty++;
+                    }
+                }
+
+                if($page_indelible > 0) {
+                    if($page_indelible == 1) {
+                        osc_add_flash_message(__('1 page couldn\'t be deleted because it is indelible.'), 'admin');
+                    } else {
+                        osc_add_flash_message($page_indelible . ' ' .__('pages couldn\'t be deleted because are indelible.'), 'admin');
+                    }
+                }
+                if($page_deleted_error > 0) {
+                    if($page_deleted_error == 1) {
+                        osc_add_flash_message(__('1 page couldn\'t be deleted.'), 'admin');
+                    } else {
+                        osc_add_flash_message($page_deleted_error . ' ' .__('pages couldn\'t be deleted.'), 'admin');
+                    }
+                }
+                if($page_deleted_correcty > 0) {
+                    if($page_deleted_correcty == 1) {
+                        osc_add_flash_message(__('1 page has been deleted correctly.'), 'admin');
+                    } else {
+                        osc_add_flash_message($page_deleted_correcty . ' ' .__('pages have been deleted correctly.'), 'admin');
+                    }
+                }
+                $this->redirectTo(osc_admin_base_url(true)."?page=pages");
+                break;
+             
+
+            default:
+
+                if(Session::_get("adminLocale")=='') {
+                    $this->_exportVariableToView("prefLocale", osc_language());
+                } else {
+                    $this->_exportVariableToView("prefLocale", Session::_get("adminLocale"));
+                }
+                $this->add_global_js('jquery.dataTables.min.js') ;
+                $this->add_css('item_list_layout.css') ;
+                $this->add_css('demo_table.css') ;
+                $this->_exportVariableToView("pages", $this->pageManager->listAll(0));
+                $this->doView("pages/index.php");
+                
         }
-    default:
-        $prefLocale = null;
-        if(!isset($_SESSION['adminLocale'])) {
-            $prefLocale = osc_language() ;
-        } else {
-            $prefLocale = $_SESSION['adminLocale'] ;
-        }
-        $pages = $pageManager->listAll(0) ;
-        osc_renderAdminSection('pages/index.php', __('Pages')) ;
+    }
+
+    //hopefully generic...
+    function doView($file) {
+        $this->osc_print_html($file) ;
+    }
 }
 
 ?>
