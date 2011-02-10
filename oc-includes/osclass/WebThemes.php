@@ -74,6 +74,41 @@
         public function getCurrentThemeJs() {
             return $this->theme_url . 'js/' ;
         }
+
+        /**
+         * This function returns an array of themes (those copied in the oc-content/themes folder)
+         * @return <type>
+         */
+        public function getListThemes() {
+            $themes = array();
+            $dir = opendir( osc_base_path() .  'oc-content/themes');
+            while ($file = readdir($dir)) {
+                if (preg_match('/^[a-z0-9_]+$/i', $file))
+                    $themes[] = $file;
+            }
+            closedir($dir);
+            return $themes;
+        }
+        /**
+         *
+         * @param <type> $theme
+         * @return <type> 
+         */
+        function loadThemeInfo($theme) {
+            $path = osc_base_path() . 'oc-content/themes/' . $theme . '/index.php';
+            if (!file_exists($path))
+                return false;
+            require_once $path;
+
+            $fxName = $theme . '_theme_info';
+            if (!function_exists($fxName))
+                return false;
+            $result = call_user_func($fxName);
+
+            $result['int_name'] = $theme;
+
+            return $result;
+        }
     }
 
 

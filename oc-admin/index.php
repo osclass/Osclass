@@ -52,6 +52,10 @@
                             $do = new CAdminAjax() ;
                             $do->doModel() ;
         break;
+        case('appearance'): require_once(osc_admin_base_path() . 'appearance.php') ;
+                            $do = new CAdminAppearance() ;
+                            $do->doModel() ;
+        break;
         default:            //login of oc-admin
                             require_once(osc_admin_base_path() . 'main.php') ;
                             $do = new CAdminMain() ;
