@@ -55,6 +55,7 @@
         case('settings'):   require_once(osc_admin_base_path() . 'settings.php') ;
                             $do = new CAdminSettings() ;
                             $do->doModel();
+        break;
         case('plugins'):    require_once(osc_admin_base_path() . 'plugins.php') ;
                             $do = new CAdminPlugins() ;
                             $do->doModel() ;
