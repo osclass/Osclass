@@ -135,8 +135,8 @@
             }
             if(strstr($_SERVER["SCRIPT_NAME"], "comments.php")) {
             ?>
-                    <script src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.dataTables.min.js"></script>
-                    <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>item_list_layout.css" media="screen" rel="stylesheet" />
+                    <!-- <script src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.dataTables.min.js"></script> -->
+                    <!-- <link type="text/css" href="<?php echo osc_current_admin_theme_styles_url() ; ?>item_list_layout.css" media="screen" rel="stylesheet" /> -->
             <?php
             }
 
