@@ -59,27 +59,43 @@ abstract class BaseModel
     }
 
     function osc_print_head() {
-        require osc_current_web_theme_path() . 'head.php' ;
+        if (file_exists(osc_current_web_theme_path() . 'head.php')) {
+            require osc_current_web_theme_path() . 'head.php' ;
+        } else {
+            require osc_base_path() . 'oc-includes/osclass/gui/user-login.php' ;
+        }
     }
 
     function osc_print_header() {
-        require osc_current_web_theme_path() . 'header.php' ;
+        if (file_exists(osc_current_web_theme_path() . 'header.php')) {
+            require osc_current_web_theme_path() . 'header.php' ;
+        } else {
+            require osc_base_path() . 'oc-includes/osclass/gui/header.php' ;
+        }
     }
 
     function osc_print_html($file) {
-        require osc_current_web_theme_path() . $file ;
+        if (file_exists(osc_current_web_theme_path() . $file)) {
+            require osc_current_web_theme_path() . $file ;
+        } else {
+            require osc_base_path() . 'oc-includes/osclass/gui/' . $file ;
+        }
     }
 
     function osc_print_footer() {
-        require osc_current_web_theme_path() . 'footer.php' ;
+        if (file_exists(osc_current_web_theme_path() . 'footer.php')) {
+            require osc_current_web_theme_path() . 'footer.php' ;
+        } else {
+            require osc_base_path() . 'oc-includes/osclass/gui/footer.php' ;
+        }
     }
 
     function add_css($css_filename) {
-        $this->aCss[] = osc_current_admin_theme_styles_url() . $css_filename ;
+        $this->aCss[] = osc_current_web_theme_styles_url() . $css_filename ;
     }
 
     function add_js($js_filename) {
-        $this->aJs[] = osc_current_admin_theme_js_url() . $js_filename ;
+        $this->aJs[] = osc_current_web_theme_js_url() . $js_filename ;
     }
 
     function add_global_css($css_filename) {

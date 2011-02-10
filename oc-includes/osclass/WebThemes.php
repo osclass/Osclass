@@ -32,19 +32,15 @@
         }
 
         public function __construct() {
-            $this->theme = null ;
-            $this->theme_url = null ;
-            $this->theme_path = null ;
+            $this->setCurrentTheme( osc_theme() ) ;
         }
 
         /* PRIVATE */
         private function setCurrentThemeUrl() {
-            if(is_null($this->theme)) return false ;
             $this->theme_url = osc_base_url() . 'oc-content/themes/' . $this->theme . '/' ;
         }
 
         private function setCurrentThemePath() {
-            if(is_null($this->theme)) return false ;
             $this->theme_path = osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
         }
 

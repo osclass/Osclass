@@ -12,24 +12,12 @@
 	    }
 
 	    function showAuthFailPage() {
-            require osc_admin_base_path() . 'gui/login.php' ;
+            if (file_exists(osc_current_web_theme_path() . 'user-login.php')) {
+                require osc_current_web_theme_path() . 'user-login.php' ;
+            } else {
+                require osc_base_path() . 'oc-includes/osclass/gui/user-login.php' ;
+            }
             exit ;
-        }
-
-        function osc_print_head() {
-            require osc_current_web_theme_path() . 'head.php' ;
-        }
-
-        function osc_print_header() {
-            require osc_current_web_theme_path() . 'header.php' ;
-        }
-
-        function osc_print_html($file) {
-            require osc_current_web_theme_path() . $file ;
-        }
-
-        function osc_print_footer() {
-            require osc_current_web_theme_path() . 'footer.php' ;
         }
     }
 

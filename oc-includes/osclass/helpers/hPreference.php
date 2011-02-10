@@ -134,6 +134,10 @@
         return(getPreference('theme')) ;
     }
 
+    function osc_admin_theme() {
+        return(getPreference('admin_theme')) ;
+    }
+
     function osc_page_description() {
         return(getPreference('pageDesc')) ;
     }
