@@ -416,7 +416,7 @@ function osc_configurePlugin($path) {
 		}
 	}
 	
-	osc_redirectTo('plugins.php?action=configure&plugin='.$plugin);
+	osc_redirectTo(osc_admin_base_url(true).'?page=plugins&action=configure&plugin='.$plugin);
 
 }
 
