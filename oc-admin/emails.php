@@ -38,7 +38,7 @@ class CAdminEmails extends AdminSecBaseModel
 
             case 'edit':
                 if(Params::getParam("id")=='') {
-                    $this->redirectTo("index.php?page=emails");
+                    $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
                 $this->add_css('tabs.css') ;
                 $this->add_global_js('tabber-minimized.js') ;
@@ -67,10 +67,10 @@ class CAdminEmails extends AdminSecBaseModel
                         $this->emailManager->updateInternalName($id, $s_internal_name);
                     }
                     osc_add_flash_message( __('The email/alert has been updated.'), 'admin' );
-                    $this->redirectTo("index.php?page=emails");
+                    $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
                 osc_add_flash_message(__('You couldn\'t repeat internal name.'), 'admin');
-                $this->redirectTo("index.php?page=emails?action=edit&id=" . $id);
+                $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                 break;
             default:
 

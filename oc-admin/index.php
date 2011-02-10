@@ -52,6 +52,10 @@
                             $do = new CAdminPages() ;
                             $do->doModel() ;
         break;
+        case('plugins'): require_once(osc_admin_base_path() . 'plugins.php') ;
+                            $do = new CAdminPlugins() ;
+                            $do->doModel() ;
+        break;
         case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
                             $do = new CAdminAjax() ;
                             $do->doModel() ;

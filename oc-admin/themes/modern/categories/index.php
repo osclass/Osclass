@@ -87,7 +87,7 @@
                         ?>
 				        [
 				        '	<input type="hidden" name="enabled" value="<?php echo $c['b_enabled']; ?>" /><input type="checkbox" name="id[]" value="<?php echo $c['pk_i_id']; ?>" />',
-					        "<?php echo str_replace('"', '\"', $c['s_name']); ?> <div id='datatables_quick_edit'><a href='index.php?page=categories&action=edit&amp;id=<?php echo $c['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='index.php?page=categories&action=enable&amp;id=<?php echo $c['pk_i_id']; ?>&enabled=<?php echo $c['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($c['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='index.php?page=categories&parentId=<?php echo $c['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick=\"javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?'); ?>')\" href='index.php?page=categories&action=delete&amp;id[]=<?php echo $c['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
+					        "<?php echo str_replace('"', '\"', $c['s_name']); ?> <div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $c['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $c['pk_i_id']; ?>&enabled=<?php echo $c['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($c['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $c['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick=\"javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $c['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
 					        "<?php echo  isset($parent) ? $parent['s_name'] : '-' ?>",
 					        '<?php echo $c['s_description']; ?>'
 				        ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
@@ -147,7 +147,7 @@
 				&nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
 				</div>
 				
-				<form id="datatablesForm" action="index.php?page=categories" method="post">
+				<form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=categories" method="post">
 				<input id="form_action" type="hidden" name="action" value="delete" />
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
 					<br />
