@@ -63,18 +63,7 @@
                 <?php } else {?>
                     <input type="hidden" name="locale" value="<?php echo $locales[0]["pk_c_code"] ; ?>" />
                 <?php } ?>
-                
-                <!--
-                    <p>
-                        <label><?php _e('Theme'); ?><br />
-                            <select name="theme" id="user_theme">
-                                <option value="modern">Modern</option>
-                            </select>
-                        </label>
-                    </p>
-                -->
-                <input type="hidden" name="theme" value="modern" />
-
+                    
                 <p class="forgetmenot">
                     <label>
                         <input name="remember" type="checkbox" id="remember" value="1" tabindex="90" /> <?php _e('Remember me') ; ?>

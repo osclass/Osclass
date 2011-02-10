@@ -38,6 +38,14 @@
         function osc_print_footer() {
             require osc_current_admin_theme_path() . 'footer.php' ;
         }
+
+        function add_css($css_filename) {
+            $this->aCss[] = osc_current_admin_theme_styles_url() . $css_filename ;
+        }
+
+        function add_js($js_filename) {
+            $this->aJs[] = osc_current_admin_theme_js_url() . $js_filename ;
+        }
     }
 
 ?>
