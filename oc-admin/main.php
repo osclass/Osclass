@@ -29,7 +29,7 @@ class CAdminMain extends AdminSecBaseModel
             case('logout'):     //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
                                 //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
                                 Session::newInstance()->session_destroy() ;
-                                osc_redirectTo( osc_admin_base_url(true) ) ;
+                                $this->redirectTo( osc_admin_base_url(true) ) ;
             break;
             default:            //default dashboard page (main page at oc-admin)
                                 $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
