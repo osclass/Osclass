@@ -24,22 +24,26 @@
 
     switch( Params::getParam('page') )
     {
-        case('items'):  require_once(osc_admin_base_path() . 'items.php') ;
-                        $do = new CAdminItems() ;
-                        $do->doModel() ;
+        case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
+                            $do = new CAdminItems() ;
+                            $do->doModel() ;
         break;
-        case ('login'): require_once(osc_admin_base_path() . 'login.php') ;
-                        $do = new CAdminLogin() ;
-                        $do->doModel() ;
+        case ('login'):     require_once(osc_admin_base_path() . 'login.php') ;
+                            $do = new CAdminLogin() ;
+                            $do->doModel() ;
         break;
-        case('categories'):  require_once(osc_admin_base_path() . 'categories.php') ;
-                        $do = new CAdminCategories() ;
-                        $do->doModel() ;
+        case('categories'): require_once(osc_admin_base_path() . 'categories.php') ;
+                            $do = new CAdminCategories() ;
+                            $do->doModel() ;
         break;
-        default:        //login of oc-admin
-                        require_once(osc_admin_base_path() . 'main.php') ;
-                        $do = new CAdminMain() ;
-                        $do->doModel() ;
+        case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
+                            $do = new CAdminAjax() ;
+                            $do->doModel() ;
+        break;
+        default:            //login of oc-admin
+                            require_once(osc_admin_base_path() . 'main.php') ;
+                            $do = new CAdminMain() ;
+                            $do->doModel() ;
     }
 
 ?>

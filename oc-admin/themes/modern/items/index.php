@@ -52,8 +52,8 @@
                             "bProcessing": true
                             ,"bServerSide": true
                             ,"sAjaxSource": "<?php echo osc_base_url() ; ?>oc-admin/ajax/items_processing.php"
-                                            ,<?php if($stat) { ?>
-                                                "fnServerData": function ( sSource, aoData, fnCallback ) {
+                                            <?php if($stat) { ?>
+                                                ,"fnServerData": function ( sSource, aoData, fnCallback ) {
                                                         /* Add some extra data to the sender */
                                                         aoData.push( { "name": "stat", "value": "<?php echo $stat ; ?>" } );
                                                         $.getJSON( sSource, aoData, function (json) {
@@ -74,7 +74,7 @@
                                                     ,"sInfoPostFix":  ""
                                                     ,"sSearch":       "<?php _e('Search') ; ?>:"
                                                     ,"sUrl":          ""
-                                                    "oPaginate": {
+                                                    ,"oPaginate": {
                                                         "sFirst":    "<?php _e('First') ; ?>",
                                                         "sPrevious": "<?php _e('Previous') ; ?>",
                                                         "sNext":     "<?php _e('Next') ; ?>",
