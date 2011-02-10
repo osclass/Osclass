@@ -307,7 +307,7 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             default:                //default
-                                    $this->add_js('jquery.dataTables.min.js') ;
+                                    $this->add_global_js('jquery.dataTables.min.js') ;
                                     $this->add_css('item_list_layout.css') ;
                                     $this->add_css('tabs.css') ;
                                     $this->add_global_js('tabber-minimized.js') ;

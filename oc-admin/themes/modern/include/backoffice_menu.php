@@ -51,10 +51,10 @@
         </h3>
         <ul>
             <li>
-                <a href="categories.php">&raquo; <?php _e('Manage categories'); ?></a>
+                <a href="index.php?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
             </li>
             <li>
-                <a href="categories.php?action=add">&raquo; <?php _e('Add a new category'); ?></a>
+                <a href="index.php?page=categories&action=add">&raquo; <?php _e('Add a new category'); ?></a>
             </li>
         </ul>
 

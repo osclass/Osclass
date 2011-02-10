@@ -19,9 +19,11 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
-
 <?php 
+
+    $categories = $this->_get("categories");
+    $category = $this->_get("category");
+    $languages = $this->_get("languages");
 
     if(isset($category['pk_i_id'])) {
         //editing...
@@ -34,8 +36,17 @@
         $title = "Add a category" ;
         $action_frm = "add_post" ;
     }
-
+    
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Categories'); ?></div>
 
 <div id="content">
     
@@ -56,7 +67,7 @@
 
         <div id="settings_form">
 			
-			<form action="categories.php" method="post">
+			<form action="index.php?page=categories" method="post">
 				<input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
 				<?php if ($edit) {
                     CategoryForm::primary_input_hidden($category) ;
@@ -98,7 +109,7 @@
                 <div class="FormElement">
 					<div class="FormElementName"></div>
 					<div class="FormElementInput">
-						<button class="formButton" type="button" onclick="window.location='categories.php';" ><?php _e('Cancel'); ?></button>
+						<button class="formButton" type="button" onclick="window.location='index.php?page=categories';" ><?php _e('Cancel'); ?></button>
 						<button class="formButton" type="submit"><?php _e('Save'); ?></button>
 					</div>
 				</div>
@@ -106,3 +117,8 @@
 			</form>
 		</div>       
 	</div>
+        <div style="clear: both;"></div>
+        </div> <!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>				

@@ -32,6 +32,10 @@
                         $do = new CAdminLogin() ;
                         $do->doModel() ;
         break;
+        case('categories'):  require_once(osc_admin_base_path() . 'categories.php') ;
+                        $do = new CAdminCategories() ;
+                        $do->doModel() ;
+        break;
         default:        //login of oc-admin
                         require_once(osc_admin_base_path() . 'main.php') ;
                         $do = new CAdminMain() ;

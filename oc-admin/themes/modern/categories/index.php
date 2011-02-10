@@ -20,95 +20,108 @@
  */
 ?>
 
-<?php $last = end($categories); $last_id = $last['pk_i_id']; ?>
-<script>
-	$(function() {
-		$.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
-			var anRows = [];
+<?php
+    $categories = $this->_get("categories");
+    $last = end($categories);
+    $last_id = $last['pk_i_id'];
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Categories'); ?></div>
+        <script>
+	        $(function() {
+		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
+			        var anRows = [];
 			
-			for (var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
-				var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
-				anRows.push(nRow);
-			}
-			return anRows;
-		};
+			        for (var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
+				        var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
+				        anRows.push(nRow);
+			        }
+			        return anRows;
+		        };
 		
-		sSearchName = "<?php _e('Search'); ?>...";	
-		oTable = $('#datatables_list').dataTable({
-	       	"bAutoWidth": false,
-			"sDom": '<"top"fl>rt<"bottom"ip<"clear">',
-			"oLanguage": {
-					"sProcessing":   "<?php _e('Processing'); ?>...",
-					"sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>",
-					"sZeroRecords":  "<?php _e('No matching records found'); ?>",
-					"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
-					"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>",
-					"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)",
-					"sInfoPostFix":  "",
-					"sSearch":       "<?php _e('Search'); ?>:",
-					"sUrl":          "",
-					"oPaginate": {
-						"sFirst":    "<?php _e('First'); ?>",
-						"sPrevious": "<?php _e('Previous'); ?>",
-						"sNext":     "<?php _e('Next'); ?>",
-						"sLast":     "<?php _e('Last'); ?>"
-					},
-			        "sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
-			        '<option value="10">10</option>'+
-			        '<option value="15">15</option>'+
-			        '<option value="20">20</option>'+
-			        '<option value="100">100</option>'+
-					'</select> <?php _e('entries'); ?>',
-			        "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
-			 },
-			"sPaginationType": "full_numbers",
+		        sSearchName = "<?php _e('Search'); ?>...";	
+		        oTable = $('#datatables_list').dataTable({
+	               	"bAutoWidth": false,
+			        "sDom": '<"top"fl>rt<"bottom"ip<"clear">',
+			        "oLanguage": {
+					        "sProcessing":   "<?php _e('Processing'); ?>...",
+					        "sLengthMenu":   "<?php _e('Show _MENU_ entries'); ?>",
+					        "sZeroRecords":  "<?php _e('No matching records found'); ?>",
+					        "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries'); ?>",
+					        "sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries'); ?>",
+					        "sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries'); ?>)",
+					        "sInfoPostFix":  "",
+					        "sSearch":       "<?php _e('Search'); ?>:",
+					        "sUrl":          "",
+					        "oPaginate": {
+						        "sFirst":    "<?php _e('First'); ?>",
+						        "sPrevious": "<?php _e('Previous'); ?>",
+						        "sNext":     "<?php _e('Next'); ?>",
+						        "sLast":     "<?php _e('Last'); ?>"
+					        },
+			                "sLengthMenu": '<div style="float:left;"><?php _e('Show'); ?> <select class="display" id="select_range">'+
+			                '<option value="10">10</option>'+
+			                '<option value="15">15</option>'+
+			                '<option value="20">20</option>'+
+			                '<option value="100">100</option>'+
+					        '</select> <?php _e('entries'); ?>',
+			                "sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
+			         },
+			        "sPaginationType": "full_numbers",
 
-			"aaData": [
-				<?php foreach($categories as $c): ?>
-                <?php $data = Category::newInstance()->isParentOf($c['pk_i_id']);
-                    if(count($data)>0) {
-                        $has_subcategories = true;
-                    } else { 
-                        $has_subcategories = false;
-                    }
-                ?>
-				[
-				'	<input type="hidden" name="enabled" value="<?php echo $c['b_enabled']; ?>" /><input type="checkbox" name="id[]" value="<?php echo $c['pk_i_id']; ?>" />',
-					"<?php echo str_replace('"', '\"', $c['s_name']); ?> <div id='datatables_quick_edit'><a href='categories.php?action=edit&amp;id=<?php echo $c['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='categories.php?action=enable&amp;id=<?php echo $c['pk_i_id']; ?>&enabled=<?php echo $c['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($c['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='categories.php?parentId=<?php echo $c['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick=\"javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?'); ?>')\" href='categories.php?action=delete&amp;id[]=<?php echo $c['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
-					"<?php echo  isset($parent) ? $parent['s_name'] : '-' ?>",
-					'<?php echo $c['s_description']; ?>'
-				] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
-				<?php endforeach; ?>
-			], 
-			"aoColumns": [
-				{"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>", 
-				 "bSortable": false, 
-				 "sClass": "center", 
-				 "sWidth": "10px",
-				 "bSearchable": false
-				 },
-				{"sTitle": "<?php _e('Name'); ?>",
-				 "sWidth": "45%"
-				},
-				{"sTitle": "<?php _e('Parent'); ?>"},
-				{"sTitle": "<?php _e('Description'); ?>" }
-			]
-		});
+			        "aaData": [
+				        <?php foreach($categories as $c): ?>
+                        <?php $data = Category::newInstance()->isParentOf($c['pk_i_id']);
+                            if(count($data)>0) {
+                                $has_subcategories = true;
+                            } else { 
+                                $has_subcategories = false;
+                            }
+                        ?>
+				        [
+				        '	<input type="hidden" name="enabled" value="<?php echo $c['b_enabled']; ?>" /><input type="checkbox" name="id[]" value="<?php echo $c['pk_i_id']; ?>" />',
+					        "<?php echo str_replace('"', '\"', $c['s_name']); ?> <div id='datatables_quick_edit'><a href='index.php?page=categories&action=edit&amp;id=<?php echo $c['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='index.php?page=categories&action=enable&amp;id=<?php echo $c['pk_i_id']; ?>&enabled=<?php echo $c['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($c['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='index.php?page=categories&parentId=<?php echo $c['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick=\"javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?'); ?>')\" href='index.php?page=categories&action=delete&amp;id[]=<?php echo $c['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
+					        "<?php echo  isset($parent) ? $parent['s_name'] : '-' ?>",
+					        '<?php echo $c['s_description']; ?>'
+				        ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
+				        <?php endforeach; ?>
+			        ], 
+			        "aoColumns": [
+				        {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>", 
+				         "bSortable": false, 
+				         "sClass": "center", 
+				         "sWidth": "10px",
+				         "bSearchable": false
+				         },
+				        {"sTitle": "<?php _e('Name'); ?>",
+				         "sWidth": "45%"
+				        },
+				        {"sTitle": "<?php _e('Parent'); ?>"},
+				        {"sTitle": "<?php _e('Description'); ?>" }
+			        ]
+		        });
 
-        $('input:hidden[name=enabled]').each(function() {
-			$(this).parent().parent().children().css('background', 'none');
+                $('input:hidden[name=enabled]').each(function() {
+			        $(this).parent().parent().children().css('background', 'none');
 
-			if ($(this).val() == '1') {
-				$(this).parent().parent().css('background-color', '#EDFFDF');
-			} else {
-				$(this).parent().parent().css('background-color', '#FFF0DF');
-			}
+			        if ($(this).val() == '1') {
+				        $(this).parent().parent().css('background-color', '#EDFFDF');
+			        } else {
+				        $(this).parent().parent().css('background-color', '#FFF0DF');
+			        }
 
-		});
+		        });
 		
-	});
-</script>
-<script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+	        });
+        </script>
+        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
 		<div id="content">
 			<div id="separator"></div>	
 			
@@ -134,22 +147,27 @@
 				&nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
 				</div>
 				
-				<form id="datatablesForm" action="categories.php" method="post">
+				<form id="datatablesForm" action="index.php?page=categories" method="post">
 				<input id="form_action" type="hidden" name="action" value="delete" />
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
 					<br />
 				</form>
 
 				</div> <!-- end of right column -->
-<script type="text/javascript">
-	$(document).ready(function() {
+                <script type="text/javascript">
+	                $(document).ready(function() {
 		
-		$('#datatables_list tr').live('mouseover', function(event) {
-			$('#datatables_quick_edit', this).show();
-		});
+		                $('#datatables_list tr').live('mouseover', function(event) {
+			                $('#datatables_quick_edit', this).show();
+		                });
 
-		$('#datatables_list tr').live('mouseleave', function(event) {
-			$('#datatables_quick_edit', this).hide();
-		});
-	});
-</script>					
+		                $('#datatables_list tr').live('mouseleave', function(event) {
+			                $('#datatables_quick_edit', this).hide();
+		                });
+	                });
+                </script>
+            <div style="clear: both;"></div>
+        </div> <!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>				
