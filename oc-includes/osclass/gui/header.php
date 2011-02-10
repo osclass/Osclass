@@ -1,63 +1,65 @@
 <?php
-    $javaScripts = array(
-        '/oc-includes/js/tiny_mce/tiny_mce.js'
-        ,'/oc-includes/js/jquery-1.4.2.js'
-        ,'/oc-includes/js/jquery-ui-1.8.5.js'
-    );
-    if(isset($headerConf['javaScripts'])) {
-        $javaScripts = array_merge($javaScripts, $headerConf['javaScripts']) ;
-    }
-?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <meta name="description" content="<?php echo osc_page_info('pageTitle') ; ?>" />
-        <meta name="keywords" content="<?php echo osc_page_info('pageTitle') ; ?>" />
-        <title><?php echo osc_page_info('pageTitle') ; ?></title>
-        <link rel="icon" href="<?php echo osc_base_url() ; ?>favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="<?php echo osc_base_url() ; ?>favicon.ico" type="image/x-icon" />
-        <link rel="alternate" type="application/rss+xml" href="<?php echo osc_create_url('feed') ; ?>" title="<?php _e('Latest items added') ; ?>" />
-        <?php foreach($javaScripts as $javaScript) { ?>
-            <script type="text/javascript" src="<?php echo osc_base_url() . $javaScript ; ?>"></script>
-        <?php } ?>
-        <meta name="generator" content="OSClass <?php echo OSCLASS_VERSION ; ?>" />
-    </head>
-    <body>
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-        <?php
-            osc_run_hooks('header') ;
-            osc_show_flash_message() ;
-            $locales = Locale::newInstance()->listAllEnabled();
-        ?>
+ ?>
 
-        <div id="header" class="header">
-            <div class="headerTitle">
-                <a href="<?php echo osc_base_url() ; ?>/" class="headerTitleLink" ><?php echo osc_page_title() ; ?></a>
-            </div>
-            <div class="headerLocales" >
-                <select style="padding: 5px;" onchange="javascript:document.location='<?php echo osc_base_url() ; ?>/index.php?action=setlanguage&value=' + this.value">
-                    <?php $i = 0 ; ?>
-                    <?php foreach($locales as $locale) { ?>
-                        <option value="<?php echo $locale['pk_c_code'] ; ?>" <?php ($locale['pk_c_code'] == $GLOBALS['locale']) ? 'selected="selected"' : '' ; ?>><?php echo $locale['s_name'] ; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-            <div style="clear: both;"></div>
-        </div>
-
-        <div class="headerOptions" >
-            <?php if(osc_isUserLoggedIn()) { ?>
-                <?php printf(__('Hello %s!'), osc_userInfo('s_name')) ; ?>
-                <?php _e('Manage from here your'); ?>
-                <a  href="<?php echo osc_createUserItemsURL(); ?>"><?php _e('items') ; ?></a>
-                <?php _e('and '); ?>
-                <a  href="<?php echo osc_createProfileURL(); ?>"><?php _e('profile') ; ?></a>.<br />
-                <a  href="<?php echo osc_createLogoutURL(); ?>"><?php _e('Logout') ; ?></a>
+ <div id="header">
+    <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
+    <div id="user_menu">
+        <ul>
+            <?php if(osc_is_user_logged_in()) { ?>
+            <li class="first logged">
+                <?php _e('Hello ' . osc_userInfo('s_name') . '!') ; ?>  &middot;
+                <?php // _e('Manage from here your'); ?>
+                <strong><a href="<?php echo osc_user_account_url() ; ?>"><?php _e('My account'); ?></a></strong> &middot;
+                <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout'); ?></a>
+            </li>
             <?php } else { ?>
-                <a  href="<?php echo osc_createRegisterURL() ; ?>"><?php _e('Register a free account') ; ?></a> <?php _e('or') ; ?> <a  href="<?php echo osc_createLoginURL() ; ?>"><?php _e('login') ; ?></a>
+            <li class="first">
+                <a id="login_open" href="<?php echo osc_login_url(); ?>"><?php _e('Login'); ?></a>  &middot;
+                <a href="<?php echo osc_createRegisterURL(); ?>"><?php _e('Register a free account'); ?></a>
+                <form id="login" action="user.php" method="post">
+                    <fieldset>
+                        <input type="hidden" name="action" value="login_post" />
+                        <label for="userName"><?php _e('User name'); ?></label>
+                        <input type="text" name="userName" id="userName" />
+                        <label for="password"><?php _e('Password'); ?></label>
+                        <input type="password" name="password" id="password" />
+                        <button type="submit"><?php _e('Login'); ?></button>
+                    </fieldset>
+                </form>
+            </li>
             <?php } ?>
-        </div>
+            <li class="last with_sub">
+                <strong><?php _e("Language") ?></strong>
+                <ul>
+                    <?php $locales = Locale::newInstance()->listAllEnabled(); ?>
+                    <?php $i = 0; foreach($locales as $locale): ?>
+                        <li <?php if($i==0) { echo "class='first'"; } ?>><a id="<?php echo  $locale['pk_c_code'] ?>" href="<?php echo WEB_PATH; ?>/index.php?action=setlanguage&value=<?php echo $locale['pk_c_code']; ?>"><?php echo $locale['s_name']; ?></a></li>
+                    <?php $i++; endforeach; ?>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
 
-        <?php osc_show_widgets('header') ; ?>
+<?php osc_showWidgets('header') ; ?>

@@ -187,8 +187,8 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'status_premium':  //status premium
-                                    $id = osc_paramRequest('id', false);
-                                    $value = osc_paramRequest('value', false);
+                                    $id = Params::getParam('id') ;
+                                    $value = Params::getParam('value') ;
 
                                     if (!$id)
                                         return false;
@@ -266,9 +266,9 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'deleteResource':  //delete resource
-                                    $id = osc_paramGet('id', -1) ;
-                                    $name = osc_paramGet('name', '') ;
-                                    $fkid = osc_paramGet('fkid', -1) ;
+                                    $id = Params::getParam('id') ;
+                                    $name = Params::getParam('name') ;
+                                    $fkid = Params::getParam('fkid') ;
 
                                     ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;

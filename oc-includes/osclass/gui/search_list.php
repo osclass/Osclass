@@ -18,18 +18,33 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ ?>
 
-foreach($items as $i): ?>
-<div class="searchListItem" >
-	<?php if(osc_item_has_thumbnail($i)): ?>
-		<a href="<?php osc_create_item_url($i, true); ?>"><img src="<?php echo osc_create_item_thumbnail_url($i) ; ?>" class="searchListImageLink" /></a>
-	<?php endif; ?>
-	<div class="searchListItemData">
-		<p><a href="<?php osc_create_item_url($i, true); ?>" class="searchListLink"><?php echo $i['s_title']; ?></a></p>
-
-		<p><?php echo strip_tags($i['s_description']); ?></p>
-	</div>
-	<div class="searchListItemPrice"><?php echo osc_format_price($i) ; ?></div>
-	<div style="clear: both;"></div>
-</div>
-<?php endforeach; ?>
+ <table border="0" cellspacing="0">
+ <tbody>
+    <?php 
+    $class = "even";
+    foreach($items as $i): 
+        ?>
+        <tr class="<?php echo $class; ?>">
+             <td class="photo">
+                 <?php if(osc_itemHasThumbnail($i)): ?>
+             		<a href="<?php echo osc_createItemURL($i); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" /></a>
+             	<?php else: ?>
+                    <img src="<?php echo osc_themeResource('images/no_photo.gif'); ?>" />
+             	<?php endif; ?>
+             </td>
+             <td class="text">
+                 <h3><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></h3>
+                 <!--
+                     <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
+                 -->
+                 <p><?php echo strip_tags($i['s_description']); ?></p>
+             </td>
+             <td class="price"><strong><?php echo osc_formatPrice($i); ?></strong></td>
+         </tr>
+        <?php 
+    $class = ($class == 'even') ? 'odd' : 'even';
+    endforeach; ?>
+</tbody>
+</table>

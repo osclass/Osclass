@@ -71,13 +71,13 @@ $locales = Locale::newInstance()->listAllEnabled() ;
                 <!-- right -->
                 <div id="header_right">
                     <div id="header_user_menu">
-                        <?php if( osc_isUserLoggedIn() ) { ?>
+                        <?php if( osc_is_user_logged_in() ) { ?>
                             <?php printf(__('Hello %s!'), osc_userInfo('s_name')) ; ?>
                             <?php _e('Manage from here your'); ?>
-                            <a href="<?php echo osc_createUserAccountURL() ; ?>"><?php _e('account') ; ?></a> |
-                            <a href="<?php echo osc_createLogoutURL() ; ?>"><?php _e('Logout') ; ?></a>
+                            <a href="<?php echo osc_user_account_url() ; ?>"><?php _e('account') ; ?></a> |
+                            <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout') ; ?></a>
                         <?php } else { ?>
-                            <a href="<?php echo osc_createRegisterURL() ; ?>"><?php _e('Register a free account') ; ?></a> <?php _e('or') ; ?> <a id="login_open" href="<?php echo osc_createLoginURL() ; ?>"><?php _e('login') ; ?></a>
+                            <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register a free account') ; ?></a> <?php _e('or') ; ?> <a id="login_open" href="<?php echo osc_login_url() ; ?>"><?php _e('login') ; ?></a>
                         <?php } ?>
                     </div>
                     <div id="header_lang_menu">
@@ -113,7 +113,7 @@ $locales = Locale::newInstance()->listAllEnabled() ;
                 </div>
 
                 <div id="search_right">
-                    <div id="search_post_yours"><a href="<?php echo osc_createItemPostURL($catId) ; ?>"><?php _e('Publish your item') ; ?></a></div>
+                    <div id="search_post_yours"><a href="<?php echo osc_item_post_url($catId) ; ?>"><?php _e('Publish your item') ; ?></a></div>
                 </div>
             </div>
         </div>

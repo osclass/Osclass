@@ -335,7 +335,7 @@ switch ($action) {
             if ($userId == null) {
                 // NOT OK
                 osc_add_flash_message(__('You need to log-in in order to post a new item.')) ;
-                osc_redirectTo(osc_createLoginURL()) ;
+                osc_redirectTo(osc_login_url()) ;
                 break;
             }
         }
@@ -428,9 +428,9 @@ switch ($action) {
 
             osc_run_hook('posted_item', $item);
             $category = Category::newInstance()->findByPrimaryKey($PcatId);
-            osc_redirectTo(osc_createCategoryURL($category));
+            osc_redirectTo(osc_search_category_url($category));
         } else {
-            osc_redirectTo(osc_createItemPostURL());
+            osc_redirectTo(osc_item_post_url());
         }
         break;
 

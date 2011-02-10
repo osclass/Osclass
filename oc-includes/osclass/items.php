@@ -192,7 +192,7 @@ switch ($action) {
             if (osc_reg_user_post()) {
                 if ($userId == null) {
                     osc_add_flash_message(__('You new to log-in in order to post a new item.')) ;
-                    osc_redirectTo(osc_createLoginURL()) ;
+                    osc_redirectTo(osc_login_url()) ;
                     break ;
                 }
             }

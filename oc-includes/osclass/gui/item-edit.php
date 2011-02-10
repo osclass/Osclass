@@ -1,70 +1,79 @@
-<script src="<?php echo osc_base_url() ; ?>/oc-includes/js/tabber-minimized.js"></script>
-<link type="text/css" href="<?php echo osc_base_url() ; ?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
+<script src="<?php echo WEB_PATH;?>/oc-includes/js/tabber-minimized.js"></script>
+<link type="text/css" href="<?php echo WEB_PATH;?>/oc-includes/css/tabs.css" media="screen" rel="stylesheet" />
 <?php ItemForm::location_javascript(); ?>
-<div id="home_header" class="sectionHeader"><?php _e('Update your item'); ?></div>
-<div class="itemFormHolder">
-	<div id="add_item_form" class="itemForm">
-		<form action="<?php echo osc_create_url('user');?>" method="post" enctype="multipart/form-data">
+
+<div class="content add_item">
+    <h1><strong><?php _e('Update your item'); ?></strong></h1>
+
+	<form action="user.php" method="post" enctype="multipart/form-data">
+	<fieldset>
 		<input type="hidden" name="action" value="item_edit_post" />
 		<input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
 		<input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
 		<input type="hidden" name="fk_location_id" value="<?php echo $item['fk_i_user_location_id'];?>" />
 
-		<!-- left -->
-		<div class="itemFormLeft">
-
-                    <div class="itemFormHeader"><?php _e('General Information'); ?></div>
-
+		<div class="left_column">
+            <div class="box general_info">
+                <h2><?php _e('General Information'); ?></h2>
+                <div class="row">
+                    <label><?php _e('Category'); ?></label>
                     <?php ItemForm::category_select($categories, $item); ?>
-
+                </div>
+                <div class="row">
                     <?php ItemForm::multilanguage_title_description($locales, $item); ?>
+                </div>
+                <div class="row price">
+                    <label><?php _e('Price'); ?></label>
+                    <?php ItemForm::price_input_text($item); ?>
+                    <?php ItemForm::currency_select($currencies,$item); ?>
+                </div>
+            </div>
 
-                    <div class="itemFormContent">
-                        <h2><?php _e('Price'); ?></h2>
-                        <?php ItemForm::price_input_text($item); ?>
-                        <?php ItemForm::currency_select($currencies,$item); ?>
+            <div class="box photos">
+                <?php ItemForm::photos_javascript($item); ?>
+                <h2><?php _e('Photos'); ?></h2>
+                <?php ItemForm::photos($resources); ?>
+                <div id="photos">
+                    <div class="row">
+                        <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
                     </div>
-
-                    <div class="itemFormContent">
-                        <?php ItemForm::photos_javascript($item); ?>
-                        <h2><?php _e('Photos'); ?></h2>
-                        <?php ItemForm::photos($resources); ?>
-                        <div id="photos">
-                            <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
-                        </div>
-                        <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo'); ?></a>
-                    </div>
-			
+                </div>
+                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo'); ?></a>
+            </div>
 		</div>
 		
-		<!-- right -->
-		<div class="itemFormRight">
-			                    <div class="itemFormContent">
-                        <!-- location info -->
-                        <div class="itemFormHeader"><?php _e('Location'); ?></div>
-                        <dl>
-                            <dt><?php _e('Country'); ?></dt>
-                            <dd><?php ItemForm::country_select($countries, $item) ; ?></dd>
-                            <dt><?php _e('Region'); ?></dt>
-                            <dd><?php ItemForm::region_select($regions, $item) ; ?></dd>
-                            <dt><?php _e('City'); ?></dt>
-                            <dd><?php ItemForm::city_select($cities, $item) ; ?></dd>
-                            <dt><?php _e('City area'); ?></dt>
-                            <dd><?php ItemForm::city_area_text($item) ; ?></dd>
-                            <dt><?php _e('Address'); ?></dt>
-                            <dd><?php ItemForm::address_text($item) ; ?></dd>
-                        </dl>
-                    </div>
+		<div class="right_column">
+            <div class="box location">
+                <h2><?php _e('Location'); ?></h2>
+                <div class="row">
+                    <label><?php _e('Country'); ?></label>
+                    <?php ItemForm::country_select($countries, $item) ; ?>
+                </div>
+                <div class="row">
+                    <label><?php _e('Region'); ?></label>
+                    <?php ItemForm::region_select($regions, $item) ; ?>
+                </div>
+                <div class="row">
+                    <label><?php _e('City'); ?></label>
+                    <?php ItemForm::city_select($cities, $item) ; ?>
+                </div>
+                <div class="row">
+                    <label><?php _e('City area'); ?></label>
+                    <?php ItemForm::city_area_text($item) ; ?>
+                </div>
+                <div class="row">
+                    <label><?php _e('Address'); ?></label>
+                    <?php ItemForm::address_text($item) ; ?>
+                </div>
+            </div>
 
 			<?php
-                            osc_run_hook('item_edit', $item) ;
+                osc_runHook('item_edit', $item);
 			?>
 		</div>
-		<div class="clear"></div>
-		<div class="itemFormButtons">
-                        <button class="itemFormButton" type="button" onclick="history.back()" ><?php _e('Cancel'); ?></button>
-                        <button class="itemFormButton" type="submit"><?php _e('Update'); ?></button>
-		</div>
-		</form>
-	</div>
+		
+        <button class="itemFormButton" type="submit"><?php _e('Update'); ?></button>
+        <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel'); ?></a>
+	</fieldset>
+	</form>
 </div>

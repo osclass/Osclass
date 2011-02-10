@@ -75,7 +75,7 @@ class CAdminAdmins extends AdminSecBaseModel
                                 $this->adminManager->update($_POST, $conditions);
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
-            case 'delete':      $id = osc_paramRequest('id', false);
+            case 'delete':      $id = Params::getParam('id') ;
                                 if($id) {
                                     // Verification to avoid an administrator trying to remove to itself
                                     if(in_array($_SESSION['adminId'], $id)) {

@@ -1,42 +1,28 @@
-<div id="home_header">
-    <div>
-        <?php _e('Register an account (free)') ; ?>
-    </div>
-</div>
-<?php UserForm::js_validation() ; ?>
-<div align="center">
-    <div id="register_form">
-        <form action="<?php echo osc_create_url('user') ; ?>" method="post" onSubmit="javascript:return checkForm();">
-            <input type="hidden" name="action" value="register_post" />
-            <p>
-		<label for="name"><?php _e('Name') ; ?></label><br />
-                <?php UserForm::name_text() ; ?>
-            </p>
-            <p>
-                <label for="email"><?php _e('E-mail') ; ?></label><br />
-                <?php UserForm::email_text() ; ?>
-            </p>
-            <p>
-		<label for="password"><?php _e('Password'); ?></label><br />
-                <?php UserForm::password_register_text() ; ?>
-            </p>
-            <p>
-		<label for="password"><?php _e('Re-type password'); ?></label><br />
-                <?php UserForm::check_password_register_text() ; ?>
-            </p>
+<div class="content user_forms">
+    <div class="inner">
+        <h1><?php _e('Register an account (free)'); ?></h1>
+        <form action="user.php" method="post" onSubmit="return checkForm()">
+        <fieldset>
+        	<label for="name"><?php _e('Name'); ?></label> <?php UserForm::name_text(); ?><br />
+        	<label for="userName"><?php _e('User name'); ?></label> <?php UserForm::username_register_text(); ?><br />
+        	<label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_register_text(); ?><br />
+            <label for="password"><?php _e('Re-type password'); ?></label> <?php UserForm::check_password_register_text(); ?><br />
             <p id="password-error" style="display:none;">
-                <?php _e('Passwords don\'t match.') ; ?>
+                <?php _e('Passwords don\'t match.'); ?>
             </p>
+            <label for="email"><?php _e('E-mail'); ?></label> <?php UserForm::email_text(); ?><br />
             <?php
-                if(isset($preferences['recaptchaPubKey'])) {
-                    require_once LIB_PATH . 'recaptchalib.php' ;
-                    echo recaptcha_get_html($preferences['recaptchaPubKey']) ;
-                }
+    		if(isset($preferences['recaptchaPubKey'])) {
+                require_once 'recaptchalib.php';
+                echo recaptcha_get_html($preferences['recaptchaPubKey']);
+    		}
             ?>
-            <p>
-                <button type="submit"><?php _e('Create user') ; ?></button>
-            </p>
-            <?php osc_run_hook('user_register_form') ; ?>
+            <input type="hidden" name="action" value="register_post" />
+            <button type="submit"><?php _e('Create user'); ?></button>
+            <?php osc_runHook('user_register_form'); ?>
+        </fieldset>
         </form>
     </div>
 </div>
+
+<?php UserForm::js_validation(); ?>

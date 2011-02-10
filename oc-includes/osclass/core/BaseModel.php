@@ -62,7 +62,7 @@ abstract class BaseModel
         if (file_exists(osc_current_web_theme_path() . 'head.php')) {
             require osc_current_web_theme_path() . 'head.php' ;
         } else {
-            require osc_base_path() . 'oc-includes/osclass/gui/user-login.php' ;
+            require osc_base_path() . 'oc-includes/osclass/gui/head.php' ;
         }
     }
 

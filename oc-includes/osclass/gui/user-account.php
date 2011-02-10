@@ -1,43 +1,21 @@
-<div id="account_items">
-    <h1><?php _e('Latest items'); ?></h1>
-
-    <?php if(isset($items) && count($items)>0) {
-        foreach($items as $i) { ?>
-            <div class="userItem" >
-                <div><a href="<?php osc_create_item_url($i, true); ?>"><?php echo $i['s_title']; ?></a></div>
-
-                <div class="userItemData" >
-                    <?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
-                    <?php _e('Price'); ?>: <?php echo osc_format_price($i) ; ?>
-                </div>
-
-                <div class="userItemButtons" ><a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Edit'); ?></a></div>
-            </div>
-            <br />
-        <?php }
-    } else {
-        _e('You do not have any items yet.') ;
-    } ?>
-</div>
-<div id="account_contact">
-    <h1><?php _e('Contact form') ; ?></h1>
-
-    <form action="<?php echo osc_base_url() ; ?>user.php" method="post">
-    <input type="hidden" name="action" value="contact_post" />
-
-    <table>
-    <tr>
-	    <td><label for="subject"><?php _e('Subject'); ?></label></td>
-	    <td><?php ContactForm::the_subject(); ?></td>
-    </tr>
-    <tr>
-        <td><label for="message"><?php _e('Message'); ?></label></td>
-        <td><?php ContactForm::your_message(); ?></td>
-    </tr>
-    <tr>
-	    <td colspan="2" style="text-align: right;"><input type="submit" value="<?php _e('Send'); ?>" /></td>
-    </tr>
-    </table>
-
-    </form>
+    <div class="account_info">
+        <h2><?php _e('Your account'); ?></h2>
+    	<p>
+    	    <strong><?php _e('Name'); ?>:</strong> <?php echo $user['s_name']; ?><br />
+        	<strong><?php _e('User name'); ?>:</strong> <?php echo $user['s_username']; ?><br />
+        	<strong><?php _e('E-mail'); ?>:</strong> <?php echo $user['s_email']; ?><br />
+        	<strong><?php _e('Web site'); ?>:</strong> <?php echo $user['s_website']; ?>
+    	</p>
+    	<h3><?php _e('Additional information'); ?>:</h3>
+        <p>
+            <?php echo $user['s_info']; ?>
+        	<strong><?php _e('Mobile phone'); ?>:</strong> <?php echo $user['s_phone_mobile']; ?><br />
+        	<strong><?php _e('Land phone'); ?>:</strong> <?php echo $user['s_phone_land']; ?>
+        </p>
+    
+        <strong><a href="<?php echo osc_createProfileURL(); ?>" ><?php _e('Edit your profile'); ?></a></strong>
+    </div>
+    
+    <!-- Close .content & #main open at user-menu.php -->
+    </div>
 </div>

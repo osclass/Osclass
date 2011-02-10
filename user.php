@@ -40,7 +40,7 @@ switch ($action) {
             break;
         } else {
             osc_add_flash_message(__('User registration is not available.'));
-            osc_redirectTo(osc_indexURL()) ;
+            osc_redirectTo(osc_base_url()) ;
         }
     case 'register_post':
         if(osc_user_registration_enabled()) {
@@ -70,13 +70,13 @@ switch ($action) {
                 case 1:
                     osc_run_hook('register_user', $manager->findByPrimaryKey($userId)) ;
                     osc_add_flash_message(__('Your account has been created. An activation email has been sent to your email address.')) ;
-                    osc_redirectTo(osc_createLoginURL()) ;
+                    osc_redirectTo(osc_login_url()) ;
                     break ;
                     
                 case 2:
                     osc_run_hook('register_user', $manager->findByPrimaryKey($userId)) ;
                     osc_add_flash_message(__('Your account has been created. You\'re ready to go.')) ;
-                    osc_redirectTo(osc_createLoginURL()) ;
+                    osc_redirectTo(osc_login_url()) ;
                     break;
                     
                 case 3:
@@ -97,7 +97,7 @@ switch ($action) {
             osc_redirectTo(osc_createRegisterURL()) ;
         } else {
             osc_add_flash_message(__('User registration is not available.')) ;
-            osc_redirectTo(osc_indexURL()) ;
+            osc_redirectTo(osc_base_url()) ;
         }
         break;
     case 'send-validation':
@@ -143,8 +143,8 @@ switch ($action) {
         osc_redirectTo('index.php') ;
         break;
     case 'validate':
-        $id = intval(osc_paramGet('id', 0)) ;
-        $code = osc_paramGet('code', '') ;
+        $id = intval( Params::getParam('id') ) ;
+        $code = Params::getParam('code') ;
         $user = $manager->findByIdSecret($id, $code) ;
 
         if ($user) {
@@ -211,7 +211,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());//'user.php?action=login');
+            osc_redirectTo(osc_login_url());//'user.php?action=login');
         }
         break;
     case 'profile_post':
@@ -245,7 +245,7 @@ switch ($action) {
             osc_renderView('user-public-dashboard.php');
             osc_renderFooter();
         } else {
-            osc_redirectTo(osc_indexURL());
+            osc_redirectTo(osc_base_url());
         }
         break;
 
@@ -264,7 +264,7 @@ switch ($action) {
 
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         }
 
         break;
@@ -281,7 +281,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         }
         break;
 
@@ -306,10 +306,10 @@ switch ($action) {
         break;
     case 'deleteItem':
     case 'item_delete':
-        $id = intval(osc_paramGet('id', 0));
-        $secret = osc_paramGet('secret', '');
-        $userId = intval(osc_paramSession('userId', 0));
-        osc_add_flash_message(__('Your item has been deleted.'));
+        $id = intval( Params::getParam('id') ) ;
+        $secret = Params::getParam('secret') ;
+        $userId = intval( Session::newInstance()->_get("userId") ) ;
+        osc_add_flash_message(__('Your item has been deleted.')) ;
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
             osc_add_flash_message(__('You could register and access every time to your items.'));
@@ -322,9 +322,9 @@ switch ($action) {
         break;
     case 'item_edit':
     case 'editItem':
-        $id = osc_paramGet('id', -1);
-        $secret = osc_paramGet('secret', '');
-        $userId = intval(osc_paramSession('userId', 0));
+        $id = Params::getParam('id') ;
+        $secret = Params::getParam('secret') ;
+        $userId = intval( Session::newInstance()->_get("userId") ) ;
         $locales = Locale::newInstance()->listAllEnabled();
 
         $currencies = Currency::newInstance()->listAll();
@@ -360,7 +360,7 @@ switch ($action) {
         // The magic code
         require_once LIB_PATH . 'osclass/items.php';
 
-        $userId = intval(osc_paramSession('userId', 0));
+        $userId = intval( Session::newInstance()->_get("userId") ) ;
         if($userId==0) {
             osc_add_flash_message(__('You could register and access every time to your items.'));
             osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
@@ -370,9 +370,9 @@ switch ($action) {
         break;
 
     case 'deleteResource':
-        $id = osc_paramGet('id', -1);
-        $name = osc_paramGet('name', '');   
-        $fkid = osc_paramGet('fkid', -1);
+        $id = Params::getParam('id') ;
+        $name = Params::getParam('name') ;
+        $fkid = Params::getParam('fkid') ;
 
         $item = ItemResource::newInstance()->findByConditions(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
         if(isset($item['s_path'])) {
@@ -415,10 +415,10 @@ switch ($action) {
             osc_run_hook('user_login');
         } else if ($user && $user['b_enabled'] == '0') {
             osc_add_flash_message(__('You have not validated your account yet.<br/> Should we resend you the validation email?').'<br/><a href="user.php?action=send-validation&userid='.$user['pk_i_id'].'">'.__('Yes, resend me the validation email.').'</a>');
-            osc_redirectToReferer(osc_createLoginURL());
+            osc_redirectToReferer(osc_login_url());
         } else {
             osc_add_flash_message(__('Wrong email or password.'));
-            osc_redirectToReferer(osc_createLoginURL());
+            osc_redirectToReferer(osc_login_url());
         }
 
         osc_redirectTo(osc_createUserAccountURL());
@@ -431,7 +431,7 @@ switch ($action) {
         setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
         unset($_COOKIE['oc_userId']);
         unset($_COOKIE['oc_userSecret']);
-        osc_redirectTo(osc_createLoginURL());
+        osc_redirectTo(osc_login_url());
         break;
 
     case 'unsub_alert':
@@ -524,7 +524,7 @@ switch ($action) {
                             array('pk_i_id' => $user['pk_i_id'])
                         );
                         osc_add_flash_message(__('The password has been changed.'));
-                        osc_redirectTo(osc_createLoginURL());
+                        osc_redirectTo(osc_login_url());
                     } else {
                         osc_add_flash_message(__('Sorry, the link is not valid.'));
                         osc_redirectTo('index.php');
@@ -549,7 +549,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         }
         break;
 
@@ -561,7 +561,7 @@ switch ($action) {
             osc_redirectTo(osc_createUserAccountURL());
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         };
         break;
 
@@ -584,7 +584,7 @@ switch ($action) {
         } else {
             osc_add_flash_message(__('You need to login first.'));
         };
-        osc_redirectTo(osc_createLoginURL());
+        osc_redirectTo(osc_login_url());
         break;
 
     case 'change_email':
@@ -626,7 +626,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         }
         break;
         
@@ -668,7 +668,7 @@ switch ($action) {
             osc_renderFooter();
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         }
         break;
 
@@ -715,14 +715,14 @@ switch ($action) {
                 setcookie('oc_userSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']) ;
                 unset($_COOKIE['oc_userId']) ;
                 unset($_COOKIE['oc_userSecret']) ;
-                osc_redirectTo(osc_createLoginURL()) ;
+                osc_redirectTo(osc_login_url()) ;
             }
             $pref = $manager->updatePreference($_SESSION['userId'], 'new_email', $_REQUEST['s_email']) ;
             osc_add_flash_message(__('We have send you an email, you need to confirm it.')) ;
             osc_redirectTo(osc_createUserAccountURL()) ;
         } else {
             osc_add_flash_message(__('You need to login first.')) ;
-            osc_redirectTo(osc_createLoginURL()) ;
+            osc_redirectTo(osc_login_url()) ;
         }   
         break;
 
@@ -742,7 +742,7 @@ switch ($action) {
                     unset($_COOKIE['oc_userId']);
                     unset($_COOKIE['oc_userSecret']);
                     osc_add_flash_message(__('E-mail change correctly, please login with your new email.'));
-                    osc_redirectTo(osc_createLoginURL());
+                    osc_redirectTo(osc_login_url());
                 } else {
                     osc_add_flash_message(__('Sorry, the link is not valid.'));
                     osc_redirectTo('index.php');
@@ -774,7 +774,7 @@ switch ($action) {
             osc_redirectTo(osc_createUserAccountURL());
         } else {
             osc_add_flash_message(__('You need to login first.'));
-            osc_redirectTo(osc_createLoginURL());
+            osc_redirectTo(osc_login_url());
         }   
 
         break;

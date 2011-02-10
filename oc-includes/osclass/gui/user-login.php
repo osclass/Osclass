@@ -23,7 +23,7 @@
 function validateLoginForm() {
 	var validator = new FormValidator();
 	try {
-		validator.addValidation('s_email', FormValidator.TYPE_REGEX, '[a-zA-Z0-9_\.@-]{5}');
+		validator.addValidation('userName', FormValidator.TYPE_REGEX, '[a-zA-Z0-9_]{5}');
 		validator.addValidation('password', FormValidator.TYPE_COMPLETED);
 		return validator.run();
 	} catch(e) {
@@ -33,27 +33,19 @@ function validateLoginForm() {
 }
 </script>
 
-<h2><?php _e('Access to your account'); ?></h2>
-
-<form action="<?php echo osc_create_url('user') ; ?>" method="post" onsubmit="return validateLoginForm();">
-<input type="hidden" name="action" value="login_post" />
-
-<p>
-<label for="email"><?php _e('E-mail'); ?></label><br />
-<?php UserForm::email_text() ; ?>
-</p>
-
-<p>
-<label for="password"><?php _e('Password'); ?></label><br />
-<?php UserForm::password_login_text();?>
-</p>
-
-<p>
-<?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me'); ?></label>
-</p>
-
-<p>
-<input type="submit" value="Login" />
-</p>
-
-</form>
+<div class="content user_forms">
+    <div class="inner">
+        <h1><?php _e('Access to your account'); ?></h1>
+        
+        <form action="user.php" method="post" onsubmit="return validateLoginForm();">
+        <fieldset>
+            <label for="userName"><?php _e('User name'); ?></label> <?php UserForm::username_login_text();?><br />
+            <label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_login_text();?><br />
+            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me'); ?></label></p>
+            <button type="submit">Login</button>
+            <input type="hidden" name="action" value="login_post" />
+        </fieldset>
+        </form>
+        
+    </div>
+</div>

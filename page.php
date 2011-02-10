@@ -20,7 +20,7 @@ require_once 'oc-load.php' ;
 
 $managePages = new Page() ;
 
-$pageId = intval(osc_paramGet('id', 0)) ;
+$pageId = intval( Params::getParam('id') ) ;
 $page = $managePages->findByPrimaryKey($pageId) ;
 
 if( (count($page) == 0) || $page['b_indelible']) {

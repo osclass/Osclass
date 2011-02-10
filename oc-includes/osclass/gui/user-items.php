@@ -19,21 +19,30 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<h2><?php _e('Your items') ; ?></h2>
+<div class="your_items">
+    <h2><?php _e('Your items'); ?> <a href="<?php echo osc_createItemPostURL($catId); ?>">+ <?php _e('Post a new item'); ?></a></h2>
 
-<?php if(count($items) == 0) { ?>
-	<h3><?php _e('You do not have any items yet.') ; ?></h3>
-<?php } else { ?>
-    <?php foreach($items as $i) { ?>
-        <div class="userItem" >
-            <div><a href="<?php osc_create_item_url($i, true) ; ?>"><?php echo $i['s_title'] ; ?></a></div>
+    <?php if(count($items) == 0): ?>
+    	<h3><?php _e('You do not have any items yet.'); ?></h3>
+    <?php else: ?>
+        <?php foreach($items as $i): ?>
+        	<div class="item" >
+        		<h3><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></h3>
+        		<p>
+        		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
+        		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
+        		</p>
 
-            <div class="userItemData" >
-                <?php _e('Publication date'); ?>: <?php echo osc_formatDate($i) ; ?><br />
-                <?php _e('Price'); ?>: <?php echo osc_format_price($i) ; ?>
-            </div>
-            <div class="userItemButtons" ><a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>');" href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Edit') ; ?></a></div>
-        </div>
-        <br />
-    <?php } ?>
-<?php } ?>
+        		<p class="options">
+        		    <strong><a href="user.php?action=editItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Edit'); ?></a></strong> 
+        		    <span>|</span>
+        		    <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=deleteItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Delete'); ?></a>
+        		</p>
+        	</div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    </div>
+    
+    <!-- Close .content & #main open at user-menu.php -->
+    </div>
+</div>

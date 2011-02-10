@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OSClass – software for creating and publishing online classified advertising platforms
  *
@@ -21,6 +22,15 @@ class CWebMain extends BaseModel
 
     function __construct() {
         parent::__construct() ;
+
+        $this->add_css('style.css') ;
+        $this->add_css('jquery-ui.css') ;
+        $this->add_global_js('tiny_mce.js') ;
+        $this->add_global_js('jquery-1.4.2.js') ;
+        $this->add_global_js('jquery-ui-1.8.5.js') ;
+        $this->add_js('jquery-extends.js') ;
+        $this->add_js('global.js') ;
+
     }
 
     //Business Layer...

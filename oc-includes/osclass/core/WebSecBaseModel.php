@@ -7,8 +7,7 @@
 	    }
 
 	    function isLogged() {
-            if (Session::newInstance()->_get("userId") == '') return false ;
-            return true ;
+            return osc_is_user_logged_in() ;
 	    }
 
 	    function showAuthFailPage() {

@@ -60,7 +60,7 @@ try {
 	
 			$categories = Category::newInstance()->listAll() ;
 			foreach($categories as $c)
-				$sm->addURL(osc_base_url() . osc_createCategoryURL($c), 'daily', 0.9) ;
+				$sm->addURL(osc_base_url() . osc_search_category_url($c), 'daily', 0.9) ;
 			$sm->toStdout();
 		break;
 		case 'feed':

@@ -47,11 +47,6 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
@@ -59,14 +54,16 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hMessages.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hUsers.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
+
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
-//Here we are the same functions as in Params.php (commented by dev.conquer)
-//require_once LIB_PATH . 'osclass/web.php';
 require_once ABS_PATH . 'common.php';
-
-//osc_checkAdminSession();
-
 require_once LIB_PATH . 'osclass/locale.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/pages.php';
