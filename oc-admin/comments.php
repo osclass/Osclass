@@ -92,17 +92,20 @@ class CAdminItemComments extends AdminSecBaseModel
             break;
             case 'comment_edit':        $itemId = Params::getParam('id') ;
                                         $comment = Comment::newInstance()->findByPrimaryKey($itemId) ;
+
+                                        $this->_exportVariableToView('comments', $comments) ;
+                                        
                                         $this->doView('comments/frm.php') ;
             break;
             case 'comment_edit_post':   $this->itemCommentManager->update(
                                             array(
-                                                's_title' => $_REQUEST['s_title']
-                                                ,'s_body' => $_REQUEST['s_body']
-                                                ,'s_author_name' => $_REQUEST['s_author_name']
-                                                ,'s_author_email' => $_REQUEST['s_author_email']
+                                                's_title' => Params::getParam('s_title')
+                                                ,'s_body' => Params::getParam('s_body')
+                                                ,'s_author_name' => Params::getParam('s_author_name')
+                                                ,'s_author_email' => Params::getParam('s_author_email')
                                             )
                                             ,array(
-                                                'pk_i_id' => $_REQUEST['id']
+                                                'pk_i_id' => Params::getParam('id')
                                             )
                                         );
 
@@ -111,15 +114,16 @@ class CAdminItemComments extends AdminSecBaseModel
                                         osc_add_flash_message(__('Great! We\'ve just update your item.')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
             break;
-            case 'delete':              $this->itemCommentManager->deleteByID($_GET['id']);
+            case 'delete':              $this->itemCommentManager->deleteByID( Params::getParam('id') );
             break;
-            default:                    $itemId = Params::getParam('id') ;
-                                        if ($itemId == '') {
-                                            $comments = $this->itemCommentManager->getAllComments() ;
-                                        } else {
-                                            $comments = $this->itemCommentManager->getAllComments($itemId) ;
-                                        }
+            default:                    $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;
+                                        
+                                        $this->_exportVariableToView('comments', $comments) ;
+
                                         //calling the view...
+                                        $this->add_global_js('jquery.dataTables.min.js') ;
+                                        $this->add_css('item_list_layout.css') ;
+                                        $this->add_css('demo_table.css') ;
                                         $this->doView('comments/index.php') ;
 
         }
