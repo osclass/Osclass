@@ -56,6 +56,10 @@
                             $do = new CAdminPlugins() ;
                             $do->doModel() ;
         break;
+        case('languages'):  require_once(osc_admin_base_path() . 'languages.php') ;
+                            $do = new CAdminLanguages() ;
+                            $do->doModel() ;
+        break;
         case('admins'):     require_once(osc_admin_base_path() . 'admins.php') ;
                             $do = new CAdminAdmins() ;
                             $do->doModel() ;
