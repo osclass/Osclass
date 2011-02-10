@@ -52,6 +52,10 @@
                             $do = new CAdminPages() ;
                             $do->doModel() ;
         break;
+        case('settings'):   require_once(osc_admin_base_path() . 'settings.php') ;
+                            $do = new CAdminSettings() ;
+                            $do->doModel();
+        break;
         case('plugins'):    require_once(osc_admin_base_path() . 'plugins.php') ;
                             $do = new CAdminPlugins() ;
                             $do->doModel() ;
@@ -66,6 +70,10 @@
         break;
         case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
                             $do = new CAdminAjax() ;
+                            $do->doModel() ;
+        break;
+        case('appearance'): require_once(osc_admin_base_path() . 'appearance.php') ;
+                            $do = new CAdminAppearance() ;
                             $do->doModel() ;
         break;
         default:            //login of oc-admin
