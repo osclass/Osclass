@@ -40,12 +40,16 @@
                             $do = new CAdminCategories() ;
                             $do->doModel() ;
         break;
-        case('emails'): require_once(osc_admin_base_path() . 'emails.php') ;
+        case('emails'):     require_once(osc_admin_base_path() . 'emails.php') ;
                             $do = new CAdminEmails() ;
                             $do->doModel() ;
         break;
-        case('pages'): require_once(osc_admin_base_path() . 'pages.php') ;
+        case('pages'):      require_once(osc_admin_base_path() . 'pages.php') ;
                             $do = new CAdminPages() ;
+                            $do->doModel() ;
+        break;
+        case('settings'):   require_once(osc_admin_base_path() . 'settings.php') ;
+                            $do = new CAdminSettings() ;
                             $do->doModel() ;
         break;
         case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
