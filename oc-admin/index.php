@@ -32,6 +32,10 @@
                             $do = new CAdminItemComments() ;
                             $do->doModel() ;
         break;
+        case('media'):      require_once(osc_admin_base_path() . 'media.php') ;
+                            $do = new CAdminMedia() ;
+                            $do->doModel() ;
+        break;
         case ('login'):     require_once(osc_admin_base_path() . 'login.php') ;
                             $do = new CAdminLogin() ;
                             $do->doModel() ;
