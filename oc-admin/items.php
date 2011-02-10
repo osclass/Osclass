@@ -266,28 +266,28 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'deleteResource':  //delete resource
-                                    $id = osc_paramGet('id', -1);
-                                    $name = osc_paramGet('name', '');
-                                    $fkid = osc_paramGet('fkid', -1);
+                                    $id = osc_paramGet('id', -1) ;
+                                    $name = osc_paramGet('name', '') ;
+                                    $fkid = osc_paramGet('fkid', -1) ;
 
-                                    ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name));
+                                    ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'post':            //post
-                                    $users = User::newInstance()->listAll();
-                                    $categories = Category::newInstance()->toTree();
-                                    $countries = Country::newInstance()->listAll();
-                                    $regions = array();
+                                    $users = User::newInstance()->listAll() ;
+                                    $categories = Category::newInstance()->toTree() ;
+                                    $countries = Country::newInstance()->listAll() ;
+                                    $regions = array() ;
                                     if( count($countries) > 0 ) {
-                                        $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+                                        $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
                                     }
-                                    $cities = array();
+                                    $cities = array() ;
                                     if( count($regions) > 0 ) {
                                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                                     }
-                                    $currencies = Currency::newInstance()->listAll();
+                                    $currencies = Currency::newInstance()->listAll() ;
 
-                                    $locales = Locale::newInstance()->listAllEnabled();
+                                    $locales = Locale::newInstance()->listAllEnabled() ;
                                     $item = array() ;
                                     $resources = array() ;
 
@@ -300,7 +300,7 @@ class CAdminItems extends AdminSecBaseModel
             break;
             case 'post_item':       //post item
                                     $admin = TRUE;
-                                    $manager = Item::newInstance();
+                                    $manager = Item::newInstance() ;
 
                                     require_once LIB_PATH . 'osclass/items.php';
 

@@ -58,6 +58,11 @@ class Params
         }
     }
 
+    static function setParam($key, $value)
+    {
+        $_REQUEST[$key] = $value;
+    }
+
     static function _view() {
         print_r(self::getParamsAsArray()) ;
     }

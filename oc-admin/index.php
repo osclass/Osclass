@@ -32,6 +32,10 @@
                             $do = new CAdminItemComments() ;
                             $do->doModel() ;
         break;
+        case('media'):      require_once(osc_admin_base_path() . 'media.php') ;
+                            $do = new CAdminMedia() ;
+                            $do->doModel() ;
+        break;
         case ('login'):     require_once(osc_admin_base_path() . 'login.php') ;
                             $do = new CAdminLogin() ;
                             $do->doModel() ;
@@ -50,6 +54,17 @@
         break;
         case('settings'):   require_once(osc_admin_base_path() . 'settings.php') ;
                             $do = new CAdminSettings() ;
+                            $do->doModel();
+        case('plugins'):    require_once(osc_admin_base_path() . 'plugins.php') ;
+                            $do = new CAdminPlugins() ;
+                            $do->doModel() ;
+        break;
+        case('languages'):  require_once(osc_admin_base_path() . 'languages.php') ;
+                            $do = new CAdminLanguages() ;
+                            $do->doModel() ;
+        break;
+        case('admins'):     require_once(osc_admin_base_path() . 'admins.php') ;
+                            $do = new CAdminAdmins() ;
                             $do->doModel() ;
         break;
         case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;

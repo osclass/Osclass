@@ -20,142 +20,128 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+class CAdminLanguages extends AdminSecBaseModel
+{
+    //specific for this class
+    private $localeManager ;
 
-require_once ABS_PATH . 'oc-admin/oc-load.php';
+    function __construct() {
+        parent::__construct() ;
 
-$localeManager = Locale::newInstance();
-$action = Params::getParam('action');
-switch ($action) {
-    case 'add':
-        osc_renderAdminSection('languages/add.php', __('Languages'), __('Upload'));
-    break;
-    case 'add_post':
-        $path = TRANSLATIONS_PATH . pathinfo($_FILES['package']['name'], PATHINFO_FILENAME);
-        if(osc_packageExtract($_FILES['package']['tmp_name'], $path)) {
-            osc_add_flash_message(__('The language has been installed correctly.'));
-        } else {
-            osc_add_flash_message(__('There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH.'));
+        //specific things for this class
+        $this->localeManager = Locale::newInstance() ;
+    }
+
+    //Business Layer...
+    function doModel() {
+        parent::doModel() ;
+
+        switch ($this->action)
+        {
+            case 'add':                 $this->doView('languages/add.php') ;
+            break;
+            case 'add_post':            $path = TRANSLATIONS_PATH . pathinfo($_FILES['package']['name'], PATHINFO_FILENAME);
+                                        if(osc_packageExtract($_FILES['package']['tmp_name'], $path)) {
+                                            osc_add_flash_message(__('The language has been installed correctly.'));
+                                        } else {
+                                            osc_add_flash_message(__('There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH.'));
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . '?page=languages' ) ;
+            break;
+            case 'edit':                $this->localeManager = Locale::newInstance()->findByPrimaryKey($_GET['id']) ;
+                                        $this->doView('languages/frm.php') ;
+            break;
+            case 'edit_post':           $code = $_POST['pk_c_code'] ;
+                                        unset($_POST['pk_c_code']) ;
+
+                                        if (!isset($_POST['b_enabled']))
+                                            $_POST['b_enabled'] = DB_CONST_FALSE ;
+                                        if (!isset($_POST['b_enabled_bo']))
+                                            $_POST['b_enabled_bo'] = DB_CONST_FALSE ;
+
+                                        $this->localeManager->update($_POST, array('pk_c_code' => $code)) ;
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=languages') ;
+            break;
+            case 'enable':              
+            case 'enable_bo':           $default_lang = osc_language() ;
+                                        $id = Params::getParam('id') ;
+                                        $enabled = Params::getParam('enabled') ;
+                                        
+                                        if ($id) {
+                                            if($action == 'enable' && $default_lang == $id && $enabled == 0) {
+                                                osc_add_flash_message($id.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it'));
+                                            } else {
+                                                $msg = ($enabled == 1) ? __('The language has been enabled for the public website') : __('The language has been disabled for the public website') ;
+                                                $aValues = array('b_enabled' => $enabled) ;
+                                                $this->localeManager->update($aValues, array('pk_c_code' => $id)) ;
+                                            }
+                                            if ($action == 'enable_bo') {
+                                                $msg = ($enabled == 1) ? __('The language has been enabled for the backoffice (oc-admin)') : __('The language has been disabled for the backoffice (oc-admin)') ;
+                                                $aValues = array('b_enabled_bo' => $enabled) ;
+                                                $this->localeManager->update($aValues, array('pk_c_code' => $id)) ;
+                                            }
+
+                                            osc_add_flash_message( $msg ) ;
+                                        } else {
+                                            osc_add_flash_message(__('There was a problem updating the language. The ID of the language was lost')) ;
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
+            break;
+            case 'enable_selected':     $msg = __('Selected languages have been enabled for the website') ;
+                                        $aValues = array('b_enabled' => 1) ;
+
+            case 'disable_selected':    $msg = __('Selected languages have been disabled for the website') ;
+                                        $aValues = array('b_enabled' => 0) ;
+
+            case 'enable_bo_selected':  $msg = __('Selected languages have been enabled for the backoffice (oc-admin)') ;
+                                        $aValues = array('b_enabled_bo' => 1) ;
+
+            case 'disable_bo_selected': $msg = __('Selected languages have been disabled for the backoffice (oc-admin)') ;
+                                        $aValues = array('b_enabled_bo' => 0) ;
+                
+                                        $id = Params::getParam('id') ;
+                                        if ($id != '') {
+                                            $default_lang = osc_language() ;
+                                            foreach ($id as $i) {
+                                                if($default_lang == $i && $action == 'disable_selected') {
+                                                    osc_add_flash_message($i.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it'));
+                                                } else {
+                                                    $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
+                                                }
+                                            }
+                                            osc_add_flash_message($msg) ;
+                                        } else {
+                                            osc_add_flash_message(__('There was a problem updating the languages. The IDs of the languages were lost')) ;
+                                        }
+
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
+            break;
+            case 'delete':              if ( is_array(Params::getParam('code') ) )
+                                        {
+                                            $default_lang = osc_language() ;
+                                            foreach ( Params::getParam('code') as $code) {
+                                                if( $default_lang != $code ) {
+                                                    $this->localeManager->deleteLocale($code) ;
+                                                    if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
+                                                        osc_add_flash_message(__('Directory "%s" could not be removed'), $code) ;
+                                                    }
+                                                } else {
+                                                        osc_add_flash_message(__('Directory "%s" could not be removed, it\' the default language. Set another language as default first and try again'), $code) ;
+                                                }
+                                            }
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
+            break;
+            default:                    osc_checkLocales() ;
+                                        $locales = Locale::newInstance()->listAll() ;
+                                        $this->doView('languages/index.php') ;
         }
-        osc_redirectTo('languages.php');
-    break;
-    case 'edit':
-        $locale = Locale::newInstance()->findByPrimaryKey($_GET['id']);
-        osc_renderAdminSection('languages/frm.php', __('Languages'), __('Edit'));
-    break;
-    case 'edit_post':
-        $code = $_POST['pk_c_code'];
-        unset($_POST['pk_c_code']);
+    }
 
-        if (!isset($_POST['b_enabled']))
-            $_POST['b_enabled'] = DB_CONST_FALSE;
-        if (!isset($_POST['b_enabled_bo']))
-            $_POST['b_enabled_bo'] = DB_CONST_FALSE;
-
-        Locale::newInstance()->update($_POST, array('pk_c_code' => $code));
-
-        osc_redirectTo('languages.php') ;
-    break;
-    case 'enable':
-    case 'enable_bo':
-        $id = osc_paramRequest('id', false) ;
-        $enabled = osc_paramRequest('enabled', false) ;
-        $default_lang = osc_language() ;
-        try {
-            if ($id) {
-                switch($action) {
-                    case('enable'):
-                        if($default_lang==$id && $enabled==0) {
-                            osc_add_flash_message($id.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
-                        } else {
-                         $msg = ($enabled == 1) ? __('The language has been enabled for the public website.') : __('The language has been disabled for the public website.') ;
-                                        $aValues = array('b_enabled' => $enabled) ;
-                                $localeManager->update($aValues, array('pk_c_code' => $id));
-                        }
-                    break;
-                    case('enable_bo'):  $msg = ($enabled == 1) ? __('The language has been enabled for the backoffice (oc-admin).') : __('The language has been disabled for the backoffice (oc-admin).');
-                                        $aValues = array('b_enabled_bo' => $enabled) ;
-                                        $localeManager->update($aValues, array('pk_c_code' => $id));
-                    break;
-                }
-
-                osc_add_flash_message( $msg );
-            } else {
-                osc_add_flash_message(__('There was a problem updating the language. The ID of the language was lost.'));
-            }
-            
-        } catch (Exception $e) {
-            osc_add_flash_message(__('Error: ') . $e->getMessage());
-        }
-        osc_redirectTo('languages.php');
-    break;
-    case 'enable_selected':
-    case 'disable_selected':
-    case 'enable_bo_selected':
-    case 'disable_bo_selected':
-        $id = osc_paramRequest('id', false);
-        try {
-            if ($id) {
-                switch($action) {
-                    case('enable_selected'):    $msg = __('Selected languages have been enabled for the website.') ;
-                                                $aValues = array('b_enabled' => 1) ;
-                    break;
-                    case('disable_selected'):   $msg = __('Selected languages have been disabled for the website.') ;
-                                                $aValues = array('b_enabled' => 0) ;
-                    break;
-                    case('enable_bo_selected'): $msg = __('Selected languages have been enabled for the backoffice (oc-admin).') ;
-                                                $aValues = array('b_enabled_bo' => 1) ;
-                    break;
-                    case('disable_bo_selected'):$msg = __('Selected languages have been disabled for the backoffice (oc-admin).') ;
-                                                $aValues = array('b_enabled_bo' => 0) ;
-                    break;
-                }
-
-                $default_lang = osc_language() ;
-                foreach ($id as $i) {
-                    if($default_lang==$i && $action=='disable_selected') {
-                        osc_add_flash_message($i.__(' can not be disabled, it\'s the deault language. Please, change the default language under General Settings in order to disable it.'));
-                    } else {
-                        $localeManager->update($aValues, array('pk_c_code' => $i));
-                    }
-                }
-
-                osc_add_flash_message($msg);
-            } else {
-                osc_add_flash_message(__('There was a problem updating the languages. The IDs of the languages were lost.'));
-            }
-            
-        } catch (Exception $e) {
-            osc_add_flash_message(__('Error: ') . $e->getMessage());
-        }
-        osc_redirectTo('languages.php');
-    break;
-    case 'delete':
-        if (isset($_GET['code']) && is_array($_GET['code'])) {
-            $default_lang = osc_language() ;
-            foreach ($_GET['code'] as $code) {
-                if($default_lang != $code) {
-                    try {
-                        Locale::newInstance()->deleteLocale($code) ;
-                        if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
-                            osc_add_flash_message(__('Directory "%s" could not be removed.'), $code);
-                        }
-                    } catch (Exception $e) {
-                        if($e->getMessage()=='1451') {
-                            osc_add_flash_message($code.__(' language pack can not be deleted it\'s being used.'));
-                        }
-                    }
-                } else {
-                        osc_add_flash_message(__('Directory "%s" could not be removed, it\' the default language. Set another language as default first and try again.'), $code);
-                }
-            }
-        }
-        osc_redirectTo('languages.php');
-    break;
-    default:
-        osc_checkLocales();
-        $locales = Locale::newInstance()->listAll();
-        osc_renderAdminSection('languages/index.php', __('Languages'));
+    //hopefully generic...
+    function doView($file) {
+        $this->osc_print_html($file) ;
+    }
 }
 
 ?>
