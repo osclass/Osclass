@@ -41,7 +41,7 @@ class CAdminTools extends AdminSecBaseModel
                 $conn = getConnection() ;
                 $conn->osc_dbImportSQL($sql) ;
 
-                $this->redirectTo('tools.php');
+                $this->redirectTo(osc_admin_base_url(true) . '?page=tools');
                 break;
             case 'images':
                 $this->doView('tools/images.php');
@@ -85,7 +85,8 @@ class CAdminTools extends AdminSecBaseModel
                 }
                 closedir($dir) ;
                 osc_add_flash_message(__('Re-generation complete.')) ;
-                $this->redirectTo('tools.php?action=images');
+
+                $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
                 break;
             case 'upgrade':
                 $this->doView('tools/upgrade.php');
