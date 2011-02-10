@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -19,85 +20,81 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
-require_once ABS_PATH . 'oc-admin/oc-load.php';
+class CAdminAdmins extends AdminSecBaseModel
+{
+    //specific for this class
+    private $adminManager ;
 
-$adminManager = Admin::newInstance();
+    function __construct() {
+        parent::__construct() ;
 
-$action = Params::getParam('action');
-switch($action) {
-    case 'add':
-        osc_renderAdminSection('admins/add.php', __('Administrators'), __('Add'));
-        break;
-    case 'add_post':
-        $_POST['s_password'] = sha1($_POST['s_password']);
-        try {
-            $adminManager->insert($_POST);
+        //specific things for this class
+        $this->adminManager = Category::newInstance() ;
+    }
 
-            osc_add_flash_message(__('The item has been added.'));
-        } catch (Exception $e) {
-            osc_add_flash_message( __('The administrator could not be created.') . ' (' . $e->getMessage() . ')');
+    //Business Layer...
+    function doModel() {
+        parent::doModel() ;
+
+        switch ($this->action)
+        {
+            case 'add':         $this->doView('admins/add.php') ;
+            break;
+            case 'add_post':    $_POST['s_password'] = sha1($_POST['s_password']) ;
+                                $this->adminManager->insert($_POST) ;
+                                osc_add_flash_message(__('The item has been added.')) ;
+                                $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+            break;
+            case 'edit':        $admin = null;
+                                if(Params::getParam('id') != '') $adminEdit = $this->adminManager->findByPrimaryKey ( Params::getParam('id') ) ;
+                                elseif( Session::newInstance()->_get('adminId') != '') $adminEdit = $this->adminManager->findByPrimaryKey( Session::newInstance()->_get('adminId') ) ;
+                                $this->doView('admins/edit.php') ;
+            break;
+            case 'edit_post':   $conditions = array('pk_i_id' => Params::getParam('id')) ;
+                                $admin = $this->adminManager->findByPrimaryKey(Params::getParam('id')) ;
+                                unset($_POST['id']);
+                                if(empty($_POST['s_password'])) {
+                                    unset($_POST['s_password']);
+                                } else {
+                                    if(sha1($_POST['old_password'])==$admin['s_password']) {
+                                        if($_POST['s_password']==$_POST['s_password2']) {
+                                            $_POST['s_password'] = sha1($_POST['s_password']);
+                                        } else {
+                                            unset($_POST['s_password']);
+                                            osc_add_flash_message(__('Password didn\'t update. Passwords don\'t match.'));
+                                        }
+                                    } else {
+                                        unset($_POST['s_password']);
+                                        osc_add_flash_message(__('Password didn\'t update. "Old password" didn\'t match with our records in the database.'));
+                                    }
+                                }
+                                unset($_POST['old_password']);
+                                unset($_POST['s_password2']);
+
+                                $this->adminManager->update($_POST, $conditions);
+                                $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+            break;
+            case 'delete':      $id = osc_paramRequest('id', false);
+                                if($id) {
+                                    // Verification to avoid an administrator trying to remove to itself
+                                    if(in_array($_SESSION['adminId'], $id)) {
+                                        osc_add_flash_message( __('The operation was not completed. You were trying to remove yourself!') );
+                                    } else {
+                                        $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $id) . ')')) ;
+                                    }
+                                }
+                                $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+            break;
+            default:            $admins = $this->adminManager->listAll();
+                                $this->doView('admins/index.php') ;
         }
-        osc_redirectTo('admins.php');
-        break;
-    case 'edit':
-        $admin = null;
-        if(isset($_GET['id']))
-            $adminEdit = $adminManager->findByPrimaryKey ($_GET['id']);
-        elseif(isset($_SESSION['adminId']))
-            $adminEdit = $adminManager->findByPrimaryKey($_SESSION['adminId']);
-        osc_renderAdminSection('admins/edit.php', __('Administrators'), __('Edit'));
-        break;
-    case 'edit_post':
-        $conditions = array('pk_i_id' => $_POST['id']);
-        $admin = $adminManager->findByPrimaryKey($_POST['id']);
-        unset($_POST['id']);
-        if(empty($_POST['s_password'])) {
-            unset($_POST['s_password']);
-        } else {
-            if(sha1($_POST['old_password'])==$admin['s_password']) {
-                if($_POST['s_password']==$_POST['s_password2']) {
-                    $_POST['s_password'] = sha1($_POST['s_password']);
-                } else {
-                    unset($_POST['s_password']);
-                    osc_add_flash_message(__('Password didn\'t update. Passwords don\'t match.'));
-                }
-            } else {
-                unset($_POST['s_password']);
-                osc_add_flash_message(__('Password didn\'t update. "Old password" didn\'t match with our records in the database.'));
-            }
-        }
-        unset($_POST['old_password']);
-        unset($_POST['s_password2']);
-        
-        try {
-            $adminManager->update($_POST, $conditions);
-        } catch (Exception $e) {
-            osc_add_flash_message( __('Error: ') . $e->getMessage());
-        }
-        osc_redirectTo('admins.php');
-        break;
-    case 'delete':
-        $id = osc_paramRequest('id', false);
-        if($id) {
-            // Verification to avoid an administrator trying to remove to itself
-            if(in_array($_SESSION['adminId'], $id)) {
-                osc_add_flash_message( __('The operation was not completed. You were trying to remove yourself!') );
-            } else {
-                try {
-                    $adminManager->delete(array('pk_i_id IN (' . implode(', ', $id) . ')'));
-                } catch (Exception $e) {
-                    osc_add_flash_message( __('Error: ') . $e->getMessage());
-                }
-            }
-        }
-        osc_redirectTo('admins.php');
-        break;
-    default:
-        $admins = $adminManager->listAll();
+    }
 
-        osc_renderAdminSection('admins/index.php', __('Administrators'));
+    //hopefully generic...
+    function doView($file) {
+        $this->osc_print_html($file) ;
+    }
 }
 
 ?>
