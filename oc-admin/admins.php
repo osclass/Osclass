@@ -30,7 +30,7 @@ class CAdminAdmins extends AdminSecBaseModel
         parent::__construct() ;
 
         //specific things for this class
-        $this->adminManager = Category::newInstance() ;
+        $this->adminManager = Admin::newInstance() ;
     }
 
     //Business Layer...
