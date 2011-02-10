@@ -68,6 +68,10 @@
                             $do = new CAdminAdmins() ;
                             $do->doModel() ;
         break;
+        case('users'):     require_once(osc_admin_base_path() . 'users.php') ;
+                            $do = new CAdminUsers() ;
+                            $do->doModel() ;
+        break;
         case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
                             $do = new CAdminAjax() ;
                             $do->doModel() ;
