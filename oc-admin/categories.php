@@ -66,7 +66,7 @@ class CAdminCategories extends AdminSecBaseModel
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
-                $this->redirectTo('index.php?page=categories');
+                $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
             
             
@@ -101,9 +101,9 @@ class CAdminCategories extends AdminSecBaseModel
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
                 if( !is_null( $fields['fk_i_parent_id'] ) ) {
-                    $this->redirectTo('index.php?page=categories&parentId=' . $fields['fk_i_parent_id']);
+                    $this->redirectTo(osc_admin_base_url(true).'?page=categories&parentId=' . $fields['fk_i_parent_id']);
                 } else {
-                    $this->redirectTo('index.php?page=categories');
+                    $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 }
             break;
             
@@ -119,7 +119,7 @@ class CAdminCategories extends AdminSecBaseModel
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
-                $this->redirectTo('index.php?page=categories');
+                $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
             
             case 'enable':
@@ -140,7 +140,7 @@ class CAdminCategories extends AdminSecBaseModel
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
-                $this->redirectTo('index.php?page=categories');
+                $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
             
             case 'enable_selected':
@@ -156,7 +156,7 @@ class CAdminCategories extends AdminSecBaseModel
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
-                $this->redirectTo('index.php?page=categories');
+                $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
             
             case 'disable_selected':
@@ -172,7 +172,7 @@ class CAdminCategories extends AdminSecBaseModel
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
-                $this->redirectTo('index.php?page=categories');
+                $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
             
             default:

@@ -83,7 +83,7 @@
                     <?php osc_show_flash_message('admin') ; ?>
                     <!-- add new page form -->
                     <div id="settings_form">
-                        <form name="emails_form" id="emails_form" action="index.php?page=emails" method="post" onSubmit="return checkForm()">
+                        <form name="emails_form" id="emails_form" action="<?php echo osc_admin_base_url(true); ?>?page=emails" method="post" onSubmit="return checkForm()">
                             <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
                             <?php PageForm::primary_input_hidden($email); ?>
                             <div class="FormElement">
@@ -102,7 +102,7 @@
                             <div class="FormElement">
                                 <div class="FormElementName"></div>
                                 <div class="FormElementInput">
-                                    <button class="formButton" type="button" onclick="window.location='index.php?page=emails';" ><?php _e('Cancel'); ?></button>
+                                    <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true); ?>?page=emails';" ><?php _e('Cancel'); ?></button>
                                     <button class="formButton" type="submit"><?php echo $btn_text; ?></button>
                                 </div>
                             </div>

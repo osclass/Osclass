@@ -78,7 +78,7 @@
                                 $p_body = str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
                             ?>
                                 <tr class="<?php echo $odd_even;?>">
-                                    <td><?php echo $email['s_internal_name']; ?><div><a href="index.php?page=emails&action=edit&amp;id=<?php echo  $email["pk_i_id"] ?>">Edit</a></div></td>
+                                    <td><?php echo $email['s_internal_name']; ?><div><a href="<?php echo osc_admin_base_url(true); ?>?page=emails&action=edit&amp;id=<?php echo  $email["pk_i_id"] ?>">Edit</a></div></td>
                                     <td><?php echo $p_body; ?></td>
                                 </tr>                          
                             <?php } ?>
