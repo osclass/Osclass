@@ -21,74 +21,86 @@
  */
 
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header">Dashboard</div>
+        <?php
+            $fields = array(
+                array('name' => 's_name', 'error_msg' => __('You have to write a name.'))
+                ,array('name' => 's_email', 'error_msg' => __('You have to write an e-mail.'))
+                ,array('name' => 's_username', 'error_msg' => __('You have to write an username.'))
+                ,array('name' => 's_password', 'error_msg' => __('You have to write a password.'))
+            );
+            osc_check_form_js($fields);
+        ?>
 
-<?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
 
-<?php
-    $fields = array(
-        array('name' => 's_name', 'error_msg' => __('You have to write a name.'))
-        ,array('name' => 's_email', 'error_msg' => __('You have to write an e-mail.'))
-        ,array('name' => 's_username', 'error_msg' => __('You have to write an username.'))
-        ,array('name' => 's_password', 'error_msg' => __('You have to write a password.'))
-    );
-    osc_check_form_js($fields);
-?>
 
-<div id="content">
-    <div id="separator"></div>
+        <div id="content">
+            <div id="separator"></div>
 
-    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/admin-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('Add new administrator'); ?></div>
-            <div style="clear: both;"></div>
-        </div>
-
-        <div id="content_separator"></div>
-
-        <?php osc_show_flash_message() ; ?>
-
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-            <div style="padding: 20px;">
-
-                <form action="admins.php" method="post" onSubmit="return checkForm()">
-                    <input type="hidden" name="action" value="add_post" />
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Real name') ; ?> (<?php _e('required') ; ?>)</legend>
-                            <input type="text" name="s_name" id="s_name" />
-                        </fieldset>
-                    </div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('E-mail'); ?></legend>
-                            <input type="text" name="s_email" id="s_email" />
-                        </fieldset>
-                    </div>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/admin-icon.png" /></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Add new administrator'); ?></div>
                     <div style="clear: both;"></div>
+                </div>
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('User name'); ?> (<?php _e('required'); ?>)</legend>
-                            <input type="text" name="s_username" id="s_username" />
-                        </fieldset>
+                <div id="content_separator"></div>
+
+                <?php osc_show_flash_message() ; ?>
+
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 20px;">
+
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">
+                            <input type="hidden" name="action" value="add_post" />
+                            <input type="hidden" name="page" value="admins" />
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Real name') ; ?> (<?php _e('required') ; ?>)</legend>
+                                    <input type="text" name="s_name" id="s_name" />
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('E-mail'); ?></legend>
+                                    <input type="text" name="s_email" id="s_email" />
+                                </fieldset>
+                            </div>
+                            <div style="clear: both;"></div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('User name'); ?> (<?php _e('required'); ?>)</legend>
+                                    <input type="text" name="s_username" id="s_username" />
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Password'); ?> (<?php _e('required'); ?>)</legend>
+                                    <input type="password" name="s_password" id="s_password" />
+                                </fieldset>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <input id="button_save" type="submit" value="<?php _e('Create administrator'); ?>" />
+                        </form>
+
                     </div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Password'); ?> (<?php _e('required'); ?>)</legend>
-                            <input type="password" name="s_password" id="s_password" />
-                        </fieldset>
-                    </div>
-                    <div style="clear: both;"></div>
-                    <input id="button_save" type="submit" value="<?php _e('Create administrator'); ?>" />
-                </form>
-
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>

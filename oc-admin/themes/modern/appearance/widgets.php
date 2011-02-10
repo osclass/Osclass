@@ -32,6 +32,7 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header">Dashboard</div>
+
         <script>
                 $(function() {
                         // Here we include specific jQuery, jQuery UI and Datatables functions.
