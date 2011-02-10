@@ -74,7 +74,7 @@
         </h3>
         <ul>
             <li>
-                <a href="emails.php">&raquo; <?php _e('Manage emails & alerts'); ?></a>
+                <a href="index.php?page=emails">&raquo; <?php _e('Manage emails & alerts'); ?></a>
             </li>
         </ul>
 

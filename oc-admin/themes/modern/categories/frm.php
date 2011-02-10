@@ -48,76 +48,76 @@
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Categories'); ?></div>
 
-<div id="content">
-    
-    <div id="separator"></div>
+        <div id="content">
+            
+            <div id="separator"></div>
 
-    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-                <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/cat-icon.png" /></div>
-                <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
-                <div style="clear: both;"></div>
-        </div>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                        <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/cat-icon.png" /></div>
+                        <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
+                        <div style="clear: both;"></div>
+                </div>
 
-        <div id="content_separator"></div>
-        
-        <?php osc_show_flash_message() ; ?>
-
-        <div id="settings_form">
-			
-			<form action="index.php?page=categories" method="post">
-				<input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
-				<?php if ($edit) {
-                    CategoryForm::primary_input_hidden($category) ;
-                } ?>
-				
-				<div class="FormElement">
-				    <div class="FormElementName"><?php _e('Parent category'); ?></div>
-					<div class="FormElementInput">
-					   <?php CategoryForm::parent_category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
-					</div>
-				</div>
-				<div class="FormElement">
-				    <div class="FormElementName"><?php _e('Expirations days'); ?> <?php _e('(0 = no expiration)'); ?></div>
-					<div class="FormElementInput">
-					   <?php CategoryForm::expiration_days_input_text($category); ?>
-					</div>
-				</div>
-				<div class="FormElement">
-				    <div class="FormElementName"><?php _e('Position (order in relation to other categories)'); ?></div>
-					<div class="FormElementInput">
-					   <?php CategoryForm::position_input_text($category); ?>
-                    </div>
-				</div>
-				
-				<div class="FormElement">
-				    <div class="FormElementName"></div>
-					<div class="FormElementInput">
-					   <?php CategoryForm::enabled_input_checkbox($category); ?>&nbsp;<?php _e('Enabled'); ?>
-					</div>
-				</div>
-				
-				<div class="clear20"></div>
-				
-				<?php 
-				    $locales = Locale::newInstance()->listAllEnabled();
-                    CategoryForm::multilanguage_name_description($locales, $category) ; 
-                ?>
+                <div id="content_separator"></div>
                 
-                <div class="FormElement">
-					<div class="FormElementName"></div>
-					<div class="FormElementInput">
-						<button class="formButton" type="button" onclick="window.location='index.php?page=categories';" ><?php _e('Cancel'); ?></button>
-						<button class="formButton" type="submit"><?php _e('Save'); ?></button>
-					</div>
-				</div>
+                <?php osc_show_flash_message() ; ?>
+
+                <div id="settings_form">
+			
+			        <form action="index.php?page=categories" method="post">
+				        <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
+				        <?php if ($edit) {
+                            CategoryForm::primary_input_hidden($category) ;
+                        } ?>
 				
-			</form>
-		</div>       
-	</div>
-        <div style="clear: both;"></div>
+				        <div class="FormElement">
+				            <div class="FormElementName"><?php _e('Parent category'); ?></div>
+					        <div class="FormElementInput">
+					           <?php CategoryForm::parent_category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
+					        </div>
+				        </div>
+				        <div class="FormElement">
+				            <div class="FormElementName"><?php _e('Expirations days'); ?> <?php _e('(0 = no expiration)'); ?></div>
+					        <div class="FormElementInput">
+					           <?php CategoryForm::expiration_days_input_text($category); ?>
+					        </div>
+				        </div>
+				        <div class="FormElement">
+				            <div class="FormElementName"><?php _e('Position (order in relation to other categories)'); ?></div>
+					        <div class="FormElementInput">
+					           <?php CategoryForm::position_input_text($category); ?>
+                            </div>
+				        </div>
+				
+				        <div class="FormElement">
+				            <div class="FormElementName"></div>
+					        <div class="FormElementInput">
+					           <?php CategoryForm::enabled_input_checkbox($category); ?>&nbsp;<?php _e('Enabled'); ?>
+					        </div>
+				        </div>
+				
+				        <div class="clear20"></div>
+				
+				        <?php 
+				            $locales = Locale::newInstance()->listAllEnabled();
+                            CategoryForm::multilanguage_name_description($locales, $category) ; 
+                        ?>
+                        
+                        <div class="FormElement">
+					        <div class="FormElementName"></div>
+					        <div class="FormElementInput">
+						        <button class="formButton" type="button" onclick="window.location='index.php?page=categories';" ><?php _e('Cancel'); ?></button>
+						        <button class="formButton" type="submit"><?php _e('Save'); ?></button>
+					        </div>
+				        </div>
+				
+			        </form>
+		        </div>       
+	        </div>
+            <div style="clear: both;"></div>
         </div> <!-- end of container -->
         <?php $this->osc_print_footer() ; ?>
     </body>

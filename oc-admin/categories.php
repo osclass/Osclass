@@ -38,6 +38,8 @@ class CAdminCategories extends AdminSecBaseModel
 
 
             case 'add':
+                $this->add_css('tabs.css') ;
+                $this->add_global_js('tabber-minimized.js') ;
                 $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
                 $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
                 $this->_exportVariableToView("category", array());
@@ -69,14 +71,16 @@ class CAdminCategories extends AdminSecBaseModel
             
             
             case 'edit':
-                $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey($_GET['id'], false));
+                $this->add_css('tabs.css') ;
+                $this->add_global_js('tabber-minimized.js') ;
+                $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey(Params::getParam("id")));
                 $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
                 $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
                 $this->doView("categories/frm.php");
             break;
             
             case 'edit_post':
-                $id = $_POST['id'];
+                $id = Params::getParam("id");
                 
                 $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
                 $fields['i_expiration_days'] = Params::getParam("i_expiration_days");
