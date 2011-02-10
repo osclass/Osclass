@@ -53,7 +53,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'maxResultsPerPage@search', '50', 'INTEGER')
     ,('osclass', 'defaultShowAs@search', 'list', 'STRING')
     ,('osclass', 'defaultOrderField@search', 'dt_pub_date', 'STRING')
-    ,('osclass', 'defaultOrderType@search', '1', 'BOOLEAN');
+    ,('osclass', 'defaultOrderType@search', '1', 'BOOLEAN')
+    ,('osclass', 'admin_theme', 'modern', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
     ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
