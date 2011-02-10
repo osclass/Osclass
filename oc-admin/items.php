@@ -215,7 +215,7 @@ class CAdminItems extends AdminSecBaseModel
             case 'item_edit':
             case 'editItem':        //item edit
                                     require_once LIB_PATH . 'osclass/items.php';
-                                    $id = osc_paramGet('id', -1);
+                                    $id = Params::getParam('id') ;
 
                                     $item = Item::newInstance()->findByPrimaryKey($id);
 
