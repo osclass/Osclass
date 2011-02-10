@@ -29,6 +29,10 @@ class CAdminAdmins extends AdminSecBaseModel
     function __construct() {
         parent::__construct() ;
 
+        $this->add_css('admins_list_layout.css');
+        $this->add_css('demo_table.css');
+        $this->add_global_js('jquery.dataTables.min.js');
+
         //specific things for this class
         $this->adminManager = Admin::newInstance() ;
     }
@@ -46,9 +50,12 @@ class CAdminAdmins extends AdminSecBaseModel
                                 osc_add_flash_message(__('The item has been added.')) ;
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
-            case 'edit':        $admin = null;
+            case 'edit':        $adminEdit = null;
                                 if(Params::getParam('id') != '') $adminEdit = $this->adminManager->findByPrimaryKey ( Params::getParam('id') ) ;
                                 elseif( Session::newInstance()->_get('adminId') != '') $adminEdit = $this->adminManager->findByPrimaryKey( Session::newInstance()->_get('adminId') ) ;
+
+                                $this->_exportVariableToView("admin", $adminEdit);
+
                                 $this->doView('admins/edit.php') ;
             break;
             case 'edit_post':   $conditions = array('pk_i_id' => Params::getParam('id')) ;
@@ -87,7 +94,10 @@ class CAdminAdmins extends AdminSecBaseModel
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
             default:            $admins = $this->adminManager->listAll();
-                                $this->doView('admins/index.php') ;
+
+                                $this->_exportVariableToView("admins", $admins);
+                                
+                                $this->doView('admins/index.php');
         }
     }
 
