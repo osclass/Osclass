@@ -39,10 +39,10 @@
             </li>
             <li><a href="index.php?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a></li>
             <li>
-                <a href="comments.php">&raquo; <?php _e('Comments'); ?></a>
+                <a href="index.php?page=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
-                <a href="media.php">&raquo; <?php _e('Manage media'); ?></a>
+                <a href="index.php?page=media">&raquo; <?php _e('Manage media'); ?></a>
             </li>
         </ul>
 
@@ -63,10 +63,10 @@
         </h3>
         <ul>
             <li>
-                <a href="pages.php">&raquo; <?php _e('Manage pages'); ?></a>
+                <a href="index.php?page=pages">&raquo; <?php _e('Manage pages'); ?></a>
             </li>
             <li>
-                <a href="pages.php?action=add">&raquo; <?php _e('Create page'); ?></a>
+                <a href="index.php?page=pages&action=add">&raquo; <?php _e('Create page'); ?></a>
             </li>
         </ul>
         <h3>
@@ -85,13 +85,13 @@
         </h3>
         <ul>
             <li>
-                <a href="appearance.php">&raquo; <?php _e('Manage themes'); ?></a>
+                <a href="index.php?page=appearance">&raquo; <?php _e('Manage themes'); ?></a>
             </li>
             <li>
-                <a href="appearance.php?action=add">&raquo; <?php _e('Add a new theme'); ?></a>
+                <a href="index.php?page=appearance&action=add">&raquo; <?php _e('Add a new theme'); ?></a>
             </li>
             <li>
-                <a href="appearance.php?action=widgets">&raquo; <?php _e('Add or remove widgets'); ?></a>
+                <a href="index.php?page=appearance&action=widgets">&raquo; <?php _e('Add or remove widgets'); ?></a>
             </li>
         </ul>
 
@@ -100,10 +100,10 @@
         </h3>
         <ul>
             <li>
-                <a href="plugins.php">&raquo; <?php _e('Manage plugins'); ?></a>
+                <a href="index.php?page=plugins">&raquo; <?php _e('Manage plugins'); ?></a>
             </li>
             <li>
-                <a href="plugins.php?action=add">&raquo; <?php _e('Add new plugin'); ?></a>
+                <a href="index.php?page=plugins&action=add">&raquo; <?php _e('Add new plugin'); ?></a>
             </li>
         </ul>
 
@@ -112,10 +112,10 @@
         </h3>
         <ul>
             <li>
-                <a href="languages.php">&raquo; <?php _e('Manage languages'); ?></a>
+                <a href="index.php?page=languages">&raquo; <?php _e('Manage languages'); ?></a>
             </li>
             <li>
-                <a href="languages.php?action=add">&raquo; <?php _e('Add a language'); ?></a>
+                <a href="index.php?page=languages&action=add">&raquo; <?php _e('Add a language'); ?></a>
             </li>
         </ul>
 
@@ -124,37 +124,37 @@
         </h3>
         <ul>
             <li>
-                <a href="settings.php">&raquo; <?php _e('General settings'); ?></a>
+                <a href="index.php?page=settings">&raquo; <?php _e('General settings'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=items">&raquo; <?php _e('Items'); ?></a>
+                <a href="index.php?page=settings&action=items">&raquo; <?php _e('Items'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=comments">&raquo; <?php _e('Comments'); ?></a>
+                <a href="index.php?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=users">&raquo; <?php _e('Users'); ?></a>
+                <a href="index.php?page=settings&action=users">&raquo; <?php _e('Users'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=locations">&raquo; <?php _e('Locations'); ?></a>
+                <a href="index.php?page=settings&action=locations">&raquo; <?php _e('Locations'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=permalinks">&raquo; <?php _e('Permalinks'); ?></a>
+                <a href="index.php?page=settings&action=permalinks">&raquo; <?php _e('Permalinks'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=spamNbots">&raquo; <?php _e('Spam and bots'); ?></a>
+                <a href="index.php?page=settings&action=spamNbots">&raquo; <?php _e('Spam and bots'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=currencies">&raquo; <?php _e('Currencies'); ?></a>
+                <a href="index.php?page=settings&action=currencies">&raquo; <?php _e('Currencies'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=mailserver">&raquo; <?php _e('Mail Server'); ?></a>
+                <a href="index.php?page=settings&action=mailserver">&raquo; <?php _e('Mail Server'); ?></a>
             </li>
             <li>
-                <a href="media.php?action=config">&raquo; <?php _e('Media'); ?></a>
+                <a href="index.php?page=media&action=config">&raquo; <?php _e('Media'); ?></a>
             </li>
             <li>
-                <a href="settings.php?action=cron">&raquo; <?php _e('Cron system'); ?></a>
+                <a href="index.php?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>
             </li>
         </ul>
 
@@ -163,16 +163,16 @@
         </h3>
         <ul>
             <li>
-                <a href="tools.php?action=import">&raquo; <?php _e('Import data'); ?></a>
+                <a href="index.php?page=tools&action=import">&raquo; <?php _e('Import data'); ?></a>
             </li>
             <li>
-                <a href="tools.php?action=backup">&raquo; <?php _e('Backup data'); ?></a>
+                <a href="index.php?page=tools&action=backup">&raquo; <?php _e('Backup data'); ?></a>
             </li>
             <li>
-                <a href="tools.php?action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
+                <a href="index.php?page=tools&action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
             </li>
             <li>
-                <a href="tools.php?action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
+                <a href="index.php?page=tools&action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
             </li>
         </ul>
 
@@ -187,10 +187,10 @@
         </h3>
         <ul>
             <li>
-                <a href="users.php">&raquo; <?php _e('Manage users'); ?></a>
+                <a href="index.php?page=users">&raquo; <?php _e('Manage users'); ?></a>
             </li>
             <li>
-                <a href="users.php?action=create">&raquo; <?php _e('Add new user'); ?></a>
+                <a href="index.php?page=users&action=create">&raquo; <?php _e('Add new user'); ?></a>
             </li>
         </ul>
 
@@ -199,13 +199,13 @@
         </h3>
         <ul>
             <li>
-                <a href="admins.php">&raquo; <?php _e('List administrators'); ?></a>
+                <a href="index.php?page=admins">&raquo; <?php _e('List administrators'); ?></a>
             </li>
             <li>
-                <a href="admins.php?action=add">&raquo; <?php _e('Add new administrator'); ?></a>
+                <a href="index.php?page=admins&action=add">&raquo; <?php _e('Add new administrator'); ?></a>
             </li>
             <li>
-                <a href="admins.php?action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
+                <a href="index.php?page=admins&action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
             </li>
         </ul>
     </div>

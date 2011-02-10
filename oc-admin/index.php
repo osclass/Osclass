@@ -44,6 +44,10 @@
                             $do = new CAdminEmails() ;
                             $do->doModel() ;
         break;
+        case('pages'): require_once(osc_admin_base_path() . 'pages.php') ;
+                            $do = new CAdminPages() ;
+                            $do->doModel() ;
+        break;
         case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
                             $do = new CAdminAjax() ;
                             $do->doModel() ;
