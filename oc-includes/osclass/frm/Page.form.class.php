@@ -28,7 +28,7 @@ class PageForm extends Form {
     }
     
     static public function internal_name_input_text($page = null) {
-        parent::generic_input_text("s_internal_name", (isset($page)) ? $page["s_internal_name"] : "", null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
+        parent::generic_input_text("s_internal_name", (isset($page) && isset($page["s_internal_name"])) ? $page["s_internal_name"] : "", null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
         return true ;
     }
     
