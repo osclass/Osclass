@@ -27,6 +27,6 @@
     <div id="arrow">&raquo;</div>
     <div id="hostname"><?php echo osc_page_title() ; ?></div>
     <em id="visit_site"><a title="<?php _e('Visit website'); ?>" href="<?php echo osc_base_url() ; ?>" target="_blank"><?php echo osc_lowerCase( __('Visit website') ); ?></a><!-- &crarr; --></em>
-    <div id="user_links"><?php _e('Howdy') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="admins.php?action=edit"><?php echo $admin['s_name'] ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
+    <div id="user_links"><?php _e('Howdy') ; ?>, <a title="<?php _e('Your profile') ; ?>" href="admins.php?action=edit"><?php echo osc_logged_admin_user_name() ; ?>!</a> | <a title="<?php _e('Log Out'); ?>" href="index.php?action=logout"><?php _e('Log Out'); ?></a></div>
     <?php osc_run_hook('admin_header') ; ?>
 </div>

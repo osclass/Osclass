@@ -19,6 +19,12 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** Defines for DB error reporting */
+define('LOG_NONE', 0) ;
+define('LOG_WEB', 1) ;
+define('LOG_COMMENT', 2) ;
+define('DEBUG_LEVEL', LOG_NONE) ;
+
 class DB
 {
     private $db = null ;

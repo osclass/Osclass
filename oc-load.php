@@ -31,13 +31,13 @@ define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
 define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
-    require_once ABS_PATH . 'oc-includes/osclass/functions.php';
+    require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php' ;
 
-    $title = 'OSClass &raquo; Error';
-    $message = 'There doesn\'t exist config.php file. OSClass seems that is not installed.</p>';
-    $message .= '<p><a class="button" href="oc-includes/osclass/install.php">Install</a></p>';
+    $title = 'OSClass &raquo; Error' ;
+    $message = 'There doesn\'t exist config.php file. OSClass seems that is not installed.</p>' ;
+    $message .= '<p><a class="button" href="oc-includes/osclass/install.php">Install</a></p>' ;
 
-    osc_die($title, $message);
+    osc_die($title, $message) ;
 }
 
 require_once ABS_PATH . 'config.php';

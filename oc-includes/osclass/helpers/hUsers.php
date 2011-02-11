@@ -10,4 +10,12 @@
         return true ;
     }
 
+    function osc_logged_web_user_name() {
+        return Session::newInstance()->_get("adminUserName") ;
+    }
+
+    function osc_logged_admin_user_name() {
+        return Session::newInstance()->_get("webUserName") ;
+    }
+
 ?>
