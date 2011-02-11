@@ -25,6 +25,10 @@
     switch( Params::getParam('page') )
     {
         
+        case('ajax'):       require_once(osc_base_path() . 'ajax.php') ;
+                            $do = new CWebAjax() ;
+                            $do->doModel() ;
+        break;
         default:            //home
                             //exit() ;
                             require_once(osc_base_path() . 'main.php') ;
