@@ -253,6 +253,15 @@ define('REL_WEB_URL', '$rel_url');
 
 define('WEB_PATH', '$abs_url');
 
+/** Defines for DB error reporting */
+define('LOG_NONE', 0) ;
+
+define('LOG_WEB', 1) ;
+
+define('LOG_COMMENT', 2) ;
+
+define('DEBUG_LEVEL', LOG_NONE) ;
+
 CONFIG;
 
     file_put_contents(ABS_PATH . 'config.php', $config_text);

@@ -30,12 +30,6 @@ define('THEMES_PATH', ABS_PATH . 'oc-content/themes/') ;
 define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
 define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
 
-/** Defines for error reporting */
-define('LOG_NONE', 0) ;
-define('LOG_WEB', 1) ;
-define('LOG_COMMENT', 2) ;
-define('DEBUG_LEVEL', LOG_NONE) ;
-
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once ABS_PATH . 'oc-includes/osclass/functions.php';
 
