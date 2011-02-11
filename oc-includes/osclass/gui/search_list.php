@@ -28,14 +28,14 @@
         ?>
         <tr class="<?php echo $class; ?>">
              <td class="photo">
-                 <?php if(osc_itemHasThumbnail($i)): ?>
-             		<a href="<?php echo osc_createItemURL($i); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" /></a>
+                 <?php if(osc_item_has_thumbnail($i)): ?>
+             		<a href="<?php echo osc_item_url($i); ?>"><img src="<?php echo osc_itemThumbnail($i); ?>" /></a>
              	<?php else: ?>
                     <img src="<?php echo osc_themeResource('images/no_photo.gif'); ?>" />
              	<?php endif; ?>
              </td>
              <td class="text">
-                 <h3><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></h3>
+                 <h3><a href="<?php echo osc_item_url($i); ?>"><?php echo $i['s_title']; ?></a></h3>
                  <!--
                      <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
                  -->
