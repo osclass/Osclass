@@ -35,6 +35,62 @@
             {
                 case 'bulk_actions':
                 break;
+                
+                case 'regions': //Return regions given a countryId
+                    $regions = Region::newInstance()->listWhere("fk_c_country_code = '%s'", Params::getParam("countryId"));
+                    echo json_encode($regions);
+                    break;
+                
+                case 'cities': //Returns cities given a regionId
+                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d", Params::getParam("regionId"));
+                    echo json_encode($cities);
+                    break;
+                
+                case 'location': // This is the autocomplete AJAX
+                    $cities = City::newInstance()->ajax(Params::getParam("term"));
+                    echo json_encode($cities);
+                    break;
+                    
+                case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
+                    $alert = Params::getParam("alert");
+                    $email = Params::getParam("email");
+                    $userid = Params::getParam("userid");
+                    if($alert!='' && $email!='') {
+                            Alerts::newInstance()->insert(array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => 'DAILY'));
+                        echo "1";
+                        return true;
+                    }
+                    echo '0';
+                    return false;
+                    break;
+                    
+                case 'runhook': //Run hooks
+                    $hook = Params::getParam("hook");
+                    switch ($hook) {
+
+                        case 'item_form':
+                            $catId = Params::getParam("catId");
+                            if($catId!='') {
+                                osc_run_hook("item_form", $catId);
+                            } else {
+                                osc_run_hook("item_form");
+                            }
+                            break;
+                            
+                        default:
+                            if($hook=='') { return false; } else { osc_run_hook($hook); }
+                            break;
+                    }
+                    break;
+                    
+                case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/item_processing.php';
+                    $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
+                    break;
+                    
+                default:
+                    echo json_encode(array('error' => 'no action defined'));
+                    break;
             }
         }
     }
