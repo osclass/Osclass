@@ -45,8 +45,14 @@ class CAdminAdmins extends AdminSecBaseModel
         {
             case 'add':         $this->doView('admins/add.php') ;
             break;
-            case 'add_post':    $_POST['s_password'] = sha1($_POST['s_password']) ;
-                                $this->adminManager->insert($_POST) ;
+            case 'add_post':    $array = array(
+                                        's_password'    =>  sha1(Params::getParam('s_password')),
+                                        's_name'        =>  Params::getParam('s_name'),
+                                        's_email'       =>  Params::getParam('s_email'),
+                                        's_username'    =>  Params::getParam('s_username'),
+                                );
+                                $this->adminManager->insert( $array ) ;
+
                                 osc_add_flash_message(__('The item has been added.')) ;
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
@@ -60,26 +66,30 @@ class CAdminAdmins extends AdminSecBaseModel
             break;
             case 'edit_post':   $conditions = array('pk_i_id' => Params::getParam('id')) ;
                                 $admin = $this->adminManager->findByPrimaryKey(Params::getParam('id')) ;
-                                unset($_POST['id']);
-                                if(empty($_POST['s_password'])) {
-                                    unset($_POST['s_password']);
+                                $array = array();
+                                if( Params::getParam('s_password') == '' ) {  // OJO
                                 } else {
-                                    if(sha1($_POST['old_password'])==$admin['s_password']) {
-                                        if($_POST['s_password']==$_POST['s_password2']) {
-                                            $_POST['s_password'] = sha1($_POST['s_password']);
+                                    if( sha1(Params::getParam('old_password')) == $admin['s_password'] ) {
+                                        if( Params::getParam('s_password') == Params::getParam('s_password2') ) {
+
+
+                                            if( $admin['s_username'] != Params::getParam('s_username') ){  // si cambia el username
+                                                if($this->adminManager->findByUsername( Params::getParam('s_username') ) ) {  // si exisite username NO PUEDE UPDATE
+                                                    osc_add_flash_message(__('Existing username.'));
+                                                }
+                                            }
+                                            $array['s_password']    = sha1(Params::getParam('s_password') );
+                                            $array['s_email']       = Params::getParam('s_email');
+                                            $array['s_username']    = Params::getParam('s_username');
+
                                         } else {
-                                            unset($_POST['s_password']);
                                             osc_add_flash_message(__('Password didn\'t update. Passwords don\'t match.'));
                                         }
                                     } else {
-                                        unset($_POST['s_password']);
                                         osc_add_flash_message(__('Password didn\'t update. "Old password" didn\'t match with our records in the database.'));
                                     }
                                 }
-                                unset($_POST['old_password']);
-                                unset($_POST['s_password2']);
-
-                                $this->adminManager->update($_POST, $conditions);
+                                $this->adminManager->update($array, $conditions);
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
             case 'delete':      $id = Params::getParam('id') ;

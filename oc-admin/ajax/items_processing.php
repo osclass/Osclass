@@ -149,9 +149,9 @@
     }
     /* END - dump results */
  }
-if(!isset($_SESSION['adminId'])) { return false; }
+//if(!isset($_SESSION['adminId'])) { return false; }
 
 /* YES! it's PHP! */
-$_GET 
+/*$_GET 
 ? $items_processing = new items_processing_ajax($_GET)
-: false;
+: false;*/

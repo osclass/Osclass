@@ -16,7 +16,6 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php UserForm::location_javascript(); ?>
 <?php
 
     $user = $this->_get("user");
@@ -53,6 +52,7 @@
         <div class="Header"><?php _e('Users'); ?></div>
             <div id="content">
                 <div id="separator"></div>
+<?php UserForm::location_javascript("admin"); ?>
 
                 <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 

@@ -72,7 +72,7 @@
                             $do = new CAdminUsers() ;
                             $do->doModel() ;
         break;
-        case('ajax'):       require_once(osc_admin_base_path() . 'ajax.php') ;
+        case('ajax'):       require_once(osc_admin_base_path() . 'ajax/ajax.php') ;
                             $do = new CAdminAjax() ;
                             $do->doModel() ;
         break;

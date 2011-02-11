@@ -294,13 +294,17 @@ function checkForm() {
 
 
 
-    static public function location_javascript() {
+    static public function location_javascript($path = 'front') {
  ?>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#countryId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
+            <?php if($path=="admin") { ?>
+                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
+            <?php } else { ?>
+                var url = '<?php echo osc_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
+            <?php }; ?>
             var result = '';
 
             if(pk_c_code != '') {
@@ -336,7 +340,11 @@ function checkForm() {
 
         $("#regionId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + pk_c_code ;
+            <?php if($path=="admin") { ?>
+                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+            <?php } else { ?>
+                var url = '<?php echo osc_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+            <?php }; ?>
             var result = '';
 
             if(pk_c_code != '') {
