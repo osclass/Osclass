@@ -40,26 +40,55 @@ class CAdminLanguages extends AdminSecBaseModel
         {
             case 'add':                 $this->doView('languages/add.php') ;
             break;
-            case 'add_post':            $path = TRANSLATIONS_PATH . pathinfo($_FILES['package']['name'], PATHINFO_FILENAME);
-                                        if(osc_packageExtract($_FILES['package']['tmp_name'], $path)) {
-                                            osc_add_flash_message(__('The language has been installed correctly.'));
-                                        } else {
-                                            osc_add_flash_message(__('There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH.'));
+            case 'add_post':            $filePackage = Params::getFiles('package');
+                                        $path = osc_translations_path() . pathinfo($filePackage['name'], PATHINFO_FILENAME);
+
+                                        if(preg_match('/^[a-z_]+$/i', $filePackage['name'])) {
+                                            if(osc_packageExtract($filePackage['tmp_name'], $path)) {
+                                                osc_add_flash_message(__('The language has been installed correctly.'));
+                                            } else {
+                                                osc_add_flash_message(__('There was a problem adding the language. Please, try again. If the problem persist, contact the developer of the package or install it manually via FTP/SSH.'));
+                                            }
+                                        }else{
+                                            osc_add_flash_message(__('There was a problem adding the language. The language zip must be aa_AA.zip. Please rename it.'));
                                         }
+
+                                        
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=languages' ) ;
             break;
-            case 'edit':                $this->localeManager = Locale::newInstance()->findByPrimaryKey($_GET['id']) ;
+            case 'edit':                $locale = $this->localeManager->findByPrimaryKey(Params::getParam('id')) ;
+
+                                        $this->_exportVariableToView("locale", $locale);
+
                                         $this->doView('languages/frm.php') ;
             break;
-            case 'edit_post':           $code = $_POST['pk_c_code'] ;
-                                        unset($_POST['pk_c_code']) ;
+            case 'edit_post':           $code = Params::getParam('pk_c_code') ;
+                                        $enabled = Params::getParam('b_enabled') ;
+                                        if ($enabled == '' ){
+                                            $enabled = DB_CONST_FALSE ;
+                                        }else{
+                                            $enabled = DB_CONST_TRUE ;
+                                        }
+                                        $enabled_bo = Params::getParam('b_enabled_bo') ;
+                                        if ( $enabled_bo == '' ){
+                                            $enabled_bo = DB_CONST_FALSE ;
+                                        }else{
+                                            $enabled_bo = DB_CONST_TRUE;
+                                        }
 
-                                        if (!isset($_POST['b_enabled']))
-                                            $_POST['b_enabled'] = DB_CONST_FALSE ;
-                                        if (!isset($_POST['b_enabled_bo']))
-                                            $_POST['b_enabled_bo'] = DB_CONST_FALSE ;
+                                        $array = array(
+                                            'b_enabled'         => $enabled,
+                                            'b_enabled_bo'      => $enabled_bo,
+                                            's_name'            => Params::getParam('s_name'),
+                                            's_short_name'      => Params::getParam('s_short_name'),
+                                            's_description'     => Params::getParam('s_description'),
+                                            's_currency_format' => Params::getParam('s_currency_format'),
+                                            's_date_format'     => Params::getParam('s_date_format'),
+                                            's_stop_words'      => Params::getParam('s_stop_words'),
+                                        );
+                                        
+                                        $this->localeManager->update($array, array('pk_c_code' => $code)) ;
 
-                                        $this->localeManager->update($_POST, array('pk_c_code' => $code)) ;
                                         $this->redirectTo(osc_admin_base_url(true).'?page=languages') ;
             break;
             case 'enable':              
@@ -122,7 +151,7 @@ class CAdminLanguages extends AdminSecBaseModel
                                             foreach ( Params::getParam('code') as $code) {
                                                 if( $default_lang != $code ) {
                                                     $this->localeManager->deleteLocale($code) ;
-                                                    if (!osc_deleteDir(TRANSLATIONS_PATH . $code)) {
+                                                    if (!osc_deleteDir(osc_translations_path() . $code)) {
                                                         osc_add_flash_message(__('Directory "%s" could not be removed'), $code) ;
                                                     }
                                                 } else {
@@ -134,6 +163,13 @@ class CAdminLanguages extends AdminSecBaseModel
             break;
             default:                    osc_checkLocales() ;
                                         $locales = Locale::newInstance()->listAll() ;
+
+                                        $this->add_css('languages_layout.css');
+                                        $this->add_css('demo_table.css');
+                                        $this->add_global_js('jquery.dataTables.min.js');
+
+                                        $this->_exportVariableToView("locales", $locales);
+
                                         $this->doView('languages/index.php') ;
         }
     }
