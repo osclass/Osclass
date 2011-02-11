@@ -79,8 +79,10 @@
             $themes = array();
             $dir = opendir( osc_base_path() .  'oc-content/themes');
             while ($file = readdir($dir)) {
-//                if (preg_match('/^[a-z0-9_]+$/i', $file))
-                    $themes[] = $file;
+                //if(!preg_match('/\.php$/i', $file) && !preg_match('/^\./i', $file)){
+                    if (preg_match('/^[a-z0-9_]+$/i', $file))
+                        $themes[] = $file;
+                //}
             }
             closedir($dir);
             return $themes;

@@ -43,7 +43,7 @@ class CAdminLanguages extends AdminSecBaseModel
             case 'add_post':            $filePackage = Params::getFiles('package');
                                         $path = osc_translations_path() . pathinfo($filePackage['name'], PATHINFO_FILENAME);
 
-                                        if(preg_match('/^[a-z_]+$/i', $filePackage['name'])) {
+                                        if(preg_match('/^[a-z_]+\.zip$/i', $filePackage['name'])) {
                                             if(osc_packageExtract($filePackage['tmp_name'], $path)) {
                                                 osc_add_flash_message(__('The language has been installed correctly.'));
                                             } else {
