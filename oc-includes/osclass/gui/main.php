@@ -22,7 +22,7 @@
 
 ?>
 
-<?php $latestItems = Item::newInstance()->listLatest(10) ; ?>
+<?php $latestItems = $this->_get('latestItems') ; ?>
 <?php $catId = Params::getParam('catId') ; ?>
 <?php $categories = $this->_get('categories') ; ?>
 
