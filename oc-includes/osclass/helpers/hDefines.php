@@ -146,7 +146,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/dashboard' ;
         } else {
-            $path = osc_base_url(true) . '?action=dashboard' ;
+            $path = osc_base_url(true) . '?page=user&action=dashboard' ;
         }
         return $path ;
     }
@@ -166,7 +166,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/register' ;
         } else {
-            $path = osc_base_url(true) . '?pages=user&action=register' ;
+            $path = osc_base_url(true) . '?page=user&action=register' ;
         }
         return $path ;
     }
@@ -176,7 +176,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url(true) . 'user/login';
         } else {
-            $path = osc_base_url(true) . '?pages=user&action=login' ;
+            $path = osc_base_url(true) . '?page=user&action=login' ;
         }
         return $path ;
     }
@@ -192,7 +192,7 @@
             }
             $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']) ;
         } else {
-            $path = osc_base_url(true) . sprintf('?pages=item&id=%d', $item['pk_i_id']) ;
+            $path = osc_base_url(true) . sprintf('?page=item&id=%d', $item['pk_i_id']) ;
         }
         return $path ;
     }
@@ -213,25 +213,28 @@
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/alerts';
         } else
-            return osc_base_url() . 'user.php?action=alerts';
+            return osc_base_url(true) . '?page=user&action=alerts' ;
+    }
+
+    //osc_createProfileURL
+    function osc_user_profile_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/profile';
+        } else
+            return osc_base_url(true) . '?page=user&action=profile' ;
+    }
+
+    //osc_createUserItemsURL
+    function osc_user_items_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/items';
+        } else
+            return osc_base_url() . 'page=user&action=items';
     }
 
 
+    
 /*
-
-function osc_createProfileURL() {
-    if (osc_rewrite_enabled()) {
-        return osc_base_url() . 'user/profile';
-    } else
-        return osc_base_url() . 'user.php?action=profile';
-}
-
-function osc_createUserItemsURL() {
-    if (osc_rewrite_enabled()) {
-        return osc_base_url() . 'user/items';
-    } else
-        return osc_base_url() . 'user.php?action=items';
-}
 
 function osc_createUserOptionsURL($option = null) {
     if (osc_rewrite_enabled()) {
@@ -320,51 +323,7 @@ function osc_createThumbnailURL($resource) {
 function osc_createResourceURL($resource) {
     return sprintf(osc_base_url() . 'oc-content/uploads/%d.png', $resource['pk_i_id']) ;
 }
-
-function osc_item_post_url($cat = null) {
-    if (!isset($cat) || !isset($cat['pk_i_id'])) {
-        if (osc_rewrite_enabled()) {
-            return osc_base_url() . 'item/new' ;
-        } else {
-            return sprintf(osc_base_url() . 'item.php?action=post') ;
-        }
-    } else {
-        if (osc_rewrite_enabled()) {
-            return osc_base_url() . 'item/new/' . $cat['pk_i_id'] ;
-        } else {
-            return sprintf(osc_base_url() . 'item.php?action=post&catId=%d', $cat['pk_i_id']) ;
-        }
-    }
-}*/
-
-/**
- * Create automatically the url of a category
- *
- * @param array $cat An array with the category information
- * @param bool $echo If you want to echo or not the path automatically
- * @return string If $echo is false, it returns the path, if not it return blank string
- */
-/*function osc_search_category_url($cat, $echo = false) {
-    $path = '';
-
-    if (osc_rewrite_enabled()) {
-        $cat = Category::newInstance()->hierarchy($cat['pk_i_id']) ;
-        $sanitized_category = "" ;
-        for ($i = count($cat); $i > 0; $i--) {
-            $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
-        }
-        $path = osc_base_url() . $sanitized_category ;
-    } else {
-        $path = sprintf(osc_base_url() . 'search.php?sCategory=%d', $cat['pk_i_id']) ;
-    }
-
-    if($echo) {
-        echo $path ;
-        return '';
-    }
-
-    return $path ;
-}*/
+*/
 
 /*
 function osc_createUserPublicDashboard($user = null) {
