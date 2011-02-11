@@ -64,7 +64,7 @@ switch ($action) {
             switch($success) {
             
                 case 0:
-                    osc_redirectTo(osc_createRegisterURL()) ;
+                    osc_redirectTo(osc_register_account_url()) ;
                     break ;
                     
                 case 1:
@@ -81,20 +81,20 @@ switch ($action) {
                     
                 case 3:
                     osc_add_flash_message(__('Sorry, but that email is already in use. Did you forget your password?')) ;
-                    osc_redirectTo(osc_createRegisterURL()) ;
+                    osc_redirectTo(osc_register_account_url()) ;
                     break;
                     
                 case 4:
                     osc_add_flash_message(__('The user could not be registered, sorry.')) ;
-                    osc_redirectTo(osc_createRegisterURL()) ;
+                    osc_redirectTo(osc_register_account_url()) ;
                     break;
                     
                 default:
-                    osc_redirectTo(osc_createRegisterURL()) ;
+                    osc_redirectTo(osc_register_account_url()) ;
                     break;
             }
 
-            osc_redirectTo(osc_createRegisterURL()) ;
+            osc_redirectTo(osc_register_account_url()) ;
         } else {
             osc_add_flash_message(__('User registration is not available.')) ;
             osc_redirectTo(osc_base_url()) ;
@@ -313,7 +313,7 @@ switch ($action) {
         if($userId==0) {
             Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
             osc_add_flash_message(__('You could register and access every time to your items.'));
-            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
+            osc_redirectTo(osc_register_account_url());//'user.php?action=register');
         } else {
             Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
             osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
@@ -363,7 +363,7 @@ switch ($action) {
         $userId = intval( Session::newInstance()->_get("userId") ) ;
         if($userId==0) {
             osc_add_flash_message(__('You could register and access every time to your items.'));
-            osc_redirectTo(osc_createRegisterURL());//'user.php?action=register');
+            osc_redirectTo(osc_register_account_url());//'user.php?action=register');
         } else {
             osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
         }
@@ -580,7 +580,7 @@ switch ($action) {
                 osc_redirectTo(osc_createUserAccountURL());
             }
             
-            osc_redirectTo(osc_createRegisterURL());
+            osc_redirectTo(osc_register_account_url());
         } else {
             osc_add_flash_message(__('You need to login first.'));
         };

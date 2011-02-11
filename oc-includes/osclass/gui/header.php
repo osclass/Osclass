@@ -36,7 +36,7 @@
             <?php } else { ?>
             <li class="first">
                 <a id="login_open" href="<?php echo osc_login_url(); ?>"><?php _e('Login'); ?></a>  &middot;
-                <a href="<?php echo osc_createRegisterURL(); ?>"><?php _e('Register a free account'); ?></a>
+                <a href="<?php echo osc_register_account_url(); ?>"><?php _e('Register a free account'); ?></a>
                 <form id="login" action="user.php" method="post">
                     <fieldset>
                         <input type="hidden" name="action" value="login_post" />
@@ -62,4 +62,4 @@
     </div>
 </div>
 
-<?php osc_showWidgets('header') ; ?>
+<?php osc_show_widgets('header') ; ?>
