@@ -4,7 +4,7 @@
     $(document).ready(function(){
         $("#countryId").change(function(){
             var pk_c_code = $(this).val();
-            var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/region.php?countryId="; ?>' + pk_c_code;
+            var url = '<?php echo osc_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
             var result = '';
             
             $.ajax({
@@ -24,7 +24,7 @@
                     $("#regionId").html(result);
     
                     var region_id = $("#regionId option:first").val();
-                    var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/city.php?regionId="; ?>' + region_id;
+                    var url = '<?php echo osc_base_url(true)."?page=ajax&action=city&regionId="; ?>' + region_id;
                     var result = '';
     
                     $.ajax({
