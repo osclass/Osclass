@@ -26,7 +26,7 @@
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
         <ul>
-            <?php if(osc_is_user_logged_in()) { ?>
+            <?php if(osc_is_web_user_logged_in()) { ?>
             <li class="first logged">
                 <?php _e('Hello ' . osc_userInfo('s_name') . '!') ; ?>  &middot;
                 <?php // _e('Manage from here your'); ?>

@@ -7,7 +7,7 @@
 	    }
 
 	    function isLogged() {
-            return osc_is_user_logged_in() ;
+            return osc_is_web_user_logged_in() ;
 	    }
 
 	    function showAuthFailPage() {

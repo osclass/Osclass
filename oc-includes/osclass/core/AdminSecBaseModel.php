@@ -42,28 +42,20 @@
             exit ;
         }
 
-        function osc_print_head() {
-            require osc_current_admin_theme_path() . 'head.php' ;
+        function osc_get_theme_path($file) {
+            if (file_exists(osc_current_admin_theme_path() . $file)) {
+                return osc_current_admin_theme_path() . $file ;
+            } else {
+                return osc_admin_base_path() . 'gui/' . $file ;
+            }
         }
 
-        function osc_print_header() {
-            require osc_current_admin_theme_path() . 'header.php' ;
-        }
-
-        function osc_print_html($file) {
-            require osc_current_admin_theme_path() . $file ;
-        }
-
-        function osc_print_footer() {
-            require osc_current_admin_theme_path() . 'footer.php' ;
-        }
-
-        function add_css($css_filename) {
-            $this->aCss[] = osc_current_admin_theme_styles_url() . $css_filename ;
-        }
-
-        function add_js($js_filename) {
-            $this->aJs[] = osc_current_admin_theme_js_url() . $js_filename ;
+        function osc_get_theme_url($file) {
+            if (file_exists(osc_current_admin_theme_path() . $file)) {
+                return osc_current_admin_theme_url() . $file ;
+            } else {
+                return osc_admin_base_url() . 'gui/' . $file ;
+            }
         }
     }
 

@@ -141,7 +141,7 @@
     function osc_user_logout_url() {
         if (osc_rewrite_enabled()) {
             return osc_base_url() . 'user/logout';
-        } else
+        } else {
             return osc_base_url() . 'user.php?action=logout';
         }
     }

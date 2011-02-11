@@ -67,7 +67,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                     <!-- right -->
                     <div id="header_right">
                         <div id="header_user_menu">
-                            <?php if(osc_is_user_logged_in()): ?>
+                            <?php if(osc_is_web_user_logged_in()): ?>
                             <?php _e('Hello ' . osc_userInfo('s_name') . '!') ; ?>
                             <?php _e('Manage from here your'); ?>
                             <a href="<?php echo osc_user_account_url() ; ?>"><?php _e('account'); ?></a> |
