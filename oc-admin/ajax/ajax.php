@@ -87,9 +87,18 @@
                     require_once osc_admin_base_path() . 'ajax/item_processing.php';
                     $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
                     break;
+
+                case 'custom': // Execute via AJAX custom file
+                    $ajaxfile = Params::getParam("ajaxfile");
+                    if($ajaxfile!='') {
+                        require_once osc_admin_base_path() . $ajaxfile;
+                    } else {
+                        echo json_encode(array('error' => __('no action defined')));
+                    }
+                    break;
                     
                 default:
-                    echo json_encode(array('error' => 'no action defined'));
+                    echo json_encode(array('error' => __('no action defined')));
                     break;
             }
         }
