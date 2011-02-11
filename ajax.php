@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class CAdminAjax extends AdminSecBaseModel
+    class CWebAjax extends BaseModel
     {
         function __construct() {
             parent::__construct() ;
@@ -83,15 +83,10 @@
                     }
                     break;
                     
-                case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
-                    require_once osc_admin_base_path() . 'ajax/item_processing.php';
-                    $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
-                    break;
-
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
-                        require_once osc_admin_base_path() . $ajaxfile;
+                        require_once osc_base_path() . $ajaxfile;
                     } else {
                         echo json_encode(array('error' => __('no action defined')));
                     }

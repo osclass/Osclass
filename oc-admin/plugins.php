@@ -40,7 +40,7 @@ class CAdminPlugins extends AdminSecBaseModel
 		        break;
 	        case 'add_post':
 	            $package = Params::getFiles("package");
-		        $path = osc_plugins_path() . pathinfo($package['name'], PATHINFO_FILENAME);
+		        $path = osc_plugins_path() ;//. pathinfo($package['name'], PATHINFO_FILENAME);
 		        osc_packageExtract($package['tmp_name'], $path);
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
