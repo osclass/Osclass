@@ -46,15 +46,13 @@
     }
 
     function osc_renderPluginView($file) {
-        global $adminTheme;
-
         extract($GLOBALS);
-        require 'themes/' . $adminTheme . '/header.php';
+        require 'themes/' . osc_admin_theme() . '/header.php';
 
         $header = __('Plugins').': '.__('Configuration');
         echo '<div class="Header">', $header, '</div>';
-        require 'themes/' . $adminTheme . '/plugins/view.php';
-        require 'themes/' . $adminTheme . '/footer.php';
+        require 'themes/' . osc_admin_theme() . '/plugins/view.php';
+        require 'themes/' . osc_admin_theme() . '/footer.php';
     }
 
 ?>

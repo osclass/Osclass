@@ -12,6 +12,18 @@
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
+    
+    function osc_ajax_plugin_url($file = '') {
+        return(WEB_PATH . "index.php?page=ajax&file=" . $file);
+    }
+
+    function osc_admin_configure_plugin_url($file = '') {
+        return(WEB_PATH . "oc-admin/index.php?page=plugins&action=configure&plugin=" . $file);
+    }
+
+    function osc_admin_render_plugin_url($file = '') {
+        return(WEB_PATH . "oc-admin/index.php?page=plugins&action=renderplugin&file=" . $file);
+    }
 
     //Path Helpers
     function osc_base_path() {

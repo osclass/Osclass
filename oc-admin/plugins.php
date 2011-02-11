@@ -94,8 +94,9 @@ class CAdminPlugins extends AdminSecBaseModel
 			        } else {
 				        $file = $_REQUEST['file'];
 			        };
-			        $this->_exportVariableToView("file", '../oc-content/plugins/'.$file);
-			        osc_renderPluginView($file);
+			        $this->_exportVariableToView("file", osc_base_path().'oc-content/plugins/'.$file);
+			        //osc_renderPluginView($file);
+			        $this->doView("plugins/view.php");
 		        }
 		        break;
 
