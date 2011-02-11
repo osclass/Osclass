@@ -30,14 +30,19 @@ class CWebMain extends BaseModel
         $this->add_global_js('jquery-ui-1.8.5.js') ;
         $this->add_js('jquery-extends.js') ;
         $this->add_js('global.js') ;
-
     }
 
     //Business Layer...
     function doModel() {
+        //recovering data needed at main.php
+        $categories = Category::newInstance()->toTree();
+        $locales = Locale::newInstance()->listAllEnabled() ;
+
         //calling the view...
+        $this->_exportVariableToView('categories', $categories) ;
+        $this->_exportVariableToView('locales', $locales) ;
+
         $this->doView('main.php') ;
-        
     }
 
     //hopefully generic...
