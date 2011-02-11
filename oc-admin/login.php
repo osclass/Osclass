@@ -51,7 +51,10 @@ class CAdminLogin extends BaseModel
 
                                             //we are logged in... let's go!
                                             Session::newInstance()->_set('adminId', $admin['pk_i_id']) ;
-                                            Session::newInstance()->_set('adminTheme', Params::getParam('theme')) ;
+                                            Session::newInstance()->_set('adminUserName', $admin['s_username']) ;
+                                            Session::newInstance()->_set('adminName', $admin['s_name']) ;
+                                            Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
+                                            //Session::newInstance()->_set('adminTheme', Params::getParam('theme')) ;
                                             Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
                                         } else {
