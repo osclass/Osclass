@@ -22,7 +22,9 @@
 
 ?>
 
-<?php $latestItems = Item::newInstance()->listLatest(10) ; ?>
+<?php $latestItems = $this->_get('latestItems') ; ?>
+<?php $catId = Params::getParam('catId') ; ?>
+<?php $categories = $this->_get('categories') ; ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -37,7 +39,7 @@
 
             <div id="form_publish">
                 <?php include("inc.search.php") ; ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url($catId); ?>">Publish your ad for free</a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url($catId) ; ?>">Publish your ad for free</a></strong>
             </div>
 
             <div class="content home">
@@ -144,7 +146,7 @@
 
         </div>
 
-        <?php osc_showFlashMessages() ; ?>
+        <?php osc_show_flash_message() ; ?>
 
     </body>
     

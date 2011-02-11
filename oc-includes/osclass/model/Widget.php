@@ -21,8 +21,14 @@
 
 
 class Widget extends DAO {
+    private static $instance ;
 
-	public static function newInstance() { return new Widget(); }
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
 
 	public function getTableName() { return DB_TABLE_PREFIX . 't_widget'; }
 

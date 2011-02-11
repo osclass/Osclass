@@ -1,5 +1,5 @@
-<?php osc_showWidgets('footer'); ?>
-<?php osc_runHook('footer'); ?>
+<?php osc_show_widgets('footer'); ?>
+<?php osc_run_hook('footer'); ?>
 
 <div id="footer">
     <div class="inner">

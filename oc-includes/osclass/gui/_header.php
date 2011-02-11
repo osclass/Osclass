@@ -56,7 +56,7 @@
                 <a  href="<?php echo osc_createProfileURL(); ?>"><?php _e('profile') ; ?></a>.<br />
                 <a  href="<?php echo osc_createLogoutURL(); ?>"><?php _e('Logout') ; ?></a>
             <?php } else { ?>
-                <a  href="<?php echo osc_createRegisterURL() ; ?>"><?php _e('Register a free account') ; ?></a> <?php _e('or') ; ?> <a  href="<?php echo osc_login_url() ; ?>"><?php _e('login') ; ?></a>
+                <a  href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register a free account') ; ?></a> <?php _e('or') ; ?> <a  href="<?php echo osc_login_url() ; ?>"><?php _e('login') ; ?></a>
             <?php } ?>
         </div>
 

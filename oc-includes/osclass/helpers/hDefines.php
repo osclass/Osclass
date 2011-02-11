@@ -93,8 +93,8 @@
     //functions for the public website //
     /////////////////////////////////////
 
-    function osc_item_post_url($category = null) {
-        if ($category) {
+    function osc_item_post_url($category = '') {
+        if ($category != '') {
             if (osc_rewrite_enabled()) {
                 return osc_base_url() . 'item/new/' . $cat['pk_i_id'] ;
             } else {

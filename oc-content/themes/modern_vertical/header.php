@@ -73,7 +73,7 @@ $locales = Locale::newInstance()->listAllEnabled();
                             <a href="<?php echo osc_user_account_url() ; ?>"><?php _e('account'); ?></a> |
                             <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout'); ?></a>
                             <?php else: ?>
-                            <a href="<?php echo osc_createRegisterURL(); ?>"><?php _e('Register a free account'); ?></a> or <a id="login_open" href="<?php echo osc_login_url(); ?>"><?php _e('login'); ?></a>
+                            <a href="<?php echo osc_register_account_url(); ?>"><?php _e('Register a free account'); ?></a> or <a id="login_open" href="<?php echo osc_login_url(); ?>"><?php _e('login'); ?></a>
                             <?php endif; ?>
                         </div>
                         <div id="header_lang_menu">
