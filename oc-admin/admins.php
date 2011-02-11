@@ -45,8 +45,14 @@ class CAdminAdmins extends AdminSecBaseModel
         {
             case 'add':         $this->doView('admins/add.php') ;
             break;
-            case 'add_post':    $_POST['s_password'] = sha1($_POST['s_password']) ;
-                                $this->adminManager->insert($_POST) ;
+            case 'add_post':    $array = array(
+                                        's_password'    =>  sha1(Params::getParam('s_password')),
+                                        's_name'        =>  Params::getParam('s_name'),
+                                        's_email'       =>  Params::getParam('s_email'),
+                                        's_username'    =>  Params::getParam('s_username'),
+                                );
+                                $this->adminManager->insert( $array ) ;
+
                                 osc_add_flash_message(__('The item has been added.')) ;
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
