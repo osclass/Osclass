@@ -25,27 +25,26 @@ define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
-require_once ABS_PATH . 'oc-includes/osclass/functions.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 
 ( isset($_REQUEST['step']) ) ? $step = (int) $_REQUEST['step'] : $step = '1' ;
 
 if( is_osclass_installed( ) ) {
-    $message = 'You appear to have already installed OSClass. To reinstall please clear your old database tables first.';
-    osc_die('OSClass &raquo; Error', $message);
+    $message = 'You appear to have already installed OSClass. To reinstall please clear your old database tables first.' ;
+    osc_die('OSClass &raquo; Error', $message) ;
 }
 
 switch ($step) {
     case 1:
-        $requirements = get_requirements();
-        $error = check_requirements($requirements);
+        $requirements = get_requirements() ;
+        $error = check_requirements($requirements) ;
         break;
     case 2:
         if( isset($_REQUEST['save_stats']) ) {
-            setcookie('osclass_save_stats', 1);
-            header('Location: '. get_absolute_url() . 'oc-includes/osclass/install.php?step=2' );
+            setcookie('osclass_save_stats', 1) ;
+            header('Location: '. get_absolute_url() . 'oc-includes/osclass/install.php?step=2') ;
         }
         break;
     case 3:
