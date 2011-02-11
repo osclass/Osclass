@@ -105,6 +105,7 @@ require_once LIB_PATH . 'osclass/frm/Category.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Item.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Contact.form.class.php';
 require_once LIB_PATH . 'osclass/frm/User.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 
 $_GET = add_slashes_extended($_GET);
 $_POST = add_slashes_extended($_POST);
