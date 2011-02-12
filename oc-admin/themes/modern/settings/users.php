@@ -20,45 +20,108 @@
  */
 ?>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
 
-<div id="content">
-    <div id="separator"></div>
+        <script type="text/javascript">
+            $.extend({
+                initDashboard: function(args) {
+                    $.isArray(args) ? true : false;
+                    $.each(args, function(i, val) {
+                        $("#" + val.substr(3)).show();
+                        $("#" + val).attr('checked', 'checked');
+                    });
+                },
+                setCookie: function(args) {
+                    $.isArray(args) ? true : false;
+                    $.cookie.set("osc_admin_main", args, {json: true});
+                }
+            });
 
-    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            $(function() {
+                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) {
+                    // create cookies if admin is a first timer...
+                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
+                    $.initDashboard(sections);
+                    $.setCookie(sections);
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" alt="" title="" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
-            <div style="clear: both;"></div>
-        </div>
-        <div id="content_separator"></div>
-        <?php osc_show_flash_message('admin') ; ?>
-        <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-            <div style="padding: 20px;">
-                <form action="settings.php" method="post">
-                    <?php $enabled_user_registration = osc_user_registration_enabled() ; ?>
-                    <?php $enabled_user_validation = osc_user_validation_enabled() ; ?>
-                    <?php $enabled_users = osc_users_enabled() ; ?>
-                    <input type="hidden" name="action" value="users_post" />
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Settings'); ?></legend>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_users" id="enabled_users" <?php if($enabled_users) { ?>checked<?php } ?>/>
-                            <label for="enabled_users"><?php _e('User enable'); ?></label>
-                            <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_validation" id="enabled_user_validation" <?php if($enabled_user_validation) { ?>checked<?php } ?>/>
-                            <label for="enabled_user_validation"><?php _e('User validation'); ?></label>
-                            <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_registration" id="enabled_user_registration" <?php if($enabled_user_registration) { ?>checked<?php } ?>/>
-                            <label for="enabled_user_registration"><?php _e('User registration'); ?></label>
-                        </fieldset>
+                } else { // else read it and apply it!
+                    var enabled_sections = $.cookie.get("osc_admin_main", true);
+                    $.initDashboard(enabled_sections);
+                    $.setCookie(enabled_sections);
+                }
+
+                // save settings
+                $("#button_save").click(function() {
+                    var sections = [];
+                    $('#checkboxes input:checkbox:checked').each(function() {
+                        sections.push($(this).attr('id'));
+                    });
+
+                    $.setCookie(sections);
+                    $('#main_div').hide();
+                });
+
+
+                $('#button_open').click(function() {
+                    $('#main_div').toggle();
+                });
+
+                $("#checkboxes input[type='checkbox']").click(function() {
+                    var val = $(this).attr('id');
+                    $("#" + val.substr(3)).toggle();
+                });
+            });
+        </script>
+        <div id="content">
+            <div id="separator"></div>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" alt="" title="" />
                     </div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
                     <div style="clear: both;"></div>
-                    <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
-                </form>
-            </div>
-        </div>
-    </div> <!-- end of right column -->
+                </div>
+                <div id="content_separator"></div>
+                <?php osc_show_flash_message('admin') ; ?>
+                <!-- settings form -->
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 20px;">
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="settings" />
+                            <input type="hidden" name="action" value="users_post" />
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Settings'); ?></legend>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_users" id="enabled_users" <?php echo (osc_users_enabled() ? 'checked="checked"' : ''); ?> value="1" />
+                                    <label for="enabled_users"><?php _e('User enable'); ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_validation" id="enabled_user_validation" <?php echo (osc_user_validation_enabled() ? 'checked="checked"' : ''); ?> value="1" />
+                                    <label for="enabled_user_validation"><?php _e('User validation'); ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_registration" id="enabled_user_registration" <?php echo (osc_user_registration_enabled() ? 'checked="checked"' : ''); ?> value="1" />
+                                    <label for="enabled_user_registration"><?php _e('User registration'); ?></label>
+                                </fieldset>
+                            </div>
+
+                            <div style="clear: both;"></div>
+                            
+                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end of right column -->
+        </div><!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>

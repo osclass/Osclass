@@ -16,11 +16,431 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+class CAdminSettings extends AdminSecBaseModel
+{
 
-require_once ABS_PATH . 'oc-admin/oc-load.php';
+    function __construct() {
+        parent::__construct() ;
+        $this->add_css('settings_layout.css');
+    }
 
-$action = Params::getParam('action');
+    //Business Layer...
+    function doModel() {
+        switch($this->action) {
+            case('items'):          // calling the items settings view
+                                    $this->doView('settings/items.php');
+            break;
+            case('items_post'):     // update item settings
+                                    $enabledRecaptchaItems   = Params::getParam('enabled_recaptcha_items');
+                                    $enabledRecaptchaItems   = (($enabledRecaptchaItems != '') ? true : false);
+                                    $enabledItemValidation   = Params::getParam('enabled_item_validation');
+                                    $enabledItemValidation   = (($enabledItemValidation != '') ? true : false);
+                                    $regUserPost             = Params::getParam('reg_user_post');
+                                    $regUserPost             = (($regUserPost != '') ? true : false);
+                                    $notifyNewItem           = Params::getParam('notify_new_item');
+                                    $notifyNewItem           = (($notifyNewItem != '') ? true : false);
+                                    $notifyContactItem       = Params::getParam('notify_contact_item');
+                                    $notifyContactItem       = (($notifyContactItem != '') ? true : false);
+                                    $notifyContactFriends    = Params::getParam('notify_contact_friends');
+                                    $notifyContactFriends    = (($notifyContactFriends != '') ? true : false);
+                                    $enabledFieldPriceItems  = Params::getParam('enableField#f_price@items');
+                                    $enabledFieldPriceItems  = (($enabledFieldPriceItems != '') ? true : false);
+                                    $enabledFieldImagesItems = Params::getParam('enableField#images@items');
+                                    $enabledFieldImagesItems = (($enabledFieldImagesItems != '') ? true : false);
+                                    
+                                    Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
+                                                                     ,array('s_name'  => 'enabled_recaptcha_items'));
+                                    Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
+                                                                     ,array('s_name'  => 'enabled_item_validation'));
+                                    Preference::newInstance()->update(array('s_value' => $regUserPost)
+                                                                     ,array('s_name'  => 'reg_user_post'));
+                                    Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                                                     ,array('s_name'  => 'notify_new_item'));
+                                    Preference::newInstance()->update(array('s_value' => $notifyContactItem)
+                                                                     ,array('s_name'  => 'notify_contact_item'));
+                                    Preference::newInstance()->update(array('s_value' => $notifyContactFriends)
+                                                                     ,array('s_name'  => 'notify_contact_friends'));
+                                    Preference::newInstance()->update(array('s_value' => $enabledFieldPriceItems)
+                                                                     ,array('s_name'  => 'enableField#f_price@items'));
+                                    Preference::newInstance()->update(array('s_value' => $enabledFieldImagesItems)
+                                                                     ,array('s_name'  => 'enableField#images@items'));
+
+                                    osc_add_flash_message(__('Items settings have been updated'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=items');
+            break;
+            case('comments'):       //calling the comments settings view
+                                    $this->doView('settings/comments.php');
+            break;
+            case('comments_post'):  // updating comment
+                                    $enabledComments  = Params::getParam('enabled_comments');
+                                    $enabledComments  = (($enabledComments != '') ? true : false);
+                                    $moderateComments = Params::getParam('moderate_comments');
+                                    $moderateComments = (($moderateComments != '') ? true : false);
+                                    $notifyNewComment = Params::getParam('notify_new_comment');
+                                    $notifyNewComment = (($notifyNewComment != '') ? true : false);
+
+                                    Preference::newInstance()->update(array('s_value' => $enabledComments)
+                                                                     ,array('s_name' => 'enabled_comments'));
+                                    Preference::newInstance()->update(array('s_value' => $moderateComments)
+                                                                     ,array('s_name' => 'moderate_comments'));
+                                    Preference::newInstance()->update(array('s_value' => $notifyNewComment)
+                                                                     ,array('s_name' => 'notify_new_comment'));
+
+                                    osc_add_flash_message(__('Comments setting have been updated'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
+            break;
+            case ('users'):         // calling the users settings view
+                                    $this->doView('settings/users.php');
+            break;
+            case ('users_post'):    // updating users
+                                    $enabledUserValidation   = Params::getParam('enabled_user_validation');
+                                    $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
+                                    $enabledUserRegistration = Params::getParam('enabled_user_registration');
+                                    $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
+                                    $enabledUsers            = Params::getParam('enabled_users');
+                                    $enabledUsers            = (($enabledUsers != '') ? true : false);
+
+                                    Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
+                                                                     ,array('s_name'  => 'enabled_user_validation'));
+                                    Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
+                                                                     ,array('s_name'  => 'enabled_user_registration'));
+                                    Preference::newInstance()->update(array('s_value' => $enabledUsers)
+                                                                     ,array('s_name'  => 'enabled_users'));
+        
+                                    osc_add_flash_message(__('Users settings have been updated.'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
+            break;
+            case ('locations'):     // calling the locations settings view
+                                    $location_action = Params::getParam('type');
+                                    $mCountries = new Country();
+                                    
+                                    switch ($location_action) {
+                                        case('add_country'):    // add country
+                                                                if( !Params::getParam('c_manual') ) {
+                                                                    $this->install_location_by_country();
+                                                                } else {
+                                                                    $countryCode     = Params::getParam('c_country');
+                                                                    $countryName     = Params::getParam('country');
+                                                                    $countryLanguage = osc_language();
+
+                                                                    $data = array('pk_c_code'        => $countryCode,
+                                                                                  'fk_c_locale_code' => $countryLanguage,
+                                                                                  's_name'           => $countryName);
+                                                                    $mCountries->insert($data);
+                                                                    
+                                                                    osc_add_flash_message(sprintf(__('%s has been added as a new country'),
+                                                                                                  $countryName), 'admin');
+                                                                }
+
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('edit_country'):   // edit country
+                                                                $newCountry = Params::getParam('e_country');
+                                                                $oldCountry = Params::getParam('country_old');
+                                                                $mCountries->update(array('s_name' => $newCountry)
+                                                                                   ,array('s_name' => $oldCountry));
+                                                                osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                                                  $newCountry), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('delete_country'): // delete country
+                                                                $countryId = Params::getParam('id');
+                                                                $mRegions = new Region();
+                                                                $mCities = new City();
+
+                                                                $aCountries = $mCountries->findByCode($countryId);
+                                                                $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
+                                                                foreach($aRegions as $region) {
+                                                                    $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                                                                    $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                }
+                                                                $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+
+                                                                osc_add_flash_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('add_region'):     // add region
+                                                                if( !Params::getParam('r_manual') ) {
+                                                                    $this->install_location_by_region();
+                                                                } else {
+                                                                    $mRegions    = new Region();
+                                                                    $regionName  = Params::getParam('region');
+                                                                    $countryCode = Params::getParam('country_c_parent');
+
+                                                                    $data = array('fk_c_country_code' => $countryCode
+                                                                                 ,'s_name' => $regionName);
+                                                                    $mRegions->insert($data);
+                                                                    osc_add_flash_message(sprintf(__('%s has been added as a new region'),
+                                                                                                     $regionName), 'admin');
+                                                                }
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('edit_region'):    // edit region
+                                                                $mRegions  = new Region();
+                                                                $newRegion = Params::getParam('e_region');
+                                                                $regionId  = Params::getParam('region_id');
+
+                                                                if($regionId != '') {
+                                                                    $mRegions->update(array('s_name' => $newRegion)
+                                                                                     ,array('pk_i_id' => $regionId));
+                                                                    osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                                                      $newRegion), 'admin');
+                                                                }
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('delete_region'):  // delete region
+                                                                $mRegion  = new Region();
+                                                                $mCities  = new City();
+                                                                
+                                                                $regionId = Params::getParam('id');
+
+                                                                if($regionId != '') {
+                                                                    $aRegion = $mRegion->findByPrimaryKey($regionId);
+
+                                                                    $mCities->delete(array('fk_i_region_id' => $regionId));
+                                                                    $mRegion->delete(array('pk_i_id' => $regionId));
+
+                                                                    osc_add_flash_message(sprintf(__('%s has been deleted'),
+                                                                            $aRegion['s_name']), 'admin');
+                                                                }
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('add_city'):       // add city
+                                                                $mCities     = new City();
+                                                                $regionId    = Params::getParam('region_parent');
+                                                                $countryCode = Params::getParam('country_c_parent');
+                                                                $newCity     = Params::getParam('city');
+
+                                                                $mCities->insert(array('fk_i_region_id'    => $regionId
+                                                                                      ,'s_name'            => $newCity
+                                                                                      ,'fk_c_country_code' => $countryCode));
+
+                                                                osc_add_flash_message(sprintf(__('%s has been added as new city'),
+                                                                                                 $newCity), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('edit_city'):      // edit city
+                                                                $mCities = new City();
+                                                                $newCity = Params::getParam('e_city');
+                                                                $cityId  = Params::getParam('city_id');
+
+                                                                $mCities->update(array('s_name' => $newCity)
+                                                                                ,array('pk_i_id' => $cityId));
+                                                                
+                                                                osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                                                 $newCity), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                        case('delete_city'):    // delete city
+                                                                $mCities = new City();
+                                                                $cityId  = Params::getParam('id');
+
+                                                                $aCity   = $mCities->findByPrimaryKey($cityId);
+                                                                $mCities->delete(array('pk_i_id' => $cityId));
+
+                                                                osc_add_flash_message(sprintf(__('%s has been deleted'),
+                                                                                                 $aCity['s_name']), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
+                                        break;
+                                    }
+                                    
+                                    $aCountries = $mCountries->listAll();
+                                    $this->_exportVariableToView('aCountries', $aCountries);
+
+                                    $this->add_css('location_layout.css');
+                                    $this->add_js('location.js');
+                                    $this->doView('settings/locations.php');
+            break;
+            case('permalinks'):     // calling the permalinks view
+                                    $htaccess = Params::getParam('htaccess_status');
+                                    $file     = Params::getParam('file_status');
+
+                                    $this->_exportVariableToView('htaccess', $htaccess);
+                                    $this->_exportVariableToView('file', $file);
+
+                                    $this->doView('settings/permalinks.php');
+            break;
+            case('permalinks_post'):// updating permalinks option
+                                    $htaccess_status = 0;
+                                    $file_status     = 0;
+                                    $rewriteEnabled  = Params::getParam('rewrite_enabled');
+                                    $rewriteEnabled  = ($rewriteEnabled ? true : false);
+
+                                    if($rewriteEnabled) {
+                                        Preference::newInstance()->update(array('s_value' => '1')
+                                                                         ,array('s_name' => 'rewriteEnabled'));
+
+                                        // require ABS_PATH.'generate_rules.php';
+                                        $htaccess = '
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase ' . REL_WEB_URL . '
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . ' . REL_WEB_URL . 'index.php [L]
+</IfModule>';
+
+                                        if( file_exists(ABS_PATH . '.htaccess') ) {
+                                            $file_status = 1;
+                                        } else if(file_put_contents(ABS_PATH . '.htaccess', $htaccess_text)) {
+                                            $file_status = 2;
+                                        } else {
+                                            $file_status = 3;
+                                        }
+
+                                        if(apache_mod_loaded('mod_rewrite')) {
+                                            $htaccess_status = 1;
+                                            Preference::newInstance()->update(array('s_value' => '1')
+                                                                             ,array('s_name' => 'mod_rewrite_loaded'));
+                                        } else {
+                                            $htaccess_status = 2;
+                                            Preference::newInstance()->update(array('s_value' => '0')
+                                                                             ,array('s_name' => 'mod_rewrite_loaded'));
+                                        }
+                                    } else {
+                                        $modRewrite = apache_mod_loaded('mod_rewrite');
+                                        Preference::newInstance()->update(array('s_value' => '0')
+                                                                         ,array('s_name' => 'rewriteEnabled'));
+                                        Preference::newInstance()->update(array('s_value' => '0')
+                                                                         ,array('s_name' => 'mod_rewrite_loaded'));
+                                    }
+
+                                    $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks&htaccess_status=';
+                                    $redirectUrl .= $htaccess_status . '&file_status=' . $file_status;
+                                    $this->redirectTo($redirectUrl);
+            break;
+            default:                // default dashboard page (main page at oc-admin)
+                                    $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
+                                    $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
+
+                                    $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
+                                    $this->_exportVariableToView( "numItemsPerCategory", CategoryStats::newInstance()->toNumItemsMap() ) ;
+                                    $this->_exportVariableToView( "categories", Category::newInstance()->listAll() ) ;
+                                    $this->_exportVariableToView( "newsList", osc_listNews() ) ;
+                                    $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
+
+                                    // calling the view...
+                                    $this->doView('main/index.php') ;
+        }
+    }
+
+    //hopefully generic...
+    function doView($file) {
+        $this->osc_print_html($file) ;
+    }
+
+    function install_location_by_country() {
+        $country    = Params::getParam('country');
+        $aCountry[] = trim($country);
+        
+        $manager_country = new Country();
+        $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=' .
+                                                implode(',', $aCountry) );
+        $countries = json_decode($countries_json);
+        foreach($countries as $c) {
+            $manager_country->insert(array(
+                "pk_c_code" => addslashes($c->id)
+                ,"fk_c_locale_code" => addslashes($c->locale_code)
+                ,"s_name" => addslashes($c->name)
+            ));
+        }
+
+        $manager_region = new Region();
+        $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' .
+                                              implode(',', $aCountry) . '&term=all');
+        $regions = json_decode($regions_json);
+        foreach($regions as $r) {
+            $manager_region->insert(array(
+                "fk_c_country_code" => addslashes($r->country_code),
+                "s_name" => addslashes($r->name)
+            ));
+        }
+        unset($regions);
+        unset($regions_json);
+
+        $manager_city = new City();
+        foreach($countries as $c) {
+            $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+            foreach($regions as $region) {
+                $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
+                                                     $c->name . '&region=' .$region['s_name'] . '&term=all') ;
+                $cities = json_decode($cities_json) ;
+                if(!isset($cities->error)) {
+                    foreach($cities as $ci) {
+                        $manager_city->insert(array(
+                            "fk_i_region_id" => addslashes($region['pk_i_id'])
+                            ,"s_name" => addslashes($ci->name)
+                            ,"fk_c_country_code" => addslashes($ci->country_code)
+                        ));
+                    }
+                }
+                unset($cities) ;
+                unset($cities_json) ;
+            }
+        }
+
+        osc_add_flash_message(sprintf(__('%s has been added as a new country'), $country), 'admin');
+    }
+
+    function install_location_by_region() {
+        $countryParent = Params::getParam('country_c_parent');
+        $region        = Params::getParam('region');
+
+        if($countryParent == '') {
+            return false;
+        }
+
+        if($region == '') {
+            return false;
+        }
+
+        $manager_country = new Country() ;
+        $country = $manager_country->findByCode($countryParent) ;
+
+        $aCountry   = array();
+        $aRegion    = array();
+        $aCountry[] = $country['s_name'];
+        $aRegion[]  = $region;
+
+        $manager_region = new Region();
+        $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' .
+                                              implode(',', $aCountry) . '&term=' . implode(',', $aRegion));
+        $regions = json_decode($regions_json);
+        foreach($regions as $r) {
+            $manager_region->insert(array(
+                "fk_c_country_code" => addslashes($r->country_code),
+                "s_name" => addslashes($r->name)
+            ));
+        }
+        unset($regions);
+        unset($regions_json);
+
+        $manager_city = new City();
+        foreach($country as $c) {
+            $regions = $manager_region->findByConditions(array('fk_c_country_code' => $country['pk_c_code']
+                                                              ,'s_name' => $region));
+            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
+                                                 $c . '&region=' . $regions['s_name'] . '&term=all');
+            $cities = json_decode($cities_json);
+            if(!isset($cities->error)) {
+                foreach($cities as $ci) {
+                    $manager_city->insert(array(
+                        "fk_i_region_id" => addslashes($regions['pk_i_id']),
+                        "s_name" => addslashes($ci->name),
+                        "fk_c_country_code" => addslashes($ci->country_code)
+                    ));
+                }
+            }
+            unset($cities);
+            unset($cities_json);
+        }
+
+        osc_add_flash_message(sprintf(__('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
+    }
+}
+
+/*
 
 switch ($action) {
     case 'spamNbots':
@@ -58,114 +478,6 @@ switch ($action) {
         break;
     case 'addCurrency':
         osc_renderAdminSection('settings/addCurrency.php', __('Settings'));
-        break;
-    case 'locations':
-        $type_action = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
-        $mCountries = new Country();
-        $mRegions = new Region();
-        $mCities = new City();
-        switch ($type_action) {
-            case 'add_country':
-                // check if is from geo or by the user
-                if ( !$_POST['c_manual'] ) {
-                    install_location_by_country();
-                } else {
-                    $c_code = $_POST['c_country'] ;
-                    $s_name = $_POST['country'] ;
-                    $c_language = osc_language() ;
-
-                    $data = array(
-                        'pk_c_code' => $c_code,
-                        'fk_c_locale_code' => $c_language,
-                        's_name' => $s_name
-                    );
-
-                    $mCountries->insert($data);
-                }
-                break;
-            case 'edit_country':
-                $new_s_country = $_POST['e_country'];
-                $old_s_country = $_POST['country_old'];
-                $mCountries->update(
-                        array('s_name' => $new_s_country),
-                        array('s_name' => $old_s_country)
-                    );
-                break;
-            case 'delete_country':
-                $code = $_GET['id'];
-                $aCountries = $mCountries->findByCode($code);
-                $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
-                foreach($aRegions as $region) {
-                    $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
-                    $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
-                }
-                $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
-
-                osc_redirectTo('settings.php?action=locations');
-                break;
-            case 'add_region':
-                if ( !$_POST['r_manual'] ) {
-                    install_location_by_region();
-                } else {
-                    $s_name = $_POST['region'];
-                    $c_country_code = $_POST['country_c_parent'];
-
-                    $data = array(
-                        'fk_c_country_code' => $c_country_code
-                        ,'s_name' => $s_name
-                    );
-
-                    $mRegions->insert($data);
-                }
-                break;
-            case 'edit_region':
-                $new_s_region = $_POST['e_region'];
-                $region_id = $_POST['region_id'];
-                $mRegions->update(
-                        array('s_name' => $new_s_region)
-                        ,array('pk_i_id' => $region_id)
-                    );
-                break;
-            case 'delete_region':
-                $code = $_GET['id'];
-
-                $mCities->delete(array('fk_i_region_id' => $code));
-                $mRegions->delete(array('pk_i_id' => $code));
-                
-                osc_redirectTo('settings.php?action=locations');
-                break;
-            case 'add_city':
-                $region_id = $_POST['region_parent'];
-                $c_country_code = $_POST['country_c_parent'];
-                $new_s_city = $_POST['city'];
-
-                $data = array(
-                    'fk_i_region_id' => $region_id
-                    ,'s_name' => $new_s_city
-                    ,'fk_c_country_code' => $c_country_code
-                );
-                $mCities->insert($data);
-                break;
-            case'edit_city':
-                $new_s_city = $_POST['e_city'];
-                $city_id = $_POST['city_id'];
-                $mCities->update(
-                        array('s_name' => $new_s_city)
-                        ,array('pk_i_id' => $city_id)
-                    );
-                break;
-            case 'delete_city':
-                $code = $_GET['id'];
-
-                $mCities->delete(array('pk_i_id' => $code));
-
-                osc_redirectTo('settings.php?action=locations');
-                break;
-            default:
-                break;
-        }
-        $aCountries = $mCountries->listAll();
-        osc_renderAdminSection('settings/locations.php', __('Location'));
         break;
     case 'addCurrency_post':
         try {
@@ -244,39 +556,6 @@ switch ($action) {
         Preference::newInstance()->toArray() ;
         osc_redirectTo('settings.php?action=functionalities') ;
         break;
-    case 'users':
-        osc_renderAdminSection('settings/users.php', __('Functionalities')) ;
-        break;
-    case 'users_post':
-        $enabled_user_validation = false ;
-        if(isset($_POST['enabled_user_validation'])) {
-            $enabled_user_validation = true ;
-        }
-        $enabled_user_registration = false ;
-        if(isset($_POST['enabled_user_registration'])) {
-            $enabled_user_registration = true ;
-        }
-        $enabled_users = false ;
-        if(isset($_POST['enabled_users'])) {
-            $enabled_users = true ;
-        }
-        
-        Preference::newInstance()->update(
-                array('s_value' => $enabled_user_validation)
-                ,array('s_name'  => 'enabled_user_validation')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => $enabled_user_registration)
-                ,array('s_name'  => 'enabled_user_registration')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => $enabled_users)
-                ,array('s_name'  => 'enabled_users')
-        );
-
-        osc_add_flash_message(__('Users settings have been updated.'), 'admin') ;
-        osc_redirectTo('settings.php?action=users') ;
-        break;
     case 'notifications':
         osc_renderAdminSection('settings/notifications.php', __('Notifications')) ;
         break;
@@ -343,78 +622,7 @@ switch ($action) {
     case 'notifications':
         osc_renderAdminSection('settings/notifications.php', __('Notifications')) ;
         break;
-    case 'permalinks':
-        $htaccess_status = isset($_REQUEST['htaccess_status']) ? $_REQUEST['htaccess_status'] : 0 ;
-        $file_status = isset($_REQUEST['file_status']) ? $_REQUEST['file_status'] : 0 ;
 
-        osc_renderAdminSection('settings/permalinks.php', __('Settings')) ;
-        break;
-    case 'permalinks_post':
-
-        $htaccess_status = 0;
-        $file_status = 0;
-        if(!isset($_REQUEST['enable_mod_rewrite'])) {
-       
-            Preference::newInstance()->update(
-                array('s_value' => isset($_REQUEST['rewrite_enabled']) ? 1 : 0)
-                ,array('s_name' => 'rewriteEnabled')
-            );
-            if(isset($_REQUEST['rewrite_enabled'])) {
-                
-                require ABS_PATH.'generate_rules.php' ;
-                $htaccess_text = '
-    <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase '.REL_WEB_URL.'
-    RewriteRule ^index\.php$ - [L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . '.REL_WEB_URL.'index.php [L]
-    </IfModule>';
-
-                if(file_exists(ABS_PATH.'.htaccess')) {
-                    $file_status = 1;
-                } else if(file_put_contents(ABS_PATH . '.htaccess', $htaccess_text)) {
-                    $file_status = 2;
-                } else {
-                    $file_status = 3;
-                }
-
-                if(apache_mod_loaded('mod_rewrite')) {
-                    $htaccess_status = 1;
-                    Preference::newInstance()->update(
-                        array('s_value' => 1)
-                        ,array('s_name' => 'mod_rewrite_loaded')
-                    );
-                } else {
-                    $htaccess_status = 2;
-                    Preference::newInstance()->update(
-                        array('s_value' => 0)
-                        ,array('s_name' => 'mod_rewrite_loaded')
-                    );
-                }
-
-            }
-
-        } else {
-        
-            Preference::newInstance()->update(
-                array('s_value' => 1)
-                ,array('s_name' => 'rewriteEnabled')
-            );
-
-            Preference::newInstance()->update(
-                array('s_value' => $_REQUEST['enable_mod_rewrite'])
-                ,array('s_name' => 'mod_rewrite_loaded')
-            );
-            
-            $htaccess_status = 3+$_REQUEST['enable_mod_rewrite'] ;
-        }
-
-        osc_redirectTo('settings.php?action=permalinks&htaccess_status='.$htaccess_status.'&file_status='.$file_status) ;
-    case 'items':
-        osc_renderAdminSection('settings/items.php', __('Settings')) ;
-        break;
     case 'comments':
         osc_renderAdminSection('settings/comments.php', __('Settings')) ;
         break;
@@ -445,41 +653,7 @@ switch ($action) {
         Preference::newInstance()->toArray();
         osc_redirectTo('settings.php?action=comments');
         break;
-    case 'items_post':
-        $enabledRecaptchaItems = Params::getParam('enabled_recaptcha_items');
-        $enabledRecaptchaItems = (($enabledRecaptchaItems != '') ? true : false);
-        $enabledItemValidation = Params::getParams('enabled_item_validation');
-        $enabledItemValidation = (($enabledItemValidation != '') ? true : false);
-        $regUserPost           = Params::getParam('reg_user_post');
-        $regUserPost           = (($regUserPost != '') ? true : false);
-        $notifyNewItem         = Params::getParam('notify_new_item');
-        $notifyNewItem         = (($notifyNewItem != '') ? true : false);
-        $notifyContactFriends  = Params::getParam('notify_contact_friends');
-        $notifyContactFriends  = (($notifyContactFriends != ''));
 
-
-
-        Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
-                                         ,array('s_name'  => 'enabled_recaptcha_items'));
-        Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
-                                         ,array('s_name'  => 'enabled_item_validation'));
-        Preference::newInstance()->update(array('s_value' => $regUserPost)
-                                         ,array('s_name'  => 'reg_user_post'));
-        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                         ,array('s_name'  => 'notify_new_item'));
-
-        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                         ,array('s_name'  => 'notify_contact_friends'));
-        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                         ,array('s_name'  => 'notify_contact_item'));
-        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                         ,array('s_name'  => 'enabled_item_validation'));
-        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                         ,array('s_name'  => 'enableField#f_price@items'));
-        Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                         ,array('s_name'  => 'enableField#images@items'));
-
-        osc_redirectTo('settings.php?action=items') ;
         break;
     case 'update':
         $sPageTitle    = Params::getParam('pageTitle');
@@ -520,101 +694,8 @@ switch ($action) {
         $aCurrencies = $mCurrencies->listAll() ;
         osc_renderAdminSection('settings/index.php', __('General settings')) ;
 }
+*/
 
 
-function install_location_by_country() {
-    $country[] = trim($_POST['country']);
-
-    $manager_country = new Country();
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) );
-    $countries = json_decode($countries_json);
-    foreach($countries as $c) {
-        $manager_country->insert(array(
-            "pk_c_code" => addslashes($c->id)
-            ,"fk_c_locale_code" => addslashes($c->locale_code)
-            ,"s_name" => addslashes($c->name)
-        ));
-    }
-
-    $manager_region = new Region();
-    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=all');
-    $regions = json_decode($regions_json);
-    foreach($regions as $r) {
-        $manager_region->insert(array(
-            "fk_c_country_code" => addslashes($r->country_code),
-            "s_name" => addslashes($r->name)
-        ));
-    }
-    unset($regions);
-    unset($regions_json);
-
-    $manager_city = new City();
-    foreach($countries as $c) {
-        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
-        foreach($regions as $region) {
-            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' .$region['s_name'] . '&term=all') ;
-            $cities = json_decode($cities_json) ;
-            if(!isset($cities->error)) {
-                foreach($cities as $ci) {
-                    $manager_city->insert(array(
-                        "fk_i_region_id" => addslashes($region['pk_i_id'])
-                        ,"s_name" => addslashes($ci->name)
-                        ,"fk_c_country_code" => addslashes($ci->country_code)
-                    ));
-                }
-            }
-            unset($cities) ;
-            unset($cities_json) ;
-        }
-    }
-}
-
-function install_location_by_region() {
-    if(!isset($_POST['country_c_parent']))
-        return false;
-
-    if(!isset($_POST['region']))
-        return false;
-
-    $manager_country = new Country() ;
-
-    $aCountry = $manager_country->findByCode($_POST['country_c_parent']) ;
-
-    $country = array();
-    $region = array();
-
-    $country[] = $aCountry['s_name'];
-    $region[] = $_POST['region'];
-
-    $manager_region = new Region();
-    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=' . implode(',', $region));
-    $regions = json_decode($regions_json);
-    foreach($regions as $r) {
-        $manager_region->insert(array(
-            "fk_c_country_code" => addslashes($r->country_code),
-            "s_name" => addslashes($r->name)
-        ));
-    }
-    unset($regions);
-    unset($regions_json);
-
-    $manager_city = new City();
-    foreach($country as $c) {
-        $regions = $manager_region->findByConditions( array('fk_c_country_code' => $aCountry['pk_c_code'], 's_name' => $_POST['region']) );
-        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c . '&region=' .$regions['s_name'] . '&term=all');
-        $cities = json_decode($cities_json);
-        if(!isset($cities->error)) {
-            foreach($cities as $ci) {
-                $manager_city->insert(array(
-                    "fk_i_region_id" => addslashes($regions['pk_i_id']),
-                    "s_name" => addslashes($ci->name),
-                    "fk_c_country_code" => addslashes($ci->country_code)
-                ));
-            }
-        }
-        unset($cities);
-        unset($cities_json);
-    }
-}
 
 ?>

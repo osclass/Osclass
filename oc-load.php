@@ -120,6 +120,6 @@ if(!defined('__FROM_CRON__')) {
     }
 }
 
-Rewrite::newInstance()->init();
+//Rewrite::newInstance()->init();
 
 ?>

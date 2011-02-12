@@ -20,72 +20,114 @@
  */
 ?>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
 
-<?php
-    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-    $timeFormats = array('g:i a', 'g:i A', 'H:i');
-?>
+        <script type="text/javascript">
+            $.extend({
+                initDashboard: function(args) {
+                    $.isArray(args) ? true : false;
+                    $.each(args, function(i, val) {
+                        $("#" + val.substr(3)).show();
+                        $("#" + val).attr('checked', 'checked');
+                    });
+                },
+                setCookie: function(args) {
+                    $.isArray(args) ? true : false;
+                    $.cookie.set("osc_admin_main", args, {json: true});
+                }
+            });
 
-<div id="content">
-    <div id="separator"></div>
+            $(function() {
+                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) {
+                    // create cookies if admin is a first timer...
+                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
+                    $.initDashboard(sections);
+                    $.setCookie(sections);
 
-    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+                } else { // else read it and apply it!
+                    var enabled_sections = $.cookie.get("osc_admin_main", true);
+                    $.initDashboard(enabled_sections);
+                    $.setCookie(enabled_sections);
+                }
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('Comments'); ?></div>
-            <div style="clear: both;"></div>
-        </div>
+                // save settings
+                $("#button_save").click(function() {
+                    var sections = [];
+                    $('#checkboxes input:checkbox:checked').each(function() {
+                        sections.push($(this).attr('id'));
+                    });
 
-        <div id="content_separator"></div>
-        <?php osc_show_flash_message() ; ?>
-        <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-            <div style="padding: 20px;">
+                    $.setCookie(sections);
+                    $('#main_div').hide();
+                });
 
-                <form action="settings.php" method="post">
-                    <input type="hidden" name="action" value="comments_post" />
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Settings'); ?></legend>
-                            <?php if(osc_comments_enabled()) { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="enabled_comments" id="enabled_comments" />
-                            <?php } else { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_comments" id="enabled_comments" />
-                            <?php } ?>
-                            <label><?php _e('Comments enabled'); ?></label>
+                $('#button_open').click(function() {
+                    $('#main_div').toggle();
+                });
 
-                            <br/>
-
-                            <?php if(osc_moderate_comments()) { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="moderate_comments" id="moderate_comments" />
-                            <?php } else { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="moderate_comments" id="moderate_comments" />
-                            <?php } ?>
-                            <label><?php _e('Moderate comments') ; ?></label>
-                        </fieldset>
+                $("#checkboxes input[type='checkbox']").click(function() {
+                    var val = $(this).attr('id');
+                    $("#" + val.substr(3)).toggle();
+                });
+            });
+        </script>
+        <div id="content">
+            <div id="separator"></div>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" alt="" title=""/>
                     </div>
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Notifications') ; ?></legend>
-                            <?php if(osc_notify_new_comment()) { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" checked="true" name="notify_new_comment" id="notify_new_comment" />
-                            <?php } else { ?>
-                                <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="notify_new_comment" id="notify_new_comment" />
-                            <?php } ?>
-                            <label><?php _e('Notify new comment'); ?></label>
-                        </fieldset>
-                    </div>
-
+                    <div id="content_header_arrow">&raquo; <?php _e('Comments'); ?></div>
                     <div style="clear: both;"></div>
+                </div>
+                <div id="content_separator"></div>
+                <?php osc_show_flash_message('admin') ; ?>
+                <!-- settings form -->
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 20px;">
 
-                    <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="settings" />
+                            <input type="hidden" name="action" value="comments_post" />
 
-                </form>
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Settings'); ?></legend>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_comments_enabled() ? 'checked="true"' : ''); ?> name="enabled_comments" id="enabled_comments" value="1" />
+                                    <label for="enabled_comments"><?php _e('Comments enabled'); ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_moderate_comments() ? 'checked="true"' : ''); ?> name="moderate_comments" id="moderate_comments" value="1" />
+                                    <label for="moderate_comments"><?php _e('Moderate comments') ; ?></label>
+                                </fieldset>
+                            </div>
+                            
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Notifications') ; ?></legend>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_comment() ? 'checked="true"' : ''); ?> name="notify_new_comment" id="notify_new_comment" value="1" />
+                                    <label for="notify_new_comment"><?php _e('Notify new comment'); ?></label>
+                                </fieldset>
+                            </div>
 
-            </div>
-        </div>
-    </div> <!-- end of right column -->
+                            <div style="clear: both;"></div>
+
+                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- end of right column -->
+        </div><!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>
