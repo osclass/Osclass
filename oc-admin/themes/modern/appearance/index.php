@@ -93,8 +93,8 @@
                                                 <strong><?php echo $info['name']; ?> <?php echo $info['version']; ?> by <a href="<?php echo $info['author_url']; ?>"><?php echo $info['author_name']; ?></a></strong>
                                             </div>
                                             <div id="available_theme_actions">
-                                                <a href="appearance.php?action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
-                                                <a target="_blank" href="<?php echo osc_base_url() ; ?>?action=testTheme&theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a> |
+                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
+                                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?action=testTheme&theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a> |
                                                 <a id="theme_delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>');" href="appearance.php?action=delete&amp;theme=<?php echo $theme ; ?>"><?php _e('Delete') ; ?></a>
                                             </div>
                                             <div id="available_theme_pic"><img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px;" /></div>

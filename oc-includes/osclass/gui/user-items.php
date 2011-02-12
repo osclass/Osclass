@@ -27,7 +27,7 @@
     <?php else: ?>
         <?php foreach($items as $i): ?>
         	<div class="item" >
-        		<h3><a href="<?php echo osc_createItemURL($i); ?>"><?php echo $i['s_title']; ?></a></h3>
+        		<h3><a href="<?php echo osc_item_url($i); ?>"><?php echo $i['s_title']; ?></a></h3>
         		<p>
         		<?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
         		<?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>

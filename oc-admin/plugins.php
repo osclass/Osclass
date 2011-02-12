@@ -40,7 +40,7 @@ class CAdminPlugins extends AdminSecBaseModel
 		        break;
 	        case 'add_post':
 	            $package = Params::getFiles("package");
-		        $path = osc_plugins_path() . pathinfo($package['name'], PATHINFO_FILENAME);
+		        $path = osc_plugins_path() ;//. pathinfo($package['name'], PATHINFO_FILENAME);
 		        osc_packageExtract($package['tmp_name'], $path);
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
@@ -94,8 +94,9 @@ class CAdminPlugins extends AdminSecBaseModel
 			        } else {
 				        $file = $_REQUEST['file'];
 			        };
-			        $this->_exportVariableToView("file", '../oc-content/plugins/'.$file);
-			        osc_renderPluginView($file);
+			        $this->_exportVariableToView("file", osc_base_path().'oc-content/plugins/'.$file);
+			        //osc_renderPluginView($file);
+			        $this->doView("plugins/view.php");
 		        }
 		        break;
 

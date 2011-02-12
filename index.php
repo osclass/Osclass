@@ -24,13 +24,12 @@
 
     switch( Params::getParam('page') )
     {
-        
-        case('ajax'):       require_once(osc_base_path() . 'ajax.php') ;
-                            $do = new CWebAjax() ;
+        case ('page'):      //static pages
+                            require_once(osc_base_path() . 'page.php') ;
+                            $do = new CWebPage() ;
                             $do->doModel() ;
         break;
         default:            //home
-                            //exit() ;
                             require_once(osc_base_path() . 'main.php') ;
                             $do = new CWebMain() ;
                             $do->doModel() ;
