@@ -47,6 +47,7 @@
                             <label for="password"><?php _e('Password') ; ?></label>
                             <?php UserForm::password_login_text() ; ?>
                             <button type="submit"><?php _e('Login') ; ?></button>
+                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover">Forgot password?</a>
                         </fieldset>
                     </form>
                 </li>

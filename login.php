@@ -75,37 +75,37 @@ class CWebLogin extends BaseModel
                                     $this->redirectTo( osc_user_dashboard_url() ) ;
             break ;
             case('recover'):        //form to recover the password (in this case we have the form in /gui/)
-                                    $this->doView( osc_admin_base_path() . 'gui/recover.php' ) ;
+                                    $this->doView( 'user-recover.php' ) ;
             break ;
             case('recover_post'):   //post execution to recover the password
-                                    $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
-                                    if($admin) {
+                                    $user = User::newInstance()->findByEmail( Params::getParam('s_email') ) ;
+                                    if($user) {
                                         require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
                                         $newPassword = osc_genRandomPassword() ;
                                         $body = sprintf( __('Your new password is "%s"'), $newPassword) ;
 
                                         Admin::newInstance()->update(
                                             array('s_password' => sha1($newPassword))
-                                            ,array('pk_i_id' => $admin['pk_i_id'])
+                                            ,array('pk_i_id' => $user['pk_i_id'])
                                         );
 
                                         $params = array(
                                             'from_name' => __('OSClass application')
                                             ,'subject' => __('Recover your password')
-                                            ,'to' => $admin['s_email']
-                                            ,'to_name' => __('OSClass administrator')
+                                            ,'to' => $user['s_email']
+                                            ,'to_name' => $user['s_name']
                                             ,'body' => $body
                                             ,'alt_body' => $body
                                         );
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_message(__('A new password has been sent to your account.')) ;
+                                        osc_add_flash_message(__('A new password has been sent to your account')) ;
                                     } else {
-                                        osc_add_flash_message(__('The email you have entered does not belong to a valid administrator.')) ;
-                                        $this->redirectTo( osc_admin_base_url(true) . '?page=login&action=recover') ;
+                                        osc_add_flash_message(__('The email is not from a valid user. Please, try again!')) ;
+                                        $this->redirectTo( osc_base_url(true) . '?page=login&action=recover') ;
                                     }
 
-                                    $this->redirectTo( osc_admin_base_url() ) ;
+                                    $this->redirectTo( osc_base_url() ) ;
             break ;
         }
        
