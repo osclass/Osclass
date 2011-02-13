@@ -24,9 +24,14 @@
 
     switch( Params::getParam('page') )
     {
-        case ('user'):      //user pages
+        case ('user'):      //user pages (with security)
                             require_once(osc_base_path() . 'user.php') ;
                             $do = new CWebUser() ;
+                            $do->doModel() ;
+        break;
+        case ('item'):      //item pages (with security)
+                            require_once(osc_base_path() . 'item.php') ;
+                            $do = new CWebItem() ;
                             $do->doModel() ;
         break;
         case ('search'):    //search pages

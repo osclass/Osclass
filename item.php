@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OSClass – software for creating and publishing online classified advertising platforms
  *
@@ -16,6 +17,37 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+class CWebItem extends WebSecBaseModel
+{
+
+    function __construct() {
+        parent::__construct() ;
+    }
+
+    //Business Layer...
+    function doModel() {
+        //calling the view...
+        //$this->_exportVariableToView('categories', $categories) ;
+        //$this->_exportVariableToView('locales', $locales) ;
+        //$this->_exportVariableToView('latestItems', $latestItems) ;
+        switch( $this->action ) {
+            case('dashboard'):      //dashboard...
+
+            break;
+        }
+
+        $this->doView('main.php') ;
+    }
+
+    //hopefully generic...
+    function doView($file) {
+        $this->osc_print_html($file) ;
+    }
+}
+
+
+
+/*
 require_once 'oc-load.php';
 
 $manager = Item::newInstance() ;
@@ -537,13 +569,10 @@ switch ($action) {
                 osc_renderView('item.php');
                 osc_renderFooter();
             } else {
-                /* The issue suggest to show a message: "The item is not validated yet"
-                 * but in my opinion, end-users shouldn't have to know that
-                 * better to redirect them to index page (as if nothing had happened)
-                 */
+
                 osc_redirectTo('index.php');
             }
         }
-}
+}*/
 
 ?>
