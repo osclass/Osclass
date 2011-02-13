@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OSClass – software for creating and publishing online classified advertising platforms
  *
@@ -15,6 +16,38 @@
  * You should have received a copy of the GNU Affero General Public
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+class CWebUser extends BaseModel
+{
+
+    function __construct() {
+        parent::__construct() ;
+        
+    }
+
+    //Business Layer...
+    function doModel() {
+        //calling the view...
+        //$this->_exportVariableToView('categories', $categories) ;
+        //$this->_exportVariableToView('locales', $locales) ;
+        //$this->_exportVariableToView('latestItems', $latestItems) ;
+
+
+        $this->doView('main.php') ;
+    }
+
+    //hopefully generic...
+    function doView($file) {
+        $this->osc_print_html($file) ;
+    }
+}
+
+?>
+
+
+
+<?php
+/*
 
 require_once 'oc-load.php' ;
 
@@ -784,5 +817,7 @@ switch ($action) {
         break;
     
 }
+
+ */
 
 ?>

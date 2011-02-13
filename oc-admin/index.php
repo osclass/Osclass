@@ -79,7 +79,8 @@
         case('appearance'): require_once(osc_admin_base_path() . 'appearance.php') ;
                             $do = new CAdminAppearance() ;
                             $do->doModel() ;
-        case('tools'): require_once(osc_admin_base_path() . 'tools.php') ;
+        break;
+        case('tools'):      require_once(osc_admin_base_path() . 'tools.php') ;
                             $do = new CAdminTools() ;
                             $do->doModel() ;
         break;

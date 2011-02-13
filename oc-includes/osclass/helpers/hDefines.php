@@ -168,7 +168,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/logout' ;
         } else {
-            $path = osc_base_url(true) . '?page=user&action=logout' ;
+            $path = osc_base_url(true) . '?page=main&action=logout' ;
         }
         return $path ;
     }
@@ -178,21 +178,29 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/register' ;
         } else {
-            $path = osc_base_url(true) . '?page=user&action=register' ;
+            $path = osc_base_url(true) . '?page=main&action=register' ;
         }
         return $path ;
     }
 
+    /*
     //osc_createLoginURL
     function osc_login_url() {
         if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url(true) . 'user/login';
+            $path = osc_base_url() . 'user/login';
         } else {
             $path = osc_base_url(true) . '?page=user&action=login' ;
         }
         return $path ;
     }
+     */
 
+
+    //osc_itemThumbnail
+    function osc_item_thumbnail_url($file) {
+
+    }
+    
     //osc_createItemURL
     function osc_item_url($item) {
         if ( osc_rewrite_enabled() ) {
@@ -223,25 +231,37 @@
     //osc_createUserAlertsURL
     function osc_user_alerts_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/alerts';
-        } else
+            return osc_base_url() . 'user/alerts' ;
+        } else {
             return osc_base_url(true) . '?page=user&action=alerts' ;
+        }
     }
 
     //osc_createProfileURL
     function osc_user_profile_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/profile';
-        } else
+            return osc_base_url() . 'user/profile' ;
+        } else {
             return osc_base_url(true) . '?page=user&action=profile' ;
+        }
     }
 
     //osc_createUserItemsURL
-    function osc_user_items_url() {
+    function osc_user_list_items_url() {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/items';
-        } else
-            return osc_base_url() . 'page=user&action=items';
+            return osc_base_url() . 'user/items' ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=items' ;
+        }
+    }
+
+    //doens't exists til now
+    function osc_change_language_url($locale) {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'language/' . $locale ;
+        } else {
+            return osc_base_url(true) . '?page=language&locale=' . $locale ;
+        }
     }
 
 
@@ -337,6 +357,14 @@ function osc_createResourceURL($resource) {
 }
 */
 
+    /*
+    function osc_create_item_thumbnail_url($item) {
+        $conn = getConnection() ;
+        $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
+        echo osc_createThumbnailURL($resource) ;
+    }
+     */
+
 /*
 function osc_createUserPublicDashboard($user = null) {
     if ($user != null || !isset($user['pk_i_id'])) {
@@ -348,38 +376,7 @@ function osc_createUserPublicDashboard($user = null) {
     }
 }*/
 
-/**
- * Prints the user's account menu
- *
- * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
- *
- * @return void
- */
-/* function nav_user_menu($options = null) {
-    if($options == null) {
-        $options = array();
-        $options[] = array('name' => __('Dashboard'), 'url' => osc_createUserAccountURL()) ;
-        $options[] = array('name' => __('Manage your items'), 'url' => osc_createUserItemsURL()) ;
-        $options[] = array('name' => __('Manage your alerts'), 'url' => osc_createUserAlertsURL()) ;
-        $options[] = array('name' => __('My account'), 'url' => osc_createProfileURL()) ;
-        $options[] = array('name' => __('Logout'), 'url' => osc_createLogoutURL()) ;
-    }
 
-    <script type="text/javascript">
-        $(".user_menu > :first-child").addClass("first");
-        $(".user_menu > :last-child").addClass("last");
-    </script>
-    <ul class="user_menu">
-
-            $var_l = count($options) ;
-            for($var_o=0;$var_o<$var_l;$var_o++) {
-                echo '<li><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
-            }
-
-            osc_run_hook('user_menu');
-
-    </ul>
-} */
 
 
 /**

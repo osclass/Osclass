@@ -355,26 +355,6 @@ class Search extends DAO
             return $this->conn->osc_dbFetchResults($sql);
         }
     }
-       
-
-    public function alertForm() {
-
-        //Normalize
-        global $search_alert;
-
-        $search_alert_obj = $this;
-        $search_alert_obj->order();
-        $search_alert_obj->limit();
-        $search_alert = base64_encode(serialize($search_alert_obj));
-        unset($search_alert_obj);
-
-        osc_renderView('alert-form.php');
-            
-
-    }
-
-
-
 
     // define '__sleep()' method
     function __sleep(){

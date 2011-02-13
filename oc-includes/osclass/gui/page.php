@@ -1,3 +1,3 @@
-<h1><?php echo $page['s_title']; ?></h1>
+<h1><?php echo $this->_get('title') ; ?></h1>
 
-<div><?php echo $page['s_text']; ?></div>
+<div><?php echo $this->_get('text') ; ?></div>

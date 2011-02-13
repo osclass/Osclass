@@ -6,12 +6,12 @@
             <option value="1">Una categoria</option>
             <option value="2">Otra categoria</option>
         </select>
-        <button type="submit">Enviar</button>
+        <button type="submit"><?php _e('Send') ; ?></button>
 
-        <a id="expand_advanced" href="#">Advanced search</a>
+        <a id="expand_advanced" href="#"><?php _e('Advanced search') ; ?></a>
     </fieldset>
     <fieldset class="extras">
-        <p class="fieldset_title"><strong>Narrow your search:</strong></p>
+        <p class="fieldset_title"><strong><?php _e('Narrow your search') ; ?>:</strong></p>
         <select name="country" id="country">
             <option value="0">Country</option>
             <option value="1">Spain</option>

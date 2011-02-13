@@ -24,12 +24,22 @@
 
     switch( Params::getParam('page') )
     {
+        case ('user'):      //user pages
+                            require_once(osc_base_path() . 'user.php') ;
+                            $do = new CWebUser() ;
+                            $do->doModel() ;
+        break;
+        case ('search'):    //search pages
+                            require_once(osc_base_path() . 'search.php') ;
+                            $do = new CWebSearch() ;
+                            $do->doModel() ;
+        break;
         case ('page'):      //static pages
                             require_once(osc_base_path() . 'page.php') ;
                             $do = new CWebPage() ;
                             $do->doModel() ;
         break;
-        default:            //home
+        default:            //home and static pages that are mandatory...
                             require_once(osc_base_path() . 'main.php') ;
                             $do = new CWebMain() ;
                             $do->doModel() ;
