@@ -28,31 +28,31 @@
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
         <ul>
-            <?php if(osc_is_web_user_logged_in()) { ?>
+            <?php if( osc_is_web_user_logged_in() ) { ?>
                 <li class="first logged">
-                    <?php _e('Hello ' . osc_userInfo('s_name') . '!') ; ?>  &middot;
-                    <?php // _e('Manage from here your'); ?>
-                    <strong><a href="<?php echo osc_user_account_url() ; ?>"><?php _e('My account') ; ?></a></strong> &middot;
+                    <?php _e('Hello ' . osc_logged_user_name() . '!') ; ?>  &middot;
+                    <strong><a href="<?php echo osc_user_dashboard_url() ; ?>"><?php _e('My account') ; ?></a></strong> &middot;
                     <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout') ; ?></a>
                 </li>
             <?php } else { ?>
                 <li class="first">
                     <a id="login_open" href="#"><?php _e('Login') ; ?></a>  &middot;
                     <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register a free account') ; ?></a>
-                    <form id="login" action="user.php" method="post">
+                    <form id="login" action="<?php osc_base_url(true) ; ?>" method="post">
                         <fieldset>
+                            <input type="hidden" name="page" value="login" />
                             <input type="hidden" name="action" value="login_post" />
-                            <label for="userName"><?php _e('User name') ; ?></label>
-                            <input type="text" name="userName" id="userName" />
+                            <label for="email"><?php _e('E-mail') ; ?></label>
+                            <?php UserForm::email_login_text() ; ?>
                             <label for="password"><?php _e('Password') ; ?></label>
-                            <input type="password" name="password" id="password" />
+                            <?php UserForm::password_login_text() ; ?>
                             <button type="submit"><?php _e('Login') ; ?></button>
                         </fieldset>
                     </form>
                 </li>
             <?php } ?>
             <li class="last with_sub">
-                <strong><?php _e("Language") ?></strong>
+                <strong><?php _e("Language") ; ?></strong>
                 <ul>
                     <?php $i = 0 ;  ?>
                     <?php foreach($locales as $locale) { ?>

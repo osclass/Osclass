@@ -178,7 +178,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/register' ;
         } else {
-            $path = osc_base_url(true) . '?page=main&action=register' ;
+            $path = osc_base_url(true) . '?page=register&action=register' ;
         }
         return $path ;
     }

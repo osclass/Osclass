@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -18,34 +19,57 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-?>
-<script type="text/javascript">
-function validateLoginForm() {
-	var validator = new FormValidator();
-	try {
-		validator.addValidation('userName', FormValidator.TYPE_REGEX, '[a-zA-Z0-9_]{5}');
-		validator.addValidation('password', FormValidator.TYPE_COMPLETED);
-		return validator.run();
-	} catch(e) {
-		alert(e);
-		return false;
-	}
-}
-</script>
 
-<div class="content user_forms">
-    <div class="inner">
-        <h1><?php _e('Access to your account'); ?></h1>
-        
-        <form action="user.php" method="post" onsubmit="return validateLoginForm();">
-        <fieldset>
-            <label for="userName"><?php _e('User name'); ?></label> <?php UserForm::username_login_text();?><br />
-            <label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_login_text();?><br />
-            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me'); ?></label></p>
-            <button type="submit">Login</button>
-            <input type="hidden" name="action" value="login_post" />
-        </fieldset>
-        </form>
-        
-    </div>
-</div>
+?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+
+        <script type="text/javascript">
+            function validateLoginForm() {
+                var validator = new FormValidator();
+                try {
+                    validator.addValidation('email', FormValidator.TYPE_EMAIL) ;
+                    validator.addValidation('password', FormValidator.TYPE_COMPLETED) ;
+                    return validator.run();
+                } catch(e) {
+                    alert(e);
+                    return false;
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+        <div class="container">
+
+            <?php $this->osc_print_header() ; ?>
+
+            <div class="content user_forms">
+                <div class="inner">
+                    <h1><?php _e('Access to your account'); ?></h1>
+                    <form action="user.php" method="post" onsubmit="return validateLoginForm();">
+                        <input type="hidden" name="page" value="login" />
+                        <input type="hidden" name="action" value="login_post" />
+                        <fieldset>
+                            <label for="email"><?php _e('E-mail'); ?></label> <?php UserForm::email_login_text() ; ?><br />
+                            <label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_login_text() ; ?><br />
+                            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me') ; ?></label></p>
+                            <button type="submit">Login</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <?php $this->osc_print_footer() ; ?>
+
+        </div>
+
+        <?php osc_show_flash_message() ; ?>
+
+    </body>
+
+</html>

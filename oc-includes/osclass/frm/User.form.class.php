@@ -27,13 +27,23 @@ class UserForm extends Form {
         return true ;
     }
     
-    static public function username_text($user = null) {
+    /*static public function username_text($user = null) {
         parent::generic_input_text("profile_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
         return true ;
-    }
+    }*/
     
-    static public function username_login_text($user = null) {
-        parent::generic_input_text("userName", isset($user['s_username'])? $user['s_username'] : '', null, false);
+    static public function email_login_text($user = null) {
+        parent::generic_input_text("email", isset($user['s_username'])? $user['s_username'] : '', null, false);
+        return true ;
+    }
+
+    static public function password_login_text($user = null) {
+        parent::generic_password("password", '', null, false);
+        return true ;
+    }
+
+    static public function rememberme_login_checkbox($user = null) {
+        parent::generic_input_checkbox("remember", '1', false);
         return true ;
     }
     
@@ -42,20 +52,10 @@ class UserForm extends Form {
         return true ;
     }
     
-    static public function password_login_text($user = null) {
-        parent::generic_password("password", '', null, false);
-        return true ;
-    }
-    
-    static public function rememberme_login_checkbox($user = null) {
-        parent::generic_input_checkbox("rememberMe", '1', false);
-        return true ;
-    }
-    
-    static public function username_register_text($user = null) {
+    /*static public function username_register_text($user = null) {
         parent::generic_input_text("s_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
         return true ;
-    }
+    }*/
     
     static public function password_text($user = null) {
         parent::generic_password("profile_password", '', null, false);

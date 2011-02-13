@@ -37,23 +37,24 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Register an account (free)') ; ?></h1>
-                    <form action="user.php" method="post" onSubmit="javascript:return checkForm();">
+                    <form action="<?php osc_base_url(true) ; ?>" method="post" onSubmit="javascript:return checkForm();">
+                        <input type="hidden" name="page" value="register" />
+                        <input type="hidden" name="action" value="register_post" />
+                        
                         <fieldset>
-                            <label for="name"><?php _e('Name'); ?></label> <?php UserForm::name_text(); ?><br />
-                            <label for="userName"><?php _e('User name'); ?></label> <?php UserForm::username_register_text(); ?><br />
-                            <label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_register_text(); ?><br />
-                            <label for="password"><?php _e('Re-type password'); ?></label> <?php UserForm::check_password_register_text(); ?><br />
+                            <label for="name"><?php _e('Name') ; ?></label> <?php UserForm::name_text(); ?><br />
+                            <label for="password"><?php _e('Password') ; ?></label> <?php UserForm::password_register_text(); ?><br />
+                            <label for="password"><?php _e('Re-type password') ; ?></label> <?php UserForm::check_password_register_text(); ?><br />
                             <p id="password-error" style="display:none;">
-                                <?php _e('Passwords don\'t match.'); ?>
+                                <?php _e('Passwords don\'t match.') ; ?>
                             </p>
-                            <label for="email"><?php _e('E-mail'); ?></label> <?php UserForm::email_text() ; ?><br />
+                            <label for="email"><?php _e('E-mail') ; ?></label> <?php UserForm::email_text() ; ?><br />
                             <?php
                             if( osc_recaptcha_public_key() ) {
                                 require_once 'recaptchalib.php' ;
                                 echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
                             }
                             ?>
-                            <input type="hidden" name="action" value="register_post" />
                             <button type="submit"><?php _e('Create user') ; ?></button>
                             <?php osc_run_hook('user_register_form') ; ?>
                         </fieldset>
@@ -61,11 +62,13 @@
                 </div>
             </div>
 
-            <?php UserForm::js_validation(); ?>
+            <?php UserForm::js_validation() ; ?>
 
             <?php $this->osc_print_footer() ; ?>
 
         </div>
+
+        <?php osc_show_flash_message() ; ?>
 
     </body>
 

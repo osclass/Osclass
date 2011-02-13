@@ -17,7 +17,7 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class CWebUser extends BaseModel
+class CWebUser extends WebSecBaseModel
 {
 
     function __construct() {
@@ -31,7 +31,11 @@ class CWebUser extends BaseModel
         //$this->_exportVariableToView('categories', $categories) ;
         //$this->_exportVariableToView('locales', $locales) ;
         //$this->_exportVariableToView('latestItems', $latestItems) ;
-
+        switch( $this->action ) {
+            case('dashboard'):      //dashboard...
+                                    
+            break;
+        }
 
         $this->doView('main.php') ;
     }
@@ -42,11 +46,8 @@ class CWebUser extends BaseModel
     }
 }
 
-?>
 
 
-
-<?php
 /*
 
 require_once 'oc-load.php' ;

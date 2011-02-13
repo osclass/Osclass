@@ -35,26 +35,22 @@ class CWebMain extends BaseModel
     //Business Layer...
     function doModel() {
         switch($this->action) {
-            case('logout'):     //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                Session::newInstance()->session_destroy() ;
-                                $this->redirectTo( osc_base_url() ) ;
+            case('logout'):         //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                    //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                    Session::newInstance()->session_destroy() ;
+                                    $this->redirectTo( osc_base_url() ) ;
             break;
-            case('register'):   //register user
-                                $this->doView('user-register.php') ;
-            break;
-            default:            //recovering data needed at main.php
-                                $categories = Category::newInstance()->toTree();
-                                $locales = Locale::newInstance()->listAllEnabled() ;
-                                $latestItems = Item::newInstance()->listLatest(10) ;
+            default:                //recovering data needed at main.php
+                                    $categories = Category::newInstance()->toTree();
+                                    $locales = Locale::newInstance()->listAllEnabled() ;
+                                    $latestItems = Item::newInstance()->listLatest(10) ;
 
-                                //calling the view...
-                                $this->_exportVariableToView('categories', $categories) ;
-                                $this->_exportVariableToView('locales', $locales) ;
-                                $this->_exportVariableToView('latestItems', $latestItems) ;
+                                    //calling the view...
+                                    $this->_exportVariableToView('categories', $categories) ;
+                                    $this->_exportVariableToView('locales', $locales) ;
+                                    $this->_exportVariableToView('latestItems', $latestItems) ;
 
-
-                                $this->doView('main.php') ;
+                                    $this->doView('main.php') ;
         }
     }
 

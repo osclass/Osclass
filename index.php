@@ -39,6 +39,16 @@
                             $do = new CWebPage() ;
                             $do->doModel() ;
         break;
+        case ('register'):  //user pages
+                            require_once(osc_base_path() . 'register.php') ;
+                            $do = new CWebRegister() ;
+                            $do->doModel() ;
+        break;
+        case ('login'):     //user pages
+                            require_once(osc_base_path() . 'login.php') ;
+                            $do = new CWebLogin() ;
+                            $do->doModel() ;
+        break;
         default:            //home and static pages that are mandatory...
                             require_once(osc_base_path() . 'main.php') ;
                             $do = new CWebMain() ;
