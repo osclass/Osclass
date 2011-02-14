@@ -29,7 +29,7 @@
             <div><a href="<?php osc_create_item_url($i, true) ; ?>"><?php echo $i['s_title'] ; ?></a></div>
 
             <div class="userItemData" >
-                <?php _e('Publication date'); ?>: <?php echo osc_formatDate($i) ; ?><br />
+                <?php _e('Publication date'); ?>: <?php echo osc_format_date($i) ; ?><br />
                 <?php _e('Price'); ?>: <?php echo osc_format_price($i) ; ?>
             </div>
             <div class="userItemButtons" ><a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>');" href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'deleteItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Delete'); ?></a> | <a href="<?php echo osc_create_url(array('file' => 'user', 'action' => 'editItem', 'id' => $i['pk_i_id'], 'secret' => $i['s_secret']));?>"><?php _e('Edit') ; ?></a></div>

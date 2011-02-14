@@ -33,11 +33,9 @@ class CWebUser extends WebSecBaseModel
         //$this->_exportVariableToView('latestItems', $latestItems) ;
         switch( $this->action ) {
             case('dashboard'):      //dashboard...
-                                    
+                                    $this->doView('user-dashboard.php') ;
             break;
         }
-
-        $this->doView('main.php') ;
     }
 
     //hopefully generic...

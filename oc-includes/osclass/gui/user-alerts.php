@@ -31,10 +31,10 @@
         <div style="width: 75%; padding-left: 100px;" >
         <?php foreach($a['items'] as $i) : ?>
 	        <div class="userItem" >
-		        <div><a href="<?php echo osc_item_url($i); ?>"><?php echo $i['s_title']; ?></a></div>
+		        <div><a href="<?php echo osc_item_url($i); ?>"><?php echo $i['s_title'] ; ?></a></div>
 
 		        <div class="userItemData" >
-		        <?php _e('Publication date'); ?>: <?php echo osc_formatDate($i); ?><br />
+		        <?php _e('Publication date'); ?>: <?php echo osc_format_date($i) ; ?><br />
 		        <?php _e('Price'); ?>: <?php echo osc_formatPrice($i); ?>
 		        </div>
 

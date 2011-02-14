@@ -26,7 +26,7 @@
         <div class="itemContent">
         <div class="itemDate" >
         <?php _e('Price:'); ?> <?php echo osc_format_price($item) ; ?><br />
-        <?php _e('Publication date:'); ?> <?php echo osc_formatDate($item) ?>
+        <?php _e('Publication date:'); ?> <?php echo osc_format_date($item) ; ?>
         </div>
         <div>
 <?php $locales = Locale::newInstance()->listAllEnabled();

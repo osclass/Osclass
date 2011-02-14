@@ -1,6 +1,6 @@
 <div id="form_publish">
     <?php include("inc.search.php"); ?>
-    <strong class="publish_button"><a href="<?php echo osc_createItemPostURL($catId); ?>">Publish your ad for free</a></strong>
+    <strong class="publish_button"><a href="<?php echo osc_item_post_url($catId) ; ?>">Publish your ad for free</a></strong>
 </div>
 
 <div class="content item">
