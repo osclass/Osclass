@@ -144,7 +144,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_description (
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
-CREATE TABLE /*TABLE_PREFIX*/t_user_email_temp (
+CREATE TABLE /*TABLE_PREFIX*/t_user_email_tmp (
     fk_i_user_id INT UNSIGNED NOT NULL,
     s_new_email VARCHAR(100) NOT NULL,
     dt_date DATETIME NOT NULL,
