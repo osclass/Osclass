@@ -68,7 +68,7 @@
                                 <label for="email"><?php _e('E-mail') ; ?></label><br />
                                 <span>
                                     <?php echo $user['s_email'] ; ?><br />
-                                    <a href="#"><?php _e('Modify e-mail') ; ?></a> <a href="#" ><?php _e('Modify password') ; ?></a>
+                                    <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password') ; ?></a>
                                 </span>
                             </p>
 
