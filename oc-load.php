@@ -85,7 +85,7 @@ require_once LIB_PATH . 'osclass/model/ItemComment.php';
 require_once LIB_PATH . 'osclass/model/ItemResource.php';
 require_once LIB_PATH . 'osclass/model/ItemStats.php';
 require_once LIB_PATH . 'osclass/model/Page.php';
-require_once LIB_PATH . 'osclass/model/Plugin.php';
+//require_once LIB_PATH . 'osclass/model/Plugin.php';
 require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 require_once LIB_PATH . 'osclass/model/Region.php';
 require_once LIB_PATH . 'osclass/model/Rewrite.php';
