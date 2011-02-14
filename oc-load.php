@@ -61,7 +61,6 @@ require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/locale.php';
-require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/pages.php';
 //require_once LIB_PATH . 'osclass/themes.php';
 require_once LIB_PATH . 'osclass/utils.php';
@@ -69,6 +68,8 @@ require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/error.php';
 require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
+require_once LIB_PATH . 'osclass/plugins.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/validations.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
@@ -120,6 +121,8 @@ if(!defined('__FROM_CRON__')) {
         osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
     }
 }
+
+Plugins::init();
 
 //Rewrite::newInstance()->init();
 

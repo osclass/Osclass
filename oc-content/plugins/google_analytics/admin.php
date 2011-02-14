@@ -1,18 +1,17 @@
 <?php
 
+    $dao_preference = new Preference() ;
     if(isset($_REQUEST['webid'])) {
-        $webid = $_REQUEST['webid'] ;
+        $webid = $_REQUEST['webid'];
     } else {
-        $webid = osc_google_analytics_id() ;
+        $preferences = $dao_preference->toArray() ;
+    	$webid = isset($preferences['google_analytics_id']) ? $preferences['google_analytics_id'] : '';
     }
     
     if(isset($_REQUEST['option']) && $_REQUEST['option']=='stepone') 
     {
-        Preference::newInstance()->update (
-            array("s_value" => $webid)
-            ,array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")
-        ) ;
-        echo '<div><p>' . __('Congratulations. The plugin is now configured.') . '</p></div>' ;
+        $dao_preference->update(array("s_value" => $webid), array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")) ;
+        echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>Congratulations. The plugin is now configured.</p></div>' ;
     }
 
 ?>
@@ -23,8 +22,6 @@
     <input type="hidden" name="option" value="stepone" />
     
     <div>
-        <?php _e('Please enter your Google Analytics <label for="id" style="font-weight: bold;">Web property ID</label>') ; ?>:
-        <input type="text" name="webid" id="webid" value="<?php echo $webid; ?>" />
-        <input type="submit" value="<?php _e('Save') ; ?>" />
+        Please enter your Google Analytics <label for="id" style="font-weight: bold;">Web property ID</label>: <input type="text" name="webid" id="webid" value="<?php echo $webid; ?>" /> <input type="submit" value="Save" />
     </div>
 </form>
