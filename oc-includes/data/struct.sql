@@ -147,7 +147,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_description (
 CREATE TABLE /*TABLE_PREFIX*/t_user_email_temp (
     fk_i_user_id INT UNSIGNED NOT NULL,
     s_new_email VARCHAR(100) NOT NULL,
-    dt_time DATETIME NOT NULL,
+    dt_date DATETIME NOT NULL,
 
         PRIMARY KEY (fk_i_user_id),
         FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
