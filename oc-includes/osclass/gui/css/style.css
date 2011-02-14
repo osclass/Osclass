@@ -289,7 +289,8 @@ a:hover { color:#F80; }
 .user_account .modify_profile form h3 { color:#000; margin-bottom:10px; }
 .user_account .modify_profile form label { clear:left; float:left; margin-right:10px; padding-top:7px; width:140px; }
 .user_account .modify_profile form input { border:1px solid #BBB; float:left; margin-bottom:5px; padding:5px; width:250px; }
-.user_account .modify_profile form span { clear:left; float:left; margin-bottom:15px; padding-left:150px; width:600px; }
+.user_account .modify_profile form select { border:1px solid #BBB; float:left; margin-bottom:5px; padding:5px; width:250px; }
+.user_account .modify_profile form span { float:left; margin-bottom:5px; padding: 5px; width:250px; }
 .user_account .modify_profile form textarea { border:1px solid #BBB; float:left; padding:5px; width:300px; }
 .user_account .modify_profile form button { clear:both; float:left; margin:10px 0 0 150px; }
 .user_account .your_items h2 a { border-left:1px solid #DDD; font-weight:normal; margin-left:5px; padding-left:10px;}

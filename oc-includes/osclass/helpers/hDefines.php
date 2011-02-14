@@ -104,6 +104,8 @@
     /////////////////////////////////////
     //functions for the public website //
     /////////////////////////////////////
+
+    //osc_createItemPostURL
     function osc_item_post_url($category = '') {
         if ($category != '') {
             if ( osc_rewrite_enabled() ) {
@@ -183,22 +185,9 @@
         return $path ;
     }
 
-    /*
-    //osc_createLoginURL
-    function osc_login_url() {
-        if ( osc_rewrite_enabled() ) {
-            $path = osc_base_url() . 'user/login';
-        } else {
-            $path = osc_base_url(true) . '?page=user&action=login' ;
-        }
-        return $path ;
-    }
-     */
-
-
     //osc_itemThumbnail
     function osc_item_thumbnail_url($file) {
-
+        return ('NOT IMPLEMENTED YET. THE PARAMETER RECEIVED IS "' . $file . '"') ;
     }
     
     //osc_createItemURL

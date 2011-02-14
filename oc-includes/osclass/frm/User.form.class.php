@@ -123,7 +123,7 @@ class UserForm extends Form {
             return true ;
         } else if ( count($countries) == 1 ) {
             parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-            echo '</span>' .$countries[0]['s_name'] . '</span>';
+            echo '<span>' .$countries[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;

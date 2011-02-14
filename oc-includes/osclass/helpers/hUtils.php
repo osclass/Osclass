@@ -19,6 +19,7 @@
     /**
      * Formats the price using the appropiate currency.
      */
+    //osc_formatPrice
     function osc_format_price($item) {
         if (!isset($item['f_price']))
             return __('Consult') ;
@@ -35,7 +36,8 @@
     /**
      * Formats the date using the appropiate format.
      */
-    function osc_formatDate($item) {
+    //osc_formatDate
+    function osc_format_date($item) {
         $date = strtotime($item['dt_pub_date']) ;
         return date(osc_date_format(), $date) ;
     }
@@ -47,7 +49,7 @@
      *
      * @return void
      */
-    function nav_user_menu($options = null)
+    function osc_private_user_menu($options = null)
     {
         if($options == null) {
             $options = array();

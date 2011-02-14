@@ -22,15 +22,15 @@
 
 <div class="content user_account">
         
-    <h1><strong><?php _e('User account manager'); ?></strong></h1>
+    <h1><strong><?php _e('User account manager') ; ?></strong></h1>
 
     <div id="sidebar">
         <ul class="user_menu" >
-            <li><a href="<?php echo osc_createUserAccountURL() ; ?>" ><?php _e('Menu'); ?></a></li>
-            <li><a href="<?php echo osc_createProfileURL() ; ?>" ><?php _e('Manage your profile'); ?></a></li>
-            <li><a href="<?php echo osc_createUserItemsURL() ; ?>" ><?php _e('Manage your items'); ?></a></li>
-            <li><a href="<?php echo osc_createUserAlertsURL() ; ?>" ><?php _e('Manage your alerts'); ?></a></li>
-            <li><a href="<?php echo osc_user_logout_url() ; ?>" ><?php _e('Log-out'); ?></a></li>
+            <li><a href="<?php echo osc_createUserAccountURL() ; ?>" ><?php _e('Menu') ; ?></a></li>
+            <li><a href="<?php echo osc_createProfileURL() ; ?>" ><?php _e('Manage your profile') ; ?></a></li>
+            <li><a href="<?php echo osc_createUserItemsURL() ; ?>" ><?php _e('Manage your items') ; ?></a></li>
+            <li><a href="<?php echo osc_createUserAlertsURL() ; ?>" ><?php _e('Manage your alerts') ; ?></a></li>
+            <li><a href="<?php echo osc_user_logout_url() ; ?>" ><?php _e('Logout') ; ?></a></li>
         </ul>
     </div>
     
