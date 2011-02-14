@@ -185,7 +185,7 @@
 
     //osc_itemThumbnail
     function osc_item_thumbnail_url($file) {
-
+        return ('NOT IMPLEMENTED YET. THE PARAMETER RECEIVED IS "' . $file . '"') ;
     }
     
     //osc_createItemURL
