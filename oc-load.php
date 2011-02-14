@@ -92,6 +92,7 @@ require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 require_once LIB_PATH . 'osclass/model/Region.php';
 require_once LIB_PATH . 'osclass/model/Rewrite.php';
 require_once LIB_PATH . 'osclass/model/User.php';
+require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';

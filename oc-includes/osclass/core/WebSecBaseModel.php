@@ -11,12 +11,7 @@
 	    }
 
 	    function showAuthFailPage() {
-            if (file_exists(osc_current_web_theme_path() . 'user-login.php')) {
-                require osc_current_web_theme_path() . 'user-login.php' ;
-            } else {
-                require osc_base_path() . 'oc-includes/osclass/gui/user-login.php' ;
-            }
-            exit ;
+            $this->redirectTo( osc_user_login_url() ) ;
         }
     }
 

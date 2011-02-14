@@ -179,6 +179,16 @@
         return $path ;
     }
 
+    //
+    function osc_user_login_url() {
+        if ( osc_rewrite_enabled() ) {
+            $path = osc_base_url() . 'user/login' ;
+        } else {
+            $path = osc_base_url(true) . '?page=login&action=login' ;
+        }
+        return $path ;
+    }
+
     //osc_createRegisterURL
     function osc_register_account_url() {
         if ( osc_rewrite_enabled() ) {
@@ -260,7 +270,7 @@
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/change_email_confirm/' . $userId . '/' . $code ;
         } else {
-            return osc_base_url(true) . '?page=user&action=change_email_confirm&id=' . $userId . '&code=' . $code ;
+            return osc_base_url(true) . '?page=user&action=change_email_confirm&userId=' . $userId . '&code=' . $code ;
         }
     }
 

@@ -58,18 +58,18 @@
                         <fieldset>
                             <p>
                                 <label for="email"><?php _e('Current password') ; ?></label><br />
-                                <input type="text" name="password" value="" />
+                                <input type="password" name="password" value="" />
                             </p>
                             <p>
                                 <label for="new_email"><?php _e('New pasword') ; ?></label><br />
-                                <input type="text" name="new_password" value="" />
+                                <input type="password" name="new_password" value="" />
                             </p>
                             <p>
                                 <label for="new_email"><?php _e('Repeat new pasword') ; ?></label><br />
-                                <input type="text" name="new_password2" value="" />
+                                <input type="password" name="new_password2" value="" />
                             </p>
 
-                            <button type="submit"><?php _e('Update your e-mail') ; ?></button>
+                            <button type="submit"><?php _e('Update your password') ; ?></button>
 
                         </fieldset>
                     </form>

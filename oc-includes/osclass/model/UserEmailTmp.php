@@ -30,19 +30,17 @@ class UserEmailTmp extends DAO {
     public function insertOrUpdate($userEmailTmp) {
 
         $status = $this->conn->osc_dbExec(
-                            'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', now() WHERE pk_i_id = %d'
+                            'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', now())'
                             ,$this->getTableName()
                             ,$userEmailTmp['fk_i_user_id']
-                            ,$admin['s_new_email']
-                            ,$admin['dt_date']
+                            ,$userEmailTmp['s_new_email']
                     ) ;
 
         if (!$status) {
             $this->conn->osc_dbExec(
-                            'UPDATE %s SET s_new_email = \'%s\', dt_date = now() WHERE pk_i_id = %d'
+                            'UPDATE %s SET s_new_email = \'%s\', dt_date = now() WHERE fk_i_user_id = %d'
                             ,$this->getTableName()
                             ,$userEmailTmp['s_new_email']
-                            ,$userEmailTmp['dt_date']
                             ,$userEmailTmp['fk_i_user_id']
                     ) ;
 
