@@ -324,6 +324,35 @@ class Item extends DAO
         return $total_ads['total'];
     }
 
+    public function list_items_by_user($userId, $active = null)
+    {
+        $sql = sprintf('SELECT * FROM %s', $this->getTableName() );
+
+        $conditions = array();
+        if ($userId) {
+            $conditions[] = 'fk_i_user_id = "' . $userId . '"' ;
+        }
+
+        if (!is_null($active)) {
+            if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
+                $conditions[] = "e_status = '$active'";
+            }
+        }
+
+        if (count($conditions) > 0) {
+            $sql .= ' WHERE ';
+            for ($i = 0; $i < count($conditions); $i++) {
+                $sql .= $conditions[$i];
+                if ($i < (count($conditions) - 1)) {
+                    $sql .= ' AND ';
+                }
+            }
+        }
+
+        $total_ads = $this->conn->osc_dbFetchResult($sql) ;
+        return $total_ads ;
+    }
+
     public function listLatest($limit = 10)
     {
         return $this->listWhere(" e_status = 'ACTIVE' ORDER BY dt_pub_date DESC LIMIT " . $limit);

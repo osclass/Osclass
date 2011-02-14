@@ -22,7 +22,14 @@ class CWebUser extends WebSecBaseModel
 
     function __construct() {
         parent::__construct() ;
-        
+
+        $this->add_css('style.css') ;
+        $this->add_css('jquery-ui.css') ;
+        $this->add_global_js('tiny_mce.js') ;
+        $this->add_global_js('jquery-1.4.2.js') ;
+        $this->add_global_js('jquery-ui-1.8.5.js') ;
+        $this->add_js('jquery-extends.js') ;
+        $this->add_js('global.js') ;
     }
 
     //Business Layer...
@@ -33,6 +40,9 @@ class CWebUser extends WebSecBaseModel
         //$this->_exportVariableToView('latestItems', $latestItems) ;
         switch( $this->action ) {
             case('dashboard'):      //dashboard...
+                                    $aItems = Item::newInstance()->list_items_by_user( Session::newInstance()->_get('userId') ) ;
+
+                                    $this->_exportVariableToView('aItems', $aItems) ;
                                     $this->doView('user-dashboard.php') ;
             break;
         }
