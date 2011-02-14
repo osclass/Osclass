@@ -144,6 +144,25 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_description (
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code) 
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
+CREATE TABLE /*TABLE_PREFIX*/t_user_email_temp (
+    fk_i_user_id INT UNSIGNED NOT NULL,
+    s_new_email VARCHAR(100) NOT NULL,
+    dt_time DATETIME NOT NULL,
+
+        PRIMARY KEY (fk_i_user_id),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
+    fk_i_user_id INT UNSIGNED NULL,
+    s_name VARCHAR(40) NOT NULL,
+    s_value LONGTEXT NOT NULL,
+    e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
+
+        UNIQUE KEY (fk_i_user_id, s_name),
+        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
 CREATE TABLE /*TABLE_PREFIX*/t_category (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_parent_id INT UNSIGNED NULL,
@@ -292,16 +311,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_preference (
     e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
 
         UNIQUE KEY (s_section, s_name)
-) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
-
-CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
-    fk_i_user_id INT UNSIGNED NULL,
-    s_name VARCHAR(40) NOT NULL,
-    s_value LONGTEXT NOT NULL,
-    e_type ENUM('STRING', 'INTEGER', 'BOOLEAN') NOT NULL,
-
-        UNIQUE KEY (fk_i_user_id, s_name),
-        FOREIGN KEY (fk_i_user_id) REFERENCES /*TABLE_PREFIX*/t_user (pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_pages (
