@@ -1,4 +1,3 @@
-
 INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enabled) VALUES
     ('GBP', 'United Kingdom pound', 'Pound £', true),
     ('USD', 'United States dollar', 'Dollar US$', true),
@@ -54,7 +53,10 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'defaultShowAs@search', 'list', 'STRING')
     ,('osclass', 'defaultOrderField@search', 'dt_pub_date', 'STRING')
     ,('osclass', 'defaultOrderType@search', '1', 'BOOLEAN')
-    ,('osclass', 'admin_theme', 'modern', 'STRING');
+    ,('osclass', 'admin_theme', 'modern', 'STRING')
+    ,('osclass', 'akismetKey', '', 'STRING')
+    ,('osclass', 'recaptchaPrivKey', '', 'STRING')
+    ,('osclass', 'recaptchaPubKey', '', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
     ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

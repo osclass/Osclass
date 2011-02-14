@@ -25,6 +25,10 @@
         return(WEB_PATH . "oc-admin/index.php?page=plugins&action=renderplugin&file=" . $file);
     }
 
+    function osc_admin_render_plugin($file = '') {
+        osc_redirectTo(osc_admin_render_plugin_url($file));
+    }
+
     //Path Helpers
     function osc_base_path() {
         return(ABS_PATH) ;
