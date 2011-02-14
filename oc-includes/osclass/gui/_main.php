@@ -36,7 +36,7 @@ function doSearch() { document.location = '<?php echo osc_base_url() ; ?>/search
 	<h3><?php _e('Latest published items'); ?></h3>
 
 	<?php foreach($latestItems as $item): ?>
-		<a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title']; ?></a> <span class="homeLastestItemsList" >(<?php echo osc_formatDate($item); ?>)</span><br />
+		<a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title']; ?></a> <span class="homeLastestItemsList" >(<?php echo osc_format_date($item) ; ?>)</span><br />
 	<?php endforeach; ?>
 </div>
 

@@ -104,6 +104,8 @@
     /////////////////////////////////////
     //functions for the public website //
     /////////////////////////////////////
+
+    //osc_createItemPostURL
     function osc_item_post_url($category = '') {
         if ($category != '') {
             if ( osc_rewrite_enabled() ) {
