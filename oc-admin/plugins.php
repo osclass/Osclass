@@ -51,7 +51,8 @@ class CAdminPlugins extends AdminSecBaseModel
 		        //Re-load the plugins
 		        osc_loadActivePlugins();
 		        //run this after installing the plugin
-		        osc_run_hooks('install_'.$pn) ;
+		        osc_run_hook('install_'.$pn) ;
+		        
 
                 osc_add_flash_message(__('Plugin installed.'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
