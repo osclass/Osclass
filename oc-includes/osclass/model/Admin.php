@@ -58,3 +58,4 @@ class Admin extends DAO {
 	}
 }
 
+?>

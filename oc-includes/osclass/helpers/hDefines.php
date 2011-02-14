@@ -248,6 +248,30 @@
         }
     }
 
+    function osc_change_user_email_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/change_email' ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_email' ;
+        }
+    }
+
+    function osc_change_user_email_confirm_url($userId, $code) {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/change_email_confirm/' . $userId . '/' . $code ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_email_confirm&id=' . $userId . '&code=' . $code ;
+        }
+    }
+
+    function osc_change_user_password_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/change_password' ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_password' ;
+        }
+    }
+
     //doens't exists til now
     function osc_change_language_url($locale) {
         if ( osc_rewrite_enabled() ) {
