@@ -34,17 +34,52 @@ class CWebUser extends WebSecBaseModel
 
     //Business Layer...
     function doModel() {
-        //calling the view...
-        //$this->_exportVariableToView('categories', $categories) ;
-        //$this->_exportVariableToView('locales', $locales) ;
-        //$this->_exportVariableToView('latestItems', $latestItems) ;
         switch( $this->action ) {
             case('dashboard'):      //dashboard...
                                     $aItems = Item::newInstance()->list_items_by_user( Session::newInstance()->_get('userId') ) ;
 
+                                    //calling the view...
                                     $this->_exportVariableToView('aItems', $aItems) ;
                                     $this->doView('user-dashboard.php') ;
-            break;
+            break ;
+            case('profile'):        //profile...
+                                    $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
+                                    $aCountries = Country::newInstance()->listAll() ;
+                                    $aRegions = array() ;
+                                    if( $user['fk_c_country_code'] != '' ) {
+                                        $aRegions = Region::newInstance()->getByCountry( $user['fk_c_country_code'] ) ;
+                                    } elseif( count($aCountries) > 0 ) {
+                                        $aRegions = Region::newInstance()->getByCountry( $aCountries[0]['pk_c_code'] ) ;
+                                    }
+                                    $aCities = array() ;
+                                    if( $user['fk_i_region_id'] != '' ) {
+                                        $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                                    } else if( count($aRegions) > 0 ) {
+                                        $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                    }
+                                    
+                                    //calling the view...
+                                    $this->_exportVariableToView('aCountries', $aCountries) ;
+                                    $this->_exportVariableToView('aRegions', $aRegions) ;
+                                    $this->_exportVariableToView('aCities', $aCities) ;
+                                    $this->_exportVariableToView('user', $user) ;
+                                    $this->doView('user-profile.php') ;
+            break ;
+            case('profile_post'):   //profile post...
+                                    $userId = Session::newInstance()->_get('userId') ;
+
+                                    //require_once LIB_PATH . 'osclass/users.php' ;
+                                    $success = 0 ;
+                                    if( $success == 0 ) {
+                                        osc_add_flash_message( __('This should never happened') ) ;
+                                    } else if( $success == 1 ) {
+                                        osc_add_flash_message( __('Passwords don\'t match') ) ;
+                                    } else {
+                                        osc_add_flash_message( __('Your profile has been updated properly') ) ;
+                                    }
+
+                                    $this->redirectTo( osc_user_profile_url() ) ;
+            break ;
         }
     }
 

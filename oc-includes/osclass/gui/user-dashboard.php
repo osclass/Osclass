@@ -56,11 +56,11 @@
                     <?php } else { ?>
                         <?php foreach($aItems as $item) { ?>
                             <div class="userItem" >
-                                <div><a href="<?php osc_create_item_url($item, true); ?>"><?php echo $item['s_title'] ; ?></a></div>
+                                <div><a href="<?php osc_create_item_url($item, true) ; ?>"><?php echo $item['s_title'] ; ?></a></div>
 
                                 <div class="userItemData" >
-                                <?php _e('Publication date'); ?>: <?php echo osc_format_date($item) ; ?><br />
-                                <?php _e('Price'); ?>: <?php echo osc_format_price($item) ; ?>
+                                <?php _e('Publication date') ; ?>: <?php echo osc_format_date($item) ; ?><br />
+                                <?php _e('Price') ; ?>: <?php echo osc_format_price($item) ; ?>
                                 </div>
 
                             </div>
@@ -70,7 +70,7 @@
 
                 </div>
 
-            <?php $this->osc_print_footer() ; ?>
+                <?php $this->osc_print_footer() ; ?>
 
         </div>
 
