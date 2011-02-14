@@ -23,7 +23,7 @@
 <?php
     $plugins = $this->_get("plugins");
     $last = end($plugins); $last_id = $last['int_name'];
-    global $active_plugins;
+    $active_plugins = osc_get_plugins();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -80,11 +80,11 @@
 
 				            <?php 
 					            foreach($plugins as $p): ?>
-				            <?php $p_info = osc_getPluginInfo($p); ?>
-				            <?php osc_isPluginInstalled($p) ? $installed = 1 : $installed = 0; ?>
+				            <?php $p_info = osc_plugin_get_info($p); ?>
+				            <?php osc_plugin_is_installed($p) ? $installed = 1 : $installed = 0; ?>
 					            [
 						            "<input type='hidden' name='installed' value='<?php echo $installed ?>' /><input type='checkbox' name='id[]' value='<?php echo $p; ?>' />",
-						            "<?php echo $p_info['plugin_name']; ?>&nbsp;<div id='datatables_quick_edit'><?php if(osc_isPluginInstalled($p)) { ?><?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a> | <?php }; ?><?php if(osc_checkUpdate($p_info['filename'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=upgrade-plugin&plugin=<?php echo $p_info['filename']; ?>'><?php _e('There\'s a new version. You should update!'); ?></a> | <?php }; ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?></div>", 
+						            "<?php echo $p_info['plugin_name']; ?>&nbsp;<div id='datatables_quick_edit'><?php if($installed) { ?><?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a> | <?php }; ?><?php if(osc_plugin_check_update($p_info['filename'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=upgrade-plugin&plugin=<?php echo $p_info['filename']; ?>'><?php _e('There\'s a new version. You should update!'); ?></a> | <?php }; ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?></div>", 
 						            '<?php echo $p_info['description']; ?>'
 					            ] <?php echo $p != end($plugins) ? ',' : ''; ?>
 				            <?php endforeach; ?>

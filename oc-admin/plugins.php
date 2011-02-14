@@ -47,11 +47,9 @@ class CAdminPlugins extends AdminSecBaseModel
 	        case 'install':
 		        $pn = Params::getParam("plugin");
 
-		        osc_activatePlugin($pn);
-		        //Re-load the plugins
-		        osc_loadActivePlugins();
+		        Plugins::activate($pn);
 		        //run this after installing the plugin
-		        osc_run_hook('install_'.$pn) ;
+		        Plugins::runHook('install_'.$pn) ;
 		        
 
                 osc_add_flash_message(__('Plugin installed.'));
@@ -60,10 +58,8 @@ class CAdminPlugins extends AdminSecBaseModel
 	        case 'uninstall':
 		        $pn = Params::getParam("plugin");
 
-		        osc_deactivatePlugin($pn);
-		        osc_run_hooks($pn.'_uninstall') ;
-		        //Re-load the plugins
-		        osc_loadActivePlugins();
+                Plugins::runHook($pn.'_uninstall') ;
+		        Plugins::deactivate($pn);
 
                 osc_add_flash_message(__('Plugin uninstalled.'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
@@ -72,11 +68,11 @@ class CAdminPlugins extends AdminSecBaseModel
 		        global $active_plugins;
 		        $plugin = Params::getParam("plugin");
 		        if($plugin!="") {
-			        osc_run_hook($plugin.'_configure');
+			        Plugins::runHook($plugin.'_configure');
 		        }
 		        break;
 	        case 'admin_post':
-		        osc_run_hook('admin_post');
+		        Plugins::runHook('admin_post');
 
 	        case 'renderplugin':
 		        global $active_plugins;
@@ -104,23 +100,22 @@ class CAdminPlugins extends AdminSecBaseModel
 	        case 'configure':
 	            $plugin = Params::getParam("plugin");
 		        if($plugin!='') {
-    		        $plugin_data = osc_getPluginInfo($plugin);
+    		        $plugin_data = Plugins::getInfo($plugin);
     		        $this->_exportVariableToView("categories", Category::newInstance()->toTreeAll());
     		        $this->_exportVariableToView("selected", PluginCategory::newInstance()->listSelected($plugin_data['short_name']));
 			        $this->_exportVariableToView("plugin_data", $plugin_data);
 			        $this->doView("plugins/configuration.php");
 		        } else {
     		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
-			        //osc_renderAdminSection('plugins/index.php', __('Plugins'));
 		        }
 		        break;
 	        case 'configure_post':
 	            $plugin_short_name = Params::getParam("plugin_short_name");
 	            $categories = Params::getParam("categories");
 		        if($plugin_short_name!="") {
-			        osc_cleanCategoryFromPlugin($plugin_short_name);
+			        Plugins::cleanCategoryFromPlugin($plugin_short_name);
 			        if(isset($categories)) {
-				        osc_addToCategoryPlugin($categories, $plugin_short_name);
+				        Plugins::addToCategoryPlugin($categories, $plugin_short_name);
 			        }
 		        } else {
 			        osc_add_flash_message(__('No plugin selected'));
@@ -133,7 +128,7 @@ class CAdminPlugins extends AdminSecBaseModel
                 $this->add_global_js('jquery.dataTables.min.js') ;
                 $this->add_css('item_list_layout.css') ;
                 $this->add_css('demo_table.css') ;
-                $this->_exportVariableToView("plugins", osc_listAllPlugins());
+                $this->_exportVariableToView("plugins", Plugins::listAll());
 		        $this->doView("plugins/index.php");
         }
     }
