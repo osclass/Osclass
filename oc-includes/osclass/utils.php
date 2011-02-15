@@ -20,17 +20,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
-
-
-/**
- * Makes an HTTP redirection and ensures the correct script abortion.
- */
-function osc_redirectTo($url) {
-    header('Location: ' . $url);
-    exit;
-}
-
 /**
  * Tries to delete the directory recursivaly.
  * @return true on success.
@@ -249,11 +238,6 @@ function osc_mailBeauty($text, $params) {
 	$text = str_ireplace($kwords, $rwords, $text) ;
     
 	return $text ;
-}
-
-function osc_redirectTo($url) {
-    header('Location: ' . $url) ;
-    exit ;
 }
 
 

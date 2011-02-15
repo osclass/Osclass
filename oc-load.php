@@ -61,11 +61,6 @@ require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once LIB_PATH . 'osclass/locale.php';
-<<<<<<< HEAD
-require_once LIB_PATH . 'osclass/pages.php';
-=======
-//require_once LIB_PATH . 'osclass/themes.php';
->>>>>>> 5b8ce9e65c10e413ca0efc0358cd8d5fd38070de
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
