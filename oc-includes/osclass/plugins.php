@@ -89,7 +89,7 @@ class Plugins
     static function loadActive() {
 	    try {		
 		    $data['s_value'] = osc_active_plugins() ;
-		    $plugins_list = osc_unserialize($data['s_value']);
+		    $plugins_list = unserialize($data['s_value']);
 		    if(is_array($plugins_list)) {
 			    foreach($plugins_list as $plugin_name) {
 				    $pluginPath = ABS_PATH . 'oc-content/plugins/'.$plugin_name;
@@ -110,7 +110,7 @@ class Plugins
 	    $p_array = array();
 	    try {
 		    $data['s_value'] = osc_active_plugins() ;
-		    $plugins_list = osc_unserialize($data['s_value']) ;
+		    $plugins_list = unserialize($data['s_value']) ;
 		    if(is_array($plugins_list)) {
 			    foreach($plugins_list as $plugin_name) {
 				    $p_array[] = $plugin_name;
@@ -134,7 +134,7 @@ class Plugins
 	    $conn->autocommit(false);
 	    try {
 		    $data['s_value'] = osc_active_plugins() ;
-		    $plugins_list = osc_unserialize($data['s_value']);
+		    $plugins_list = unserialize($data['s_value']);
 		    $found_it = false;
 		    if(is_array($plugins_list)) {
 			    foreach($plugins_list as $plugin_name) {
@@ -147,7 +147,7 @@ class Plugins
 		    }
 		    if(!$found_it) {
 			    $plugins_list[] = $path;
-			    $data['s_value'] = osc_serialize($plugins_list);
+			    $data['s_value'] = serialize($plugins_list);
 			    $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins');		
 			    Preference::newInstance()->update($data, $condition);
 			    unset($condition);
@@ -176,7 +176,7 @@ class Plugins
         $conn->autocommit(false);
 	    try {
 		    $data['s_value'] = osc_active_plugins() ;
-		    $plugins_list = osc_unserialize($data['s_value']);
+		    $plugins_list = unserialize($data['s_value']);
 
 		    $path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 		    if(is_array($plugins_list)) {
@@ -185,7 +185,7 @@ class Plugins
 					    unset($plugins_list[$key]);
 				    }
 			    }
-			    $data['s_value'] = osc_serialize($plugins_list);
+			    $data['s_value'] = serialize($plugins_list);
 			    $condition = array( 's_section' => 'osclass', 's_name' => 'active_plugins') ;
 			    Preference::newInstance()->update($data, $condition) ;
 			    unset($condition);
@@ -269,7 +269,7 @@ class Plugins
     static function configureView($path) {
 	    $plugin = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
 	    if(stripos($plugin, ".php")===FALSE) {
-		    $plugins_list = osc_unserialize(osc_active_plugins());
+		    $plugins_list = unserialize(osc_active_plugins());
 		    if(is_array($plugins_list)) {
 			    foreach($plugins_list as $p){
 				    $data = Plugins::getInfo($p);
@@ -280,7 +280,7 @@ class Plugins
 			    }
 		    }
 	    }
-	    osc_redirectTo(osc_admin_base_url(true).'?page=plugins&action=configure&plugin='.$plugin);
+	    osc_redirectTo(osc_plugin_configure_url($plugin));
     }
 
     static function cleanCategoryFromPlugin($plugin) {

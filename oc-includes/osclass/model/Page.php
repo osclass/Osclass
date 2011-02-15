@@ -360,6 +360,38 @@ class Page extends DAO
         
         return $result;
     }
+    
+    /**
+     * Check if a page id is indelible
+     *
+     * @param int $id Page id
+     * @return true if it's indelible, false in case not
+     */
+    function isIndelible($id)
+    {
+        $page = $this->findByPrimaryKey($id);
+        if($page['b_indelible'] == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if Internal Name exists with another id
+     *
+     * @param int $id page id
+     * @param string $internalName page internal name
+     * @return true if internal name exists, false if not
+     */
+    function internalNameExists($id, $internalName)
+    {
+        $result = $this->listWhere('s_internal_name = \'' . $internalName . '\' AND pk_i_id <> ' . $id );
+        if(count($result) > 0) {
+            return true;
+        }
+        return false;
+    }
+    
 }
 
 ?>

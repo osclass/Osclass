@@ -62,8 +62,8 @@ class CAdminPages extends AdminSecBaseModel
                     $this->pageManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
                 }
                 
-                if(!pageInternalNameExists($id, $s_internal_name)) {
-                    if(!pageIsIndelible($id)) {
+                if(!$this->pageManager->internalNameExists($id, $s_internal_name)) {
+                    if(!$this->pageManager->isIndelible($id)) {
                         $this->pageManager->updateInternalName($id, $s_internal_name);
                     }
                     osc_add_flash_message( __('The page has been updated.'), 'admin' );
@@ -115,7 +115,7 @@ class CAdminPages extends AdminSecBaseModel
                 }
                 
                 foreach($id as $_id) {
-                    $result = pageDeleteById($_id);
+                    $result = $this->pageManager->deleteByID($_id);
                     switch ($result) {
                         case -1:
                             $page_indelible++;
