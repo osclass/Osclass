@@ -734,8 +734,8 @@ switch ($action) {
             $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 
             foreach($item['locale'] as $k => $v) {
-                $item['locale'][$k]['s_title'] = osc_applyFilter('item_title',$v['s_title']);
-                $item['locale'][$k]['s_description'] = osc_applyFilter('item_description',$v['s_description']);
+                $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
             }
 
             $mUser = new User();
