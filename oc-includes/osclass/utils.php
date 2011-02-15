@@ -67,11 +67,13 @@ function osc_deleteDir($path) {
  * @return true on success.
  */
 function osc_packageExtract($zipPath, $path) {
-    if (!@mkdir($path, 0666)) {
-        return false;
+    if(!file_exists($path)) {
+        if (!@mkdir($path, 0666)) {
+            return false;
+        }
     }
 
-    chmod($path, 0777);
+    @chmod($path, 0777);
 
     $zip = new ZipArchive;
     if ($zip->open($zipPath) === true) {
