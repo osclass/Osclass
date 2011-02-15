@@ -30,18 +30,6 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Dashboard'); ?></div>
-        <?php
-            $fields = array(
-                array('name' => 's_name', 'error_msg' => __('You have to write a name.'))
-                ,array('name' => 's_email', 'error_msg' => __('You have to write an e-mail.'))
-                ,array('name' => 's_username', 'error_msg' => __('You have to write an username.'))
-                ,array('name' => 's_password', 'error_msg' => __('You have to write a password.'))
-            );
-            osc_check_form_js($fields);
-        ?>
-
-
-
         <div id="content">
             <div id="separator"></div>
 

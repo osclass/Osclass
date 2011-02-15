@@ -64,12 +64,6 @@
             theme_advanced_buttons1_add : "media"
             });
         </script>
-        <?php
-            $fields = array(
-                array('name' => 's_internal_name', 'error_msg' => __('You have to write an unique internal name.'))
-            );
-            osc_check_form_js($fields);
-        ?>
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>

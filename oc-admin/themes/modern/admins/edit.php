@@ -32,21 +32,6 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header">Dashboard</div>
-        <?php
-            $fields = array(
-                array('name' => 's_name', 'error_msg' => __('You have to write a name.')),
-                array('name' => 's_email', 'error_msg' => __('You have to write an e-mail.')),
-                array('name' => 's_username', 'error_msg' => __('You have to write an username.'))
-            );
-            osc_check_form_js($fields);
-        ?>
-
-        <script>
-                $(function() {
-                        // Here we include specific jQuery, jQuery UI and Datatables functions.
-                });
-        </script>
-
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
