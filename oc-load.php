@@ -67,7 +67,7 @@ require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPlugins.php';
-require_once LIB_PATH . 'osclass/validations.php';
+//require_once LIB_PATH . 'osclass/validations.php'; xxx: to be deleted
 require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
