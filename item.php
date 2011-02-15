@@ -22,6 +22,8 @@ class CWebItem extends WebSecBaseModel
 
     function __construct() {
         parent::__construct() ;
+        $this->add_css('style.css');
+        $this->add_css('jquery-ui.css');
     }
 
     //Business Layer...
@@ -31,12 +33,206 @@ class CWebItem extends WebSecBaseModel
         //$this->_exportVariableToView('locales', $locales) ;
         //$this->_exportVariableToView('latestItems', $latestItems) ;
         switch( $this->action ) {
+            case 'post': // add
+                if(!osc_users_enabled()) {
+                    osc_add_flash_message(__('Users are not enable')) ;
+                    $this->redirectTo(osc_base_url(true));
+                }
+
+                if( Session::newInstance()->_get('userId') != '' ){
+                    $userId = Session::newInstance()->_get('userId');
+                }else{
+                    $userId = null;
+                }
+
+                $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
+                $categories = Category::newInstance()->toTree();
+                $countries = Country::newInstance()->listAll();
+                $regions = array(); 
+                if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+                    $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+                } else if( count($countries) > 0 ) {
+                    $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+                }
+                $cities = array();
+                if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                } else if( count($regions) > 0 ) {
+                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                }
+
+                $currencies = Currency::newInstance()->listAll();
+
+                $this->_exportVariableToView('categories', $categories) ;
+                $this->_exportVariableToView('currencies', $currencies) ;
+                $this->_exportVariableToView('countries',$countries ) ;
+                $this->_exportVariableToView('regions', $regions) ;
+                $this->_exportVariableToView('cities', $cities) ;
+
+                osc_run_hook('post_item');
+                $this->doView('item-post.php');
+                break;
+                
+            case 'post_item': // add_post
+                if(!osc_users_enabled()) {
+                    osc_add_flash_message(__('Users are not enable'));
+                    osc_redirectTo(osc_base_url());
+                }
+                
+                // variables
+                $active     = 'INACTIVE';
+
+                $is_admin   = FALSE;
+
+                $showEmail  = 0;
+                if(Params::getParam('showEmail') != ''){    // comprobación de integer
+                    $showEmail = (int) Params::getParam('showEmail');
+                }
+
+                $catId      = '';
+                if( Params::getParam('catId') != '' ) {
+                    $catId = Params::getParam('catId');
+                }
+
+                $userId     = '';
+                if( Session::newInstance()->_get('userId') != '' ) {
+                    $userId = Session::newInstance()->_get('userId');
+                }
+
+                $currency   = '';
+                if( Params::getParam('currency') != '' ) {
+                    $currency = Params::getParam('currency');
+                }
+
+                $price      = '';
+                if( Params::getParam('price') != '' ) {
+                    $price = Params::getParam('price');
+                }
+
+                $countryId = '';
+                if( Params::getParam('countryId') != '' ) {
+                    $countryId = Params::getParam('countryId');
+                }
+
+                $mUser = new User();
+                $data = $mUser->findByPrimaryKey( (int)$userId );
+                $contactName   = $data['s_name'];
+                $contactEmail  = $data['s_email'];
+
+                // falta testealo
+                if (osc_recaptcha_private_key()) {
+                    require_once LIB_PATH . 'recaptchalib.php';
+                    if ( Params::getFiles("recaptcha_challenge_field") != '') {
+                        $resp = recaptcha_check_answer (
+                            osc_recaptcha_private_key()
+                            ,$_SERVER["REMOTE_ADDR"]
+                            ,Params::getParam("recaptcha_challenge_field")
+                            ,Params::getParam("recaptcha_response_field")
+                        );
+                        if (!$resp->is_valid) {
+                            die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")") ;
+                        }
+                    }
+                }
+                
+                // crear el array con los datos a pasar
+                $aItem = array(
+                    'showEmail'     => $showEmail,
+                    'is_admin'      => FALSE,
+                    'active'        => $active,
+                    'userId'        => $userId,
+                    'price'         => $price,
+                    'catId'         => $catId,
+                    'currency'      => $currency,
+                    'contactName'   => $contactName,
+                    'contactEmail'  => $contactEmail,
+                    'countryId'     => $countryId,
+                    'region'        => Params::getParam('region'),
+                    'regionId'      => Params::getParam('regionId'),
+                    'cityId'        => Params::getParam('cityId'),
+                    'cityArea'      => Params::getParam('cityArea'),
+                    'address'       => Params::getParam('address'),
+                    'photos'        => Params::getFiles('photos'),
+                    'title'         => Params::getParam('title'),
+                    'description'   => Params::getParam('description')
+                );
+
+//                echo "<pre>";
+//                print_r($aItem);
+//                echo "</pre>";
+
+                $mItems = new ItemActions();
+                $success = $mItems->post_item($aItem);
+
+                if($success){
+                    echo "SUCCESS<br>";
+                }else{
+                    echo "FAIL<br>";
+                }
+//
+//                if($success) {
+//                    if(!isset($_SESSION['userId'])) {
+//                        $mPages = new Page() ;
+//                        $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
+//                        $locale = osc_get_user_locale() ;
+//
+//                        $content = array();
+//                        if(isset($aPage['locale'][$locale]['s_title'])) {
+//                            $content = $aPage['locale'][$locale];
+//                        } else {
+//                            $content = current($aPage['locale']);
+//                        }
+//
+//                        $item_url = osc_create_item_url($item) ;
+//                        $urlEdit =  array(
+//                                        'file'   => 'user'
+//                                        ,'action' => 'item_edit'
+//                                        ,'id'     => $itemId
+//                                        ,'userId' => null
+//                                        ,'secret' => $item['s_secret']
+//                                    ) ;
+//                        $edit_link = osc_create_url($urlEdit);
+//
+//                        $urlDelete =    array(
+//                                            'file'   => 'user'
+//                                            ,'action' => 'item_delete'
+//                                            ,'id'     => $itemId
+//                                            ,'userId' => null
+//                                            ,'secret' => $item['s_secret']
+//                                        ) ;
+//                        $delete_link = osc_create_url($urlDelete) ;
+//
+//                        $words   = array();
+//                        $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
+//                                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+//                        $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
+//                                         $item_url, osc_page_title(), $edit_link, $delete_link) ;
+//                        $title = osc_mailBeauty($content['s_title'], $words) ;
+//                        $body = osc_mailBeauty($content['s_text'], $words) ;
+//
+//                        $emailParams =  array(
+//                                            'subject' => $title
+//                                            ,'to' => $PcontactEmail
+//                                            ,'to_name' => $PcontactName
+//                                            ,'body' => $body
+//                                            ,'alt_body' => $body
+//                                        );
+//                        osc_sendMail($params);
+//                    }
+//
+//                    osc_run_hook('posted_item', $item);
+//                    $category = Category::newInstance()->findByPrimaryKey($PcatId);
+//                    osc_redirectTo(osc_search_category_url($category));
+//                } else {
+//                    osc_redirectTo(osc_item_post_url());
+//                }
+                break;
+
             case('dashboard'):      //dashboard...
 
             break;
-        }
 
-        $this->doView('main.php') ;
+        }
     }
 
     //hopefully generic...
@@ -538,8 +734,8 @@ switch ($action) {
             $comments = ItemComment::newInstance()->findByItemID($_GET['id']);
 
             foreach($item['locale'] as $k => $v) {
-                $item['locale'][$k]['s_title'] = osc_applyFilter('item_title',$v['s_title']);
-                $item['locale'][$k]['s_description'] = osc_applyFilter('item_description',$v['s_description']);
+                $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
             }
 
             $mUser = new User();

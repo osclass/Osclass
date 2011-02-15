@@ -98,28 +98,28 @@ class UserForm extends Form {
     }
     
     static public function info_textarea($name, $locale = 'en_US', $value = '') {
-        parent::generic_textarea($locale . "#" . $name, $value);
+        parent::generic_textarea($name . '[' . $locale . ']', $value) ;
         return true ;
     }
 
     static public function multilanguage_info($locales, $user = null) {
         $num_locales = count($locales);
         if($num_locales>1) { echo '<div class="tabber">'; };
-        foreach($locales as $locale) {
-            if($num_locales>1) { echo '<div class="tabbertab">'; };
-            if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-            echo '<div class="description">';
-            echo '<div><label for="description">' . __('User Description') . '</label></div>';
-            self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
-            echo '</div>';
-            if($num_locales>1) { echo '</div>'; };
-         }
+            foreach($locales as $locale) {
+                if($num_locales>1) { echo '<div class="tabbertab">'; };
+                    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
+                    echo '<div class="description">';
+                        echo '<div><label for="description">' . __('User Description') . '</label></div>';
+                        self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
+                    echo '</div>';
+                if($num_locales>1) { echo '</div>'; };
+             }
          if($num_locales>1) { echo '</div>'; };
     }
 
     static public function country_select($countries, $user = null) {
         if( count($countries) > 1 ) {
-            parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select one country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
+            parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
             return true ;
         } else if ( count($countries) == 1 ) {
             parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
@@ -138,7 +138,7 @@ class UserForm extends Form {
 
     static public function region_select($regions, $user = null) {
         if( count($regions) > 1 ) {
-            parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select one region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
+            parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
             return true ;
         } else if ( count($regions) == 1 ) {
             parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
@@ -156,7 +156,7 @@ class UserForm extends Form {
 
     static public function city_select($cities, $user = null) {
         if( count($cities) > 1 ) {
-            parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select one city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+            parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
             return true ;
         } else if ( count($cities) == 1 ) {
             parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
@@ -341,9 +341,9 @@ function checkForm() {
         $("#regionId").change(function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
-                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php } else { ?>
-                var url = '<?php echo osc_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+                var url = '<?php echo osc_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php }; ?>
             var result = '';
 
