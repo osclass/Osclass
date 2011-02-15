@@ -54,11 +54,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     $userActions = new UserActions($this->action, true) ;
                                     $success = $userActions->add() ;
                                     switch($success) {
-                                        case 1: osc_add_flash_message(__('The account has been created. An activation email has been sent to the user\'s email address')) ;
+                                        case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent to the user\'s email address')) ;
                                         break;
-                                        case 2: osc_add_flash_message(__('The account has been created and it was activated')) ;
+                                        case 2: osc_add_flash_message(__('The user has been created and it was activated')) ;
                                         break;
-                                        case 3: osc_add_flash_message(__('Sorry, but that email is already in use. Did you forget your password?')) ;
+                                        case 3: osc_add_flash_message(__('Sorry, but that email is already in use')) ;
                                         break;
                                     }
                                     $this->redirectTo("index.php?page=users") ;
@@ -86,16 +86,14 @@ class CAdminUsers extends AdminSecBaseModel
                                     $this->doView("users/frm.php");
             break;
             case 'edit_post':       //edit post
-                                    $userId = Params::getParam("id");
-
                                     require_once LIB_PATH . 'osclass/users.php' ;
                                     $userActions = new UserActions($this->action, true) ;
-                                    $success = $userActions->edit() ;
+                                    $success = $userActions->edit( Params::getParam("id") ) ;
 
                                     switch($success) {
                                         case 1: osc_add_flash_message(__('Passwords don\'t match')) ;
                                         break;
-                                        case 2: osc_add_flash_message(__('The account has been created and it was activated')) ;
+                                        case 2: osc_add_flash_message(__('The user has been updated and it was activated')) ;
                                         break;
                                         default: osc_add_flash_message(__('The user has been updated'));
                                         break;

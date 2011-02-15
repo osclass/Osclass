@@ -68,7 +68,7 @@
                             $do = new CAdminAdmins() ;
                             $do->doModel() ;
         break;
-        case('users'):     require_once(osc_admin_base_path() . 'users.php') ;
+        case('users'):      require_once(osc_admin_base_path() . 'users.php') ;
                             $do = new CAdminUsers() ;
                             $do->doModel() ;
         break;

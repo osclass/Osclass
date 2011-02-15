@@ -94,10 +94,10 @@
          }
 
         //edit...
-        function edit()
+        function edit($userId)
         {
             $input = $this->prepareData(false) ;
-            $manager->update($input, array('pk_i_id' => $userId)) ;
+            $this->manager->update($input, array('pk_i_id' => $userId)) ;
 
             foreach (Params::getParam('s_info') as $key => $value) {
                 $this->manager->updateDescription($userId, $key, $value) ;
@@ -105,9 +105,9 @@
 
             if ($this->is_admin) {
                 if(Params::getParam("b_enabled") != '') {
-                    $manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId)) ;
+                    $this->manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId)) ;
                 } else {
-                    $manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId)) ;
+                    $this->manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId)) ;
                 }
             }
 
