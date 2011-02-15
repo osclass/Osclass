@@ -354,7 +354,7 @@ class CWebItem extends WebSecBaseModel
                 break;
 
             case 'contact_post':
-                $path = '';
+                $path = null;
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
 
                 $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
@@ -383,9 +383,9 @@ class CWebItem extends WebSecBaseModel
                 $words   = array();
                 $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
                                  '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
-                // OJO
-                $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'],
-                                 $_POST['phoneNumber'], osc_base_url(), $item['s_title'], osc_item_url($item), Params::getParam('message'));
+                
+                $words[] = array($item['s_contact_name'], Params::getParam('yourName'), Params::getParam('yourEmail'),
+                                 Params::getParam('phoneNumber'), osc_base_url(), $item['s_title'], osc_item_url($item), Params::getParam('message'));
                 $title = osc_mailBeauty($content['s_title'], $words);
                 $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -404,18 +404,22 @@ class CWebItem extends WebSecBaseModel
                                     ,'to_name'   => $item['s_contact_name']
                                     ,'body'      => $body
                                     ,'alt_body'  => $body
-                                    ,'reply_to'  => $_POST['yourEmail']
+                                    ,'reply_to'  => Params::getParam('yourEmail')
                                 ) ;
 
+                print_r($emailParams);
                 if(osc_item_attachment()) {
-                    $resourceName = $_FILES['attachment']['name'] ;
-                    $tmpName = $_FILES['attachment']['tmp_name'] ;
-                    $resourceType = $_FILES['attachment']['type'] ;
-                    $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+                    echo "debug<br>";
+                    $attachment = Params::getFiles('attachment');
+                    $resourceName = $attachment['name'] ;
+                    $tmpName = $attachment['tmp_name'] ;
+                    $resourceType = $attachment['type'] ;
 
-                    if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
+                    $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+
+                    if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
                         osc_add_flash_message(__('There has been some erro sending the message')) ;
-                        osc_redirectToReferer(osc_base_url()) ;
+                        $this->redirectTo( osc_base_url() );
                     }
 
                     if(!move_uploaded_file($tmpName, $path)){
@@ -427,10 +431,15 @@ class CWebItem extends WebSecBaseModel
                     $emailParams['attachment'] = $path ;
                 }
 
-                osc_sendMail($emailParams) ;
+                if(osc_sendMail($emailParams) ){
+                    echo "send ok <br>";
+                }else{
+                    echo "failed <br>";
+                }
                 @unlink($path) ;
                 osc_add_flash_message(__('We\'ve just sent an e-mail to the seller.')) ;
-                osc_redirectTo(osc_create_item_url($item)) ;
+                //$this->redirectTo( osc_create_item_url($item) );
+                
                 break;
             case('dashboard'):      //dashboard...
 

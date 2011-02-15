@@ -131,7 +131,6 @@
 			    <div id="content_header" class="content_header">
 					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/cat-icon.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
-					<!-- <div id="button_open"> <?php echo osc_lowerCase( __('Add New Category') ); ?></div> -->
 					<div style="clear: both;"></div>
 				</div>
 				<div id="content_separator"></div>
