@@ -68,7 +68,7 @@
             </div>
 
 			<?php
-                osc_runHook('item_edit', $item);
+                osc_run_hook('item_edit', $item) ;
 			?>
 		</div>
 		
