@@ -29,7 +29,7 @@ function google_maps_call_after_uninstall() {
 }
 
 function google_maps_admin() {
-    osc_renderPluginView(dirname(__FILE__) . '/admin.php') ;
+    osc_admin_render_plugin(dirname(__FILE__) . '/admin.php') ;
 }
 
 function google_maps_location() {

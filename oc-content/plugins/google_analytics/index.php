@@ -30,7 +30,7 @@ function google_analytics_call_after_uninstall() {
 
 function google_analytics_admin() {
 	
-	osc_renderPluginView(dirname(__FILE__).'/admin.php') ;
+	osc_admin_render_plugin(dirname(__FILE__).'/admin.php') ;
 }
 
 
