@@ -39,88 +39,19 @@
                                         $this->doView('user-register.php') ;
                 break;
                 case('register_post'):  //register user
-                                        $userManager = new User() ;
-
-                                        $success = 0;
-                                        $input['s_name'] = Params::getParam('s_name') ;
-                                        $input['s_email'] = Params::getParam('s_email') ;
-                                        $input['s_password'] = sha1( Params::getParam('s_password') ) ;
-                                        $input['dt_reg_date'] = DB_FUNC_NOW ;
-                                        $code = osc_genRandomPassword() ;
-                                        $input['s_secret'] = $code ;
-
-                                        $email_taken = $userManager->findByEmail( $input['s_email'] ) ;
-                                        if($email_taken == null)
-                                        {
-                                            $userManager->insert($input) ;
-                                            $userId = $userManager->getConnection()->get_last_id() ;
-
-                                            /*
-                                            //for multilanguage descriptions
-                                            $data = array();
-                                            foreach ($_REQUEST as $k => $v) {
-                                                if (preg_match('|(.+?)#(.+)|', $k, $m)) {
-                                                    $data[$m[1]][$m[2]] = $v;
-                                                }
-                                            }
-                                            foreach ($data as $k => $_data) {
-                                                $manager->updateDescription($userId, $k, $_data['s_info']);
-                                            }*/
-
-                                            osc_run_hook('user_register_completed') ;
-
-                                            if( osc_user_validation_enabled() )
-                                            {
-                                                $PageManager = new Page() ;
-                                                $locale = osc_get_user_locale() ;
-                                                $aPage = $PageManager->findByInternalName('email_user_validation') ;
-
-                                                $content = array() ;
-                                                if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                    $content = $aPage['locale'][$locale] ;
-                                                } else {
-                                                    $content = current($aPage['locale']) ;
-                                                }
-
-                                                if (!is_null($content)) {
-                                                    $validationLink = sprintf(
-                                                                        '%s?page=register&action=validate&id=%d&code=%s'
-                                                                        ,osc_base_url(true)
-                                                                        ,$userId
-                                                                        ,$code
-                                                    ) ;
-
-                                                    $words   = array() ;
-                                                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}') ;
-                                                    $words[] = array($input['s_name'], $input['s_email'], osc_base_url(), $validationLink) ;
-                                                    $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                    $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                                                    $emailParams = array(
-                                                                        'subject'  => $title
-                                                                        ,'to'       => $_POST['s_email']
-                                                                        ,'to_name'  => $_POST['s_name']
-                                                                        ,'body'     => $body
-                                                                        ,'alt_body' => $body
-                                                    ) ;
-
-                                                    osc_sendMail($emailParams) ;
-                                                }
-
-                                                osc_add_flash_message('The account must be validated. An e-mail has been sent to your e-mail') ;
-                                                $this->redirectTo( osc_base_url() ) ;
-                                            } else {
-                                                User::newInstance()->update(
-                                                                        array('b_enabled' => '1')
-                                                                        ,array('pk_i_id' => $userId)
-                                                ) ;
-
-                                                osc_add_flash_message(__('Your account has been created successfully. Log in!')) ;
-                                                $this->doView('user-login.php') ;
-                                            }
-                                        } else {
-                                            osc_add_flash_message(__('The specified e-mail is taken. Did you forget your password?')) ;
-                                            $this->doView('user-register.php') ;
+                                        require_once LIB_PATH . 'osclass/users.php' ;
+                                        $userActions = new UserActions(false) ;
+                                        $success = $userActions->add() ;
+                                        switch($success) {
+                                            case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent to the user\'s email address')) ;
+                                                    $this->redirectTo( osc_base_url() ) ;
+                                            break;
+                                            case 2: osc_add_flash_message(__('Your account has been created successfully')) ;
+                                                    $this->doView('user-login.php') ;
+                                            break;
+                                            case 3: osc_add_flash_message(__('The specified e-mail is already in use')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
                                         }
                 break;
                 case('validate'):       //validate account
@@ -128,7 +59,7 @@
                                         $code = Params::getParam('code') ;
                                         $userManager = new User() ;
                                         $user = $userManager->findByIdSecret($id, $code) ;
-
+                                            
                                         if ($user) {
                                             if (!$user['b_enabled']) {
                                                 $userManager = new User() ;

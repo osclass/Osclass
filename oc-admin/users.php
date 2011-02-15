@@ -51,20 +51,14 @@ class CAdminUsers extends AdminSecBaseModel
             break;
             case 'create_post':     //creating the user...
                                     require_once LIB_PATH . 'osclass/users.php' ;
+                                    $userActions = new UserActions(true) ;
+                                    $success = $userActions->add() ;
                                     switch($success) {
-                                        case 0:
+                                        case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent to the user\'s email address')) ;
                                         break;
-                                        case 1:
-                                            osc_add_flash_message(__('The account has been created. An activation email has been sent to the user\'s email address.')) ;
+                                        case 2: osc_add_flash_message(__('The user has been created and it was activated')) ;
                                         break;
-                                        case 2:
-                                            osc_add_flash_message(__('The account has been created and it was activated.')) ;
-                                        break;
-                                        case 3:
-                                            osc_add_flash_message(__('Sorry, but that email is already in use. Did you forget your password?')) ;
-                                        break;
-                                        case 4:
-                                            osc_add_flash_message(__('The user could not be registered, sorry.')) ;
+                                        case 3: osc_add_flash_message(__('Sorry, but that email is already in use')) ;
                                         break;
                                     }
                                     $this->redirectTo("index.php?page=users") ;
@@ -83,6 +77,7 @@ class CAdminUsers extends AdminSecBaseModel
                                     } else if( count($regions) > 0 ) {
                                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                                     }
+                                    
                                     $this->_exportVariableToView("user", $user);
                                     $this->_exportVariableToView("countries", $countries);
                                     $this->_exportVariableToView("regions", $regions);
@@ -91,22 +86,17 @@ class CAdminUsers extends AdminSecBaseModel
                                     $this->doView("users/frm.php");
             break;
             case 'edit_post':       //edit post
-                                    $userId = Params::getParam("id");
+                                    require_once LIB_PATH . 'osclass/users.php' ;
+                                    $userActions = new UserActions(true) ;
+                                    $success = $userActions->edit( Params::getParam("id") ) ;
 
-                                    require_once LIB_PATH . 'osclass/users.php';
-
-                                    if(Params::getParam("b_enabled")!='') {
-                                        $manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId));
-                                    } else {
-                                        $manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId));
-                                    }
-
-                                    if($success==0) {
-                                        osc_add_flash_message(__('This should never happened.'));
-                                    } else if($success==1) {
-                                        osc_add_flash_message(__('Passwords don\'t match.'));
-                                    } else {
-                                        osc_add_flash_message(__('The user has been updated.'));
+                                    switch($success) {
+                                        case 1: osc_add_flash_message(__('Passwords don\'t match')) ;
+                                        break;
+                                        case 2: osc_add_flash_message(__('The user has been updated and it was activated')) ;
+                                        break;
+                                        default: osc_add_flash_message(__('The user has been updated'));
+                                        break;
                                     }
 
                                     $this->redirectTo("index.php?page=users") ;
@@ -118,7 +108,7 @@ class CAdminUsers extends AdminSecBaseModel
                                         $values = array('b_enabled' => 1);
                                         try {
                                             $this->userManager->update($values, $conditions);
-                                            osc_add_flash_message(__('The user has been activated.'));
+                                            osc_add_flash_message(__('The user has been activated'));
                                         } catch (Exception $e) {
                                             osc_add_flash_message(__('Error: ') . $e->getMessage());
                                         }

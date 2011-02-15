@@ -22,39 +22,39 @@ class User extends DAO {
 	public static function newInstance() { return new User(); }
 
 	public function getTableName()
-        {
-            return DB_TABLE_PREFIX . 't_user';
+    {
+        return DB_TABLE_PREFIX . 't_user';
+    }
+
+    public function getDescriptionTableName()
+    {
+        return DB_TABLE_PREFIX . 't_user_description';
+    }
+
+    public function findByPrimaryKey($id, $locale = null)
+    {
+        $sql = 'SELECT * FROM ' . $this->getTableName();
+        $sql .= ' WHERE ' . $this->getPrimaryKey() . ' = ' . $id;
+        $row = $this->conn->osc_dbFetchResult($sql);
+
+        if(is_null($row)) {
+            return array();
         }
 
-        public function getDescriptionTableName()
-        {
-            return DB_TABLE_PREFIX . 't_user_description';
+        $sql_desc = 'SELECT * FROM ';
+        $sql_desc .= $this->getDescriptionTableName() . ' WHERE fk_i_user_id = ' . $id;
+        if(!is_null($locale)) {
+            $sql_desc .= ' AND fk_c_locale_code  = \'' . $locale . '\' ';
+        }
+        $sub_rows = $this->conn->osc_dbFetchResults($sql_desc);
+
+        $row['locale'] = array();
+        foreach($sub_rows as $sub_row) {
+            $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
         }
 
-        public function findByPrimaryKey($id, $locale = null)
-        {
-            $sql = 'SELECT * FROM ' . $this->getTableName();
-            $sql .= ' WHERE ' . $this->getPrimaryKey() . ' = ' . $id;
-            $row = $this->conn->osc_dbFetchResult($sql);
-
-            if(is_null($row)) {
-                return array();
-            }
-
-            $sql_desc = 'SELECT * FROM ';
-            $sql_desc .= $this->getDescriptionTableName() . ' WHERE fk_i_user_id = ' . $id;
-            if(!is_null($locale)) {
-                $sql_desc .= ' AND fk_c_locale_code  = \'' . $locale . '\' ';
-            }
-            $sub_rows = $this->conn->osc_dbFetchResults($sql_desc);
-
-            $row['locale'] = array();
-            foreach($sub_rows as $sub_row) {
-                $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
-            }
-
-            return $row;
-        }
+        return $row;
+    }
 
 	public function findByEmail($email)
         {

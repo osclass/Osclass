@@ -87,7 +87,7 @@ class CWebLogin extends BaseModel
                                         $newPassword = osc_genRandomPassword() ;
                                         $body = sprintf( __('Your new password is "%s"'), $newPassword) ;
 
-                                        Admin::newInstance()->update(
+                                        User::newInstance()->update(
                                             array('s_password' => sha1($newPassword))
                                             ,array('pk_i_id' => $user['pk_i_id'])
                                         );
