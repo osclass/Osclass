@@ -117,7 +117,7 @@
             <div id="right_column">
 
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/icon-language.png" /></div>
+                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/icon-language.png" /></div>
                     <div id="content_header_arrow">&raquo; <?php _e('Languages'); ?></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&action=add" id="button_open"><?php _e('Add') ; ?></a>
                     <div style="clear: both;"></div>

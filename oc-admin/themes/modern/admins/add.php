@@ -29,7 +29,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
         <?php
             $fields = array(
                 array('name' => 's_name', 'error_msg' => __('You have to write a name.'))
@@ -49,7 +49,7 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/admin-icon.png" /></div>
+                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/admin-icon.png" /></div>
                     <div id="content_header_arrow">&raquo; <?php _e('Add new administrator'); ?></div>
                     <div style="clear: both;"></div>
                 </div>

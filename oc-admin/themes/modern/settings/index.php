@@ -42,7 +42,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo $current_theme ; ?>/images/back_office/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo $current_theme ; ?>/images/settings-icon.png" alt="" title=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
                     <div style="clear: both;"></div>

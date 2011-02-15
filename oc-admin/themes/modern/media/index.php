@@ -104,7 +104,7 @@
 				/* this is header for right side. */ 
 				?>
 				<div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/media-icon.png" /></div>
+					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/media-icon.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Media') ; ?></div>
 					<a href="?action=config" id="button_open"><?php _e('Settings') ; ?></a>
 					<div style="clear: both;"></div>
