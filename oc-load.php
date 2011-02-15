@@ -60,10 +60,8 @@ require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
 
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
-require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/locale.php';
 require_once LIB_PATH . 'osclass/pages.php';
-//require_once LIB_PATH . 'osclass/themes.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
@@ -87,7 +85,6 @@ require_once LIB_PATH . 'osclass/model/ItemComment.php';
 require_once LIB_PATH . 'osclass/model/ItemResource.php';
 require_once LIB_PATH . 'osclass/model/ItemStats.php';
 require_once LIB_PATH . 'osclass/model/Page.php';
-//require_once LIB_PATH . 'osclass/model/Plugin.php';
 require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 require_once LIB_PATH . 'osclass/model/Region.php';
 require_once LIB_PATH . 'osclass/model/Rewrite.php';
@@ -111,12 +108,6 @@ require_once LIB_PATH . 'osclass/frm/Contact.form.class.php';
 require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 
-/*$_GET = add_slashes_extended($_GET);
-$_POST = add_slashes_extended($_POST);
-$_COOKIE = add_slashes_extended($_COOKIE);
-$_SERVER = add_slashes_extended($_SERVER);
-$_REQUEST = add_slashes_extended($_REQUEST);*/
-
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
     if(osc_auto_cron()) {
@@ -124,7 +115,7 @@ if(!defined('__FROM_CRON__')) {
     }
 }
 
-Plugins::init();
+Plugins::init() ;
 
 //Rewrite::newInstance()->init();
 
