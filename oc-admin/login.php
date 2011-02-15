@@ -69,7 +69,8 @@ class CAdminLogin extends BaseModel
                                     $this->redirectTo( osc_admin_base_url() ) ;
             break ;
             case('recover'):        //form to recover the password (in this case we have the form in /gui/)
-                                    $this->doView( osc_admin_base_path() . 'gui/recover.php' ) ;
+                                    //#dev.conquer: we cannot use the doView here and only here
+                                    $this->doView('gui/recover.php') ;
             break ;
             case('recover_post'):   //post execution to recover the password
                                     $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
@@ -105,9 +106,9 @@ class CAdminLogin extends BaseModel
        
     }
 
-    //hopefully generic...
+    //in this case, this function is prepared for the "recover your password" form
     function doView($file) {
-        $this->osc_print_html($file) ;
+        require osc_admin_base_path() . $file ;
     }
 }
 

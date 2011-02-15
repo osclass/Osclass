@@ -25,6 +25,10 @@
         return(WEB_PATH . "oc-admin/index.php?page=plugins&action=renderplugin&file=" . $file);
     }
 
+    function osc_admin_render_plugin($file = '') {
+        osc_redirectTo(osc_admin_render_plugin_url($file));
+    }
+
     //Path Helpers
     function osc_base_path() {
         return(ABS_PATH) ;
@@ -175,6 +179,16 @@
         return $path ;
     }
 
+    //
+    function osc_user_login_url() {
+        if ( osc_rewrite_enabled() ) {
+            $path = osc_base_url() . 'user/login' ;
+        } else {
+            $path = osc_base_url(true) . '?page=login&action=login' ;
+        }
+        return $path ;
+    }
+
     //osc_createRegisterURL
     function osc_register_account_url() {
         if ( osc_rewrite_enabled() ) {
@@ -241,6 +255,30 @@
             return osc_base_url() . 'user/items' ;
         } else {
             return osc_base_url(true) . '?page=user&action=items' ;
+        }
+    }
+
+    function osc_change_user_email_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/change_email' ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_email' ;
+        }
+    }
+
+    function osc_change_user_email_confirm_url($userId, $code) {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/change_email_confirm/' . $userId . '/' . $code ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_email_confirm&userId=' . $userId . '&code=' . $code ;
+        }
+    }
+
+    function osc_change_user_password_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/change_password' ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=change_password' ;
         }
     }
 

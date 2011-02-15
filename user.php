@@ -34,16 +34,175 @@ class CWebUser extends WebSecBaseModel
 
     //Business Layer...
     function doModel() {
-        //calling the view...
-        //$this->_exportVariableToView('categories', $categories) ;
-        //$this->_exportVariableToView('locales', $locales) ;
-        //$this->_exportVariableToView('latestItems', $latestItems) ;
         switch( $this->action ) {
             case('dashboard'):      //dashboard...
                                     $aItems = Item::newInstance()->list_items_by_user( Session::newInstance()->_get('userId') ) ;
 
+                                    //calling the view...
                                     $this->_exportVariableToView('aItems', $aItems) ;
                                     $this->doView('user-dashboard.php') ;
+            break ;
+            case('profile'):        //profile...
+                                    $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
+                                    $aCountries = Country::newInstance()->listAll() ;
+                                    $aRegions = array() ;
+                                    if( $user['fk_c_country_code'] != '' ) {
+                                        $aRegions = Region::newInstance()->getByCountry( $user['fk_c_country_code'] ) ;
+                                    } elseif( count($aCountries) > 0 ) {
+                                        $aRegions = Region::newInstance()->getByCountry( $aCountries[0]['pk_c_code'] ) ;
+                                    }
+                                    $aCities = array() ;
+                                    if( $user['fk_i_region_id'] != '' ) {
+                                        $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                                    } else if( count($aRegions) > 0 ) {
+                                        $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                    }
+                                    
+                                    //calling the view...
+                                    $this->_exportVariableToView('aCountries', $aCountries) ;
+                                    $this->_exportVariableToView('aRegions', $aRegions) ;
+                                    $this->_exportVariableToView('aCities', $aCities) ;
+                                    $this->_exportVariableToView('user', $user) ;
+                                    $this->doView('user-profile.php') ;
+            break ;
+            case('profile_post'):   //profile post...
+                                    $userId = Session::newInstance()->_get('userId') ;
+
+                                    //require_once LIB_PATH . 'osclass/users.php' ;
+                                    $success = 0 ;
+                                    if( $success == 0 ) {
+                                        osc_add_flash_message( __('This should never happened') ) ;
+                                    } else if( $success == 1 ) {
+                                        osc_add_flash_message( __('Passwords don\'t match') ) ;
+                                    } else {
+                                        osc_add_flash_message( __('Your profile has been updated properly') ) ;
+                                    }
+
+                                    $this->redirectTo( osc_user_profile_url() ) ;
+            break ;
+            case('alerts'):         //alerts
+                                    $aAlerts = Alerts::newInstance()->getAlertsFromUser( Session::newInstance()->_get('userId') ) ;
+                                    foreach($aAlerts as $k => $a) {
+                                        $search = osc_unserialize(base64_decode($a['s_search'])) ;
+                                        $search->limit(0, 3) ;
+                                        $aAlerts[$k]['items'] = $search->search() ;
+                                    }
+                                    
+                                    $this->_exportVariableToView('aAlerts', $aAlerts) ;
+                                    $this->doView('user-alerts.php') ;
+            break;
+            case('change_email'):           //change email
+                                            $this->doView('user-change_email.php') ;
+            break;
+            case('change_email_post'):      //change email post
+                                            if( osc_user_validation_enabled() )
+                                            {
+                                                $userEmailTmp = array() ;
+                                                $userEmailTmp['fk_i_user_id'] = Session::newInstance()->_get('userId') ;
+                                                $userEmailTmp['s_new_email'] = Params::getParam('new_email') ;
+                                                
+                                                UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
+
+                                                $code = osc_genRandomPassword(50) ;
+                                                $date = date('Y-m-d H:i:s') ;
+
+                                                $userManager = new User() ;
+                                                $userManager->update (
+                                                    array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR'] )
+                                                    ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
+                                                );
+
+                                                $locale = Session::newInstance()->_get('userLocale') ;
+                                                $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
+                                                if(isset($aPage['locale'][$locale]['s_title'])) {
+                                                    $content = $aPage['locale'][$locale] ;
+                                                } else {
+                                                    $content = current($aPage['locale']) ;
+                                                }
+
+                                                if (!is_null($content)) {
+                                                    $validationLink = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+
+                                                    $words = array() ;
+                                                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}') ;
+                                                    $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), osc_base_url(), osc_page_title(), $validationLink) ;
+                                                    $title = osc_mailBeauty($content['s_title'], $words) ;
+                                                    $body = osc_mailBeauty($content['s_text'], $words) ;
+
+                                                    $params = array(
+                                                        'subject' => $title
+                                                        ,'to' => Params::getParam('new_email')
+                                                        ,'to_name' => Session::newInstance()->_get('userName')
+                                                        ,'body' => $body
+                                                        ,'alt_body' => $body
+                                                    ) ;
+                                                    osc_sendMail($params) ;
+                                                }
+                                                osc_add_flash_message(__('We have sent you an email to your account. Follow the instructions to validate the changes')) ;
+                                                $this->redirectTo( osc_user_profile_url() ) ;
+
+                                            } else {
+                                                
+                                                $manager->update(
+                                                    array( 's_email' => Params::getParam('new_email') )
+                                                    ,array( 'pk_i_id' => Params::getParam('userId') )
+                                                ) ;
+                                                osc_add_flash_message(__('Your email has been changed successfully')) ;
+                                                $this->redirectTo( osc_user_profile_url() ) ;
+
+                                            }
+            break;
+            case 'change_email_confirm':    //change email confirm
+                                            if ( Params::getParam('userId') && Params::getParam('code') ) {
+
+                                                $userManager = new User() ;
+                                                $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
+
+                                                if( $user['s_pass_code'] == Params::getParam('code') ) {
+                                                    $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') ) ;
+                                                    $userManager->update(
+                                                        array('s_email' => $userEmailTmp['s_new_email'])
+                                                        ,array('pk_i_id' => $userEmailTmp['fk_i_user_id'])
+                                                    );
+
+                                                    osc_add_flash_message(__('Your email has been changed successfully'));
+                                                    $this->redirectTo( osc_user_profile_url() ) ;
+                                                } else {
+                                                    osc_add_flash_message(__('Sorry, the link is not valid'));
+                                                    $this->redirectTo( osc_base_url() ) ;
+                                                }
+                                            } else {
+                                                osc_add_flash_message(__('Sorry, the link is not valid'));
+                                                    $this->redirectTo( osc_base_url() ) ;
+                                            }
+            break;
+            case('change_password'):        //change password
+                                            $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
+
+                                            $this->_exportVariableToView('user', $user) ;
+                                            $this->doView('user-change_password.php') ;
+            break;
+            case 'change_password_post':    //change password post
+                                            $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
+
+                                            if( $user['s_password'] != sha1( Params::getParam('password') ) ) {
+                                                osc_add_flash_message(__('Old password doesn\'t match')) ;
+                                                $this->redirectTo( osc_change_user_password_url() ) ;
+                                            } elseif( !Params::getParam('new_password') ) {
+                                                osc_add_flash_message(__('Passwords cannot be empty')) ;
+                                                $this->redirectTo( osc_change_user_password_url() ) ;
+                                            } elseif( Params::getParam('new_password') != Params::getParam('new_password2') ) {
+                                                osc_add_flash_message(__('Passwords don\'t match'));
+                                                $this->redirectTo( osc_change_user_password_url() ) ;
+                                            }
+
+                                            User::newInstance()->update(
+                                                        array( 's_password' => sha1( Params::getParam ('new_password') ) )
+                                                        ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
+                                                ) ;
+                                            
+                                            osc_add_flash_message(__('Password has been changed')) ;
+                                            $this->redirectTo( osc_user_profile_url() ) ;
             break;
         }
     }

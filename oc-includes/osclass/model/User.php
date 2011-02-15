@@ -95,60 +95,6 @@ class User extends DAO {
             $date = date("Y-m-d H:i:s", (time()-(24*3600)));
             return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
 	}
-
-	public function preferences($id)
-        {
-            $prefs = $this->conn->osc_dbFetchResults("SELECT * FROM %st_user_preferences WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
-            $preferences = array();
-            foreach($prefs as $pref) {
-                $preferences[$pref['s_name']] = $pref['s_value'];
-            }
-            return $preferences;
-	}
-
-	public function findPreferenceByUserAndName($id, $name)
-        {
-            $pref = $this->conn->osc_dbFetchResult("SELECT * FROM %st_user_preferences WHERE fk_i_user_id = %d AND s_name = '%s'", DB_TABLE_PREFIX, $id, $name);
-            if($pref!=null) {
-                $preference[$pref['s_name']] = $pref['s_value'];
-                return $preference;
-            } else {
-                return null;
-            }
-	}
-
-	public function updatePreferences($options = array(), $id = null)
-        {
-            if($id!=null) {
-                foreach($options as $k => $v) {
-                    if($this->findPreferenceByUserAndName($id, $k)!=null) {
-                        $this->conn->osc_dbExec("INSERT INTO %st_user_preferences (`fk_i_user_id`, `s_name`, `s_value`, `e_type`) VALUES ('%d', '%s', '%s', 'STRING')", DB_TABLE_PREFIX, $id, $k, $v );
-                    } else {
-                        $this->conn->osc_dbExec("UPDATE  %st_user_preferences SET  `s_value` =  '%s' WHERE  fk_i_user_id =%d AND s_name =  '%s' LIMIT 1", DB_TABLE_PREFIX, $v, $id, $k );
-                    }
-                }
-            }
-	}
-	
-	public function updatePreference($id = null, $k, $v)
-        {
-            if($id!=null) {
-                if($this->findPreferenceByUserAndName($id, $k)==null) {
-                    $this->conn->osc_dbExec("INSERT INTO %st_user_preferences (`fk_i_user_id`, `s_name`, `s_value`, `e_type`) VALUES ('%d', '%s', '%s', 'STRING')", DB_TABLE_PREFIX, $id, $k, $v );
-                } else {
-                    $this->conn->osc_dbExec("UPDATE  %st_user_preferences SET  `s_value` =  '%s' WHERE  fk_i_user_id =%d AND s_name =  '%s' LIMIT 1", DB_TABLE_PREFIX, $v, $id, $k );
-                }
-            }
-	}
-	
-	public function deletePreference($id = null, $name)
-        {
-            if($id!=null) {
-                $this->conn->osc_dbExec("DELETE FROM %st_user_preferences WHERE fk_i_user_id = %d AND s_name = '%s'", DB_TABLE_PREFIX, $id, $name);
-                return true;
-            }
-            return false;
-	}
 	
 	public function deleteUser($id = null)
         {

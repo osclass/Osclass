@@ -23,9 +23,7 @@
 ?>
 
 <?php
-
-    $aAlerts = $this->_get('aAlerts') ;
-
+    $user = $this->_get('user') ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -49,34 +47,32 @@
 
                 </div>
 
-                <div id="main">
+                <div id="main" class="modify_profile">
+                    <h2><?php _e('Change your Password') ; ?></h2>
 
-                    <h2><?php _e('Your alerts') ; ?></h2>
+                    <form action="<?php osc_base_url(true) ; ?>" method="post">
 
-                    <?php if(count($aAlerts) == 0) { ?>
-                        <h3><?php _e('You do not have any alerts yet.'); ?></h3>
-                    <?php } else { ?>
-                        <?php foreach($aAlerts as $alert) { ?>
-                            <div class="userItem" >
-                                <div><?php _e('Alert'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>');" href="<?php echo osc_user_unsubscribe_alert_url($alert) ; ?>"><?php _e('Delete this alert') ; ?></a></div>
+                        <input type="hidden" name="page" value="user" />
+                        <input type="hidden" name="action" value="change_password_post" />
 
-                                <div style="width: 75%; padding-left: 100px;" >
-                                <?php foreach($alert['items'] as $item) { ?>
-                                    <div class="userItem" >
-                                        <div><a href="<?php echo osc_item_url($i); ?>"><?php echo $item['s_title'] ; ?></a></div>
+                        <fieldset>
+                            <p>
+                                <label for="email"><?php _e('Current password') ; ?></label><br />
+                                <input type="password" name="password" value="" />
+                            </p>
+                            <p>
+                                <label for="new_email"><?php _e('New pasword') ; ?></label><br />
+                                <input type="password" name="new_password" value="" />
+                            </p>
+                            <p>
+                                <label for="new_email"><?php _e('Repeat new pasword') ; ?></label><br />
+                                <input type="password" name="new_password2" value="" />
+                            </p>
 
-                                        <div class="userItemData" >
-                                        <?php _e('Publication date') ; ?>: <?php echo osc_format_date($item) ; ?><br />
-                                        <?php _e('Price') ; ?>: <?php echo osc_format_price($item) ; ?>
-                                        </div>
-                                    </div>
-                                    <br />
-                                <?php } ?>
-                                </div>
-                            </div>
-                            <br />
-                        <?php } ?>
-                    <?php } ?>
+                            <button type="submit"><?php _e('Update your password') ; ?></button>
+
+                        </fieldset>
+                    </form>
                 </div>
             </div>
 
