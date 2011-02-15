@@ -62,7 +62,6 @@ require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
 require_once ABS_PATH . 'common.php';
 require_once LIB_PATH . 'osclass/locale.php';
-require_once LIB_PATH . 'osclass/pages.php';
 //require_once LIB_PATH . 'osclass/themes.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
