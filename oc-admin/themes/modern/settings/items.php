@@ -52,10 +52,10 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Settings') ; ?></legend>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_enabled_recaptcha_items() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" value="1" />
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_recaptcha_items_enabled() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" value="1" />
                                     <label for="enabled_recaptcha_items"><?php _e('Enabled recaptcha') ; ?></label>
                                     <br/>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_enabled_item_validation() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" value="1" />
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_validation_enabled() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" value="1" />
                                     <label for="enabled_item_validation"><?php _e('Enabled item validation') ; ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" value="1" />

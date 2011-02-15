@@ -37,7 +37,7 @@ Class ItemActions
         $code = osc_genRandomPassword();
 
         $has_to_validate = false ;
-        if(osc_enabled_item_validation()) {
+        if( osc_item_validation_enabled() ) {
             $has_to_validate = true ;
         }
 
@@ -225,7 +225,7 @@ Class ItemActions
 
             // send an e-mail to the admin with the data of the new item
             if(!$is_admin) {
-                if (osc_enabled_item_validation()) {
+                if ( osc_item_validation_enabled() ) {
                     $aPage = $mPages->findByInternalName('email_item_validation') ;
 
                     $content = array();
@@ -350,7 +350,7 @@ Class ItemActions
             if($is_admin) {
                 osc_add_flash_message(__('A new item has been added')) ;
             } else {
-                if(osc_enabled_item_validation()) {
+                if( osc_item_validation_enabled() ) {
                     osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
                 } else {
                     osc_add_flash_message(__('Great! We\'ve just published your item.')) ;

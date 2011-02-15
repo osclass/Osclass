@@ -40,11 +40,13 @@
         return (getBoolPreference('auto_cron')) ;
     }
 
-    function osc_enabled_recaptcha_items() {
+    //osc_enabled_recaptcha_items
+    function osc_recaptcha_items_enabled() {
         return (getBoolPreference('enabled_recaptcha_items')) ;
     }
 
-    function osc_enabled_item_validation() {
+    //osc_enabled_item_validation
+    function osc_item_validation_enabled() {
         return (getBoolPreference('enabled_item_validation')) ;
     }
     
