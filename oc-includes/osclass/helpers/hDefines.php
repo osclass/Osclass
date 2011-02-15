@@ -111,7 +111,7 @@
 
     //osc_createItemPostURL
     function osc_item_post_url($category = '') {
-        if ($category != '') {
+        if ($category != '' && isset($category['pk_i_id'])) {
             if ( osc_rewrite_enabled() ) {
                 $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
             } else {
