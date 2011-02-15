@@ -284,7 +284,7 @@ class Category extends DAO
             //UPDATE for description of categories
             $fieldsDescription['fk_i_category_id'] = $pk;
             $fieldsDescription['fk_c_locale_code'] = $k;
-            $fieldsDescription['s_slug'] = osc_sanitizeString(osc_applyFilter('slug', $fieldsDescription['s_name']));
+            $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
             $set = "";
             foreach ($fieldsDescription as $key => $value) {
                 if ($set != "")
@@ -323,7 +323,7 @@ class Category extends DAO
         foreach ($aFieldsDescription as $k => $fieldsDescription) {
             $fieldsDescription['fk_i_category_id'] = $category_id;
             $fieldsDescription['fk_c_locale_code'] = $k;
-            $fieldsDescription['s_slug'] = osc_sanitizeString(osc_applyFilter('slug', $fieldsDescription['s_name']));
+            $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
             $columns = implode(', ', array_keys($fieldsDescription));
 
             $set = "";
