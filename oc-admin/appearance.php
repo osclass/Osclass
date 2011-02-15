@@ -39,7 +39,7 @@ class CAdminAppearance extends AdminSecBaseModel
             break;
             case 'add_post':
                 $filePackage = Params::getFiles('package');
-                $path = osc_themes_path();// . pathinfo($filePackage['name'],PATHINFO_FILENAME);
+                $path = osc_translations_path() ;
                 osc_packageExtract($filePackage['tmp_name'], $path);
                 $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
             break;
