@@ -20,7 +20,6 @@ require_once ABS_PATH . 'oc-includes/php-gettext/streams.php';
 require_once ABS_PATH . 'oc-includes/php-gettext/gettext.php';
 
 require_once ABS_PATH . 'oc-includes/osclass/locales.php';
-//require_once ABS_PATH . 'oc-includes/osclass/session.php';
 
 $locale = osc_getDefaultLanguage();
 if(defined('OC_ADMIN')) {
