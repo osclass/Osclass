@@ -98,22 +98,22 @@ class UserForm extends Form {
     }
     
     static public function info_textarea($name, $locale = 'en_US', $value = '') {
-        parent::generic_textarea($locale . "#" . $name, $value);
+        parent::generic_textarea($name . '[' . $locale . ']', $value) ;
         return true ;
     }
 
     static public function multilanguage_info($locales, $user = null) {
         $num_locales = count($locales);
         if($num_locales>1) { echo '<div class="tabber">'; };
-        foreach($locales as $locale) {
-            if($num_locales>1) { echo '<div class="tabbertab">'; };
-            if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-            echo '<div class="description">';
-            echo '<div><label for="description">' . __('User Description') . '</label></div>';
-            self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
-            echo '</div>';
-            if($num_locales>1) { echo '</div>'; };
-         }
+            foreach($locales as $locale) {
+                if($num_locales>1) { echo '<div class="tabbertab">'; };
+                    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
+                    echo '<div class="description">';
+                        echo '<div><label for="description">' . __('User Description') . '</label></div>';
+                        self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
+                    echo '</div>';
+                if($num_locales>1) { echo '</div>'; };
+             }
          if($num_locales>1) { echo '</div>'; };
     }
 
