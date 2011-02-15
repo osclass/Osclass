@@ -28,7 +28,6 @@
 
         //Business Layer...
         function doModel() {
-            parent::doModel() ;
 
             //specific things for this class
             switch ($this->action)
