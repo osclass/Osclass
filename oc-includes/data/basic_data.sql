@@ -11,7 +11,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'pageDesc', 'open source classifieds', 'STRING')
     ,('osclass', 'maxSizeKb', 1000000, 'INTEGER')
     ,('osclass', 'allowedExt', 'png,gif,jpg', 'STRING')
-    ,('osclass', 'dimThumbnail', '240x200', 'STRING')
+    ,('osclass', 'dimThumbnail', '240x200', 'STRING'
+    ,('osclass', 'dimPreview', '480x340', 'STRING'))
     ,('osclass', 'dimNormal', '640x480', 'STRING')
     ,('osclass', 'keep_original_image', '1', 'BOOLEAN')
     ,('osclass', 'dateFormat', 'F j, Y', 'STRING')
