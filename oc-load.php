@@ -66,7 +66,6 @@ require_once LIB_PATH . 'osclass/pages.php';
 //require_once LIB_PATH . 'osclass/themes.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
-require_once LIB_PATH . 'osclass/error.php';
 require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';

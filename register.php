@@ -102,7 +102,7 @@
                                         } else {
                                             osc_add_flash_message(__('The link is not valid anymore. Sorry for the inconvenience!')) ;
                                         }
-                                        osc_redirectTo('index.php') ;
+                                        $this->redirectTo( osc_base_url() ) ;
                 break;
             }
 

@@ -121,8 +121,8 @@
                 ?>
                 <div id="content_header" class="content_header">
                     <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/pages-icon.png" alt="" title=""/></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Pages'); ?></div>
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&action=add" id="button_open"><?php echo osc_lowerCase(__('Create page')); ?></a>
+                    <div id="content_header_arrow">&raquo; <?php _e('Pages') ; ?></div>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&action=add" id="button_open"><?php _e('Create page') ; ?></a>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -131,11 +131,11 @@
 
                 <div id="TableToolsToolbar">
                     <select id="bulk_actions" class="display">
-                        <option value=""><?php _e('Bulk Actions'); ?></option>
-                        <option value="delete_all"><?php _e('Delete') ?></option>
+                        <option value=""><?php _e('Bulk Actions') ; ?></option>
+                        <option value="delete_all"><?php _e('Delete') ; ?></option>
                     </select>
                     &nbsp;
-                    <button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
+                    <button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>
                 </div>
 
                 <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post">

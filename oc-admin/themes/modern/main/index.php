@@ -114,9 +114,9 @@
             
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/home.png" /></div>
-					<div id="content_header_arrow">&raquo; <?php _e('Dashboard'); ?></div>
-					<div id="button_open"><?php echo osc_lowerCase( __('Settings') ); ?></div>
+					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/home.png" /></div>
+					<div id="content_header_arrow">&raquo; <?php _e('Dashboard') ; ?></div>
+					<div id="button_open"><?php _e('Settings') ; ?></div>
 					<div style="clear: both;"></div>
 				</div>
 				<?php osc_show_flash_message() ; ?>
@@ -124,21 +124,21 @@
 				<!-- settings div -->
 				<div id="main_div">
 					<form id="checkboxes">
-						<div style="margin-bottom: 8px; font-weight: bold;"><?php _e('Which of the following content do you want to see on your dashboard'); ?>:</div>
+						<div style="margin-bottom: 8px; font-weight: bold;"><?php _e('Which of the following content do you want to see on your dashboard') ; ?>:</div>
 						<input id="cb_last_items" type="checkbox" />
-						<label for="cb_last_items"><?php _e('Last Items'); ?></label>
+						<label for="cb_last_items"><?php _e('Last Items') ; ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_statistics" type="checkbox" />
-						<label for="cb_statistics"><?php _e('Statistics'); ?></label>
+						<label for="cb_statistics"><?php _e('Statistics') ; ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_comments" type="checkbox" />
-						<label for="cb_last_comments"><?php _e('Last Comments'); ?></label>
+						<label for="cb_last_comments"><?php _e('Last Comments') ; ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_news" type="checkbox" />
-						<label for="cb_last_news"><?php _e('Last News from OSClass'); ?></label>
+						<label for="cb_last_news"><?php _e('Last News from OSClass') ; ?></label>
 					</form>
 					<br />
-					<a href="#" id="button_save"><?php echo osc_lowerCase( __('Save') ); ?></a><br />
+					<a href="#" id="button_save"><?php _e('Save') ; ?></a><br />
 				</div>
 
 				<!-- sortable divs -->
@@ -153,7 +153,7 @@
 								<?php $totalWithItems = 0 ; ?>
 								<?php if (isset($numItemsPerCategory[$c['pk_i_id']])) { ?>
     								<a href="items.php?catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name']; ?></a>
-    								<?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? osc_lowerCase('Item') : osc_lowerCase('Items') ) . ")" ;?>
+    								<?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
 									<br />
 									<?php $totalWithItems++ ; ?>
 								<?php } //end if ?>
@@ -183,7 +183,7 @@
 							<h3 class="ui-state-default"><?php _e('Last Comments') ; ?></h3>
 							<div id="statistics_body">
 								<?php foreach($comments as $c) { ?>
-									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php echo osc_lowerCase( __('Commented on Item') ) ; ?> <i><a title="<?php echo $c['s_body']; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
+									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on Item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
 								<?php } ?>
 							</div>
 						</div>

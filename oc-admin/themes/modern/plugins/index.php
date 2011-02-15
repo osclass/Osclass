@@ -125,7 +125,7 @@
 			            <div id="content_header" class="content_header">
 				            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/plugins-icon.png" /></div>
 				            <div id="content_header_arrow">&raquo; <?php _e('Plugins'); ?></div>
-				            <a href="?action=add" id="button_open"><?php echo osc_lowerCase(__('Add a new plugin')); ?></a>
+				            <a href="?action=add" id="button_open"><?php _e('Add a new plugin') ; ?></a>
 				            <div style="clear: both;"></div>
 			            </div>
 			            <?php osc_show_flash_message() ; ?>

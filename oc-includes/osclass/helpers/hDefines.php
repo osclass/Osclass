@@ -18,15 +18,17 @@
     }
 
     function osc_admin_configure_plugin_url($file = '') {
-        return(WEB_PATH . "oc-admin/index.php?page=plugins&action=configure&plugin=" . $file);
+        return(osc_base_url() . "oc-admin/index.php?page=plugins&action=configure&plugin=" . $file);
     }
 
     function osc_admin_render_plugin_url($file = '') {
-        return(WEB_PATH . "oc-admin/index.php?page=plugins&action=renderplugin&file=" . $file);
+        return(osc_base_url() . "oc-admin/index.php?page=plugins&action=renderplugin&file=" . $file);
     }
 
     function osc_admin_render_plugin($file = '') {
-        osc_redirectTo(osc_admin_render_plugin_url($file));
+        header('Location: ' . osc_admin_render_plugin_url($file) ) ;
+        exit ;
+        //osc_redirectTo( osc_admin_render_plugin_url($file) ) ;
     }
 
     //Path Helpers
