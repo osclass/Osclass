@@ -18,13 +18,11 @@
      */
 
      Class UserActions {
-         var $action ;
          var $is_admin ;
          var $manager ;
 
 
-         function __construct($action, $is_admin) {
-             $this->action = $action ;
+         function __construct($is_admin) {
              $this->is_admin = $is_admin ;
              $this->manager = User::newInstance() ;
          }
@@ -39,8 +37,10 @@
                 $this->manager->insert($input) ;
                 $userId = $this->manager->getConnection()->get_last_id() ;
 
-                foreach (Params::getParam('s_info') as $key => $value) {
-                    $this->manager->updateDescription($userId, $key, $value) ;
+                if ( is_array( Params::getParam('s_info') ) ) {
+                    foreach (Params::getParam('s_info') as $key => $value) {
+                        $this->manager->updateDescription($userId, $key, $value) ;
+                    }
                 }
                 
                 osc_run_hook('user_register_completed') ;
@@ -62,7 +62,7 @@
                     }
                     
                     if (!is_null($content)) {
-                        $validationLink = sprintf('%sindex.php?page=users&action=validate&id=%d&code=%s', osc_base_url(), $user['pk_i_id'], $input['code']) ;
+                        $validationLink = sprintf('%sindex.php?page=register&action=validate&id=%d&code=%s', osc_base_url(), $user['pk_i_id'], $input['s_secret']) ;
                         $words   = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}') ;
                         $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), $validationLink) ;
@@ -128,7 +128,7 @@
             }
 
             //only for administration, in the public website this two params are edited separately
-            if ($this->is_admin) {
+            if ($this->is_admin || $is_add) {
                 $input['s_email'] = Params::getParam('s_email') ;
 
                 if( Params::getParam('s_password') != Params::getParam('s_password2') ) {

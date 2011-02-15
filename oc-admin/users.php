@@ -51,7 +51,7 @@ class CAdminUsers extends AdminSecBaseModel
             break;
             case 'create_post':     //creating the user...
                                     require_once LIB_PATH . 'osclass/users.php' ;
-                                    $userActions = new UserActions($this->action, true) ;
+                                    $userActions = new UserActions(true) ;
                                     $success = $userActions->add() ;
                                     switch($success) {
                                         case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent to the user\'s email address')) ;
@@ -87,7 +87,7 @@ class CAdminUsers extends AdminSecBaseModel
             break;
             case 'edit_post':       //edit post
                                     require_once LIB_PATH . 'osclass/users.php' ;
-                                    $userActions = new UserActions($this->action, true) ;
+                                    $userActions = new UserActions(true) ;
                                     $success = $userActions->edit( Params::getParam("id") ) ;
 
                                     switch($success) {

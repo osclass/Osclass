@@ -68,11 +68,11 @@ class CWebUser extends WebSecBaseModel
             case('profile_post'):   //profile post...
                                     $userId = Session::newInstance()->_get('userId') ;
 
-                                    //require_once LIB_PATH . 'osclass/users.php' ;
-                                    $success = 0 ;
-                                    if( $success == 0 ) {
-                                        osc_add_flash_message( __('This should never happened') ) ;
-                                    } else if( $success == 1 ) {
+                                    require_once LIB_PATH . 'osclass/users.php' ;
+                                    $userActions = new UserActions(false) ;
+                                    $success = $userActions->edit( $userId ) ;
+
+                                    if( $success == 1 ) {
                                         osc_add_flash_message( __('Passwords don\'t match') ) ;
                                     } else {
                                         osc_add_flash_message( __('Your profile has been updated properly') ) ;
