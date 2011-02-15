@@ -249,11 +249,6 @@ function osc_mailBeauty($text, $params) {
 	return $text ;
 }
 
-function osc_redirectTo($url) {
-    header('Location: ' . $url) ;
-    exit ;
-}
-
 
 function osc_copy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
 	$result =true;
