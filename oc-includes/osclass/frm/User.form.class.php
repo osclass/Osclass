@@ -341,9 +341,9 @@ function checkForm() {
         $("#regionId").change(function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
-                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php } else { ?>
-                var url = '<?php echo osc_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+                var url = '<?php echo osc_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php }; ?>
             var result = '';
 
