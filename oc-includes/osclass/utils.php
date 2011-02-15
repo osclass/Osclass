@@ -22,33 +22,14 @@
 
 //require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
-/**
- * Converts a string to lowercase respecting the charset.
- */
-/*function osc_lowerCase($string) {
-    if (is_null($string))
-        return false;
-    return mb_convert_case(__($string), MB_CASE_LOWER, "UTF-8");
-}*/
 
 /**
  * Makes an HTTP redirection and ensures the correct script abortion.
- *//*
+ */
 function osc_redirectTo($url) {
     header('Location: ' . $url);
     exit;
-}*/
-
-/**
- * Tries to redirect to the previous page and falls to the one passed by parameter if the referer does not exist.
- */
-/*function osc_redirectToReferer($default) {
-    $url = $default;
-    if (isset($_SERVER['HTTP_REFERER']))
-        $url = $_SERVER['HTTP_REFERER'];
-    header('Location: ' . $url);
-    exit;
-}*/
+}
 
 /**
  * Tries to delete the directory recursivaly.

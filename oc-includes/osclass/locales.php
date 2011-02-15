@@ -16,11 +16,6 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * @deprecated
- */
-function osc_listLanguages() { return osc_listLocales(); }
-
 function osc_listLocales() {
     $languages = array();
 
