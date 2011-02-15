@@ -20,8 +20,7 @@ a:hover { color:#F80; }
 .container { margin:0 auto; width:970px; }
 .content { clear:both; float:left; margin-bottom:20px; width:100%; }
 .content.home,
-.content.list,
-.content.item { border-top:1px solid #BBB; }
+.content.list { border-top:1px solid #BBB; }
 
 /* Header */
 #header { border-bottom:1px solid #BBB; clear:both; float:left; margin:25px 0 12px; padding:0 0 12px 10px; position: relative; width:960px; }
@@ -253,6 +252,7 @@ a:hover { color:#F80; }
 .item #photos .mini_photos img { margin:0 1px 1px 0; }
 
 /* Contact form */
+.item .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:20px auto; padding:13px; width:350px; -moz-border-radius:10px; border-radius:10px; }
 .item #contact { background:#e9f5f9; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px; }
 .item #contact h2 { color:#000; font-size:14px; margin-bottom:8px; padding-left:12px; }
 .item #contact fieldset { background:#FFF; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px;  }
@@ -262,7 +262,6 @@ a:hover { color:#F80; }
 .item #contact fieldset input { border:1px solid #BBB; display:block; margin-bottom:10px; padding:5px; width:260px; }
 .item #contact fieldset textarea { border:1px solid #BBB; display:block; margin-bottom:10px; padding:5px; width:260px; }
 .item #contact fieldset .button { background:#ff7f26 url(../images/button_light_orange_bg.gif) repeat-x top; border:1px solid #e67020; color:#FFF; float:right; text-shadow: 1px 1px 0px #cc3300; filter: dropshadow(color=#cc3300, offx=1, offy=1);}
-
 
 /* -- LOGIN & REGISTER FORM --------------------------------------- */
 .user_forms .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:20px auto; padding:13px; width:350px; -moz-border-radius:10px; border-radius:10px; }

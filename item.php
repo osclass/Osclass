@@ -19,11 +19,14 @@
 
 class CWebItem extends WebSecBaseModel
 {
+    private $itemManager;
 
     function __construct() {
         parent::__construct() ;
+        $this->itemManager = Item::newInstance();
         $this->add_css('style.css');
         $this->add_css('jquery-ui.css');
+        $this->add_global_js('jquery.js');
     }
 
     //Business Layer...
@@ -157,21 +160,15 @@ class CWebItem extends WebSecBaseModel
                     'description'   => Params::getParam('description')
                 );
 
-//                echo "<pre>";
-//                print_r($aItem);
-//                echo "</pre>";
+//                echo "<pre>";print_r($aItem);echo "</pre>";
 
                 $mItems = new ItemActions();
                 $success = $mItems->post_item($aItem);
 
-                if($success){
-                    echo "SUCCESS<br>";
-                }else{
-                    echo "FAIL<br>";
-                }
+                if($success) {
+                    // ESTO VA EN EL item.php QUE EXTIENDE SIN SEGURIDAD ?
+//                    if( Session::newInstance()->_get('userId') == '' ){ // if(!isset($_SESSION['userId'])) {
 //
-//                if($success) {
-//                    if(!isset($_SESSION['userId'])) {
 //                        $mPages = new Page() ;
 //                        $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
 //                        $locale = osc_get_user_locale() ;
@@ -219,15 +216,222 @@ class CWebItem extends WebSecBaseModel
 //                                        );
 //                        osc_sendMail($params);
 //                    }
-//
-//                    osc_run_hook('posted_item', $item);
-//                    $category = Category::newInstance()->findByPrimaryKey($PcatId);
-//                    osc_redirectTo(osc_search_category_url($category));
-//                } else {
-//                    osc_redirectTo(osc_item_post_url());
-//                }
+
+                    osc_run_hook('posted_item', $item);
+                    $category = Category::newInstance()->findByPrimaryKey($catId);
+                    $this->redirectTo(osc_search_category_url($category));
+                } else {
+                    $this->redirectTo( osc_item_post_url() );
+                }
+            break;
+            case 'mark':
+                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+                $column = null;
+                switch (Params::getParam('as')) {
+                    case 'spam':
+                        $column = 'i_num_spam';
+                        break;
+                    case 'badcat':
+                        $column = 'i_num_bad_classified';
+                        break;
+                    case 'offensive':
+                        $column = 'i_num_offensive';
+                        break;
+                    case 'repeated':
+                        $column = 'i_num_repeated';
+                        break;
+                    case 'expired':
+                        $column = 'i_num_expired';
+                        break;
+                }
+
+                $dao_itemStats = new ItemStats() ;
+                $dao_itemStats->increase($column, Params::getParam('id')) ;
+                unset($dao_itemStats) ;
+                setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
+                osc_add_flash_message(__('Thanks! That helps us.'));
+                $this->redirectTo( osc_item_url($item) );
+            break;
+            case 'send_friend':
+                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+//                global $osc_request;
+//                $osc_request['section'] = __('Send to a friend');
+//                $osc_request['category'] = $item['fk_i_category_id'];
+//                $osc_request['item'] = $item;
+//                $osc_request['location'] = 'item_send_friend';
+                // pasar los parametros a la vista...
+                $this->_exportVariableToView('item', $item) ;
+                
+                $this->doView('item-send-friend.php');
+            break;
+            case 'send_friend_post':
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_send_friend');
+                $locale = osc_get_user_locale();
+
+                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+                $item_url = osc_item_url($item);
+
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+
+                $words   = array() ;
+                $words[] = array(
+                                    '{FRIEND_NAME}'
+                                    ,'{USER_NAME}'
+                                    ,'{USER_EMAIL}'
+                                    ,'{FRIEND_EMAIL}'
+                                    ,'{WEB_URL}'
+                                    ,'{ITEM_NAME}'
+                                    ,'{COMMENT}'
+                                    ,'{ITEM_URL}'
+                                    ,'{WEB_TITLE}'
+                            ) ;
+                $words[] = array(
+                                    Params::getParam('friendName')
+                                    ,Params::getParam('yourName')
+                                    ,Params::getParam('yourEmail')
+                                    ,Params::getParam('friendEmail')
+                                    ,osc_base_url()
+                                    ,Params::getParam('s_title')
+                                    ,Params::getParam('message')
+                                    ,$item_url
+                                    ,osc_page_title()
+                            ) ;
+                $title = osc_mailBeauty($content['s_title'], $words) ;
+                $body  = osc_mailBeauty($content['s_text'], $words) ;
+
+
+                $from = osc_contact_email();
+                if( Params::getParam('yourEmail') != '' ){
+                    $from = Params::getParam('yourEmail');
+                }
+                
+                $from_name = Params::getParam('yourName');
+
+                if (osc_notify_contact_friends()) {
+                    $add_bbc = osc_contact_email() ;
+                }
+
+                $params = array(
+                            'add_bcc'   => $add_bbc
+                            ,'from'      => $from
+                            ,'from_name' => $from_name
+                            ,'subject'   => $title
+                            ,'to'        => Params::getParam('friendEmail')
+                            ,'to_name'   => Params::getParam('friendName')
+                            ,'body'      => $body
+                            ,'alt_body'  => $body
+                          ) ;
+
+                if(osc_sendMail($params)) {
+                    osc_add_flash_message(__('We just send your message to ') . Params::getParam('friendName') . ".") ;
+                } else {
+                    osc_add_flash_message(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
+                }
+                $this->redirectTo($item_url);
+            break;
+            case 'contact':
+                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+                $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']) ;
+                if($category['i_expiration_days'] > 0) {
+                    $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
+                    $date = time() ;
+                    if($item_date < $date) {
+                        // The item is expired, we can not contact the seller
+                        osc_add_flash_message(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                        $this->redirectTo(osc_create_item_url($item));
+                    }
+                }
+
+                $this->_exportVariableToView('item', $item) ;
+
+                $this->doView('item-contact.php');
                 break;
 
+            case 'contact_post':
+                $path = '';
+                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+
+                $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+
+                if($category['i_expiration_days'] > 0) {
+                    $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
+                    $date = time();
+                    if($item_date < $date) {
+                        // The item is expired, we can not contact the seller
+                        osc_add_flash_message(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                        $this->redirectTo(osc_create_item_url($item));
+                    }
+                }
+
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_item_inquiry');
+                $locale = osc_get_user_locale() ;
+
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+
+                $words   = array();
+                $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
+                                 '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
+                // OJO
+                $words[] = array($item['s_contact_name'], $_POST['yourName'], $_POST['yourEmail'],
+                                 $_POST['phoneNumber'], osc_base_url(), $item['s_title'], osc_item_url($item), Params::getParam('message'));
+                $title = osc_mailBeauty($content['s_title'], $words);
+                $body = osc_mailBeauty($content['s_text'], $words);
+
+                $from = osc_contact_email() ;
+                $from_name = osc_page_title() ;
+                if (osc_notify_contact_item()) {
+                    $add_bbc = osc_contact_email() ;
+                }
+
+                $emailParams = array (
+                                    'add_bcc'   => $add_bbc
+                                    ,'from'      => $from
+                                    ,'from_name' => $from_name
+                                    ,'subject'   => $title
+                                    ,'to'        => $item['s_contact_email']
+                                    ,'to_name'   => $item['s_contact_name']
+                                    ,'body'      => $body
+                                    ,'alt_body'  => $body
+                                    ,'reply_to'  => $_POST['yourEmail']
+                                ) ;
+
+                if(osc_item_attachment()) {
+                    $resourceName = $_FILES['attachment']['name'] ;
+                    $tmpName = $_FILES['attachment']['tmp_name'] ;
+                    $resourceType = $_FILES['attachment']['type'] ;
+                    $path = ABS_PATH . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+
+                    if(!is_writable(ABS_PATH . 'oc-content/uploads/')) {
+                        osc_add_flash_message(__('There has been some erro sending the message')) ;
+                        osc_redirectToReferer(osc_base_url()) ;
+                    }
+
+                    if(!move_uploaded_file($tmpName, $path)){
+                        unset($path) ;
+                    }
+                }
+
+                if(isset($path)) {
+                    $emailParams['attachment'] = $path ;
+                }
+
+                osc_sendMail($emailParams) ;
+                @unlink($path) ;
+                osc_add_flash_message(__('We\'ve just sent an e-mail to the seller.')) ;
+                osc_redirectTo(osc_create_item_url($item)) ;
+                break;
             case('dashboard'):      //dashboard...
 
             break;

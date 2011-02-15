@@ -109,7 +109,7 @@
                                                  -->
                                                  <p><?php echo strip_tags($i['s_description']) ; ?></p>
                                              </td>
-                                             <td class="price"><strong><?php echo osc_formatPrice($i) ; ?></strong></td>
+                                             <td class="price"><strong><?php echo osc_format_price($i) ; ?></strong></td>
                                          </tr>
                                         <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
                                     <?php } ?>
