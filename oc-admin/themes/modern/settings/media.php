@@ -82,41 +82,68 @@
         </script>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/media-config-icon.png" title="" alt=""/>
+                    </div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Configure Media') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
-
                 <?php osc_show_flash_message('admin') ; ?>
-
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                <div style="border: 1px solid #ccc; background: #eee;">
                     <div style="padding: 20px;">
-
+                        <div><?php _e('Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)'); ?></div>
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
-                            <input type="hidden" name="action" value="cron_post" />
-                            <div style="float: left; width: 100%;">
-                                <fieldset>
-                                    <legend><?php _e('Cron System'); ?></legend>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo ( osc_auto_cron() ) ? 'checked="true"' : '' ; ?> name="auto_cron" id="auto_cron" />
-                                    <label for="auto_cron"><?php _e('Auto-cron'); ?></label>
-                                    <br/>
-                                    <label><?php _e('Some functionalities os OSClass requires a cron system to work. Check this if you don\'t know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass.'); ?></label>
-                                </fieldset>
-                            </div>
-                            <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+                            <input type="hidden" name="action" value="media_post" />
+                            <fieldset>
+                                <legend><?php _e('Restrictions'); ?></legend>
+
+                                <p>
+                                    <label for="maxSize"><?php _e('Maximum size in KB'); ?></label><br />
+                                    <input type="text" name="maxSizeKb" id="maxSize" value="<?php echo osc_max_size_kb() ; ?>" />
+                                </p>
+
+                                <p>
+                                    <label for="allowedExt"><?php _e('Allowed format extensions (eg: png, jpg, gif)'); ?></label><br />
+                                    <input type="text" name="allowedExt" id="allowedExt" value="<?php echo osc_allowed_extension() ; ?>" />
+                                </p>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend><?php _e('Dimensions'); ?></legend>
+
+                                <p>
+                                    <label for="thumbnail"><?php _e('Thumbnail dimensions'); ?></label><br />
+                                    <input type="text" name="dimThumbnail" id="thumbnail" value="<?php echo osc_thumbnail_dimensions() ; ?>" />
+                                </p>
+
+                                <p>
+                                    <label for="preview"><?php _e('Preview dimensions'); ?></label><br />
+                                    <input type="text" name="dimPreview" id="preview" value="<?php echo osc_preview_dimensions() ; ?>" />
+                                </p>
+
+                                <p>
+                                    <label for="normal"><?php _e('Normal dimensions'); ?></label><br />
+                                    <input type="text" name="dimNormal" id="normal" value="<?php echo osc_normal_dimensions() ; ?>" />
+                                </p>
+
+                                <p>
+                                    <input id="keep_original_image" type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ) ? 'checked' : '' ; ?>/><label for="keep_original_image"><?php _e('Keep original image') ; ?></label>
+                                    <br />
+                                    <?php _e('Keeping original image files required extra storage and some files could have extra-large size. This option ensures the original quality of the file un-altered. Be careful using this option.'); ?>
+                                </p>
+                            </fieldset>
+
+                            <input id="button_save" type="submit" value="<?php _e('Update configuration'); ?>" />
                         </form>
                     </div>
                 </div>
-            </div>
+                <div style="clear: both;"></div>
+            </div> <!-- end of right column -->
         </div><!-- end of container -->
         <?php $this->osc_print_footer() ; ?>
     </body>

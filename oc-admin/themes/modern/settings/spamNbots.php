@@ -20,57 +20,74 @@
  */
 ?>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <script type="text/javascript">
+            var base_url    = '<?php echo osc_base_url() ; ?>';
+            var s_close     = '<?php _e('Close'); ?>';
+            var s_view_more = '<?php _e('View more'); ?>';
+        </script>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div id="content">
+            <div id="separator"></div>
 
-<div id="content">
-    <div id="separator"></div>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
-    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" alt="" title=""/>
+                    </div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
+                    <div style="clear: both;"></div>
+                </div>
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
-            <div style="clear: both;"></div>
-        </div>
+                <div id="content_separator"></div>
+                <?php osc_show_flash_message('admin') ; ?>
 
-        <div id="content_separator"></div>
-        <?php osc_show_flash_message() ; ?>
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 20px;">
 
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-            <div style="padding: 20px;">
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="settings" />
+                            <input type="hidden" name="action" value="spamNbots_post" />
 
-                <form action="settings.php" method="post">
-                    <input type="hidden" name="action" value="spamNbots_post" />
+                            <fieldset>
+                                <legend><?php _e('Akismet'); ?></legend>
+                                <p>
+                                    <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label><br />
+                                    <input type="text" name="akismetKey" id="akismetKey" value="<?php echo (osc_akismet_key() ? osc_akismet_key() : ''); ?>" /><br />
+                                    <span class="Explanation"><?php _e('If the field is empty it is because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
+                                </p>
+                            </fieldset>
 
-                    <fieldset>
-                        <legend><?php _e('Akismet'); ?></legend>
-                        <p>
-                        <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label><br />
-                        <input type="text" name="akismetKey" id="akismetKey" value="<?php ( osc_akismet_key() ) ? echo osc_akismet_key() : echo '' ; ?>" /><br />
-                        <span class="Explanation"><?php _e('If the field is empty it is because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
-                        </p>
-                    </fieldset>
+                            <fieldset>
+                                <legend><?php _e('Re-captcha') ; ?></legend>
+                                <p>
+                                    <?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.
+                                </p>
+                                <p>
+                                    <label for="recaptchaPrivKey"><?php _e('Re-captcha private key'); ?></label><br />
+                                    <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
+                                </p>
+                                <p>
+                                    <label for="recaptchaPubKey"><?php _e('Re-captcha public key'); ?></label><br />
+                                    <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
+                                </p>
+                            </fieldset>
 
-                    <fieldset>
-                        <legend><?php _e('Re-captcha') ; ?></legend>
-
-                        <p><?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.</p>
-
-                        <p>
-                            <label for="recaptchaPrivKey"><?php _e('Re-captcha private key'); ?><br />
-                            <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php ( osc_recaptcha_private_key() ) ? echo osc_recaptcha_private_key() : echo '' ; ?>" />
-                        </p>
-
-                        <p>
-                            <label for="recaptchaPubKey"><?php _e('Re-captcha public key'); ?><br />
-                            <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php ( osc_recaptcha_public_key() ) ? echo osc_recaptcha_public_key() : echo '' ; ?>" />
-                        </p>
-                    </fieldset>
-
-                    <input id="button_save" type="submit" value="<?php _e('Update spam and bots configuration'); ?>" />
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                            <input id="button_save" type="submit" value="<?php _e('Update spam and bots configuration'); ?>" />
+                        </form>
+                    </div>
+                </div>
+            </div><!-- end of right column -->
+        </div><!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>

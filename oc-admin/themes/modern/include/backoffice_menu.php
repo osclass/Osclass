@@ -23,7 +23,9 @@
 <!-- menu -->
 <div id="left_column"> 
     <div style="padding-top: 9px;">
-        <div style="float: left; padding-left: 5px; padding-top: 5px;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/home_icon.gif" /></div>
+        <div style="float: left; padding-left: 5px; padding-top: 5px;">
+            <img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/home_icon.gif" alt="" title="" />
+        </div>
         <div style="float: left; padding-top: 5px; padding-left: 5px;">&raquo; <a href="<?php echo osc_admin_base_url(); ?>"><?php _e('Dashboard'); ?></a></div>
         <div style="clear: both;"></div>
         <div style="border-top: 1px solid #ccc; width: 99%;">&nbsp;</div>
@@ -151,7 +153,7 @@
                 <a href="index.php?page=settings&action=mailserver">&raquo; <?php _e('Mail Server'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=media&action=config">&raquo; <?php _e('Media'); ?></a>
+                <a href="index.php?page=settings&action=media">&raquo; <?php _e('Media'); ?></a>
             </li>
             <li>
                 <a href="index.php?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>

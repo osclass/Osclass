@@ -15,167 +15,183 @@
  * You should have received a copy of the GNU Affero General Public
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-    defined('ABS_PATH') or die(__('Invalid OSClass request.'));
-
-    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y') ;
-    $timeFormats = array('g:i a', 'g:i A', 'H:i') ;
 ?>
 
-<div id="content">
-    <div id="separator"></div>
+<?php
+    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
+    $timeFormats = array('g:i a', 'g:i A', 'H:i');
 
-    <?php include_once $absolute_path . '/include/backoffice_menu.php'; ?>
+    $aLanguages  = $this->_get('aLanguages');
+    $aCurrencies = $this->_get('aCurrencies');
+?>
 
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;">
-                <img src="<?php echo $current_theme ; ?>/images/back_office/settings-icon.png" alt="" title=""/>
-            </div>
-            <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
-            <div style="clear: both;"></div>
-        </div>
-        
-        <div id="content_separator"></div>
-        
-        <?php osc_show_flash_message() ; ?>
-        
-        <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
-            <div style="padding: 20px;">
-                <form action="settings.php" method="post">
-                    <input type="hidden" name="action" value="update" />
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Page title'); ?></legend>
-                            <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageTitle" id="pageTitle" value="<?php echo osc_page_title() ; ?>" />
-                        </fieldset>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div id="content">
+            <div id="separator"></div>
+
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo $current_theme ; ?>/images/back_office/settings-icon.png" alt="" title=""/>
                     </div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Page description'); ?></legend>
-                            <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageDesc" id="pageDesc" value="<?php echo osc_page_description() ; ?>" />
-                        </fieldset>
-                    </div>
-
+                    <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
                     <div style="clear: both;"></div>
+                </div>
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Administrator E-mail'); ?></legend>
-                            <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="contactEmail" id="contactEmail" value="<?php echo osc_contact_email() ; ?>" />
-                        </fieldset>
-                    </div>
+                <div id="content_separator"></div>
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Default language'); ?></legend>
-                            <select name="language" id="language">
-                                <?php foreach($languages as $lang) { ?>
-                                    <?php $sLanguage = osc_language(); ?>
-                                    <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo ((osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $lang['s_name'] ; ?></option>
-                                <?php } ?>
-                            </select>
-                        </fieldset>
-                    </div>
+                <?php osc_show_flash_message('admin'); ?>
 
-                    <div style="clear: both;"></div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Date format'); ?></legend>
-                            <div style="font-size: small; margin: 0px;">
-                                <?php
-                                    $custom_checked = true;
-                                    foreach($dateFormats as $df) {
-                                        $checked = false;
-                                        if($df == osc_date_format()) {
-                                            $custom_checked = false;
-                                            $checked = true ;
-                                        } ?>
-                                        <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo (($checked) ? 'checked="checked"' : ''); ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;"/>
-                                        <label for="<?php echo $df; ?>"><?php echo date($df); ?></label><br />
-                                <?php } ?>
-
-                                <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
-                                <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_date_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('dateFormat').value = this.value;"/>
-                                <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format(); ?>" />
+                <!-- settings form -->
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
+                    <div style="padding: 20px;">
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="settings" />
+                            <input type="hidden" name="action" value="update" />
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Page title'); ?></legend>
+                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageTitle" id="pageTitle" value="<?php echo osc_page_title() ; ?>" />
+                                </fieldset>
                             </div>
-                        </fieldset>
-                    </div>
 
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Default currency'); ?></legend>
-                            <select name="currency" id="currency">
-                                <?php $currentCurrency = osc_currency(); ?>
-                                <?php foreach($aCurrencies as $currency) { ?>
-                                    <option value="<?php echo $currency['pk_c_code'] ?>" <?php echo (($currentCurrency == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </fieldset>
-                        
-                        <fieldset>
-                            <legend><?php _e('Week starts on'); ?></legend>
-                            <select name="weekStart" id="weekStart">
-                                <option value="0" selected="selected"><?php _e('Sunday'); ?></option>
-                                <option value="1" <?php if(osc_week_starts_at() == '1') { ?>selected="selected"<?php } ?>><?php _e('Monday') ; ?></option>
-                                <option value="2" <?php if(osc_week_starts_at() == '2') { ?>selected="selected"<?php } ?>><?php _e('Tuesday') ; ?></option>
-                                <option value="3" <?php if(osc_week_starts_at() == '3') { ?>selected="selected"<?php } ?>><?php _e('Wednesday') ; ?></option>
-                                <option value="4" <?php if(osc_week_starts_at() == '4') { ?>selected="selected"<?php } ?>><?php _e('Thursday') ; ?></option>
-                                <option value="5" <?php if(osc_week_starts_at() == '5') { ?>selected="selected"<?php } ?>><?php _e('Friday') ; ?></option>
-                                <option value="6" <?php if(osc_week_starts_at() == '6') { ?>selected="selected"<?php } ?>><?php _e('Saturday') ; ?></option>
-                            </select>
-                        </fieldset>
-                    </div>
-
-                    <div style="clear: both;"></div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Time format') ; ?></legend>
-                            <div style="font-size: small; margin: 0px;">
-                                <?php
-                                    $custom_checked = true;
-                                    foreach($timeFormats as $tf) {
-                                        $checked = false;
-                                        if($tf == osc_time_format()) {
-                                            $custom_checked = false;
-                                            $checked = true;
-                                        } ?>
-                                        <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo (($checked) ? 'checked="checked"' : ''); ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
-                                        <label for="<?php echo $tf; ?>"><?php echo date($tf) ; ?></label>
-                                        <br />
-                                    <?php } ?>
-                                <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
-                                <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_time_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('timeFormat').value = this.value;"/>
-                                <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_time_format(); ?>" />
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Page description'); ?></legend>
+                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="pageDesc" id="pageDesc" value="<?php echo osc_page_description() ; ?>" />
+                                </fieldset>
                             </div>
-                        </fieldset>
+
+                            <div style="clear: both;"></div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Administrator E-mail'); ?></legend>
+                                    <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="contactEmail" id="contactEmail" value="<?php echo osc_contact_email() ; ?>" />
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Default language'); ?></legend>
+                                    <select name="language" id="language">
+                                        <?php foreach($aLanguages as $lang) { ?>
+                                            <?php $sLanguage = osc_language(); ?>
+                                            <option value="<?php echo $lang['pk_c_code'] ; ?>" <?php echo ((osc_language() == $lang['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $lang['s_name'] ; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            <div style="clear: both;"></div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Date format'); ?></legend>
+                                    <div style="font-size: small; margin: 0px;">
+                                        <?php
+                                            $custom_checked = true;
+                                            foreach($dateFormats as $df) {
+                                                $checked = false;
+                                                if($df == osc_date_format()) {
+                                                    $custom_checked = false;
+                                                    $checked = true ;
+                                                } ?>
+                                                <input type="radio" name="df" id="<?php echo $df ; ?>" value="<?php echo $df ; ?>" <?php echo (($checked) ? 'checked="checked"' : ''); ?> onclick="javascript:document.getElementById('dateFormat').value = '<?php echo $df ; ?>' ;"/>
+                                                <label for="<?php echo $df; ?>"><?php echo date($df); ?></label><br />
+                                        <?php } ?>
+
+                                        <input type="radio" name="df" id="df_custom" value="df_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
+                                        <label for="df_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_date_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('dateFormat').value = this.value;"/>
+                                        <input type="hidden" name="dateFormat" id="dateFormat" value="<?php echo osc_date_format(); ?>" />
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Default currency'); ?></legend>
+                                    <select name="currency" id="currency">
+                                        <?php $currentCurrency = osc_currency(); ?>
+                                        <?php foreach($aCurrencies as $currency) { ?>
+                                            <option value="<?php echo $currency['pk_c_code'] ?>" <?php echo (($currentCurrency == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </fieldset>
+
+                                <fieldset>
+                                    <legend><?php _e('Week starts on'); ?></legend>
+                                    <select name="weekStart" id="weekStart">
+                                        <option value="0" selected="selected"><?php _e('Sunday'); ?></option>
+                                        <option value="1" <?php if(osc_week_starts_at() == '1') { ?>selected="selected"<?php } ?>><?php _e('Monday') ; ?></option>
+                                        <option value="2" <?php if(osc_week_starts_at() == '2') { ?>selected="selected"<?php } ?>><?php _e('Tuesday') ; ?></option>
+                                        <option value="3" <?php if(osc_week_starts_at() == '3') { ?>selected="selected"<?php } ?>><?php _e('Wednesday') ; ?></option>
+                                        <option value="4" <?php if(osc_week_starts_at() == '4') { ?>selected="selected"<?php } ?>><?php _e('Thursday') ; ?></option>
+                                        <option value="5" <?php if(osc_week_starts_at() == '5') { ?>selected="selected"<?php } ?>><?php _e('Friday') ; ?></option>
+                                        <option value="6" <?php if(osc_week_starts_at() == '6') { ?>selected="selected"<?php } ?>><?php _e('Saturday') ; ?></option>
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            <div style="clear: both;"></div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Time format') ; ?></legend>
+                                    <div style="font-size: small; margin: 0px;">
+                                        <?php
+                                            $custom_checked = true;
+                                            foreach($timeFormats as $tf) {
+                                                $checked = false;
+                                                if($tf == osc_time_format()) {
+                                                    $custom_checked = false;
+                                                    $checked = true;
+                                                } ?>
+                                                <input type="radio" name="tf" id="<?php echo $tf ; ?>" value="<?php echo $tf; ?>" <?php echo (($checked) ? 'checked="checked"' : ''); ?> onclick="javascript:document.getElementById('timeFormat').value = '<?php echo $tf ; ?>' ;" />
+                                                <label for="<?php echo $tf; ?>"><?php echo date($tf) ; ?></label>
+                                                <br />
+                                            <?php } ?>
+                                        <input type="radio" name="tf" id="tf_custom" value="tf_custom" <?php echo (($custom_checked) ? 'checked="checked"' : ''); ?> />
+                                        <label for="tf_custom"><?php _e('Custom') ; ?>:</label> <input type="text" <?php echo (($custom_checked) ? 'value="' . osc_time_format() . '"' : ''); ?> onkeyup="javascript:document.getElementById('timeFormat').value = this.value;"/>
+                                        <input type="hidden" name="timeFormat" id="timeFormat" value="<?php echo osc_time_format(); ?>" />
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Number of items in the RSS') ; ?></legend>
+                                    <select name="num_rss_items" id="num_rss_items">
+                                        <option value="10" <?php echo (osc_num_rss_items() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
+                                        <option value="25" <?php echo (osc_num_rss_items() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
+                                        <option value="50" <?php echo (osc_num_rss_items() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
+                                        <option value="75" <?php echo (osc_num_rss_items() == '75') ? 'selected="selected"' : '' ; ?>>75</option>
+                                        <option value="100" <?php echo (osc_num_rss_items() == '100') ? 'selected="selected"' : '' ; ?>>100</option>
+                                        <option value="150" <?php echo (osc_num_rss_items() == '150') ? 'selected="selected"' : '' ; ?>>150</option>
+                                        <option value="200" <?php echo (osc_num_rss_items() == '200') ? 'selected="selected"' : '' ; ?>>200</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+
+                            <div style="clear: both;"></div>
+
+                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+                        </form>
+
                     </div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Number of items in the RSS') ; ?></legend>
-                            <select name="num_rss_items" id="num_rss_items">
-                                <option value="10" <?php echo (osc_num_rss_items() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
-                                <option value="25" <?php echo (osc_num_rss_items() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
-                                <option value="50" <?php echo (osc_num_rss_items() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
-                                <option value="75" <?php echo (osc_num_rss_items() == '75') ? 'selected="selected"' : '' ; ?>>75</option>
-                                <option value="100" <?php echo (osc_num_rss_items() == '100') ? 'selected="selected"' : '' ; ?>>100</option>
-                                <option value="150" <?php echo (osc_num_rss_items() == '150') ? 'selected="selected"' : '' ; ?>>150</option>
-                                <option value="200" <?php echo (osc_num_rss_items() == '200') ? 'selected="selected"' : '' ; ?>>200</option>
-                            </select>
-                        </fieldset>
-                    </div>
-
-                    <div style="clear: both;"></div>
-
-                    <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
-                </form>
-
-            </div>
-        </div>
-    </div> <!-- end of right column -->
-</div>
+                </div>
+            </div> <!-- end of right column -->
+        </div><!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>

@@ -80,44 +80,51 @@
                 });
             });
         </script>
-        <div id="content">
-            <div id="separator"></div>
+		<div id="content">
+			<div id="separator"></div>	
+			
+			<?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
-            <div id="right_column">
-                <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
-                    <div style="clear: both;"></div>
-                </div>
-
-                <div id="content_separator"></div>
-
-                <?php osc_show_flash_message('admin') ; ?>
-
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-                    <div style="padding: 20px;">
-
+		    <div id="right_column">
+				<div id="content_header" class="content_header">
+					<div style="float: left;">
+                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" alt="" title=""/>
+                    </div>
+					<div id="content_header_arrow">&raquo; <?php _e('Currencies'); ?></div>
+					<div style="clear: both;"></div>
+				</div>
+				<div id="content_separator"></div>
+				<div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+					<div style="padding: 20px;">
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
-                            <input type="hidden" name="action" value="cron_post" />
-                            <div style="float: left; width: 100%;">
-                                <fieldset>
-                                    <legend><?php _e('Cron System'); ?></legend>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo ( osc_auto_cron() ) ? 'checked="true"' : '' ; ?> name="auto_cron" id="auto_cron" />
-                                    <label for="auto_cron"><?php _e('Auto-cron'); ?></label>
-                                    <br/>
-                                    <label><?php _e('Some functionalities os OSClass requires a cron system to work. Check this if you don\'t know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass.'); ?></label>
-                                </fieldset>
-                            </div>
-                            <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div><!-- end of container -->
+                            <input type="hidden" name="action" value="currencies" />
+                            <input type="hidden" name="type" value="add_post" />
+                            <fieldset>
+                                <legend><?php _e('Create currency'); ?></legend>
+                                <p>
+                                    <label for="code"><?php _e('Code'); ?></label><br />
+                                    <input type="text" name="pk_c_code" id="code" />
+                                    <span><?php _e('It should be a code of three characters') ?>.</span>
+                                </p>
+							
+                                <p>
+                                    <label for="name"><?php _e('Name'); ?></label><br />
+                                    <input type="text" name="s_name" id="name" />
+                                </p>
+							
+                                <p>
+                                    <label for="description"><?php _e('Description'); ?></label><br />
+                                    <input type="text" name="s_description" id="description" />
+                                </p>
+                            </fieldset>
+                            <input id="button_save" onclick="javascript:history.back();" value="<?php _e('Cancel'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Create currency'); ?>" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div><!-- end of container -->
         <?php $this->osc_print_footer() ; ?>
     </body>
 </html>

@@ -19,92 +19,105 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+    <head>
+        <?php $this->osc_print_head() ; ?>
+    </head>
+    <body>
+        <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <script type="text/javascript">
+            function changeServer( box ) {
+                if( box.value == 'gmail' ) {
+                    document.getElementById("mailserver_host").value = 'smtp.gmail.com';
+                    document.getElementById("mailserver_host").readOnly = true;
+                    document.getElementById("mailserver_port").readOnly = true;
+                    document.getElementById("mailserver_port").value = '465';
+                    document.getElementById("mailserver_auth").checked = 'true';
+                    document.getElementById("mailserver_ssl").value = 'ssl';
+                }
+            }
+        </script>
+        <div id="content">
+            <div id="separator"></div>
 
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
-<?php
-    $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
-    $timeFormats = array('g:i a', 'g:i A', 'H:i');
-?>
-<script type="text/javascript">
-    function changeServer( box ) {
-        if( box.value == 'gmail' ) {
-            document.getElementById("mailserver_host").value = 'smtp.gmail.com';
-            document.getElementById("mailserver_host").readOnly = true;
-            document.getElementById("mailserver_port").readOnly = true;
-            document.getElementById("mailserver_port").value = '465';
-            document.getElementById("mailserver_auth").checked = 'true';
-            document.getElementById("mailserver_ssl").value = 'ssl';
-        }
-    }
-</script>
-<div id="content">
-    <div id="separator"></div>
-
-    <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
-    <div id="right_column">
-        <div id="content_header" class="content_header">
-            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" /></div>
-            <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
-            <div style="clear: both;"></div>
-        </div>
-
-        <div id="content_separator"></div>
-        <?php osc_show_flash_message(); ?>
-        <!-- settings form -->
-        <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-            <div style="padding: 20px;">
-
-                <form id="mailserver_form" action="settings.php" method="post">
-                    <input type="hidden" name="action" value="mailserver_post" />
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Configuration'); ?></legend>
-                            <label><?php _e('Type of server'); ?></label>
-                            <select name="mailserver_type" id="mailserver_type" onChange="changeServer(this)">
-                                <option value="custom" <?php echo (osc_mailserver_type() == 'custom') ? 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
-                                <option value="gmail" <?php echo (osc_mailserver_type() == 'gmail') ? 'selected="true"' : '' ; ?>><?php _e('GMail Server'); ?></option>
-                            </select>
-                            <br/>
-                            <br/>
-
-                            <label><?php _e('Host Name'); ?></label>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo osc_mailserver_host() ; ?>" />
-                            <br/>
-                            <label><?php _e('Server Port'); ?></label>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo osc_mailserver_port() ; ?>" />
-                            <br/>
-                            <label><?php _e('Username'); ?></label>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_username" id="mailserver_username" value="<?php echo osc_mailserver_username() ; ?>" />
-                            <br/>
-                            <label><?php _e('Password'); ?></label>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="password"  name="mailserver_password" id="mailserver_password" value="<?php echo osc_mailserver_password() ; ?>" />
-                            <br/>
-                            <label><?php _e('Encryption'); ?></label>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_ssl" id="mailserver_ssl" value="<?php echo osc_mailserver_ssl() ; ?>" />
-                            <br/>
-                            <small><?php _e('leave it empty if there isn\'t encryption, ssl or tls'); ?></small>
-                            <br/>
-                            <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
-                            <label><?php _e('Enable SMTP authentication'); ?></label>
-                        </fieldset>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/back_office/settings-icon.png" alt="" title=""/>
                     </div>
-
-                    <div style="float: left; width: 50%;">
-                        <fieldset>
-                            <legend><?php _e('Help') ; ?></legend>
-                            <label><?php _e('Enter your email server configuration.') ; ?></label>
-                        </fieldset>
-                    </div>
-
+                    <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
                     <div style="clear: both;"></div>
+                </div>
+                <div id="content_separator"></div>
+                <?php osc_show_flash_message('admin'); ?>
+                <!-- settings form -->
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 20px;">
+                        <form id="mailserver_form" action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="settings" />
+                            <input type="hidden" name="action" value="mailserver_post" />
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Configuration'); ?></legend>
+                                    <label><?php _e('Type of server'); ?></label>
+                                    <select name="mailserver_type" id="mailserver_type" onChange="changeServer(this)">
+                                        <option value="custom" <?php echo (osc_mailserver_type() == 'custom') ? 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
+                                        <option value="gmail" <?php echo (osc_mailserver_type() == 'gmail') ? 'selected="true"' : '' ; ?>><?php _e('GMail Server'); ?></option>
+                                    </select>
+                                    <p>
+                                        <label><?php _e('Host Name'); ?></label>
+                                        <br/>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo osc_mailserver_host() ; ?>" />
+                                    </p>
+                                    <p>
+                                        <label><?php _e('Server Port'); ?></label>
+                                        <br/>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo osc_mailserver_port() ; ?>" />
+                                    </p>
+                                    <p>
+                                        <label><?php _e('Username'); ?></label>
+                                        <br/>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_username" id="mailserver_username" value="<?php echo osc_mailserver_username() ; ?>" />
+                                    </p>
+                                    <p>
+                                        <label><?php _e('Password'); ?></label>
+                                        <br/>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="password"  name="mailserver_password" id="mailserver_password" value="<?php echo osc_mailserver_password() ; ?>" />
+                                    </p>
+                                    <p>
+                                        <label><?php _e('Encryption'); ?></label>
+                                        <br/>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_ssl" id="mailserver_ssl" value="<?php echo osc_mailserver_ssl() ; ?>" />
+                                        <small><?php _e('it could be: blank, ssl or tls'); ?></small>
+                                    </p>
+                                    <p>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
+                                        <label for="mailserver_auth"><?php _e('Enable SMTP authentication'); ?></label>
+                                    </p>
+                                </fieldset>
+                            </div>
 
-                    <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
-                </form>
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Help'); ?></legend>
+                                    <label><?php _e('Enter your email server configuration.'); ?></label>
+                                </fieldset>
+                            </div>
 
-            </div>
-        </div>
-    </div> <!-- end of right column -->
-</div>
+                            <div style="clear: both;"></div>
+
+                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
+                        </form>
+
+                    </div>
+                </div>
+            </div> <!-- end of right column -->
+        </div><!-- end of container -->
+        <?php $this->osc_print_footer() ; ?>
+    </body>
+</html>

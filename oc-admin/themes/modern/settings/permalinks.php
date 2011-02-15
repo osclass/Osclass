@@ -160,7 +160,7 @@ $file_status     = $this->_get('file');
                                     <div style="float: right; width: 50%;">
                                         <?php
                                             if(file_exists(ABS_PATH.'.htaccess')) {
-                                                $htaccess_content = file_get_contents(ABS_PATH . '.htaccess');
+                                                $htaccess_content = file_get_contents(osc_base_path() . '.htaccess');
                                                 if($htaccess_content) {
                                                     _e('Current content of your .htaccess file:');
                                         ?>

@@ -31,6 +31,7 @@ class CAdminSettings extends AdminSecBaseModel
                                     $this->doView('settings/items.php');
             break;
             case('items_post'):     // update item settings
+                                    $iUpdated                = 0;
                                     $enabledRecaptchaItems   = Params::getParam('enabled_recaptcha_items');
                                     $enabledRecaptchaItems   = (($enabledRecaptchaItems != '') ? true : false);
                                     $enabledItemValidation   = Params::getParam('enabled_item_validation');
@@ -48,30 +49,33 @@ class CAdminSettings extends AdminSecBaseModel
                                     $enabledFieldImagesItems = Params::getParam('enableField#images@items');
                                     $enabledFieldImagesItems = (($enabledFieldImagesItems != '') ? true : false);
                                     
-                                    Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
-                                                                     ,array('s_name'  => 'enabled_recaptcha_items'));
-                                    Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
-                                                                     ,array('s_name'  => 'enabled_item_validation'));
-                                    Preference::newInstance()->update(array('s_value' => $regUserPost)
-                                                                     ,array('s_name'  => 'reg_user_post'));
-                                    Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                                                     ,array('s_name'  => 'notify_new_item'));
-                                    Preference::newInstance()->update(array('s_value' => $notifyContactItem)
-                                                                     ,array('s_name'  => 'notify_contact_item'));
-                                    Preference::newInstance()->update(array('s_value' => $notifyContactFriends)
-                                                                     ,array('s_name'  => 'notify_contact_friends'));
-                                    Preference::newInstance()->update(array('s_value' => $enabledFieldPriceItems)
-                                                                     ,array('s_name'  => 'enableField#f_price@items'));
-                                    Preference::newInstance()->update(array('s_value' => $enabledFieldImagesItems)
-                                                                     ,array('s_name'  => 'enableField#images@items'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
+                                                                                  ,array('s_name'  => 'enabled_recaptcha_items'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
+                                                                                  ,array('s_name'  => 'enabled_item_validation'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPost)
+                                                                                  ,array('s_name'  => 'reg_user_post'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewItem)
+                                                                                  ,array('s_name'  => 'notify_new_item'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyContactItem)
+                                                                                  ,array('s_name'  => 'notify_contact_item'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyContactFriends)
+                                                                                  ,array('s_name'  => 'notify_contact_friends'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldPriceItems)
+                                                                                  ,array('s_name'  => 'enableField#f_price@items'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldImagesItems)
+                                                                                  ,array('s_name'  => 'enableField#images@items'));
 
-                                    osc_add_flash_message(__('Items settings have been updated'), 'admin');
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Items settings have been updated'), 'admin');
+                                    }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=items');
             break;
             case('comments'):       //calling the comments settings view
                                     $this->doView('settings/comments.php');
             break;
             case('comments_post'):  // updating comment
+                                    $iUpdated         = 0;
                                     $enabledComments  = Params::getParam('enabled_comments');
                                     $enabledComments  = (($enabledComments != '') ? true : false);
                                     $moderateComments = Params::getParam('moderate_comments');
@@ -79,20 +83,23 @@ class CAdminSettings extends AdminSecBaseModel
                                     $notifyNewComment = Params::getParam('notify_new_comment');
                                     $notifyNewComment = (($notifyNewComment != '') ? true : false);
 
-                                    Preference::newInstance()->update(array('s_value' => $enabledComments)
-                                                                     ,array('s_name' => 'enabled_comments'));
-                                    Preference::newInstance()->update(array('s_value' => $moderateComments)
-                                                                     ,array('s_name' => 'moderate_comments'));
-                                    Preference::newInstance()->update(array('s_value' => $notifyNewComment)
-                                                                     ,array('s_name' => 'notify_new_comment'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
+                                                                                  ,array('s_name' => 'enabled_comments'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $moderateComments)
+                                                                                  ,array('s_name' => 'moderate_comments'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
+                                                                                  ,array('s_name' => 'notify_new_comment'));
 
-                                    osc_add_flash_message(__('Comments setting have been updated'), 'admin');
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Comments setting have been updated'), 'admin');
+                                    }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
             break;
             case ('users'):         // calling the users settings view
                                     $this->doView('settings/users.php');
             break;
             case ('users_post'):    // updating users
+                                    $iUpdated                = 0;
                                     $enabledUserValidation   = Params::getParam('enabled_user_validation');
                                     $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
                                     $enabledUserRegistration = Params::getParam('enabled_user_registration');
@@ -100,14 +107,16 @@ class CAdminSettings extends AdminSecBaseModel
                                     $enabledUsers            = Params::getParam('enabled_users');
                                     $enabledUsers            = (($enabledUsers != '') ? true : false);
 
-                                    Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
-                                                                     ,array('s_name'  => 'enabled_user_validation'));
-                                    Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
-                                                                     ,array('s_name'  => 'enabled_user_registration'));
-                                    Preference::newInstance()->update(array('s_value' => $enabledUsers)
-                                                                     ,array('s_name'  => 'enabled_users'));
-        
-                                    osc_add_flash_message(__('Users settings have been updated.'), 'admin');
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
+                                                                                  ,array('s_name'  => 'enabled_user_validation'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
+                                                                                  ,array('s_name'  => 'enabled_user_registration'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
+                                                                                  ,array('s_name'  => 'enabled_users'));
+
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Users settings have been updated.'), 'admin');
+                                    }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
             break;
             case ('locations'):     // calling the locations settings view
@@ -281,9 +290,9 @@ class CAdminSettings extends AdminSecBaseModel
     RewriteRule . ' . REL_WEB_URL . 'index.php [L]
 </IfModule>';
 
-                                        if( file_exists(ABS_PATH . '.htaccess') ) {
+                                        if( file_exists(osc_base_path() . '.htaccess') ) {
                                             $file_status = 1;
-                                        } else if(file_put_contents(ABS_PATH . '.htaccess', $htaccess_text)) {
+                                        } else if(file_put_contents(osc_base_path() . '.htaccess', $htaccess)) {
                                             $file_status = 2;
                                         } else {
                                             $file_status = 3;
@@ -292,36 +301,320 @@ class CAdminSettings extends AdminSecBaseModel
                                         if(apache_mod_loaded('mod_rewrite')) {
                                             $htaccess_status = 1;
                                             Preference::newInstance()->update(array('s_value' => '1')
-                                                                             ,array('s_name' => 'mod_rewrite_loaded'));
+                                                                             ,array('s_name'  => 'mod_rewrite_loaded'));
                                         } else {
                                             $htaccess_status = 2;
                                             Preference::newInstance()->update(array('s_value' => '0')
-                                                                             ,array('s_name' => 'mod_rewrite_loaded'));
+                                                                             ,array('s_name'  => 'mod_rewrite_loaded'));
                                         }
                                     } else {
                                         $modRewrite = apache_mod_loaded('mod_rewrite');
                                         Preference::newInstance()->update(array('s_value' => '0')
-                                                                         ,array('s_name' => 'rewriteEnabled'));
+                                                                         ,array('s_name'  => 'rewriteEnabled'));
                                         Preference::newInstance()->update(array('s_value' => '0')
-                                                                         ,array('s_name' => 'mod_rewrite_loaded'));
+                                                                         ,array('s_name'  => 'mod_rewrite_loaded'));
                                     }
 
                                     $redirectUrl  = osc_admin_base_url(true) . '?page=settings&action=permalinks&htaccess_status=';
                                     $redirectUrl .= $htaccess_status . '&file_status=' . $file_status;
                                     $this->redirectTo($redirectUrl);
             break;
-            default:                // default dashboard page (main page at oc-admin)
-                                    $this->_exportVariableToView( "numUsers", User::newInstance()->count() ) ;
-                                    $this->_exportVariableToView( "numAdmins", Admin::newInstance()->count() ) ;
+            case('spamNbots'):      // calling the spam and bots view
+                                    $this->doView('settings/spamNbots.php');
+            break;
+            case('spamNbots_post'): // updating spam and bots option
+                                    $iUpdated         = 0;
+                                    $akismetKey       = Params::getParam('akismetKey');
+                                    $akismetKey       = trim($akismetKey);
+                                    $recaptchaPrivKey = Params::getParam('recaptchaPrivKey');
+                                    $recaptchaPrivKey = trim($recaptchaPrivKey);
+                                    $recaptchaPubKey  = Params::getParam('recaptchaPubKey');
+                                    $recaptchaPubKey  = trim($recaptchaPubKey);
 
-                                    $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
-                                    $this->_exportVariableToView( "numItemsPerCategory", CategoryStats::newInstance()->toNumItemsMap() ) ;
-                                    $this->_exportVariableToView( "categories", Category::newInstance()->listAll() ) ;
-                                    $this->_exportVariableToView( "newsList", osc_listNews() ) ;
-                                    $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $akismetKey)
+                                                                                  ,array('s_name'  => 'akismetKey'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPrivKey)
+                                                                                  ,array('s_name'  => 'recaptchaPrivKey'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $recaptchaPubKey)
+                                                                                  ,array('s_name'  => 'recaptchaPubKey'));
 
-                                    // calling the view...
-                                    $this->doView('main/index.php') ;
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Akismet and ReCatpcha have been updated') ,'admin');
+                                    }
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
+            break;
+            case('currencies'):     // currencies settings
+                                    $currencies_action = Params::getParam('type');
+
+                                    switch ($currencies_action) {
+                                        case('add'):        // calling add currency view
+                                                            $this->doView('settings/add_currency.php');
+                                        break;
+                                        case('add_post'):   // adding a new currency
+                                                            $currencyCode         = Params::getParam('pk_c_code');
+                                                            $currencyName         = Params::getParam('s_name');
+                                                            $currencyDescription  = Params::getParam('s_description');
+
+                                                            // cleaning parameters
+                                                            $currencyName        = strip_tags($currencyName);
+                                                            $currencyDescription = strip_tags($currencyDescription);
+                                                            $currencyCode        = strip_tags($currencyCode);
+                                                            $currencyCode        = trim($currencyCode);
+
+                                                            if(!preg_match('/^.{1,3}$/', $currencyCode)) {
+                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                            }
+
+                                                            $fields               = array('pk_c_code'     => $currencyCode
+                                                                                         ,'s_name'        => $currencyName
+                                                                                         ,'s_description' => $currencyDescription);
+                                                                                         
+                                                            $isInserted = Currency::newInstance()->insert($fields);
+
+                                                            if(!$isInserted) {
+                                                                osc_add_flash_message(__('New currency has been added'), 'admin');
+                                                            } else {
+                                                                osc_add_flash_message(__('Error: currency couldn\'t be added'), 'admin');
+                                                            }
+                                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                        break;
+                                        case('edit'):       // calling edit currency view
+                                                            $currencyCode = Params::getParam('code');
+                                                            $currencyCode = strip_tags($currencyCode);
+                                                            $currencyCode = trim($currencyCode);
+                                                            
+                                                            if($currencyCode == '') {
+                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                            }
+
+                                                            $aCurrency = Currency::newInstance()->findByCode($currencyCode);
+
+                                                            if(count($aCurrency) == 0) {
+                                                                osc_add_flash_message(__('Error: the currency doesn\'t exist'), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                            }
+
+                                                            $this->_exportVariableToView('aCurrency', $aCurrency);
+                                                            $this->doView('settings/edit_currency.php');
+                                        break;
+                                        case('edit_post'):  // updating currency
+                                                            $currencyName        = Params::getParam('s_name');
+                                                            $currencyDescription = Params::getParam('s_description');
+                                                            $currencyCode        = Params::getParam('pk_c_code');
+
+                                                            // cleaning parameters
+                                                            $currencyName        = strip_tags($currencyName);
+                                                            $currencyDescription = strip_tags($currencyDescription);
+                                                            $currencyCode        = strip_tags($currencyCode);
+                                                            $currencyCode        = trim($currencyCode);
+
+                                                            if(!preg_match('/.{1,3}/', $currencyCode)) {
+                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                            }
+
+                                                            $iUpdated = Currency::newInstance()->update(array('s_name'        => $currencyName
+                                                                                                              ,'s_description' => $currencyDescription)
+                                                                                                        ,array('pk_c_code'     => $currencyCode));
+
+                                                            if($iUpdated == 1) {
+                                                                osc_add_flash_message(__('Currency has been updated'), 'admin');
+                                                            }
+                                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                        break;
+                                        case('delete'):     // deleting a currency
+                                                            $rowChanged    = 0;
+                                                            $aCurrencyCode = Params::getParam('code');
+
+                                                            if(!is_array($aCurrencyCode)) {
+                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                                            }
+
+                                                            foreach($aCurrencyCode as $currencyCode) {
+                                                                if(preg_match('/.{1,3}/', $currencyCode)) {
+                                                                    $rowChanged += Currency::newInstance()->delete(array('pk_c_code' => $currencyCode));
+                                                                }
+                                                            }
+
+                                                            $msg = '';
+                                                            switch ($rowChanged) {
+                                                                case ('0'): $msg = __('Any currency have been deleted');
+                                                                break;
+                                                                case ('1'): $msg = __('One currency has been deleted');
+                                                                break;
+                                                                default:    $msg = sprintf(__('%s currencies have been deleted'), $rowChanged);
+                                                                break;
+                                                            }
+                                                            
+                                                            osc_add_flash_message($msg, 'admin');
+                                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
+                                        break;
+                                        default:            // calling the currencies view
+                                                            $aCurrencies = Currency::newInstance()->listAll();
+                                                            $this->_exportVariableToView('aCurrencies', $aCurrencies);
+
+                                                            $this->add_global_js('jquery.dataTables.min.js');
+                                                            $this->add_css('demo_table.css');
+                                                            $this->doView('settings/currencies.php');
+                                        break;
+                                    }
+            break;
+            case('mailserver'):     // calling the mailserver view
+                                    $this->doView('settings/mailserver.php');
+            break;
+            case('mailserver_post'):// updating mailserver
+                                    $iUpdated           = 0;
+                                    $mailserverAuth     = Params::getParam('mailserver_auth');
+                                    $mailserverAuth     = ($mailserverAuth != '' ? true : false);
+                                    $mailserverType     = Params::getParam('mailserver_type');
+                                    $mailserverHost     = Params::getParam('mailserver_host');
+                                    $mailserverPort     = Params::getParam('mailserver_port');
+                                    $mailserverUsername = Params::getParam('mailserver_username');
+                                    $mailserverPassword = Params::getParam('mailserver_password');
+                                    $mailserverSsl      = Params::getParam('mailserver_ssl');
+
+                                    if( !in_array($mailserverType, array('custom', 'gmail')) ) {
+                                        osc_add_flash_message(__('Mail server type is incorrect'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                    }
+
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverAuth)
+                                                                                   ,array('s_name' => 'mailserver_auth'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverType)
+                                                                                   ,array('s_name' => 'mailserver_type'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverHost)
+                                                                                   ,array('s_name' => 'mailserver_host'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPort)
+                                                                                   ,array('s_name' => 'mailserver_port'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverUsername)
+                                                                                   ,array('s_name' => 'mailserver_username'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPassword)
+                                                                                   ,array('s_name' => 'mailserver_password'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverSsl)
+                                                                                   ,array('s_name' => 'mailserver_ssl'));
+
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Mailserver configuration has changed'), 'admin');
+                                    }
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+            break;
+            case('media'):          // calling the media view
+                                    $this->add_css('demo_table.css') ;
+                                    $this->doView('settings/media.php') ;
+            break;
+            case('media_post'):     // updating the media config
+                                    $iUpdated          = 0;
+                                    $maxSizeKb         = Params::getParam('maxSizeKb');
+                                    $allowedExt        = Params::getParam('allowedExt');
+                                    $dimThumbnail      = Params::getParam('dimThumbnail');
+                                    $dimPreview        = Params::getParam('dimPreview');
+                                    $dimNormal         = Params::getParam('dimNormal');
+                                    $keepOriginalImage = Params::getParam('keep_original_image');
+
+                                    // format parameters
+                                    $maxSizeKb         = strip_tags($maxSizeKb);
+                                    $allowedExt        = strip_tags($allowedExt);
+                                    $dimThumbnail      = strip_tags($dimThumbnail);
+                                    $dimPreview        = strip_tags($dimPreview);
+                                    $dimNormal         = strip_tags($dimNormal);
+                                    $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
+
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
+                                                                                  ,array('s_name'  => 'maxSizeKb'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
+                                                                                  ,array('s_name'  => 'allowedExt'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $dimThumbnail)
+                                                                                  ,array('s_name'  => 'dimThumbnail'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $dimPreview)
+                                                                                  ,array('s_name'  => 'dimPreview'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $dimNormal)
+                                                                                  ,array('s_name'  => 'dimNormal'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
+                                                                                  ,array('s_name'  => 'keep_original_image'));
+
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Media config has been updated'), 'admin');
+                                    }
+
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media');
+            break ;
+            case('cron'):           // viewing the cron view
+                                    $this->doView('settings/cron.php');
+            break;
+            case('cron_post'):      // updating cron config
+                                    $iUpdated  = 0;
+                                    $bAutoCron = Params::getParam('auto_cron');
+                                    $bAutoCron = ($bAutoCron != '' ? true : false);
+
+                                    $iUpdated  += Preference::newInstance()->update(array('s_value' => $bAutoCron)
+                                                                                   ,array('s_name' => 'auto_cron'));
+        
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('Cron config has been updated'), 'admin');
+                                    }
+
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
+            break;
+            case('update'):         // update index view
+                                    $iUpdated      = 0;
+                                    $sPageTitle    = Params::getParam('pageTitle');
+                                    $sPageDesc     = Params::getParam('pageDesc');
+                                    $sContactEmail = Params::getParam('contactEmail');
+                                    $sLanguage     = Params::getParam('language');
+                                    $sDateFormat   = Params::getParam('dateFormat');
+                                    $sCurrency     = Params::getParam('currency');
+                                    $sWeekStart    = Params::getParam('weekStart');
+                                    $sTimeFormat   = Params::getParam('timeFormat');
+                                    $sNumRssItems  = Params::getParam('num_rss_items');
+
+                                    // preparing parameters
+                                    $sPageTitle    = strip_tags($sPageTitle);
+                                    $sPageDesc     = strip_tags($sPageDesc);
+                                    $sContactEmail = strip_tags($sContactEmail);
+                                    $sLanguage     = strip_tags($sLanguage);
+                                    $sDateFormat   = strip_tags($sDateFormat);
+                                    $sCurrency     = strip_tags($sCurrency);
+                                    $sWeekStart    = strip_tags($sWeekStart);
+                                    $sTimeFormat   = strip_tags($sTimeFormat);
+                                    $sNumRssItems  = strip_tags($sNumRssItems);
+
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'language'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'dateFormat'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sCurrency)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'currency'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sWeekStart)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
+                                    $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
+                                                                                  ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message(__('General settings have been updated'), 'admin');
+                                    }
+
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
+            break;
+            default:                // calling the view
+                                    $aLanguages = Locale::newInstance()->listAllEnabled() ;
+                                    $aCurrencies = Currency::newInstance()->listAll() ;
+
+                                    $this->_exportVariableToView('aLanguages', $aLanguages);
+                                    $this->_exportVariableToView('aCurrencies', $aCurrencies);
+
+                                    $this->doView('settings/index.php') ;
+            break;
         }
     }
 
@@ -439,263 +732,5 @@ class CAdminSettings extends AdminSecBaseModel
         osc_add_flash_message(sprintf(__('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
     }
 }
-
-/*
-
-switch ($action) {
-    case 'spamNbots':
-        osc_renderAdminSection('settings/spamNbots.php', __('Settings'));
-        break;
-    case 'spamNbots_post':
-        $akismetKey = trim($_POST['akismetKey']);
-        if (empty($akismetKey)) {
-            Preference::newInstance()->delete(array('s_name' => 'akismetKey'));
-        } else {
-            Preference::newInstance()->delete(array('s_name' => 'akismetKey')); // @TODO remove
-            Preference::newInstance()->insert(array('s_section' => 'osclass', 's_name' => 'akismetKey', 's_value' => $akismetKey, 'e_type' => 'STRING'));
-        }
-
-        $recaptchaPrivKey = trim($_POST['recaptchaPrivKey']);
-        $recaptchaPubKey = trim($_POST['recaptchaPubKey']);
-        if (empty($recaptchaPrivKey) || empty($recaptchaPubKey)) {
-            Preference::newInstance()->delete(array('s_name' => 'recaptchaPrivKey'));
-            Preference::newInstance()->delete(array('s_name' => 'recaptchaPubKey'));
-        } else {
-            Preference::newInstance()->delete(array('s_name' => 'recaptchaPrivKey')); // @TODO remove
-            Preference::newInstance()->delete(array('s_name' => 'recaptchaPubKey')); // @TODO remove
-            Preference::newInstance()->insert(array('s_section' => 'osclass', 's_name' => 'recaptchaPrivKey', 's_value' => $recaptchaPrivKey, 'e_type' => 'STRING'));
-            Preference::newInstance()->insert(array('s_section' => 'osclass', 's_name' => 'recaptchaPubKey', 's_value' => $recaptchaPubKey, 'e_type' => 'STRING'));
-        }
-
-        osc_redirectTo('settings.php?action=spamNbots');
-        break;
-    case 'registry':
-        osc_renderAdminSection('settings/registry.php', __('Settings'));
-        break;
-    case 'currencies':
-        $currencies = Currency::newInstance()->listAll();
-        osc_renderAdminSection('settings/currencies.php', __('Settings'));
-        break;
-    case 'addCurrency':
-        osc_renderAdminSection('settings/addCurrency.php', __('Settings'));
-        break;
-    case 'addCurrency_post':
-        try {
-            Currency::newInstance()->insert($_POST);
-        } catch (Exception $e) {
-            osc_add_flash_message($e->getMessage());
-        }
-        osc_redirectTo('settings.php?action=currencies');
-        break;
-    case 'editCurrency':
-        if(isset($_GET['code'])) {
-            $currency = Currency::newInstance()->findByCode($_GET['code']);
-            osc_renderAdminSection('settings/editCurrency.php', __('Settings'));
-        } else {
-            osc_redirectTo('settings.php?action=currencies');
-        }
-        break;
-    case 'editCurrency_post':
-        try {
-            Currency::newInstance()->update(array('s_name' => $_POST['s_name'], 's_description' => $_POST['s_description']), array('pk_c_code' => $_POST['pk_c_code']));
-        } catch (Exception $e) {
-            osc_add_flash_message($e->getMessage());
-        }
-        osc_redirectTo('settings.php?action=currencies');
-        break;
-    case 'deleteCurrency':
-        $codes = $_GET['code'];
-
-        isset($_POST['id']) ? $codes = $_POST['id'] : '';
-
-        foreach ($codes as &$code)
-            $code = "'$code'";
-        unset($code);
-        $cond = 'pk_c_code IN (' . implode(', ', $codes) . ')';
-        try {
-            Currency::newInstance()->delete(array(DB_CUSTOM_COND => $cond));
-        } catch (Exception $e) {
-            if($e->getMessage()=="1451") {
-                osc_add_flash_message(__('This currency is currently being used in some items. It can not be deleted.')) ;
-            } else {
-                osc_add_flash_message($e->getMessage()) ;
-            }
-        }
-
-        osc_redirectTo('settings.php?action=currencies') ;
-        break;
-    case 'functionalities':
-        osc_renderAdminSection('settings/functionalities.php', __('Functionalities')) ;
-        break;
-    case 'functionalities_post':
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_comments']) ? true : false)
-                ,array('s_name' => 'enabled_comments')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_recaptcha_items']) ? true : false)
-                ,array('s_name' => 'enabled_recaptcha_items')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
-                ,array('s_name' => 'enabled_item_validation')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['moderate_comments']) ? true : false)
-                ,array('s_name' => 'moderate_comments')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['reg_user_post']) ? true : false)
-                ,array('s_name' => 'reg_user_post')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['auto_cron']) ? true : false)
-                ,array('s_name' => 'auto_cron')
-        );
-        //XXX: Maybe is not needed. We want to reload the values from Preference
-        Preference::newInstance()->toArray() ;
-        osc_redirectTo('settings.php?action=functionalities') ;
-        break;
-    case 'notifications':
-        osc_renderAdminSection('settings/notifications.php', __('Notifications')) ;
-        break;
-    case 'notifications_post':
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_new_item']) ? true : false)
-                ,array('s_name' => 'notify_new_item')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_contact_friends']) ? true : false)
-                ,array('s_name' => 'notify_contact_friends')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_new_comment']) ? true : false)
-                ,array('s_name' => 'notify_new_comment')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_contact_item']) ? true : false)
-                ,array('s_name' => 'notify_contact_item')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_item_validation']) ? true : false)
-                ,array('s_name' => 'enabled_item_validation')
-        );
-        //XXX: Maybe is not needed. We want to reload the values from Preference
-        Preference::newInstance()->toArray() ;
-        osc_redirectTo('settings.php?action=notifications') ;
-        break;
-    case 'mailserver':
-        osc_renderAdminSection('settings/mailserver.php', __('Functionalities')) ;
-        break;
-    case 'mailserver_post':
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_auth']) ? true : false)
-                ,array('s_name' => 'mailserver_auth')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_type']) ? $_POST['mailserver_type'] : 'custom')
-                ,array('s_name' => 'mailserver_type')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_host']) ? $_POST['mailserver_host'] : '')
-                ,array('s_name' => 'mailserver_host')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_port']) ? $_POST['mailserver_port'] : '')
-                ,array('s_name' => 'mailserver_port')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_username']) ? $_POST['mailserver_username'] : '')
-                ,array('s_name' => 'mailserver_username')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_password']) ? $_POST['mailserver_password'] : '')
-                ,array('s_name' => 'mailserver_password')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['mailserver_ssl']) ? $_POST['mailserver_ssl'] : '')
-                ,array('s_name' => 'mailserver_ssl')
-        );
-        Preference::newInstance()->toArray();
-        osc_redirectTo('settings.php?action=mailserver') ;
-        break;
-    case 'notifications':
-        osc_renderAdminSection('settings/notifications.php', __('Notifications')) ;
-        break;
-
-    case 'comments':
-        osc_renderAdminSection('settings/comments.php', __('Settings')) ;
-        break;
-    case 'cron':
-        osc_renderAdminSection('settings/cron.php', __('Settings')) ;
-        break;
-    case 'cron_post':
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['auto_cron']) ? true : false)
-                ,array('s_name' => 'auto_cron')
-        );
-        Preference::newInstance()->toArray() ;
-        osc_redirectTo('settings.php?action=cron') ;
-        break;
-    case 'comments_post':
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['enabled_comments']) ? true : false)
-                ,array('s_name' => 'enabled_comments')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['moderate_comments']) ? true : false)
-                ,array('s_name' => 'moderate_comments')
-        );
-        Preference::newInstance()->update(
-                array('s_value' => isset($_POST['notify_new_comment']) ? true : false)
-                ,array('s_name' => 'notify_new_comment')
-        );
-        Preference::newInstance()->toArray();
-        osc_redirectTo('settings.php?action=comments');
-        break;
-
-        break;
-    case 'update':
-        $sPageTitle    = Params::getParam('pageTitle');
-        $sPageDesc     = Params::getParam('pageDesc');
-        $sContactEmail = Params::getParam('contactEmail');
-        $sLanguage     = Params::getParam('language');
-        $sDateFormat   = Params::getParam('dateFormat');
-        $sCurrency     = Params::getParam('currency');
-        $sWeekStart    = Params::getParam('weekStart');
-        $sTimeFormat   = Params::getParam('tf');
-        $sTimeFormat   = Params::getParam('timeFormat');
-        $sNumRssItems  = Params::getParam('num_rss_items');
-
-        Preference::newInstance()->update(array('s_value'   => $sPageTitle)
-                                         ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
-        Preference::newInstance()->update(array('s_value'   => $sPageDesc)
-                                         ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
-        Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                         ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
-        Preference::newInstance()->update(array('s_value'   => $sLanguage)
-                                         ,array('s_section' => 'osclass', 's_name' => 'language'));
-        Preference::newInstance()->update(array('s_value'   => $sDateFormat)
-                                         ,array('s_section' => 'osclass', 's_name' => 'dateFormat'));
-        Preference::newInstance()->update(array('s_value'   => $sCurrency)
-                                         ,array('s_section' => 'osclass', 's_name' => 'currency'));
-        Preference::newInstance()->update(array('s_value'   => $sWeekStart)
-                                         ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
-        Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
-                                         ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
-        Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                         ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
-
-        osc_redirectTo('settings.php?action=items');
-        Preference::newInstance()->toArray() ;
-    default:
-        $languages = Locale::newInstance()->listAllEnabled() ;
-        $mCurrencies = new Currency() ;
-        $aCurrencies = $mCurrencies->listAll() ;
-        osc_renderAdminSection('settings/index.php', __('General settings')) ;
-}
-*/
-
-
 
 ?>
