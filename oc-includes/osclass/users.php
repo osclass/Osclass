@@ -45,7 +45,7 @@
                 
                 osc_run_hook('user_register_completed') ;
 
-                if( osc_user_validation_enabled() && !$is_admin ) {
+                if( osc_user_validation_enabled() && !$this->is_admin ) {
                     
                     $user = $this->manager->findByPrimaryKey($userId) ;
 
@@ -62,7 +62,7 @@
                     }
                     
                     if (!is_null($content)) {
-                        $validationLink = sprintf('%sindex.php?page=users&action=validate&id=%d&code=%s', osc_base_url(), $user['pk_i_id'], $code) ;
+                        $validationLink = sprintf('%sindex.php?page=users&action=validate&id=%d&code=%s', osc_base_url(), $user['pk_i_id'], $input['code']) ;
                         $words   = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}') ;
                         $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), $validationLink) ;

@@ -84,18 +84,14 @@
                                     <legend><?php _e('E-mail'); ?></legend>
                                     <?php UserForm::email_text($user); ?>
                                 </fieldset>
-                                <fieldset>
-                                    <legend><?php _e('Activation'); ?></legend>
-                                    <input type="checkbox" name="b_enabled" id="b_enabled" value="1" <?php if($user['b_enabled']==1) { echo 'checked'; };?>/> <label for="b_enabled"><?php _e('Active user'); ?></label>
-                                </fieldset>
                             </div>
 
                             <div style="float: left; width: 50%;">
-                                <fieldset>
+                                <fieldset style="float:left;">
                                     <legend><?php _e('Password'); ?></legend>
                                     <?php UserForm::password_register_text($user); ?>
                                 </fieldset>
-                                <fieldset>
+                                <fieldset style="float:left;">
                                     <legend><?php _e('Retype the password'); ?> </legend>
                                     <?php UserForm::check_password_register_text($user); ?>
                                 </fieldset>
