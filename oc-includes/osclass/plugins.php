@@ -280,7 +280,7 @@ class Plugins
 			    }
 		    }
 	    }
-	    osc_redirectTo(osc_admin_base_url(true).'?page=plugins&action=configure&plugin='.$plugin);
+	    osc_redirectTo(osc_plugin_configure_url($plugin));
     }
 
     static function cleanCategoryFromPlugin($plugin) {
