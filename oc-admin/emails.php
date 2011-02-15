@@ -62,8 +62,8 @@ class CAdminEmails extends AdminSecBaseModel
                     $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
                 }
                 
-                if(!pageInternalNameExists($id, $s_internal_name)) {
-                    if(!pageIsIndelible($id)) {
+                if(!$this->emailManager->internalNameExists($id, $s_internal_name)) {
+                    if(!$this->emailManager->isIndelible($id)) {
                         $this->emailManager->updateInternalName($id, $s_internal_name);
                     }
                     osc_add_flash_message( __('The email/alert has been updated.'), 'admin' );

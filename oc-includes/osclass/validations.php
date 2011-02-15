@@ -24,10 +24,10 @@
  * This function checks if the string passed by parameter is a valid email or not.
  * @param string $email
  * @return true if it is a valid email, false otherwise.
- */
+ *//*
 function osc_isValidEmail($email) {
 	return strpos($email, '@') !== false;
-}
+}*/
 
 function osc_check_form_js($fields = null) {
     if(is_array($fields)) {

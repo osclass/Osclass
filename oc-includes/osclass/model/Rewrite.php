@@ -36,12 +36,12 @@ class Rewrite extends DAO
     public function getTableName() {}
 
     public function getRules() {
-        return osc_unserialize(osc_rewrite_rules()) ;
+        return unserialize(osc_rewrite_rules()) ;
     }
 
     public function setRules() {
         Preference::newInstance()->update(
-                array('s_value' => osc_serialize($this->rules))
+                array('s_value' => serialize($this->rules))
                 ,array('s_name' => 'rewrite_rules')
         );
     }

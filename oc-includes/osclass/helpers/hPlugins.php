@@ -56,4 +56,8 @@
         return Plugins::resource($file);
     }
     
+    function osc_plugin_configure_url($plugin) {
+        return osc_admin_base_url(true).'?page=plugins&action=configure&plugin='.$plugin;
+    }
+    
 ?>

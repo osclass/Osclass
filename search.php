@@ -239,16 +239,6 @@
 
             $this->doView('alert-form.php') ;
         }
-/*
-        function osc_is_category_checked($aCategory, $aCategories) {
-            if(in_array($aCategory['pk_i_id'], $aCategories)) {
-                return(true) ;
-            }
-            if(in_array($aCategory['s_slug'], $aCategories)) {
-                return(true) ;
-            }
-        }
- */
     }
 
 ?>
