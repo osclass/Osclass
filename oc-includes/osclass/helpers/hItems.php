@@ -128,5 +128,61 @@
     function osc_item_link_expired($item = null) {
         return osc_base_url(true)."?page=item&action=mark&as=expired&id=".osc_item_id($item);
     }
+    
+    function osc_comment_id($comment = null) {
+        return osc_item_field($comment, "pk_i_id");    
+    }
+
+    function osc_comment_pub_date($comment = null) {
+        return osc_item_field($comment, "dt_pub_date");
+    }
+
+    function osc_comment_title($comment = null) {
+        return osc_item_field($comment, "s_title");
+    }
+
+    function osc_comment_author_name($comment = null) {
+        return osc_item_field($comment, "s_author_name");
+    }
+
+    function osc_comment_author_email($comment = null) {
+        return osc_item_field($comment, "s_author_email");
+    }
+
+    function osc_comment_body($comment = null) {
+        return osc_item_field($comment, "s_body");
+    }
+
+    function osc_comment_user_id($comment = null) {
+        return osc_item_field($comment, "fk_i_user_id");
+    }
+    
+    function osc_resource_id($resource = null) {
+        return osc_item_field($resource, "pk_i_id");
+    }
+
+    function osc_resource_name($resource = null) {
+        return osc_item_field($resource, "s_name");
+    }
+
+    function osc_resource_type($resource = null) {
+        return osc_item_field($resource, "s_content_type");
+    }
+
+    function osc_resource_path($resource = null) {
+        return osc_base_url().osc_item_field($resource, "s_path");
+    }
+
+    function osc_resource_thumbnail($resource = null) {
+        return osc_base_url().osc_item_field($resource, "s_path");
+    }
+
+    function osc_resource_normal($resource = null) {
+        return osc_base_url().preg_replace("|_thumbnail.png^|", "", osc_item_field($resource, "s_path"));
+    }
+
+    function osc_resource_original($resource = null) {
+        return osc_base_url().preg_replace("|_thumbnail.png^|", ".png", osc_item_field($resource, "s_path"));
+    }
 
 ?>
