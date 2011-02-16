@@ -23,6 +23,7 @@
 <?php
     $last_item = end( $this->_get("items") ) ;
     $last_id = $last_item['pk_i_id'] ;
+    $stat = $this->_get("stat");
 ?>
 
 
@@ -34,7 +35,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Items_PROBANDO</div>
+        <div class="Header"><?php _e("Items");?></div>
         
         <script type="text/javascript">
             $(function() {
@@ -51,7 +52,7 @@
                 oTable = $('#datatables_list').dataTable({
                             "bProcessing": true
                             ,"bServerSide": true
-                            ,"sAjaxSource": "<?php echo osc_base_url() ; ?>oc-admin/ajax/items_processing.php"
+                            ,"sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items"
                                             <?php if($stat) { ?>
                                                 ,"fnServerData": function ( sSource, aoData, fnCallback ) {
                                                         /* Add some extra data to the sender */
@@ -139,7 +140,7 @@
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message() ; ?>
 
-                <form id="datatablesForm" action="items.php" method="post">
+                <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
                             <div id="TableToolsToolbar">
                                 <select id="bulk_actions" name="bulk_actions" class="display">
                                         <option value=""><?php _e('Bulk Actions'); ?></option>
@@ -153,12 +154,12 @@
                             </div>
                             <div id="TableToolsLinks">
                                 <strong><?php _e('Filter by') ?>:</strong> <a href="items.php"><?php _e('All') ?></a> |
-                                <a href="?stat=pending"><?php _e('Pending') ?></a> |
-                                <a href="?stat=spam"><?php _e('Spam') ?></a> |
-                                <a href="?stat=duplicated"><?php _e('Duplicated') ?></a> |
-                                <a href="?stat=bad"><?php _e('Bad classified') ?></a> |
-                                <a href="?stat=offensive"><?php _e('Offensive') ?></a> |
-                                <a href="?stat=expired"><?php _e('Expired') ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=pending"><?php _e('Pending') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=spam"><?php _e('Spam') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=duplicated"><?php _e('Duplicated') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad"><?php _e('Bad classified') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=offensive"><?php _e('Offensive') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired"><?php _e('Expired') ?></a>
                             </div>
                 <input type="hidden" name="action" value="bulk_actions" />
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>

@@ -69,13 +69,13 @@ class ItemForm extends Form {
 
     static public function title_input($name, $locale = 'en_US', $value = '')
     {
-        parent::generic_input_text($locale . "#" . $name, $value) ;
+        parent::generic_input_text($name . '[' . $locale . ']', $value) ;
         return true ;
     }
 
     static public function description_textarea($name, $locale = 'en_US', $value = '')
     {
-        parent::generic_textarea($locale . "#" . $name, $value) ;
+        parent::generic_textarea($name . '[' . $locale . ']', $value) ;
         return true ;
     }
 
@@ -87,11 +87,11 @@ class ItemForm extends Form {
             if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
             echo '<div class="title">';
             echo '<div><label for="title">' . __('Title') . '</label></div>';
-            self::title_input('s_title', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' );
+            self::title_input('title', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' );
             echo '</div>';
             echo '<div class="description">';
             echo '<div><label for="description">' . __('Description') . '</label></div>';
-            self::description_textarea('s_description', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '');
+            self::description_textarea('description', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '');
             echo '</div>';
             if($num_locales>1) { echo '</div>'; };
          }
@@ -401,14 +401,14 @@ class ItemForm extends Form {
 <script type="text/javascript">
     $("#catId").change(function(){
         var cat_id = $(this).val();
-        var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/plugins.php"; ?>';
+        var url = '<?php echo osc_base_url(true); ?>';
         var result = '';
 
         if(cat_id != '') {
             $.ajax({
                 type: "POST",
                 url: url,
-                data: 'action=runhook&hook=item_form&catId=' + cat_id,
+                data: 'page=ajax&action=runhook&hook=item_form&catId=' + cat_id,
                 dataType: 'text/html',
                 success: function(data){
                     $("#plugin-hook").html(data);

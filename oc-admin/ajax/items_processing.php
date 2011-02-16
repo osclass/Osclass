@@ -98,21 +98,21 @@
                 $this->sOutput .= '"<input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' />",';
                 $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['s_title'])).' <br/>';
                 $this->sOutput .= '<span id=\'datatables_quick_edit\'>';
-                $this->sOutput .= '<a href=\'comments.php?action=list&amp;id='.$aRow['pk_i_id'].'\'>'.  __('View comments') .'</a>';
-                $this->sOutput .= ' | <a href=\'media.php?action=list&amp;id='. $aRow['pk_i_id'] .'\'>'. __('View media') .'</a>';
+                $this->sOutput .= '<a href=\''.osc_admin_base_url(true).'?page=comments&action=list&amp;id='.$aRow['pk_i_id'].'\'>'.  __('View comments') .'</a>';
+                $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=media&action=list&amp;id='. $aRow['pk_i_id'] .'\'>'. __('View media') .'</a>';
                 if(isset($aRow['e_status']) && ($aRow['e_status'] == 'ACTIVE')) {
-                    $this->sOutput .= ' | <a href=\'items.php?action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
+                    $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
                 } else if (isset($aRow['e_status']) && ($aRow['e_status'] == 'INACTIVE')) {
-                    $this->sOutput .= ' | <a href=\'items.php?action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
+                    $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
                 }
                 if(isset($aRow['b_premium']) && $aRow['b_premium']) {
-                    $this->sOutput .= ' | <a href=\'items.php?action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=0\'>'. __('Demake Premium') .'</a>';
+                    $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=0\'>'. __('Demake Premium') .'</a>';
                 } else { //if (isset($aRow['b_premium']) && !$aRow['b_premium']) {
-                    $this->sOutput .= ' | <a href=\'items.php?action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=1\'>'. __('Make Premium') .'</a>';
+                    $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=1\'>'. __('Make Premium') .'</a>';
                 }
-                $this->sOutput .= ' | <a href=\'items.php?action=editItem&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Edit') .'</a>';
+                $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=item_edit&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Edit') .'</a>';
                                         $var = 'onclick=\"javascript:return confirm(\''.__('This action can not be undone. Are you sure you want to continue?').'\')\"';
-                $this->sOutput .= ' | <a '.$var.' href=\'items.php?action=delete&amp;id[]='. $aRow['pk_i_id'] .'\'>'. __('Delete') .'</a></span>",';
+                $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=delete&amp;id[]='. $aRow['pk_i_id'] .'\'>'. __('Delete') .'</a></span>",';
 
                 /* if $_GET['stat'] */
                 if(isset($aRow['num_total'])) {

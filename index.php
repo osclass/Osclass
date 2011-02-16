@@ -30,8 +30,13 @@
                             $do->doModel() ;
         break;
         case ('item'):      //item pages (with security)
-                            require_once(osc_base_path() . 'item.php') ;
-                            $do = new CWebItem() ;
+                            if((Params::getParam("action")=="post" || Params::getParam("action")=="post_item") && osc_reg_user_post()) {
+                                require_once(osc_base_path() . 'item-secure.php');
+                                $do = new CWebSecItem() ;
+                            } else {
+                                require_once(osc_base_path() . 'item.php');
+                                $do = new CWebItem() ;
+                            }
                             $do->doModel() ;
         break;
         case ('search'):    //search pages
@@ -47,6 +52,11 @@
         case ('register'):  //user pages
                             require_once(osc_base_path() . 'register.php') ;
                             $do = new CWebRegister() ;
+                            $do->doModel() ;
+        break;
+        case ('ajax'):  //user pages
+                            require_once(osc_base_path() . 'ajax.php') ;
+                            $do = new CWebAjax() ;
                             $do->doModel() ;
         break;
         case ('login'):     //user pages

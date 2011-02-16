@@ -213,15 +213,14 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'item_edit':
-            case 'editItem':        //item edit
-                                    require_once LIB_PATH . 'osclass/items.php';
+                                    //require_once LIB_PATH . 'osclass/itemActions.php';
                                     $id = Params::getParam('id') ;
 
                                     $item = Item::newInstance()->findByPrimaryKey($id);
+                                    if (count($item) <= 0) {
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                    }
 
-                                    $users = User::newInstance()->listAll();
-
-                                    $categories = Category::newInstance()->toTree();
                                     $countries = Country::newInstance()->listAll();
                                     $regions = array();
                                     if( count($countries) > 0 ) {
@@ -231,20 +230,24 @@ class CAdminItems extends AdminSecBaseModel
                                     if( count($regions) > 0 ) {
                                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$item['fk_i_region_id']) ;
                                     }
-                                    $currencies = Currency::newInstance()->listAll();
 
-                                    $locales = Locale::newInstance()->listAllEnabled();
-
-                                    if (count($item) > 0) {
                                         $resources = Item::newInstance()->findResourcesByID($id);
-                                        $this->doView('items/frm.php') ;
-                                    } else {
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
-                                    }
+
+                                    $this->_exportVariableToView("users", User::newInstance()->listAll());
+                                    $this->_exportVariableToView("categories", Category::newInstance()->toTree());
+                                    $this->_exportVariableToView("countries", $countries);
+                                    $this->_exportVariableToView("regions", $regions);
+                                    $this->_exportVariableToView("cities", $cities);
+                                    $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
+                                    $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                    $this->_exportVariableToView("item", $item);
+                                    $this->_exportVariableToView("resources", $resources);
+
+                                    $this->doView('items/frm.php') ;
             break;
             case 'item_edit_post':
             case 'editItemPost':    //item edit (post)
-                                    require_once LIB_PATH . 'osclass/items.php';
+                                    require_once LIB_PATH . 'osclass/itemActions.php';
 
                                     if(isset($_REQUEST['userId'])) {
                                         if($_REQUEST['userId']!='') {
@@ -274,8 +277,6 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             case 'post':            //post
-                                    $users = User::newInstance()->listAll() ;
-                                    $categories = Category::newInstance()->toTree() ;
                                     $countries = Country::newInstance()->listAll() ;
                                     $regions = array() ;
                                     if( count($countries) > 0 ) {
@@ -285,24 +286,27 @@ class CAdminItems extends AdminSecBaseModel
                                     if( count($regions) > 0 ) {
                                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                                     }
-                                    $currencies = Currency::newInstance()->listAll() ;
-
-                                    $locales = Locale::newInstance()->listAllEnabled() ;
-                                    $item = array() ;
-                                    $resources = array() ;
-
-                                    $new_item = TRUE ;
                                     
                                     $this->add_css('demo_table.css') ;
                                     $this->add_global_js('jquery.dataTables.min.js') ;
                                     $this->add_css('new_item_layout.css') ;
+                                    $this->_exportVariableToView("users", User::newInstance()->listAll());
+                                    $this->_exportVariableToView("categories", Category::newInstance()->toTree());
+                                    $this->_exportVariableToView("countries", $countries);
+                                    $this->_exportVariableToView("regions", $regions);
+                                    $this->_exportVariableToView("cities", $cities);
+                                    $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
+                                    $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                    $this->_exportVariableToView("item", array());
+                                    $this->_exportVariableToView("resources", array());
+                                    $this->_exportVariableToView("new_item", TRUE);
                                     $this->doView('items/frm.php') ;
             break;
             case 'post_item':       //post item
                                     $admin = TRUE;
                                     $manager = Item::newInstance() ;
 
-                                    require_once LIB_PATH . 'osclass/items.php';
+                                    require_once LIB_PATH . 'osclass/itemActions.php';
 
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;

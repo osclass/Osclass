@@ -29,7 +29,7 @@ class CAdminMedia extends AdminSecBaseModel
         parent::__construct() ;
 
         //specific things for this class
-        $this->resourcesManager = ItemComment::newInstance() ;
+        $this->resourcesManager = ItemResource::newInstance() ;
     }
 
     //Business Layer...
@@ -39,23 +39,21 @@ class CAdminMedia extends AdminSecBaseModel
         //specific things for this class
         switch ($this->action)
         {
-            case 'delete':          if(isset($_REQUEST['id']) && is_array($_REQUEST['id'])) {
-                                        $resourcesManager->delete(array(
-                                            DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $_REQUEST['id']). ')'
+            case 'delete':          if(Params::getParam("id")!="") {
+                                        $this->resourcesManager->delete(array(
+                                            DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', Params::getParam("id")). ')'
                                         ));
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;
             break;
-            default:                $resourceId = null;
-                                    if(isset($_REQUEST['id']) && !empty($_REQUEST['id']))
-                                        $resourceId = $_GET['id'];
-
-                                    !is_null($resourceId) ? $resources = $resourcesManager->getAllResources($resourceId) :	$resources = $resourcesManager->getAllResources();
-
+            default:                $resourceId = Params::getParam("id");
+                                    !is_null($resourceId) ? $resources = $this->resourcesManager->getAllResources($resourceId) :	$resources = $this->resourcesManager->getAllResources();
                                     //calling the view...
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('demo_table.css') ;
-                                    $this->doView('media/index.php') ;
+                                    $this->add_global_js('jquery.dataTables.min.js');
+                                    $this->add_css('demo_table.css');
+                                    $this->_exportVariableToView("resources", $resources) ;
+                                    $this->_exportVariableToView("resourceId", $resourceId) ;
+                                    $this->doView('media/index.php');
                 
         }
     }
