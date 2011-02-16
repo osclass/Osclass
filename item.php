@@ -529,23 +529,44 @@ class CWebItem extends WebSecBaseModel
             case('dashboard'):      //dashboard...
 
             break;
+            case 'activate':
+                if( Params::getParam('secret') != '' && Params::getParam('id') ){
+
+                    $secret = Params::getParam('secret');
+                    $id     = Params::getParam('id');
+                    $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
+                    if (count($item) == 1) {
+                        $item_validated = $manager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
+                        if (!is_array($item_validated))
+                            return false;
+
+                        if (count($item_validated) == 1) {
+                            $manager->update(
+                                    array('e_status' => 'ACTIVE'),
+                                    array('s_secret' => $secret)
+                            );
+                            osc_run_hook('activate_item', $manager->findByPrimaryKey($id));
+                            CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
+                            osc_add_flash_message('Item validated');
+                            $this->redirectTo( osc_item_url($item[0]) );
+                        } else {
+                            osc_add_flash_message('The item was validated before');
+                            $this->redirectTo( osc_item_url($item[0]) );
+                        }
+                    }
+                }
+            break;
             default:
                 if( Params::getParam('id') == ''){
                     $this->redirectTo(osc_base_url());
                 }
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-
-//                global $osc_request;
-//                $osc_request['section'] = $item['s_title'];
-//                $osc_request['category'] = $item['fk_i_category_id'];
-//                $osc_request['item'] = $item;
-//                $osc_request['location'] = 'item';
-
+                
                 $this->_exportVariableToView('item', $item) ;
-                $this->_exportVariableToView('section',$item['s_title']) ;
-                $this->_exportVariableToView('category', $item['fk_i_category_id']) ;
-                $this->_exportVariableToView('location', 'item' ) ;
+                $this->_exportVariableToView('section',$item['s_title']) ;  // ??
+                $this->_exportVariableToView('category', $item['fk_i_category_id']) ;   // ??
+                $this->_exportVariableToView('location', 'item' ) ; //  ??
 
                 if ($item['e_status'] == 'ACTIVE') {
                     $mStats = new ItemStats();
@@ -573,7 +594,7 @@ class CWebItem extends WebSecBaseModel
 
                     $this->_exportVariableToView('aUser', $aUser) ;
 
-                    $headerConf = array('pageTitle' => $item['s_title'] . ' - ' . osc_page_title()) ;
+                    //$headerConf = array('pageTitle' => $item['s_title'] . ' - ' . osc_page_title()) ; // ??
                     osc_run_hook('show_item', $item);
                     $this->doView('item.php');
                 } else {
