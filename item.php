@@ -407,9 +407,8 @@ class CWebItem extends WebSecBaseModel
                                     ,'reply_to'  => Params::getParam('yourEmail')
                                 ) ;
 
-                print_r($emailParams);
+                
                 if(osc_item_attachment()) {
-                    echo "debug<br>";
                     $attachment = Params::getFiles('attachment');
                     $resourceName = $attachment['name'] ;
                     $tmpName = $attachment['tmp_name'] ;
@@ -431,20 +430,165 @@ class CWebItem extends WebSecBaseModel
                     $emailParams['attachment'] = $path ;
                 }
 
-                if(osc_sendMail($emailParams) ){
-                    echo "send ok <br>";
-                }else{
-                    echo "failed <br>";
-                }
+                osc_sendMail($emailParams);
+                   
                 @unlink($path) ;
                 osc_add_flash_message(__('We\'ve just sent an e-mail to the seller.')) ;
-                //$this->redirectTo( osc_create_item_url($item) );
+                $this->redirectTo( osc_create_item_url($item) );
                 
                 break;
+            case 'add_comment':
+                $authorName     = Params::getParam('authorName') ;
+                $authorEmail    = Params::getParam('authorEmail') ;
+                $body           = Params::getParam('body') ;
+                $title          = Params::getParam('title') ;
+                $itemId         = Params::getParam('id') ;
+
+                $item = $this->itemManager->findByPrimaryKey($itemId) ;
+
+                $itemURL = osc_item_url($item) ;
+
+                if (osc_moderate_comments()) {
+                    $status = 'INACTIVE' ;
+                } else {
+                    $status = 'ACTIVE' ;
+                }
+                if (osc_akismet_key()) {
+                    require_once LIB_PATH . 'Akismet.class.php' ;
+                    $akismet = new Akismet(osc_base_url(), osc_akismet_key()) ;
+                    $akismet->setCommentAuthor($authorName) ;
+                    $akismet->setCommentAuthorEmail($authorEmail) ;
+                    $akismet->setCommentContent($body) ;
+                    $akismet->setPermalink($itemURL) ;
+
+                    $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
+                }
+
+               
+                $mComments = new Comment() ;
+                $aComment  = array(
+                                'dt_pub_date'    => DB_FUNC_NOW
+                                ,'fk_i_item_id'   => $itemId
+                                ,'s_author_name'  => $authorName
+                                ,'s_author_email' => $authorEmail
+                                ,'s_title'        => $title
+                                ,'s_body'         => $body
+                                ,'e_status'       => $status
+                            );
+
+                if( $mComments->insert($aComment) ){
+
+                    $notify = osc_notify_new_comment() ;
+                    $admin_email = osc_contact_email() ;
+                    $prefLocale = osc_language;
+
+                    //Notify admin
+                    if ($notify) {
+                        $mPages = new Page() ;
+                        $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
+                        $locale = osc_get_user_locale() ;
+
+                        $content = array();
+                        if(isset($aPage['locale'][$locale]['s_title'])) {
+                            $content = $aPage['locale'][$locale];
+                        } else {
+                            $content = current($aPage['locale']);
+                        }
+
+                        $words   = array();
+                        $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
+                                         '{COMMENT_TEXT}', '{ITEM_NAME}', '{ITEM_ID}', '{ITEM_URL}');
+                        $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
+                        $title_email = osc_mailBeauty($content['s_title'], $words);
+                        $body_email = osc_mailBeauty($content['s_text'], $words);
+
+                        $from = osc_contact_email() ;
+                        $from_name = osc_page_title ;
+                        if (osc_notify_contact_item()) {
+                            $add_bbc = osc_contact_email() ;
+                        }
+
+                        $emailParams = array(
+                                        'from'      => $admin_email
+                                        ,'from_name' => __('Admin mail system')
+                                        ,'subject'   => $title_email
+                                        ,'to'        => $admin_email
+                                        ,'to_name'   => __('Admin mail system')
+                                        ,'body'      => $body_email
+                                        ,'alt_body'  => $body_email
+                                        );
+                        osc_sendMail($emailParams) ;
+                    }
+                    osc_run_hook('add_comment', $item);
+                }else{
+                    osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
+                }
+                $this->redirectTo($itemURL);
+                break;
+
             case('dashboard'):      //dashboard...
 
             break;
+            default:
+                if( Params::getParam('id') == ''){
+                    $this->redirectTo(osc_base_url());
+                }
 
+                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+
+//                global $osc_request;
+//                $osc_request['section'] = $item['s_title'];
+//                $osc_request['category'] = $item['fk_i_category_id'];
+//                $osc_request['item'] = $item;
+//                $osc_request['location'] = 'item';
+
+                $this->_exportVariableToView('item', $item) ;
+                $this->_exportVariableToView('section',$item['s_title']) ;
+                $this->_exportVariableToView('category', $item['fk_i_category_id']) ;
+                $this->_exportVariableToView('location', 'item' ) ;
+
+                if ($item['e_status'] == 'ACTIVE') {
+                    $mStats = new ItemStats();
+                    $mStats->increase('i_num_views', $item['pk_i_id']);
+
+                    $resources = $this->itemManager->findResourcesByID( Params::getParam('id') );
+                    $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
+
+                    foreach($item['locale'] as $k => $v) {
+                        $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                        $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
+                    }
+
+                    $mUser = new User();
+
+                    //$user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);  // OJO
+
+                    $aUser = $mUser->findByPrimaryKey($item['fk_i_user_id']);
+                    $actual_locale = osc_get_user_locale() ;
+                    if(isset($aUser['locale'][$actual_locale]['s_info'])) {
+                        $aUser['s_info'] = $aUser['locale'][$actual_locale]['s_info'];
+                    } else {
+                        $aUser['s_info'] = '';
+                    }
+
+                    $this->_exportVariableToView('aUser', $aUser) ;
+
+                    $headerConf = array('pageTitle' => $item['s_title'] . ' - ' . osc_page_title()) ;
+                    osc_run_hook('show_item', $item);
+                    $this->doView('item.php');
+                } else {
+                    if( Session::newInstance()->_get('userId') != '' && Session::newInstance()->_get('userId') == $item['fk_i_user_id'] ) {
+                        $resources = $manager->findResourcesByID( Params::getParam('id') );
+                        $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
+
+                        $headerConf = array('pageTitle' => $item['s_title'] . ' - '.osc_page_title()) ;
+                        osc_add_flash_message('This item is NOT validated. You should validate it in order to show this item
+                            to the rest of the users. You could do that in your profile menu.');
+                        $this->doView('item.php');
+                    } else {
+                        $this->redirectTo( osc_base_url(true) );
+                    }
+                }
         }
     }
 
