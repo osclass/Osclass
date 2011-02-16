@@ -32,8 +32,9 @@ class CWebItem extends WebSecBaseModel
     //Business Layer...
     function doModel() {
         //calling the view...
+        $locales = Locale::newInstance()->listAllEnabled() ;
         //$this->_exportVariableToView('categories', $categories) ;
-        //$this->_exportVariableToView('locales', $locales) ;
+        $this->_exportVariableToView('locales', $locales) ;
         //$this->_exportVariableToView('latestItems', $latestItems) ;
         switch( $this->action ) {
             case 'post': // add
@@ -71,6 +72,7 @@ class CWebItem extends WebSecBaseModel
                 $this->_exportVariableToView('countries',$countries ) ;
                 $this->_exportVariableToView('regions', $regions) ;
                 $this->_exportVariableToView('cities', $cities) ;
+                $this->_exportVariableToView('user', $user) ;
 
                 osc_run_hook('post_item');
                 $this->doView('item-post.php');
