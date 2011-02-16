@@ -112,11 +112,6 @@
                                 <?php UserForm::website_text($user) ; ?>
                             </p>
 
-                            <p>
-                                <label for="info"><?php _e('Additional information') ; ?></label><br />
-                                <?php UserForm::info_textarea($user) ; ?>
-                            </p>
-
                             <button type="submit"><?php _e('Update profile') ; ?></button>
 
                             <?php osc_run_hook('user_form') ; ?>
