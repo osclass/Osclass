@@ -18,20 +18,24 @@
 
 Class ItemActions
 {
-    private $modelItems = null;
-    private static $instance;
+    private $manager = null;
+    var $is_admin ;
 
-    public static function newInstance()
-    {
-        if (!isset(self::$instance)){
-            self::$instance = new Items();
-        }
-        return self::$instance;
+    function __construct($is_admin) {
+        $this->is_admin = $is_admin ;
+        $this->manager = Item::newInstance() ;
     }
 
-    public function post_item($aItem)
+    /**
+     *      case 'post_item'
+     *
+     * @return boolean
+     */
+    public function add()
     {
         $success = true;
+
+        $aItem = $this->prepareData(true);
 
         // first of all, insert the item
         $code = osc_genRandomPassword();
@@ -43,19 +47,19 @@ Class ItemActions
 
         // set params from array
         $active         = $aItem['active'];
-        if($aItem['is_admin'] || !$has_to_validate) {
+        if( $this->is_admin || !$has_to_validate) {
             $active = 'ACTIVE';
         }
         
         $userId         = $aItem['userId'];
-        $admin          = $aItem['admin'];
+        $admin          = $this->is_admin;
         $contactName    = $aItem['contactName'];
         $contactEmail   = $aItem['contactEmail'];
         $price          = $aItem['price'];
         $catId          = $aItem['catId'];
         $currency       = $aItem['currency'];
 
-        $show_email     = '0';
+        $show_email     = $aItem['showEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
             osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
@@ -88,49 +92,13 @@ Class ItemActions
             }
             unset($dao_item) ;
 
-            // insert location
-            $country = Country::newInstance()->findByCode($aItem['countryId']);
-            if(count($country) > 0) {
-                $countryId = $country['pk_c_code'];
-                $countryName = $country['s_name'];
-            } else {
-                $countryId = null;
-                $countryName = null;
-            }
+            $countryId  = $aItem['countryId'];
+            $countryName = $aItem['countryName'];
+            $regionId   = $aItem['regionId'];
+            $regionName = $aItem['regionName'];
+            $cityId     = $aItem['cityId'];
+            $cityName   = $aItem['cityName'];
 
-            if( $aItem['regionId'] != '' ) {
-                if( intval($aItem['regionId']) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($aItem['regionId']);
-                    if( count($region) > 0 ) {
-                        $regionId = $region['pk_i_id'];
-                        $regionName = $region['s_name'];
-                    }
-                }
-            } else {
-                $regionId = null;
-                $regionName = $aItem['region'];
-            }
-
-            if( $aItem['cityId'] != '' ) {
-                if( intval($aItem['cityId']) ) {
-                    $city = City::newInstance()->findByPrimaryKey($aItem['cityId']);
-                    if( count($city) > 0 ) {
-                        $cityId = $city['pk_i_id'];
-                        $cityName = $city['s_name'];
-                    }
-                }
-            } else {
-                $cityId = null;
-                $cityName = $aItem['city'];
-            }
-
-            if( $aItem['cityArea'] == '' ) {
-                $aItem['cityArea'] = null;
-            }
-
-            if( $aItem['address'] == '' ) {
-                $aItem['address'] = null;
-            }
 
             $location = array('fk_i_item_id'      => $itemId,
                               'fk_c_country_code' => $countryId,
@@ -140,7 +108,8 @@ Class ItemActions
                               'fk_i_city_id'      => $cityId,
                               's_city'            => $cityName,
                               's_city_area'       => $aItem['cityArea'],
-                              's_address'         => $aItem['address']);
+                              's_address'         => $aItem['address']
+                );
             $locationManager = ItemLocation::newInstance();
             $locationManager->insert($location);
 
@@ -162,7 +131,7 @@ Class ItemActions
                 }
             }
 
-            if ($is_admin || !$has_to_validate) {
+            if ( $this->is_admin || !$has_to_validate) {
                 CategoryStats::newInstance()->increaseNumItems($catId);
             }
 
@@ -185,17 +154,17 @@ Class ItemActions
                         $resourceId = $dao_itemResource->getConnection()->get_last_id();
 
                         // Create thumbnail
-                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
                         $size = explode('x', osc_thumbnail_dimensions()) ;
                         ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
                         // Create normal size
-                        $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $resourceId . '.png' ;
+                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
                         $size = explode('x', osc_normal_dimensions()) ;
                         ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
                         if(osc_keep_original_image()) {
-                            $path = ABS_PATH . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                            $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
                             move_uploaded_file($tmpName, $path) ;
                         }
 
@@ -212,19 +181,20 @@ Class ItemActions
                 unset($dao_itemResource) ;
             }
 
+
             if ( $aItem['catId'] == '' ) {
                 $aItem['catId'] = "" ;
             }
 
             osc_run_hook('item_form_post', $aItem['catId'], array('id' => $itemId));
-            $manager = Item::newInstance() ;
-            $item = $manager->findByPrimaryKey($itemId);
+            
+            $item = $this->manager->findByPrimaryKey($itemId);
 
             $mPages = new Page();
             $locale = osc_get_user_locale() ;
 
             // send an e-mail to the admin with the data of the new item
-            if(!$is_admin) {
+            if( !$this->is_admin ) {
                 if ( osc_item_validation_enabled() ) {
                     $aPage = $mPages->findByInternalName('email_item_validation') ;
 
@@ -265,9 +235,9 @@ Class ItemActions
                     $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
                                      $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                                      $item['s_contact_email'], osc_base_url(), $item['s_title'], $item_url,
-                                     osc_page_title(), '<a href="' . osc_base_url() .
-                                     'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' .
-                                     $item['s_secret'] . '" >' . osc_base_url() . 'item.php?action=activate&id=' .
+                                     osc_page_title(), '<a href="' . osc_base_url(true) .
+                                     '?page=item&action=activate&id=' . $item['pk_i_id'] . '&secret=' .
+                                     $item['s_secret'] . '" >' . osc_base_url(true) . '?page=item&action=activate&id=' .
                                      $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
@@ -320,18 +290,18 @@ Class ItemActions
                                      '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
                                      '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}',
                                      '{WEB_TITLE}', '{VALIDATION_LINK}');
-                    $words[] = array('<a href="' . osc_base_url() . 'oc-admin/items.php?action=editItem&id=' .
-                                     $item['pk_i_id'] . '" >' . osc_base_url() . 'oc-admin/items.php?action=editItem&id=' .
+                    $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=item&action=editItem&id=' .
+                                     $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=item&action=editItem&id=' .
                                      $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
                                      $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                                      $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
                                      $item_url, osc_page_title(), '<a href="' .
-                                     osc_base_url() . 'item.php?action=activate&id=' . $item['pk_i_id'] .
+                                     osc_base_url() . '?page=item&action=activate&id=' . $item['pk_i_id'] .
                                      '&secret=' . $item['s_secret'] . '" >' . osc_base_url() .
-                                     'item.php?action=activate&id=' . $item['pk_i_id'] . '&secret=' .
+                                     '?page=item&action=activate&id=' . $item['pk_i_id'] . '&secret=' .
                                      $item['s_secret'] . '</a>' );
                     $title = osc_mailBeauty($content['s_title'], $words);
-                    $body = osc_mailBeauty($content['s_text'], $words);
+                    $body  = osc_mailBeauty($content['s_text'], $words);
 
                     $emailParams = array(
                                         'subject'  => $title
@@ -361,7 +331,298 @@ Class ItemActions
         return $success;
     }
 
+    function edit($userId)
+    {
+
+        $aItem = $this->prepareData(false);
+        
+
+        $Pid         = $aItem['idItem'];
+        $countryId   = $aItem['countryId'];
+        $countryName = $aItem['countryName'];
+        $regionId    = $aItem['regionId'];
+        $regionName  = $aItem['regionName'];
+        $cityId      = $aItem['cityId'];
+        $cityName    = $aItem['cityName'];
+        $cityArea    = $aItem['cityArea'];
+        $address     = $aItem['address'];
+        
+        $location = array(
+            'fk_c_country_code' => $countryId,
+            's_country' => $countryName,
+            'fk_i_region_id' => $regionId,
+            's_region' => $regionName,
+            'fk_i_city_id' => $cityId,
+            's_city' => $cityName,
+            's_city_area' => $cityArea,
+            's_address' => $address
+        );
+
+        $locationManager = ItemLocation::newInstance();
+        $locationManager->update($location, array('fk_i_item_id' => $Pid));
+
+        // If the Google Maps plugin is well configured, we can try to geodecode the address
+        if (osc_google_maps_key()) {
+            $key = osc_google_maps_key() ;
+            $address = sprintf('%s, %s %s', Params::getParam('address'), $regionName, $cityName);
+            $temp = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
+            $temp = json_decode($temp);
+            if (isset($temp->Placemark) && count($temp->Placemark[0]) > 0) {
+                $coord = $temp->Placemark[0]->Point->coordinates;
+                $locationManager->update (
+                        array(
+                            'd_coord_lat' => $coord[1]
+                            ,'d_coord_long' => $coord[0]
+                        )
+                        ,array('fk_i_item_id' => $Pid)
+                );
+            }
+        }
+
+        $contactName    = $aItem['contactName'];
+        $contactEmail   = $aItem['contactEmail'];
+        $price          = $aItem['price'];          // OK
+        $catId          = $aItem['catId'];          // OK
+        $currency       = $aItem['currency'];       // OK
+        $secret         = $aItem['secret'];         // OK
+
+        // Update category numbers
+        $old_item = $this->manager->findByPrimaryKey($Pid) ;
+        if($old_item['fk_i_category_id'] != $catId) {
+            CategoryStats::newInstance()->increaseNumItems($catId) ;
+            CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
+        }
+        unset($old_item) ;
+
+
+        $result = $this->manager->update (
+                                array(
+                                    'dt_pub_date' => DB_FUNC_NOW
+                                    ,'fk_i_category_id' => $catId
+                                    ,'f_price' => $price
+                                    ,'fk_c_currency_code' => $currency
+                                )
+                                ,array(
+                                    'pk_i_id' => $Pid
+                                    ,'s_secret' => $secret
+                            )
+        ) ;
+
+        //  !!!NEW PARSE FORMAT title[locale]
+        
+        // prepare locales
+        $title          = $aItem['title'];
+        $description    = $aItem['description'];
+
+        // insert locales
+        foreach($title as $k => $_data){
+            $_title         = $title[$k];
+            $_description   = $description[$k];
+            $this->manager->updateLocaleForce($Pid, $k, $_title, $_description) ;
+        }
+
+        $filePhotos = Params::getFiles('photos') ;
+        if($filePhotos != '')
+        {
+            $dao_itemResource = new ItemResource() ;
+            foreach ($filePhotos['error'] as $key => $error) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $resourceName = $filePhotos['name'][$key];
+                    $tmpName = $filePhotos['tmp_name'][$key];
+                    $resourceType = $filePhotos['type'][$key];
+
+                    $dao_itemResource->insert(array(
+                        'fk_i_item_id' => $Pid,
+                        's_name' => $resourceName,
+                        's_content_type' => $resourceType
+                    ));
+                    $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
+
+                    // Create thumbnail
+                    $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                    $size = explode('x', osc_thumbnail_dimensions()) ;
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+
+                    // Create normal size
+                    $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
+                    $size = explode('x', osc_normal_dimensions()) ;
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+
+                    if(osc_keep_original_image()) {
+                        $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                        move_uploaded_file($tmpName, $path) ;
+                    }
+
+                    $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
+                    $dao_itemResource->update(
+                                            array('s_path' => $s_path)
+                                            ,array('pk_i_id' => $resourceId, 'fk_i_item_id' => $Pid)
+                    ) ;
+                }
+            }
+            unset($dao_itemResource) ;
+        }
+
+        Params::setParam('pk_i_id',Params::getParam('id'));
+//        osc_run_hook('item_edit_post');
+        
+        return $return;
+    }
+
+    public function prepareData($is_add)
+    {
+        $aItem = array();
+
+        if(!$is_add){
+            $aItem['secret']    = Params::getParam('secret');
+            $aItem['idItem']    = Params::getParam('id');
+            // get input hidden name=fk_location_id ? 
+        }
+        // variables
+        $active     = 'INACTIVE';
+        $userId     = '';
+        // IF USER -> ¿ IF ADMIN ?
+        if( Session::newInstance()->_get('userId') != '' ) {
+            $userId = Session::newInstance()->_get('userId');
+        }
+
+        $mUser = new User();
+        $data = $mUser->findByPrimaryKey( (int)$userId );
+        $contactName   = $data['s_name'];
+        $contactEmail  = $data['s_email'];
+        
+        // get params
+        $aItem['contactName']   = $contactName;
+        $aItem['contactEmail']  = $contactEmail;
+        $aItem['active']        = $active;
+        $aItem['userId']        = $userId;
+        $aItem['catId']         = Params::getParam('catId');            // OK
+        $aItem['region']        = Params::getParam('region');           // OK
+        $aItem['city']          = Params::getParam('city');             // OK
+        $aItem['regionId']      = Params::getParam('regionId');         // OK
+        $aItem['cityId']        = Params::getParam('cityId');           // OK
+        $aItem['price']         = Params::getParam('price');            // OK
+        $aItem['countryId']     = Params::getParam('countryId');        // OK
+        $aItem['cityArea']      = Params::getParam('cityArea');         // OK
+        $aItem['address']       = Params::getParam('address');          // OK
+        $aItem['currency']      = Params::getParam('currency');         // OK
+        $aItem['showEmail']     = Params::getParam('showEmail');        // OK
+        $aItem['title']         = Params::getParam('title');
+        $aItem['description']   = Params::getParam('description');
+        $aItem['photos']        = Params::getFiles('photos');
+
+        // check params
+        // ---------
+        $country = Country::newInstance()->findByCode($aItem['countryId']);
+        if( count($country) > 0 ) {
+            $countryId = $country['pk_c_code'];
+            $countryName = $country['s_name'];
+        } else {
+            $countryId = null;
+            $countryName = null;
+        }
+        $aItem['countryId']   = $countryId;
+        $aItem['countryName']   = $countryName;
+        
+        if( $aItem['regionId'] != '' ) {
+            if( intval($aItem['regionId']) ) {
+                $region = Region::newInstance()->findByPrimaryKey($aItem['regionId']);
+                if( count($region) > 0 ) {
+                    $regionId = $region['pk_i_id'];
+                    $regionName = $region['s_name'];
+                }
+            }
+        } else {
+            $regionId = null;
+            $regionName = $aItem['region'];   // OJO ¿ DE DONDE VIENE ?
+        }
+        $aItem['regionId']      = $regionId ;
+        $aItem['regionName']    = $regionName;
+        
+        if( $aItem['cityId'] != '' ) {
+            if( intval($aItem['cityId']) ) {
+                $city = City::newInstance()->findByPrimaryKey($aItem['cityId']);
+                if( count($city) > 0 ) {
+                    $cityId = $city['pk_i_id'];
+                    $cityName = $city['s_name'];
+                }
+            }
+        } else {
+            $cityId = null;
+            $cityName = $aItem['city'];
+        }
+
+        $aItem['cityId']      = $cityId;
+        $aItem['cityName']    = $cityName;
+        
+        if( $aItem['cityArea'] == '' ) {
+            $aItem['cityArea'] = null;
+        }
+
+        if( $aItem['address'] == '' ) {
+            $aItem['address'] = null;
+        }
+
+        if( $aItem['price'] != '' ) {
+            $aItem['price'] = (int) $aItem['price'];
+        }
+
+        if( $aItem['catId'] == ''){
+            $aItem['catId'] = 0;
+        }
+
+        if( $aItem['currency'] == '' ) {
+            $aItem['currency'] = null;
+        }
+
+        if($aItem['showEmail'] == ''){
+            $aItem['showEmail'] = 0;
+        }
+        
+        // to be tested
+        if (osc_recaptcha_private_key()) {
+            require_once LIB_PATH . 'recaptchalib.php';
+            if ( Params::getFiles("recaptcha_challenge_field") != '') {
+                $resp = recaptcha_check_answer (
+                    osc_recaptcha_private_key()
+                    ,$_SERVER["REMOTE_ADDR"]
+                    ,Params::getParam("recaptcha_challenge_field")
+                    ,Params::getParam("recaptcha_response_field")
+                );
+                if (!$resp->is_valid) {
+                    die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")") ;
+                }
+            }
+        }
+
+        // crear el array con los datos a pasar
+//        $input = array(
+//            'region'        => Params::getParam('region'),
+//            'photos'        => Params::getFiles('photos')
+//        );
+        
+        return $aItem;
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //
 //$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null ;

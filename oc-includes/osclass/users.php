@@ -99,8 +99,10 @@
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
 
-            foreach (Params::getParam('s_info') as $key => $value) {
-                $this->manager->updateDescription($userId, $key, $value) ;
+            if ( is_array( Params::getParam('s_info') ) ) {
+                foreach (Params::getParam('s_info') as $key => $value) {
+                    $this->manager->updateDescription($userId, $key, $value) ;
+                }
             }
 
             if ($this->is_admin) {

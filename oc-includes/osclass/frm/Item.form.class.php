@@ -401,14 +401,14 @@ class ItemForm extends Form {
 <script type="text/javascript">
     $("#catId").change(function(){
         var cat_id = $(this).val();
-        var url = '<?php echo osc_base_url() . "/oc-includes/osclass/ajax/plugins.php"; ?>';
+        var url = '<?php echo osc_base_url(true); ?>';
         var result = '';
 
         if(cat_id != '') {
             $.ajax({
                 type: "POST",
                 url: url,
-                data: 'action=runhook&hook=item_form&catId=' + cat_id,
+                data: 'page=ajax&action=runhook&hook=item_form&catId=' + cat_id,
                 dataType: 'text/html',
                 success: function(data){
                     $("#plugin-hook").html(data);
