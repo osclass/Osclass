@@ -454,16 +454,16 @@ class CWebItem extends BaseModel
                     $id     = Params::getParam('id');
                     $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
                     if (count($item) == 1) {
-                        $item_validated = $manager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
+                        $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
                         if (!is_array($item_validated))
                             return false;
 
                         if (count($item_validated) == 1) {
-                            $manager->update(
+                            $this->itemManager->update(
                                     array('e_status' => 'ACTIVE'),
                                     array('s_secret' => $secret)
                             );
-                            osc_run_hook('activate_item', $manager->findByPrimaryKey($id));
+                            osc_run_hook('activate_item', $this->itemManager->findByPrimaryKey($id));
                             CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                             osc_add_flash_message('Item validated');
                             $this->redirectTo( osc_item_url($item[0]) );
@@ -472,6 +472,66 @@ class CWebItem extends BaseModel
                             $this->redirectTo( osc_item_url($item[0]) );
                         }
                     }
+                }
+            break;
+            case 'editItem':
+                //item edit
+                $id = Params::getParam('id') ;
+                $item = Item::newInstance()->findByPrimaryKey($id);
+
+                if(!osc_users_enabled()) {
+                    osc_add_flash_message(__('Users are not enable')) ;
+                    $this->redirectTo(osc_base_url(true));
+                }
+
+                if( Session::newInstance()->_get('userId') != '' ){
+                    $userId = Session::newInstance()->_get('userId');
+                }else{
+                    $userId = null;
+                }
+
+                $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
+                $categories = Category::newInstance()->toTree();
+                $countries = Country::newInstance()->listAll();
+                $regions = array();
+                if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+                    $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+                } else if( count($countries) > 0 ) {
+                    $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+                }
+                $cities = array();
+                if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                } else if( count($regions) > 0 ) {
+                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                }
+
+                $currencies = Currency::newInstance()->listAll();
+
+                $this->_exportVariableToView('categories', $categories) ;
+                $this->_exportVariableToView('currencies', $currencies) ;
+                $this->_exportVariableToView('countries',$countries ) ;
+                $this->_exportVariableToView('regions', $regions) ;
+                $this->_exportVariableToView('cities', $cities) ;
+                $this->_exportVariableToView('user', $user) ;
+                $this->_exportVariableToView('item', $item) ;
+
+                $this->doView('item-edit.php');
+
+            break;
+
+            case 'item_edit_post':
+
+                $mItems = new ItemActions(false);
+                $userId = Session::newInstance()->_get('userId');
+                $success = $mItems->edit($userId);
+                if($success){
+                    osc_run_hook('item_edit_post');
+                    osc_add_flash_message(__('Great! We\'ve just update your item.'));
+                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                } else {
+                    $id = Params::getParam('id');
+                    $this->redirectTo(osc_base_url() . "?page=item_&id=$id");
                 }
             break;
             default:

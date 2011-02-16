@@ -84,8 +84,8 @@ class CWebSecItem extends WebSecBaseModel
                     osc_add_flash_message(__('Users are not enable'));
                     osc_redirectTo(osc_base_url());
                 }
-
-                $mItems = new ItemActions(true);
+                
+                $mItems = new ItemActions(false);
                 $success = $mItems->add();
 
                 if($success) {
