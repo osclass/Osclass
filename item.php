@@ -81,7 +81,10 @@ class CWebItem extends WebSecBaseModel
                     osc_add_flash_message(__('Users are not enable'));
                     osc_redirectTo(osc_base_url());
                 }
-                
+
+                $mItems = new ItemActions();
+                $success = $mItems->add(Item);
+
                 // variables
                 $active     = 'INACTIVE';
 
@@ -162,8 +165,7 @@ class CWebItem extends WebSecBaseModel
 
 //                echo "<pre>";print_r($aItem);echo "</pre>";
 
-                $mItems = new ItemActions();
-                $success = $mItems->post_item($aItem);
+                
 
                 if($success) {
                     // ESTO VA EN EL item.php QUE EXTIENDE SIN SEGURIDAD ?
