@@ -28,7 +28,11 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
+<<<<<<< HEAD
         <div class="Header"><?php _e('Dashboard'); ?></div>
+=======
+        <div class="Header"><?php _e("Backup");?></div>
+>>>>>>> b9f22ea44b72d76f4f579990e24f93b07898f3f1
 
         <script type="text/javascript">
             $().ready(function(){

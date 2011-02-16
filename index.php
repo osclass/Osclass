@@ -30,10 +30,11 @@
                             $do->doModel() ;
         break;
         case ('item'):      //item pages (with security)
-                            require_once(osc_base_path() . 'item.php') ;
                             if((Params::getParam("action")=="post" || Params::getParam("action")=="post_item") && osc_reg_user_post()) {
+                                require_once(osc_base_path() . 'item-secure.php');
                                 $do = new CWebSecItem() ;
                             } else {
+                                require_once(osc_base_path() . 'item.php');
                                 $do = new CWebItem() ;
                             }
                             $do->doModel() ;
