@@ -96,7 +96,7 @@ class CAdminTools extends AdminSecBaseModel
                 break;
             case 'backup-sql':
                 if( Params::getParam('bck_dir') != '' ) {
-                    if(substr(trim(Params::getParam('bck_dir'), -1, 1) == "/") ) {
+                    if(substr(trim(Params::getParam('bck_dir')), -1, 1) == "/") {
                             $sql_name = trim(Params::getParam('bck_dir')) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
                     } else {
                             $sql_name = trim(Params::getParam('bck_dir')) . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
