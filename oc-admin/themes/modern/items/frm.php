@@ -17,6 +17,18 @@
  */
 ?>
 
+<?php
+    $new_item = $this->_get("new_item");
+    $users = $this->_get("users");
+    $categories = $this->_get("categories");
+    $countries = $this->_get("countries");
+    $regions = $this->_get("regions");
+    $cities = $this->_get("cities");
+    $currencies = $this->_get("currencies");
+    $locales = $this->_get("locales");
+    $item = $this->_get("item");
+    $resources = $this->_get("resources");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -24,6 +36,8 @@
     </head>
     <body>
         <?php $this->osc_print_header() ; ?>
+        <div id="update_version" style="display:none;"></div>
+        <div class="Header"><?php _e("Items");?></div>
 
         <script type="text/javascript">
             document.write('<style type="text/css">.tabber{display:none;}<\/style>');
@@ -49,10 +63,17 @@
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
 
             <div id="right_column">
-                <div id="home_header" style="margin-left: 40px;"><h2><?php if(isset($new_item) && $new_item==TRUE) { _e('New item');} else { _e('Update your item');}; ?></h2></div>
+                <div id="home_header" style="margin-left: 40px;">
+                    <h2>
+                        <?php
+                            if($new_item=="TRUE") { _e('New item');} else { _e('Update your item');};
+                        ?>
+                    </h2>
+                </div>
                 <div align="center">
                     <div id="add_item_form" class="item-form">
-                        <form action="items.php" method="post" enctype="multipart/form-data">
+                        <form action="<?php echo osc_admin_base_url(true);?>" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="page" value="items" />
                             <?php if(isset($new_item) && $new_item==TRUE) { ?>
                                 <input type="hidden" name="action" value="post_item" />
                             <?php } else { ?>
@@ -128,7 +149,7 @@
                                                 $.ajax({
                                                     type: 'get',
                                                     url: 'items.php',
-                                                    data: 'action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
+                                                    data: '<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
                                                     success: function() {
                                                         parent.slideUp(300,function() {
                                                             parent.remove();
@@ -143,7 +164,7 @@
                                     <div id="photos">
                                         <?php foreach($resources as $_r) {?>
                                             <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                                <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="items.php?action=deleteResource&id=<?php echo $_r['pk_i_id'] ; ?>&fkid=<?php echo $_r['fk_i_item_id'] ; ?>&name=<?php echo $_r['s_name'] ; ?>" class="delete"><?php _e('Delete'); ?></a>
+                                                <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id=<?php echo $_r['pk_i_id'] ; ?>&fkid=<?php echo $_r['fk_i_item_id'] ; ?>&name=<?php echo $_r['s_name'] ; ?>" class="delete"><?php _e('Delete'); ?></a>
                                             </div>
                                         <?php } ?>
                                         <div>
@@ -179,15 +200,14 @@
                             ?>
                             <div class="clear"></div>
                             <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
-                                <button type="button" onclick="window.location='items.php';" ><?php _e('Cancel'); ?></button>
-                                <button type="submit"><?php if(isset($new_item) && $new_item==TRUE) { _e('Add item');} else { _e('Save');}; ?></button>
+                                <button type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=items';" ><?php _e('Cancel'); ?></button>
+                                <button type="submit"><?php if($new_item==TRUE) { _e('Add item');} else { _e('Save');}; ?></button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
         <?php $this->osc_print_footer() ; ?>
 
     </body>

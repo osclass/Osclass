@@ -54,6 +54,11 @@
                             $do = new CWebRegister() ;
                             $do->doModel() ;
         break;
+        case ('ajax'):  //user pages
+                            require_once(osc_base_path() . 'ajax.php') ;
+                            $do = new CWebAjax() ;
+                            $do->doModel() ;
+        break;
         case ('login'):     //user pages
                             require_once(osc_base_path() . 'login.php') ;
                             $do = new CWebLogin() ;
