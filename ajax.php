@@ -28,8 +28,6 @@
 
         //Business Layer...
         function doModel() {
-            parent::doModel() ;
-
             //specific things for this class
             switch ($this->action)
             {
@@ -97,6 +95,12 @@
                     break;
             }
         }
+        
+        //hopefully generic...
+        function doView($file) {
+            $this->osc_print_html($file) ;
+        }
+
     }
 
 ?>
