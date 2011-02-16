@@ -572,48 +572,39 @@ class CWebItem extends WebSecBaseModel
                 $this->_exportVariableToView('category', $item['fk_i_category_id']) ;   // ??
                 $this->_exportVariableToView('location', 'item' ) ; //  ??
 
-                if ($item['e_status'] == 'ACTIVE') {
-                    $mStats = new ItemStats();
-                    $mStats->increase('i_num_views', $item['pk_i_id']);
-
-                    $resources = $this->itemManager->findResourcesByID( Params::getParam('id') );
-                    $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
-
-                    foreach($item['locale'] as $k => $v) {
-                        $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
-                        $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
-                    }
-
-                    $mUser = new User();
-
-                    //$user_prefs = User::newInstance()->preferences($item['fk_i_user_id']);  // OJO
-
-                    $aUser = $mUser->findByPrimaryKey($item['fk_i_user_id']);
-                    $actual_locale = osc_get_user_locale() ;
-                    if(isset($aUser['locale'][$actual_locale]['s_info'])) {
-                        $aUser['s_info'] = $aUser['locale'][$actual_locale]['s_info'];
-                    } else {
-                        $aUser['s_info'] = '';
-                    }
-
-                    $this->_exportVariableToView('aUser', $aUser) ;
-
-                    //$headerConf = array('pageTitle' => $item['s_title'] . ' - ' . osc_page_title()) ; // ??
-                    osc_run_hook('show_item', $item);
-                    $this->doView('item.php');
-                } else {
+                if ($item['e_status'] != 'ACTIVE') {
                     if( Session::newInstance()->_get('userId') != '' && Session::newInstance()->_get('userId') == $item['fk_i_user_id'] ) {
-                        $resources = $manager->findResourcesByID( Params::getParam('id') );
-                        $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
-
-                        $headerConf = array('pageTitle' => $item['s_title'] . ' - '.osc_page_title()) ;
                         osc_add_flash_message('This item is NOT validated. You should validate it in order to show this item
                             to the rest of the users. You could do that in your profile menu.');
-                        $this->doView('item.php');
                     } else {
                         $this->redirectTo( osc_base_url(true) );
                     }
                 }
+                $mStats = new ItemStats();
+                $mStats->increase('i_num_views', $item['pk_i_id']);
+
+                $resources = $this->itemManager->findResourcesByID( Params::getParam('id') );
+                $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
+
+                foreach($item['locale'] as $k => $v) {
+                    $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                    $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
+                }
+
+                $author = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                $actual_locale = osc_get_user_locale() ;
+                if(isset($author['locale'][$actual_locale]['s_info'])) {
+                    $author['s_info'] = $author['locale'][$actual_locale]['s_info'];
+                } else {
+                    $author['s_info'] = '';
+                }
+
+                $this->_exportVariableToView('author', $author) ;
+                $this->_exportVariableToView('item', $item) ;
+                $this->_exportVariableToView('comments', $comments) ;
+                $this->_exportVariableToView('resources', $resources) ;
+                osc_run_hook('show_item', $item);
+                $this->doView('item.php');
         }
     }
 

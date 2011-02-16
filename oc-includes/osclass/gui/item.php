@@ -21,7 +21,9 @@
 ?>
 <?php
     $item = $this->_get('item') ;
-    $user = $this->_get('user') ;
+    $author = $this->_get('author') ;
+    $comments = $this->_get('comments') ;
+    $resources = $this->_get('resources') ;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -108,8 +110,8 @@
                         <div class="comments_list">
                             <?php foreach($comments as $c): ?>
                                 <div class="comment">
-                                    <h3><strong><?php echo $c['s_title']; ?></strong> <em>by <?php echo $c['s_author_name']; ?>::</em></h3>
-                                    <p><?php echo  $c['s_body'] ?></p>
+                                    <h3><strong><?php echo osc_comment_title($c); ?></strong> <em><?php _e("by");?> <?php echo osc_comment_author_name($c); ?>::</em></h3>
+                                    <p><?php echo osc_comment_author_email($c); ?></p>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -145,7 +147,7 @@
                     <div id="photos">
                         <?php if(count($resources)): ?>
                             <?php foreach($resources as $r): ?>
-                                <img src="<?php echo osc_base_path(); ?>/oc-content/uploads/<?php echo $r['pk_i_id']; ?>.png" />
+                                <img src="<?php echo osc_resource_normal($r); ?>.png" />
                             <?php endforeach; ?>
                         <?php endif; ?>
                         <!--
@@ -167,11 +169,11 @@
 
                     <div id="contact">
                         <h2><?php _e("Contact publisher");?></h2>
-                        <form action="item.php" method="post" onsubmit="return validate_contact();">
+                        <form action="<?php echo osc_base_url(true); ?>?page=item" method="post" onsubmit="return validate_contact();">
                         <fieldset>
-                            <h3><?php echo osc_user_name($user); ?></h3>
-                            <?php if(osc_user_phone($user) != ''):?>
-                            <p class="phone"><?php _e("Tel.: ");?> <?php echo osc_user_phone($user); ?></p>
+                            <h3><?php echo osc_user_name($author); ?></h3>
+                            <?php if(osc_user_phone($author) != ''):?>
+                            <p class="phone"><?php _e("Tel.: ");?> <?php echo osc_user_phone($author); ?></p>
                             <?php endif;?>
                             <label for="yourName"><?php _e('Your name'); ?> <?php _e('(optional)'); ?>:</label><input type="text" name="yourName" value="" id="yourName" />
                             <label for="yourEmail"><?php _e('Your email address'); ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
