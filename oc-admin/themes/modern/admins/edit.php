@@ -31,7 +31,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
@@ -39,7 +39,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/admin-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php if($adminEdit['pk_i_id']==Session::newInstance()->_get('adminId')) { _e('Edit your profile'); } else { _e('Edit administrator'); } ?></div>
+                    <div id="content_header_arrow">&raquo;<?php _e('Edit admin'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
@@ -76,18 +76,18 @@
 
                         <div style="float: left; width: 50%;">
                         <fieldset>	
-                            <legend><?php _e('Old password'); ?></legend>	
+                            <legend><?php _e('Current password'); ?></legend>
                             <input type="password" name="old_password" id="old_password" value="" />
                             <legend><?php _e('New password'); ?></legend>	
                             <input type="password" name="s_password" id="s_password" value="" />
                             <legend><?php _e('Re-type new password'); ?></legend>	
                             <input type="password" name="s_password2" id="password2" value="" />
                         </fieldset>
-                        <div style="margin-left: 10px; width: 95%; padding: 4px; background: #FFD2CF;"><?php _e('Leave it blank if you do not want to change your password now'); ?>.</div>
+                        <div style="margin-left: 10px; width: 95%; padding: 4px; background: #FFD2CF;"><?php _e('Leave it blank if you don\'t want to change your password'); ?>.</div>
                         </div>
                         <div style="clear: both;"></div>
 
-                        <input id="button_save" type="submit" value="<?php _e('Update administrator'); ?>" /> 						
+                        <input id="button_save" type="submit" value="<?php _e('Update'); ?>" /> 						
                         </form>
                     </div>
                 </div>

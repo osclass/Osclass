@@ -62,7 +62,7 @@ class CAdminLogin extends BaseModel
                                         }
 
                                     } else {
-                                        osc_add_flash_message(__('The username does not exists')) ;
+                                        osc_add_flash_message(__('That username does not exist')) ;
                                     }
 
                                     //returning logged in to the main page...
@@ -94,7 +94,7 @@ class CAdminLogin extends BaseModel
                                         );
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_message(__('A new password has been sent to your account.')) ;
+                                        osc_add_flash_message(__('A new password has been sent to your e-mail.')) ;
                                     } else {
                                         osc_add_flash_message(__('The email you have entered does not belong to a valid administrator.')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=login&action=recover') ;

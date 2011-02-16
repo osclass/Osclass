@@ -28,12 +28,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
-        <script>
-                $(function() {
-                        // Here we include specific jQuery, jQuery UI and Datatables functions.
-                });
-        </script>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
 
@@ -52,7 +47,7 @@
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e("This function lets you modify your database to add, remove or modify its data. It is usually used to import countries list, cities, currencies and more"); ?>.
+                        <?php _e("You can modify your database to add, remove or modify its data here. It\'s usually used to import countries, regions and cities"); ?>.
 
                         <form action="<?php echo osc_admin_base_url(true);?>" method="post">
                             <input type="hidden" name="action" value="import_post" />

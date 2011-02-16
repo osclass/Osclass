@@ -80,7 +80,7 @@
                         <?php foreach($aCurrencies as $c) { ?>
                         [
                             "<input type='checkbox' name='code[]' value='<?php echo $c['pk_c_code']; ?>' />",
-                            "<?php echo $c['pk_c_code']; ?> <div><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code[]=<?php echo $c['pk_c_code']; ?>'><?php _e('Delete'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo $c['pk_c_code']; ?>'><?php _e('Edit'); ?></a></div>",
+                            "<?php echo $c['pk_c_code']; ?> <div><a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code[]=<?php echo $c['pk_c_code']; ?>'><?php _e('Delete'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo $c['pk_c_code']; ?>'><?php _e('Edit'); ?></a></div>",
                             "<?php echo $c['s_name']; ?>",
                             "<?php echo $c['s_description']; ?>"
                         ]  <?php echo $last_id != $c['pk_c_code'] ? ',' : ''; ?>
@@ -127,7 +127,7 @@
 
                 <div id="TableToolsToolbar">
                     <select id="bulk_actions" class="display">
-                        <option value=""><?php _e('Bulk Actions'); ?></option>
+                        <option value=""><?php _e('Bulk actions'); ?></option>
                         <option value="delete_all"><?php _e('Delete') ?></option>
                     </select>
                     &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>

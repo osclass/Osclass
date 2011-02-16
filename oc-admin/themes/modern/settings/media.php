@@ -29,57 +29,6 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Dashboard'); ?></div>
-
-        <script type="text/javascript">
-            $.extend({
-                initDashboard: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.each(args, function(i, val) {
-                        $("#" + val.substr(3)).show();
-                        $("#" + val).attr('checked', 'checked');
-                    });
-                },
-                setCookie: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.cookie.set("osc_admin_main", args, {json: true});
-                }
-            });
-
-            $(function() {
-                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) {
-                    // create cookies if admin is a first timer...
-                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
-                    $.initDashboard(sections);
-                    $.setCookie(sections);
-
-                } else { // else read it and apply it!
-                    var enabled_sections = $.cookie.get("osc_admin_main", true);
-                    $.initDashboard(enabled_sections);
-                    $.setCookie(enabled_sections);
-                }
-
-                // save settings
-                $("#button_save").click(function() {
-                    var sections = [];
-                    $('#checkboxes input:checkbox:checked').each(function() {
-                        sections.push($(this).attr('id'));
-                    });
-
-                    $.setCookie(sections);
-                    $('#main_div').hide();
-                });
-
-
-                $('#button_open').click(function() {
-                    $('#main_div').toggle();
-                });
-
-                $("#checkboxes input[type='checkbox']").click(function() {
-                    var val = $(this).attr('id');
-                    $("#" + val.substr(3)).toggle();
-                });
-            });
-        </script>
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
@@ -88,14 +37,14 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/media-config-icon.png" title="" alt=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Configure Media') ; ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Configure media') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <div style="border: 1px solid #ccc; background: #eee;">
                     <div style="padding: 20px;">
-                        <div><?php _e('Please set the preferred dimensions for all the images on the website. (in format WIDTHxHEIGHT, eg: 640x480)'); ?></div>
+                        <div><?php _e('Please set the preferred dimensions for all the images on the website. (format: WIDTHxHEIGHT, eg: 640x480)'); ?></div>
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
                             <input type="hidden" name="action" value="media_post" />
@@ -103,7 +52,7 @@
                                 <legend><?php _e('Restrictions'); ?></legend>
 
                                 <p>
-                                    <label for="maxSize"><?php _e('Maximum size in KB'); ?></label><br />
+                                    <label for="maxSize"><?php _e('Maximum size, in KB'); ?></label><br />
                                     <input type="text" name="maxSizeKb" id="maxSize" value="<?php echo osc_max_size_kb() ; ?>" />
                                 </p>
 
@@ -134,11 +83,11 @@
                                 <p>
                                     <input id="keep_original_image" type="checkbox" name="keep_original_image" value="1" <?php echo ( osc_keep_original_image() ) ? 'checked' : '' ; ?>/><label for="keep_original_image"><?php _e('Keep original image') ; ?></label>
                                     <br />
-                                    <?php _e('Keeping original image files required extra storage and some files could have extra-large size. This option ensures the original quality of the file un-altered. Be careful using this option.'); ?>
+                                    <?php _e('Keeping original image files requires extra storage. This option ensures that the original quality of the file is un-altered. Be careful when using this option.'); ?>
                                 </p>
                             </fieldset>
 
-                            <input id="button_save" type="submit" value="<?php _e('Update configuration'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
                         </form>
                     </div>
                 </div>

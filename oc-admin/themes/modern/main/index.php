@@ -43,7 +43,7 @@
         <div id="update_version" style="display:none;"></div>
         <div class="Header">Dashboard</div>
 
-        <script>
+        <script type="text/javascript">
             $.extend({
                 initDashboard: function(args) {
                     $.isArray(args) ? true : false;
@@ -59,7 +59,7 @@
             });
 
             $(function() {
-                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) { // create cookies if admin is a first timer...
+                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) { 
                     var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
                     $.initDashboard(sections);
                     $.setCookie(sections);
@@ -124,18 +124,18 @@
 				<!-- settings div -->
 				<div id="main_div">
 					<form id="checkboxes">
-						<div style="margin-bottom: 8px; font-weight: bold;"><?php _e('Which of the following content do you want to see on your dashboard') ; ?>:</div>
+						<div style="margin-bottom: 8px; font-weight: bold;"><?php _e('Which of the following do you want to see on your dashboard') ; ?>:</div>
 						<input id="cb_last_items" type="checkbox" />
-						<label for="cb_last_items"><?php _e('Last Items') ; ?></label>
+						<label for="cb_last_items"><?php _e('Latest items') ; ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_statistics" type="checkbox" />
 						<label for="cb_statistics"><?php _e('Statistics') ; ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_comments" type="checkbox" />
-						<label for="cb_last_comments"><?php _e('Last Comments') ; ?></label>
+						<label for="cb_last_comments"><?php _e('Latest comments') ; ?></label>
 						&nbsp;&nbsp;&nbsp;
 						<input id="cb_last_news" type="checkbox" />
-						<label for="cb_last_news"><?php _e('Last News from OSClass') ; ?></label>
+						<label for="cb_last_news"><?php _e('Latest news from OSClass') ; ?></label>
 					</form>
 					<br />
 					<a href="#" id="button_save"><?php _e('Save') ; ?></a><br />
@@ -147,7 +147,7 @@
 					<div id="sortable_left" class="sortable_div">
 
 						<div id="last_items" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php _e('Items by Category'); ?></h3>
+							<h3 class="ui-state-default"><?php _e('Items by category'); ?></h3>
 							<div id="last_items_body">
 							<?php foreach($categories as $c) { ?>
 								<?php $totalWithItems = 0 ; ?>
@@ -180,16 +180,16 @@
 					<div id="sortable_right" class="sortable_div">
 
 						<div id="last_comments" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php _e('Last Comments') ; ?></h3>
+							<h3 class="ui-state-default"><?php _e('Latest comments') ; ?></h3>
 							<div id="statistics_body">
 								<?php foreach($comments as $c) { ?>
-									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on Item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
+									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
 								<?php } ?>
 							</div>
 						</div>
 
 						<div id="last_news" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php _e('Latest News from OSClass') ; ?></h3>
+							<h3 class="ui-state-default"><?php _e('Latest news from OSClass') ; ?></h3>
 							<div id="last_news_body">
 							<?php
 								$xml = @osc_file_get_contents('http://osclass.org/feed') ;

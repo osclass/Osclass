@@ -38,7 +38,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/admin-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Add new administrator'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Add new admin'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -82,9 +82,8 @@
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Create administrator'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Create'); ?>" />
                         </form>
-
                     </div>
                 </div>
             </div>

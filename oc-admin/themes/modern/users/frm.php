@@ -1,5 +1,4 @@
 <?php
-
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -24,21 +23,19 @@
     $locales = $this->_get("locales");
 
     if(isset($user['pk_i_id'])) {
-        //editing...
+        // editing...
         $edit = true ;
         $title = __("Edit user") ;
         $action_frm = "edit_post";
         $btn_text = __("Save");
     } else {
-        //adding...
+        // adding...
         $edit = false ;
         $title = __("Add user");
         $action_frm = "create_post";
         $btn_text = __('Add');
     }
 ?>
-
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -54,28 +51,23 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Users'); ?></div>
-            <div id="content">
-                <div id="separator"></div>
-
-                <?php UserForm::location_javascript("admin"); ?>
-
-                <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php' ; ?>
-
-                <div id="right_column">
-                    <div id="content_header" class="content_header">
-                        <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/user-group-icon.png" /></div>
-                        <div id="content_header_arrow">&raquo; <?php echo $title ; ?></div>
-                        <div style="clear: both;"></div>
+        <div id="content">
+            <div id="separator"></div>
+            <?php UserForm::location_javascript("admin"); ?>
+            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php' ; ?>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url(); ?>images/user-group-icon.png" title="" alt=""/>
                     </div>
-				
-                    <div id="content_separator"></div>
-                    <?php osc_show_flash_message() ; ?>
-				
-                    <!-- add new item form -->
-                    <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
-                        <div style="padding: 20px;">
-
-                            <form action="<?php echo osc_admin_base_url(true); ?>?page=users" method="post" onSubmit="return checkForm()">
+                    <div id="content_header_arrow">&raquo; <?php echo $title ; ?></div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div id="content_separator"></div>
+                <!-- add new item form -->
+                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 20px;">
+                        <form action="<?php echo osc_admin_base_url(true); ?>?page=users" method="post" onSubmit="return checkForm()">
                             <input type="hidden" name="action" value="<?php echo $action_frm;?>"/>
                             <?php UserForm::primary_input_hidden($user); ?>
 
@@ -92,7 +84,7 @@
                                     <?php UserForm::password_register_text($user); ?>
                                 </fieldset>
                                 <fieldset style="float:left;">
-                                    <legend><?php _e('Retype the password'); ?> </legend>
+                                    <legend><?php _e('Re-type the password'); ?> </legend>
                                     <?php UserForm::check_password_register_text($user); ?>
                                 </fieldset>
                                 <p id="password-error" style="display:none;">
@@ -108,15 +100,15 @@
                                     <?php UserForm::name_text($user); ?>
                                 </fieldset>
                                 <fieldset>
-                                    <legend><?php _e('Mobile phone'); ?></legend>
+                                    <legend><?php _e('Cell phone'); ?></legend>
                                     <?php UserForm::mobile_text($user); ?>
                                 </fieldset>
                                 <fieldset>
-                                    <legend><?php _e('Land phone'); ?></legend>
+                                    <legend><?php _e('Phone'); ?></legend>
                                     <?php UserForm::phone_land_text($user); ?>
                                 </fieldset>
                                 <fieldset>
-                                    <legend><?php _e('Web site'); ?></legend>
+                                    <legend><?php _e('Website'); ?></legend>
                                     <?php UserForm::website_text($user); ?>
                                 </fieldset>
                                 <fieldset style="min-height: 166px;">
@@ -150,8 +142,7 @@
                             <div style="clear: both;"></div>
 
                             <input id="button_save" type="submit" value="<?php echo $btn_text; ?>" />
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

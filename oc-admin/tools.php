@@ -22,7 +22,6 @@
 
 class CAdminTools extends AdminSecBaseModel
 {
-
     function __construct() {
         parent::__construct() ;
         // common css
@@ -33,98 +32,96 @@ class CAdminTools extends AdminSecBaseModel
     function doModel() {
 
         switch ($this->action) {
-            case 'import':
-                $this->doView('tools/import.php');
-                break;
-            case 'import_post':
-                $sql = Params::getParam('sql');
-                $conn = getConnection() ;
-                $conn->osc_dbImportSQL($sql) ;
+            case 'import':          // calling import view
+                                    $this->doView('tools/import.php');
+            break;
+            case 'import_post':     // calling 
+                                    $sql = Params::getParam('sql');
+                                    $conn = getConnection() ;
+                                    $conn->osc_dbImportSQL($sql) ;
 
-                $this->redirectTo(osc_admin_base_url(true) . '?page=tools');
-                break;
-            case 'images':
-                $this->doView('tools/images.php');
-                break;
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=tools');
+            break;
+            case 'images':          // calling images view
+                                    $this->doView('tools/images.php');
+            break;
             case 'images_post':
-                $preferences = Preference::newInstance()->toArray() ;
+                                    $preferences = Preference::newInstance()->toArray() ;
 
-                $path = osc_base_path() . 'oc-content/uploads' ;
-                $dir = opendir($path) ;
-                while($file = readdir($dir)) {
+                                    $path = osc_base_path() . 'oc-content/uploads' ;
+                                    $dir = opendir($path) ;
+                                    while($file = readdir($dir)) {
 
-                    if(preg_match('|([0-9]+)_thumbnail\.png|i', $file, $matches)) {
+                                        if(preg_match('|([0-9]+)_thumbnail\.png|i', $file, $matches)) {
 
-                        $orig_file = str_replace('_thumbnail.', '_original.', $file) ;
-                        $tmpName = osc_base_path() . 'oc-content/uploads/' . $orig_file ;
-                        if(!file_exists($orig_file)) {
-                            copy(str_replace('_original.', '.', $tmpName), $tmpName) ;
-                        }
+                                            $orig_file = str_replace('_thumbnail.', '_original.', $file) ;
+                                            $tmpName = osc_base_path() . 'oc-content/uploads/' . $orig_file ;
+                                            if(!file_exists($orig_file)) {
+                                                copy(str_replace('_original.', '.', $tmpName), $tmpName) ;
+                                            }
 
-                        // Create thumbnail
-                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $file ;
-                        $size = explode('x', osc_thumbnail_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+                                            // Create thumbnail
+                                            $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $file ;
+                                            $size = explode('x', osc_thumbnail_dimensions()) ;
+                                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
-                        // Create preview
-                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/'.str_replace('_thumbnail.', '_preview.', $file) ;
-                        $size = explode('x', osc_preview_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+                                            // Create preview
+                                            $thumbnailPath = osc_base_path() . 'oc-content/uploads/'.str_replace('_thumbnail.', '_preview.', $file) ;
+                                            $size = explode('x', osc_preview_dimensions()) ;
+                                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
-                        // Create normal size
-                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/'.str_replace('_thumbnail.', '.', $file) ;
-                        $size = explode('x', osc_normal_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+                                            // Create normal size
+                                            $thumbnailPath = osc_base_path() . 'oc-content/uploads/'.str_replace('_thumbnail.', '.', $file) ;
+                                            $size = explode('x', osc_normal_dimensions()) ;
+                                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
-                        if(!osc_keep_original_image()) {
-                            @unlink($tmpName) ;
-                        }
+                                            if(!osc_keep_original_image()) {
+                                                @unlink($tmpName) ;
+                                            }
 
-                    }
+                                        }
 
-                }
-                closedir($dir) ;
-                osc_add_flash_message(__('Re-generation complete.')) ;
-
-                $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
-                break;
+                                    }
+                                    closedir($dir) ;
+                                    osc_add_flash_message(__('Re-generation complete'), 'admin') ;
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
+            break;
             case 'upgrade':
-                $this->doView('tools/upgrade.php');
-                break;
+                                    $this->doView('tools/upgrade.php');
+            break;
             case 'backup':
-                $this->doView('tools/backup.php');
-                break;
+                                    $this->doView('tools/backup.php');
+            break;
             case 'backup-sql':
-                if( Params::getParam('bck_dir') != '' ) {
-                    if(substr(trim(Params::getParam('bck_dir'), -1, 1) == "/") ) {
-                            $sql_name = trim(Params::getParam('bck_dir')) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                    } else {
-                            $sql_name = trim(Params::getParam('bck_dir')) . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                    }
-                } else {
-                    $sql_name = osc_base_path() . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                }
-                osc_dbdump($sql_name) ;
-                _e('Backup made correctly') ;
-                break;
+                                    if( Params::getParam('bck_dir') != '' ) {
+                                        if(substr(trim(Params::getParam('bck_dir'), -1, 1) == "/") ) {
+                                            $sql_name = trim(Params::getParam('bck_dir')) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
+                                        } else {
+                                            $sql_name = trim(Params::getParam('bck_dir')) . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
+                                        }
+                                    } else {
+                                        $sql_name = osc_base_path() . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
+                                    }
+                                    osc_dbdump($sql_name) ;
+                                    _e('Backup successful') ;
+            break;
             case 'backup-zip':
-                if( Params::getParam('bck_dir') != '' ) {
-                    $archive_name = Params::getParam('bck_dir') . "/OSClass_backup." . date('YmdHis') . ".zip" ;
-                } else {
-                    $archive_name = osc_base_path() . "OSClass_backup." . date('YmdHis') . ".zip" ;
-                }
-                $archive_folder = osc_base_path() ;
+                                    if( Params::getParam('bck_dir') != '' ) {
+                                        $archive_name = Params::getParam('bck_dir') . "/OSClass_backup." . date('YmdHis') . ".zip" ;
+                                    } else {
+                                        $archive_name = osc_base_path() . "OSClass_backup." . date('YmdHis') . ".zip" ;
+                                    }
+                                    $archive_folder = osc_base_path() ;
 
-                if (osc_zipFolder($archive_folder, $archive_name)) {
-                    _e('Archiving is sucessful!') ;
-                }else{
-                    _e('Error, can\'t create a zip file!') ;
-                }
-                break;
-             case 'backup_post':     
-                //print_r($_REQUEST);  ???
-                $this->doView('tools/backup.php');
-                break;
+                                    if (osc_zipFolder($archive_folder, $archive_name)) {
+                                        _e('Archiving successful!') ;
+                                    }else{
+                                        _e('Error, couldn\'t create a zip file!') ;
+                                    }
+            break;
+            case 'backup_post':
+                                    $this->doView('tools/backup.php');
+            break;
             default:
         }
     }
@@ -134,90 +131,5 @@ class CAdminTools extends AdminSecBaseModel
         $this->osc_print_html($file) ;
     }
 }
-
-//$action = Params::getParam('action') ;
-//switch($action)
-//{
-//    case 'import':          osc_renderAdminSection('tools/import.php', __('Tools')) ;
-//	break;
-//    case 'import_post':     $sql = $_POST['sql'] ;
-//                            $conn = getConnection() ;
-//                            $conn->osc_dbImportSQL($sql) ;
-//
-//                            osc_redirectTo('tools.php') ;
-//	break;
-//    case 'images':          osc_renderAdminSection('tools/images.php', __('Tools')) ;
-//	break;
-//    case 'images_post':
-//        $preferences = Preference::newInstance()->toArray() ;
-//
-//	    $path = ABS_PATH . 'oc-content/uploads' ;
-//	    $dir = opendir($path) ;
-//	    while($file = readdir($dir)) {
-//
-//		    if(preg_match('|([0-9]+)_thumbnail\.png|i', $file, $matches)) {
-//
-//                $orig_file = str_replace('_thumbnail.', '_original.', $file) ;
-//                $tmpName = ABS_PATH . 'oc-content/uploads/' . $orig_file ;
-//			    if(!file_exists($orig_file)) {
-//                    copy(str_replace('_original.', '.', $tmpName), $tmpName) ;
-//                }
-//
-//                // Create thumbnail
-//                $thumbnailPath = ABS_PATH . 'oc-content/uploads/' . $file ;
-//                $size = explode('x', osc_thumbnail_dimensions()) ;
-//                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
-//
-//                // Create preview
-//                $thumbnailPath = ABS_PATH . 'oc-content/uploads/'.str_replace('_thumbnail.', '_preview.', $file) ;
-//                $size = explode('x', osc_preview_dimensions()) ;
-//                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
-//
-//                // Create normal size
-//                $thumbnailPath = ABS_PATH . 'oc-content/uploads/'.str_replace('_thumbnail.', '.', $file) ;
-//                $size = explode('x', osc_normal_dimensions()) ;
-//                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
-//
-//                if(!osc_keep_original_image()) {
-//                    @unlink($tmpName) ;
-//                }
-//
-//		    }
-//
-//	    }
-//	    closedir($dir) ;
-//        osc_add_flash_message(__('Re-generation complete.')) ;
-//        osc_redirectTo('tools.php?action=images') ;
-//	break;
-//    case 'upgrade':         osc_renderAdminSection('tools/upgrade.php', __('Tools')) ;
-//	break;
-//    case 'backup':          osc_renderAdminSection('tools/backup.php', __('Tools')) ;
-//	break;
-//    case 'backup-sql':      if(isset($_REQUEST['bck_dir'])) {
-//                                if(substr(trim($_REQUEST['bck_dir']), -1, 1) == "/") {
-//                                	$sql_name = trim($_REQUEST['bck_dir']) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-//                                } else {
-//                                	$sql_name = trim($_REQUEST['bck_dir']) . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-//                                }
-//                            } else {
-//                            	$sql_name = ABS_PATH . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-//                            }
-//                            osc_dbdump($sql_name) ;
-//                            _e('Backup made correctly') ;
-//	break;
-//    case 'backup-zip':      if(isset($_REQUEST['bck_dir'])) {
-//                            	$archive_name = $_REQUEST['bck_dir'] . "/OSClass_backup." . date('YmdHis') . ".zip" ;
-//                            } else {
-//                            	$archive_name = ABS_PATH . "OSClass_backup." . date('YmdHis') . ".zip" ;
-//                            }
-//                            $archive_folder = ABS_PATH ;
-//
-//                            if (osc_zipFolder($archive_folder, $archive_name)) _e('Archiving is sucessful!') ;
-//                            else _e('Error, can\'t create a zip file!') ;
-//	break;
-//    case 'backup_post':     print_r($_REQUEST);
-//                            osc_renderAdminSection('tools/backup.php', __('Tools')) ;
-//	break;
-//}
 
 ?>

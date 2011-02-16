@@ -81,7 +81,7 @@
                             <?php foreach ($locales as $l) { ?>
                             [
                                 "<input type='checkbox' name='id[]' value='<?php echo $l['pk_c_code']; ?>' />"
-                                ,"<?php echo $l['s_name']; ?> <div id='datatables_quick_edit'> <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=edit&amp;id=<?php echo $l['pk_c_code'] ; ?>'><?php _e('Edit') ; ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=enable&amp;id=<?php echo $l['pk_c_code']; ?>&enabled=<?php echo $l['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($l['b_enabled'] == 1 ? 'Disable (website)' : 'Enable (website)'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=enable_bo&amp;id=<?php echo $l['pk_c_code']; ?>&enabled=<?php echo $l['b_enabled_bo'] == 1 ? '0' : '1'; ?>'><?php _e($l['b_enabled_bo'] == 1 ? 'Disable (oc-admin)' : 'Enable (oc-admin)'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=delete&amp;code[]=<?php echo $l['pk_c_code']; ?>'><?php _e('Delete'); ?></a></div>"
+                                ,"<?php echo $l['s_name']; ?> <div id='datatables_quick_edit'> <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=edit&amp;id=<?php echo $l['pk_c_code'] ; ?>'><?php _e('Edit') ; ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled'] == 1 ? 'Disable (website)' : 'Enable (website)'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action==<?php echo $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled_bo'] == 1 ? 'Disable (oc-admin)' : 'Enable (oc-admin)'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=delete&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e('Delete'); ?></a></div>"
                                 ,"<?php echo $l['s_short_name']; ?>"
                                 ,"<?php echo $l['s_description']; ?>"
                                 ,"<?php echo ($l['b_enabled']) ? __("Yes") : __("No"); ?>"
@@ -97,7 +97,7 @@
                                 ,"bSearchable": false
                             }
                             ,{"sTitle": "<?php _e('Name'); ?>", "sWidth": "300px"}
-                            ,{"sTitle": "<?php _e('Short Name'); ?>"}
+                            ,{"sTitle": "<?php _e('Short name'); ?>"}
                             ,{"sTitle": "<?php _e('Description'); ?>"}
                             ,{"sTitle": "<?php _e('Enabled (website)'); ?>"}
                             ,{"sTitle": "<?php _e('Enabled (oc-admin)'); ?>"}
@@ -125,7 +125,7 @@
 
                 <div id="content_separator"></div>
 
-                <?php osc_show_flash_message() ; ?>
+                <?php osc_show_flash_message('admin')  ?>
 
                 <div id="TableToolsToolbar">
                     <select name="action" id="bulk_actions" class="display">
@@ -134,7 +134,7 @@
                         <option value="disable_selected"><?php _e('Disable (Website)') ; ?></option>
                         <option value="enable_bo_selected"><?php _e('Enable (oc-admin)') ; ?></option>
                         <option value="disable_bo_selected"><?php _e('Disable (oc-admin)') ; ?></option>
-                        <option value="delete_all"><?php _e('Delete') ?></option>
+                        <option value="delete"><?php _e('Delete') ?></option>
                     </select>
                     &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>
                 </div>

@@ -54,11 +54,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     $userActions = new UserActions(true) ;
                                     $success = $userActions->add() ;
                                     switch($success) {
-                                        case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent to the user\'s email address')) ;
+                                        case 1: osc_add_flash_message(__('The user has been created. We\'ve sent an activation e-mail'), 'admin') ;
                                         break;
-                                        case 2: osc_add_flash_message(__('The user has been created and it was activated')) ;
+                                        case 2: osc_add_flash_message(__('The user has been created and activated'), 'admin') ;
                                         break;
-                                        case 3: osc_add_flash_message(__('Sorry, but that email is already in use')) ;
+                                        case 3: osc_add_flash_message(__('Sorry, but that e-mail is already in use'), 'admin') ;
                                         break;
                                     }
                                     $this->redirectTo("index.php?page=users") ;
@@ -91,11 +91,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     $success = $userActions->edit( Params::getParam("id") ) ;
 
                                     switch($success) {
-                                        case 1: osc_add_flash_message(__('Passwords don\'t match')) ;
+                                        case 1: osc_add_flash_message(__('Passwords don\'t match'), 'admin') ;
                                         break;
-                                        case 2: osc_add_flash_message(__('The user has been updated and it was activated')) ;
+                                        case 2: osc_add_flash_message(__('The user has been updated and activated'), 'admin') ;
                                         break;
-                                        default: osc_add_flash_message(__('The user has been updated'));
+                                        default: osc_add_flash_message(__('The user has been updated'), 'admin');
                                         break;
                                     }
 
@@ -108,9 +108,9 @@ class CAdminUsers extends AdminSecBaseModel
                                         $values = array('b_enabled' => 1);
                                         try {
                                             $this->userManager->update($values, $conditions);
-                                            osc_add_flash_message(__('The user has been activated'));
+                                            osc_add_flash_message(__('The user has been activated'), 'admin');
                                         } catch (Exception $e) {
-                                            osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                            osc_add_flash_message(__('Error: ') . $e->getMessage(), 'admin');
                                         }
                                     }
                                     $this->redirectTo("index.php?page=users");
@@ -122,9 +122,9 @@ class CAdminUsers extends AdminSecBaseModel
                                         $values = array('b_enabled' => 0);
                                         try {
                                             $this->userManager->update($values, $conditions);
-                                            osc_add_flash_message(__('The user has been deactivated.'));
+                                            osc_add_flash_message(__('The user has been deactivated.'), 'admin');
                                         } catch (Exception $e) {
-                                            osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                            osc_add_flash_message(__('Error: ') . $e->getMessage(), 'admin');
                                         }
                                     }
                                     $this->redirectTo("index.php?page=users");

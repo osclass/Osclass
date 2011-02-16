@@ -36,9 +36,7 @@
         <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -63,21 +61,21 @@
                                 <p>
                                     <label for="akismetKey"><?php _e('Akismet key (same as Wordpress.com)'); ?></label><br />
                                     <input type="text" name="akismetKey" id="akismetKey" value="<?php echo (osc_akismet_key() ? osc_akismet_key() : ''); ?>" /><br />
-                                    <span class="Explanation"><?php _e('If the field is empty it is because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
+                                    <span class="Explanation"><?php _e('If the field is empty it\'s because the Akismet service is disabled'); ?>. <?php _e('Get your free key at'); ?> <a href="http://akismet.com">http://akismet.com</a></span>.
                                 </p>
                             </fieldset>
 
                             <fieldset>
-                                <legend><?php _e('Re-captcha') ; ?></legend>
+                                <legend><?php _e('ReCAPTCHA') ; ?></legend>
                                 <p>
-                                    <?php _e('If the field is empty it is because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.
+                                    <?php _e('If the field is empty it\'s because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.
                                 </p>
                                 <p>
-                                    <label for="recaptchaPrivKey"><?php _e('Re-captcha private key'); ?></label><br />
+                                    <label for="recaptchaPrivKey"><?php _e('reCAPTCHA private key'); ?></label><br />
                                     <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
                                 </p>
                                 <p>
-                                    <label for="recaptchaPubKey"><?php _e('Re-captcha public key'); ?></label><br />
+                                    <label for="recaptchaPubKey"><?php _e('reCAPTCHA public key'); ?></label><br />
                                     <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
                                 </p>
                             </fieldset>

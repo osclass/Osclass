@@ -19,37 +19,36 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<script>
-	$().ready(function(){
+<script type="text/javascript">
+	$(document).ready(function(){
 		$.ajaxSetup({
 			error:function(x,e){
-				if(x.status == 0) {
-                    alert('You are offline!!\n Please Check Your Network.') ;
-				} else if(x.status==404){
-                    alert('Requested URL not found.') ;
-				} else if(x.status==500){
-                    alert('Internel Server Error.') ;
-				} else if(e=='parsererror'){
-                    alert('Error.\nParsing JSON Request failed.') ;
-				} else if(e=='timeout'){
-                    alert('Request Time out.') ;
-				} else {
-                    alert('Unknow Error.\n'+x.responseText) ;
-				}
-			}
+                if(x.status==0){
+                    alert(<?php _e('You\'re offline! Please check your connection.'); ?>);
+                }else if(x.status==404){
+                    alert(<?php _e('Requested URL not found.'); ?>);
+                }else if(x.status==500){
+                    alert(<?php _e('Internal server error.'); ?>);
+                }else if(e=='parsererror'){
+                    alert(<?php _e('Error. Parsing JSON request failed.'); ?>);
+                }else if(e=='timeout'){
+                    alert(<?php _e('Request timeout.'); ?>);
+                }else {
+                    alert(<?php _e('Unknown error.\n'); ?> + x.responseText);
+                }
+            }
 		});
 	});
-
 
 	$(function() {
 		var steps = document.getElementById('steps');
 		var version = <?php echo osc_version() ; ?> ;
 		var fileToUnzip = '';
-		steps.innerHTML += "<?php _e('Checking for update (installed version: '); ?>"+version+"): " ;
+		steps.innerHTML += "<?php _e('Checking for updates (installed version: '); ?>" + version + "): " ;
 
 		$.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
 			if(data.version <= version) {
-				steps.innerHTML += "<?php _e('HORRAY! Your OSClass installation is up to date! (current version: '); ?>" + data.version + ")" ;
+				steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: '); ?>" + data.version + ")" ;
 			} else {
 				steps.innerHTML += "<?php _e('current version: '); ?>" + data.version + "<br/>" ;
 				steps.innerHTML += "<?php _e('Downloading update file: ') ; ?>" ;
@@ -84,13 +83,13 @@
 									$.get('<?php echo osc_base_url() ; ?>oc-admin/upgrade.php?action=execute-actions', function(data) {
 									
 										steps.innerHTML += data+"<br/>";
-										steps.innerHTML += "<?php _e('Cleanning all the mesh: '); ?>";
+										steps.innerHTML += "<?php _e('Cleaning all the mess: '); ?>";
 
 										$.get('<?php echo osc_base_url() ; ?>oc-admin/upgrade.php?action=empty-temp', function(data) {
 										
 											steps.innerHTML += data+"<br/>";
 
-											steps.innerHTML += "<?php _e('Satisfaying user with awesome and easy auto-upgrade: Done!'); ?><br/><br/>" ;
+											steps.innerHTML += "<?php _e('Awesome and easy auto-upgrade: done!'); ?><br/><br/>" ;
 										});
 									});
 								});
@@ -102,8 +101,6 @@
 		});
 	});
 </script>
-
-<?php defined('ABS_PATH') or die(__('Invalid OSClass request.')); ?>
 
 <div id="content">
     <div id="separator"></div>
@@ -129,5 +126,4 @@
 		</div>
 	</div>
 </div> <!-- end of right column -->
-
 

@@ -76,7 +76,7 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
-                                    <legend><?php _e('Administrator E-mail'); ?></legend>
+                                    <legend><?php _e('Admin e-mail'); ?></legend>
                                     <input style="width: 95%; height: 20px; padding-left: 4px;" type="text" name="contactEmail" id="contactEmail" value="<?php echo osc_contact_email() ; ?>" />
                                 </fieldset>
                             </div>
