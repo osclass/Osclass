@@ -31,7 +31,11 @@
         break;
         case ('item'):      //item pages (with security)
                             require_once(osc_base_path() . 'item.php') ;
-                            $do = new CWebItem() ;
+                            if((Params::getParam("action")=="post" || Params::getParam("action")=="post_item") && osc_reg_user_post()) {
+                                $do = new CWebSecItem() ;
+                            } else {
+                                $do = new CWebItem() ;
+                            }
                             $do->doModel() ;
         break;
         case ('search'):    //search pages
