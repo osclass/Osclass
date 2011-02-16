@@ -21,7 +21,7 @@
 ?>
 <?php
     $item = $this->_get('item') ;
-    $aUser = $this->_get('aUser') ;
+    $user = $this->_get('user') ;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -34,22 +34,22 @@
             
             <div id="form_publish">
                 <?php include("inc.search.php"); ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url($catId) ; ?>">Publish your ad for free</a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url(osc_item_category_id($item)) ; ?>"><?php _e("Publish your ad for free");?></a></strong>
             </div>
 
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
-                        <h1><span class="price"><?php echo osc_format_price($item); ?></span> <strong><?php echo $item['s_title']; ?></strong></h1>
+                        <h1><span class="price"><?php echo osc_format_price($item); ?></span> <strong><?php echo osc_item_title($item); ?></strong></h1>
 
                         <p id="report">
                             <strong><?php echo __('Mark as '); ?></strong> 
                             <span>
-                                <a id="item_spam" href="<?php echo osc_base_url(); ?>?page=item&action=mark&amp;as=spam&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('spam'); ?></a>
-                                <a id="item_bad_category" href="<?php echo osc_base_url(); ?>?page=item&action=mark&amp;as=badcat&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('bad category'); ?></a>
-                                <a id="item_repeated" href="<?php echo osc_base_url(); ?>?page=item&action=mark&amp;as=repeated&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('repeated'); ?></a>
-                                <a id="item_expired" href="<?php echo osc_base_url(); ?>?page=item&action=mark&amp;as=expired&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('expired'); ?></a>
-                                <a id="item_offensive" href="<?php echo osc_base_url(); ?>?page=item&action=mark&amp;as=offensive&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('offensive'); ?></a>
+                                <a id="item_spam" href="<?php echo osc_item_link_spam($item); ?>"><?php echo __('spam'); ?></a>
+                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category($item); ?>"><?php echo __('bad category'); ?></a>
+                                <a id="item_repeated" href="<?php echo osc_item_link_repeated($item); ?>"><?php echo __('repeated'); ?></a>
+                                <a id="item_expired" href="<?php echo osc_item_link_expired($item); ?>"><?php echo __('expired'); ?></a>
+                                <a id="item_offensive" href="<?php echo osc_item_link_offensive($item); ?>"><?php echo __('offensive'); ?></a>
                             </span>
                         </p>
                     </div>
@@ -58,17 +58,17 @@
                 <div id="main">
 
                     <div id="type_dates">
-                        <strong>For Rent</strong>
-                        <em class="publish"><?php echo date("d/m/Y", strtotime($a['dt_pub_date'])); ?></em>
-                        <em class="update"><?php echo date("d/m/Y", strtotime($a['dt_mod_date'])); ?></em>
+                        <strong><?php echo osc_item_category($item);?></strong>
+                        <em class="publish"><?php echo date("d/m/Y", strtotime(osc_item_pub_date($item))); ?></em>
+                        <em class="update"><?php echo date("d/m/Y", strtotime(osc_item_mod_date($item))); ?></em>
                     </div>
 
                     <ul id="item_location">
-                        <?php if($item['s_country']!=""): ?><li>Country: <strong><?php echo $item['s_country']; ?></strong></li><?php endif ?>
-                        <?php if($item['s_region']!=""): ?><li>Region: <strong><?php echo $item['s_region']; ?></strong></li><?php endif ?>
-                        <?php if($item['s_city']!=""): ?><li>City: <strong><?php echo $item['s_city']; ?></strong></li><?php endif ?>
-                        <?php if($item['s_city_area']!=""): ?><li>City area: <strong><?php echo $item['s_city_area']; ?></strong></li><?php endif ?>
-                        <?php if($item['s_address']!=""): ?><li>Address: <strong><?php echo $item['s_address']; ?></strong></li><?php endif ?>
+                        <?php if(osc_item_country($item)!=""): ?><li><?php _e("Country:");?> <strong><?php echo osc_item_country($item); ?></strong></li><?php endif ?>
+                        <?php if(osc_item_region($item)!=""): ?><li><?php _e("Region:");?> <strong><?php echo osc_item_region($item); ?></strong></li><?php endif ?>
+                        <?php if(osc_item_city($item)!=""): ?><li><?php _e("City:");?> <strong><?php echo osc_item_city($item); ?></strong></li><?php endif ?>
+                        <?php if(osc_item_city_area($item)!=""): ?><li><?php _e("City area:");?> <strong><?php echo osc_item_city_area($item); ?></strong></li><?php endif ?>
+                        <?php if(osc_item_address($item)!=""): ?><li><?php _e("Address:");?> <strong><?php echo osc_item_address($item); ?></strong></li><?php endif ?>
                     </ul>
 
                     <div id="description">
@@ -79,7 +79,7 @@
                                 $locale = $locales[0];
                                 ?>
                                 <p>
-                                <?php echo  @$item['locale'][$locale['pk_c_code']]['s_description']; ?>
+                                <?php echo  osc_item_description($item, $locale['pk_c_code']); ?>
                                 </p>
                             <?php 
                         } 
@@ -87,7 +87,7 @@
                             ?>
                             <?php foreach($locales as $locale) {?>
                                 <h3><?php echo $locale['s_name']; ?>:</h3>
-                                <?php echo  @$item['locale'][$locale['pk_c_code']]['s_description']; ?>
+                                <?php echo  osc_item_description($item, $locale['pk_c_code']); ?>
                             <?php }; ?>
                         <?php }; ?>
 
@@ -119,7 +119,7 @@
                             <h3><?php echo __('Leave your comment (spam and offensive messages will be removed)'); ?></h3>
                             <input type="hidden" name="action" value="add_comment" />
                             <input type="hidden" name="page" value="item" />
-                            <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
+                            <input type="hidden" name="id" value="<?php echo osc_item_id($item); ?>" />
                             <label for="authorName"><?php echo __('Your name:'); ?></label> <input type="text" name="authorName" id="authorName" /><br />
                             <label for="authorEmail"><?php echo __('Your email:'); ?></label> <input type="text" name="authorEmail" id="authorEmail" /><br />
                             <label for="title"><?php echo __('Title:'); ?></label><br /><input type="text" name="title" id="title" /><br />
@@ -166,19 +166,19 @@
                     </div>
 
                     <div id="contact">
-                        <h2>Contact publisher</h2>
+                        <h2><?php _e("Contact publisher");?></h2>
                         <form action="item.php" method="post" onsubmit="return validate_contact();">
                         <fieldset>
-                            <h3><?php echo $item['s_contact_name']; ?></h3>
-                            <?php if($aUser['s_phone_mobile'] != ''):?>
-                            <p class="phone">Tel.: <?php echo $aUser['s_phone_mobile']; ?></p>
+                            <h3><?php echo osc_user_name($user); ?></h3>
+                            <?php if(osc_user_phone($user) != ''):?>
+                            <p class="phone"><?php _e("Tel.: ");?> <?php echo osc_user_phone($user); ?></p>
                             <?php endif;?>
                             <label for="yourName"><?php _e('Your name'); ?> <?php _e('(optional)'); ?>:</label><input type="text" name="yourName" value="" id="yourName" />
                             <label for="yourEmail"><?php _e('Your email address'); ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
                             <label for="phoneNumber"><?php _e('Phone number'); ?>:</label><input type="text" name="phoneNumber" value="" id="phoneNumber" />
                             <label for="message"><?php _e('Message'); ?>:</label><textarea name="message" rows="8" cols="30"></textarea>
                             <input type="hidden" name="action" value="contact_post" />
-                            <input type="hidden" name="id" value="<?php echo $item['id']; ?>" />
+                            <input type="hidden" name="id" value="<?php echo osc_item_id($item); ?>" />
                             <button type="submit"><?php _e('Send message'); ?></button>
                         </fieldset>
                         </form>
