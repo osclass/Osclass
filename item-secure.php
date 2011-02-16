@@ -31,7 +31,13 @@ class CWebSecItem extends WebSecBaseModel
 
     //Business Layer...
     function doModel() {
+
         //calling the view...
+        $locales = Locale::newInstance()->listAllEnabled() ;
+        //$this->_exportVariableToView('categories', $categories) ;
+        $this->_exportVariableToView('locales', $locales) ;
+        //$this->_exportVariableToView('latestItems', $latestItems) ;
+        
         switch( $this->action ) {
             case 'post': // add
                 if(!osc_users_enabled()) {
@@ -79,86 +85,8 @@ class CWebSecItem extends WebSecBaseModel
                     osc_redirectTo(osc_base_url());
                 }
 
-                $mItems = new ItemActions();
-                $success = $mItems->add(Item);
-
-                // variables
-                $active     = 'INACTIVE';
-
-                $is_admin   = FALSE;
-
-                $showEmail  = 0;
-                if(Params::getParam('showEmail') != ''){    // comprobación de integer
-                    $showEmail = (int) Params::getParam('showEmail');
-                }
-
-                $catId      = '';
-                if( Params::getParam('catId') != '' ) {
-                    $catId = Params::getParam('catId');
-                }
-
-                $userId     = '';
-                if( Session::newInstance()->_get('userId') != '' ) {
-                    $userId = Session::newInstance()->_get('userId');
-                }
-
-                $currency   = '';
-                if( Params::getParam('currency') != '' ) {
-                    $currency = Params::getParam('currency');
-                }
-
-                $price      = '';
-                if( Params::getParam('price') != '' ) {
-                    $price = Params::getParam('price');
-                }
-
-                $countryId = '';
-                if( Params::getParam('countryId') != '' ) {
-                    $countryId = Params::getParam('countryId');
-                }
-
-                $mUser = new User();
-                $data = $mUser->findByPrimaryKey( (int)$userId );
-                $contactName   = $data['s_name'];
-                $contactEmail  = $data['s_email'];
-
-                // falta testealo
-                if (osc_recaptcha_private_key()) {
-                    require_once LIB_PATH . 'recaptchalib.php';
-                    if ( Params::getFiles("recaptcha_challenge_field") != '') {
-                        $resp = recaptcha_check_answer (
-                            osc_recaptcha_private_key()
-                            ,$_SERVER["REMOTE_ADDR"]
-                            ,Params::getParam("recaptcha_challenge_field")
-                            ,Params::getParam("recaptcha_response_field")
-                        );
-                        if (!$resp->is_valid) {
-                            die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")") ;
-                        }
-                    }
-                }
-                
-                // crear el array con los datos a pasar
-                $aItem = array(
-                    'showEmail'     => $showEmail,
-                    'is_admin'      => FALSE,
-                    'active'        => $active,
-                    'userId'        => $userId,
-                    'price'         => $price,
-                    'catId'         => $catId,
-                    'currency'      => $currency,
-                    'contactName'   => $contactName,
-                    'contactEmail'  => $contactEmail,
-                    'countryId'     => $countryId,
-                    'region'        => Params::getParam('region'),
-                    'regionId'      => Params::getParam('regionId'),
-                    'cityId'        => Params::getParam('cityId'),
-                    'cityArea'      => Params::getParam('cityArea'),
-                    'address'       => Params::getParam('address'),
-                    'photos'        => Params::getFiles('photos'),
-                    'title'         => Params::getParam('title'),
-                    'description'   => Params::getParam('description')
-                );
+                $mItems = new ItemActions(true);
+                $success = $mItems->add();
 
                 if($success) {
                     osc_run_hook('posted_item', $item);

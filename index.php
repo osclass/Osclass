@@ -31,7 +31,7 @@
         break;
         case ('item'):      //item pages (with security)
                             if((Params::getParam("action")=="post" || Params::getParam("action")=="post_item") && osc_reg_user_post()) {
-                                require_once(osc_base_path() . 'item_secure.php');
+                                require_once(osc_base_path() . 'item-secure.php');
                                 $do = new CWebSecItem() ;
                             } else {
                                 require_once(osc_base_path() . 'item.php');
