@@ -210,9 +210,9 @@ class ItemForm extends Form {
     }
 
     static public function show_email_checkbox($item = null) {
-        echo '<label for="showEmail">';
+//        echo '<label for="showEmail">';
         parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );
-        _e('Show email publically within the item page') . '</label>';
+//        _e('Show email publically within the item page') . '</label>';
         return true ;
     }
 
@@ -263,9 +263,9 @@ class ItemForm extends Form {
         $("#regionId").change(function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
-                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+                var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php } else { ?>
-                var url = '<?php echo osc_base_url(true)."?page=ajax&action=city&regionId="; ?>' + pk_c_code;
+                var url = '<?php echo osc_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php }; ?>
 
             var result = '';
