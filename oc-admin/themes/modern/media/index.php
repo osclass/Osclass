@@ -35,12 +35,12 @@
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e("Media");?></div>
 
-        <script>
+        <script type="text/javascript">
 	        $(function() {
 		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
 			        var anRows = [];
 			
-			        for (var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
+			        for (var i=0, iLen=oSettings.aiDisplay.length ; i < iLen; i++ ) {
 				        var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
 				        anRows.push(nRow);
 			        }
@@ -79,7 +79,7 @@
 				        <?php foreach($resources as $r) { ?>
 					        [
 						        "<input type='checkbox' name='id[]' value='<?php echo $r['pk_i_id']; ?>' />",
-						        "<div id='media_list_pic'><img src='<?php echo osc_createResourceURL($r) ; ?>' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'><?php echo $r['s_content_type']; ?><br /><span id='datatables_quick_edit'><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=media&action=delete&amp;id[]=<?php echo $r['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></span></div>", 
+						        "<div id='media_list_pic'><img src='<?php echo osc_createResourceURL($r) ; ?>' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'><?php echo $r['s_content_type']; ?><br /><span id='datatables_quick_edit'><a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=media&action=delete&amp;id[]=<?php echo $r['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></span></div>",
 						        "<a target='_blank' href='<?php echo osc_base_url(true) . '?page=item&id=' . $r['fk_i_item_id'] ?>'><?php echo $r['s_title']; ?></a>",
 						        "<?php echo $r['dt_pub_date']; ?>"
 					        ] <?php echo $last_id != $r['pk_i_id'] ? ',' : ''; ?>
@@ -128,7 +128,7 @@
 				
 				        <div id="TableToolsToolbar">
 				        <select id="bulk_actions" class="display">
-					        <option value=""><?php _e('Bulk Actions') ; ?></option>
+					        <option value=""><?php _e('Bulk actions') ; ?></option>
 					        <option value="delete_all"><?php _e('Delete') ; ?></option>
 				        </select>
 				        &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>

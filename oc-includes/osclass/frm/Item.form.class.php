@@ -125,7 +125,7 @@ class ItemForm extends Form {
 
     static public function country_select($countries, $item = null) {
         if( count($countries) > 1 ) {
-            parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select one country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
+            parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
             return true ;
         } else if ( count($countries) == 1 ) {
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
@@ -144,7 +144,7 @@ class ItemForm extends Form {
 
     static public function region_select($regions, $item = null) {
         if( count($regions) > 1 ) {
-            parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select one region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
+            parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
             return true ;
         } else if ( count($regions) == 1 ) {
             parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
@@ -162,7 +162,7 @@ class ItemForm extends Form {
 
     static public function city_select($cities, $item = null) {
         if( count($cities) > 1 ) {
-            parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select one city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
+            parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
             return true ;
         } else if ( count($cities) == 1 ) {
             parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
@@ -311,30 +311,30 @@ class ItemForm extends Form {
 
     function checkForm() {
         if(document.getElementById('regionId').value == "") {
-            alert("<?php  _e('You have to select a region.');?>");
+            alert("<?php  _e('You have to select a region');?>");
             return false;
         }
 
         if(document.getElementById('cityId').value == "") {
-            alert("<?php  _e('You have to select a city.');?>");
+            alert("<?php  _e('You have to select a city');?>");
             return false;
         }
 
         if(document.getElementById('city').value == "") {
-            alert("<?php  _e('You have to write a city.');?>");
+            alert("<?php  _e('You have to enter a city');?>");
             return false;
         }
 
         if(typeof(document.getElementById('contactName'))!='undefined') {
             if(document.getElementById('contactName').value == "") {
-                alert("<?php  _e('You have to write a name.');?>");
+                alert("<?php  _e('You have to enter a name');?>");
                 return false;
             }
         }
         
         if(typeof(document.getElementById('contactEmail'))!='undefined') {
             if(document.getElementById('contactEmail').value == "") {
-                alert("<?php  _e('You have to write an e-mail.');?>");
+                alert("<?php  _e('You have to enter an e-mail');?>");
                 return false;
             }
         }
@@ -351,7 +351,7 @@ class ItemForm extends Form {
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="user.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
+                    <img src="<?php echo $_r['s_path'];?>" /><a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')" href="user.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
                 </div>						
             <?php }
         }

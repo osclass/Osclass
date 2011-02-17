@@ -144,26 +144,10 @@
                     <div id="photos">
                         <?php if(count($resources)) { ?>
                             <?php foreach($resources as $resource) { ?>
-                                <img src="<?php echo osc_resource_normal($resource) ; ?>" />
+                                <img src="<?php echo osc_resource_url($resource) ; ?>" width="350" />
                             <?php } ?>
                         <?php } ?>
 
-                                <!--
-                        <div class="main_photo">
-                            <a href="#"><img src="<?php echo osc_resource_normal('osclass.png') ; ?>" /><strong>+ enlarge picture</strong></a>
-                        </div>
-                        <div class="mini_photos">
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_1.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_2.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_3.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_4.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_1.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_2.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_3.jpg" /></span></a>
-                            <a href="TMP_PHOTOS/item_big_2.jpg"><span><img src="TMP_PHOTOS/item_4.jpg" /></span></a>
-                        </div>
-                                -->
-                        
                     </div>
 
                     <div id="contact">

@@ -90,20 +90,21 @@
                             <p class="empty"><?php _e('No Latest Items') ; ?></p>
                         <?php } else { ?>
 
-                             <table border="0" cellspacing="0">
+                            <table border="0" cellspacing="0">
                                  <tbody>
                                     <?php $class = "even";
                                     foreach($latestItems as $item) { ?>
                                         <tr class="<?php echo $class ; ?>">
                                              <td class="photo">
                                                  <?php if( osc_item_has_thumbnail($item) ) { ?>
-                                                    <a href="<?php echo osc_item_url($item) ; ?>"><img src="<?php echo osc_item_thumbnail_url($item) ; ?>" /></a>
+                                                    <?php $aResources = ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ; ?>
+                                                    <a href="<?php echo osc_item_url($item) ; ?>"><img src="<?php echo osc_resource_thumbnail_url( current($aResources) ) ; ?>" /></a>
                                                 <?php } else { ?>
                                                     <img src="<?php echo $this->osc_get_theme_url('images/no_photo.gif') ; ?>" />
                                                 <?php } ?>
                                              </td>
                                              <td class="text">
-                                                 <h3><a href="<?php echo osc_item_url($item); ?>"><?php echo $item['s_title'] ; ?></a></h3>
+                                                 <h3><a href="<?php echo osc_item_url($item) ; ?>"><?php echo $item['s_title'] ; ?></a></h3>
                                                  <!--
                                                      <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
                                                  -->
@@ -115,8 +116,9 @@
                                     <?php } ?>
                                 </tbody>
                             </table>
-
-                            <p class="see_more_link"><a href="#"><strong>See all offers &raquo;</strong></a></p>
+                            <?php if( count($latestItems) == osc_max_latest_items() ) { ?>
+                                <p class="see_more_link"><a href="#"><strong>See all offers &raquo;</strong></a></p>
+                            <?php } ?>
                         <?php } ?>
                     </div>
                 </div>

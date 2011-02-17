@@ -66,10 +66,10 @@ class CAdminEmails extends AdminSecBaseModel
                     if(!$this->emailManager->isIndelible($id)) {
                         $this->emailManager->updateInternalName($id, $s_internal_name);
                     }
-                    osc_add_flash_message( __('The email/alert has been updated.'), 'admin' );
+                    osc_add_flash_message( __('The email/alert has been updated'), 'admin' );
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
-                osc_add_flash_message(__('You couldn\'t repeat internal name.'), 'admin');
+                osc_add_flash_message(__('You can\'t repeat internal name'), 'admin');
                 $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                 break;
             default:

@@ -32,7 +32,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
 
         <script type="text/javascript" src="<?php echo osc_base_url() ; ?>/oc-includes/js/tiny_mce/tiny_mce.js"></script>
         <script type="text/javascript">
@@ -48,7 +48,7 @@
             });
         </script>
         <?php if(isset($action) && $action === "add_widget") { ?>
-                <script>
+                <script type="text/javascript">
                         $(function() {
                                 // change title of the page
                                 $(this).attr("title", "<?php _e('Dashboard - Add New Widget'); ?>") ;
@@ -76,8 +76,8 @@
             <div id="right_column">
 
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/plugins-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Create widget on ') . $_GET['location'] ; ?></div>
+                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/plugins-icon.png" /></div>
+                    <div id="content_header_arrow">&raquo; <?php echo sprintf(__('Create widget in %s') . $_GET['location']); ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -93,7 +93,7 @@
                             <input type="hidden" name="location" value="<?php echo $_GET['location'] ; ?>" />
 
                             <fieldset>
-                                <legend><?php _e('Description (only for internal purpose)'); ?></legend>
+                                <legend><?php _e('Description (only for internal purposes)'); ?></legend>
                                 <input type="text" name="description" id="description" />
                             </fieldset>
 

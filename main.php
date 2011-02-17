@@ -43,7 +43,7 @@ class CWebMain extends BaseModel
             default:                //recovering data needed at main.php
                                     $categories = Category::newInstance()->toTree();
                                     $locales = Locale::newInstance()->listAllEnabled() ;
-                                    $latestItems = Item::newInstance()->listLatest(10) ;
+                                    $latestItems = Item::newInstance()->listLatest( osc_max_latest_items() ) ;
                                     
                                     //calling the view...
                                     $this->_exportVariableToView('categories', $categories) ;

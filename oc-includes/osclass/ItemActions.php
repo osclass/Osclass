@@ -37,11 +37,13 @@ Class ItemActions
         $success = true;
         $aItem = $this->prepareData(true);
 
+
         if($aItem == -1){
             return -1;
         }else{
             // first of all, insert the item
             $code = osc_genRandomPassword();
+
 
             $has_to_validate = false ;
             if( osc_item_validation_enabled() ) {
@@ -119,6 +121,7 @@ Class ItemActions
 
                 osc_run_hook('after_item_post') ;
 
+
                 if($this->is_admin) {
                     osc_add_flash_message(__('A new item has been added')) ;
                 } else {
@@ -127,6 +130,7 @@ Class ItemActions
                     } else {
                         osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
                     }
+
                 }
             }
             return $success;
@@ -136,8 +140,9 @@ Class ItemActions
     function edit($userId)
     {
         $aItem = $this->prepareData(false);
-        echo "<pre>";print_r($aItem);echo "</pre>";
-        exit;
+
+        //echo "<pre>";print_r($aItem);echo "</pre>";
+
         $location = array(
             'fk_c_country_code' => $aItem['countryId'],
             's_country'         => $aItem['countryName'],

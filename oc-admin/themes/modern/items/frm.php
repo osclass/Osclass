@@ -66,7 +66,7 @@
                 <div id="home_header" style="margin-left: 40px;">
                     <h2>
                         <?php
-                            if($new_item=="TRUE") { _e('New item');} else { _e('Update your item');};
+                            if($new_item=="TRUE") { _e('New item');} else { _e('Edit item');};
                         ?>
                     </h2>
                 </div>
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                             <h2>
-                                <?php _e('General Information'); ?>
+                                <?php _e('General information'); ?>
                             </h2>
                             <label for="catId">
                                 <?php _e('Category') ?>:
@@ -164,11 +164,11 @@
                                     <div id="photos">
                                         <?php foreach($resources as $_r) {?>
                                             <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                                <img src="../<?php echo $_r['s_path'];?>" /><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href="<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id=<?php echo $_r['pk_i_id'] ; ?>&fkid=<?php echo $_r['fk_i_item_id'] ; ?>&name=<?php echo $_r['s_name'] ; ?>" class="delete"><?php _e('Delete'); ?></a>
+                                                <img src="../<?php echo $_r['s_path'];?>" /><a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id=<?php echo $_r['pk_i_id'] ; ?>&fkid=<?php echo $_r['fk_i_item_id'] ; ?>&name=<?php echo $_r['s_name'] ; ?>" class="delete"><?php _e('Delete'); ?></a>
                                             </div>
                                         <?php } ?>
                                         <div>
-                                            <input type="file" name="photos[]" /> (<?php _e('optional') ; ?>)
+                                            <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
                                         </div>
                                     </div>
                                     <a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a>
@@ -201,7 +201,7 @@
                             <div class="clear"></div>
                             <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
                                 <button type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=items';" ><?php _e('Cancel'); ?></button>
-                                <button type="submit"><?php if($new_item==TRUE) { _e('Add item');} else { _e('Save');}; ?></button>
+                                <button type="submit"><?php if($new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
                             </div>
                         </div>
                     </form>

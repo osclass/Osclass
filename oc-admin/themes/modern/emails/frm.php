@@ -29,7 +29,7 @@
         $edit = true ;
         $title = __("Edit email/alert") ;
         $action_frm = "edit_post";
-        $btn_text = __("Save");
+        $btn_text = __("Update");
     } else {
         //adding...
         $edit = false ;
@@ -82,7 +82,7 @@
                             <?php PageForm::primary_input_hidden($email); ?>
                             <div class="FormElement">
                                 <div class="FormElementName">
-                                    <?php _e('Internal Name (Short name to easily identify this email/alert)'); ?>
+                                    <?php _e('Internal name (name to easily identify this email/alert)'); ?>
                                 </div>
                                 <div class="FormElementInput">
                                    <?php PageForm::internal_name_input_text($email); ?>

@@ -31,10 +31,14 @@
     $sOrder = $this->_get('sOrder') ;
     $sPattern = $this->_get('sPattern') ;
     $iNumPages = $this->_get('iNumPages') ;
+    $iPage = $this->_get('iPage') ;
     $bPic = $this->_get('bPic') ;
     $sCity = $this->_get('sCity') ;
     $sPriceMin = $this->_get('sPriceMin') ;
     $sPriceMax = $this->_get('sPriceMax') ;
+    $iTotalItems = $this->_get('iTotalItems') ;
+    $aItems = $this->_get('aItems') ;
+    $sShowAs = $this->_get('sShowAs') ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -77,25 +81,24 @@
                                         <?php } ?>
                                         <?php $i++ ; ?>
                                     <?php } ?>
-                                    <!--<?php _e('Show as:'); ?> <a href="<?php echo $this->osc_update_search_url(array('showAs' => 'list')); ?>"><?php _e('List'); ?></a> or <a href="<?php echo $this->osc_update_search_url(array('showAs' => 'gallery', 'onlyPic' => 1)); ?>"><?php _e('image gallery'); ?></a>-->
+                                    
                                 </p>
                             </div>
                         </div>
 
-                        <!--<div class="searchShowing" ><?php printf('Showing from %d to %d %s of a total of %d results.', ($start + 1), $end, $pattern, $totalItems); ?></div>-->
 
-                        <?php if(!isset($items) || !is_array($items) || count($items) == 0) { ?>
+                        <?php if(!isset($aItems) || !is_array($aItems) || count($aItems) == 0) { ?>
                             <p class="empty" ><?php printf(__('There are no results matching "%s".'), $sPattern) ; ?></p>
                         <?php } else { ?>
-                            <?php osc_renderView($showAs == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
+                            <?php require($sShowAs == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
                         <?php } ?>
 
                         <div class="paginate" >
                         <?php for($i = 0 ; $i < $iNumPages ; $i++) {
-                            if($i == $page) {
-                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', $this->osc_update_search_url(array('page' => $i)), ($i + 1));
+                            if($i == $iPage) {
+                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', $this->osc_update_search_url(array('iPage' => $i)), ($i + 1));
                             } else {
-                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', $this->osc_update_search_url(array('page' => $i)), ($i + 1));
+                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', $this->osc_update_search_url(array('iPage' => $i)), ($i + 1));
                             }
                         } ?>
                         </div>
@@ -105,7 +108,8 @@
                 <div id="sidebar">
 
                     <div class="filters">
-                        <form action="search.php" method="post">
+                        <form action="<?php echo osc_base_url('index');?>" method="post">
+                        <input type="hidden" name="page" value="search" >
                             <?php
                             foreach($_REQUEST as $k => $v) {
                                 if($k!='osclass') {
@@ -118,7 +122,7 @@
                                 <h3><strong><?php _e('Location') ; ?></strong></h3>
                                 <div class="row one_input">
                                     <h6><?php _e('City'); ?></h6>
-                                    <input type="text" id="city" name="city" value="<?php echo $sCity ; ?>" />
+                                    <input type="text" id="sCity" name="sCity" value="<?php echo $sCity ; ?>" />
                                 </div>
                             </fieldset>
 
@@ -186,7 +190,7 @@
                     }
 
                     $( "#city" ).autocomplete({
-                        source: "<?php echo WEB_PATH; ?>/oc-includes/osclass/ajax/location.php",
+                        source: "<?php echo osc_base_url(true); ?>?page=ajax&actionlocation",
                         minLength: 2,
                         select: function( event, ui ) {
                             log( ui.item ?
