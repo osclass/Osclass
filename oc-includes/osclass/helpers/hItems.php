@@ -177,20 +177,25 @@
         return osc_base_url().osc_item_field($resource, "s_path");
     }
 
-    function osc_resource_thumbnail($resource = null) {
+    function osc_resource_thumbnail_url($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_thumbnail.".osc_item_field($resource, "s_extension");
     }
 
-    function osc_resource($resource = null) {
+    function osc_resource_url($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name").".".osc_item_field($resource, "s_extension");
     }
 
-    function osc_resource_normal($resource = null) {
-        return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name").".".osc_item_field($resource, "s_extension");
-    }
-
-    function osc_resource_original($resource = null) {
+    function osc_resource_original_url($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_original.".osc_item_field($resource, "s_extension");
     }
+    
+    function osc_item_thumbnail($item = null) {
+        if($item!=null) {
+            $conn = getConnection() ;
+            $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d LIMIT 1', DB_TABLE_PREFIX, $item['pk_i_id']) ;
+            orc_resource_thumbnail($resource);
+        }    
+    }
+
 
 ?>
