@@ -28,7 +28,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('Backup'); ?></div>
         <script type="text/javascript">
             $(document).ready(function(){
                 $.ajaxSetup({
@@ -58,7 +58,7 @@
                     } else {
                         var result = document.getElementById('steps_sql') ;
                     }
-                    result.innerHTML = "<?php _e('Backing up data... please wait') ; ?>";
+                    result.innerHTML = "<?php _e('Backing up data... please wait'); ?>";
 
                     $.get('<?php echo osc_admin_base_url(true); ?>?page=tools&bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
                         result.innerHTML = data;
@@ -74,17 +74,15 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/tools-icon.png" title="" alt=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Backup OSClass'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e('You can back up  OSClass here. WARNING: Backup files will be created in the root of your OSClass installation'); ?>.
+                        <?php _e('You can back up OSClass here. WARNING: Backup files will be created in the root of your OSClass installation'); ?>.
                         <form action="<?php echo osc_admin_base_url(true);?>" method="post" id="bckform" name="bckform" >
                             <input type="hidden" name="action" value="backup_post" />
                             <input type="hidden" name="page" value="tools" />
