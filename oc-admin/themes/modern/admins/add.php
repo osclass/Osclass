@@ -41,11 +41,8 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Add new admin'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
-
-                <?php osc_show_flash_message() ; ?>
-
+                <?php osc_show_flash_message('admin'); ?>
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
 

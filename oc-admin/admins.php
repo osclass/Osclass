@@ -43,71 +43,132 @@ class CAdminAdmins extends AdminSecBaseModel
 
         switch ($this->action)
         {
-            case 'add':         $this->doView('admins/add.php') ;
+            case 'add':         // callin add view
+                                $this->doView('admins/add.php') ;
             break;
-            case 'add_post':    $array = array(
-                                        's_password'    =>  sha1(Params::getParam('s_password')),
-                                        's_name'        =>  Params::getParam('s_name'),
-                                        's_email'       =>  Params::getParam('s_email'),
-                                        's_username'    =>  Params::getParam('s_username'),
-                                );
-                                $this->adminManager->insert( $array ) ;
+            case 'add_post':    // adding a new admin
+                                $sPassword = Params::getParam('s_password');
+                                $sName     = Params::getParam('s_name');
+                                $sEmail    = Params::getParam('s_email');
+                                $sUserName = Params::getParam('s_username');
 
-                                osc_add_flash_message(__('The admin has been added.')) ;
-                                $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
+                                // cleaning parameters
+                                $sPassword = strip_tags($sPassword);
+                                $sPassword = trim($sPassword);
+                                $sPassword = sha1($sPassword);
+                                $sName     = strip_tags($sName);
+                                $sName     = trim($sName);
+                                $sEmail    = strip_tags($sEmail);
+                                $sEmail    = trim($sEmail);
+                                $sUserName = strip_tags($sUserName);
+                                $sUserName = trim($sUserName);
+
+                                $array = array('s_password' =>  $sPassword
+                                              ,'s_name'     =>  $sName
+                                              ,'s_email'    =>  $sEmail
+                                              ,'s_username' =>  $sUserName);
+                                
+                                $isInserted = $this->adminManager->insert($array);
+
+                                if($isInserted) {
+                                    osc_add_flash_message(__('The admin has been added'), 'admin');
+                                } else {
+                                    osc_add_flash_message(__('There have been an error adding a new admin'), 'admin') ;
+                                }
+                                $this->redirectTo(osc_admin_base_url(true).'?page=admins');
             break;
-            case 'edit':        $adminEdit = null;
-                                if(Params::getParam('id') != '') $adminEdit = $this->adminManager->findByPrimaryKey ( Params::getParam('id') ) ;
-                                elseif( Session::newInstance()->_get('adminId') != '') $adminEdit = $this->adminManager->findByPrimaryKey( Session::newInstance()->_get('adminId') ) ;
+            case 'edit':        // calling edit admin view
+                                $adminEdit = null;
+                                $adminId   = Params::getParam('id');
+                                
+                                if(Params::getParam('id') != '') {
+                                    $adminEdit = $this->adminManager->findByPrimaryKey((int)$adminId);
+                                } elseif( Session::newInstance()->_get('adminId') != '') {
+                                    $adminEdit = $this->adminManager->findByPrimaryKey(Session::newInstance()->_get('adminId'));
+                                }
+
+                                if(count($adminEdit) == 0) {
+                                    osc_add_flash_message(__('It doesn\'t exist an admin with this id'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true).'?page=admins');
+                                }
 
                                 $this->_exportVariableToView("admin", $adminEdit);
-
                                 $this->doView('admins/edit.php') ;
             break;
-            case 'edit_post':   $conditions = array('pk_i_id' => Params::getParam('id')) ;
-                                $admin = $this->adminManager->findByPrimaryKey(Params::getParam('id')) ;
-                                $array = array();
-                                if( Params::getParam('s_password') == '' ) {  // OJO
+            case 'edit_post':   // updating a new admin
+                                $iUpdated = 0;
+                                $adminId  = Params::getParam('id');
+
+                                $aAdmin   = $this->adminManager->findByPrimaryKey($adminId);
+
+                                if(count($aAdmin) == 0) {
+                                    osc_add_flash_message(__('There admin doesn\'t exist'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true).'?page=admins');
+                                }
+
+                                if( $aAdmin['s_username'] != Params::getParam('s_username') ){
+                                    if($this->adminManager->findByUsername( Params::getParam('s_username') ) ) {
+                                        osc_add_flash_message(__('Existing username'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
+                                    }
+                                }
+                                
+                                $conditions = array('pk_i_id' => $adminId);
+                                $array      = array();
+
+                                if(Params::getParam('old_password') != '') {
+                                    $firstCondition  = sha1(Params::getParam('old_password')) == $aAdmin['s_password'];
+                                    $secondCondition = Params::getParam('s_password') == Params::getParam('s_password2');
+                                    if( $firstCondition && $secondCondition ) {
+                                        $array['s_password'] = sha1(Params::getParam('s_password') );
+                                    } else {
+                                        osc_add_flash_message(__('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
+                                    }
+                                }
+
+                                $array['s_name']     = Params::getParam('s_name');
+                                $array['s_username'] = Params::getParam('s_username');
+                                $array['s_email']    = Params::getParam('s_email');
+
+                                $iUpdated = $this->adminManager->update($array, $conditions);
+
+                                if($iUpdated > 0) {
+                                    osc_add_flash_message(__('The admin has been updated'), 'admin');
+                                }
+
+                                $this->redirectTo(osc_admin_base_url(true).'?page=admins');
+            break;
+            case 'delete':      // deleting and admin
+                                $isDeleted = false;
+                                $adminId   = Params::getParam('id');
+
+                                if(!is_array($adminId)) {
+                                    osc_add_flash_message(__('The admin id isn\'t in the correct format'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true).'?page=admins');
+                                }
+                                
+                                // Verification to avoid an administrator trying to remove to itself
+                                if(in_array(Session::newInstance()->_get('adminId'), $adminId)) {
+                                    osc_add_flash_message(__('The operation hasn\'t been completed. You\'re trying to remove yourself!'), 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true).'?page=admins');
+                                }
+
+                                $isDeleted = $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $adminId) . ')')) ;
+
+                                if($isDeleted) {
+                                    osc_add_flash_message(__('The admin has been deleted correctly'), 'admin');
                                 } else {
-                                    if( sha1(Params::getParam('old_password')) == $admin['s_password'] ) {
-                                        if( Params::getParam('s_password') == Params::getParam('s_password2') ) {
-
-
-                                            if( $admin['s_username'] != Params::getParam('s_username') ){  // si cambia el username
-                                                if($this->adminManager->findByUsername( Params::getParam('s_username') ) ) {  // si exisite username NO PUEDE UPDATE
-                                                    osc_add_flash_message(__('Existing username.'));
-                                                }
-                                            }
-                                            $array['s_password']    = sha1(Params::getParam('s_password') );
-                                            $array['s_email']       = Params::getParam('s_email');
-                                            $array['s_username']    = Params::getParam('s_username');
-
-                                        } else {
-                                            osc_add_flash_message(__('The password couldn\'t be updated. Passwords don\'t match.'));
-                                        }
-                                    } else {
-                                        osc_add_flash_message(__('The password couldn\'t be updated. "Current password" doesn\'t match our records.'));
-                                    }
-                                }
-                                $this->adminManager->update($array, $conditions);
-                                $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
-            break;
-            case 'delete':      $id = Params::getParam('id') ;
-                                if($id) {
-                                    // Verification to avoid an administrator trying to remove to itself
-                                    if(in_array($_SESSION['adminId'], $id)) {
-                                        osc_add_flash_message( __('The operation hasn\'t been completed. You\'re trying to remove yourself!') );
-                                    } else {
-                                        $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $id) . ')')) ;
-                                    }
+                                    osc_add_flash_message(__('The admin couldn\'t be deleted'), 'admin');
                                 }
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
-            default:            $admins = $this->adminManager->listAll();
+            default:            // calling manage admins view
+                                $admins = $this->adminManager->listAll();
 
                                 $this->_exportVariableToView("admins", $admins);
-                                
                                 $this->doView('admins/index.php');
+            break;
         }
     }
 
