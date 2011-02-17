@@ -88,7 +88,11 @@ class Test extends DAO {
         $sql .= implode($aSqlInserts, ",") ;
         $this->conn->osc_dbExec($sql) ;
 
-        
+        //ITEM RESOURCES
+        $sql =  "INSERT INTO `oc_t_item_resource` VALUES " ;
+        $aSqlInserts = $this->getItemResourceInserts() ;
+        $sql .= implode($aSqlInserts, ",") ;
+        $this->conn->osc_dbExec($sql) ;
 
     }
 
@@ -143,6 +147,25 @@ class Test extends DAO {
                         ,"(9,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Cordoba',NULL,'Cosquin',NULL,'',NULL,NULL)"
                         ,"(10,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'Puerto Madero',NULL,NULL)"
                         ,"(11,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'San Isidro',NULL,'',NULL,NULL)"
+        ) ;
+
+        return($inserts) ;
+    }
+
+    public function getItemResourceInserts() {
+        $fields = array('pk_i_id', 'fk_i_item_id', 's_name', 's_content_type', 's_path') ;
+        $inserts = array(
+                        "(1,1,'OSClass injection1-1','image/png','')"
+                        ,"(2,1,'OSClass injection1-2','image/png','')"
+                        ,"(3,1,'OSClass injection1-3','image/png','')"
+                        ,"(4,1,'OSClass injection1-4','image/png','')"
+                        ,"(5,2,'OSClass injection2-1','image/png','')"
+                        ,"(6,2,'OSClass injection2-2','image/png','')"
+                        ,"(7,3,'OSClass injection3-1','image/png','')"
+                        ,"(8,4,'OSClass injection4-1','image/png','')"
+                        ,"(9,5,'OSClass injection5-1','image/png','')"
+                        ,"(10,6,'OSClass injection6-1','image/png','')"
+                        ,"(11,6,'OSClass injection6-2','image/png','')"
         ) ;
 
         return($inserts) ;

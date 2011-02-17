@@ -135,51 +135,8 @@ Class ItemActions
                 CategoryStats::newInstance()->increaseNumItems($catId);
             }
 
-            $filePhotos = $aItem['photos'];
-            if($filePhotos != '')
-            {
-                $dao_itemResource = new ItemResource() ;
-
-                foreach ($filePhotos['error'] as $key => $error) {
-                    if ($error == UPLOAD_ERR_OK) {
-                        $resourceName = $filePhotos['name'][$key];
-                        $tmpName = $filePhotos['tmp_name'][$key];
-                        $resourceType = $filePhotos['type'][$key];
-
-                        $dao_itemResource->insert(array(
-                            'fk_i_item_id' => $itemId,
-                            's_name' => $resourceName,
-                            's_content_type' => $resourceType
-                        ));
-                        $resourceId = $dao_itemResource->getConnection()->get_last_id();
-
-                        // Create thumbnail
-                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
-                        $size = explode('x', osc_thumbnail_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
-
-                        // Create normal size
-                        $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
-                        $size = explode('x', osc_normal_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
-
-                        if(osc_keep_original_image()) {
-                            $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
-                            move_uploaded_file($tmpName, $path) ;
-                        }
-
-                        $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
-                        $dao_itemResource->update(
-                                                array('s_path' => $s_path)
-                                                ,array(
-                                                    'pk_i_id'      => $resourceId
-                                                    ,'fk_i_item_id' => $itemId
-                                                )
-                                           ) ;
-                    }
-                }
-                unset($dao_itemResource) ;
-            }
+            //uploading resources from the input form
+            $this->uploadItemResources( $aItem['photos'] ) ;
 
 
             if ( $aItem['catId'] == '' ) {
@@ -337,7 +294,7 @@ Class ItemActions
         $aItem = $this->prepareData(false);
         
 
-        $Pid         = $aItem['idItem'];
+        $itemId         = $aItem['idItem'];
         $countryId   = $aItem['countryId'];
         $countryName = $aItem['countryName'];
         $regionId    = $aItem['regionId'];
@@ -359,7 +316,7 @@ Class ItemActions
         );
 
         $locationManager = ItemLocation::newInstance();
-        $locationManager->update($location, array('fk_i_item_id' => $Pid));
+        $locationManager->update($location, array('fk_i_item_id' => $itemId));
 
         // If the Google Maps plugin is well configured, we can try to geodecode the address
         if (osc_google_maps_key()) {
@@ -374,7 +331,7 @@ Class ItemActions
                             'd_coord_lat' => $coord[1]
                             ,'d_coord_long' => $coord[0]
                         )
-                        ,array('fk_i_item_id' => $Pid)
+                        ,array('fk_i_item_id' => $itemId)
                 );
             }
         }
@@ -387,7 +344,7 @@ Class ItemActions
         $secret         = $aItem['secret'];         // OK
 
         // Update category numbers
-        $old_item = $this->manager->findByPrimaryKey($Pid) ;
+        $old_item = $this->manager->findByPrimaryKey($itemId) ;
         if($old_item['fk_i_category_id'] != $catId) {
             CategoryStats::newInstance()->increaseNumItems($catId) ;
             CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
@@ -403,7 +360,7 @@ Class ItemActions
                                     ,'fk_c_currency_code' => $currency
                                 )
                                 ,array(
-                                    'pk_i_id' => $Pid
+                                    'pk_i_id' => $itemId
                                     ,'s_secret' => $secret
                             )
         ) ;
@@ -418,55 +375,62 @@ Class ItemActions
         foreach($title as $k => $_data){
             $_title         = $title[$k];
             $_description   = $description[$k];
-            $this->manager->updateLocaleForce($Pid, $k, $_title, $_description) ;
+            $this->manager->updateLocaleForce($itemId, $k, $_title, $_description) ;
         }
 
-        $filePhotos = Params::getFiles('photos') ;
-        if($filePhotos != '')
-        {
-            $dao_itemResource = new ItemResource() ;
-            foreach ($filePhotos['error'] as $key => $error) {
-                if ($error == UPLOAD_ERR_OK) {
-                    $resourceName = $filePhotos['name'][$key];
-                    $tmpName = $filePhotos['tmp_name'][$key];
-                    $resourceType = $filePhotos['type'][$key];
+        $this->uploadItemResources( $aItem['photos'] ) ;
 
-                    $dao_itemResource->insert(array(
-                        'fk_i_item_id' => $Pid,
-                        's_name' => $resourceName,
-                        's_content_type' => $resourceType
-                    ));
-                    $resourceId = $dao_itemResource->getConnection()->get_last_id() ;
+//        osc_run_hook('item_edit_post');
+        
+        return $return;
+    }
+
+    public function uploadItemResources($aResources) {
+        if($aResources != '')
+        {
+            $itemResourceManager = ItemResource::newInstance() ;
+            
+            foreach ($aResource as $resource) {
+                if ($error == UPLOAD_ERR_OK) {
+                    $tmpName = $resource['tmp_name'][$key] ;
+
+                    $itemResourceManager->insert(array(
+                        'fk_i_item_id' => $itemId
+                    )) ;
+                    $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
                     // Create thumbnail
-                    $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
                     $size = explode('x', osc_thumbnail_dimensions()) ;
-                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     // Create normal size
-                    $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
+                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
                     $size = explode('x', osc_normal_dimensions()) ;
-                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath);
+                    ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                    if(osc_keep_original_image()) {
+                    if( osc_keep_original_image() ) {
                         $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
                         move_uploaded_file($tmpName, $path) ;
                     }
 
-                    $s_path = 'oc-content/uploads/' . $resourceId . '_thumbnail.png';
-                    $dao_itemResource->update(
-                                            array('s_path' => $s_path)
-                                            ,array('pk_i_id' => $resourceId, 'fk_i_item_id' => $Pid)
+                    $s_path = 'oc-content/uploads/' ;
+                    $resourceType = 'image/png' ;
+                    $itemResourceManager->update(
+                                            array(
+                                                's_path' => $s_path
+                                                ,'s_name' => $resourceId
+                                                ,'s_extension' => 'png'
+                                                ,'s_content_type' => $resourceType
+                                            )
+                                            ,array(
+                                                'pk_i_id'      => $resourceId
+                                                ,'fk_i_item_id' => $itemId
+                                            )
                     ) ;
                 }
             }
-            unset($dao_itemResource) ;
         }
-
-        Params::setParam('pk_i_id',Params::getParam('id'));
-//        osc_run_hook('item_edit_post');
-        
-        return $return;
     }
 
     public function prepareData($is_add)
@@ -678,7 +642,7 @@ Class ItemActions
 //        );
 //
 //        $locationManager = ItemLocation::newInstance();
-//        $locationManager->update($location, array('fk_i_item_id' => $Pid));
+//        $locationManager->update($location, array('fk_i_item_id' => $itemId));
 //
 //        // If the Google Maps plugin is well configured, we can try to geodecode the address
 //        if (osc_google_maps_key()) {
