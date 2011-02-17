@@ -23,11 +23,11 @@
  <table border="0" cellspacing="0">
      <tbody>
         <?php $class = "even" ; ?>
-        <?php foreach($items as $item) { ?>
+        <?php foreach($aItems as $item) { ?>
             <tr class="<?php echo $class; ?>">
                  <td class="photo">
                      <?php if(osc_item_has_thumbnail($item)) { ?>
-                        <a href="<?php echo osc_item_url($item) ; ?>"><img src="<?php echo osc_item_thumbnail_url($item) ; ?>" /></a>
+                        <a href="<?php echo osc_item_url($item) ; ?>"><img src="<?php echo osc_item_thumbnail($item) ; ?>" /></a>
                     <?php } else { ?>
                         <img src="<?php echo $this->osc_get_theme_url('images/no_photo.gif') ; ?>" />
                     <?php } ?>
@@ -39,7 +39,7 @@
                      -->
                      <p><?php echo strip_tags($i['s_description']) ; ?></p>
                  </td>
-                 <td class="price"><strong><?php echo osc_formatPrice($item) ; ?></strong></td>
+                 <td class="price"><strong><?php echo osc_format_price($item) ; ?></strong></td>
              </tr>
             <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
         <?php } ?>

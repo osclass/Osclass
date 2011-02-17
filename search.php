@@ -58,7 +58,7 @@
                 if($p_sCity == '') {
                     $p_sCity = array() ;
                 } else {
-                    $p_sCity = array($p_sCity);
+                    $p_sCity = explode(",", $p_sCity);
                 }
             }
 
@@ -67,7 +67,7 @@
                 if($p_sRegion == '') {
                     $p_sRegion = array() ;
                 } else {
-                    $p_sRegion = array($p_sRegion);
+                    $p_sRegion = explode(",", $p_sRegion);
                 }
             }
 
@@ -76,7 +76,7 @@
                 if($p_sCountry == '') {
                     $p_sCountry = array() ;
                 } else {
-                    $p_sCountry = array($p_sCountry);
+                    $p_sCountry = explode(",", $p_sCountry);
                 }
             }
 
@@ -136,16 +136,19 @@
             foreach($p_sCity as $city) {
                 $this->mSearch->addCity($city);
             }
+            $p_sCity = implode(", ", $p_sCity);
 
             //FILTERING REGION
             foreach($p_sRegion as $region) {
                 $this->mSearch->addRegion($region);
             }
+            $p_sRegion = implode(", ", $p_sRegion);
 
             //FILTERING COUNTRY
             foreach($p_sCountry as $country) {
                 $this->mSearch->addCountry($country);
             }
+            $p_sCountry = implode(", ", $p_sCountry);
 
             // FILTERING PATTERN
             if($p_sPattern != '') {
@@ -209,10 +212,14 @@
                 $this->_exportVariableToView('sOrder', $p_sOrder) ;
                 $this->_exportVariableToView('sPattern', $p_sPattern) ;
                 $this->_exportVariableToView('iNumPages', $iNumPages) ;
+                $this->_exportVariableToView('iPage', $p_iPage) ;
                 $this->_exportVariableToView('bPic', $p_bPic) ;
                 $this->_exportVariableToView('sCity', $p_sCity) ;
                 $this->_exportVariableToView('sPriceMin', $p_sPriceMin) ;
                 $this->_exportVariableToView('sPriceMax', $p_sPriceMax) ;
+                $this->_exportVariableToView('iTotalItems', $iTotalItems) ;
+                $this->_exportVariableToView('aItems', $aItems) ;
+                $this->_exportVariableToView('sShowAs', $p_sShowAs);
                 
                 //calling the view...
                 $this->doView('search.php') ;
@@ -229,7 +236,7 @@
 
         function osc_update_search_url($params, $delimiter = '&amp;') {
             $merged = array_merge($_REQUEST, $params);
-            return osc_base_url() . '/search.php?' . http_build_query($merged, '', $delimiter);
+            return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
         }
 
         function alert_form() {
