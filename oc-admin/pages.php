@@ -66,10 +66,10 @@ class CAdminPages extends AdminSecBaseModel
                     if(!$this->pageManager->isIndelible($id)) {
                         $this->pageManager->updateInternalName($id, $s_internal_name);
                     }
-                    osc_add_flash_message( __('The page has been updated.'), 'admin' );
+                    osc_add_flash_message( __('The page has been updated'), 'admin' );
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                 }
-                osc_add_flash_message(__('You couldn\'t repeat internal name.'), 'admin');
+                osc_add_flash_message(__('You can\'t repeat internal name'), 'admin');
                 $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
                 break;
             case 'add':
@@ -82,7 +82,7 @@ class CAdminPages extends AdminSecBaseModel
             case 'add_post':
                 $s_internal_name = Params::getParam("s_internal_name");
                 if($s_internal_name=='') {
-                    osc_add_flash_message(__('You have to put some internal name.'), 'admin');
+                    osc_add_flash_message(__('You have to set an internal name'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                 }
 
@@ -98,9 +98,9 @@ class CAdminPages extends AdminSecBaseModel
                     }
 
                     $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
-                    osc_add_flash_message(__('The page has been added.'), 'admin') ;
+                    osc_add_flash_message(__('The page has been added'), 'admin') ;
                 } else {
-                    osc_add_flash_message(__('Ops! That internal name is already in use. We couldn\'t made the changes.'), 'admin') ;
+                    osc_add_flash_message(__('Oops! That internal name is already in use. We can\'t made the changes'), 'admin') ;
                 }
                 $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                 break;
@@ -130,23 +130,23 @@ class CAdminPages extends AdminSecBaseModel
 
                 if($page_indelible > 0) {
                     if($page_indelible == 1) {
-                        osc_add_flash_message(__('1 page couldn\'t be deleted because it is indelible.'), 'admin');
+                        osc_add_flash_message(__('One page can\'t be deleted because it is indelible'), 'admin');
                     } else {
-                        osc_add_flash_message($page_indelible . ' ' .__('pages couldn\'t be deleted because are indelible.'), 'admin');
+                        osc_add_flash_message($page_indelible . ' ' .__('pages couldn\'t be deleted because are indelible'), 'admin');
                     }
                 }
                 if($page_deleted_error > 0) {
                     if($page_deleted_error == 1) {
-                        osc_add_flash_message(__('1 page couldn\'t be deleted.'), 'admin');
+                        osc_add_flash_message(__('One page couldn\'t be deleted'), 'admin');
                     } else {
-                        osc_add_flash_message($page_deleted_error . ' ' .__('pages couldn\'t be deleted.'), 'admin');
+                        osc_add_flash_message($page_deleted_error . ' ' .__('pages couldn\'t be deleted'), 'admin');
                     }
                 }
                 if($page_deleted_correcty > 0) {
                     if($page_deleted_correcty == 1) {
-                        osc_add_flash_message(__('1 page has been deleted correctly.'), 'admin');
+                        osc_add_flash_message(__('One page has been deleted correctly'), 'admin');
                     } else {
-                        osc_add_flash_message($page_deleted_correcty . ' ' .__('pages have been deleted correctly.'), 'admin');
+                        osc_add_flash_message($page_deleted_correcty . ' ' .__('pages have been deleted correctly'), 'admin');
                     }
                 }
                 $this->redirectTo(osc_admin_base_url(true)."?page=pages");

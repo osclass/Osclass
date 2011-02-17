@@ -30,7 +30,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Emails & Alerts'); ?></div>              
+        <div class="Header"><?php _e('Emails & alerts'); ?></div>
         <div id="content">
             <div id="separator"></div>
 
@@ -42,7 +42,7 @@
                 ?>
                 <div id="content_header" class="content_header">
                     <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/pages-icon.png" alt="" title=""/></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Emails & Alerts'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Emails & alerts'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -78,7 +78,7 @@
                                 $p_body = str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
                             ?>
                                 <tr class="<?php echo $odd_even;?>">
-                                    <td><?php echo $email['s_internal_name']; ?><div><a href="<?php echo osc_admin_base_url(true); ?>?page=emails&action=edit&amp;id=<?php echo  $email["pk_i_id"] ?>">Edit</a></div></td>
+                                    <td><?php echo $email['s_internal_name']; ?><div><a href="<?php echo osc_admin_base_url(true); ?>?page=emails&action=edit&amp;id=<?php echo  $email["pk_i_id"] ?>"><?php _e('Edit'); ?></a></div></td>
                                     <td><?php echo $p_body; ?></td>
                                 </tr>                          
                             <?php } ?>

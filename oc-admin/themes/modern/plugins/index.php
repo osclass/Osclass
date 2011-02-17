@@ -31,7 +31,7 @@
         <?php $this->osc_print_head() ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php $this->osc_print_header(); ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Plugins'); ?></div>              
             <script>

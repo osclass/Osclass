@@ -43,7 +43,7 @@
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
-                                            case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent to the user\'s email address')) ;
+                                            case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent')) ;
                                                     $this->redirectTo( osc_base_url() ) ;
                                             break;
                                             case 2: osc_add_flash_message(__('Your account has been created successfully')) ;
@@ -95,7 +95,7 @@
                                                     osc_sendMail($emailParams) ;
                                                 }
                                                 osc_run_hook('validate_user', $user) ;
-                                                osc_add_flash_message(__('Your account has been correctly validated. Thanks!')) ;
+                                                osc_add_flash_message(__('Your account has been validated')) ;
                                             } else {
                                                 osc_add_flash_message(__('Your account has already been activated')) ;
                                             }

@@ -62,7 +62,7 @@ Class ItemActions
         $show_email     = $aItem['showEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
+            osc_add_flash_message(__('You need to enter your name and email in order to publish a new item'));
             $success = false;
         } else {
             $dao_item = new Item() ;
@@ -278,9 +278,9 @@ Class ItemActions
                 osc_add_flash_message(__('A new item has been added')) ;
             } else {
                 if( osc_item_validation_enabled() ) {
-                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+                    osc_add_flash_message(__('Great! You\'ll receive an e-mail in order to activate your item')) ;
                 } else {
-                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
+                    osc_add_flash_message(__('Great! We just published your item')) ;
                 }
             }
         }
@@ -294,7 +294,7 @@ Class ItemActions
         $aItem = $this->prepareData(false);
         
 
-        $itemId         = $aItem['idItem'];
+        $itemId      = $aItem['idItem'];
         $countryId   = $aItem['countryId'];
         $countryName = $aItem['countryName'];
         $regionId    = $aItem['regionId'];

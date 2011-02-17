@@ -35,8 +35,6 @@ class CAdminCategories extends AdminSecBaseModel
         //specific things for this class
         switch ($this->action)
         {
-
-
             case 'add':
                 $this->add_css('tabs.css') ;
                 $this->add_global_js('tabber-minimized.js') ;
@@ -45,7 +43,6 @@ class CAdminCategories extends AdminSecBaseModel
                 $this->_exportVariableToView("category", array());
                 $this->doView("categories/frm.php");
             break;
-            
             case 'add_post':
                 try {
                     // fields contain data of t_category
@@ -62,14 +59,12 @@ class CAdminCategories extends AdminSecBaseModel
                     }
                     $this->categoryManager->insert($fields, $aFieldsDescription);
 
-                    osc_add_flash_message(__('The category has been added.'));
+                    osc_add_flash_message(__('The category has been added'));
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
-            
-            
             case 'edit':
                 $this->add_css('tabs.css') ;
                 $this->add_global_js('tabber-minimized.js') ;
@@ -78,7 +73,6 @@ class CAdminCategories extends AdminSecBaseModel
                 $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
                 $this->doView("categories/frm.php");
             break;
-            
             case 'edit_post':
                 $id = Params::getParam("id");
                 
@@ -96,7 +90,7 @@ class CAdminCategories extends AdminSecBaseModel
                 
                 try {
                     $this->categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
-                    osc_add_flash_message(__('The item has been updated.'));
+                    osc_add_flash_message(__('The category has been updated.'));
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
@@ -115,7 +109,7 @@ class CAdminCategories extends AdminSecBaseModel
                             $this->categoryManager->deleteByPrimaryKey($i);
                         }
                     }
-                    osc_add_flash_message(__('The items have been deleted.'));
+                    osc_add_flash_message(__('The categories have been deleted'));
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
@@ -129,12 +123,12 @@ class CAdminCategories extends AdminSecBaseModel
                     if ($id!='') {
                         $this->categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
                         if ($enabled!='') {
-                            $msg = __('The category has been enabled.') ;
+                            $msg = __('The category has been enabled') ;
                         } else {
-                            $msg = __('The category has been disabled.') ;
+                            $msg = __('The category has been disabled') ;
                         }
                     } else {
-                        $msg = __('There was a problem with this page. The ID for the category is not set.') ;
+                        $msg = __('There was a problem with this page. The ID for the category hasn\'t been set') ;
                     }
                     osc_add_flash_message($msg) ;
                 } catch (Exception $e) {
@@ -152,7 +146,7 @@ class CAdminCategories extends AdminSecBaseModel
                             $this->categoryManager->update(array('b_enabled' => 1), array('pk_i_id' => $id));
                         }
                     }
-                    osc_add_flash_message(__('The categories have been enabled.'));
+                    osc_add_flash_message(__('The categories have been enabled'));
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }
@@ -168,7 +162,7 @@ class CAdminCategories extends AdminSecBaseModel
                             $this->categoryManager->update(array('b_enabled' => 0), array('pk_i_id' => $id));
                         }
                     }
-                    osc_add_flash_message(__('Selected categories have been disabled.'));
+                    osc_add_flash_message(__('The selected categories have been disabled'));
                 } catch (Exception $e) {
                     osc_add_flash_message(__('Error: ') . $e->getMessage());
                 }

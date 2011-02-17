@@ -153,19 +153,19 @@ class Test extends DAO {
     }
 
     public function getItemResourceInserts() {
-        $fields = array('pk_i_id', 'fk_i_item_id', 's_name', 's_content_type', 's_path') ;
+        $fields = array('pk_i_id', 'fk_i_item_id', 's_name', 's_extension', 's_content_type', 's_path') ;
         $inserts = array(
-                        "(1,1,'OSClass injection1-1','image/png','')"
-                        ,"(2,1,'OSClass injection1-2','image/png','')"
-                        ,"(3,1,'OSClass injection1-3','image/png','')"
-                        ,"(4,1,'OSClass injection1-4','image/png','')"
-                        ,"(5,2,'OSClass injection2-1','image/png','')"
-                        ,"(6,2,'OSClass injection2-2','image/png','')"
-                        ,"(7,3,'OSClass injection3-1','image/png','')"
-                        ,"(8,4,'OSClass injection4-1','image/png','')"
-                        ,"(9,5,'OSClass injection5-1','image/png','')"
-                        ,"(10,6,'OSClass injection6-1','image/png','')"
-                        ,"(11,6,'OSClass injection6-2','image/png','')"
+                        "(1,1,'1','png','image/png','oc-content/uploads/test/')"
+                        ,"(2,1,'2','png','image/png','oc-content/uploads/test/')"
+                        ,"(3,1,'3','png','image/png','oc-content/uploads/test/')"
+                        ,"(4,1,'4','png','image/png','oc-content/uploads/test/')"
+                        ,"(5,2,'5','png','image/png','oc-content/uploads/test/')"
+                        ,"(6,2,'6','png','image/png','oc-content/uploads/test/')"
+                        ,"(7,3,'7','png','image/png','oc-content/uploads/test/')"
+                        ,"(8,4,'8','png','image/png','oc-content/uploads/test/')"
+                        ,"(9,5,'9','png','image/png','oc-content/uploads/test/')"
+                        ,"(10,6,'10','png','image/png','oc-content/uploads/test/')"
+                        ,"(11,6,'11','png','image/png','oc-content/uploads/test/')"
         ) ;
 
         return($inserts) ;

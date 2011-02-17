@@ -34,7 +34,7 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Categories'); ?></div>
-        <script>
+        <script type="text/javascript">
 	        $(function() {
 		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
 			        var anRows = [];
@@ -87,7 +87,7 @@
                         ?>
 				        [
 				        '	<input type="hidden" name="enabled" value="<?php echo $c['b_enabled']; ?>" /><input type="checkbox" name="id[]" value="<?php echo $c['pk_i_id']; ?>" />',
-					        "<?php echo str_replace('"', '\"', $c['s_name']); ?> <div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $c['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $c['pk_i_id']; ?>&enabled=<?php echo $c['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($c['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $c['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick=\"javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action can not be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $c['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
+					        "<?php echo str_replace('"', '\"', $c['s_name']); ?> <div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $c['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $c['pk_i_id']; ?>&enabled=<?php echo $c['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($c['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $c['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick=\"javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $c['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
 					        "<?php echo  isset($parent) ? $parent['s_name'] : '-' ?>",
 					        '<?php echo $c['s_description']; ?>'
 				        ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
@@ -138,7 +138,7 @@
 				
 				<div id="TableToolsToolbar">
 				<select id="bulk_actions" class="display">
-					<option value=""><?php _e('Bulk Actions'); ?></option>
+					<option value=""><?php _e('Bulk actions'); ?></option>
 					<option value="enable_selected"><?php _e('Enable') ?></option>
 					<option value="disable_selected"><?php _e('Disable') ?></option>
 					<option value="delete_all"><?php _e('Delete') ?></option>

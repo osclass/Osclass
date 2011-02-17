@@ -99,9 +99,7 @@
         </script>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -110,14 +108,12 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                         <div id="steps">
-                        <br/>
                         </div>
                     </div>
                 </div>

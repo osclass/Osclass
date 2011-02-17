@@ -88,7 +88,7 @@ class CAdminItems extends AdminSecBaseModel
                                                         ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been made premium')) ;
+                                                osc_add_flash_message(__('The items have been marked as premium')) ;
                                             } catch (Exception $e) {
                                                 osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                             }
@@ -143,7 +143,7 @@ class CAdminItems extends AdminSecBaseModel
                                                 $this->itemManager->deleteByID($i) ;
                                             }
                                         }
-                                        osc_add_flash_message(__('The items have been deleted.')) ;
+                                        osc_add_flash_message(__('The items have been deleted')) ;
                                     } catch (Exception $e) {
                                         osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
                                     }
@@ -180,7 +180,7 @@ class CAdminItems extends AdminSecBaseModel
                                                 break;
                                         }
 
-                                        osc_add_flash_message(__('The item has been activate.'));
+                                        osc_add_flash_message(__('The item has been activated'));
                                     } catch (Exception $e) {
                                         osc_add_flash_message(__('Error: ') . $e->getMessage());
                                     }
@@ -206,7 +206,7 @@ class CAdminItems extends AdminSecBaseModel
                                                 array('b_premium' => $value),
                                                 array('pk_i_id' => $id)
                                         );
-                                        osc_add_flash_message(__('Changes have been made.'));
+                                        osc_add_flash_message(__('Changes have been applied'));
                                     } catch (Exception $e) {
                                         osc_add_flash_message(__('Error: ') . $e->getMessage());
                                     }

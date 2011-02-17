@@ -29,11 +29,11 @@
         $edit = true ;
         $title = __("Edit page") ;
         $action_frm = "edit_post";
-        $btn_text = __("Save");
+        $btn_text = __("Update");
     } else {
         //adding...
         $edit = false ;
-        $title = __("Add a page");
+        $title = __("Add page");
         $action_frm = "add_post";
         $btn_text = __('Add');
     }
@@ -82,7 +82,7 @@
                         <?php PageForm::primary_input_hidden($page); ?>
                         <div class="FormElement">
                             <div class="FormElementName">
-                                <?php _e('Internal Name (Short name to easily identify this page)'); ?>
+                                <?php _e('Internal name (name to easily identify this page)'); ?>
                             </div>
                             <div class="FormElementInput">
                                <?php PageForm::internal_name_input_text($page); ?>

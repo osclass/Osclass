@@ -85,13 +85,13 @@
 			            <p>
 			            <?php echo "<b>".$plugin_data['plugin_name']."</b>,<br/>".$plugin_data['description']; ?>
 			            <br/>
-			            <?php _e('Select the categories you want to apply those attributes:'); ?>
+			            <?php _e('Select the categories where you want to apply these attributes:'); ?>
 			            </p>
 			            <p>
 			            <table>
 			            <tr style="vertical-align: top;">
 			            <td style="font-weight: bold;" colspan="<?php echo $numCols; ?>">
-			            <label for="categories"><?php _e("Presets categories");?></label><br />
+			            <label for="categories"><?php _e("Preset categories");?></label><br />
 			            <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', false); return false;"><?php _e("Uncheck all");?></a>
 			            </td>
 			            <td>
@@ -103,7 +103,7 @@
 
 			            <p>
 			            <input class="Button" type="button" onclick="window.history.go(-1);" value="<?php _e('Cancel'); ?>" />
-			            <input class="Button" type="submit" value="<?php _e('Save'); ?>" />
+			            <input class="Button" type="submit" value="<?php _e('Update'); ?>" />
 			            </p>
 
 			            </form>
