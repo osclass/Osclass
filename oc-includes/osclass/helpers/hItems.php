@@ -198,7 +198,17 @@
     }
 
     function osc_item_pictures_url($item = null) {
-        return ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ;
+        if(isset($item["pk_i_id"])) {
+            $aResources = ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ;
+            $aResourcesUrl = array() ;
+            foreach($aResources as $resource) {
+                $aResourcesUrl[] = osc_resource_url($resource) ;
+            }
+
+            return $aResourcesUrl ;
+        } else {
+            return '' ;
+        }
     }
 
 
