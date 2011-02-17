@@ -42,7 +42,7 @@
                 </div>
 
                 <div id="content_separator"></div>
-                <?php osc_show_flash_message() ; ?>
+                <?php osc_show_flash_message('amin') ; ?>
 
                 <!-- add new plugin form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
@@ -55,11 +55,11 @@
                                 <label for="package"><?php _e('Language package') ; ?> (.zip)</label>
                                 <input type="file" name="package" id="package" />
                             </p>
-                            <input id="button_save" type="submit" value="<?php _e('Upload translation') ; ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Upload') ; ?>" />
                         </form>
                     <?php } else { ?>
                         <p>
-                            <?php _e('The translations folder '); ?> (<?php echo osc_translations_path() ; ?>) <?php _e(' is not writable on your server, this'); ?> <span class="OSClass"><?php _e('OSClass') ; ?></span> <?php _e("can't upload translations from the administration panel. Please copy the translation package using another technique (FTP, SSH) or make the mentioned translations folder writable."); ?>
+                            <?php _e('The translations folder '); ?> (<?php echo osc_translations_path() ; ?>) <?php _e(' is not writable on your server, this'); ?> <span class="OSClass"><?php _e('OSClass') ; ?></span> <?php _e("can't upload translations from the administration panel. Please copy the translation package using FTP or SSH, or make the translation folder writable"); ?>.
                         </p>
                         <p>
                             <?php _e('To make a directory writable under UNIX execute this command from the shell:') ; ?>

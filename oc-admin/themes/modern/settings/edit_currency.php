@@ -33,57 +33,6 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Dashboard'); ?></div>
-
-        <script type="text/javascript">
-            $.extend({
-                initDashboard: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.each(args, function(i, val) {
-                        $("#" + val.substr(3)).show();
-                        $("#" + val).attr('checked', 'checked');
-                    });
-                },
-                setCookie: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.cookie.set("osc_admin_main", args, {json: true});
-                }
-            });
-
-            $(function() {
-                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) {
-                    // create cookies if admin is a first timer...
-                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
-                    $.initDashboard(sections);
-                    $.setCookie(sections);
-
-                } else { // else read it and apply it!
-                    var enabled_sections = $.cookie.get("osc_admin_main", true);
-                    $.initDashboard(enabled_sections);
-                    $.setCookie(enabled_sections);
-                }
-
-                // save settings
-                $("#button_save").click(function() {
-                    var sections = [];
-                    $('#checkboxes input:checkbox:checked').each(function() {
-                        sections.push($(this).attr('id'));
-                    });
-
-                    $.setCookie(sections);
-                    $('#main_div').hide();
-                });
-
-
-                $('#button_open').click(function() {
-                    $('#main_div').toggle();
-                });
-
-                $("#checkboxes input[type='checkbox']").click(function() {
-                    var val = $(this).attr('id');
-                    $("#" + val.substr(3)).toggle();
-                });
-            });
-        </script>
 		<div id="content">
 			<div id="separator"></div>	
 			<?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
@@ -110,7 +59,7 @@
                                     <p>
                                         <label for="code"><?php _e('Code'); ?></label><br />
                                         <input type="text" name="pk_c_code" id="code" value="<?php echo $aCurrency['pk_c_code'];?>" disabled/>
-                                        <span><?php _e('Once it\'s created, it couldn\'t be modified') ?>.</span>
+                                        <span><?php _e('Once it\'s created, it can\'t be modified') ?>.</span>
                                     </p>
 							
                                     <p>
@@ -125,7 +74,7 @@
                             </fieldset>
 							
                             <input id="button_save" onclick="javascript:history.back();" value="<?php _e('Cancel'); ?>" />
-                            <input id="button_save" type="submit" value="<?php _e('Edit currency'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Edit'); ?>" />
 						</form>
 					</div>
 				</div>

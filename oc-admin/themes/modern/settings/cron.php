@@ -29,57 +29,6 @@
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Dashboard'); ?></div>
-
-        <script type="text/javascript">
-            $.extend({
-                initDashboard: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.each(args, function(i, val) {
-                        $("#" + val.substr(3)).show();
-                        $("#" + val).attr('checked', 'checked');
-                    });
-                },
-                setCookie: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.cookie.set("osc_admin_main", args, {json: true});
-                }
-            });
-
-            $(function() {
-                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) {
-                    // create cookies if admin is a first timer...
-                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
-                    $.initDashboard(sections);
-                    $.setCookie(sections);
-
-                } else { // else read it and apply it!
-                    var enabled_sections = $.cookie.get("osc_admin_main", true);
-                    $.initDashboard(enabled_sections);
-                    $.setCookie(enabled_sections);
-                }
-
-                // save settings
-                $("#button_save").click(function() {
-                    var sections = [];
-                    $('#checkboxes input:checkbox:checked').each(function() {
-                        sections.push($(this).attr('id'));
-                    });
-
-                    $.setCookie(sections);
-                    $('#main_div').hide();
-                });
-
-
-                $('#button_open').click(function() {
-                    $('#main_div').toggle();
-                });
-
-                $("#checkboxes input[type='checkbox']").click(function() {
-                    var val = $(this).attr('id');
-                    $("#" + val.substr(3)).toggle();
-                });
-            });
-        </script>
         <div id="content">
             <div id="separator"></div>
 
@@ -87,8 +36,10 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" title="" alt="" />
+                    </div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Cron'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -104,11 +55,11 @@
                             <input type="hidden" name="action" value="cron_post" />
                             <div style="float: left; width: 100%;">
                                 <fieldset>
-                                    <legend><?php _e('Cron System'); ?></legend>
+                                    <legend><?php _e('Cron system'); ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo ( osc_auto_cron() ) ? 'checked="true"' : '' ; ?> name="auto_cron" id="auto_cron" />
                                     <label for="auto_cron"><?php _e('Auto-cron'); ?></label>
                                     <br/>
-                                    <label><?php _e('Some functionalities os OSClass requires a cron system to work. Check this if you don\'t know what a cron-job is or your host is not able to do them. Uncheck if you want to do your cron manually. Refer to the manual to know more about the cron system in OSClass.'); ?></label>
+                                    <label><?php _e('Some OSClass functionalities require a cron in order to work. Check if your host isn\'t able to do them. Uncheck if you want to set up your cron manually. Refer to the manual to know more about the OSClass cron system.'); ?></label>
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>

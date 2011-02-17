@@ -75,10 +75,10 @@
             </form>
 
             <p id="nav">
-                <a href="index.php?page=login&action=recover" title="<?php _e('Lost your password?') ; ?>"><?php _e('Lost your password?') ; ?></a>
+                <a href="index.php?page=login&action=recover" title="<?php _e('Forgot your password?') ; ?>"><?php _e('Forgot your password?') ; ?></a>
             </p>
         </div>
-        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Are you lost?') ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php echo __('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
         <script type="text/javascript">
             try{
                 document.getElementById('user_login').focus();

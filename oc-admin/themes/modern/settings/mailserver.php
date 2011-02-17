@@ -48,9 +48,9 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Functionalities'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Mail server'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
@@ -64,18 +64,18 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Configuration'); ?></legend>
-                                    <label><?php _e('Type of server'); ?></label>
+                                    <label><?php _e('Server type'); ?></label>
                                     <select name="mailserver_type" id="mailserver_type" onChange="changeServer(this)">
                                         <option value="custom" <?php echo (osc_mailserver_type() == 'custom') ? 'selected="true"' : '' ; ?>><?php _e('Custom Server') ; ?></option>
                                         <option value="gmail" <?php echo (osc_mailserver_type() == 'gmail') ? 'selected="true"' : '' ; ?>><?php _e('GMail Server'); ?></option>
                                     </select>
                                     <p>
-                                        <label><?php _e('Host Name'); ?></label>
+                                        <label><?php _e('Hostname'); ?></label>
                                         <br/>
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_host" id="mailserver_host" value="<?php echo osc_mailserver_host() ; ?>" />
                                     </p>
                                     <p>
-                                        <label><?php _e('Server Port'); ?></label>
+                                        <label><?php _e('Server port'); ?></label>
                                         <br/>
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_port" id="mailserver_port" value="<?php echo osc_mailserver_port() ; ?>" />
                                     </p>
@@ -93,7 +93,7 @@
                                         <label><?php _e('Encryption'); ?></label>
                                         <br/>
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="text"  name="mailserver_ssl" id="mailserver_ssl" value="<?php echo osc_mailserver_ssl() ; ?>" />
-                                        <small><?php _e('it could be: blank, ssl or tls'); ?></small>
+                                        <small><?php _e('Options: blank, ssl or tls'); ?></small>
                                     </p>
                                     <p>
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
@@ -105,7 +105,7 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Help'); ?></legend>
-                                    <label><?php _e('Enter your email server configuration.'); ?></label>
+                                    <label><?php _e('Enter your e-mail server configuration.'); ?></label>
                                 </fieldset>
                             </div>
 

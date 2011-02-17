@@ -53,7 +53,7 @@ class CAdminAdmins extends AdminSecBaseModel
                                 );
                                 $this->adminManager->insert( $array ) ;
 
-                                osc_add_flash_message(__('The item has been added.')) ;
+                                osc_add_flash_message(__('The admin has been added.')) ;
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
             case 'edit':        $adminEdit = null;
@@ -83,10 +83,10 @@ class CAdminAdmins extends AdminSecBaseModel
                                             $array['s_username']    = Params::getParam('s_username');
 
                                         } else {
-                                            osc_add_flash_message(__('Password didn\'t update. Passwords don\'t match.'));
+                                            osc_add_flash_message(__('The password couldn\'t be updated. Passwords don\'t match.'));
                                         }
                                     } else {
-                                        osc_add_flash_message(__('Password didn\'t update. "Old password" didn\'t match with our records in the database.'));
+                                        osc_add_flash_message(__('The password couldn\'t be updated. "Current password" doesn\'t match our records.'));
                                     }
                                 }
                                 $this->adminManager->update($array, $conditions);
@@ -96,7 +96,7 @@ class CAdminAdmins extends AdminSecBaseModel
                                 if($id) {
                                     // Verification to avoid an administrator trying to remove to itself
                                     if(in_array($_SESSION['adminId'], $id)) {
-                                        osc_add_flash_message( __('The operation was not completed. You were trying to remove yourself!') );
+                                        osc_add_flash_message( __('The operation hasn\'t been completed. You\'re trying to remove yourself!') );
                                     } else {
                                         $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $id) . ')')) ;
                                     }

@@ -21,7 +21,6 @@
 ?>
 
 <?php
-
     $admins = $this->_get("admins") ;
     $last = end($admins);
     $last_id = $last['pk_i_id'];
@@ -37,7 +36,7 @@
         <div id="update_version" style="display:none;"></div>
         <div class="Header">Dashboard</div>
 
-        <script>
+        <script type="text/javascript">
                 $(function() {
                         $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
                         {
@@ -80,14 +79,14 @@
                                  },
                                 "sPaginationType": "full_numbers",
                                 "aaData": [
-                                        <?php foreach($admins as $a): ?>
+                                        <?php foreach($admins as $a) { ?>
                                                 [
                                                         "<input type='checkbox' name='id[]' value='<?php echo $a['pk_i_id']; ?>' />",
-                                                        "<?php echo $a['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit&amp;id=<?php echo $a['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=delete&amp;id[]=<?php echo $a['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
+                                                        "<?php echo $a['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit&amp;id=<?php echo $a['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=delete&amp;id[]=<?php echo $a['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
                                                         "<?php echo $a['s_name']; ?>",
                                                         "<?php echo $a['s_email']; ?>"
                                                 ] <?php echo $last_id != $a['pk_i_id'] ? ',' : ''; ?>
-                                        <?php endforeach; ?>
+                                        <?php } ?>
                                 ],
                                 "aoColumns": [
                                         {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>",
@@ -115,8 +114,8 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/admin-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Administrators'); ?></div>
-                    <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add" id="button_open"><?php _e('Add new administrator') ; ?></a>
+                    <div id="content_header_arrow">&raquo; <?php _e('Admins'); ?></div>
+                    <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add" id="button_open"><?php _e('Add new admin') ; ?></a>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -125,7 +124,7 @@
 
                 <div id="TableToolsToolbar">
                 <select id="bulk_actions" class="display">
-                        <option value=""><?php _e('Bulk Actions'); ?></option>
+                        <option value=""><?php _e('Bulk actions'); ?></option>
                         <option value="delete_all"><?php _e('Delete') ?></option>
                 </select>
                 &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>

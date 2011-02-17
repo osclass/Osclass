@@ -49,7 +49,7 @@
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
                             <input type="hidden" name="action" value="comments_post" />
-
+                            
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Settings'); ?></legend>
@@ -65,7 +65,7 @@
                                 <fieldset>
                                     <legend><?php _e('Notifications') ; ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_comment() ? 'checked="true"' : ''); ?> name="notify_new_comment" id="notify_new_comment" value="1" />
-                                    <label for="notify_new_comment"><?php _e('Notify new comment'); ?></label>
+                                    <label for="notify_new_comment"><?php _e('Notify when there\'s a new comment'); ?></label>
                                 </fieldset>
                             </div>
 
