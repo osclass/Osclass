@@ -80,6 +80,7 @@ require_once LIB_PATH . 'osclass/model/Country.php';
 require_once LIB_PATH . 'osclass/model/Comment.php';
 require_once LIB_PATH . 'osclass/model/Currency.php';
 require_once LIB_PATH . 'osclass/model/Locale.php';
+require_once LIB_PATH . 'osclass/model/Test.php';
 require_once LIB_PATH . 'osclass/model/Item.php';
 require_once LIB_PATH . 'osclass/model/ItemComment.php';
 require_once LIB_PATH . 'osclass/model/ItemResource.php';
