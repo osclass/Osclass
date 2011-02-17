@@ -33,7 +33,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('Spam and bots settings'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
@@ -45,17 +45,15 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Spam and bots') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
 
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
                             <input type="hidden" name="action" value="spamNbots_post" />
-
+                            
                             <fieldset>
                                 <legend><?php _e('Akismet'); ?></legend>
                                 <p>
@@ -80,7 +78,7 @@
                                 </p>
                             </fieldset>
 
-                            <input id="button_save" type="submit" value="<?php _e('Update spam and bots configuration'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
                         </form>
                     </div>
                 </div>

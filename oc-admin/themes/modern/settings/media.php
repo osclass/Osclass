@@ -28,7 +28,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('Media settings'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
@@ -50,7 +50,6 @@
                             <input type="hidden" name="action" value="media_post" />
                             <fieldset>
                                 <legend><?php _e('Restrictions'); ?></legend>
-
                                 <p>
                                     <label for="maxSize"><?php _e('Maximum size, in KB'); ?></label><br />
                                     <input type="text" name="maxSizeKb" id="maxSize" value="<?php echo osc_max_size_kb() ; ?>" />
@@ -64,7 +63,6 @@
 
                             <fieldset>
                                 <legend><?php _e('Dimensions'); ?></legend>
-
                                 <p>
                                     <label for="thumbnail"><?php _e('Thumbnail dimensions'); ?></label><br />
                                     <input type="text" name="dimThumbnail" id="thumbnail" value="<?php echo osc_thumbnail_dimensions() ; ?>" />
@@ -86,7 +84,6 @@
                                     <?php _e('Keeping original image files requires extra storage. This option ensures that the original quality of the file is un-altered. Be careful when using this option.'); ?>
                                 </p>
                             </fieldset>
-
                             <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
                         </form>
                     </div>

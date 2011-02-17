@@ -27,7 +27,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('Mail server settings'); ?></div>
         <script type="text/javascript">
             function changeServer( box ) {
                 if( box.value == 'gmail' ) {
@@ -42,9 +42,7 @@
         </script>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -108,12 +106,9 @@
                                     <label><?php _e('Enter your e-mail server configuration.'); ?></label>
                                 </fieldset>
                             </div>
-
                             <div style="clear: both;"></div>
-
                             <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
                         </form>
-
                     </div>
                 </div>
             </div> <!-- end of right column -->

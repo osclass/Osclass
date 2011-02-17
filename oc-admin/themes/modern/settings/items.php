@@ -27,7 +27,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('Items settings'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
@@ -51,15 +51,15 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
-                                    <legend><?php _e('Settings') ; ?></legend>
+                                    <legend><?php _e('Settings'); ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_recaptcha_items_enabled() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" value="1" />
-                                    <label for="enabled_recaptcha_items"><?php _e('Enabled reCAPTCHA') ; ?></label>
+                                    <label for="enabled_recaptcha_items"><?php _e('Enabled reCAPTCHA'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_validation_enabled() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" value="1" />
-                                    <label for="enabled_item_validation"><?php _e('Item validation by users') ; ?></label>
+                                    <label for="enabled_item_validation"><?php _e('Item validation by users'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" value="1" />
-                                    <label for="reg_user_post"><?php _e('Only allow registered users to post items') ; ?></label>
+                                    <label for="reg_user_post"><?php _e('Only allow registered users to post items'); ?></label>
                                 </fieldset>
                             </div>
 
@@ -67,13 +67,13 @@
                                 <fieldset>
                                     <legend><?php _e('Notifications'); ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_new_item() ? 'checked="true"' : ''); ?> name="notify_new_item" id="notify_new_item" value="1" />
-                                    <label for="notify_new_item"><?php _e('Notify admin of new items') ; ?></label>
+                                    <label for="notify_new_item"><?php _e('Notify admin of new items'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_contact_item() ? 'checked="true"' : ''); ?> name="notify_contact_item" id="notify_contact_item" value="1" />
-                                    <label for="notify_contact_item"><?php _e('Notify admin of contact items') ; ?></label>
+                                    <label for="notify_contact_item"><?php _e('Notify admin of contact items'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_notify_contact_friends() ? 'checked="true"' : ''); ?> name="notify_contact_friends" id="notify_contact_friends" value="1" />
-                                    <label for="notify_contact_friends"><?php _e('Notify admin of share') ; ?></label>
+                                    <label for="notify_contact_friends"><?php _e('Notify admin of share'); ?></label>
                                 </fieldset>
                             </div>
 
@@ -81,17 +81,14 @@
                                 <fieldset>
                                     <legend><?php _e('Optional fields'); ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_price_enabled_at_items() ? 'checked="true"' : ''); ?> name="enableField#f_price@items" id="enableField#f_price@items" value="1"  />
-                                    <label for="enableField#f_price@items"><?php _e('Enable price') ; ?></label>
+                                    <label for="enableField#f_price@items"><?php _e('Enable price'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_images_enabled_at_items() ? 'checked="true"' : ''); ?> name="enableField#images@items" id="enableField#images@items" value="1" />
-                                    <label for="enableField#images@items"><?php _e('Enable images') ; ?></label>
+                                    <label for="enableField#images@items"><?php _e('Enable images'); ?></label>
                                 </fieldset>
                             </div>
-
                             <div style="clear: both;"></div>
-
                             <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
-
                         </form>
                     </div>
                 </div>

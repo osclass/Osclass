@@ -434,7 +434,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                             }
 
                                                             foreach($aCurrencyCode as $currencyCode) {
-                                                                if(preg_match('/.{1,3}/', $currencyCode)) {
+                                                                if(preg_match('/.{1,3}/', $currencyCode) && $currencyCode != osc_currency()) {
                                                                     $rowChanged += Currency::newInstance()->delete(array('pk_c_code' => $currencyCode));
                                                                 }
                                                             }

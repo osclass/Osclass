@@ -37,7 +37,7 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Comments'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Comments settings'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
@@ -68,9 +68,7 @@
                                     <label for="notify_new_comment"><?php _e('Notify when there\'s a new comment'); ?></label>
                                 </fieldset>
                             </div>
-
                             <div style="clear: both;"></div>
-
                             <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
                         </form>
                     </div>

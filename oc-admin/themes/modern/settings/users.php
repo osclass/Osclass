@@ -37,7 +37,7 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Users settings'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
@@ -62,9 +62,7 @@
                                     <label for="enabled_user_registration"><?php _e('User registration enabled'); ?></label>
                                 </fieldset>
                             </div>
-
                             <div style="clear: both;"></div>
-                            
                             <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
                         </form>
                     </div>
