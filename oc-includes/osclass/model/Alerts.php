@@ -22,9 +22,16 @@
 
 class Alerts extends DAO {
 
-	public static function newInstance() { return new Alerts(); }
+	private static $instance ;
 
-	public function getTableName() { return DB_TABLE_PREFIX . 't_alerts'; }
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+
+    public function getTableName() { return DB_TABLE_PREFIX . 't_alerts'; }
 
     public function getAlertsFromUser($user) {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $user);

@@ -22,8 +22,15 @@
 
 class Locale extends DAO {
 
-	public static function newInstance() { return new Locale() ; }
+	private static $instance ;
 
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+    
 	public function getTableName() { return DB_TABLE_PREFIX . 't_locale' ; }
 
 	public function getPrimaryKey() { return 'pk_c_code' ; }

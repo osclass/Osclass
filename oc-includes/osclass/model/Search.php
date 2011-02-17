@@ -33,11 +33,8 @@ class Search extends DAO
     private $regions;
     private $countries;
     private $categories;
+    private static $instance ;
 
-    public function  getTableName()
-    {
-        return '';
-    }
 
     public function __construct() {
         $this->cities = array();
@@ -52,7 +49,14 @@ class Search extends DAO
         parent::__construct();
     }
 
-    public static function newInstance() { return new Search; }
+    public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+
+    public function  getTableName() { return ''; }
 
     public static function getAllowedColumnsForSorting() {
         return( array('f_price', 'dt_pub_date') ) ;

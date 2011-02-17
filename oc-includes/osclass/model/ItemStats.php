@@ -22,8 +22,15 @@
 
 class ItemStats extends DAO {
 
-	public static function newInstance() { return new ItemStats(); }
+	private static $instance ;
 
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+    
 	public function getTableName() { return DB_TABLE_PREFIX . 't_item_stats'; }
 	
 	public function increase($column, $id) {
