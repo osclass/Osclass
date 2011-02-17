@@ -142,10 +142,7 @@
 
                 <div id="sidebar">
                     <div id="photos">
-                        <?php while ( has_item_resources() ) { ?>
-                            <img src="<?php echo resource_url() ; ?>" width="350" />
-                        <?php } ?>
-
+                        
                         <?php $aPictures = osc_item_pictures_url($item) ; ?>
                         <?php if(count($aPictures) > 0) { ?>
                             <?php foreach($aPictures as $picture) { ?>

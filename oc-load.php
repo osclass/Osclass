@@ -54,6 +54,7 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hUtils.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/View.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/WebSecBaseModel.php';
