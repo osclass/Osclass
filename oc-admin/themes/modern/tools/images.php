@@ -42,19 +42,19 @@
                 </div>
 
                 <div id="content_separator"></div>
-                <?php osc_show_flash_message() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
 
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e("You can regenerate your thumbnails and previews images here. It\'s useful if you changed your theme and images are not showing up correctly. Please, check the size values defined in the settings/media section"); ?>.
-
+                        <p>
+                            <?php _e('You can regenerate your thumbnails and previews images here. It\'s useful if you changed your theme and images are not showing up correctly. Please, check the size values defined in the settings/media section'); ?>.
+                        </p>
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                        <input type="hidden" name="action" value="images_post" />
-                        <input type="hidden" name="page" value="tools" />
+                            <input type="hidden" name="action" value="images_post" />
+                            <input type="hidden" name="page" value="tools" />
 
-                        <input id="button_save" type="submit" value="<?php _e('Regenerate thumbnails'); ?>" />
-
+                            <input id="button_save" type="submit" value="<?php _e('Regenerate thumbnails'); ?>" />
                         </form>
                     </div>
                 </div>

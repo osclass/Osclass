@@ -392,10 +392,6 @@ function checkForm() {
 <?php
     }
 
-
-
-    
-   
 }
 
 ?>
