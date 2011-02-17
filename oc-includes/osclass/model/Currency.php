@@ -22,8 +22,16 @@
 
 class Currency extends DAO {
 
-	public static function newInstance() { return new Currency(); }
+	private static $instance ;
 
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+
+    
 	public function getTableName() { return DB_TABLE_PREFIX . 't_currency'; }
 
 	public function findByCode($code) {

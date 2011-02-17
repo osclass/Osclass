@@ -22,6 +22,7 @@
 
 class Category extends DAO
 {
+    private static $instance ;
     private $language;
 
     public function __construct($l = "") {
@@ -37,8 +38,11 @@ class Category extends DAO
         parent::__construct() ;
     }
 
-    public static function newInstance($l = "") {
-        return new Category($l);
+    public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
     }
 
     public function getTableName() {

@@ -22,8 +22,16 @@
 
 class Cron extends DAO {
 
-	public static function newInstance() { return new Cron(); }
+	private static $instance ;
 
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+
+    
 	public function getTableName() { return DB_TABLE_PREFIX . 't_cron'; }
 
     public function getCronByType($type) {

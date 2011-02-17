@@ -34,6 +34,8 @@ class Page extends DAO
      */
     private $columns_desc;
 
+    private static $instance ;
+
     public function __construct() {
         parent::__construct();
 
@@ -41,11 +43,12 @@ class Page extends DAO
         $this->columns_desc = array('fk_i_pages_id', 'fk_c_locale_code', 's_title', 's_text');
     }
 
-    /**
-     * @deprecated
-     * @return Page class
-     */
-    public static function newInstance() { return new Page(); }
+    public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
 
     /**
      * Return's the name of the table.

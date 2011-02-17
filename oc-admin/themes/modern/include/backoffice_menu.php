@@ -210,5 +210,14 @@
                 <a href="index.php?page=admins&action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
             </li>
         </ul>
+
+        <h3>
+            <a href="#"><?php _e('Tests'); ?></a>
+        </h3>
+        <ul>
+            <li>
+                <a href="index.php?page=test">&raquo; <?php _e('Database'); ?></a>
+            </li>
+        </ul>
     </div>
 </div>

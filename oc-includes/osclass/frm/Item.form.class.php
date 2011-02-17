@@ -30,7 +30,7 @@ class ItemForm extends Form {
                 echo '<option value="">' . $default_item . '</option>' ;
             }
             foreach($categories as $c) {
-                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+                echo '<option value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
                 }
@@ -47,7 +47,7 @@ class ItemForm extends Form {
         }
         $deep++;
         foreach($categories as $c) {
-            echo '<option value="' . $c['pk_i_id'] . '"' . ( ($item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
+            echo '<option value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
             if(isset($c['categories']) && is_array($c['categories'])) {
                 ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
             }
@@ -61,7 +61,7 @@ class ItemForm extends Form {
                 echo '<option value="">' . $default_item . '</option>' ;
             }
             foreach($users as $user) {
-                echo '<option value="' . $user['pk_i_id'] . '"' . ( ($item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
+                echo '<option value="' . $user['pk_i_id'] . '"' . ( (isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
             }
         echo '</select>' ;
         return true ;

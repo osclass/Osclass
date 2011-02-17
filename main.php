@@ -44,7 +44,7 @@ class CWebMain extends BaseModel
                                     $categories = Category::newInstance()->toTree();
                                     $locales = Locale::newInstance()->listAllEnabled() ;
                                     $latestItems = Item::newInstance()->listLatest(10) ;
-
+                                    
                                     //calling the view...
                                     $this->_exportVariableToView('categories', $categories) ;
                                     $this->_exportVariableToView('locales', $locales) ;

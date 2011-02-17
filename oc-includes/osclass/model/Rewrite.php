@@ -22,6 +22,7 @@
 
 class Rewrite extends DAO
 {
+    private static $instance ;
     private $rules;
     
     public function __construct() {
@@ -29,8 +30,11 @@ class Rewrite extends DAO
         parent::__construct() ;
     }
 
-    public static function newInstance() { 
-        return new Rewrite;
+    public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
     }
 
     public function getTableName() {}
