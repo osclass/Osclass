@@ -427,6 +427,7 @@ Class ItemActions
                                             array(
                                                 's_path'            => $s_path
                                                 ,'s_name'           => $resourceId
+                                                ,'s_extension'      => 'png'
                                                 ,'s_content_type'   => $resourceType
                                             )
                                             ,array(
