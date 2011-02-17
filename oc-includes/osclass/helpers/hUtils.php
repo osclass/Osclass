@@ -22,15 +22,15 @@
     //osc_formatPrice
     function osc_format_price($item) {
         if (!isset($item['f_price']))
-            return __('Consult') ;
+            return __('Check with seller');
 
         if ($item['f_price'] == 0)
-            return __('Free') ;
+            return __('Free');
 
         if (!empty($item['f_price']))
-            return sprintf('%.02f %s', $item['f_price'], $item['fk_c_currency_code']) ;
+            return sprintf('%.02f %s', $item['f_price'], $item['fk_c_currency_code']);
 
-        return __('Consult') ;
+        return __('Check with seller');
     }
 
     /**

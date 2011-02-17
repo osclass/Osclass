@@ -28,7 +28,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
 
         <div id="content">
             <div id="separator"></div>
@@ -38,7 +38,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/pages-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Add New Page') ; ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Add new page'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -59,17 +59,17 @@
                                     <label for="package"><?php _e('Theme package') ; ?> (.zip)</label>
                                     <input type="file" name="package" id="package" />
                                 </p>
-                                <input id="button_save" type="submit" value="<?php _e('Upload theme') ; ?>" />
+                                <input id="button_save" type="submit" value="<?php _e('Upload') ; ?>" />
                             </form>
 
                         <?php } else { ?>
 
                             <div id="flash_message">
                                 <p>
-                                    <?php _e('The themes folder ') ; ?> (<?php echo osc_themes_path() ; ?>) <?php _e(' is not writable on your server, '); ?> <span class="OSClass"><?php _e('OSClass'); ?></span> <?php _e(" can't upload themes from the administration panel. Please copy the theme package using another technique (FTP, SSH) or make the mentioned themes folder writable."); ?>
+                                    <?php _e('The theme folder ') ; ?> (<?php echo osc_themes_path() ; ?>) <?php _e(' is not writable on your server, '); ?> <span class="OSClass"><?php _e('OSClass'); ?></span> <?php _e(" can't upload themes from the administration panel. Please copy the theme package using FTP or SSH, or make the mentioned themes folder writable."); ?>
                                 </p>
                                 <p>
-                                    <?php _e('To make a directory writable under UNIX execute this command from the shell:'); ?>
+                                    <?php _e('To make a directory writable under UNIX execute this command from the shell'); ?>:
                                 </p>
                                 <p style="background-color: white; border: 1px solid black; padding: 8px;">
                                     chmod a+w <?php echo osc_themes_path(); ?>

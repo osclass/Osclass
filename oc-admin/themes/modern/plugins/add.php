@@ -56,17 +56,22 @@
                                         <label for="package"><?php _e('Plugin package'); ?> (.zip)</label>
                                         <input type="file" name="package" id="package" />
                                     </p>
-                                    <input id="button_save" type="submit" value="<?php _e('Upload plugin'); ?>" />
+                                    <input id="button_save" type="submit" value="<?php _e('Upload'); ?>" />
                                 </form>
 
                             <?php } else { ?>
 
                                 <div id="flash_message">
                                     <p>
-                                        <?php _e('The plugins folder '); ?> (<?php echo osc_plugins_path(); ?>) <?php _e(' is not writable on your server, this <span class="OSClass">OSClass</span> can\'t upload plugins from the administration panel. Please copy the plugin package using another technique (FTP, SSH) or make the mentioned plugins folder writable.'); ?>
+                                        <?php
+                                            $msg  = sprintf(__('The plugin folder %s is not writable on your server'), osc_plugins_path());
+                                            $msg .= __('OSClass can\'t upload plugins from the administration panel') . '.';
+                                            $msg .= __('Please copy the plugin package using FTP or SSH, or make the mentioned plugins folder writable') . '.';
+                                            echo $msg;
+                                        ?>
                                     </p>
                                     <p>
-                                        <?php _e('To make a directory writable under UNIX execute this command from the shell:'); ?>
+                                        <?php _e('To make a directory writable under UNIX execute this command from the shell'); ?>:
                                     </p>
                                     <p style="background-color: white; border: 1px solid black; padding: 8px;">
                                         chmod a+w <?php echo osc_plugins_path() ; ?>

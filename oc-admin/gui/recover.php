@@ -26,7 +26,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><?php _e('OSClass Admin Panel Login') ; ?></title>
+        <title><?php _e('OSClass admin panel login') ; ?></title>
         <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-includes/js/jquery.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
@@ -36,8 +36,8 @@
             <h1><a href="<?php echo osc_base_url() ; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0" /></a></h1>
             <?php osc_show_flash_message() ; ?>
             <div class="message" style="text-align:center;">
-                <?php _e('Please enter your username or e-mail address.') ; ?><br />
-                <?php _e('You will receive a new password via e-mail.') ; ?>
+                <?php _e('Please enter your username or e-mail address') ; ?>.<br />
+                <?php _e('You will receive a new password via e-mail') ; ?>.
             </div>
 
             <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">

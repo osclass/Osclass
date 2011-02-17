@@ -55,7 +55,7 @@ class CAdminItemComments extends AdminSecBaseModel
                                                                                 array('pk_i_id' => $_id)
                                                                             );
                                                                         }
-                                                                        osc_add_flash_message(__('The comments have been activated')) ;
+                                                                        osc_add_flash_message(__('The comments have been approved')) ;
                                                 break;
                                                 case 'deactivate_all':  $value = 'INACTIVE' ;
                                                                         foreach ($id as $_id) {
@@ -64,7 +64,7 @@ class CAdminItemComments extends AdminSecBaseModel
                                                                                 array('pk_i_id' => $_id)
                                                                             );
                                                                         }
-                                                                        osc_add_flash_message(__('The comments have been deactivated')) ;
+                                                                        osc_add_flash_message(__('The comments have been unapproved')) ;
                                                 break;
                                             }
                                         }
@@ -83,9 +83,9 @@ class CAdminItemComments extends AdminSecBaseModel
                                                 ,array('pk_i_id' => $id)
                                         );
                                         if( $value == 'ACTIVE' ) {
-                                            osc_add_flash_message(__('The comment has been activated'));
+                                            osc_add_flash_message(__('The comment has been approved'));
                                         } else {
-                                            osc_add_flash_message(__('The comment has been deactivated'));
+                                            osc_add_flash_message(__('The comment has been unapproved'));
                                         }
                                         
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
@@ -111,7 +111,7 @@ class CAdminItemComments extends AdminSecBaseModel
 
                                         osc_run_hook('item_edit_post') ;
 
-                                        osc_add_flash_message(__('Great! We\'ve just update your item.')) ;
+                                        osc_add_flash_message(__('Great! We just updated your comment')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
             break;
             case 'delete':              $this->itemCommentManager->deleteByID( Params::getParam('id') );

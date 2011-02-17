@@ -143,12 +143,12 @@
                 <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
                             <div id="TableToolsToolbar">
                                 <select id="bulk_actions" name="bulk_actions" class="display">
-                                        <option value=""><?php _e('Bulk Actions'); ?></option>
+                                        <option value=""><?php _e('Bulk actions'); ?></option>
                                         <option value="delete_all"><?php _e('Delete') ?></option>
                                         <option value="activate_all"><?php _e('Activate') ?></option>
                                         <option value="deactivate_all"><?php _e('Deactivate') ?></option>
-                                        <option value="premium_all"><?php _e('Make Premium') ?></option>
-                                        <option value="depremium_all"><?php _e('Demake Premium') ?></option>
+                                        <option value="premium_all"><?php _e('Mark as premium') ?></option>
+                                        <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
                                 </select>
                                 &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
                             </div>
@@ -157,7 +157,7 @@
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=pending"><?php _e('Pending') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=spam"><?php _e('Spam') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=duplicated"><?php _e('Duplicated') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad"><?php _e('Bad classified') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad"><?php _e('Misclassified') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=offensive"><?php _e('Offensive') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired"><?php _e('Expired') ?></a>
                             </div>
