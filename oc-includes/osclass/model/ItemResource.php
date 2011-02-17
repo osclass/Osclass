@@ -42,5 +42,11 @@ class ItemResource extends DAO {
 			return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE fk_i_item_id = ' . $itemId, $this->getTableName(), $this->getTableItemName());
 		}
 	}
+	
+	public function getResource($itemId) {
+        return $this->conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d LIMIT 1'$this->getTableName(), $itemId);
+	}
+
+
 }
 
