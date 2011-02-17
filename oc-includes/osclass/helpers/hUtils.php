@@ -79,6 +79,8 @@
     /**
      * Prints a select with al the categories
      *
+     * @param select_name name of the select (optional)
+     *
      * @param selected category's ID (optional)
      *
      * @return void
@@ -92,12 +94,23 @@
         echo '</select>' ;
         return true ;
     }
-    
+
+    /**
+     * Prints a select with al the categories
+     *
+     * @param categories (optional)
+     *
+     * @param selected category's ID (optional)
+     *
+     * @param deep how deep is the option (optional)
+     *
+     * @return void
+     */    
     function osc_subcategories_select($categories, $selected = null, $deep = 0)
     {
         $deep_string = "";
         for($var = 0;$var<$deep;$var++) {
-            $deep_string .= '&nbsp;&nbsp;';
+            $deep_string .= '-';
         }
         $deep++;
         foreach($categories as $c) {
@@ -107,6 +120,29 @@
             }
         }
     }
+    
+    /**
+     * Prints a select with al the countries
+     *
+     * @param select_name name of the select (optional)
+     *
+     * @param selected country's ID (optional)
+     *
+     * @return void
+     */
+    function osc_countries_select($select_name = "categories", $selected = null)
+    {
+        echo '<select name="'.$select_name.'" id="'.$select_name.'">
+                <option value="">'.__("Select a country").'</option>' ;
+        $countries = Country::newInstance()->listAll();
+        foreach($countries as $c) {
+            echo '<option value="' . $c['pk_c_code'] . '"' . ( ($selected == $c['pk_c_code']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+        }
+        echo '</select>' ;
+        return true ;
+    }
+
+
   
 
 ?>

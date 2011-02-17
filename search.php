@@ -49,7 +49,7 @@
                 if($p_sCategory == '') {
                     $p_sCategory = array() ;
                 } else {
-                    $p_sCategory = array($p_sCategory);
+                    $p_sCategory = explode(",",$p_sCategory);
                 }
             }
 
