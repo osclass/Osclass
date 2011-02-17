@@ -106,14 +106,19 @@
             }
 
             if ($this->is_admin) {
+                $iUpdated = 0;
                 if(Params::getParam("b_enabled") != '') {
-                    $this->manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId)) ;
+                    $iUpdated += $this->manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId)) ;
                 } else {
-                    $this->manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId)) ;
+                    $iUpdated += $this->manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId)) ;
+                }
+
+                if($iUpdated > 0) {
+                    return 2;
                 }
             }
 
-            return 2 ;
+            return 0;
         }
 
 

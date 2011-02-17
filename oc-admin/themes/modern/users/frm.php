@@ -25,13 +25,13 @@
     if(isset($user['pk_i_id'])) {
         // editing...
         $edit = true ;
-        $title = __("Edit user") ;
+        $title = __("Edit") ;
         $action_frm = "edit_post";
-        $btn_text = __("Save");
+        $btn_text = __("Update");
     } else {
         // adding...
         $edit = false ;
-        $title = __("Add user");
+        $title = __("Add");
         $action_frm = "create_post";
         $btn_text = __('Add');
     }
@@ -67,10 +67,11 @@
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <form action="<?php echo osc_admin_base_url(true); ?>?page=users" method="post" onSubmit="return checkForm()">
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post" onSubmit="return checkForm()">
+                            <input type="hidden" name="page" value="users" />
                             <input type="hidden" name="action" value="<?php echo $action_frm;?>"/>
                             <?php UserForm::primary_input_hidden($user); ?>
-
+                            <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ?>" />
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('E-mail'); ?></legend>
@@ -138,9 +139,7 @@
                                     <?php UserForm::address_text($user); ?>
                                 </fieldset>
                             </div>
-
                             <div style="clear: both;"></div>
-
                             <input id="button_save" type="submit" value="<?php echo $btn_text; ?>" />
                         </form>
                     </div>
@@ -150,4 +149,4 @@
         </div> <!-- end of container -->
         <?php $this->osc_print_footer() ; ?>
     </body>
-</html>				            
+</html>
