@@ -197,13 +197,8 @@
         }
     }
 
-    function osc_item_picture_url($item = null) {
-        if(isset($item["pk_i_id"])) {
-            return osc_resource_url(ItemResource::newInstance()->getResource( $item["pk_i_id"] ));
-        } else {
-            return '';
-        }
-        //return ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ;
+    function osc_item_pictures_url($item = null) {
+        return ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ;
     }
 
 
