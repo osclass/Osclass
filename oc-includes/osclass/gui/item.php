@@ -20,7 +20,7 @@
  */
 ?>
 <?php
-    $item = $this->_get('item') ;
+    //$item = $this->_get('item') ;
     $author = $this->_get('author') ;
     $comments = $this->_get('comments') ;
     //$resources = $this->_get('resources') ;
@@ -36,22 +36,22 @@
             
             <div id="form_publish">
                 <?php include("inc.search.php") ; ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url(osc_item_category_id($item)) ; ?>"><?php _e("Publish your ad for free") ; ?></a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url( osc_item_category_id() ) ; ?>"><?php _e("Publish your ad for free") ; ?></a></strong>
             </div>
 
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
-                        <h1><span class="price"><?php echo osc_format_price($item) ; ?></span> <strong><?php echo osc_item_title($item) ; ?></strong></h1>
+                        <h1><span class="price"><?php echo osc_format_price() ; ?></span> <strong><?php echo osc_item_title() ; ?></strong></h1>
 
                         <p id="report">
                             <strong><?php _e('Mark as ') ; ?></strong>
                             <span>
-                                <a id="item_spam" href="<?php echo osc_item_link_spam($item) ; ?>"><?php _e('spam') ; ?></a>
-                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category($item) ; ?>"><?php _e('bad category') ; ?></a>
-                                <a id="item_repeated" href="<?php echo osc_item_link_repeated($item) ; ?>"><?php _e('repeated') ; ?></a>
-                                <a id="item_expired" href="<?php echo osc_item_link_expired($item) ; ?>"><?php _e('expired') ; ?></a>
-                                <a id="item_offensive" href="<?php echo osc_item_link_offensive($item) ; ?>"><?php _e('offensive') ; ?></a>
+                                <a id="item_spam" href="<?php echo osc_item_link_spam() ; ?>"><?php _e('spam') ; ?></a>
+                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category() ; ?>"><?php _e('bad category') ; ?></a>
+                                <a id="item_repeated" href="<?php echo osc_item_link_repeated() ; ?>"><?php _e('repeated') ; ?></a>
+                                <a id="item_expired" href="<?php echo osc_item_link_expired() ; ?>"><?php _e('expired') ; ?></a>
+                                <a id="item_offensive" href="<?php echo osc_item_link_offensive() ; ?>"><?php _e('offensive') ; ?></a>
                             </span>
                         </p>
                     </div>
@@ -60,17 +60,17 @@
                 <div id="main">
 
                     <div id="type_dates">
-                        <strong><?php echo osc_item_category($item) ; ?></strong>
-                        <em class="publish"><?php echo date("d/m/Y", strtotime(osc_item_pub_date($item))) ; ?></em>
-                        <em class="update"><?php echo date("d/m/Y", strtotime(osc_item_mod_date($item))) ; ?></em>
+                        <strong><?php echo "HOLA" . osc_item_category() ; ?></strong>
+                        <em class="publish"><?php echo date("d/m/Y", strtotime(osc_item_pub_date())) ; ?></em>
+                        <em class="update"><?php echo date("d/m/Y", strtotime(osc_item_mod_date())) ; ?></em>
                     </div>
 
                     <ul id="item_location">
-                        <?php if ( osc_item_country($item) != "" ) { ?><li><?php _e("Country:") ; ?> <strong><?php echo osc_item_country($item) ; ?></strong></li><?php } ?>
-                        <?php if ( osc_item_region($item) != "" ) { ?><li><?php _e("Region:") ; ?> <strong><?php echo osc_item_region($item) ; ?></strong></li><?php } ?>
-                        <?php if ( osc_item_city($item) != "" ) { ?><li><?php _e("City:") ; ?> <strong><?php echo osc_item_city($item) ; ?></strong></li><?php } ?>
-                        <?php if ( osc_item_city_area($item) != "" ) { ?><li><?php _e("City area:") ; ?> <strong><?php echo osc_item_city_area($item) ; ?></strong></li><?php } ?>
-                        <?php if ( osc_item_address($item) != "" ) { ?><li><?php _e("Address:") ; ?> <strong><?php echo osc_item_address($item) ; ?></strong></li><?php } ?>
+                        <?php if ( osc_item_country() != "" ) { ?><li><?php _e("Country:") ; ?> <strong><?php echo osc_item_country() ; ?></strong></li><?php } ?>
+                        <?php if ( osc_item_region() != "" ) { ?><li><?php _e("Region:") ; ?> <strong><?php echo osc_item_region() ; ?></strong></li><?php } ?>
+                        <?php if ( osc_item_city() != "" ) { ?><li><?php _e("City:") ; ?> <strong><?php echo osc_item_city() ; ?></strong></li><?php } ?>
+                        <?php if ( osc_item_city_area() != "" ) { ?><li><?php _e("City area:") ; ?> <strong><?php echo osc_item_city_area() ; ?></strong></li><?php } ?>
+                        <?php if ( osc_item_address() != "" ) { ?><li><?php _e("Address:") ; ?> <strong><?php echo osc_item_address() ; ?></strong></li><?php } ?>
                     </ul>
 
                     <div id="description">
@@ -79,13 +79,13 @@
                         if(count($locales) == 1 ) { ?>
 
                             <?php $locale = $locales[0] ; ?>
-                            <p><?php echo  osc_item_description($item, $locale['pk_c_code']); ?></p>
+                            <p><?php echo  osc_item_description($locale['pk_c_code']); ?></p>
                         
                         <?php } else {?>
 
                             <?php foreach($locales as $locale) { ?>
                                 <h3><?php echo $locale['s_name']; ?>:</h3>
-                                <?php echo  osc_item_description($item, $locale['pk_c_code']) ; ?>
+                                <?php echo  osc_item_description($locale['pk_c_code']) ; ?>
                             <?php } ?>
 
                         <?php } ?>
@@ -96,7 +96,7 @@
                     </div>
 
                     <!-- plugins -->
-                    <?php osc_run_hook('item_detail', $item) ; ?>
+                    <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                     <?php osc_run_hook('location') ; ?>
 
 
@@ -142,12 +142,8 @@
 
                 <div id="sidebar">
                     <div id="photos">
-                        
-                        <?php $aPictures = osc_item_pictures_url($item) ; ?>
-                        <?php if(count($aPictures) > 0) { ?>
-                            <?php foreach($aPictures as $picture) { ?>
-                                <img src="<?php echo $picture ; ?>" width="350" />
-                            <?php } ?>
+                        <?php while ( has_item_resources() ) { ?>
+                            <img src="<?php echo resource_url() ; ?>" width="350" />
                         <?php } ?>
 
                     </div>

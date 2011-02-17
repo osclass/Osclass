@@ -42,8 +42,12 @@
         }
 
         //to get the exported variables for the view
-        function _get($key) {
-            return($this->aExported[$key]) ;
+        function _get($key, $sentAll = false) {
+            if (!$sentAll && is_array($this->aExported[$key])) {
+                return current($this->aExported[$key]) ;
+            } else {
+                return($this->aExported[$key]) ;
+            }
         }
 
         //only for debug
@@ -53,6 +57,28 @@
             } else {
                 print_r($this->aExported) ;
             }
+        }
+
+        function _next($key) {
+            if (is_array($this->aExported[$key])) {
+                if ( next($this->aExported[$key]) ) return true ;
+                else false ;
+            } else {
+                die("YOU ARE USING _NEXT FUNCTION WITH A NON ARRAY") ;
+            }
+        }
+
+        /* @deprecated. dev.conquer: now we are using _get for arrays and simple variables
+        function _current($key) {
+            if (is_array($this->aExported[$key])) {
+                return current($this->aExported[$key]) ;
+            } else {
+                die("YOU ARE USING _CURRENT FUNCTION WITH A NON ARRAY") ;
+            }
+        }*/
+
+        function _exists($key) {
+            return ( isset($this->aExported[$key]) ? true : false ) ;
         }
     }
 

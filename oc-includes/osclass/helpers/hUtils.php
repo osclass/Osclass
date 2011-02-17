@@ -17,23 +17,6 @@
     }
 
     /**
-     * Formats the price using the appropiate currency.
-     */
-    //osc_formatPrice
-    function osc_format_price($item) {
-        if (!isset($item['f_price']))
-            return __('Check with seller');
-
-        if ($item['f_price'] == 0)
-            return __('Free');
-
-        if (!empty($item['f_price']))
-            return sprintf('%.02f %s', $item['f_price'], $item['fk_c_currency_code']);
-
-        return __('Check with seller');
-    }
-
-    /**
      * Formats the date using the appropiate format.
      */
     //osc_formatDate
