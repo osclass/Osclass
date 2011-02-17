@@ -153,12 +153,12 @@
                                 <div class="row checkboxes">
                                     <h6><?php _e('Category'); ?></h6>
                                     <ul>
-                                        <?php print_r($aCategories);foreach($aCategories as $cat) { ?>
+                                        <?php foreach($aCategories as $cat) { ?>
                                             <li>
-                                                <?php if(in_array($cat['pk_i_id'], $cats)) { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" checked="checked" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
+                                                <?php if(in_array($cat['pk_i_id'], $sCategory)) { ?>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
                                                 <?php } else { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
                                                 <?php } ?>
                                             </li>
                                         <?php } ?>
