@@ -48,6 +48,7 @@ class Test extends DAO {
         //first of all, we need the categories that we have in this installation
         $aCategories = Category::newInstance()->findRootCategories() ;
         $aIdCategories = array() ;
+        $aTotalPerCategory = array() ;
         for($i = 0 ; $i < count($aCategories) ; $i++) {
             //echo $aCategories[$i]['pk_i_id'] . "#<br />" ;
             $aIdCategories[] = $aCategories[$i]['pk_i_id'] ;
@@ -58,7 +59,13 @@ class Test extends DAO {
         $aSqlInserts = $this->getItemInserts() ;
         for ($i = 0 ; $i < count($aSqlInserts) ; $i++) {
             $aSqlInserts[$i] = str_replace('%EMAIL%', $email, $aSqlInserts[$i]) ;
-            $aSqlInserts[$i] = str_replace('%CATEGORY%', $aIdCategories[rand(0, count($aIdCategories)-1)], $aSqlInserts[$i]) ;
+            $position = rand(0, count($aIdCategories)-1) ;
+            if(!isset($aTotalPerCategory[$aIdCategories[$position]])) {
+                $aTotalPerCategory[$aIdCategories[$position]] = 1 ;
+            } else {
+                $aTotalPerCategory[$aIdCategories[$position]]++ ;
+            }
+            $aSqlInserts[$i] = str_replace('%CATEGORY%', $aIdCategories[$position], $aSqlInserts[$i]) ;
         }
 
         $sql .= implode($aSqlInserts, ",") ;
@@ -78,7 +85,7 @@ class Test extends DAO {
         $this->conn->osc_dbExec($sql) ;
 
         //ITEM LOCATION
-        $sql =  "INSERT INTO `oc_t_item_location` VALUES " ;
+        $sql = "INSERT INTO `oc_t_item_location` VALUES " ;
         $aSqlInserts = $this->getItemLocationInserts() ;
         for ($i = 0 ; $i < count($aSqlInserts) ; $i++) {
             $aSqlInserts[$i] = str_replace('%COUNTRY_CODE%', $this->aCountries[0]['pk_c_code'], $aSqlInserts[$i]) ;
@@ -89,8 +96,17 @@ class Test extends DAO {
         $this->conn->osc_dbExec($sql) ;
 
         //ITEM RESOURCES
-        $sql =  "INSERT INTO `oc_t_item_resource` VALUES " ;
+        $sql = "INSERT INTO `oc_t_item_resource` VALUES " ;
         $aSqlInserts = $this->getItemResourceInserts() ;
+        $sql .= implode($aSqlInserts, ",") ;
+        $this->conn->osc_dbExec($sql) ;
+
+        //CATEGORY STATS
+        $aSqlInserts = array() ;
+        foreach($aTotalPerCategory as $catId => $total) {
+            $aSqlInserts[] = "(" . $catId . "," . $total . ")" ;
+        }
+        $sql = "INSERT INTO `oc_t_category_stats` VALUES " ;
         $sql .= implode($aSqlInserts, ",") ;
         $this->conn->osc_dbExec($sql) ;
 
@@ -170,7 +186,6 @@ class Test extends DAO {
 
         return($inserts) ;
     }
-
     
     public function loadUserInfo($email, $name) {
         //USERS
