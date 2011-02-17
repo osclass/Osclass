@@ -33,22 +33,20 @@ if(!defined('__OSC_LOADED__')) {
 
 
 function count_items_subcategories($category = null) {
-
     $manager = CategoryStats::newInstance();
     $total = $manager->countItemsFromCategory($category['pk_i_id']);
     $categories = Category::newInstance()->isParentOf($category['pk_i_id']);
     if($categories!=null) {
-    foreach($categories as $c) {
-        $total += count_items_subcategories($c);
-    }
+        foreach($categories as $c) {
+            $total += count_items_subcategories($c);
+        }
     }
     return $total;
-
 }
 
 function update_cat_stats() {
 
-    $manager = CategoryStats::newInstance();
+    //$manager = CategoryStats::newInstance();
 
 	$conn = getConnection() ;
 	$sql_cats = "SELECT pk_i_id FROM ".DB_TABLE_PREFIX."t_category";
@@ -60,21 +58,25 @@ function update_cat_stats() {
         $total = $conn->osc_dbFetchResult($sql);
         $total = $total['total'];
         
-        $manager->update(
+        /*$manager->update(
             array(
                 'i_num_items' => $total
                 ), array('fk_i_category_id' => $c['pk_i_id'])
-            );
+            );*/
+        $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
 	}
 	
 	
 	$categories = Category::newInstance()->findRootCategories();
 	foreach($categories as $c) {
-        $manager->update(
+        /*$manager->update(
 			array(
 				'i_num_items' => count_items_subcategories($c)
 			), array('fk_i_category_id' => $c['pk_i_id'])
-		);
+		);*/
+		$total = count_items_subcategories($c);
+        $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
+
 			
 	}
 	
@@ -82,5 +84,6 @@ function update_cat_stats() {
 
 update_cat_stats();
 osc_runAlert('HOURLY');
+print_r("loL");
 
 ?>
