@@ -189,13 +189,15 @@
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_original.".osc_item_field($resource, "s_extension");
     }
     
-    function osc_item_thumbnail_url($item) {
-        $conn = getConnection() ;
-        $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d LIMIT 1', DB_TABLE_PREFIX, $item['pk_i_id']) ;
-        return osc_resource_thumbnail_url($resource);
+    function osc_item_thumbnail_url($item = null) {
+        if(isset($item["pk_i_id"])) {
+            return osc_resource_thumbnail_url(ItemResource::newInstance()->getResource( $item["pk_i_id"] ));
+        } else {
+            return '';
+        }
     }
 
-    function osc_item_picture_url($item = null) {
+    function osc_item_pictures_url($item = null) {
         return ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ;
     }
 
