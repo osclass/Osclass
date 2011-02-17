@@ -191,7 +191,7 @@
     
     function osc_item_thumbnail_url($item = null) {
         if(isset($item["pk_i_id"])) {
-            return osc_resource_thumbnail_url(ItemResource::newInstance()-getResource( $item["pk_i_id"] ));
+            return osc_resource_thumbnail_url(ItemResource::newInstance()->getResource( $item["pk_i_id"] ));
         } else {
             return '';
         }
@@ -199,7 +199,7 @@
 
     function osc_item_picture_url($item = null) {
         if(isset($item["pk_i_id"])) {
-            return osc_resource_url(ItemResource::newInstance()-getResource( $item["pk_i_id"] ));
+            return osc_resource_url(ItemResource::newInstance()->getResource( $item["pk_i_id"] ));
         } else {
             return '';
         }
