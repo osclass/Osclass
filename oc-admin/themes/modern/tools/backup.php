@@ -28,28 +28,23 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-<<<<<<< HEAD
         <div class="Header"><?php _e('Dashboard'); ?></div>
-=======
-        <div class="Header"><?php _e("Backup");?></div>
->>>>>>> b9f22ea44b72d76f4f579990e24f93b07898f3f1
-
         <script type="text/javascript">
-            $().ready(function(){
+            $(document).ready(function(){
                 $.ajaxSetup({
-                    error:function(x,e){
+                    error: function(x,e){
                         if(x.status==0){
-                            alert(<?php _e('You\'re offline! Please check your connection.'); ?>);
-                        }else if(x.status==404){
-                            alert(<?php _e('Requested URL not found.'); ?>);
-                        }else if(x.status==500){
-                            alert(<?php _e('Internal server error.'); ?>);
-                        }else if(e=='parsererror'){
-                            alert(<?php _e('Error. Parsing JSON request failed.'); ?>);
-                        }else if(e=='timeout'){
-                            alert(<?php _e('Request timeout.'); ?>);
-                        }else {
-                            alert(<?php _e('Unknown error.\n'); ?> + x.responseText);
+                            alert("<?php _e('You\'re offline! Please check your connection'); ?>");
+                        } else if(x.status==404){
+                            alert("<?php _e('Requested URL not found'); ?>");
+                        } else if(x.status==500){
+                            alert("<?php _e('Internal server error'); ?>");
+                        } else if(e=='parsererror'){
+                            alert("<?php _e('Error. Parsing JSON request failed'); ?>");
+                        } else if(e=='timeout'){
+                            alert("<?php _e('Request timeout'); ?>");
+                        } else {
+                            alert("<?php _e('Unknown error'); ?>" + x.responseText);
                         }
                     }
                 });
