@@ -23,6 +23,7 @@
 class Test extends DAO {
     private static $instance ;
     private $aLocales ;
+    private $aCountries ;
 
 	public static function newInstance() { 
         if(!self::$instance instanceof self) {
@@ -36,6 +37,8 @@ class Test extends DAO {
         
         //and locales...
         $this->aLocales = Locale::newInstance()->listAllEnabled() ;
+        //and countries...
+        $this->aCountries = Country::newInstance()->listAll() ;
     }
 
     public function getTableName() { return '' ; }
@@ -73,6 +76,20 @@ class Test extends DAO {
 
         $sql .= implode($aSqlInsertsWithAllTheLocales, ",") ;
         $this->conn->osc_dbExec($sql) ;
+
+        //ITEM LOCATION
+        $sql =  "INSERT INTO `oc_t_item_location` VALUES " ;
+        $aSqlInserts = $this->getItemLocationInserts() ;
+        for ($i = 0 ; $i < count($aSqlInserts) ; $i++) {
+            $aSqlInserts[$i] = str_replace('%COUNTRY_CODE%', $this->aCountries[0]['pk_c_code'], $aSqlInserts[$i]) ;
+            $aSqlInserts[$i] = str_replace('%COUNTRY_NAME%', $this->aCountries[0]['s_name'], $aSqlInserts[$i]) ;
+        }
+
+        $sql .= implode($aSqlInserts, ",") ;
+        $this->conn->osc_dbExec($sql) ;
+
+        
+
     }
 
     public function getItemInserts() {
@@ -106,6 +123,25 @@ class Test extends DAO {
                         ,"(9,'%LOCALE%','%LOCALE%Delegado Comercial C√≥rdoba','%LOCALE%Bucamos ejecutivo comercial para comercializar servicios jur√≠dicos, con orientaci√≥n a resultados\r\n','Delegado Comercial C√≥rdoba Bucamos ejecutivo comercial para comercializar servicios jur√≠dicos, con orientaci√≥n a resultados\r\n')"
                         ,"(10,'%LOCALE%','%LOCALE%Abogado / Consultor laboral','%LOCALE%Nuestra b√∫squeda se orienta a un abogado con experiencia en consultor√≠a laboral y previsional, conflictos judiciales laborales y convenios colectivos de trabajo.\r\n\r\nSus responsabilidades dentro de NewCorp ser√°n el asesoramiento a otras empresas del grupo en el √°rea laboral, seguridad social, obras sociales y redacci√≥n editorial.\r\n\r\nEdad: 24 - 40 a√±os\r\nLos interesados deber√°n enviar su CV sin omitir la remuneraci√≥n pretendida.','Abogado / Consultor laboral Nuestra b√∫squeda se orienta a un abogado con experiencia en consultor√≠a laboral y previsional, conflictos judiciales laborales y convenios colectivos de trabajo.\r\n\r\nSus responsabilidades dentro de NewCorp ser√°n el asesoramiento a otras empresas del grupo en el √°rea laboral, seguridad social, obras sociales y redacci√≥n editorial.\r\n\r\nEdad: 24 - 40 a√±os\r\nLos interesados deber√°n enviar su CV sin omitir la remuneraci√≥n pretendida.')"
                         ,"(11,'%LOCALE%','%LOCALE%Consultor funcional SAP','%LOCALE%NewCorp se encuentra en la b√∫squeda de profesionales con experiencia como Consultores Funcionales Sap Pp/ Sap Ps/ Sap Pm y Sap Mm, para formar parte de diversos proyectos en el exterior, para una Importante Multinacional en Tecnolog√≠a.\r\n\r\n\r\n Horario de Trabajo: 9 a 18 hs.\r\n Fecha de incorporaci√≥n: Inmediata\r\n\r\n Se ofrecen excelentes condiciones de contrataci√≥n, posibilidad de trabajar en el exterior y desarrollo de carrera.\r\n\r\nLos interesados deber√°n enviar un mail con Ref.: SD en el asunto, indicando su remuneraci√≥n bruta pretendida y disponibilidad para entrevistas a clara_zito@bnetbuilders.com','Consultor funcional SAP NewCorp se encuentra en la b√∫squeda de profesionales con experiencia como Consultores Funcionales Sap Pp/ Sap Ps/ Sap Pm y Sap Mm, para formar parte de diversos proyectos en el exterior, para una Importante Multinacional en Tecnolog√≠a.\r\n\r\n\r\n Horario de Trabajo: 9 a 18 hs.\r\n Fecha de incorporaci√≥n: Inmediata\r\n\r\n Se ofrecen excelentes condiciones de contrataci√≥n, posibilidad de trabajar en el exterior y desarrollo de carrera.\r\n\r\nLos interesados deber√°n enviar un mail con Ref.: SD en el asunto, indicando su remuneraci√≥n bruta pretendida y disponibilidad para entrevistas a clara_zito@bnetbuilders.com')"
+        ) ;
+
+        return($inserts) ;
+    }
+
+    public function getItemLocationInserts() {
+        $fields = array('fk_i_item_id', 'fk_c_country_code', 's_country', 's_address', 's_zip', 'fk_i_region_id', 's_region', 'fk_i_city_id', 's_city', 'fk_i_city_area_id', 's_city_area', 'd_coord_lat', 'd_coord_long') ;
+        $inserts = array(
+                        "(1,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'',NULL,NULL)"
+                        ,"(2,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'',NULL,NULL)"
+                        ,"(3,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'',NULL,NULL)"
+                        ,"(4,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'',NULL,NULL)"
+                        ,"(5,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Mendoza',NULL,'Mendoza',NULL,'',NULL,NULL)"
+                        ,"(6,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'',NULL,NULL)"
+                        ,"(7,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'',NULL,NULL)"
+                        ,"(8,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Zona Norte',NULL,'',NULL,NULL)"
+                        ,"(9,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Cordoba',NULL,'Cosquin',NULL,'',NULL,NULL)"
+                        ,"(10,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'Puerto Madero',NULL,NULL)"
+                        ,"(11,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'San Isidro',NULL,'',NULL,NULL)"
         ) ;
 
         return($inserts) ;

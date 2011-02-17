@@ -18,9 +18,13 @@
 
 class Item extends DAO
 {
-    public static function newInstance()
-    {
-        return new Item();
+    private static $instance ;
+
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
     }
 
     public function getTableName()
