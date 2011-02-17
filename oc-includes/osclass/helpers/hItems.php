@@ -4,7 +4,7 @@
         return (Item::newInstance()->listLatest( osc_max_latest_items() )) ;
     }
 
-    function osc_field($item, $locale) {
+    function osc_field($item, $field, $locale) {
         if($item != null) {
             if($locale == "") {
                 if(isset($item[$field])) {
@@ -15,13 +15,14 @@
                     return $item["locale"][$locale][$field] ;
                 }
             }
+            return $item ;
         }
         return "";
     }
 
     function osc_item() {
         if (View::newInstance()->_exists('items')) {
-            $item = View::newInstance()->_get('items') ;
+            $item = View::newInstance()->_current('items') ;
         } else {
             $item = View::newInstance()->_get('item') ;
         }
@@ -29,40 +30,40 @@
         return($item) ;
     }
 
-    function osc_item_field($locale = "") {
+    function osc_item_field($field, $locale = "") {
         if (View::newInstance()->_exists('items')) {
-            $item = View::newInstance()->_get('items') ;
+            $item = View::newInstance()->_current('items') ;
         } else {
             $item = View::newInstance()->_get('item') ;
         }
-        return osc_field($item, $locale) ;
+        return osc_field($item, $field, $locale) ;
     }
 
-    function osc_category_field($locale = '') {
+    function osc_category_field($field, $locale = '') {
         if (View::newInstance()->_exists('categories')) {
-            $category = View::newInstance()->_get('categories') ;
+            $category = View::newInstance()->_current('categories') ;
         } else {
             $category = View::newInstance()->_get('category') ;
         }
-        return osc_field($category, $locale) ;
+        return osc_field($category, $field, $locale) ;
     }
     
-    function osc_comment_field($locale = '') {
+    function osc_comment_field($field, $locale = '') {
         if (View::newInstance()->_exists('comments')) {
-            $comment = View::newInstance()->_get('comments') ;
+            $comment = View::newInstance()->_current('comments') ;
         } else {
             $comment = View::newInstance()->_get('comment') ;
         }
-        return osc_field($comment, $locale) ;
+        return osc_field($comment, $field, $locale) ;
     }
 
-    function osc_resource_field($locale = '') {
+    function osc_resource_field($field, $locale = '') {
         if (View::newInstance()->_exists('resources')) {
-            $resource = View::newInstance()->_get('resources') ;
+            $resource = View::newInstance()->_current('resources') ;
         } else {
             $resource = View::newInstance()->_get('resource') ;
         }
-        return osc_field($resource, $locale) ;
+        return osc_field($resource, $field, $locale) ;
     }
 
 
@@ -71,21 +72,25 @@
     }
 
     function osc_item_description($locale = "") {
-        return osc_item_field("s_description", $locale);
+        if ($locale == "") $locale = osc_get_user_locale() ;
+        return osc_item_field("s_description", $locale) ;
     }
 
     function osc_item_title($locale = "") {
+        if ($locale == "") $locale = osc_get_user_locale() ;
         return osc_item_field("s_title");
     }
 
     function osc_item_category($locale = "") {
+        if ($locale == "") $locale = osc_get_user_locale() ;
         $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
-        return osc_category_field("s_name") ;
+        return osc_field($category, "s_name", $locale) ;
     }
 
-    function osc_item_category_description($item = null, $locale = "") {
+    function osc_item_category_description($locale = "") {
+        if ($locale == "") $locale = osc_get_user_locale() ;
         $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
-        return osc_category_field("s_description") ;
+        return osc_field($category, "s_description", $locale) ;
     }
 
     function osc_item_pub_date() {
@@ -234,6 +239,10 @@
         return View::newInstance()->_next('resources') ;
     }
 
+    function has_item_comments() {
+        return View::newInstance()->_next('comments') ;
+    }
+
     function resource_url() {
         if (View::newInstance()->_exists('resources')) {
             $resource = View::newInstance()->_get('resources') ;
@@ -244,7 +253,6 @@
     }
 
     function osc_item_category_id() {
-        
         return osc_item_field("fk_i_category_id") ;
     }
 

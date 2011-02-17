@@ -21,8 +21,8 @@
 ?>
 <?php
     //$item = $this->_get('item') ;
-    $author = $this->_get('author') ;
-    $comments = $this->_get('comments') ;
+    //$author = $this->_get('author') ;
+    //$comments = $this->_get('comments') ;
     //$resources = $this->_get('resources') ;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -60,7 +60,7 @@
                 <div id="main">
 
                     <div id="type_dates">
-                        <strong><?php echo "HOLA" . osc_item_category() ; ?></strong>
+                        <strong><?php echo osc_item_category() ; ?></strong>
                         <em class="publish"><?php echo date("d/m/Y", strtotime(osc_item_pub_date())) ; ?></em>
                         <em class="update"><?php echo date("d/m/Y", strtotime(osc_item_mod_date())) ; ?></em>
                     </div>
@@ -74,22 +74,7 @@
                     </ul>
 
                     <div id="description">
-                        <?php 
-                        $locales = Locale::newInstance()->listAllEnabled() ;
-                        if(count($locales) == 1 ) { ?>
-
-                            <?php $locale = $locales[0] ; ?>
-                            <p><?php echo  osc_item_description($locale['pk_c_code']); ?></p>
-                        
-                        <?php } else {?>
-
-                            <?php foreach($locales as $locale) { ?>
-                                <h3><?php echo $locale['s_name']; ?>:</h3>
-                                <?php echo  osc_item_description($locale['pk_c_code']) ; ?>
-                            <?php } ?>
-
-                        <?php } ?>
-
+                        <p><?php echo  osc_item_description() ; ?></p>
                         <p class="contact_button">
                             <strong><a href="#contact"><?php _e('Contact publisher') ; ?></a></strong>
                         </p>
@@ -103,12 +88,12 @@
                     <?php if(osc_comments_enabled()) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments'); ?></h2>
-                            <?php if(isset($comments) && count($comments) > 0) { ?>
+                            <?php if( has_item_comments() ) { ?>
                                 <div class="comments_list">
-                                    <?php foreach($comments as $c) { ?>
+                                    <?php while ( has_item_comments() ) { ?>
                                         <div class="comment">
-                                            <h3><strong><?php echo osc_comment_title($c) ; ?></strong> <em><?php _e("by") ; ?> <?php echo osc_comment_author_name($c) ; ?>:</em></h3>
-                                            <p><?php echo osc_comment_author_email($c) ; ?></p>
+                                            <h3><strong><?php echo osc_comment_title() ; ?></strong> <em><?php _e("by") ; ?> <?php echo osc_comment_author_name() ; ?>:</em></h3>
+                                            <p><?php echo osc_comment_author_email() ; ?></p>
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -118,7 +103,7 @@
                                 <h3><?php _e('Leave your comment (spam and offensive messages will be removed)') ; ?></h3>
                                 <input type="hidden" name="action" value="add_comment" />
                                 <input type="hidden" name="page" value="item" />
-                                <input type="hidden" name="id" value="<?php echo osc_item_id($item) ; ?>" />
+                                <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
                                 <label for="authorName"><?php _e('Your name:') ; ?></label> <input type="text" name="authorName" id="authorName" /><br />
                                 <label for="authorEmail"><?php _e('Your email:') ; ?></label> <input type="text" name="authorEmail" id="authorEmail" /><br />
                                 <label for="title"><?php _e('Title:') ; ?></label><br /><input type="text" name="title" id="title" /><br />
@@ -152,16 +137,16 @@
                         <h2><?php _e("Contact publisher") ; ?></h2>
                         <form action="<?php echo osc_base_url(true) ; ?>?page=item" method="post" onsubmit="return validate_contact();">
                             <fieldset>
-                                <h3><?php echo osc_user_name($author) ; ?></h3>
-                                <?php if ( osc_user_phone($author) != '' ) { ?>
-                                    <p class="phone"><?php _e("Tel.: ") ; ?> <?php echo osc_user_phone($author) ; ?></p>
+                                <h3><?php echo osc_user_name() ; ?></h3>
+                                <?php if ( osc_user_phone() != '' ) { ?>
+                                    <p class="phone"><?php _e("Tel.: ") ; ?> <?php echo osc_user_phone() ; ?></p>
                                 <?php } ?>
                                 <label for="yourName"><?php _e('Your name') ; ?> <?php _e('(optional)') ; ?>:</label><input type="text" name="yourName" value="" id="yourName" />
                                 <label for="yourEmail"><?php _e('Your email address') ; ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
                                 <label for="phoneNumber"><?php _e('Phone number') ; ?>:</label><input type="text" name="phoneNumber" value="" id="phoneNumber" />
                                 <label for="message"><?php _e('Message') ; ?>:</label><textarea name="message" rows="8" cols="30"></textarea>
                                 <input type="hidden" name="action" value="contact_post" />
-                                <input type="hidden" name="id" value="<?php echo osc_item_id($item) ; ?>" />
+                                <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
                                 <button type="submit"><?php _e('Send message') ; ?></button>
                             </fieldset>
                         </form>
@@ -194,8 +179,8 @@
 
                     <!--
                     VER QUE HACEMOS CON ESTO    
-                    <div id="item_contact_seller"><a href="<?php echo WEB_PATH; ?>/item.php?action=contact&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('Contact seller'); ?></a></div>
-                    <div id="item_send_friend"><a href="<?php echo WEB_PATH; ?>/item.php?action=send_friend&amp;id=<?php echo $item['pk_i_id']; ?>"><?php echo __('Send to a friend'); ?></a></div>
+                    <div id="item_contact_seller"><a href="<?php echo WEB_PATH; ?>/item.php?action=contact&amp;id=<?php echo osc_item_id() ; ?>"><?php _e('Contact seller'); ?></a></div>
+                    <div id="item_send_friend"><a href="<?php echo WEB_PATH; ?>/item.php?action=send_friend&amp;id=<?php echo osc_item_id() ; ?>"><?php _e('Send to a friend'); ?></a></div>
                     -->
                 </div>
             </div>
