@@ -31,9 +31,7 @@
         <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -42,14 +40,10 @@
                     <div id="content_header_arrow">&raquo; <?php _e('Cron'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
-
                 <?php osc_show_flash_message('admin') ; ?>
-
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                             <input type="hidden" name="page" value="settings" />
                             <input type="hidden" name="action" value="cron_post" />

@@ -33,12 +33,10 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('General Settings'); ?></div>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -47,11 +45,8 @@
                     <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
-
                 <?php osc_show_flash_message('admin'); ?>
-
                 <!-- settings form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee;">
                     <div style="padding: 20px;">
@@ -182,9 +177,7 @@
                                     </select>
                                 </fieldset>
                             </div>
-
                             <div style="clear: both;"></div>
-
                             <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
                         </form>
 

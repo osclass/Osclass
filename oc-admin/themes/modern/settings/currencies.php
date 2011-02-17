@@ -1,26 +1,24 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-?>
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-<?php
     $aCurrencies = $this->_get('aCurrencies');
     $last = end($aCurrencies); $last_id = $last['pk_c_code'];
 ?>
@@ -33,14 +31,12 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
-        <script type="text/javascript" >
+        <div class="Header"><?php _e('Currencies'); ?></div>
+        <script type="text/javascript">
             $(function() {
-                $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
-                {
+                $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
                     var anRows = [];
-                    for ( var i=0, iLen = oSettings.aiDisplay.length ; i < iLen ; i++ )
-                    {
+                    for ( var i=0, iLen = oSettings.aiDisplay.length ; i < iLen ; i++ ) {
                         var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
                         anRows.push( nRow );
                     }
@@ -105,11 +101,8 @@
         <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
         <div id="content">
             <div id="separator"></div>
-
             <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
-
             <div id="right_column">
-
                 <div id="content_header" class="content_header">
                     <div id="content_header" class="content_header">
                         <div style="float: left;">
@@ -120,11 +113,8 @@
                         <div style="clear: both;"></div>
                     </div>
                 </div>
-                
                 <?php osc_show_flash_message('admin') ; ?>
-
                 <div id="content_separator"></div>
-
                 <div id="TableToolsToolbar">
                     <select id="bulk_actions" class="display">
                         <option value=""><?php _e('Bulk actions'); ?></option>
@@ -141,7 +131,6 @@
                     <br />
                     <div style="clear: both;"></div>
                 </form>
-
             </div> <!-- end of right column -->
         </div><!-- end of container -->
         <?php $this->osc_print_footer() ; ?>
