@@ -142,21 +142,26 @@
 
                 <div id="sidebar">
                     <div id="photos">
-                        <?php if(count($resources)) { ?>
-                            <?php foreach($resources as $resource) { ?>
-                                <img src="<?php echo osc_resource_url($resource) ; ?>" width="350" />
+                        <?php while ( has_item_resources() ) { ?>
+                            <img src="<?php echo resource_url() ; ?>" width="350" />
+                        <?php } ?>
+
+                        <?php $aPictures = osc_item_pictures_url($item) ; ?>
+                        <?php if(count($aPictures) > 0) { ?>
+                            <?php foreach($aPictures as $picture) { ?>
+                                <img src="<?php echo $picture ; ?>" width="350" />
                             <?php } ?>
                         <?php } ?>
 
                     </div>
 
                     <div id="contact">
-                        <h2><?php _e("Contact publisher");?></h2>
+                        <h2><?php _e("Contact publisher") ; ?></h2>
                         <form action="<?php echo osc_base_url(true) ; ?>?page=item" method="post" onsubmit="return validate_contact();">
                             <fieldset>
                                 <h3><?php echo osc_user_name($author) ; ?></h3>
                                 <?php if ( osc_user_phone($author) != '' ) { ?>
-                                    <p class="phone"><?php _e("Tel.: ") ; ?> <?php echo osc_user_phone($author); ?></p>
+                                    <p class="phone"><?php _e("Tel.: ") ; ?> <?php echo osc_user_phone($author) ; ?></p>
                                 <?php } ?>
                                 <label for="yourName"><?php _e('Your name') ; ?> <?php _e('(optional)') ; ?>:</label><input type="text" name="yourName" value="" id="yourName" />
                                 <label for="yourEmail"><?php _e('Your email address') ; ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
