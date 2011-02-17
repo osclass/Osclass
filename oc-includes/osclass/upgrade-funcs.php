@@ -16,11 +16,18 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once "../../oc-load.php";
+
     $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
     if($version < 119) {
         osc_sql110() ;
         osc_changeVersionTo(119) ;
+    }
+    
+    if($version < 120) {
+        osc_sql119() ;
+        osc_changeVersionTo(120) ;
     }
     
     
@@ -83,6 +90,18 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
             echo "Error: ".$e->getMessage()."\n";
         }
     }
-
+    
+    
+    function osc_sql119() {
+            $conn = getConnection();
+        try {
+            $resources = $conn->osc_dbFetchResults("SELECT * FROM %st_item_resource", DB_TABLE_PREFIX);
+            foreach($resources as $r) {
+                $conn->osc_dbExec("UPDATE %st_item_resource SET s_name = '%s', s_path = 'oc-content/uploads/', s_extension = 'png', s_content_type = 'image/png' WHERE pk_i_id = %d", DB_TABLE_PREFIX, $r["pk_i_id"], $r["pk_i_id"]);
+            }
+        } catch(Exception $e) {
+            echo "Error: ".$e->getMessage()."\n";
+        }
+    }
 
 ?>
