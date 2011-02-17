@@ -86,12 +86,17 @@ class CWebItem extends BaseModel
                     osc_redirectTo(osc_base_url());
                 }
 
+                // check the required fields
 
                 $mItems = new ItemActions(false);
                 $success = $mItems->add();
 
                 if($success) {
-                    // ESTO VA EN EL item.php QUE EXTIENDE SIN SEGURIDAD ?
+                    $PcontactName   = Params::getParam('contactName');
+                    $PcontactEmail  = Params::getParam('contactEmail');
+                    $itemId = Params::getParam('itemId');
+                    //echo $PcontactEmail."<br>".$PcontactName."<br>$itemId<br>";
+
                     if( Session::newInstance()->_get('userId') == '' ){ // if(!isset($_SESSION['userId'])) {
 
                         $mPages = new Page() ;
@@ -105,7 +110,10 @@ class CWebItem extends BaseModel
                             $content = current($aPage['locale']);
                         }
 
-                        $item_url = osc_create_item_url($item) ;
+                        
+                        $item =  $this->itemManager->findByPrimaryKey($itemId);
+                        
+                        $item_url = osc_item_url($item) ;
                         $urlEdit =  array(
                                         'file'   => 'user'
                                         ,'action' => 'item_edit'
@@ -113,7 +121,8 @@ class CWebItem extends BaseModel
                                         ,'userId' => null
                                         ,'secret' => $item['s_secret']
                                     ) ;
-                        $edit_link = osc_create_url($urlEdit);
+
+                        $edit_link = osc_base_url(true). "?page=item&action=editItem&id=$itemId&secret=".$item['s_secret'];
 
                         $urlDelete =    array(
                                             'file'   => 'user'
@@ -122,7 +131,7 @@ class CWebItem extends BaseModel
                                             ,'userId' => null
                                             ,'secret' => $item['s_secret']
                                         ) ;
-                        $delete_link = osc_create_url($urlDelete) ;
+                        $delete_link = osc_base_url(true) . "?page=item&action=item_delete&id=$itemId&secret=".$item['s_secret'] ;
 
                         $words   = array();
                         $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
@@ -147,6 +156,76 @@ class CWebItem extends BaseModel
                     $this->redirectTo(osc_search_category_url($category));
                 } else {
                     $this->redirectTo( osc_item_post_url() );
+                }
+            break;
+            case 'editItem':
+                //item edit
+//                $secret = Params::getParam('secret');
+//                $id     = Params::getParam('id');
+//                $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
+//                    if (count($item) == 1) {
+                        // secret es correcto
+//                        if( Params::getParam('secret') != '' && Params::getParam('id') ){
+                
+                        $id = Params::getParam('id') ;
+                        $item = Item::newInstance()->findByPrimaryKey($id);
+
+                        if(!osc_users_enabled()) {
+                            osc_add_flash_message(__('Users are not enable')) ;
+                            $this->redirectTo(osc_base_url(true));
+                        }
+
+                        if( Session::newInstance()->_get('userId') != '' ){
+                            $userId = Session::newInstance()->_get('userId');
+                        }else{
+                            $userId = null;
+                        }
+
+                        $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
+                        $categories = Category::newInstance()->toTree();
+                        $countries = Country::newInstance()->listAll();
+                        $regions = array();
+                        if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
+                            $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
+                        } else if( count($countries) > 0 ) {
+                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+                        }
+                        $cities = array();
+                        if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
+                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                        } else if( count($regions) > 0 ) {
+                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                        }
+
+                        $currencies = Currency::newInstance()->listAll();
+
+                        $this->_exportVariableToView('categories', $categories) ;
+                        $this->_exportVariableToView('currencies', $currencies) ;
+                        $this->_exportVariableToView('countries',$countries ) ;
+                        $this->_exportVariableToView('regions', $regions) ;
+                        $this->_exportVariableToView('cities', $cities) ;
+                        $this->_exportVariableToView('user', $user) ;
+                        $this->_exportVariableToView('item', $item) ;
+//                        }
+//                    }
+                $this->doView('item-edit.php');
+
+            break;
+            case 'item_edit_post':
+                $userId = Session::newInstance()->_get('userId');
+
+                $mItems = new ItemActions(false);
+                $success = $mItems->edit($userId);
+
+                $id = Params::getParam('id');
+
+                if($success){
+                    osc_run_hook('item_edit_post');
+                    osc_add_flash_message(__('Great! We\'ve just update your item.'));
+                    $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
+                } else {
+                    $id = Params::getParam('id');
+                    $this->redirectTo( osc_base_url() . "?page=item&action=editItem&id=$id" );
                 }
             break;
             case 'mark':
@@ -474,66 +553,24 @@ class CWebItem extends BaseModel
                     }
                 }
             break;
-            case 'editItem':
-                //item edit
-                $id = Params::getParam('id') ;
-                $item = Item::newInstance()->findByPrimaryKey($id);
+            case 'item_delete':
+                $id = intval( Params::getParam('id') ) ;
+                $secret = Params::getParam('secret') ;
 
-                if(!osc_users_enabled()) {
-                    osc_add_flash_message(__('Users are not enable')) ;
-                    $this->redirectTo(osc_base_url(true));
-                }
 
-                if( Session::newInstance()->_get('userId') != '' ){
-                    $userId = Session::newInstance()->_get('userId');
-                }else{
-                    $userId = null;
-                }
-
-                $user = ($userId!=null)?User::newInstance()->findByPrimaryKey($userId):null;
-                $categories = Category::newInstance()->toTree();
-                $countries = Country::newInstance()->listAll();
-                $regions = array();
-                if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
-                    $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
-                } else if( count($countries) > 0 ) {
-                    $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
-                }
-                $cities = array();
-                if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
-                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
-                } else if( count($regions) > 0 ) {
-                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
-                }
-
-                $currencies = Currency::newInstance()->listAll();
-
-                $this->_exportVariableToView('categories', $categories) ;
-                $this->_exportVariableToView('currencies', $currencies) ;
-                $this->_exportVariableToView('countries',$countries ) ;
-                $this->_exportVariableToView('regions', $regions) ;
-                $this->_exportVariableToView('cities', $cities) ;
-                $this->_exportVariableToView('user', $user) ;
-                $this->_exportVariableToView('item', $item) ;
-
-                $this->doView('item-edit.php');
-
-            break;
-
-            case 'item_edit_post':
-
-                $mItems = new ItemActions(false);
-                $userId = Session::newInstance()->_get('userId');
-                $success = $mItems->edit($userId);
-                if($success){
-                    osc_run_hook('item_edit_post');
-                    osc_add_flash_message(__('Great! We\'ve just update your item.'));
-                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                osc_add_flash_message(__('Your item has been deleted.')) ;
+                if(!osc_is_web_user_logged_in ()) {
+                    Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
+                    osc_add_flash_message(__('You could register and access every time to your items.'));
+                    osc_redirectTo(osc_register_account_url());//'user.php?action=register');
                 } else {
-                    $id = Params::getParam('id');
-                    $this->redirectTo(osc_base_url() . "?page=item_&id=$id");
+                    Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
+                    osc_redirectTo(osc_user_list_items_url());//'user.php?action=items');
                 }
+                osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
             break;
+
+            
             default:
                 if( Params::getParam('id') == ''){
                     $this->redirectTo(osc_base_url());

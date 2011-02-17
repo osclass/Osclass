@@ -204,6 +204,14 @@ class CWebUser extends WebSecBaseModel
                                             osc_add_flash_message(__('Password has been changed')) ;
                                             $this->redirectTo( osc_user_profile_url() ) ;
             break;
+            case 'items':                   // view items user
+                                            $items = Item::newInstance()->findByUserID($_SESSION['userId']);
+
+                                            $this->_exportVariableToView('items', $items);
+
+                                            $this->doView('user-items.php');
+
+            break;
         }
     }
 

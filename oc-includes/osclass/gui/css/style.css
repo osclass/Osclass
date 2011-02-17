@@ -308,6 +308,7 @@ a:hover { color:#F80; }
 .add_item h2 { font-size:16px; margin-bottom:10px; }
 .add_item label { float:left; line-height:24px; margin-right:10px; width:120px; }
 .add_item input { border:1px solid #BBB; padding:7px 7px 6px; width:250px; }
+.add_item input#showEmail { border:1px solid #BBB; padding:7px 7px 6px; width:20px; }
 .add_item textarea { border:1px solid #BBB; height:100px; padding:7px 7px 6px; width:300px; }
 .add_item textarea#description { height:175px; width:340px; }
 .add_item .button,

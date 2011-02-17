@@ -82,24 +82,10 @@
                             <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo'); ?></a>
                         </div>
 
-<!--                        <div class="itemFormContent">
-                             location info 
-                            <div class="itemFormHeader"><?php _e('Location'); ?></div>
-                            <dl>
-                                <dt><?php _e('Country'); ?></dt>
-                                <dd><?php ItemForm::country_select($countries, $user) ; ?></dd>
-                                <dt><?php _e('Region'); ?></dt>
-                                <dd><?php ItemForm::region_select($regions, $user) ; ?></dd>
-                                <dt><?php _e('City'); ?></dt>
-                                <dd><?php ItemForm::city_select($cities, $user) ; ?></dd>
-                                <dt><?php _e('City area'); ?></dt>
-                                <dd><?php ItemForm::city_area_text($user) ; ?></dd>
-                                <dt><?php _e('Address'); ?></dt>
-                                <dd><?php ItemForm::address_text($user) ; ?></dd>
-                            </dl>
-                        </div>-->
 
-                        </div>
+                    </div>
+
+                        
 
 
                     <!-- right -->
@@ -142,8 +128,10 @@
                                 <?php ItemForm::contact_email_text() ; ?>
                             </div>
                             <div class="row">
-                                <?php ItemForm::show_email_checkbox() ; ?>
-                                <label for="showEmail"><?php _e('Show email publically within the item page'); ?></label>
+                                <div style="width: 120px;text-align: right;float:left;">
+                                    <?php ItemForm::show_email_checkbox() ; ?>
+                                </div>
+                                <label for="showEmail" style="width: 250px;float:right;"><?php _e('Show email publically within the item page'); ?></label>
                             </div>
                         </div>
                         <?php }; ?>
@@ -153,8 +141,6 @@
                     <button  type="submit"><?php _e('Publish'); ?></button>
                     </fieldset>
              </form>
-                    
-                
             </div>
         </div>
         <?php $this->osc_print_footer() ; ?>
