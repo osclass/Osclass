@@ -22,8 +22,6 @@
 
     abstract class BaseModel
     {
-        //array for variables needed at the view layer
-        private $aExported ;
         //action to execute
         protected $action ;
         //array of css
@@ -35,28 +33,23 @@
         function  __construct() {
             Session::newInstance()->session_start() ;
             $this->action = Params::getParam('action') ;
-            $this->aExported = array() ;
             $this->aCss = array() ;
             $this->aJs = array() ;
         }
 
         //to export variables at the business layer
         function _exportVariableToView($key, $value) {
-            $this->aExported[$key] = $value ;
+            View::newInstance()->_exportVariableToView($key, $value) ;
         }
 
         //to get the exported variables for the view
         function _get($key) {
-            return($this->aExported[$key]) ;
+            return ( View::newInstance()->_get($key) ) ;
         }
 
         //only for debug
         function _view($key = null) {
-            if ($key) {
-                print_r($this->aExported[$key]) ;
-            } else {
-                print_r($this->aExported) ;
-            }
+            View::newInstance()->_view($key) ;
         }
 
         //Funciones que se tendran que reescribir en la clase que extienda de esta
