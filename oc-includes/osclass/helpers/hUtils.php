@@ -110,7 +110,7 @@
     {
         $deep_string = "";
         for($var = 0;$var<$deep;$var++) {
-            $deep_string .= '-';
+            $deep_string .= '&nbsp;&nbsp;';
         }
         $deep++;
         foreach($categories as $c) {

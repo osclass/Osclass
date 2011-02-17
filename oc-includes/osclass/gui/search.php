@@ -132,7 +132,7 @@
                                 <div class="row checkboxes">
                                     <ul>
                                         <li>
-                                            <?php if($bPic) { ?>
+                                            <?php if($bPic==1) { ?>
                                                 <input type="checkbox" name="bPic" id="withPicture" onchange="document.location = '<?php echo $this->osc_update_search_url(array('bPic' => 0)); ?>';" checked="checked" />
                                             <?php } else { ?>
                                                 <input type="checkbox" name="bPic" id="withPicture" value="false" onchange="document.location = '<?php echo $this->osc_update_search_url(array('bPic' => 1)); ?>';" />

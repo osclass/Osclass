@@ -83,7 +83,7 @@
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
 
             $p_bPic       = Params::getParam('bPic');
-            ($p_bPic == '') ? $p_bPic = 0 : $p_bPic = 1 ;
+            ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0 ;
 
             $p_sPriceMin  = Params::getParam('sPriceMin');
             $p_sPriceMax  = Params::getParam('sPriceMax');
