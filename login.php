@@ -71,7 +71,7 @@ class CWebLogin extends BaseModel
                                         }
 
                                     } else {
-                                        osc_add_flash_message(__('The username does not exists')) ;
+                                        osc_add_flash_message(__('The username doesn\'t exist')) ;
                                     }
 
                                     //returning logged in to the main page...
@@ -104,7 +104,7 @@ class CWebLogin extends BaseModel
 
                                         osc_add_flash_message(__('A new password has been sent to your account')) ;
                                     } else {
-                                        osc_add_flash_message(__('The email is not from a valid user. Please, try again!')) ;
+                                        osc_add_flash_message(__('The email isn\'t associated to a valid user. Please, try again')) ;
                                         $this->redirectTo( osc_base_url(true) . '?page=login&action=recover') ;
                                     }
 

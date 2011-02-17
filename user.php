@@ -75,7 +75,7 @@ class CWebUser extends WebSecBaseModel
                                     if( $success == 1 ) {
                                         osc_add_flash_message( __('Passwords don\'t match') ) ;
                                     } else {
-                                        osc_add_flash_message( __('Your profile has been updated properly') ) ;
+                                        osc_add_flash_message( __('Your profile has been updated successfully') ) ;
                                     }
 
                                     $this->redirectTo( osc_user_profile_url() ) ;
@@ -138,7 +138,7 @@ class CWebUser extends WebSecBaseModel
                                                     ) ;
                                                     osc_sendMail($params) ;
                                                 }
-                                                osc_add_flash_message(__('We have sent you an email to your account. Follow the instructions to validate the changes')) ;
+                                                osc_add_flash_message(__('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
                                                 $this->redirectTo( osc_user_profile_url() ) ;
 
                                             } else {
@@ -186,10 +186,10 @@ class CWebUser extends WebSecBaseModel
                                             $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
                                             if( $user['s_password'] != sha1( Params::getParam('password') ) ) {
-                                                osc_add_flash_message(__('Old password doesn\'t match')) ;
+                                                osc_add_flash_message(__('Current password doesn\'t match')) ;
                                                 $this->redirectTo( osc_change_user_password_url() ) ;
                                             } elseif( !Params::getParam('new_password') ) {
-                                                osc_add_flash_message(__('Passwords cannot be empty')) ;
+                                                osc_add_flash_message(__('Passwords can\'t be empty')) ;
                                                 $this->redirectTo( osc_change_user_password_url() ) ;
                                             } elseif( Params::getParam('new_password') != Params::getParam('new_password2') ) {
                                                 osc_add_flash_message(__('Passwords don\'t match'));

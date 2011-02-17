@@ -33,7 +33,7 @@
     </head>
     <body>
         <?php $this->osc_print_header() ; ?>
-        <script>
+        <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
                     var anRows = [];
@@ -82,7 +82,7 @@
                                         echo ' | <a href=\'comments.php?action=status&amp;id='. $c['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
                                     } else if (isset($c['e_status']) && ($c['e_status'] == 'INACTIVE')) {
                                         echo ' | <a href=\'comments.php?action=status&amp;id='. $c['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
-                                    }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')\" href='comments.php?action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></div>"
+                                    }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='comments.php?action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></div>"
                                 ,"<?php echo $c['s_body']; ?>"
                                 ,"<?php echo $c['dt_pub_date']; ?>"
                             ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
@@ -128,7 +128,7 @@
                         <form id="datatablesForm" action="comments.php" method="post">
                         <div id="TableToolsToolbar">
                         <select id="bulk_actions" name="bulk_actions" class="display">
-                            <option value=""><?php _e('Bulk Actions'); ?></option>
+                            <option value=""><?php _e('Bulk actions'); ?></option>
                             <option value="delete_all"><?php _e('Delete') ?></option>
                             <option value="activate_all"><?php _e('Activate') ?></option>
                             <option value="deactivate_all"><?php _e('Deactivate') ?></option>

@@ -52,7 +52,7 @@ class CAdminPlugins extends AdminSecBaseModel
 		        Plugins::runHook('install_'.$pn) ;
 		        
 
-                osc_add_flash_message(__('Plugin installed.'));
+                osc_add_flash_message(__('Plugin installed'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
 	        case 'uninstall':
@@ -61,7 +61,7 @@ class CAdminPlugins extends AdminSecBaseModel
                 Plugins::runHook($pn.'_uninstall') ;
 		        Plugins::deactivate($pn);
 
-                osc_add_flash_message(__('Plugin uninstalled.'));
+                osc_add_flash_message(__('Plugin uninstalled'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
 	        case 'admin':
