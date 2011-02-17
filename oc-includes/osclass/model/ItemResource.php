@@ -35,11 +35,11 @@ class ItemResource extends DAO {
 	
 	public function getTableItemName() { return DB_TABLE_PREFIX . 't_item'; }
 	
-	public function getAllResources($resourceId = null) {
-		if(is_null($resourceId)) {
+	public function getAllResources($itemId = null) {
+		if(is_null($itemId)) {
 			return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id', $this->getTableName(), $this->getTableItemName());				
 		} else {
-			return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE fk_i_item_id = ' . $resourceId, $this->getTableName(), $this->getTableItemName());
+			return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE fk_i_item_id = ' . $itemId, $this->getTableName(), $this->getTableItemName());
 		}
 	}
 }

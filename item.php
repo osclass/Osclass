@@ -557,7 +557,7 @@ class CWebItem extends BaseModel
                 $mStats = new ItemStats();
                 $mStats->increase('i_num_views', $item['pk_i_id']);
 
-                $resources = $this->itemManager->findResourcesByID( Params::getParam('id') );
+                $aResources = ItemResource::newInstance()->getAllResources( Params::getParam('id') ) ;
                 $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
 
                 foreach($item['locale'] as $k => $v) {
@@ -576,7 +576,7 @@ class CWebItem extends BaseModel
                 $this->_exportVariableToView('author', $author) ;
                 $this->_exportVariableToView('item', $item) ;
                 $this->_exportVariableToView('comments', $comments) ;
-                $this->_exportVariableToView('resources', $resources) ;
+                $this->_exportVariableToView('resources', $aResources) ;
                 osc_run_hook('show_item', $item);
                 $this->doView('item.php');
         }

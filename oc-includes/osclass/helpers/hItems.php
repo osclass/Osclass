@@ -8,11 +8,11 @@
         if($item!=null) {
             if($locale=="") {
                 if(isset($item[$field])) {
-                    return $item[$field];
+                    return $item[$field] ;
                 }
             } else {
                 if(isset($item["locale"]) && isset($item["locale"][$locale]) && isset($item["locale"][$locale][$field])) {
-                    return $item["locale"][$locale][$field];
+                    return $item["locale"][$locale][$field] ;
                 }
             }
         }
