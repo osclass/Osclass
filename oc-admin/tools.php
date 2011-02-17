@@ -93,20 +93,6 @@ class CAdminTools extends AdminSecBaseModel
                                     $this->doView('tools/backup.php');
             break;
             case 'backup-sql':
-<<<<<<< HEAD
-                                    if( Params::getParam('bck_dir') != '' ) {
-                                        if(substr(trim(Params::getParam('bck_dir'), -1, 1) == "/") ) {
-                                            $sql_name = trim(Params::getParam('bck_dir')) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                                        } else {
-                                            $sql_name = trim(Params::getParam('bck_dir')) . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                                        }
-                                    } else {
-                                        $sql_name = osc_base_path() . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                                    }
-                                    osc_dbdump($sql_name) ;
-                                    _e('Backup successful') ;
-            break;
-=======
                 if( Params::getParam('bck_dir') != '' ) {
                     if(substr(trim(Params::getParam('bck_dir')), -1, 1) == "/") {
                             $sql_name = trim(Params::getParam('bck_dir')) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
@@ -119,7 +105,6 @@ class CAdminTools extends AdminSecBaseModel
                 osc_dbdump($sql_name) ;
                 _e('Backup made correctly') ;
                 break;
->>>>>>> b9f22ea44b72d76f4f579990e24f93b07898f3f1
             case 'backup-zip':
                                     if( Params::getParam('bck_dir') != '' ) {
                                         $archive_name = Params::getParam('bck_dir') . "/OSClass_backup." . date('YmdHis') . ".zip" ;
