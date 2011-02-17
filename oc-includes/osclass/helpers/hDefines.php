@@ -293,4 +293,27 @@
         }
     }
     
+    function osc_search_url($params = null) {
+        $url = osc_base_url(true) . '?page=search';
+        if($params!=null) {
+            foreach($params as $k => $v) {
+                $url .= "&" . $k . "=" . $v;
+            }
+        }
+        return $url;
+    }
+    
+    function osc_search_list_countries() {
+        return Search::newInstance()->listCountries();
+    }
+    
+    function osc_search_list_regions($country = '%%%%') {
+        return Search::newInstance()->listRegions($country);
+    }
+    
+    function osc_search_list_cities($region = '%%%%') {
+        return Search::newInstance()->listCities($region);
+    }
+    
+    
 ?>

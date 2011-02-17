@@ -117,7 +117,7 @@
                                 </tbody>
                             </table>
                             <?php if( count($latestItems) == osc_max_latest_items() ) { ?>
-                                <p class="see_more_link"><a href="#"><strong>See all offers &raquo;</strong></a></p>
+                                <p class="see_more_link"><a href="#"><strong><?php _e("See all offers");?> &raquo;</strong></a></p>
                             <?php } ?>
                         <?php } ?>
                     </div>
@@ -128,13 +128,12 @@
                     <div class="navigation">
 
                         <div class="box location">
-                            <h3><strong>Location</strong></h3>
+                            <h3><strong><?php _e("Location");?></strong></h3>
                             <ul>
-                                <li><a href="#">Madrid</a> <em>(12.674)</em></li>
-                                <li><a href="#">Barcelona</a> <em>(10.432)</em></li>
-                                <li><a href="#">Sevilla</a> <em>(9.456)</em></li>
-                                <li><a href="#">Valencia</a> <em>(7.503)</em></li>
-                                <li><a href="#">Bilbao</a> <em>(7.552)</em></li>
+                            <?php $regions = osc_search_list_regions();
+                                foreach($regions as $region) { ?>
+                                <li><a href="<?php echo osc_search_url(array('sRegion' => $region['region_name']));?>"><?php echo $region['region_name'];?></a> <em>(<?php echo $region['items'];?>)</em></li>
+                            <?php } ?>
                             </ul>
                         </div>
 

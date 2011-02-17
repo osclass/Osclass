@@ -132,7 +132,7 @@
                                 <div class="row checkboxes">
                                     <ul>
                                         <li>
-                                            <?php if($bPic) { ?>
+                                            <?php if($bPic==1) { ?>
                                                 <input type="checkbox" name="bPic" id="withPicture" onchange="document.location = '<?php echo $this->osc_update_search_url(array('bPic' => 0)); ?>';" checked="checked" />
                                             <?php } else { ?>
                                                 <input type="checkbox" name="bPic" id="withPicture" value="false" onchange="document.location = '<?php echo $this->osc_update_search_url(array('bPic' => 1)); ?>';" />
@@ -155,10 +155,10 @@
                                     <ul>
                                         <?php foreach($aCategories as $cat) { ?>
                                             <li>
-                                                <?php if(in_array($cat['pk_i_id'], $cats)) { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" checked="checked" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
+                                                <?php if(in_array($cat['pk_i_id'], $sCategory)) { ?>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
                                                 <?php } else { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" id="cat<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
                                                 <?php } ?>
                                             </li>
                                         <?php } ?>
