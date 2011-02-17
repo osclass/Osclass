@@ -35,21 +35,28 @@ class CAdminUsers extends AdminSecBaseModel
         //specific things for this class
         switch ($this->action)
         {
-
-
-            case 'create':          $countries = Country::newInstance()->listAll();
-                                    $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
-                                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+            case 'create':          // callign create view
+                                    $aCountries = array();
+                                    $aRegions   = array();
+                                    $aCities    = array();
+                                    
+                                    $aCountries = Country::newInstance()->listAll();
+                                    if(isset($aCountries[0]['pk_c_code'])) {
+                                        $aRegions = Region::newInstance()->getByCountry($aCountries[0]['pk_c_code']);
+                                    }
+                                    if(isset($aRegions[0]['pk_i_id'])) {
+                                        $aCities  = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                    }
 
                                     $this->_exportVariableToView("user", null);
-                                    $this->_exportVariableToView("countries", $countries);
-                                    $this->_exportVariableToView("regions", $regions);
-                                    $this->_exportVariableToView("cities", $cities);
+                                    $this->_exportVariableToView("countries", $aCountries);
+                                    $this->_exportVariableToView("regions", $aRegions);
+                                    $this->_exportVariableToView("cities", $aCities);
                                     $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
 
                                     $this->doView("users/frm.php");
             break;
-            case 'create_post':     //creating the user...
+            case 'create_post':     // creating the user...
                                     require_once LIB_PATH . 'osclass/users.php' ;
                                     $userActions = new UserActions(true) ;
                                     $success = $userActions->add() ;
@@ -61,88 +68,138 @@ class CAdminUsers extends AdminSecBaseModel
                                         case 3: osc_add_flash_message(__('Sorry, but that e-mail is already in use'), 'admin') ;
                                         break;
                                     }
-                                    $this->redirectTo("index.php?page=users") ;
+                                    
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
-            case 'edit':            $user = $this->userManager->findByPrimaryKey(Params::getParam("id"));
-                                    $countries = Country::newInstance()->listAll();
-                                    $regions = array();
-                                    if( isset($user['fk_c_country_code']) && $user['fk_c_country_code']!='' ) {
-                                        $regions = Region::newInstance()->getByCountry($user['fk_c_country_code']);
-                                    } else if( count($countries) > 0 ) {
-                                        $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+            case 'edit':            // calling the edit view
+                                    $aUser      = array();
+                                    $aCountries = array();
+                                    $aRegions   = array();
+                                    $aCities    = array();
+
+                                    $aUser = $this->userManager->findByPrimaryKey(Params::getParam("id"));
+                                    $aCountries = Country::newInstance()->listAll();
+                                    $aRegions = array();
+                                    if( $aUser['fk_c_country_code'] != '') {
+                                        $aRegions = Region::newInstance()->getByCountry($aUser['fk_c_country_code']);
+                                    } else if( count($aCountries) > 0 ) {
+                                        $aRegions = Region::newInstance()->getByCountry($aCountries[0]['pk_c_code']);
                                     }
-                                    $cities = array();
-                                    if( isset($user['fk_i_region_id']) && $user['fk_i_region_id']!='' ) {
-                                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
-                                    } else if( count($regions) > 0 ) {
-                                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                                    $aCities = array();
+                                    if( $aUser['fk_i_region_id']!='' ) {
+                                        $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aUser['fk_i_region_id']) ;
+                                    } else if( count($aRegions) > 0 ) {
+                                        $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
                                     }
                                     
-                                    $this->_exportVariableToView("user", $user);
-                                    $this->_exportVariableToView("countries", $countries);
-                                    $this->_exportVariableToView("regions", $regions);
-                                    $this->_exportVariableToView("cities", $cities);
+                                    $this->_exportVariableToView("user", $aUser);
+                                    $this->_exportVariableToView("countries", $aCountries);
+                                    $this->_exportVariableToView("regions", $aRegions);
+                                    $this->_exportVariableToView("cities", $aCities);
                                     $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
                                     $this->doView("users/frm.php");
             break;
-            case 'edit_post':       //edit post
+            case 'edit_post':       // edit post
                                     require_once LIB_PATH . 'osclass/users.php' ;
                                     $userActions = new UserActions(true) ;
                                     $success = $userActions->edit( Params::getParam("id") ) ;
 
                                     switch($success) {
-                                        case 1: osc_add_flash_message(__('Passwords don\'t match'), 'admin') ;
+                                        case (1):  osc_add_flash_message(__('Passwords don\'t match'), 'admin') ;
                                         break;
-                                        case 2: osc_add_flash_message(__('The user has been updated and activated'), 'admin') ;
+                                        case (2):  osc_add_flash_message(__('The user has been updated and activated'), 'admin') ;
                                         break;
-                                        default: osc_add_flash_message(__('The user has been updated'), 'admin');
+                                        default:   osc_add_flash_message(__('The user has been updated'), 'admin');
                                         break;
                                     }
 
-                                    $this->redirectTo("index.php?page=users") ;
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
             case 'activate':        //activate
-                                    $ids = Params::getParam('id');
-                                    foreach($ids as $id) {
-                                        $conditions = array('pk_i_id' => $id);
-                                        $values = array('b_enabled' => 1);
-                                        try {
-                                            $this->userManager->update($values, $conditions);
-                                            osc_add_flash_message(__('The user has been activated'), 'admin');
-                                        } catch (Exception $e) {
-                                            osc_add_flash_message(__('Error: ') . $e->getMessage(), 'admin');
-                                        }
+                                    $iUpdated = 0;
+                                    $userId   = Params::getParam('id');
+                                    if(!is_array($userId)) {
+                                        osc_admin_flash_message(__('User id isn\'t in the correct format'), 'admin');
                                     }
-                                    $this->redirectTo("index.php?page=users");
+
+                                    foreach($userId as $id) {
+                                        $conditions = array('pk_i_id' => $id);
+                                        $values     = array('b_enabled' => 1);
+                                        $iUpdated  += $this->userManager->update($values, $conditions);
+                                    }
+
+                                    switch ($iUpdated) {
+                                        case (0):   $msg = __('Any user has been activated');
+                                        break;
+                                        case (1):   $msg = __('One user has been activated');
+                                        break;
+                                        default:    $msg = sprintf(__('%s users have been activated'), $iUpdated);
+                                        break;
+                                    }
+                                    
+                                    osc_add_flash_message($msg, 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
             case 'deactivate':      //deactivate
-                                    $ids = Params::getParam('id');
-                                    foreach($ids as $id) {
-                                        $conditions = array('pk_i_id' => $id);
-                                        $values = array('b_enabled' => 0);
-                                        try {
-                                            $this->userManager->update($values, $conditions);
-                                            osc_add_flash_message(__('The user has been deactivated.'), 'admin');
-                                        } catch (Exception $e) {
-                                            osc_add_flash_message(__('Error: ') . $e->getMessage(), 'admin');
-                                        }
+                                    $iUpdated = 0;
+                                    $userId   = Params::getParam('id');
+                                    if(!is_array($userId)) {
+                                        osc_admin_flash_message(__('User id isn\'t in the correct format'), 'admin');
                                     }
-                                    $this->redirectTo("index.php?page=users");
+
+                                    foreach($userId as $id) {
+                                        $conditions = array('pk_i_id' => $id);
+                                        $values     = array('b_enabled' => 0);
+                                        $iUpdated  += $this->userManager->update($values, $conditions);
+                                    }
+
+                                    switch ($iUpdated) {
+                                        case (0):   $msg = __('Any user has been deactivated');
+                                        break;
+                                        case (1):   $msg = __('One user has been deactivated');
+                                        break;
+                                        default:    $msg = sprintf(__('%s users have been deactivated'), $iUpdated);
+                                        break;
+                                    }
+
+                                    osc_add_flash_message($msg, 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
             case 'delete':          //delete
-                                    $ids = Params::getParam('id');
-                                    foreach($ids as $id) {
-                                        $this->userManager->deleteUser($id);
+                                    $iDeleted = 0;
+                                    $userId   = Params::getParam('id');
+                                    if(!is_array($userId)) {
+                                        osc_admin_flash_message(__('User id isn\'t in the correct format'), 'admin');
                                     }
-                                    $this->redirectTo("index.php?page=users") ;
+
+                                    foreach($userId as $id) {
+                                        if($this->userManager->deleteUser($id)) {
+                                            $iDeleted++;
+                                        }
+                                    }
+
+                                    switch ($iDeleted) {
+                                        case (0):   $msg = __('Any user has been deleted');
+                                        break;
+                                        case (1):   $msg = __('One user has been deleted');
+                                        break;
+                                        default:    $msg = sprintf(__('%s users have been deleted'), $iDeleted);
+                                        break;
+                                    }
+
+                                    osc_add_flash_message($msg, 'admin');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
-            default:
+            default:                // manage users view
+                                    $aUsers = $this->userManager->listAll();
+
                                     $this->add_global_js('jquery.dataTables.min.js') ;
                                     $this->add_css('item_list_layout.css') ;
                                     $this->add_css('demo_table.css') ;
 
-                                    $this->_exportVariableToView("users", $this->userManager->listAll());
+                                    $this->_exportVariableToView("users", $aUsers);
                                     $this->doView("users/index.php");
+            break;
         }
     }
 
