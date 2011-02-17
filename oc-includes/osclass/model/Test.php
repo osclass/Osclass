@@ -88,22 +88,27 @@ class Test extends DAO {
         $sql .= implode($aSqlInserts, ",") ;
         $this->conn->osc_dbExec($sql) ;
 
-        
+        //ITEM RESOURCES
+        $sql =  "INSERT INTO `oc_t_item_resource` VALUES " ;
+        $aSqlInserts = $this->getItemResourceInserts() ;
+        $sql .= implode($aSqlInserts, ",") ;
+        $this->conn->osc_dbExec($sql) ;
 
     }
 
     public function getItemInserts() {
+        $fields = array ('pk_i_id', 'fk_i_user_id', 'fk_i_category_id', 'dt_pub_date', 'dt_mod_date', 'f_price', 'fk_c_currency_code', 's_contact_name', 's_contact_email', 'b_premium', 'e_status', 's_secret', 'b_show_email') ;
         $inserts = array(
-                    "(1,1,%CATEGORY%,'2011-02-11 12:23:29','2011-02-11 12:23:29',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','2fn2fsjo',0)"
-                    ,"(2,1,%CATEGORY%,'2011-02-11 12:30:31','2011-02-11 12:30:31',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','nxmcojpz',0)"
-                    ,"(3,1,%CATEGORY%,'2011-02-11 12:29:19','2011-02-11 12:29:19',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','b0ahftfu',0)"
-                    ,"(4,1,%CATEGORY%,'2011-02-14 11:21:09','2011-02-14 11:21:09',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','bkj8jnu2',0)"
-                    ,"(5,1,%CATEGORY%,'2011-02-11 12:25:31','2011-02-11 12:25:31',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','xyqo41aj',0)"
-                    ,"(6,1,%CATEGORY%,'2011-02-11 12:22:00','2011-02-11 12:22:00',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','3rpcisj1',0)"
-                    ,"(7,1,%CATEGORY%,'2011-02-11 12:13:25','2011-02-11 12:13:25',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','5jgcecci',0)"
-                    ,"(8,1,%CATEGORY%,'2011-02-14 11:21:41','2011-02-14 11:21:41',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','ol0zsz0y',0)"
-                    ,"(9,1,%CATEGORY%,'2011-02-11 12:24:49','2011-02-11 12:24:49',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','ejtxfj9e',0)"
-                    ,"(10,1,%CATEGORY%,'2011-02-14 11:05:40','2011-02-14 11:05:40',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','c66vhky2',0)"
+                    "(1,1,%CATEGORY%,'2011-02-11 12:23:29','2011-02-11 12:23:29',223.43,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','2fn2fsjo',0)"
+                    ,"(2,1,%CATEGORY%,'2011-02-11 12:30:31','2011-02-11 12:30:31',1000,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','nxmcojpz',0)"
+                    ,"(3,1,%CATEGORY%,'2011-02-11 12:29:19','2011-02-11 12:29:19',2500,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','b0ahftfu',0)"
+                    ,"(4,1,%CATEGORY%,'2011-02-14 11:21:09','2011-02-14 11:21:09',3900,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','bkj8jnu2',0)"
+                    ,"(5,1,%CATEGORY%,'2011-02-11 12:25:31','2011-02-11 12:25:31',213.20,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','xyqo41aj',0)"
+                    ,"(6,1,%CATEGORY%,'2011-02-11 12:22:00','2011-02-11 12:22:00',412.232,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','3rpcisj1',0)"
+                    ,"(7,1,%CATEGORY%,'2011-02-11 12:13:25','2011-02-11 12:13:25',2000,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','5jgcecci',0)"
+                    ,"(8,1,%CATEGORY%,'2011-02-14 11:21:41','2011-02-14 11:21:41',5600,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','ol0zsz0y',0)"
+                    ,"(9,1,%CATEGORY%,'2011-02-11 12:24:49','2011-02-11 12:24:49',7200,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','ejtxfj9e',0)"
+                    ,"(10,1,%CATEGORY%,'2011-02-14 11:05:40','2011-02-14 11:05:40',200,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','c66vhky2',0)"
                     ,"(11,1,%CATEGORY%,'2011-02-14 11:20:25','2011-02-14 11:20:25',NULL,NULL,'NewCorp','%EMAIL%',NULL,'ACTIVE','mxe9ouht',0)"
         ) ;
         
@@ -142,6 +147,25 @@ class Test extends DAO {
                         ,"(9,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Cordoba',NULL,'Cosquin',NULL,'',NULL,NULL)"
                         ,"(10,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'Capital Federal',NULL,'Puerto Madero',NULL,NULL)"
                         ,"(11,'%COUNTRY_CODE%','%COUNTRY_NAME%','',NULL,NULL,'Buenos Aires',NULL,'San Isidro',NULL,'',NULL,NULL)"
+        ) ;
+
+        return($inserts) ;
+    }
+
+    public function getItemResourceInserts() {
+        $fields = array('pk_i_id', 'fk_i_item_id', 's_name', 's_content_type', 's_path') ;
+        $inserts = array(
+                        "(1,1,'OSClass injection1-1','image/png','')"
+                        ,"(2,1,'OSClass injection1-2','image/png','')"
+                        ,"(3,1,'OSClass injection1-3','image/png','')"
+                        ,"(4,1,'OSClass injection1-4','image/png','')"
+                        ,"(5,2,'OSClass injection2-1','image/png','')"
+                        ,"(6,2,'OSClass injection2-2','image/png','')"
+                        ,"(7,3,'OSClass injection3-1','image/png','')"
+                        ,"(8,4,'OSClass injection4-1','image/png','')"
+                        ,"(9,5,'OSClass injection5-1','image/png','')"
+                        ,"(10,6,'OSClass injection6-1','image/png','')"
+                        ,"(11,6,'OSClass injection6-2','image/png','')"
         ) ;
 
         return($inserts) ;

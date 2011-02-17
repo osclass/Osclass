@@ -202,9 +202,9 @@
     }
 
     //osc_itemThumbnail
-    function osc_item_thumbnail_url($file) {
+    /*function osc_item_thumbnail_url($file) {
         return ('NOT IMPLEMENTED YET. THE PARAMETER RECEIVED IS "' . $file . '"') ;
-    }
+    }*/
     
     //osc_createItemURL
     function osc_item_url($item) {
@@ -292,135 +292,5 @@
             return osc_base_url(true) . '?page=language&locale=' . $locale ;
         }
     }
-
-
-    
-/*
-
-function osc_createUserOptionsURL($option = null) {
-    if (osc_rewrite_enabled()) {
-        if($option != null) {
-            return osc_base_url() . 'user/options/'.$option;
-        } else {
-            return osc_base_url() . 'user/options';
-        }
-    } else {
-        if($option != null) {
-            return osc_base_url() . 'user.php?action=options&option='.$option;
-        } else {
-            return osc_base_url() . 'user.php?action=options';
-        }
-    }
-}
-
-function osc_createUserOptionsPostURL($option = null) {
-    if (osc_rewrite_enabled()) {
-        if($option != null) {
-            return osc_base_url() . 'user/options_post/' . $option ;
-        } else {
-            return osc_base_url() . 'user/options_post';
-        }
-    } else {
-        if($option != null) {
-            return osc_base_url() . 'user.php?action=options_post&option=' . $option ;
-        } else {
-            return osc_base_url() . 'user.php?action=options_post' ;
-        }
-    }
-}
-
-function osc_create_url($params = null, $echo = false) {
-    $path = '';
-    if(!is_array($params)) {
-        return '';
-    }
-
-    if(count($params) == 0) {
-        return '';
-    }
-
-    if(!isset($params['file'])) {
-        return '';
-    }
-
-    if (osc_rewrite_enabled()) {
-        if($params['file'] == 'index') {
-            $params['file'] = '';
-            $path = osc_base_url() . $params['action'];
-        } else {
-            if(count($params) == 2 && isset($params['action'])) {
-                $path = osc_base_url() . $params['file'] . "/" . $params['action'];
-            } else {
-                $path = osc_base_url() . $params['file'] . "?" . $params_string;
-            }
-        }
-    } else {
-        $params_string = "";
-        foreach ($params as $k => $v) {
-            if ($k != 'file') {
-                $params_string .= $k . '=' . $v . '&';
-            }
-        }
-        $params_string = preg_replace('/\&$/','',$params_string);
-        $path = osc_base_url() . $params['file'] . ".php?" . $params_string;
-    }
-
-    if($echo) {
-        echo $path;
-        return '';
-    }
-
-    return $path;
-}
-
-function osc_createThumbnailURL($resource) {
-    if(isset($resource['pk_i_id'])) {
-        return sprintf(osc_base_url() . 'oc-content/uploads/%d_thumbnail.png', $resource['pk_i_id']) ;
-    } else {
-        return osc_theme_resource('images/no-image.png') ;
-    }
-}
-
-function osc_createResourceURL($resource) {
-    return sprintf(osc_base_url() . 'oc-content/uploads/%d.png', $resource['pk_i_id']) ;
-}
-*/
-
-    /*
-    function osc_create_item_thumbnail_url($item) {
-        $conn = getConnection() ;
-        $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
-        echo osc_createThumbnailURL($resource) ;
-    }
-     */
-
-/*
-function osc_createUserPublicDashboard($user = null) {
-    if ($user != null || !isset($user['pk_i_id'])) {
-        if (osc_rewrite_enabled()) {
-            return osc_base_url() . 'user/'.$user['pk_i_id'] ;
-        } else {
-            return osc_base_url() . 'user.php?action=public&user='.$user['pk_i_id'] ;
-        }
-    }
-}*/
-
-
-
-
-/**
- * Prints the aditional options to the menu
- *
- * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
- *
- * @return void
- */
-/*function add_option_menu($option = null) {
-    if($option!=null) {
-        echo '<li><a href="' . $option['url'] . '" >' . $option['name'] . '</a></li>' ;
-    }
-
-}*/
-
     
 ?>

@@ -67,7 +67,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                                                   ,array('s_name'  => 'enableField#images@items'));
 
                                     if($iUpdated > 0) {
-                                        osc_add_flash_message(__('Items settings have been updated'), 'admin');
+                                        osc_add_flash_message(__('Items\' settings have been updated'), 'admin');
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=items');
             break;
@@ -91,7 +91,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                                                   ,array('s_name' => 'notify_new_comment'));
 
                                     if($iUpdated > 0) {
-                                        osc_add_flash_message(__('Comments setting have been updated'), 'admin');
+                                        osc_add_flash_message(__('Comments\' settings have been updated'), 'admin');
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
             break;
@@ -115,7 +115,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                                                   ,array('s_name'  => 'enabled_users'));
 
                                     if($iUpdated > 0) {
-                                        osc_add_flash_message(__('Users settings have been updated.'), 'admin');
+                                        osc_add_flash_message(__('Users\' settings have been updated.'), 'admin');
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
             break;
@@ -224,7 +224,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                                                       ,'s_name'            => $newCity
                                                                                       ,'fk_c_country_code' => $countryCode));
 
-                                                                osc_add_flash_message(sprintf(__('%s has been added as new city'),
+                                                                osc_add_flash_message(sprintf(__('%s has been added as a new city'),
                                                                                                  $newCity), 'admin');
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                         break;
@@ -339,7 +339,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                                                   ,array('s_name'  => 'recaptchaPubKey'));
 
                                     if($iUpdated > 0) {
-                                        osc_add_flash_message(__('Akismet and ReCatpcha have been updated') ,'admin');
+                                        osc_add_flash_message(__('Akismet and reCAPTCHA have been updated') ,'admin');
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
             break;
@@ -385,7 +385,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                             $currencyCode = trim($currencyCode);
                                                             
                                                             if($currencyCode == '') {
-                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                osc_add_flash_message(__('Error: the currency code isn\'t in the correct format'), 'admin');
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                             }
 
@@ -411,7 +411,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                             $currencyCode        = trim($currencyCode);
 
                                                             if(!preg_match('/.{1,3}/', $currencyCode)) {
-                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                osc_add_flash_message(__('Error: the currency code isn\'t in the correct format'), 'admin');
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                             }
 
@@ -429,7 +429,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                             $aCurrencyCode = Params::getParam('code');
 
                                                             if(!is_array($aCurrencyCode)) {
-                                                                osc_add_flash_message(__('Error: the currency code is not in the correct format'), 'admin');
+                                                                osc_add_flash_message(__('Error: the currency code isn\'t in the correct format'), 'admin');
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                             }
 
@@ -441,7 +441,7 @@ class CAdminSettings extends AdminSecBaseModel
 
                                                             $msg = '';
                                                             switch ($rowChanged) {
-                                                                case ('0'): $msg = __('Any currency have been deleted');
+                                                                case ('0'): $msg = __('No currencies have been deleted');
                                                                 break;
                                                                 case ('1'): $msg = __('One currency has been deleted');
                                                                 break;
@@ -497,7 +497,7 @@ class CAdminSettings extends AdminSecBaseModel
                                                                                    ,array('s_name' => 'mailserver_ssl'));
 
                                     if($iUpdated > 0) {
-                                        osc_add_flash_message(__('Mailserver configuration has changed'), 'admin');
+                                        osc_add_flash_message(__('Mail server configuration has changed'), 'admin');
                                     }
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
             break;

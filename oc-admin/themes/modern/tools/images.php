@@ -28,12 +28,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
-        <script>
-                $(function() {
-                        // Here we include specific jQuery, jQuery UI and Datatables functions.
-                });
-        </script>
+        <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
 
@@ -41,7 +36,7 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/tools-icon.png" /></div>
+                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/tools-icon.png" /></div>
                     <div id="content_header_arrow">&raquo; <?php _e('Regenerate thumbnails'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
@@ -52,13 +47,13 @@
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e("This function lets you regenerate your thumbnails and previews images. Usefull if you changed your theme and images are not showing up correctly. Please, check the size values defined in the settings/media section."); ?>.
+                        <?php _e("You can regenerate your thumbnails and previews images here. It\'s useful if you changed your theme and images are not showing up correctly. Please, check the size values defined in the settings/media section"); ?>.
 
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
                         <input type="hidden" name="action" value="images_post" />
                         <input type="hidden" name="page" value="tools" />
 
-                        <input id="button_save" type="submit" value="<?php _e('Regenerate Thumbnails'); ?>" />
+                        <input id="button_save" type="submit" value="<?php _e('Regenerate thumbnails'); ?>" />
 
                         </form>
                     </div>

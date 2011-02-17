@@ -111,7 +111,7 @@
                     <div style="float:left; width: 33%; ">
                         <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
                             <div style="float:left;">
-                                <h3 style="">
+                                <h3>
                                     <?php _e('Cities'); ?>
                                 </h3>
                             </div>
@@ -151,7 +151,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><small id="c_code_error" style="color: red; display: none;"><?php _e('Country code has two characters'); ?></small></td>
+                            <td><small id="c_code_error" style="color: red; display: none;"><?php _e('Country code should have two characters'); ?></small></td>
                         </tr>
                     </table>
                     <div style="margin-top: 8px; text-align: right; ">

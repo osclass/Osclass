@@ -169,20 +169,28 @@
         return osc_item_field($resource, "s_content_type");
     }
 
+    function osc_resource_extension($resource = null) {
+        return osc_item_field($resource, "s_extension");
+    }
+
     function osc_resource_path($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path");
     }
 
     function osc_resource_thumbnail($resource = null) {
-        return osc_base_url().osc_item_field($resource, "s_path");
+        return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_thumbnail.".osc_item_field($resource, "s_extension");
+    }
+
+    function osc_resource($resource = null) {
+        return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name").".".osc_item_field($resource, "s_extension");
     }
 
     function osc_resource_normal($resource = null) {
-        return osc_base_url().preg_replace("|_thumbnail.png^|", "", osc_item_field($resource, "s_path"));
+        return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name").".".osc_item_field($resource, "s_extension");
     }
 
     function osc_resource_original($resource = null) {
-        return osc_base_url().preg_replace("|_thumbnail.png^|", ".png", osc_item_field($resource, "s_path"));
+        return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_original.".osc_item_field($resource, "s_extension");
     }
 
 ?>

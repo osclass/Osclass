@@ -27,7 +27,7 @@ $file_status     = $this->_get('file');
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <script type="text/javascript">
-            var base_url    = '<?php echo osc_base_url() ; ?>';
+            var base_url    = '<?php echo osc_base_url(); ?>';
             var s_close     = '<?php _e('Close'); ?>';
             var s_view_more = '<?php _e('View more'); ?>';
         </script>
@@ -37,56 +37,6 @@ $file_status     = $this->_get('file');
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Dashboard'); ?></div>
-
-        <script type="text/javascript">
-            $.extend({
-                initDashboard: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.each(args, function(i, val) {
-                        $("#" + val.substr(3)).show();
-                        $("#" + val).attr('checked', 'checked');
-                    });
-                },
-                setCookie: function(args) {
-                    $.isArray(args) ? true : false;
-                    $.cookie.set("osc_admin_main", args, {json: true});
-                }
-            });
-
-            $(function() {
-                if ($.cookie.get("osc_admin_main") == '' || $.cookie.get("osc_admin_main") == null) {
-                    // create cookies if admin is a first timer...
-                    var sections = ['cb_last_items', 'cb_statistics', 'cb_last_comments', 'cb_last_news'];
-                    $.initDashboard(sections);
-                    $.setCookie(sections);
-
-                } else { // else read it and apply it!
-                    var enabled_sections = $.cookie.get("osc_admin_main", true);
-                    $.initDashboard(enabled_sections);
-                    $.setCookie(enabled_sections);
-                }
-
-                // save settings
-                $("#button_save").click(function() {
-                    var sections = [];
-                    $('#checkboxes input:checkbox:checked').each(function() {
-                        sections.push($(this).attr('id'));
-                    });
-
-                    $.setCookie(sections);
-                    $('#main_div').hide();
-                });
-
-                $('#button_open').click(function() {
-                    $('#main_div').toggle();
-                });
-
-                $("#checkboxes input[type='checkbox']").click(function() {
-                    var val = $(this).attr('id');
-                    $("#" + val.substr(3)).toggle();
-                });
-            });
-        </script>
 		<div id="content">
             <div id="separator"></div>
 
@@ -113,11 +63,11 @@ $file_status     = $this->_get('file');
 						
                             <div style="float: left; width: 100%;">
                                 <fieldset>
-                                    <legend><?php _e('Nice URLs') ; ?></legend>
-                                    <div><?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them, however OSClass offers you the ability to create a custom URL structure for your permalinks and archives. This can improve the aesthetics, usability, and forward-compatibility of your links. A number of tags are available, and here are some examples to get you started'); ?>.</div>
+                                    <legend><?php _e('Friendly urls') ; ?></legend>
+                                    <div><?php _e('By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links'); ?>.</div>
                                     <br />
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_rewrite_enabled() ? 'checked="true"' : ''); ?> name="rewrite_enabled" id="rewrite_enabled" value="1" />
-                                    <label for="rewrite_enabled"><?php _e('Enable nice URLs') ; ?></label>
+                                    <label for="rewrite_enabled"><?php _e('Enable friendly urls') ; ?></label>
                                 </fieldset>
                             </div>
 
@@ -128,17 +78,17 @@ $file_status     = $this->_get('file');
                                     <?php switch($htaccess_status) {
                                             case 1:     _e('Module <em>mod_rewrite</em> was found on the server.');
                                             break;
-                                            case 2:     _e('Warning! Rewrite module wasn\'t found on the server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use nice urls if AllowPathInfo option is On in your Apache configuration (we can not know if it\'s enabled or not, but usually it is). With restricted nice url "index.php" will appear as a part of your URL (ie. http://www.yourdomain.com/index.php/nice/url).');
+                                            case 2:     _e('Warning! Rewrite module wasn\'t found on the server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use friendly urls if AllowPathInfo option is on in your Apache configuration (we can\'t know if it\'s enabled or not, but it usually is). "Index.php" will appear as a part of your URL (ie. http://www.example.com/index.php/nice/url).');
                                             break;
                                           }
                                     ?>
                                          <br/>
                                     <?php switch ($file_status) {
-                                            case 3:     _e('Error. We could not write the .htaccess file on your server. Please create a file called .htaccess on the root of your OSClass installation with the following content.');
+                                            case 3:     _e('Error. We couldn\'t write the .htaccess file on your server. Please create a file called .htaccess in the root of your OSClass installation with the following content.');
                                             break;
-                                            case 1:     _e('File .htaccess already exists. Please, check that the .htaccess file has the following content.');
+                                            case 1:     _e('File .htaccess already exists. Please check that the .htaccess file has the following content.');
                                             break;
-                                            case 2:     _e('We create a .htaccess file on the root of your OSClass installation.');
+                                            case 2:     _e('We\'ve created a .htaccess file on the root of your OSClass installation.');
                                             break;
                                           }
                                     ?>
