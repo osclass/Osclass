@@ -210,9 +210,7 @@ class ItemForm extends Form {
     }
 
     static public function show_email_checkbox($item = null) {
-//        echo '<label for="showEmail">';
         parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );
-//        _e('Show email publically within the item page') . '</label>';
         return true ;
     }
 
