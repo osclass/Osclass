@@ -177,19 +177,15 @@
         return osc_base_url().osc_item_field($resource, "s_path");
     }
 
-    function osc_resource_thumbnail($resource = null) {
+    function osc_resource_thumbnail_url($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_thumbnail.".osc_item_field($resource, "s_extension");
     }
 
-    function osc_resource($resource = null) {
+    function osc_resource_url($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name").".".osc_item_field($resource, "s_extension");
     }
 
-    function osc_resource_normal($resource = null) {
-        return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name").".".osc_item_field($resource, "s_extension");
-    }
-
-    function osc_resource_original($resource = null) {
+    function osc_resource_original_url($resource = null) {
         return osc_base_url().osc_item_field($resource, "s_path").osc_item_field($resource, "s_name")."_original.".osc_item_field($resource, "s_extension");
     }
     

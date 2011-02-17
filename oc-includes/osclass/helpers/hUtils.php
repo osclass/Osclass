@@ -75,5 +75,38 @@
 
         echo '</ul>' ;
     }
+    
+    /**
+     * Prints a select with al the categories
+     *
+     * @param selected category's ID (optional)
+     *
+     * @return void
+     */
+    function osc_categories_select($select_name = "categories", $selected = null)
+    {
+        echo '<select name="'.$select_name.'" id="'.$select_name.'">
+                <option value="">'.__("Select a category").'</option>' ;
+        $categories = Category::newInstance()->toTree();
+        osc_subcategories_select($categories, $selected, 0);
+        echo '</select>' ;
+        return true ;
+    }
+    
+    function osc_subcategories_select($categories, $selected = null, $deep = 0)
+    {
+        $deep_string = "";
+        for($var = 0;$var<$deep;$var++) {
+            $deep_string .= '&nbsp;&nbsp;';
+        }
+        $deep++;
+        foreach($categories as $c) {
+            echo '<option value="' . $c['pk_i_id'] . '"' . ( ($selected == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
+            if(isset($c['categories']) && is_array($c['categories'])) {
+                osc_subcategories_select($c['categories'], $selected, $deep+1);
+            }
+        }
+    }
+  
 
 ?>
