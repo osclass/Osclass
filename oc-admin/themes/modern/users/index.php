@@ -34,11 +34,9 @@
         <div class="Header"><?php _e('Users'); ?></div>
         <script type="text/javascript">
 	        $(function() {		
-		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
-		        {
+		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
 			        var anRows = [];
-			        for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-			        {
+			        for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
 				        var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
 				        anRows.push( nRow );
 			        }

@@ -29,7 +29,7 @@
     <body>
         <?php $this->osc_print_header() ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
+        <div class="Header"><?php _e('Admins'); ?></div>
         <div id="content">
             <div id="separator"></div>
 

@@ -1,8 +1,8 @@
 <?php
     $javaScripts = array(
         '/oc-includes/js/tiny_mce/tiny_mce.js'
-        ,'/oc-includes/js/jquery-1.4.2.js'
-        ,'/oc-includes/js/jquery-ui-1.8.5.js'
+        ,'/oc-includes/js/jquery2.js'
+        ,'/oc-includes/js/jquery-ui.js'
     );
     if(isset($headerConf['javaScripts'])) {
         $javaScripts = array_merge($javaScripts, $headerConf['javaScripts']) ;
