@@ -41,14 +41,13 @@ class CWebMain extends BaseModel
                                     $this->redirectTo( osc_base_url() ) ;
             break;
             default:                //recovering data needed at main.php
-                                    $categories = Category::newInstance()->toTree();
+                                    //$categories = Category::newInstance()->toTree();
                                     $locales = Locale::newInstance()->listAllEnabled() ;
-                                    $latestItems = Item::newInstance()->listLatest( osc_max_latest_items() ) ;
                                     
                                     //calling the view...
-                                    $this->_exportVariableToView('categories', $categories) ;
+                                    //$this->_exportVariableToView('categories', $categories) ;
                                     $this->_exportVariableToView('locales', $locales) ;
-                                    $this->_exportVariableToView('latestItems', $latestItems) ;
+                                    //$this->_exportVariableToView('latestItems', $latestItems) ;
 
                                     $this->doView('main.php') ;
         }

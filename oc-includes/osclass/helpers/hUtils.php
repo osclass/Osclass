@@ -1,4 +1,40 @@
 <?php
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
+
+    //generic function for view layer
+    function osc_field($item, $field, $locale) {
+        if(!is_null($item)) {
+            if($locale == "") {
+                if(isset($item[$field])) {
+                    return $item[$field] ;
+                }
+            } else {
+                if(isset($item["locale"]) && isset($item["locale"][$locale]) && isset($item["locale"][$locale][$field])) {
+                    return $item["locale"][$locale][$field] ;
+                }
+            }
+        }
+        return '' ;
+    }
+    
 
     function osc_show_widgets($location) {
         $widgets = Widget::newInstance()->findByLocation($location);
@@ -57,51 +93,6 @@
             osc_run_hook('user_menu') ;
 
         echo '</ul>' ;
-    }
-    
-    /**
-     * Prints a select with al the categories
-     *
-     * @param select_name name of the select (optional)
-     *
-     * @param selected category's ID (optional)
-     *
-     * @return void
-     */
-    function osc_categories_select($select_name = "categories", $selected = null)
-    {
-        echo '<select name="'.$select_name.'" id="'.$select_name.'">
-                <option value="">'.__("Select a category").'</option>' ;
-        $categories = Category::newInstance()->toTree();
-        osc_subcategories_select($categories, $selected, 0);
-        echo '</select>' ;
-        return true ;
-    }
-
-    /**
-     * Prints a select with al the categories
-     *
-     * @param categories (optional)
-     *
-     * @param selected category's ID (optional)
-     *
-     * @param deep how deep is the option (optional)
-     *
-     * @return void
-     */    
-    function osc_subcategories_select($categories, $selected = null, $deep = 0)
-    {
-        $deep_string = "";
-        for($var = 0;$var<$deep;$var++) {
-            $deep_string .= '&nbsp;&nbsp;';
-        }
-        $deep++;
-        foreach($categories as $c) {
-            echo '<option value="' . $c['pk_i_id'] . '"' . ( ($selected == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
-            if(isset($c['categories']) && is_array($c['categories'])) {
-                osc_subcategories_select($c['categories'], $selected, $deep+1);
-            }
-        }
     }
     
     /**

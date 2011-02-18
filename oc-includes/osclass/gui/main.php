@@ -22,10 +22,6 @@
 
 ?>
 
-<?php $latestItems = $this->_get('latestItems') ; ?>
-<?php $catId = Params::getParam('catId') ; ?>
-<?php $categories = $this->_get('categories') ; ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -39,86 +35,99 @@
 
             <div id="form_publish">
                 <?php include("inc.search.php") ; ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url($catId) ; ?>"><?php _e('Publish your ad for free') ; ?></a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url() ; ?>"><?php _e('Publish your ad for free') ; ?></a></strong>
             </div>
 
             <div class="content home">
                 <div id="main">
+
                     <?php
-                        $total_categories   = count($categories);
+                        $total_categories   = osc_count_categories() ;
                         $col1_max_cat       = ceil($total_categories/3);
                         $col2_max_cat       = ceil(($total_categories-$col1_max_cat)/2);
                         $col3_max_cat       = $total_categories-($col1_max_cat+$col2_max_cat);
                     ?>
                     <div class="categories <?php echo 'c' . $total_categories ; ?>">
                         <?php
-                        $i      = 1;
-                        $x      = 1;
-                        $col    = 1;
-                        echo '<div class="col c1">';
-                        foreach($categories as $c) {
-                            ?>
+                            $i      = 1;
+                            $x      = 1;
+                            $col    = 1;
+                            echo '<div class="col c1">';
+                        ?>
+
+                        <?php osc_goto_first_category() ; ?>
+                        
+                        <?php while ( osc_has_categories() ) { ?>
                             <div class="category">
-                                <h1><strong><a href="<?php echo osc_search_category_url($c) ; ?>"><?php echo $c['s_name'] ; ?></a> <span>(<?php echo CategoryStats::newInstance()->getNumItems($c) ; ?>)</span></strong></h1>
-                                <ul>
-                                    <?php foreach($c['categories'] as $sc) { ?>
-                                        <li><a href="<?php echo osc_search_category_url($sc) ; ?>"><?php echo $sc['s_name'] ; ?></a> <span>(<?php echo CategoryStats::newInstance()->getNumItems($sc) ; ?>)</span></li>
-                                    <?php } ?>
-                                </ul>
+                                <h1><strong><a href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></strong></h1>
+
+                                <?php if ( osc_count_subcategories() > 0 ) { ?>
+                                    <ul>
+                                        <?php while ( osc_has_subcategories() ) { ?>
+                                            <li><a href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></li>
+                                        <?php } ?>
+                                    </ul>
+                                <?php } ?>
                             </div>
                             <?php
-
-                            if (($col==1 && $i==$col1_max_cat) || ($col==2 && $i==$col2_max_cat) || ($col==3 && $i==$col3_max_cat)) {
-                                $i = 1;
-                                $col++;
-                                echo '</div>';
-                                if($x < $total_categories) {
-                                    echo '<div class="col c'.$col.'">';
+                                if (($col==1 && $i==$col1_max_cat) || ($col==2 && $i==$col2_max_cat) || ($col==3 && $i==$col3_max_cat)) {
+                                    $i = 1;
+                                    $col++;
+                                    echo '</div>';
+                                    if($x < $total_categories) {
+                                        echo '<div class="col c'.$col.'">';
+                                    }
+                                } else {
+                                    $i++ ;
                                 }
-                            }
-                            else {
-                                $i++ ;
-                            }
-                            $x++ ;
-                        }
-                        ?>
+                                $x++ ;
+                            ?>
+                        <?php } ?>
                    </div>
 
                    <div class="latest_ads">
                         <h1><strong><?php _e('Latest Items') ; ?></strong></h1>
-                        <?php if(!isset($latestItems) || is_null($latestItems)) { ?>
+                        
+                        <?php if( osc_count_latest_items() == 0) { ?>
+
                             <p class="empty"><?php _e('No Latest Items') ; ?></p>
+                            
                         <?php } else { ?>
 
                             <table border="0" cellspacing="0">
                                  <tbody>
-                                    <?php $class = "even";
-                                    foreach($latestItems as $item) { ?>
+                                    <?php $class = "even"; ?>
+                                    <?php while ( osc_has_latest_items() ) { ?>
                                         <tr class="<?php echo $class ; ?>">
                                              <td class="photo">
-                                                 <?php if( osc_item_has_thumbnail($item) ) { ?>
-                                                    <?php $aResources = ItemResource::newInstance()->getAllResources( $item['pk_i_id'] ) ; ?>
-                                                    <a href="<?php echo osc_item_url($item) ; ?>"><img src="<?php echo osc_resource_thumbnail_url( current($aResources) ) ; ?>" /></a>
+                                                <?php if( osc_count_item_resources() ) { ?>
+
+                                                    <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" /></a>
+                                                
                                                 <?php } else { ?>
+
                                                     <img src="<?php echo $this->osc_get_theme_url('images/no_photo.gif') ; ?>" />
+
                                                 <?php } ?>
                                              </td>
                                              <td class="text">
-                                                 <h3><a href="<?php echo osc_item_url($item) ; ?>"><?php echo $item['s_title'] ; ?></a></h3>
+                                                 <h3><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></h3>
                                                  <!--
                                                      <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
                                                  -->
-                                                 <p><?php echo strip_tags($item['s_description']) ; ?></p>
+                                                 <p><?php echo osc_item_description() ; ?></p>
                                              </td>
-                                             <td class="price"><strong><?php echo osc_format_price($item) ; ?></strong></td>
+                                            <td class="price"><strong><?php echo osc_item_formated_price() ; ?></strong></td>
                                          </tr>
                                         <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
                                     <?php } ?>
                                 </tbody>
                             </table>
-                            <?php if( count($latestItems) == osc_max_latest_items() ) { ?>
+
+                            <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
                                 <p class="see_more_link"><a href="#"><strong><?php _e("See all offers");?> &raquo;</strong></a></p>
                             <?php } ?>
+
                         <?php } ?>
                     </div>
                 </div>

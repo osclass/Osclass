@@ -42,7 +42,7 @@
         }
 
         //to get the exported variables for the view
-        function _get($key, $sentAll = false) {
+        function _get($key) {
             return($this->aExported[$key]) ;
         }
 
@@ -57,18 +57,27 @@
 
         function _next($key) {
             if (is_array($this->aExported[$key])) {
-                if ( next($this->aExported[$key]) ) return true ;
-                else false ;
-            } else {
-                die("YOU ARE USING _NEXT FUNCTION WITH A NON ARRAY") ;
+                if ( next($this->aExported[$key]) ) {
+                    return true ;
+                }
             }
+            return false ;
         }
 
         function _current($key) {
             if (is_array($this->aExported[$key])) {
                 return current($this->aExported[$key]) ;
-            } else {
+            } /*else {
                 die("YOU ARE USING _CURRENT FUNCTION WITH A NON ARRAY") ;
+            }*/
+            return '' ;
+        }
+
+        function _reset($key) {
+            if (is_array($this->aExported[$key])) {
+                return reset($this->aExported[$key]) ;
+            } else {
+                die("YOU ARE USING _RESET FUNCTION WITH A NON ARRAY") ;
             }
         }
 
@@ -79,9 +88,12 @@
         function _count($key) {
             if (is_array($this->aExported[$key])) {
                 return count($this->aExported[$key]) ;
-            } else {
-                die("YOU ARE USING _COUNT FUNCTION WITH A NON ARRAY") ;
             }
+            return -1 ;
+        }
+
+        function _erase($key) {
+            unset($this->aExported[$key]) ;
         }
     }
 

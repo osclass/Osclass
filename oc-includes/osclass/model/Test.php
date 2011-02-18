@@ -109,7 +109,6 @@ class Test extends DAO {
         $sql = "INSERT INTO `oc_t_category_stats` VALUES " ;
         $sql .= implode($aSqlInserts, ",") ;
         $this->conn->osc_dbExec($sql) ;
-
     }
 
     public function getItemInserts() {

@@ -157,7 +157,9 @@
      * @return string If $echo is false, it returns the path, if not it return blank string
      */
     //osc_createSearchURL y lo mismo con category...
-    function osc_search_category_url($category = '', $pattern = '') {
+    function osc_search_category_url($pattern = '') {
+        $category = osc_category() ;
+
         $path = '' ;
         if ( osc_rewrite_enabled() ) {
             if ($category != '') {

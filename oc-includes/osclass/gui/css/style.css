@@ -82,7 +82,7 @@ a:hover { color:#F80; }
 .home #main .categories .category h1 { margin-bottom:5px; }
 .home #main .categories .category h1 span { color:#CCC; }
 .home #main .categories .category li { border-bottom:1px dotted #DDD; color:#CCC; font-size:11px; padding:5px 0; }
-.home #main .latest_ads { padding-left:10px; }
+.home #main .latest_ads { padding-left:10px; clear:both; }
 .home #main .latest_ads table { clear:both; width:100%; }
 .home #main .latest_ads table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; } 
 .home #main .latest_ads table tr.odd td { background:#f8f8f8; }

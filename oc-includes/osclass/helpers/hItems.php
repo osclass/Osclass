@@ -1,25 +1,27 @@
 <?php
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-    function osc_latest_items() {
-        return (Item::newInstance()->listLatest( osc_max_latest_items() )) ;
-    }
-
-    function osc_field($item, $field, $locale) {
-        if($item != null) {
-            if($locale == "") {
-                if(isset($item[$field])) {
-                    return $item[$field] ;
-                }
-            } else {
-                if(isset($item["locale"]) && isset($item["locale"][$locale]) && isset($item["locale"][$locale][$field])) {
-                    return $item["locale"][$locale][$field] ;
-                }
-            }
-            return $item ;
-        }
-        return "";
-    }
-
+    ////////////////////////////////////////////////////////////////
+    // FUNCTIONS THAT RETURNS OBJECT FROM THE STATIC CLASS (VIEW) //
+    ////////////////////////////////////////////////////////////////
     function osc_item() {
         if (View::newInstance()->_exists('items')) {
             $item = View::newInstance()->_current('items') ;
@@ -30,42 +32,46 @@
         return($item) ;
     }
 
-    function osc_item_field($field, $locale = "") {
-        if (View::newInstance()->_exists('items')) {
-            $item = View::newInstance()->_current('items') ;
-        } else {
-            $item = View::newInstance()->_get('item') ;
-        }
-        return osc_field($item, $field, $locale) ;
-    }
-
-    function osc_category_field($field, $locale = '') {
-        if (View::newInstance()->_exists('categories')) {
-            $category = View::newInstance()->_current('categories') ;
-        } else {
-            $category = View::newInstance()->_get('category') ;
-        }
-        return osc_field($category, $field, $locale) ;
-    }
-    
-    function osc_comment_field($field, $locale = '') {
+    function osc_comment() {
         if (View::newInstance()->_exists('comments')) {
             $comment = View::newInstance()->_current('comments') ;
         } else {
             $comment = View::newInstance()->_get('comment') ;
         }
-        return osc_field($comment, $field, $locale) ;
+
+        return($comment) ;
     }
 
-    function osc_resource_field($field, $locale = '') {
+    function osc_resource() {
         if (View::newInstance()->_exists('resources')) {
             $resource = View::newInstance()->_current('resources') ;
         } else {
             $resource = View::newInstance()->_get('resource') ;
         }
-        return osc_field($resource, $field, $locale) ;
+
+        return($resource) ;
     }
 
+
+    function osc_item_field($field, $locale = "") {
+        return osc_field(osc_item(), $field, $locale) ;
+    }
+
+    function osc_comment_field($field, $locale = '') {
+        return osc_field(osc_comment(), $field, $locale) ;
+    }
+
+    function osc_resource_field($field, $locale = '') {
+        return osc_field(osc_resource(), $field, $locale) ;
+    }
+    /////////////////////////////////////////////////
+    // END FUNCTIONS THAT RETURNS OBJECT FROM VIEW //
+    /////////////////////////////////////////////////
+
+
+    ///////////////////////
+    // HELPERS FOR ITEMS //
+    ///////////////////////
 
     function osc_item_id() {
         return osc_item_field("pk_i_id");
@@ -93,6 +99,10 @@
         return osc_field($category, "s_description", $locale) ;
     }
 
+    function osc_item_category_id() {
+        return osc_item_field("fk_i_category_id") ;
+    }
+
     function osc_item_pub_date() {
         return osc_item_field("dt_pub_date");
     }
@@ -102,7 +112,11 @@
     }
 
     function osc_item_price() {
-        return osc_item_field("f_price");
+        return osc_item_field("f_price") ;
+    }
+
+    function osc_item_formated_price() {
+        return osc_format_price( osc_item_field("f_price") ) ;
     }
 
     function osc_item_currency() {
@@ -173,7 +187,14 @@
     function osc_item_link_expired() {
         return osc_base_url(true) . "?page=item&action=mark&as=expired&id=" . osc_item_id() ;
     }
+    ///////////////////////
+    // HELPERS FOR ITEMS //
+    ///////////////////////
     
+
+    //////////////////////////
+    // HELPERS FOR COMMENTS //
+    //////////////////////////
     function osc_comment_id() {
         return osc_comment_field("pk_i_id");
     }
@@ -201,7 +222,13 @@
     function osc_comment_user_id() {
         return osc_comment_field("fk_i_user_id");
     }
-    
+    //////////////////////////////
+    // END HELPERS FOR COMMENTS //
+    //////////////////////////////
+
+    ///////////////////////////
+    // HELPERS FOR RESOURCES //
+    ///////////////////////////
     function osc_resource_id() {
         return osc_resource_field("pk_i_id");
     }
@@ -233,66 +260,83 @@
     function osc_resource_original_url() {
         return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_original.".osc_resource_field("s_extension");
     }
+    ///////////////////////////////
+    // END HELPERS FOR RESOURCES //
+    ///////////////////////////////
     
-    //using View Class (the static class for the view layer)
-    function has_items() {
+    /////////////
+    // DETAILS //
+    /////////////
+    function osc_has_items() {
         return View::newInstance()->_next('items') ;
     }
-
-    function has_item_resources() {
+    /*
+    function osc_has_item_resources() {
         return View::newInstance()->_next('resources') ;
-    }
-
-    function has_item_comments() {
+    }*/
+/*
+    function osc_has_item_comments() {
         return View::newInstance()->_next('comments') ;
     }
-
-    function count_items() {
-        return View::newInstance()->_count('items') ;
+*/
+    function osc_count_item_resources() {
+        if ( !View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+        }
+        return osc_priv_count_item_resources() ;
     }
 
-    function count_item_resources() {
-        return View::newInstance()->_count('resources') ;
-    }
 
-    function count_item_comments() {
+    /*
+    function osc_count_item_comments() {
         return View::newInstance()->_count('comments') ;
     }
+    */
 
-    function resource_url() {
-        if (View::newInstance()->_exists('resources')) {
-            $resource = View::newInstance()->_get('resources') ;
-        } else {
-            $resource = View::newInstance()->_get('resource') ;
+    //////////
+    // HOME //
+    //////////
+    function osc_has_latest_items() {
+        if ( !View::newInstance()->_exists('items') ) {
+            View::newInstance()->_exportVariableToView('items', Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
         }
-        return ( osc_resource_url($resource) ) ;
+        return osc_has_items() ;
     }
 
-    function osc_item_category_id() {
-        return osc_item_field("fk_i_category_id") ;
+    function osc_count_latest_items() {
+        if ( !View::newInstance()->_exists('items') ) {
+            View::newInstance()->_exportVariableToView('items', Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+        }
+
+        return osc_priv_count_items() ;
     }
+    //////////////
+    // END HOME //
+    //////////////
+
 
     /**
      * Formats the price using the appropiate currency.
      */
     //osc_formatPrice
-    function osc_format_price() {
-        if (View::newInstance()->_exists('items')) {
-            $item = View::newInstance()->_get('items') ;
-        } else {
-            $item = View::newInstance()->_get('item') ;
-        }
+    function osc_format_price($price) {
+        if ($price == null) return __('Check with seller') ;
+        if ($price == 0) return __('Free') ;
+        return sprintf('%.02f %s', $price, osc_item_currency() ) ;
+    }
 
-        if (!isset($item['f_price']))
-            return __('Check with seller') ;
 
-        if ($item['f_price'] == 0)
-            return __('Free') ;
 
-        if (!empty($item['f_price']))
-            return sprintf('%.02f %s', $item['f_price'], $item['fk_c_currency_code']) ;
 
-        return __('Check with seller') ;
+
+
+    //PRIVATE
+    function osc_priv_count_items() {
+        return View::newInstance()->_count('items') ;
+    }
+
+    function osc_priv_count_item_resources() {
+        return View::newInstance()->_count('resources') ;
     }
 
 

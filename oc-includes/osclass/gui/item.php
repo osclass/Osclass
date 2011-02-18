@@ -19,12 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php
-    //$item = $this->_get('item') ;
-    //$author = $this->_get('author') ;
-    //$comments = $this->_get('comments') ;
-    //$resources = $this->_get('resources') ;
-?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -42,7 +37,7 @@
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
-                        <h1><span class="price"><?php echo osc_format_price() ; ?></span> <strong><?php echo osc_item_title() ; ?></strong></h1>
+                        <h1><span class="price"><?php echo osc_item_formated_price() ; ?></span> <strong><?php echo osc_item_title() ; ?></strong></h1>
 
                         <p id="report">
                             <strong><?php _e('Mark as ') ; ?></strong>
@@ -88,9 +83,9 @@
                     <?php if(osc_comments_enabled()) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments'); ?></h2>
-                            <?php if( count_item_comments() ) { ?>
+                            <?php if( osc_count_item_comments() > 0 ) { ?>
                                 <div class="comments_list">
-                                    <?php while ( has_item_comments() ) { ?>
+                                    <?php while ( osc_has_item_comments() ) { ?>
                                         <div class="comment">
                                             <h3><strong><?php echo osc_comment_title() ; ?></strong> <em><?php _e("by") ; ?> <?php echo osc_comment_author_name() ; ?>:</em></h3>
                                             <p><?php echo osc_comment_author_email() ; ?></p>
@@ -127,8 +122,8 @@
 
                 <div id="sidebar">
                     <div id="photos">
-                        <?php while ( has_item_resources() ) { ?>
-                            <img src="<?php echo resource_url() ; ?>" width="350" />
+                        <?php while ( osc_has_item_resources() ) { ?>
+                            <img src="<?php echo osc_resource_url() ; ?>" width="350" />
                         <?php } ?>
 
                     </div>
