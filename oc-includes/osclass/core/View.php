@@ -23,6 +23,7 @@
     class View
     {
         private $aExported ;
+        private $aCurrent ;
         private static $instance ;
 
         public static function newInstance() {
@@ -57,7 +58,9 @@
 
         function _next($key) {
             if (is_array($this->aExported[$key])) {
-                if ( next($this->aExported[$key]) ) {
+                $this->aCurrent[$key] = current( $this->aExported[$key] ) ;
+                if ( $this->aCurrent[$key] ) {
+                    next( $this->aExported[$key] ) ;
                     return true ;
                 }
             }
@@ -65,8 +68,8 @@
         }
 
         function _current($key) {
-            if (is_array($this->aExported[$key])) {
-                return current($this->aExported[$key]) ;
+            if (is_array($this->aCurrent[$key])) {
+                return $this->aCurrent[$key] ;
             } /*else {
                 die("YOU ARE USING _CURRENT FUNCTION WITH A NON ARRAY") ;
             }*/

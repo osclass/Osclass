@@ -42,11 +42,11 @@ class CWebMain extends BaseModel
             break;
             default:                //recovering data needed at main.php
                                     //$categories = Category::newInstance()->toTree();
-                                    $locales = Locale::newInstance()->listAllEnabled() ;
+                                    //$locales = Locale::newInstance()->listAllEnabled() ;
                                     
                                     //calling the view...
                                     //$this->_exportVariableToView('categories', $categories) ;
-                                    $this->_exportVariableToView('locales', $locales) ;
+                                    //$this->_exportVariableToView('locales', $locales) ;
                                     //$this->_exportVariableToView('latestItems', $latestItems) ;
 
                                     $this->doView('main.php') ;
