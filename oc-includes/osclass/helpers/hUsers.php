@@ -8,6 +8,17 @@
         }
         return osc_field($user, $field, $locale) ;
     }
+    
+    function osc_user() {
+        if (View::newInstance()->_exists('users')) {
+            $user = View::newInstance()->_current('users') ;
+        } else {
+            $user = View::newInstance()->_get('user') ;
+        }
+
+        return($user) ;
+    }
+
 
     function osc_is_web_user_logged_in() {
         if (Session::newInstance()->_get("userId") == '') return false ;
@@ -115,7 +126,24 @@
     function osc_user_longitude() {
         return osc_user_field("d_coord_long");
     }
+    
+    /////////////
+    // ALERTS  //
+    /////////////
+    function osc_has_alerts() {
+        $alert = View::newInstance()->_next('alerts') ;
+        View::newInstance()->_exportVariableToView("items", isset($alert['items'])?$alert['items']:array());
+        return $alert;
+    }
 
+    function osc_count_alerts() {
+        return View::newInstance()->_count('alerts') ;
+    }
+    
+    function osc_alert() {
+        return View::newInstance()->_get('alerts');
+    }
+    
     function osc_prepare_user_info() {
         if ( !View::newInstance()->_exists('users') ) {
             View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_id() ) ) ) ;

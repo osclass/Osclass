@@ -42,7 +42,7 @@
                 </div>
 
                 <div id="main">
-                <h2><?php _e('Your items'); ?> <a href="<?php echo osc_item_post_url($catId) ; ?>">+ <?php _e('Post a new item'); ?></a></h2>
+                <h2><?php _e('Your items'); ?> <a href="<?php echo osc_item_post_url() ; ?>">+ <?php _e('Post a new item'); ?></a></h2>
 
                 <?php if(osc_count_items() == 0): ?>
                     <h3><?php _e('You do not have any items yet.'); ?></h3>
@@ -56,10 +56,11 @@
                                     </p>
 
                                     <p class="options">
-                                        <strong><a href="<?php osc_base_url(true);?>?page=user&action=editItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Edit'); ?></a></strong>
+                                        <strong><a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit'); ?></a></strong>
                                         <span>|</span>
-                                        <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="user.php?action=deleteItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Delete'); ?></a>
+                                        <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete'); ?></a>
                                     </p>
+                                    <br />
                             </div>
                     <?php }; ?>
                 <?php endif; ?>

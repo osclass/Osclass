@@ -94,7 +94,7 @@
 				        echo '<b>'.$item['s_title'].'</b>';?>
 				        
 				        <a href="<?php osc_create_item_url($item, true);?>"><button><?php _e('View');?></button></a>
-				        <a href="items.php?action=editItem&id=<?php echo $item['pk_i_id'];?>"><button><?php _e('Edit');?></button></a>
+				        <a href="items.php?action=item_edit&id=<?php echo $item['pk_i_id'];?>"><button><?php _e('Edit');?></button></a>
 					</div>
                 </div>
 
