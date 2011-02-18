@@ -132,7 +132,9 @@
     /////////////////////////////////////
 
     //osc_createItemPostURL
-    function osc_item_post_url($category = '') {
+    function osc_item_post_url_in_category() {
+        $category = osc_category() ;
+        
         if ($category != '' && isset($category['pk_i_id'])) {
             if ( osc_rewrite_enabled() ) {
                 $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
@@ -140,11 +142,16 @@
                 $path = sprintf(osc_base_url(true) . '?page=item&action=post&catId=%d', $category['pk_i_id']) ;
             }
         } else {
-            if ( osc_rewrite_enabled() ) {
-                $path = osc_base_url() . 'item/new' ;
-            } else {
-                $path = sprintf(osc_base_url(true) . '?page=item&action=post') ;
-            }
+            $path = osc_item_post_url() ;
+        }
+        return $path ;
+    }
+
+    function osc_item_post_url() {
+        if ( osc_rewrite_enabled() ) {
+            $path = osc_base_url() . 'item/new' ;
+        } else {
+            $path = sprintf(osc_base_url(true) . '?page=item&action=post') ;
         }
         return $path ;
     }

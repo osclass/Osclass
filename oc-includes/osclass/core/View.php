@@ -68,11 +68,12 @@
         }
 
         function _current($key) {
-            if (is_array($this->aCurrent[$key])) {
+            if ( isset($this->aCurrent[$key]) && is_array($this->aCurrent[$key]) ) {
                 return $this->aCurrent[$key] ;
-            } /*else {
-                die("YOU ARE USING _CURRENT FUNCTION WITH A NON ARRAY") ;
-            }*/
+            } elseif ( is_array($this->aExported[$key]) ) {
+                $this->aCurrent[$key] = current( $this->aExported[$key] ) ;
+                return $this->aCurrent[$key] ;
+            }
             return '' ;
         }
 

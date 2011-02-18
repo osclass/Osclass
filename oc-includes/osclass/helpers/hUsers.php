@@ -38,13 +38,6 @@
     function osc_logged_admin_email() {
         return Session::newInstance()->_get('adminEmail') ;
     }
-    
-    /*function osc_user_field($user = null, $field) {
-        if($user!=null && isset($user[$field])) {
-            return $user[$field];
-        }
-        return "";
-    }*/
 
     function osc_user_name() {
         return osc_user_field("s_name");
@@ -121,6 +114,13 @@
 
     function osc_user_longitude() {
         return osc_user_field("d_coord_long");
+    }
+
+    function osc_prepare_user_info() {
+        if ( !View::newInstance()->_exists('users') ) {
+            View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_id() ) ) ) ;
+        }
+        return View::newInstance()->_next('users') ;
     }
 
 
