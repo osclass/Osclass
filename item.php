@@ -78,7 +78,7 @@ class CWebItem extends BaseModel
                     osc_add_flash_message(__('Only allow registered users to post items')) ;
                     $this->redirectTo(osc_base_url(true));
                 }
-                // check the required fields
+                // POST ITEM ( ADD ITEM ) 
                 $mItems = new ItemActions(false);
                 $success = $mItems->add();
 
@@ -87,10 +87,7 @@ class CWebItem extends BaseModel
                     $PcontactEmail  = Params::getParam('contactEmail');
                     $itemId         = Params::getParam('itemId');
 
-
-
-                    if( Session::newInstance()->_get('userId') == '' ){ 
-
+                    if( Session::newInstance()->_get('userId') == '' ){
                         $mPages = new Page() ;
                         $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
                         $locale = osc_get_user_locale() ;
@@ -101,15 +98,11 @@ class CWebItem extends BaseModel
                         } else {
                             $content = current($aPage['locale']);
                         }
-
-                        
                         $item =  $this->itemManager->findByPrimaryKey($itemId);
                         
                         $item_url = osc_item_url($item) ;
-                       
                         // before page = user , action = item_edit
                         $edit_link = osc_base_url(true). "?page=item&action=editItem&id=$itemId&secret=".$item['s_secret'];
-
                         // before page = user , action = item_delete
                         $delete_link = osc_base_url(true) . "?page=item&action=item_delete&id=$itemId&secret=".$item['s_secret'] ;
 
@@ -141,7 +134,7 @@ class CWebItem extends BaseModel
             break;
             case 'editItem':
                 if( osc_reg_user_post() ) {
-                    osc_add_flash_message(__('Only allow registered users to post items')) ;
+                    osc_add_flash_message(__('Only allow registered users to post items') ) ;
                     $this->redirectTo(osc_base_url(true));
                 }
                 // not logged user
@@ -153,7 +146,7 @@ class CWebItem extends BaseModel
                     $item = Item::newInstance()->findByPrimaryKey($id);
 
                     if(!osc_users_enabled()) {
-                        osc_add_flash_message(__('Users are not enable')) ;
+                        osc_add_flash_message(__('Users are not enable') ) ;
                         $this->redirectTo(osc_base_url(true));
                     }
 
@@ -192,32 +185,60 @@ class CWebItem extends BaseModel
                     // add a flash message [ITEM NO EXISTE]
                     $this->redirectTo(osc_base_url(true));
                 }
-                
-
             break;
             case 'item_edit_post':
                 // recoger el secret y el 
                 $secret = Params::getParam('secret');
                 $id     = Params::getParam('id');
-
                 $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL", $secret, $id);
                 if (count($item) == 1) {
-
                     $mItems = new ItemActions(false);
                     $success = $mItems->edit();
 
                     if($success){
                         osc_run_hook('item_edit_post');
                         osc_add_flash_message(__('Great! We\'ve just update your item.')) ;
-                        echo osc_base_url(true) . "?page=item&id=$id";
-                        exit;
-//                        $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
+                        $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                     } else {
                         $this->redirectTo( osc_base_url(true) . "?page=item&action=editItem&id=$id" ) ;
                     }
                 }
 
             break;
+            case 'activate':
+                $secret = Params::getParam('secret');
+                $id     = Params::getParam('id');
+                $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
+                if (count($item) == 1) {
+                    $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL AND i.e_status = '%s'", $secret, $id, 'INACTIVE');
+                    if ( !is_array($item_validated) ) {
+                        // aqui hay que poner flashmessage ??
+                        $this->redirectTo( osc_base_url(true) );
+                    }
+                    if( count($item_validated) == 1 ) {
+                        // ACTIVETE ITEM
+                        $mItems = new ItemActions(false) ;
+                        $success = $mItems->activate( Params::getParam('secret'), Params::getParam('id') );
+
+                        if( $success ){
+                            osc_add_flash_message( __('Item validated') ) ;
+                            $this->redirectTo( osc_item_url($item[0]) );
+                        }else{
+                            osc_add_flash_message( __('Item could not be validated') ) ;
+                            $this->redirectTo( osc_base_url(true) );
+                        }
+                    }else {
+                        osc_add_flash_message( __('The item was validated before') );
+                        $this->redirectTo( osc_item_url($item[0]) );
+                    }
+                }else{
+                    osc_add_flash_message( __('The item was validated before') );
+                    $this->redirectTo( osc_base_url(true) );
+                }
+            break;
+
+
+
             case 'mark':
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                 $column = null;
@@ -516,36 +537,7 @@ class CWebItem extends BaseModel
             case('dashboard'):      //dashboard...
 
             break;
-            case 'activate':
-                // no logged in web
-                if( Params::getParam('secret') != '' && Params::getParam('id') ){
-                    $mItems = new ItemActions() ;
-                    $mItems->activate( Params::getParam('secret'), Params::getParam('id') );
-
-//                    $secret = Params::getParam('secret');
-//                    $id     = Params::getParam('id');
-//                    $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
-//                    if (count($item) == 1) {
-//                        $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
-//                        if (!is_array($item_validated))
-//                            return false;
-//
-//                        if (count($item_validated) == 1) {
-//                            $this->itemManager->update(
-//                                    array('e_status' => 'ACTIVE'),
-//                                    array('s_secret' => $secret)
-//                            );
-//                            osc_run_hook('activate_item', $this->itemManager->findByPrimaryKey($id));
-//                            CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
-//                            osc_add_flash_message('Item validated');
-//                            $this->redirectTo( osc_item_url($item[0]) );
-//                        } else {
-//                            osc_add_flash_message('The item was validated before');
-//                            $this->redirectTo( osc_item_url($item[0]) );
-//                        }
-//                    }
-                }
-            break;
+            
             case 'item_delete':
                 $id = intval( Params::getParam('id') ) ;
                 $secret = Params::getParam('secret') ;
@@ -578,9 +570,10 @@ class CWebItem extends BaseModel
 
                 if ($item['e_status'] != 'ACTIVE') {
                     if( Session::newInstance()->_get('userId') != '' && Session::newInstance()->_get('userId') == $item['fk_i_user_id'] ) {
-                        osc_add_flash_message('This item is NOT validated. You should validate it in order to show this item
-                            to the rest of the users. You could do that in your profile menu.');
+                        osc_add_flash_message(__('This item is NOT validated. You should validate it in order to show this item
+                            to the rest of the users. You could do that in your profile menu.') );
                     } else {
+                        osc_add_flash_message( __('This item is NOT validated.') );  // el item no esta activado,  tienes el enlace de activacion en el correo
                         $this->redirectTo( osc_base_url(true) );
                     }
                 }

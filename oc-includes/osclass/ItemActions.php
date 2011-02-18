@@ -192,31 +192,23 @@ Class ItemActions
         return $result;
     }
     
-
-    public function activate($secret, $itemId)
+    /**
+     * Activetes an item
+     * @param <type> $secret
+     * @param <type> $itemId
+     * @return boolean
+     */
+    public function activate($secret,$itemId)
     {
-        $secret = Params::getParam('secret');
-        $id     = Params::getParam('id');
-        $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
-        if (count($item) == 1) {
-            $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
-            if (!is_array($item_validated))
-                return false;
+        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
+        $result = $this->manager->update(
+            array('e_status' => 'ACTIVE'),
+            array('s_secret' => $secret)
+        );
+        osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($itemId) );
+        CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
 
-            if (count($item_validated) == 1) {
-                $this->itemManager->update(
-                        array('e_status' => 'ACTIVE'),
-                        array('s_secret' => $secret)
-                );
-                osc_run_hook('activate_item', $this->itemManager->findByPrimaryKey($id));
-                CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
-                osc_add_flash_message('Item validated');
-                $this->redirectTo( osc_item_url($item[0]) );
-            } else {
-                osc_add_flash_message('The item was validated before');
-                $this->redirectTo( osc_item_url($item[0]) );
-            }
-        }
+        return $result;
     }
 
 
