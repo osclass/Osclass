@@ -270,6 +270,10 @@
     function osc_has_items() {
         return View::newInstance()->_next('items') ;
     }
+
+    function osc_count_items() {
+        return osc_priv_count_items() ;
+    }
     /*
     function osc_has_item_resources() {
         return View::newInstance()->_next('resources') ;

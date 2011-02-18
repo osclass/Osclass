@@ -56,9 +56,9 @@
      * Formats the date using the appropiate format.
      */
     //osc_formatDate
-    function osc_format_date($item) {
-        $date = strtotime($item['dt_pub_date']) ;
-        return date(osc_date_format(), $date) ;
+    function osc_format_date($date) {
+        //$date = strtotime($item['dt_pub_date']) ;
+        return date(osc_date_format(), strtotime($date)) ;
     }
 
     /**
