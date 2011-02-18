@@ -36,107 +36,105 @@ Class ItemActions
     {
         $success = true;
         $aItem = $this->prepareData(true);
-        
-        if($aItem == -1){
-            return -1;
-        }else{
-            // first of all, insert the item
-            $code = osc_genRandomPassword();
+
+        // first of all, insert the item
+        $code = osc_genRandomPassword();
 
 
-            $has_to_validate = false ;
-            if( osc_item_validation_enabled() ) {
-                $has_to_validate = true ;
-            }
-
-            // set params from array
-            $active         = $aItem['active'];
-            if( $this->is_admin || !$has_to_validate) {
-                $active = 'ACTIVE';
-            }
-
-            $contactName    = $aItem['contactName'];
-            $contactEmail   = $aItem['contactEmail'];
-
-            if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-                osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
-                $success = false;
-            } else {
-                $this->manager->insert(array(
-                    'fk_i_user_id'          => $aItem['userId'],
-                    'dt_pub_date'           => DB_FUNC_NOW,
-                    'fk_i_category_id'      => $aItem['catId'],
-                    'f_price'               => $aItem['price'],
-                    'fk_c_currency_code'    => $aItem['currency'],
-                    's_contact_name'        => $contactName,
-                    's_contact_email'       => $contactEmail,
-                    's_secret'              => $code,
-                    'e_status'              => $active,
-                    'b_show_email'          => $aItem['showEmail']
-                ));
-
-                $itemId = $this->manager->getConnection()->get_last_id();
-
-                // INSERT title and description locales
-                $this->insertItemLocales('ADD', $aItem['title'], $aItem['description'], $itemId );
-                // INSERT location item
-                $location = array(
-                    'fk_i_item_id'      => $itemId,
-                    'fk_c_country_code' => $aItem['countryId'],
-                    's_country'         => $aItem['countryName'],
-                    'fk_i_region_id'    => $aItem['regionId'],
-                    's_region'          => $aItem['regionName'],
-                    'fk_i_city_id'      => $aItem['cityId'],
-                    's_city'            => $aItem['cityName'],
-                    's_city_area'       => $aItem['cityArea'],
-                    's_address'         => $aItem['address']
-                );
-
-                $locationManager = ItemLocation::newInstance();
-                $locationManager->insert($location);
-
-                // If the Google Maps plugin is well configured, we can try to geodecode the address
-                if (osc_google_maps_key()) {
-                    $this->geocodeAddress($aItem['address'],$aItem['regionName'], $aItem['cityName'], $itemId);
-                }
-                // OJO
-                if ( $this->is_admin || !$has_to_validate) {
-                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                }
-
-                //uploading resources from the input form
-                $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
-
-                osc_run_hook('item_form_post', $aItem['catId'], array('id' => $itemId));
-
-                $item = $this->manager->findByPrimaryKey($itemId);
-                $aItem['item'] = $item;
-
-                // send an e-mail to the admin with the data of the new item
-                // and send an e-email to admin to validate the item if configured to do so
-                if( !$this->is_admin ) {
-                    $this->sendEmails($aItem);
-                }
-
-                osc_run_hook('after_item_post') ;
-
-
-                if($this->is_admin) {
-                    osc_add_flash_message(__('A new item has been added')) ;
-                } else {
-                    if( osc_item_validation_enabled() ) {
-                        osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
-                    } else {
-                        osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
-                    }
-
-                }
-            }
-            return $success;
+        $has_to_validate = false ;
+        if( osc_item_validation_enabled() ) {
+            $has_to_validate = true ;
         }
+
+        // set params from array
+        $active         = $aItem['active'];
+        if( $this->is_admin || !$has_to_validate) {
+            $active = 'ACTIVE';
+        }
+
+        $contactName    = $aItem['contactName'];
+        $contactEmail   = $aItem['contactEmail'];
+
+        if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
+            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
+            $success = false;
+        } else {
+            $this->manager->insert(array(
+                'fk_i_user_id'          => $aItem['userId'],
+                'dt_pub_date'           => DB_FUNC_NOW,
+                'fk_i_category_id'      => $aItem['catId'],
+                'f_price'               => $aItem['price'],
+                'fk_c_currency_code'    => $aItem['currency'],
+                's_contact_name'        => $contactName,
+                's_contact_email'       => $contactEmail,
+                's_secret'              => $code,
+                'e_status'              => $active,
+                'b_show_email'          => $aItem['showEmail']
+            ));
+
+            $itemId = $this->manager->getConnection()->get_last_id();
+
+            Params::setParam('itemId', $itemId);
+
+            // INSERT title and description locales
+            $this->insertItemLocales('ADD', $aItem['title'], $aItem['description'], $itemId );
+            // INSERT location item
+            $location = array(
+                'fk_i_item_id'      => $itemId,
+                'fk_c_country_code' => $aItem['countryId'],
+                's_country'         => $aItem['countryName'],
+                'fk_i_region_id'    => $aItem['regionId'],
+                's_region'          => $aItem['regionName'],
+                'fk_i_city_id'      => $aItem['cityId'],
+                's_city'            => $aItem['cityName'],
+                's_city_area'       => $aItem['cityArea'],
+                's_address'         => $aItem['address']
+            );
+
+            $locationManager = ItemLocation::newInstance();
+            $locationManager->insert($location);
+
+            // If the Google Maps plugin is well configured, we can try to geodecode the address
+            if (osc_google_maps_key()) {
+                $this->geocodeAddress($aItem['address'],$aItem['regionName'], $aItem['cityName'], $itemId);
+            }
+            // OJO
+            if ( $this->is_admin || !$has_to_validate) {
+                CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
+            }
+
+            //uploading resources from the input form
+            $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
+
+            osc_run_hook('item_form_post', $aItem['catId'], array('id' => $itemId));
+
+            $item = $this->manager->findByPrimaryKey($itemId);
+            $aItem['item'] = $item;
+
+            // send an e-mail to the admin with the data of the new item
+            // and send an e-email to admin to validate the item if configured to do so
+            if( !$this->is_admin ) {
+                $this->sendEmails($aItem);
+            }
+
+            osc_run_hook('after_item_post') ;
+
+
+            if($this->is_admin) {
+                osc_add_flash_message(__('A new item has been added')) ;
+            } else {
+                if( osc_item_validation_enabled() ) {
+                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+                } else {
+                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
+                }
+
+            }
+        }
+        return $success;
     }
 
-    function edit($userId)
+    function edit()
     {
         $aItem = $this->prepareData(false);
 
@@ -191,7 +189,7 @@ Class ItemActions
 
         osc_run_hook('item_edit_post');
         
-        return $return;
+        return $result;
     }
     
 
@@ -260,8 +258,7 @@ Class ItemActions
     public function prepareData($is_add)
     {
         $aItem = array();
-        $canContinue = true;
-
+        
         if( $is_add ){   // ADD
 
             if($this->is_admin){
@@ -270,12 +267,6 @@ Class ItemActions
                 $userId = Session::newInstance()->_get('userId');
                 if($userId == ''){
                     $userId = NULL;
-                }
-                if( osc_reg_user_post() ) {     // 1 => solo los registrados pueden añadir items
-                                                // 0 => todos pueden añadir items
-                    if ( $userId == NULL ) {    // sino esta logeado como usuario NO PUEDE AÑADIR
-                        $canContinue = NULL;
-                    }
                 }
                 // to be tested
                 if (osc_recaptcha_private_key()) {
@@ -315,94 +306,90 @@ Class ItemActions
             $aItem['idItem']    = Params::getParam('id');
             // get input hidden name=fk_location_id ?
         }
-        
-        if($canContinue != NULL) {
-            // get params
-            $aItem['active']        = $active;
-            $aItem['userId']        = $userId;
-            $aItem['catId']         = Params::getParam('catId');            // OK
-            $aItem['region']        = Params::getParam('region');           // OK
-            $aItem['city']          = Params::getParam('city');             // OK
-            $aItem['regionId']      = Params::getParam('regionId');         // OK
-            $aItem['cityId']        = Params::getParam('cityId');           // OK
-            $aItem['price']         = Params::getParam('price');            // OK
-            $aItem['countryId']     = Params::getParam('countryId');        // OK
-            $aItem['cityArea']      = Params::getParam('cityArea');         // OK
-            $aItem['address']       = Params::getParam('address');          // OK
-            $aItem['currency']      = Params::getParam('currency');         // OK
-            $aItem['showEmail']     = Params::getParam('showEmail');        // OK
-            $aItem['title']         = Params::getParam('title');
-            $aItem['description']   = Params::getParam('description');
-            $aItem['photos']        = Params::getFiles('photos');
 
-            // check params
-            // ---------
-            $country = Country::newInstance()->findByCode($aItem['countryId']);
-            if( count($country) > 0 ) {
-                $countryId = $country['pk_c_code'];
-                $countryName = $country['s_name'];
-            } else {
-                $countryId = null;
-                $countryName = null;
-            }
-            $aItem['countryId']   = $countryId;
-            $aItem['countryName']   = $countryName;
+        // get params
+        $aItem['active']        = $active;
+        $aItem['userId']        = $userId;
+        $aItem['catId']         = Params::getParam('catId');            // OK
+        $aItem['region']        = Params::getParam('region');           // OK
+        $aItem['city']          = Params::getParam('city');             // OK
+        $aItem['regionId']      = Params::getParam('regionId');         // OK
+        $aItem['cityId']        = Params::getParam('cityId');           // OK
+        $aItem['price']         = Params::getParam('price');            // OK
+        $aItem['countryId']     = Params::getParam('countryId');        // OK
+        $aItem['cityArea']      = Params::getParam('cityArea');         // OK
+        $aItem['address']       = Params::getParam('address');          // OK
+        $aItem['currency']      = Params::getParam('currency');         // OK
+        $aItem['showEmail']     = Params::getParam('showEmail');        // OK
+        $aItem['title']         = Params::getParam('title');
+        $aItem['description']   = Params::getParam('description');
+        $aItem['photos']        = Params::getFiles('photos');
 
-            if( $aItem['regionId'] != '' ) {
-                if( intval($aItem['regionId']) ) {
-                    $region = Region::newInstance()->findByPrimaryKey($aItem['regionId']);
-                    if( count($region) > 0 ) {
-                        $regionId = $region['pk_i_id'];
-                        $regionName = $region['s_name'];
-                    }
-                }
-            } else {
-                $regionId = null;
-                $regionName = $aItem['region'];   // OJO ¿ DE DONDE VIENE ?
-            }
-            $aItem['regionId']      = $regionId ;
-            $aItem['regionName']    = $regionName;
-
-            if( $aItem['cityId'] != '' ) {
-                if( intval($aItem['cityId']) ) {
-                    $city = City::newInstance()->findByPrimaryKey($aItem['cityId']);
-                    if( count($city) > 0 ) {
-                        $cityId = $city['pk_i_id'];
-                        $cityName = $city['s_name'];
-                    }
-                }
-            } else {
-                $cityId = null;
-                $cityName = $aItem['city'];
-            }
-
-            $aItem['cityId']      = $cityId;
-            $aItem['cityName']    = $cityName;
-
-            if( $aItem['cityArea'] == '' ) {
-                $aItem['cityArea'] = null;
-            }
-
-            if( $aItem['address'] == '' ) {
-                $aItem['address'] = null;
-            }
-
-            if( $aItem['price'] != '' ) {
-                $aItem['price'] = (int) $aItem['price'];
-            }
-
-            if( $aItem['catId'] == ''){
-                $aItem['catId'] = 0;
-            }
-
-            if( $aItem['currency'] == '' ) {
-                $aItem['currency'] = null;
-            }
-
-            return $aItem;
-        }else{
-            return -1;
+        // check params
+        // ---------
+        $country = Country::newInstance()->findByCode($aItem['countryId']);
+        if( count($country) > 0 ) {
+            $countryId = $country['pk_c_code'];
+            $countryName = $country['s_name'];
+        } else {
+            $countryId = null;
+            $countryName = null;
         }
+        $aItem['countryId']   = $countryId;
+        $aItem['countryName']   = $countryName;
+
+        if( $aItem['regionId'] != '' ) {
+            if( intval($aItem['regionId']) ) {
+                $region = Region::newInstance()->findByPrimaryKey($aItem['regionId']);
+                if( count($region) > 0 ) {
+                    $regionId = $region['pk_i_id'];
+                    $regionName = $region['s_name'];
+                }
+            }
+        } else {
+            $regionId = null;
+            $regionName = $aItem['region'];   // OJO ¿ DE DONDE VIENE ?
+        }
+        $aItem['regionId']      = $regionId ;
+        $aItem['regionName']    = $regionName;
+
+        if( $aItem['cityId'] != '' ) {
+            if( intval($aItem['cityId']) ) {
+                $city = City::newInstance()->findByPrimaryKey($aItem['cityId']);
+                if( count($city) > 0 ) {
+                    $cityId = $city['pk_i_id'];
+                    $cityName = $city['s_name'];
+                }
+            }
+        } else {
+            $cityId = null;
+            $cityName = $aItem['city'];
+        }
+
+        $aItem['cityId']      = $cityId;
+        $aItem['cityName']    = $cityName;
+
+        if( $aItem['cityArea'] == '' ) {
+            $aItem['cityArea'] = null;
+        }
+
+        if( $aItem['address'] == '' ) {
+            $aItem['address'] = null;
+        }
+
+        if( $aItem['price'] != '' ) {
+            $aItem['price'] = (int) $aItem['price'];
+        }
+
+        if( $aItem['catId'] == ''){
+            $aItem['catId'] = 0;
+        }
+
+        if( $aItem['currency'] == '' ) {
+            $aItem['currency'] = null;
+        }
+
+        return $aItem;
     }
 
     public function uploadItemResources($aResources,$itemId)
