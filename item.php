@@ -236,7 +236,31 @@ class CWebItem extends BaseModel
                     $this->redirectTo( osc_base_url(true) );
                 }
             break;
+            case 'item_delete':
+                $secret = Params::getParam('secret');
+                $id     = Params::getParam('id');
+                $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
 
+                if (count($item) == 1) {
+                    $mItems = new ItemActions(false);
+                    $success = $mItems->delete( $secret, $id);
+                    osc_add_flash_message( __('Your item has been deleted.') ) ;
+                    $this->redirectTo( osc_register_account_url() ) ;
+                }else{
+                    osc_add_flash_message( __('The item you are trying to delete has not been deleted.') ) ;
+                    $this->redirectTo( osc_base_url(true) ) ;
+                }
+//                osc_add_flash_message(__('Your item has been deleted.')) ;
+//                if(!osc_is_web_user_logged_in ()) {
+//                    Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
+//                    osc_add_flash_message(__('You could register and access every time to your items.'));
+//                    osc_redirectTo(osc_register_account_url());//'user.php?action=register');
+//                } else {
+//                    Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
+//                    osc_redirectTo(osc_user_list_items_url());//'user.php?action=items');
+//                }
+//                osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
+            break;
 
 
             case 'mark':
@@ -538,22 +562,7 @@ class CWebItem extends BaseModel
 
             break;
             
-            case 'item_delete':
-                $id = intval( Params::getParam('id') ) ;
-                $secret = Params::getParam('secret') ;
-
-
-                osc_add_flash_message(__('Your item has been deleted.')) ;
-                if(!osc_is_web_user_logged_in ()) {
-                    Item::newInstance()->delete(array('pk_i_id' => $id, 's_secret' => $secret));
-                    osc_add_flash_message(__('You could register and access every time to your items.'));
-                    osc_redirectTo(osc_register_account_url());//'user.php?action=register');
-                } else {
-                    Item::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_user_id' => $userId, 's_secret' => $secret));
-                    osc_redirectTo(osc_user_list_items_url());//'user.php?action=items');
-                }
-                osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
-            break;
+            
 
             
             default:
@@ -562,46 +571,51 @@ class CWebItem extends BaseModel
                 }
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-                
-                $this->_exportVariableToView('item', $item) ;
-                $this->_exportVariableToView('section',$item['s_title']) ;  // ??
-                $this->_exportVariableToView('category', $item['fk_i_category_id']) ;   // ??
-                $this->_exportVariableToView('location', 'item' ) ; //  ??
+                // if item doesn't exist redirect to base url
+                if( !$item['fk_i_item_id'] ){
+                    osc_add_flash_message( __('This item doesn\'t exist.') );
+                    $this->redirectTo( osc_base_url(true) );
+                }else{
+                    $this->_exportVariableToView('item', $item) ;
+                    $this->_exportVariableToView('section',$item['s_title']) ;  // ??
+                    $this->_exportVariableToView('category', $item['fk_i_category_id']) ;   // ??
+                    $this->_exportVariableToView('location', 'item' ) ; //  ??
 
-                if ($item['e_status'] != 'ACTIVE') {
-                    if( Session::newInstance()->_get('userId') != '' && Session::newInstance()->_get('userId') == $item['fk_i_user_id'] ) {
-                        osc_add_flash_message(__('This item is NOT validated. You should validate it in order to show this item
-                            to the rest of the users. You could do that in your profile menu.') );
-                    } else {
-                        osc_add_flash_message( __('This item is NOT validated.') );  // el item no esta activado,  tienes el enlace de activacion en el correo
-                        $this->redirectTo( osc_base_url(true) );
+                    if ($item['e_status'] != 'ACTIVE') {
+                        if( Session::newInstance()->_get('userId') != '' && Session::newInstance()->_get('userId') == $item['fk_i_user_id'] ) {
+                            osc_add_flash_message(__('This item is NOT validated. You should validate it in order to show this item
+                                to the rest of the users. You could do that in your profile menu.') );
+                        } else {
+                            osc_add_flash_message( __('This item is NOT validated.') );  // el item no esta activado,  tienes el enlace de activacion en el correo
+                            $this->redirectTo( osc_base_url(true) );
+                        }
                     }
+                    $mStats = new ItemStats();
+                    $mStats->increase('i_num_views', $item['pk_i_id']);
+
+                    $aResources = ItemResource::newInstance()->getAllResources( Params::getParam('id') ) ;
+                    $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
+
+                    foreach($item['locale'] as $k => $v) {
+                        $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
+                        $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
+                    }
+
+                    $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                    $actual_locale = osc_get_user_locale() ;
+                    if(isset($author['locale'][$actual_locale]['s_info'])) {
+                        $author['s_info'] = $author['locale'][$actual_locale]['s_info'];
+                    } else {
+                        $author['s_info'] = '';
+                    }
+
+                    $this->_exportVariableToView('user', $user) ;
+                    $this->_exportVariableToView('item', $item) ;
+                    $this->_exportVariableToView('comments', $comments) ;
+                    $this->_exportVariableToView('resources', $aResources) ;
+                    osc_run_hook('show_item', $item) ;
+                    $this->doView('item.php') ;
                 }
-                $mStats = new ItemStats();
-                $mStats->increase('i_num_views', $item['pk_i_id']);
-
-                $aResources = ItemResource::newInstance()->getAllResources( Params::getParam('id') ) ;
-                $comments = ItemComment::newInstance()->findByItemID( Params::getParam('id') );
-
-                foreach($item['locale'] as $k => $v) {
-                    $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
-                    $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
-                }
-
-                $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                $actual_locale = osc_get_user_locale() ;
-                if(isset($author['locale'][$actual_locale]['s_info'])) {
-                    $author['s_info'] = $author['locale'][$actual_locale]['s_info'];
-                } else {
-                    $author['s_info'] = '';
-                }
-
-                $this->_exportVariableToView('user', $user) ;
-                $this->_exportVariableToView('item', $item) ;
-                $this->_exportVariableToView('comments', $comments) ;
-                $this->_exportVariableToView('resources', $aResources) ;
-                osc_run_hook('show_item', $item) ;
-                $this->doView('item.php') ;
         }
     }
 

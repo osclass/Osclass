@@ -138,8 +138,6 @@ Class ItemActions
     {
         $aItem = $this->prepareData(false);
 
-        //echo "<pre>";print_r($aItem);echo "</pre>";
-
         $location = array(
             'fk_c_country_code' => $aItem['countryId'],
             's_country'         => $aItem['countryName'],
@@ -210,7 +208,16 @@ Class ItemActions
 
         return $result;
     }
-
+    
+    /**
+     *
+     * @param <type> $secret
+     * @param <type> $itemId
+     */
+    public function delete($secret, $itemId)
+    {
+        $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
+    }
 
     // common functions
 
