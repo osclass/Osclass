@@ -56,7 +56,7 @@
                     <?php } else { ?>
                         <?php while(has_items()) { ?>
                             <div class="userItem" >
-                                <div><a href="<?php /*osc_item_url() ;*/ ?>"><?php echo osc_item_title() ; ?></a></div>
+                                <div><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></div>
 
                                 <div class="userItemData" >
                                 <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item()) ; ?><br />
