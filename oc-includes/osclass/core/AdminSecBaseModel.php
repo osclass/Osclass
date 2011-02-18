@@ -27,8 +27,8 @@
 
             $this->add_css('backoffice.css') ;
             $this->add_global_css('jquery-ui.css') ;
-            $this->add_global_js('jquery-1.4.2.js') ;
-            $this->add_global_js('jquery-ui-1.8.5.js') ;
+            $this->add_global_js('jquery.js') ;
+            $this->add_global_js('jquery-ui.js') ;
             $this->add_js('jquery.cookie.js') ;
             $this->add_js('jquery.json.js') ;
 	    }

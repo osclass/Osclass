@@ -64,8 +64,8 @@ switch ($step) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>OSClass Installation</title>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery-1.4.2.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery-ui-1.8.5.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery-ui.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/js/vtip/vtip.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery.jsonp.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/js/install.js" type="text/javascript"></script>
