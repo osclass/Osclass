@@ -49,7 +49,7 @@
     function osc_logged_admin_email() {
         return Session::newInstance()->_get('adminEmail') ;
     }
-    
+
     function osc_user_name() {
         return osc_user_field("s_name");
     }
@@ -144,8 +144,12 @@
         return View::newInstance()->_get('alerts');
     }
     
-    
- 
+    function osc_prepare_user_info() {
+        if ( !View::newInstance()->_exists('users') ) {
+            View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_id() ) ) ) ;
+        }
+        return View::newInstance()->_next('users') ;
+    }
 
 
 ?>

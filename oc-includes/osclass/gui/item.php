@@ -31,7 +31,7 @@
             
             <div id="form_publish">
                 <?php include("inc.search.php") ; ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url( osc_item_category_id() ) ; ?>"><?php _e("Publish your ad for free") ; ?></a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free") ; ?></a></strong>
             </div>
 
             <div class="content item">
@@ -80,7 +80,7 @@
                     <?php osc_run_hook('location') ; ?>
 
 
-                    <?php if(osc_comments_enabled()) { ?>
+                    <?php if( osc_comments_enabled() ) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments'); ?></h2>
                             <?php if( osc_count_item_comments() > 1 ) { ?>
@@ -131,6 +131,9 @@
                     <div id="contact">
                         <h2><?php _e("Contact publisher") ; ?></h2>
                         <form action="<?php echo osc_base_url(true) ; ?>?page=item" method="post" onsubmit="return validate_contact();">
+
+                            <?php osc_prepare_user_info() ; ?>
+
                             <fieldset>
                                 <h3><?php echo osc_user_name() ; ?></h3>
                                 <?php if ( osc_user_phone() != '' ) { ?>
