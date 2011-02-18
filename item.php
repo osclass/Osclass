@@ -38,7 +38,7 @@ class CWebItem extends BaseModel
         $this->_exportVariableToView('locales', $locales) ;
         //$this->_exportVariableToView('latestItems', $latestItems) ;
 
-        switch( $this->action ) {
+        switch( $this->action ){
             case 'post': // add
                 if( osc_reg_user_post() ) {     // 1 => solo los registrados pueden añadir items
                                                 // 0 => todos pueden añadir items
@@ -192,6 +192,7 @@ class CWebItem extends BaseModel
                 $id     = Params::getParam('id');
                 $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL", $secret, $id);
                 if (count($item) == 1) {
+                    
                     $mItems = new ItemActions(false);
                     $success = $mItems->edit();
 
@@ -261,112 +262,46 @@ class CWebItem extends BaseModel
 //                }
 //                osc_redirectTo(osc_createUserItemsURL());//'user.php?action=items');
             break;
-
-
             case 'mark':
-                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
-                $column = null;
-                switch (Params::getParam('as')) {
-                    case 'spam':
-                        $column = 'i_num_spam';
-                        break;
-                    case 'badcat':
-                        $column = 'i_num_bad_classified';
-                        break;
-                    case 'offensive':
-                        $column = 'i_num_offensive';
-                        break;
-                    case 'repeated':
-                        $column = 'i_num_repeated';
-                        break;
-                    case 'expired':
-                        $column = 'i_num_expired';
-                        break;
-                }
 
-                $dao_itemStats = new ItemStats() ;
-                $dao_itemStats->increase($column, Params::getParam('id')) ;
-                unset($dao_itemStats) ;
-                setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
+                $mItem = new ItemActions(false);
+                $mItem->mark();
+
+                $item = Params::getParam('item');
+
+//                echo "<pre>";
+//                print_r($item);
+//                echo "</pre>";
+                
                 osc_add_flash_message(__('Thanks! That helps us.'));
                 $this->redirectTo( osc_item_url($item) );
+
             break;
             case 'send_friend':
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 $this->_exportVariableToView('item', $item) ;
                 $this->doView('item-send-friend.php');
             break;
+
+
+
+
+
+
+        
             case 'send_friend_post':
-                $mPages = new Page();
-                $aPage = $mPages->findByInternalName('email_send_friend');
-                $locale = osc_get_user_locale();
+                $mItem = new ItemActions(false);
+                $mItem->send_friend();
 
-                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
-                $item_url = osc_item_url($item);
-
-                $content = array();
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale];
-                } else {
-                    $content = current($aPage['locale']);
-                }
-
-                $words   = array() ;
-                $words[] = array(
-                                    '{FRIEND_NAME}'
-                                    ,'{USER_NAME}'
-                                    ,'{USER_EMAIL}'
-                                    ,'{FRIEND_EMAIL}'
-                                    ,'{WEB_URL}'
-                                    ,'{ITEM_NAME}'
-                                    ,'{COMMENT}'
-                                    ,'{ITEM_URL}'
-                                    ,'{WEB_TITLE}'
-                            ) ;
-                $words[] = array(
-                                    Params::getParam('friendName')
-                                    ,Params::getParam('yourName')
-                                    ,Params::getParam('yourEmail')
-                                    ,Params::getParam('friendEmail')
-                                    ,osc_base_url()
-                                    ,Params::getParam('s_title')
-                                    ,Params::getParam('message')
-                                    ,$item_url
-                                    ,osc_page_title()
-                            ) ;
-                $title = osc_mailBeauty($content['s_title'], $words) ;
-                $body  = osc_mailBeauty($content['s_text'], $words) ;
-
-
-                $from = osc_contact_email();
-                if( Params::getParam('yourEmail') != '' ){
-                    $from = Params::getParam('yourEmail');
-                }
-                
-                $from_name = Params::getParam('yourName');
-
-                if (osc_notify_contact_friends()) {
-                    $add_bbc = osc_contact_email() ;
-                }
-
-                $params = array(
-                            'add_bcc'   => $add_bbc
-                            ,'from'      => $from
-                            ,'from_name' => $from_name
-                            ,'subject'   => $title
-                            ,'to'        => Params::getParam('friendEmail')
-                            ,'to_name'   => Params::getParam('friendName')
-                            ,'body'      => $body
-                            ,'alt_body'  => $body
-                          ) ;
-
-                if(osc_sendMail($params)) {
-                    osc_add_flash_message(__('We just send your message to ') . Params::getParam('friendName') . ".") ;
-                } else {
-                    osc_add_flash_message(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
-                }
+                $item_url = Params::getParam('item_url');
                 $this->redirectTo($item_url);
             break;
+
+
+
+
+
+        
             case 'contact':
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                 $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']) ;
