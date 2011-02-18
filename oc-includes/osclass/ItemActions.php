@@ -315,7 +315,170 @@ Class ItemActions
         }
     }
 
+    public function contact()
+    {
+        //$aItem = $this->prepareDataForFunction( 'contact' );
+        $path = NULL;
+        $item = $this->manager->findByPrimaryKey( Params::getParam('id') ) ;
 
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_item_inquiry');
+        $locale = osc_get_user_locale() ;
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
+                         '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
+
+        $words[] = array($item['s_contact_name'], Params::getParam('yourName'), Params::getParam('yourEmail'),
+                         Params::getParam('phoneNumber'), osc_base_url(), $item['s_title'], osc_item_url($item), Params::getParam('message'));
+
+        $title = osc_mailBeauty($content['s_title'], $words);
+        $body = osc_mailBeauty($content['s_text'], $words);
+
+        $from = osc_contact_email() ;
+        $from_name = osc_page_title() ;
+        if (osc_notify_contact_item()) {
+            $add_bbc = osc_contact_email() ;
+        }
+
+        $emailParams = array (
+                            'add_bcc'   => $add_bbc
+                            ,'from'      => $from
+                            ,'from_name' => $from_name
+                            ,'subject'   => $title
+                            ,'to'        => $item['s_contact_email']
+                            ,'to_name'   => $item['s_contact_name']
+                            ,'body'      => $body
+                            ,'alt_body'  => $body
+                            ,'reply_to'  => Params::getParam('yourEmail')
+                        ) ;
+
+
+        if(osc_item_attachment()) {
+            $attachment = Params::getFiles('attachment');
+            $resourceName = $attachment['name'] ;
+            $tmpName = $attachment['tmp_name'] ;
+            $resourceType = $attachment['type'] ;
+
+            $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+
+            if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
+                osc_add_flash_message(__('There has been some erro sending the message')) ;
+                $this->redirectTo( osc_base_url() );
+            }
+
+            if(!move_uploaded_file($tmpName, $path)){
+                unset($path) ;
+            }
+        }
+
+        if(isset($path)) {
+            $emailParams['attachment'] = $path ;
+        }
+        osc_sendMail($emailParams);
+
+        @unlink($path) ;
+    }
+
+    /*
+     *
+     */
+    public function add_comment()
+    {
+       $authorName     = Params::getParam('authorName') ;
+        $authorEmail    = Params::getParam('authorEmail') ;
+        $body           = Params::getParam('body') ;
+        $title          = Params::getParam('title') ;
+        $itemId         = Params::getParam('id') ;
+
+        $item = $this->manager->findByPrimaryKey($itemId) ;
+
+        $itemURL = osc_item_url($item) ;
+        
+        Params::setParam('itemURL', $itemURL);
+
+        if (osc_moderate_comments()) {
+            $status = 'INACTIVE' ;
+        } else {
+            $status = 'ACTIVE' ;
+        }
+        if (osc_akismet_key()) {
+            require_once LIB_PATH . 'Akismet.class.php' ;
+            $akismet = new Akismet(osc_base_url(), osc_akismet_key()) ;
+            $akismet->setCommentAuthor($authorName) ;
+            $akismet->setCommentAuthorEmail($authorEmail) ;
+            $akismet->setCommentContent($body) ;
+            $akismet->setPermalink($itemURL) ;
+
+            $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
+        }
+
+        $mComments = new Comment() ;
+        $aComment  = array(
+                        'dt_pub_date'    => DB_FUNC_NOW
+                        ,'fk_i_item_id'   => $itemId
+                        ,'s_author_name'  => $authorName
+                        ,'s_author_email' => $authorEmail
+                        ,'s_title'        => $title
+                        ,'s_body'         => $body
+                        ,'e_status'       => $status
+                    );
+
+        if( $mComments->insert($aComment) ){
+
+            $notify = osc_notify_new_comment() ;
+            $admin_email = osc_contact_email() ;
+            $prefLocale = osc_language;
+
+            //Notify admin
+            if ($notify) {
+                $mPages = new Page() ;
+                $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
+                $locale = osc_get_user_locale() ;
+
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+
+                $words   = array();
+                $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
+                                 '{COMMENT_TEXT}', '{ITEM_NAME}', '{ITEM_ID}', '{ITEM_URL}');
+                $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
+                $title_email = osc_mailBeauty($content['s_title'], $words);
+                $body_email = osc_mailBeauty($content['s_text'], $words);
+
+                $from = osc_contact_email() ;
+                $from_name = osc_page_title ;
+                if (osc_notify_contact_item()) {
+                    $add_bbc = osc_contact_email() ;
+                }
+
+                $emailParams = array(
+                                'from'      => $admin_email
+                                ,'from_name' => __('Admin mail system')
+                                ,'subject'   => $title_email
+                                ,'to'        => $admin_email
+                                ,'to_name'   => __('Admin mail system')
+                                ,'body'      => $body_email
+                                ,'alt_body'  => $body_email
+                                );
+                osc_sendMail($emailParams) ;
+            }
+            osc_run_hook('add_comment', $item);
+        }else{
+            osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
+        }
+    }
     /**
      * Return an array with all data necessary for do the action
      * @param <type> $action
@@ -369,10 +532,19 @@ Class ItemActions
                 $aItem['message']       = Params::getParam('message');
             break;
             case 'contact':
-
+                // TODO CARLOS
+//                $path = null;
+//                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+//
+//                $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+//
+//
+//                $aItem['path']      = $path;
+//                $aItem['item']      = $item;
+//                $aItem['category']  = $category;
             break;
             case 'add_comment':
-
+                // TODO CARLOS
             break;
             default:
         }
