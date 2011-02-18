@@ -51,16 +51,16 @@
 
                     <h2><?php echo __('Items from ') . osc_logged_user_name() ; ?></h2>
 
-                    <?php if(count_items()==0) { ?>
+                    <?php if(osc_count_items()==0) { ?>
                         <h3><?php _e('There aren\'t items added yet') ; ?></h3>
                     <?php } else { ?>
-                        <?php while(has_items()) { ?>
+                        <?php while(osc_has_items()) { ?>
                             <div class="userItem" >
                                 <div><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></div>
 
                                 <div class="userItemData" >
-                                <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item()) ; ?><br />
-                                <?php _e('Price') ; ?>: <?php echo osc_format_price() ; ?>
+                                <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
+                                <?php _e('Price') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
                                 </div>
 
                             </div>

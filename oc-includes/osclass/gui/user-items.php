@@ -44,15 +44,15 @@
                 <div id="main">
                 <h2><?php _e('Your items'); ?> <a href="<?php echo osc_item_post_url($catId) ; ?>">+ <?php _e('Post a new item'); ?></a></h2>
 
-                <?php if(count_items() == 0): ?>
+                <?php if(osc_count_items() == 0): ?>
                     <h3><?php _e('You do not have any items yet.'); ?></h3>
                 <?php else: ?>
-                    <?php while(has_items()) { ?>
+                    <?php while(osc_has_items()) { ?>
                             <div class="item" >
                                     <h3><a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a></h3>
                                     <p>
-                                    <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item()) ; ?><br />
-                                    <?php _e('Price') ; ?>: <?php echo osc_format_price(); ?>
+                                    <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
+                                    <?php _e('Price') ; ?>: <?php echo osc_format_price(osc_item_price()); ?>
                                     </p>
 
                                     <p class="options">
