@@ -301,28 +301,6 @@
         }
     }
     
-    function osc_search_url($params = null) {
-        $url = osc_base_url(true) . '?page=search';
-        if($params!=null) {
-            foreach($params as $k => $v) {
-                $url .= "&" . $k . "=" . $v;
-            }
-        }
-        return $url;
-    }
-    
-    function osc_search_list_countries() {
-        return Search::newInstance()->listCountries();
-    }
-    
-    function osc_search_list_regions($country = '%%%%') {
-        return Search::newInstance()->listRegions($country);
-    }
-    
-    function osc_search_list_cities($region = '%%%%') {
-        return Search::newInstance()->listCities($region);
-    }
-    
     /////////////////////////////////////
     //       functions for items       //
     /////////////////////////////////////
@@ -358,12 +336,18 @@
     }
 
     function osc_item_edit_url() {
-        return osc_base_url(true)."?page=item&action=edit&id=".osc_item_id();
+        return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id();
     }
 
     function osc_item_delete_url() {
         return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
     }
+
+
+    /////////////////////////////////////
+    //functions for locations & search //
+    /////////////////////////////////////
+
 
     function osc_list_countries() {
         if (View::newInstance()->_exists('countries')) {
@@ -397,6 +381,29 @@
         }
     }
     
+    function osc_search_url($params = null) {
+        $url = osc_base_url(true) . '?page=search';
+        if($params!=null) {
+            foreach($params as $k => $v) {
+                $url .= "&" . $k . "=" . $v;
+            }
+        }
+        return $url;
+    }
+    
+    function osc_search_list_countries() {
+        return Search::newInstance()->listCountries();
+    }
+    
+    function osc_search_list_regions($country = '%%%%') {
+        return Search::newInstance()->listRegions($country);
+    }
+    
+    function osc_search_list_cities($region = '%%%%') {
+        return Search::newInstance()->listCities($region);
+    }
+    
+
     
     
 ?>
