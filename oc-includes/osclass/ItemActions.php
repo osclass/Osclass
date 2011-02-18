@@ -196,7 +196,7 @@ Class ItemActions
      * @param <type> $itemId
      * @return boolean
      */
-    public function activate($secret,$itemId)
+    public function activate( $secret, $itemId )
     {
         $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
         $result = $this->manager->update(
@@ -214,47 +214,177 @@ Class ItemActions
      * @param <type> $secret
      * @param <type> $itemId
      */
-    public function delete($secret, $itemId)
+    public function delete( $secret, $itemId )
     {
         $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
     }
 
-    // common functions
-
-    public function geocodeAddress($address,$regionName, $cityName, $itemId)
+    /**
+     * Mark an item
+     * @param <type> $column
+     * @param <type> $itemId
+     */
+    public function mark( )
     {
-        $locationManager = ItemLocation::newInstance();
+        $aItem = $this->prepareDataForFunction( 'mark' ) ;
+        
+        $dao_itemStats = new ItemStats() ;
+        $dao_itemStats->increase( $aItem['column'], $aItem['id'] ) ;
+        unset($dao_itemStats) ;
 
-        $key = osc_google_maps_key() ;
-        $address = sprintf('%s, %s %s', $address, $regionName, $cityName);
-        $temp = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
-        $temp = json_decode($temp);
-        if (isset($temp->Placemark) && count($temp->Placemark[0]) > 0) {
-            $coord = $temp->Placemark[0]->Point->coordinates;
-            $locationManager->update (
-                    array(
-                        'd_coord_lat' => $coord[1]
-                        ,'d_coord_long' => $coord[0]
-                    )
-                    ,array('fk_i_item_id' => $itemId)
-            );
+        $item   = $aItem['item'];
+        setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
+
+        Params::setParam( 'item', $item );
+    }
+
+    public function send_friend()
+    {
+        // get data for this function
+        $aItem = $this->prepareDataForFunction( 'send_friend' );
+
+        $item       = $aItem['item'];
+        $s_title    = $aItem['s_title'];
+        $item_url   = osc_item_url($item);
+
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_send_friend');
+        $locale = osc_get_user_locale();
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array() ;
+        $words[] = array(
+                '{FRIEND_NAME}'
+                ,'{USER_NAME}'
+                ,'{USER_EMAIL}'
+                ,'{FRIEND_EMAIL}'
+                ,'{WEB_URL}'
+                ,'{ITEM_NAME}'
+                ,'{COMMENT}'
+                ,'{ITEM_URL}'
+                ,'{WEB_TITLE}'
+        ) ;
+        $words[] = array(
+                $aItem['friendName']
+                ,$aItem['yourName']
+                ,$aItem['yourEmail']
+                ,$aItem['friendEmail']
+                ,osc_base_url()
+                ,$aItem['s_title']
+                ,$aItem['message']
+                ,$item_url
+                ,osc_page_title()
+        ) ;
+        $title = osc_mailBeauty($content['s_title'], $words) ;
+        $body  = osc_mailBeauty($content['s_text'], $words) ;
+
+        $from = osc_contact_email();
+        if( $yourEmail != '' ){
+            $from = $yourEmail;
+        }
+
+        $from_name = $aItem['yourName'];
+
+        if (osc_notify_contact_friends()) {
+            $add_bbc = osc_contact_email() ;
+        }
+
+        $params = array(
+                    'add_bcc'    => $add_bbc
+                    ,'from'      => $from
+                    ,'from_name' => $from_name
+                    ,'subject'   => $title
+                    ,'to'        => $aItem['friendEmail']
+                    ,'to_name'   => $aItem['friendName']
+                    ,'body'      => $body
+                    ,'alt_body'  => $body
+                  ) ;
+
+        Params::setParam( 'item_url', $item_url );
+
+        if(osc_sendMail($params)) {
+            osc_add_flash_message(__('We just send your message to ') . $aItem['friendName'] . ".") ;
+        } else {
+            osc_add_flash_message(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
         }
     }
 
-    function insertItemLocales($type, $title, $description, $itemId )
+
+    /**
+     * Return an array with all data necessary for do the action
+     * @param <type> $action
+     */
+    private function prepareDataForFunction( $action )
     {
-        foreach($title as $k => $_data){
-            $_title         = $title[$k];
-            $_description   = $description[$k];
-            if($type == 'ADD'){
-                $this->manager->insertLocale($itemId, $k, $_title, $_description, $_title . " " . $_description);
-            }else if($type == 'EDIT'){
-                $this->manager->updateLocaleForce($itemId, $k, $_title, $_description) ;
-            }
+        $aItem = array();
+
+        switch ( $action ){
+            case 'mark':
+                
+                $id     = Params::getParam('id');
+                $item   = $this->manager->findByPrimaryKey( $id ) ;
+                $column = null;
+                
+                switch (Params::getParam('as')) {
+                    case 'spam':
+                        $column = 'i_num_spam';
+                        break;
+                    case 'badcat':
+                        $column = 'i_num_bad_classified';
+                        break;
+                    case 'offensive':
+                        $column = 'i_num_offensive';
+                        break;
+                    case 'repeated':
+                        $column = 'i_num_repeated';
+                        break;
+                    case 'expired':
+                        $column = 'i_num_expired';
+                        break;
+                }
+
+                $aItem['id']            = $id;
+                $aItem['item']          = $item;
+                $aItem['column']        = $column;
+
+            break;
+            case 'send_friend':
+                $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
+
+                $aItem['item']          = $item;
+                
+                $aItem['yourName']      = Params::getParam('yourName');
+                $aItem['yourEmail']     = Params::getParam('yourEmail');
+
+                $aItem['friendName']    = Params::getParam('friendName');
+                $aItem['friendEmail']   = Params::getParam('friendEmail');  
+
+                $aItem['s_title']       = Params::getParam('s_title');
+                $aItem['message']       = Params::getParam('message');
+            break;
+            case 'contact':
+
+            break;
+            case 'add_comment':
+
+            break;
+            default:
         }
+        return $aItem;
     }
 
-    public function prepareData($is_add)
+    /**
+     * Return an array with all data necessary for do the action (ADD OR EDIT)
+     * @param <type> $is_add
+     * @return array
+     */
+    private function prepareData( $is_add )
     {
         $aItem = array();
         
@@ -391,6 +521,39 @@ Class ItemActions
         return $aItem;
     }
 
+    public function geocodeAddress($address,$regionName, $cityName, $itemId)
+    {
+        $locationManager = ItemLocation::newInstance();
+
+        $key = osc_google_maps_key() ;
+        $address = sprintf('%s, %s %s', $address, $regionName, $cityName);
+        $temp = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
+        $temp = json_decode($temp);
+        if (isset($temp->Placemark) && count($temp->Placemark[0]) > 0) {
+            $coord = $temp->Placemark[0]->Point->coordinates;
+            $locationManager->update (
+                    array(
+                        'd_coord_lat' => $coord[1]
+                        ,'d_coord_long' => $coord[0]
+                    )
+                    ,array('fk_i_item_id' => $itemId)
+            );
+        }
+    }
+
+    function insertItemLocales($type, $title, $description, $itemId )
+    {
+        foreach($title as $k => $_data){
+            $_title         = $title[$k];
+            $_description   = $description[$k];
+            if($type == 'ADD'){
+                $this->manager->insertLocale($itemId, $k, $_title, $_description, $_title . " " . $_description);
+            }else if($type == 'EDIT'){
+                $this->manager->updateLocaleForce($itemId, $k, $_title, $_description) ;
+            }
+        }
+    }
+    
     public function uploadItemResources($aResources,$itemId)
     {
         
