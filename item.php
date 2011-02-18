@@ -132,7 +132,7 @@ class CWebItem extends BaseModel
                     $this->redirectTo( osc_item_post_url() );
                 }
             break;
-            case 'editItem':
+            case 'item_edit':
                 if( osc_reg_user_post() ) {
                     osc_add_flash_message(__('Only allow registered users to post items') ) ;
                     $this->redirectTo(osc_base_url(true));

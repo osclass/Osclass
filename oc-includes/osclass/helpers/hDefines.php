@@ -347,12 +347,12 @@
     
     function osc_item_post_url($category = null) {
         if($catId==null) {
-            return osc_base_url(true)."?page=post&action=post";
+            return osc_base_url(true)."?page=item&action=post";
         } else {
             if(isset($category['pk_i_id'])) {
-                return osc_base_url(true)."?page=post&action=post&catId=".$category['pk_i_id'];
+                return osc_base_url(true)."?page=item&action=post&catId=".$category['pk_i_id'];
             } else {
-                return osc_base_url(true)."?page=post&action=post&catId=".$category;
+                return osc_base_url(true)."?page=item&action=post&catId=".$category;
             }
         }
     }
@@ -362,7 +362,7 @@
     }
 
     function osc_item_delete_url() {
-        return osc_base_url(true)."?page=delete&action=edit&id=".osc_item_id();
+        return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
     }
 
 
