@@ -246,7 +246,7 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->doView('items/frm.php') ;
             break;
             case 'item_edit_post':
-            case 'editItemPost':    //item edit (post)
+            //case 'editItemPost':    //item edit (post)
                                     require_once LIB_PATH . 'osclass/itemActions.php';
 
                                     if(isset($_REQUEST['userId'])) {

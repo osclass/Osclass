@@ -22,8 +22,6 @@
 
 ?>
 
-<?php $locales = Locale::newInstance()->listAllEnabled(); ?>
-
 <div id="header">
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
@@ -52,16 +50,24 @@
                     </form>
                 </li>
             <?php } ?>
-            <li class="last with_sub">
-                <strong><?php _e("Language") ; ?></strong>
-                <ul>
-                    <?php $i = 0 ;  ?>
-                    <?php foreach($locales as $locale) { ?>
-                        <li <?php if( $i == 0 ) { echo "class='first'" ; } ?>><a id="<?php echo $locale['pk_c_code'] ; ?>" href="<?php echo osc_change_language_url ($locale['pk_c_code']) ; ?>"><?php echo $locale['s_name'] ; ?></a></li>
-                        <?php $i++ ; ?>
-                    <?php } ?>
-                </ul>
-            </li>
+
+            <?php if ( osc_count_web_enabled_locales() > 1) { ?>
+
+                <?php osc_goto_first_locale() ; ?>
+
+                <li class="last with_sub">
+                    <strong><?php _e("Language") ; ?></strong>
+                    <ul>
+                        <?php $i = 0 ;  ?>
+                        <?php while ( osc_has_web_enabled_locales() ) { ?>
+                            <li <?php if( $i == 0 ) { echo "class='first'" ; } ?>><a id="<?php echo osc_locale_code() ; ?>" href="<?php echo osc_change_language_url ( osc_locale_code() ) ; ?>"><?php echo osc_locale_name() ; ?></a></li>
+                            <?php $i++ ; ?>
+                        <?php } ?>
+                    </ul>
+                </li>
+                
+            <?php } ?>
+                
         </ul>
     </div>
 </div>
