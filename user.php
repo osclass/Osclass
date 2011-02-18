@@ -87,7 +87,7 @@ class CWebUser extends WebSecBaseModel
                                         $aAlerts[$k]['items'] = $search->search() ;
                                     }
                                     
-                                    $this->_exportVariableToView('aAlerts', $aAlerts) ;
+                                    $this->_exportVariableToView('alerts', $aAlerts) ;
                                     $this->doView('user-alerts.php') ;
             break;
             case('change_email'):           //change email

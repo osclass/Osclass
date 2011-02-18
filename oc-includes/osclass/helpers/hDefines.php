@@ -131,24 +131,6 @@
     //functions for the public website //
     /////////////////////////////////////
 
-    //osc_createItemPostURL
-    function osc_item_post_url($category = '') {
-        if ($category != '' && isset($category['pk_i_id'])) {
-            if ( osc_rewrite_enabled() ) {
-                $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
-            } else {
-                $path = sprintf(osc_base_url(true) . '?page=item&action=post&catId=%d', $category['pk_i_id']) ;
-            }
-        } else {
-            if ( osc_rewrite_enabled() ) {
-                $path = osc_base_url() . 'item/new' ;
-            } else {
-                $path = sprintf(osc_base_url(true) . '?page=item&action=post') ;
-            }
-        }
-        return $path ;
-    }
-
     /**
      * Create automatically the url of a category
      *
@@ -340,6 +322,51 @@
     function osc_search_list_cities($region = '%%%%') {
         return Search::newInstance()->listCities($region);
     }
+    
+    /////////////////////////////////////
+    //       functions for items       //
+    /////////////////////////////////////
+
+    //osc_createItemPostURL
+    /*function osc_item_post_url($category = '') {
+        if ($category != '' && isset($category['pk_i_id'])) {
+            if ( osc_rewrite_enabled() ) {
+                $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
+            } else {
+                $path = sprintf(osc_base_url(true) . '?page=item&action=post&catId=%d', $category['pk_i_id']) ;
+            }
+        } else {
+            if ( osc_rewrite_enabled() ) {
+                $path = osc_base_url() . 'item/new' ;
+            } else {
+                $path = sprintf(osc_base_url(true) . '?page=item&action=post') ;
+            }
+        }
+        return $path ;
+    }*/
+    
+    function osc_item_post_url($category = null) {
+        if($catId==null) {
+            return osc_base_url(true)."?page=post&action=post";
+        } else {
+            if(isset($category['pk_i_id'])) {
+                return osc_base_url(true)."?page=post&action=post&catId=".$category['pk_i_id'];
+            } else {
+                return osc_base_url(true)."?page=post&action=post&catId=".$category;
+            }
+        }
+    }
+
+    function osc_item_edit_url() {
+        return osc_base_url(true)."?page=item&action=edit&id=".osc_item_id();
+    }
+
+    function osc_item_delete_url() {
+        return osc_base_url(true)."?page=delete&action=edit&id=".osc_item_id();
+    }
+
+
+
     
     
 ?>
