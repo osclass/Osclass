@@ -218,8 +218,9 @@
                 $this->_exportVariableToView('sPriceMin', $p_sPriceMin) ;
                 $this->_exportVariableToView('sPriceMax', $p_sPriceMax) ;
                 $this->_exportVariableToView('iTotalItems', $iTotalItems) ;
-                $this->_exportVariableToView('aItems', $aItems) ;
+                $this->_exportVariableToView('items', $aItems) ;
                 $this->_exportVariableToView('sShowAs', $p_sShowAs);
+                $this->_exportVariableToView('search', $this->mSearch);
                 
                 //calling the view...
                 $this->doView('search.php') ;
@@ -242,7 +243,7 @@
         function alert_form() {
             $this->mSearch->order() ;
             $this->mSearch->limit() ;
-            //$search_alert = base64_encode(serialize($this->mSearch)) ;
+            $this->_exportVariableToView('search_alert', base64_encode(serialize($this->mSearch))) ;
 
             $this->doView('alert-form.php') ;
         }

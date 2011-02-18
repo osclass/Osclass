@@ -37,7 +37,6 @@
     $sPriceMin = $this->_get('sPriceMin') ;
     $sPriceMax = $this->_get('sPriceMax') ;
     $iTotalItems = $this->_get('iTotalItems') ;
-    $aItems = $this->_get('aItems') ;
     $sShowAs = $this->_get('sShowAs') ;
 ?>
 
@@ -87,7 +86,7 @@
                         </div>
 
 
-                        <?php if(!isset($aItems) || !is_array($aItems) || count($aItems) == 0) { ?>
+                        <?php if(osc_count_items() == 0) { ?>
                             <p class="empty" ><?php printf(__('There are no results matching "%s".'), $sPattern) ; ?></p>
                         <?php } else { ?>
                             <?php require($sShowAs == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
@@ -190,7 +189,7 @@
                     }
 
                     $( "#city" ).autocomplete({
-                        source: "<?php echo osc_base_url(true); ?>?page=ajax&actionlocation",
+                        source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
                         minLength: 2,
                         select: function( event, ui ) {
                             log( ui.item ?
