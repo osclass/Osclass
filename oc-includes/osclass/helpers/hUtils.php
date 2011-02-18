@@ -19,6 +19,11 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    //get params
+    function osc_get_param($key) {
+        return Params::getParam($key) ;
+    }
+
     //generic function for view layer
     function osc_field($item, $field, $locale) {
         if(!is_null($item)) {
@@ -94,29 +99,5 @@
 
         echo '</ul>' ;
     }
-    
-    /**
-     * Prints a select with al the countries
-     *
-     * @param select_name name of the select (optional)
-     *
-     * @param selected country's ID (optional)
-     *
-     * @return void
-     */
-    function osc_countries_select($select_name = "categories", $selected = null)
-    {
-        echo '<select name="'.$select_name.'" id="'.$select_name.'">
-                <option value="">'.__("Select a country").'</option>' ;
-        $countries = Country::newInstance()->listAll();
-        foreach($countries as $c) {
-            echo '<option value="' . $c['pk_c_code'] . '"' . ( ($selected == $c['pk_c_code']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
-        }
-        echo '</select>' ;
-        return true ;
-    }
-
-
-  
 
 ?>
