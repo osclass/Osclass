@@ -51,6 +51,7 @@
                 <?php endif; ?>
             </div>
                 <!-- Close .content & #main open at user-menu.php -->
+                <!-- NOTE: user-menu.php is not used anymore ... -->
         </div>
         <?php $this->osc_print_footer() ; ?>
 

@@ -36,7 +36,7 @@
                 </li>
             <?php } else { ?>
                 <li class="first">
-                    <a id="login_open" href="#"><?php _e('Login') ; ?></a>  &middot;
+                    <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login') ; ?></a>  &middot;
                     <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register a free account') ; ?></a>
                     <form id="login" action="<?php osc_base_url(true) ; ?>" method="post">
                         <fieldset>
@@ -47,7 +47,7 @@
                             <label for="password"><?php _e('Password') ; ?></label>
                             <?php UserForm::password_login_text() ; ?>
                             <button type="submit"><?php _e('Login') ; ?></button>
-                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover">Forgot password?</a>
+                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?");?></a>
                         </fieldset>
                     </form>
                 </li>

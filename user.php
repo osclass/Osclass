@@ -36,10 +36,9 @@ class CWebUser extends WebSecBaseModel
     function doModel() {
         switch( $this->action ) {
             case('dashboard'):      //dashboard...
-                                    $aItems = Item::newInstance()->list_items_by_user( Session::newInstance()->_get('userId') ) ;
-
+                                    $aItems = Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));//list_items_by_user( Session::newInstance()->_get('userId') ) ;
                                     //calling the view...
-                                    $this->_exportVariableToView('aItems', $aItems) ;
+                                    $this->_exportVariableToView('items', $aItems) ;
                                     $this->doView('user-dashboard.php') ;
             break ;
             case('profile'):        //profile...
@@ -177,9 +176,9 @@ class CWebUser extends WebSecBaseModel
                                             }
             break;
             case('change_password'):        //change password
-                                            $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
-
-                                            $this->_exportVariableToView('user', $user) ;
+                                            // No variables needed
+                                            //$user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
+                                            //$this->_exportVariableToView('user', $user) ;
                                             $this->doView('user-change_password.php') ;
             break;
             case 'change_password_post':    //change password post

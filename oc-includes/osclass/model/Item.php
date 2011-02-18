@@ -353,7 +353,7 @@ class Item extends DAO
             }
         }
 
-        $total_ads = $this->conn->osc_dbFetchResult($sql) ;
+        $total_ads = $this->conn->osc_dbFetchResults($sql) ;
         return $total_ads ;
     }
 

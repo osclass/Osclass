@@ -57,8 +57,8 @@
                             <label for="email"><?php _e('E-mail'); ?></label> <?php UserForm::email_login_text() ; ?><br />
                             <label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_login_text() ; ?><br />
                             <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me') ; ?></label></p>
-                            <button type="submit">Login</button>
-                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover">Forgot password?</a>
+                            <button type="submit"><?php _e("Login");?></button>
+                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?");?></a>
                         </fieldset>
                     </form>
                 </div>

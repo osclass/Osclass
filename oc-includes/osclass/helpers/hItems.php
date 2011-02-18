@@ -235,12 +235,28 @@
     }
     
     //using View Class (the static class for the view layer)
+    function has_items() {
+        return View::newInstance()->_next('items') ;
+    }
+
     function has_item_resources() {
         return View::newInstance()->_next('resources') ;
     }
 
     function has_item_comments() {
         return View::newInstance()->_next('comments') ;
+    }
+
+    function count_items() {
+        return View::newInstance()->_count('items') ;
+    }
+
+    function count_item_resources() {
+        return View::newInstance()->_count('resources') ;
+    }
+
+    function count_item_comments() {
+        return View::newInstance()->_count('comments') ;
     }
 
     function resource_url() {

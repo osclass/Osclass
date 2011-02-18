@@ -23,7 +23,7 @@
 ?>
 
 <?php
-    $aItems = $this->_get('aItems') ;
+    //$aItems = $this->_get('aItems') ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -51,16 +51,16 @@
 
                     <h2><?php echo __('Items from ') . osc_logged_user_name() ; ?></h2>
 
-                    <?php if(count($aItems) == 0) { ?>
+                    <?php if(count_items()==0) { ?>
                         <h3><?php _e('There aren\'t items added yet') ; ?></h3>
                     <?php } else { ?>
-                        <?php foreach($aItems as $item) { ?>
+                        <?php while(has_items()) { ?>
                             <div class="userItem" >
-                                <div><a href="<?php osc_create_item_url($item, true) ; ?>"><?php echo $item['s_title'] ; ?></a></div>
+                                <div><a href="<?php /*osc_item_url() ;*/ ?>"><?php echo osc_item_title() ; ?></a></div>
 
                                 <div class="userItemData" >
-                                <?php _e('Publication date') ; ?>: <?php echo osc_format_date($item) ; ?><br />
-                                <?php _e('Price') ; ?>: <?php echo osc_format_price($item) ; ?>
+                                <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item()) ; ?><br />
+                                <?php _e('Price') ; ?>: <?php echo osc_format_price() ; ?>
                                 </div>
 
                             </div>

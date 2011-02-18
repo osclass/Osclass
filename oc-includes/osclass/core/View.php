@@ -75,6 +75,14 @@
         function _exists($key) {
             return ( isset($this->aExported[$key]) ? true : false ) ;
         }
+
+        function _count($key) {
+            if (is_array($this->aExported[$key])) {
+                return count($this->aExported[$key]) ;
+            } else {
+                die("YOU ARE USING _COUNT FUNCTION WITH A NON ARRAY") ;
+            }
+        }
     }
 
 ?>
