@@ -26,19 +26,33 @@
         <?php $this->osc_print_head() ; ?>
     </head>
     <body>
+
         <div class="container">
-            <div class="your_items">
+
+            <?php $this->osc_print_header() ; ?>
+
+            <div class="content user_account">
+
+                <h1><strong><?php _e('User account manager') ; ?></strong></h1>
+
+                <div id="sidebar">
+
+                    <?php echo osc_private_user_menu() ; ?>
+
+                </div>
+
+                <div id="main">
                 <h2><?php _e('Your items'); ?> <a href="<?php echo osc_item_post_url($catId) ; ?>">+ <?php _e('Post a new item'); ?></a></h2>
 
-                <?php if(count($items) == 0): ?>
+                <?php if(count_items() == 0): ?>
                     <h3><?php _e('You do not have any items yet.'); ?></h3>
                 <?php else: ?>
-                    <?php foreach($items as $i): ?>
+                    <?php while(has_items()) { ?>
                             <div class="item" >
-                                    <h3><a href="<?php echo osc_item_url($i); ?>"><?php echo $i['s_title']; ?></a></h3>
+                                    <h3><a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title(); ?></a></h3>
                                     <p>
-                                    <?php _e('Publication date') ; ?>: <?php echo osc_format_date($i) ; ?><br />
-                                    <?php _e('Price') ; ?>: <?php echo osc_formatPrice($i); ?>
+                                    <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item()) ; ?><br />
+                                    <?php _e('Price') ; ?>: <?php echo osc_format_price(); ?>
                                     </p>
 
                                     <p class="options">
@@ -47,13 +61,15 @@
                                         <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="user.php?action=deleteItem&amp;id=<?php echo $i['pk_i_id']; ?>&amp;secret=<?php echo $i['s_secret']; ?>"><?php _e('Delete'); ?></a>
                                     </p>
                             </div>
-                    <?php endforeach; ?>
+                    <?php }; ?>
                 <?php endif; ?>
-            </div>
-                <!-- Close .content & #main open at user-menu.php -->
-                <!-- NOTE: user-menu.php is not used anymore ... -->
+                </div>
+
+                <?php $this->osc_print_footer() ; ?>
+
         </div>
-        <?php $this->osc_print_footer() ; ?>
+
+        <?php osc_show_flash_message() ; ?>
 
     </body>
 

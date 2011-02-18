@@ -30,21 +30,15 @@
                             $do->doModel() ;
         break;
         case ('item'):      //item pages (with security)
-                            require_once(osc_base_path() . 'item.php');
-                            $do = new CWebItem() ;
-                            $do->doModel() ;
-//                            if( !osc_is_web_user_logged_in()) {
-//                                if( (Params::getParam("action")=="post" || Params::getParam("action")=="post_item") && osc_reg_user_post() ){
-//                                    require_once(osc_base_path() . 'item.php');
-//                                    $do = new CWebItem() ;
-//                                    $do->doModel() ;
-//                                }
-//                            } else {
-//                                require_once(osc_base_path() . 'item-secure.php');
-//                                $do = new CWebSecItem() ;
-//                                $do->doModel() ;
-//                            }
-                            
+                            if( !osc_is_web_user_logged_in()) {
+                                require_once(osc_base_path() . 'item.php');
+                                $do = new CWebItem() ;
+                                $do->doModel() ;
+                            }else{
+                                require_once(osc_base_path() . 'item-secure.php');
+                                $do = new CWebSecItem() ;
+                                $do->doModel() ;
+                            }
         break;
         case ('search'):    //search pages
                             require_once(osc_base_path() . 'search.php') ;
