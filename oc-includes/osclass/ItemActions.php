@@ -36,8 +36,7 @@ Class ItemActions
     {
         $success = true;
         $aItem = $this->prepareData(true);
-
-
+        
         if($aItem == -1){
             return -1;
         }else{
@@ -162,8 +161,8 @@ Class ItemActions
             $this->geocodeAddress( $aItem['address'],$aItem['regionName'], $aItem['cityName'], $aItem['idItem'] );
         }
 
-        $contactName    = $aItem['contactName'];
-        $contactEmail   = $aItem['contactEmail'];
+        $contactName    = $aItem['contactName'] ;
+        $contactEmail   = $aItem['contactEmail'] ;
 
         // Update category numbers
         $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
@@ -194,6 +193,36 @@ Class ItemActions
         
         return $return;
     }
+    
+
+    public function activate($secret, $itemId)
+    {
+        $secret = Params::getParam('secret');
+        $id     = Params::getParam('id');
+        $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
+        if (count($item) == 1) {
+            $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
+            if (!is_array($item_validated))
+                return false;
+
+            if (count($item_validated) == 1) {
+                $this->itemManager->update(
+                        array('e_status' => 'ACTIVE'),
+                        array('s_secret' => $secret)
+                );
+                osc_run_hook('activate_item', $this->itemManager->findByPrimaryKey($id));
+                CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
+                osc_add_flash_message('Item validated');
+                $this->redirectTo( osc_item_url($item[0]) );
+            } else {
+                osc_add_flash_message('The item was validated before');
+                $this->redirectTo( osc_item_url($item[0]) );
+            }
+        }
+    }
+
+
+    // common functions
 
     public function geocodeAddress($address,$regionName, $cityName, $itemId)
     {
@@ -231,16 +260,13 @@ Class ItemActions
     public function prepareData($is_add)
     {
         $aItem = array();
+        $canContinue = true;
 
         if( $is_add ){   // ADD
 
             if($this->is_admin){
                 $userId = Session::newInstance()->_get('adminId');
             }else{
-
-                $aItem['contactName']   = NULL;
-                $aItem['contactEmail']  = NULL;
-
                 $userId = Session::newInstance()->_get('userId');
                 if($userId == ''){
                     $userId = NULL;
@@ -248,7 +274,7 @@ Class ItemActions
                 if( osc_reg_user_post() ) {     // 1 => solo los registrados pueden añadir items
                                                 // 0 => todos pueden añadir items
                     if ( $userId == NULL ) {    // sino esta logeado como usuario NO PUEDE AÑADIR
-                        $aItem = NULL;
+                        $canContinue = NULL;
                     }
                 }
                 // to be tested
@@ -278,6 +304,9 @@ Class ItemActions
                 }
                 $aItem['contactName']   = $data['s_name'];
                 $aItem['contactEmail']  = $data['s_email'];
+            }else{
+                $aItem['contactName']   = Params::getParam('contactName');
+                $aItem['contactEmail']  = Params::getParam('contactEmail');
             }
 
 
@@ -286,24 +315,9 @@ Class ItemActions
             $aItem['idItem']    = Params::getParam('id');
             // get input hidden name=fk_location_id ?
         }
-
         
-        if($aItem != NULL) {
-            // variables
-            $userId     = '';
-            // IF USER -> ¿ IF ADMIN ?
-            if( Session::newInstance()->_get('userId') != '' ) {
-                $userId = Session::newInstance()->_get('userId');
-            }
-
-            $mUser = new User();
-            $data = $mUser->findByPrimaryKey( (int)$userId );
-            $contactName   = $data['s_name'];
-            $contactEmail  = $data['s_email'];
-
+        if($canContinue != NULL) {
             // get params
-            $aItem['contactName']   = $contactName;
-            $aItem['contactEmail']  = $contactEmail;
             $aItem['active']        = $active;
             $aItem['userId']        = $userId;
             $aItem['catId']         = Params::getParam('catId');            // OK

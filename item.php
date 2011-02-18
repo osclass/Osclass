@@ -94,10 +94,9 @@ class CWebItem extends BaseModel
                 if($success) {
                     $PcontactName   = Params::getParam('contactName');
                     $PcontactEmail  = Params::getParam('contactEmail');
-                    $itemId = Params::getParam('itemId');
-                    //echo $PcontactEmail."<br>".$PcontactName."<br>$itemId<br>";
+                    $itemId         = Params::getParam('itemId');
 
-                    if( Session::newInstance()->_get('userId') == '' ){ // if(!isset($_SESSION['userId'])) {
+                    if( Session::newInstance()->_get('userId') == '' ){ 
 
                         $mPages = new Page() ;
                         $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
@@ -527,30 +526,33 @@ class CWebItem extends BaseModel
 
             break;
             case 'activate':
+                // no logged in web
                 if( Params::getParam('secret') != '' && Params::getParam('id') ){
+                    $mItems = new ItemActions() ;
+                    $mItems->activate( Params::getParam('secret'), Params::getParam('id') );
 
-                    $secret = Params::getParam('secret');
-                    $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
-                    if (count($item) == 1) {
-                        $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
-                        if (!is_array($item_validated))
-                            return false;
-
-                        if (count($item_validated) == 1) {
-                            $this->itemManager->update(
-                                    array('e_status' => 'ACTIVE'),
-                                    array('s_secret' => $secret)
-                            );
-                            osc_run_hook('activate_item', $this->itemManager->findByPrimaryKey($id));
-                            CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
-                            osc_add_flash_message('Item validated');
-                            $this->redirectTo( osc_item_url($item[0]) );
-                        } else {
-                            osc_add_flash_message('The item was validated before');
-                            $this->redirectTo( osc_item_url($item[0]) );
-                        }
-                    }
+//                    $secret = Params::getParam('secret');
+//                    $id     = Params::getParam('id');
+//                    $item   = $this->itemManager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s'", $secret, $id);
+//                    if (count($item) == 1) {
+//                        $item_validated = $this->itemManager->listWhere("i.s_secret = '%s' AND i.e_status = '%s' AND i.pk_i_id = '%s'", $secret, 'INACTIVE', $id);
+//                        if (!is_array($item_validated))
+//                            return false;
+//
+//                        if (count($item_validated) == 1) {
+//                            $this->itemManager->update(
+//                                    array('e_status' => 'ACTIVE'),
+//                                    array('s_secret' => $secret)
+//                            );
+//                            osc_run_hook('activate_item', $this->itemManager->findByPrimaryKey($id));
+//                            CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
+//                            osc_add_flash_message('Item validated');
+//                            $this->redirectTo( osc_item_url($item[0]) );
+//                        } else {
+//                            osc_add_flash_message('The item was validated before');
+//                            $this->redirectTo( osc_item_url($item[0]) );
+//                        }
+//                    }
                 }
             break;
             case 'item_delete':
