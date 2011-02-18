@@ -365,8 +365,38 @@
         return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
     }
 
-
-
+    function osc_list_countries() {
+        if (View::newInstance()->_exists('countries')) {
+            return View::newInstance()->_get('countries') ;
+        } else {
+            return Country::newInstance()->listAll() ;
+        }
+    }
+    
+    function osc_list_regions($country = '') {
+        if (View::newInstance()->_exists('regions')) {
+            return View::newInstance()->_get('regions') ;
+        } else {
+            if($country=='') {
+                return Region::newInstance()->listAll() ;
+            } else {
+                return Region::newInstance()->getByCountry($country);
+            }
+        }
+    }
+    
+    function osc_list_cities($region = '') {
+        if (View::newInstance()->_exists('cities')) {
+            return View::newInstance()->_get('cities') ;
+        } else {
+            if($region=='') {
+                return City::newInstance()->listAll() ;
+            } else {
+                return City::newInstance()->listWhere("fk_i_region_id = %d", $region);
+            }
+        }
+    }
+    
     
     
 ?>

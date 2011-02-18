@@ -58,9 +58,9 @@ class CWebUser extends WebSecBaseModel
                                     }
                                     
                                     //calling the view...
-                                    $this->_exportVariableToView('aCountries', $aCountries) ;
-                                    $this->_exportVariableToView('aRegions', $aRegions) ;
-                                    $this->_exportVariableToView('aCities', $aCities) ;
+                                    $this->_exportVariableToView('countries', $aCountries) ;
+                                    $this->_exportVariableToView('regions', $aRegions) ;
+                                    $this->_exportVariableToView('cities', $aCities) ;
                                     $this->_exportVariableToView('user', $user) ;
                                     $this->doView('user-profile.php') ;
             break ;

@@ -22,13 +22,6 @@
 
 ?>
 
-<?php
-    $user = $this->_get('user') ;
-    $aCountries = $this->_get('aCountries') ;
-    $aRegions = $this->_get('aRegions') ;
-    $aCities = $this->_get('aCities') ;
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -61,55 +54,55 @@
                         <fieldset>
                             <p>
                                 <label for="name"><?php _e('Name') ; ?></label><br />
-                                <?php UserForm::name_text($user) ; ?>
+                                <?php UserForm::name_text(osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="email"><?php _e('E-mail') ; ?></label><br />
                                 <span>
-                                    <?php echo $user['s_email'] ; ?><br />
+                                    <?php echo osc_user_email() ; ?><br />
                                     <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password') ; ?></a>
                                 </span>
                             </p>
 
                             <p>
                                 <label for="phoneMobile"><?php _e('Mobile phone') ; ?></label><br />
-                                <?php UserForm::mobile_text($user) ; ?>
+                                <?php UserForm::mobile_text(osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="phoneLand"><?php _e('Land phone') ; ?></label><br />
-                                <?php UserForm::phone_land_text($user) ; ?>
+                                <?php UserForm::phone_land_text(osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="country"><?php _e('Country') ; ?></label><br />
-                                <?php UserForm::country_select($aCountries, $user) ; ?>
+                                <?php UserForm::country_select(osc_list_countries(), osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="region"><?php _e('Region') ; ?></label><br />
-                                <?php UserForm::region_select($aRegions, $user) ; ?>
+                                <?php UserForm::region_select(osc_list_regions(), osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="city"><?php _e('City') ; ?></label><br />
-                                <?php UserForm::city_select($aCities, $user) ; ?>
+                                <?php UserForm::city_select(osc_list_cities(), osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="city_area"><?php _e('City Area') ; ?></label><br />
-                                <?php UserForm::city_area_text($user) ; ?>
+                                <?php UserForm::city_area_text(osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="address"><?php _e('Address') ; ?></label><br />
-                                <?php UserForm::address_text($user) ; ?>
+                                <?php UserForm::address_text(osc_user()) ; ?>
                             </p>
 
                             <p>
                                 <label for="webSite"><?php _e('Web site') ; ?></label><br />
-                                <?php UserForm::website_text($user) ; ?>
+                                <?php UserForm::website_text(osc_user()) ; ?>
                             </p>
 
                             <button type="submit"><?php _e('Update profile') ; ?></button>

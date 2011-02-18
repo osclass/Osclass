@@ -8,6 +8,17 @@
         }
         return osc_field($user, $field, $locale) ;
     }
+    
+    function osc_user() {
+        if (View::newInstance()->_exists('users')) {
+            $user = View::newInstance()->_current('users') ;
+        } else {
+            $user = View::newInstance()->_get('user') ;
+        }
+
+        return($user) ;
+    }
+
 
     function osc_is_web_user_logged_in() {
         if (Session::newInstance()->_get("userId") == '') return false ;
