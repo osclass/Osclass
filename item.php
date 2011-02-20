@@ -253,13 +253,15 @@ class CWebItem extends BaseModel
                 }
             break;
             case 'mark':
-                $mItem = new ItemActions(false);
-                $mItem->mark();
+                $mItem = new ItemActions(false) ;
 
-                $item = Params::getParam('item');
+                $id = Params::getParam('id') ;
+                $as = Params::getParam('as') ;
                 
+                $mItem->mark($id, $as) ;
+
                 osc_add_flash_message( __('Thanks! That helps us') ) ;
-                $this->redirectTo( osc_item_url($item) );
+                $this->redirectTo( osc_item_url($id) );
 
             break;
             case 'send_friend':

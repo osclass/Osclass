@@ -221,21 +221,30 @@ Class ItemActions
 
     /**
      * Mark an item
-     * @param <type> $column
      * @param <type> $itemId
+     * @param <type> $column
      */
-    public function mark( )
+    public function mark( $id, $as )
     {
-        $aItem = $this->prepareDataForFunction( 'mark' ) ;
+        switch ($as) {
+            case 'spam':
+                $column = 'i_num_spam';
+            break;
+            case 'badcat':
+                $column = 'i_num_bad_classified';
+            break;
+            case 'offensive':
+                $column = 'i_num_offensive';
+            break;
+            case 'repeated':
+                $column = 'i_num_repeated';
+            break;
+            case 'expired':
+                $column = 'i_num_expired';
+            break;
+        }
         
-        $dao_itemStats = new ItemStats() ;
-        $dao_itemStats->increase( $aItem['column'], $aItem['id'] ) ;
-        unset($dao_itemStats) ;
-
-        $item   = $aItem['item'];
-        setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
-
-        Params::setParam( 'item', $item );
+        ItemStats::newInstance()->increase( $column, $id ) ;
     }
 
     public function send_friend()
@@ -488,35 +497,6 @@ Class ItemActions
         $aItem = array();
 
         switch ( $action ){
-            case 'mark':
-                
-                $id     = Params::getParam('id');
-                $item   = $this->manager->findByPrimaryKey( $id ) ;
-                $column = null;
-                
-                switch (Params::getParam('as')) {
-                    case 'spam':
-                        $column = 'i_num_spam';
-                        break;
-                    case 'badcat':
-                        $column = 'i_num_bad_classified';
-                        break;
-                    case 'offensive':
-                        $column = 'i_num_offensive';
-                        break;
-                    case 'repeated':
-                        $column = 'i_num_repeated';
-                        break;
-                    case 'expired':
-                        $column = 'i_num_expired';
-                        break;
-                }
-
-                $aItem['id']            = $id;
-                $aItem['item']          = $item;
-                $aItem['column']        = $column;
-
-            break;
             case 'send_friend':
                 $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
 
