@@ -115,7 +115,7 @@ class CAdminPages extends AdminSecBaseModel
                 }
                 
                 foreach($id as $_id) {
-                    $result = $this->pageManager->deleteByID($_id);
+                    $result = $this->pageManager->deleteByPrimaryKey($_id);
                     switch ($result) {
                         case -1:
                             $page_indelible++;

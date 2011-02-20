@@ -231,11 +231,6 @@
         return $path ;
     }
 
-    //osc_itemThumbnail
-    /*function osc_item_thumbnail_url($file) {
-        return ('NOT IMPLEMENTED YET. THE PARAMETER RECEIVED IS "' . $file . '"') ;
-    }*/
-    
     //osc_createItemURL
     function osc_item_url($item = null) {
         if($item==null) {
@@ -330,12 +325,20 @@
     /////////////////////////////////////
     //       functions for items       //
     /////////////////////////////////////
-    function osc_item_edit_url() {
-        return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id();
+    function osc_item_edit_url($secret = '') {
+        if($secret!='') {
+            return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id()."&secret=".$secret;
+        } else {
+            return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id();
+        }
     }
 
-    function osc_item_delete_url() {
-        return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
+    function osc_item_delete_url($secret = '') {
+        if($secret!='') {
+            return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id()."&secret=".$secret;
+        } else {
+            return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
+        }
     }
 
 

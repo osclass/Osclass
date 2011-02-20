@@ -110,7 +110,7 @@ class User extends DAO {
 	        $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
 	        $itemManager = Item::newInstance();
 	        foreach($items as $item) {
-                    $itemManager->deleteByID($item['pk_i_id']);
+                    $itemManager->deleteByPrimaryKey($item['pk_i_id']);
                 }
                 $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);

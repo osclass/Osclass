@@ -196,7 +196,7 @@ Class ItemActions
      * @param <type> $itemId
      * @return boolean
      */
-    public function activate( $secret, $itemId )
+    public function activate( $id, $secret )
     {
         $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
         $result = $this->manager->update(
@@ -596,6 +596,8 @@ Class ItemActions
                 }
                 $aItem['contactName']   = $data['s_name'];
                 $aItem['contactEmail']  = $data['s_email'];
+                Params::setParam('contactName', $data['s_name']);
+                Params::setParam('contactEmail', $data['s_email']);
             }else{
                 $aItem['contactName']   = Params::getParam('contactName');
                 $aItem['contactEmail']  = Params::getParam('contactEmail');
@@ -897,8 +899,8 @@ Class ItemActions
                              '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
                              '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}',
                              '{WEB_TITLE}', '{VALIDATION_LINK}');
-            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=item&action=editItem&id=' .
-                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=item&action=editItem&id=' .
+            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=item&action=item_edit&id=' .
+                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=item&action=item_edit&id=' .
                              $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                              $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],

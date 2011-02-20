@@ -119,7 +119,7 @@ class CAdminItems extends AdminSecBaseModel
                                                         if( $item['e_status'] == 'ACTIVE' ) {
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                         }
-                                                        $this->itemManager->deleteByID($i);
+                                                        $this->itemManager->deleteByIPrimaryKey($i);
                                                     }
                                                 }
                                                 osc_add_flash_message(__('The items have been deleted')) ;
@@ -140,7 +140,7 @@ class CAdminItems extends AdminSecBaseModel
                                                 if( $item['e_status'] == 'ACTIVE' ) {
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                 }
-                                                $this->itemManager->deleteByID($i) ;
+                                                $this->itemManager->deleteByPrimaryKey($i) ;
                                             }
                                         }
                                         osc_add_flash_message(__('The items have been deleted')) ;

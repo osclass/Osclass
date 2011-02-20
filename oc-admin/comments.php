@@ -114,7 +114,7 @@ class CAdminItemComments extends AdminSecBaseModel
                                         osc_add_flash_message(__('Great! We just updated your comment')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
             break;
-            case 'delete':              $this->itemCommentManager->deleteByID( Params::getParam('id') );
+            case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
             break;
             default:                    $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;
                                         

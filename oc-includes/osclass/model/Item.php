@@ -474,7 +474,7 @@ class Item extends DAO
         return $this->conn->osc_dbExec($sql);
     }
 
-    public function deleteByID($id)
+    public function deleteByPrimaryKey($id)
     {
         osc_run_hook('delete_item', $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
@@ -483,11 +483,6 @@ class Item extends DAO
         $this->conn->osc_dbExec('DELETE FROM %st_item_location WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_stats WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
-    }
-
-    public function deleteByPrimaryKey($id)
-    {
-        return $this->deleteByID($id);
     }
 
     public function delete($conditions)
@@ -502,7 +497,7 @@ class Item extends DAO
         $where = implode(' AND ', $where);
         $items = $this->listWhere($where);
         foreach($items as $item) {
-            $this->deleteByID($item['pk_i_id']);
+            $this->deleteByPrimaryKey($item['pk_i_id']);
         }
     }
 }

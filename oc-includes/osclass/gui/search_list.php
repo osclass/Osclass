@@ -27,7 +27,7 @@
             <tr class="<?php echo $class; ?>">
                  <td class="photo">
                      <?php if(osc_count_item_resources()) { ?>
-                        <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_item_thumbnail() ; ?>" /></a>
+                        <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" /></a>
                     <?php } else { ?>
                         <img src="<?php echo $this->osc_get_theme_url('images/no_photo.gif') ; ?>" />
                     <?php } ?>

@@ -125,7 +125,7 @@ abstract class DAO {
     /**
      * Deletes a row with the id passed by parameter.
      */
-    public function deleteByID($id) {
+    public function deleteByPrimaryKey($id) {
         return $this->delete(array('pk_i_id' => $id));
     }
 

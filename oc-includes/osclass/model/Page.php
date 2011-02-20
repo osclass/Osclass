@@ -213,7 +213,7 @@ class Page extends DAO
      * @param int $id Page id which is going to be deleted
      * @return bool True on successful removal, false on failure
      */
-    public function deleteByID($id)
+    public function deleteByPrimaryKey($id)
     {
         $this->conn->osc_dbExec('DELETE FROM %s WHERE fk_i_pages_id = %d', $this->getDescriptionTableName(), $id);
         $result = $this->delete(array('pk_i_id' => $id));
@@ -237,7 +237,7 @@ class Page extends DAO
             return false;
         }
 
-        return $this->deleteByID($id);
+        return $this->deleteByPrimaryKey($id);
     }
 
     /**
