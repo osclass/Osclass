@@ -40,6 +40,7 @@
     </head>
     <body>
         <div class="container">
+
             <?php $this->osc_print_header() ; ?>
 
             <?php ItemForm::location_javascript(); ?>
@@ -141,10 +142,15 @@
                     <button  type="submit"><?php _e('Publish'); ?></button>
                     </fieldset>
              </form>
-            </div>
-        </div>
-        <?php $this->osc_print_footer() ; ?>
 
+            </div>
+        
+            <?php $this->osc_print_footer() ; ?>
+
+        </div>
+
+        <?php osc_show_flash_message() ; ?>
+        
     </body>
 
 </html>

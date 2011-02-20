@@ -51,7 +51,12 @@
                     </form>
                 </div>
             </div>
-        </div>  
-        <?php $this->osc_print_footer() ; ?>
+
+            <?php $this->osc_print_footer() ; ?>
+
+        </div>
+
+        <?php osc_show_flash_message() ; ?>
+
     </body>
 </html>

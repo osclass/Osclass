@@ -258,7 +258,7 @@ class CWebItem extends BaseModel
 
                 $item = Params::getParam('item');
                 
-                osc_add_flash_message(__('Thanks! That helps us.'));
+                osc_add_flash_message( __('Thanks! That helps us') ) ;
                 $this->redirectTo( osc_item_url($item) );
 
             break;

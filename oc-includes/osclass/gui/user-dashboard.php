@@ -51,7 +51,7 @@
 
                     <h2><?php echo __('Items from ') . osc_logged_user_name() ; ?></h2>
 
-                    <?php if(osc_count_items()==0) { ?>
+                    <?php if(osc_count_items() == 0) { ?>
                         <h3><?php _e('There aren\'t items added yet') ; ?></h3>
                     <?php } else { ?>
                         <?php while(osc_has_items()) { ?>
@@ -70,7 +70,9 @@
 
                 </div>
 
-                <?php $this->osc_print_footer() ; ?>
+            </div>
+
+            <?php $this->osc_print_footer() ; ?>
 
         </div>
 

@@ -181,8 +181,14 @@
                     <div id="item_send_friend"><a href="<?php echo WEB_PATH; ?>/item.php?action=send_friend&amp;id=<?php echo osc_item_id() ; ?>"><?php _e('Send to a friend'); ?></a></div>
                     -->
                 </div>
+                
             </div>
+
+            <?php $this->osc_print_footer() ; ?>
+
         </div>
-        <?php $this->osc_print_footer() ; ?>
+
+        <?php osc_show_flash_message() ; ?>
+        
     </body>
 </html>

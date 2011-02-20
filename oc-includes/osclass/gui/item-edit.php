@@ -40,11 +40,14 @@
         <?php $this->osc_print_head() ; ?>
     </head>
     <body>
+
         <div class="container">
+
             <?php $this->osc_print_header() ; ?>
             <?php ItemForm::location_javascript(); ?>
 
             <div class="content add_item">
+
                 <h1><strong><?php _e('Update your item'); ?></strong></h1>
 
                     <form action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
@@ -118,9 +121,13 @@
                     </fieldset>
                     </form>
             </div>
-                    </div>
-        <?php $this->osc_print_footer() ; ?>
 
+            <?php $this->osc_print_footer() ; ?>
+
+        </div>
+
+        <?php osc_show_flash_message() ; ?>
+        
     </body>
 
 </html>
