@@ -268,6 +268,9 @@
     // DETAILS //
     /////////////
     function osc_has_items() {
+        if ( View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_erase('resources') ;
+        }
         return View::newInstance()->_next('items') ;
     }
 
