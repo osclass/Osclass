@@ -221,7 +221,7 @@ class Test extends DAO {
 
     public function getUserDescriptionInserts() {
         $inserts = array (
-                        "VALUES (1,'%LOCALE%','Esta es la descripcion que ponemos')"
+                        "(1,'%LOCALE%','Esta es la descripcion que ponemos')"
         ) ;
 
         return($inserts) ;

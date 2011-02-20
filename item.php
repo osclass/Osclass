@@ -29,6 +29,8 @@ class CWebItem extends BaseModel
         $this->add_css('style.css');
         $this->add_css('jquery-ui.css');
         $this->add_global_js('jquery.js');
+        $this->add_js('jquery-extends.js');
+        $this->add_js('global.js');
         if( Session::newInstance()->_get('userId') != '' ){
             $this->userId = Session::newInstance()->_get('userId');
             $this->user = User::newInstance()->findByPrimaryKey($this->userId);
