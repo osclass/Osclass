@@ -21,16 +21,13 @@
 ?>
 <?php
     //getting variables for this view
-    $categories = $this->_get("categories");
-    $currencies = $this->_get("currencies");
-    $countries  = $this->_get("countries");
-    $locales    = $this->_get("locales") ;
-    $regions    = $this->_get("regions");
-    $cities     = $this->_get("cities");
-    $user       = $this->_get("user") ;
-
-    $this->add_css('tabs.css');
-    $this->add_global_js('tabber-minimized.js')
+    $categories = __get("categories");
+    $currencies = __get("currencies");
+    $countries  = __get("countries");
+    $locales    = __get("locales") ;
+    $regions    = __get("regions");
+    $cities     = __get("cities");
+    $user       = __get("user") ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
