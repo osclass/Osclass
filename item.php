@@ -366,20 +366,7 @@ class CWebItem extends BaseModel
                         $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
                     }
 
-                    /*$this->user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                    $actual_locale = osc_get_user_locale() ;
-                    if(isset($author['locale'][$actual_locale]['s_info'])) {
-                        $author['s_info'] = $author['locale'][$actual_locale]['s_info'];
-                    } else {
-                        $author['s_info'] = '';
-                    }*/
-                    //$this->_exportVariableToView('user', $this->user) ;
                     $this->_exportVariableToView('items', array($item)) ;
-                    //$this->_exportVariableToView('comments', $aComments) ;
-                    //$this->_exportVariableToView('resources', $aResources) ;
-                    //$this->_exportVariableToView('section',$item['s_title']) ;
-                    //$this->_exportVariableToView('category', $item['fk_i_category_id']) ;
-                    //$this->_exportVariableToView('location', 'item' ) ; //  ??
 
                     osc_run_hook('show_item', $item) ;
 
