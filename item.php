@@ -51,7 +51,7 @@ class CWebItem extends BaseModel
         //$this->_exportVariableToView('latestItems', $latestItems) ;
 
         switch( $this->action ){
-            case 'post': // add
+            case 'item_add': // post
                 if( osc_reg_user_post() && $this->user==null) {
                     // CHANGEME: This text
                     osc_add_flash_message(__('Only allow registered users to post items')) ;

@@ -140,7 +140,7 @@
             if ( osc_rewrite_enabled() ) {
                 $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
             } else {
-                $path = sprintf(osc_base_url(true) . '?page=item&action=post&catId=%d', $category['pk_i_id']) ;
+                $path = sprintf(osc_base_url(true) . '?page=item&action=item_add&catId=%d', $category['pk_i_id']) ;
             }
         } else {
             $path = osc_item_post_url() ;
@@ -152,7 +152,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'item/new' ;
         } else {
-            $path = sprintf(osc_base_url(true) . '?page=item&action=post') ;
+            $path = sprintf(osc_base_url(true) . '?page=item&action=item_add') ;
         }
         return $path ;
     }
