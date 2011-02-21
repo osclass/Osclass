@@ -74,7 +74,7 @@ abstract class DAO {
             case DB_CONST_NULL:
                 break;
             default:
-                $value = '\'' . $value . '\'' ;
+                $value = '\'' . addslashes($value) . '\'' ;
                 break;
         }
 
