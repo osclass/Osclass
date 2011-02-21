@@ -55,7 +55,7 @@ class Test extends DAO {
         }
         
         //ITEMS
-		$sql =  "INSERT INTO `oc_t_item` VALUES " ;
+	$sql =  "INSERT INTO `oc_t_item` VALUES " ;
         $aSqlInserts = $this->getItemInserts() ;
         for ($i = 0 ; $i < count($aSqlInserts) ; $i++) {
             $aSqlInserts[$i] = str_replace('%EMAIL%', $email, $aSqlInserts[$i]) ;
@@ -104,9 +104,9 @@ class Test extends DAO {
         //CATEGORY STATS
         $aSqlInserts = array() ;
         foreach($aTotalPerCategory as $catId => $total) {
-            $aSqlInserts[] = "(" . $catId . "," . $total . ")" ;
+            $aSqlInserts[] = "fk_i_category_id = " . $catId . ", i_num_items = " . $total . ")" ;
         }
-        $sql = "INSERT INTO `oc_t_category_stats` VALUES " ;
+        $sql = "UPDATE `oc_t_category_stats` SET " ;
         $sql .= implode($aSqlInserts, ",") ;
         $this->conn->osc_dbExec($sql) ;
     }
@@ -207,7 +207,7 @@ class Test extends DAO {
             }
         }
 
-        $sql .= implode($aSqlInserts, ",") ;
+        $sql .= implode($aSqlInsertsWithAllTheLocales, ",") ;
         $this->conn->osc_dbExec($sql) ;
     }
 
