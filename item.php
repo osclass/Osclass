@@ -86,7 +86,7 @@ class CWebItem extends BaseModel
                 $this->doView('item-post.php');
                 break;
                 
-            case 'post_item': // add_post
+            case 'item_add_post': //post_item
                 if( osc_reg_user_post() && $this->user==null) {                
                     osc_add_flash_message(__('Only allow registered users to post items')) ;
                     $this->redirectTo(osc_base_url(true));

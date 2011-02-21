@@ -49,7 +49,7 @@
                 <h1><strong><?php _e('Post your item'); ?></strong></h1>
                 <form action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
                     <fieldset>
-                    <input type="hidden" name="action" value="post_item" />
+                    <input type="hidden" name="action" value="item_add_post" />
                     <input type="hidden" name="page" value="item" />
 
                     <!-- left -->

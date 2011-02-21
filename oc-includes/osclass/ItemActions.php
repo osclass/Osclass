@@ -26,6 +26,7 @@ Class ItemActions
         $this->manager = Item::newInstance() ;
     }
 
+
     /**
      * @return boolean
      */
@@ -406,6 +407,7 @@ Class ItemActions
     public function add_comment()
     {
         $aItem  = $this->prepareDataForFunction('add_comment');
+        
         $authorName     = $aItem['authorName'] ;
         $authorEmail    = $aItem['authorEmail'] ;
         $body           = $aItem['body'] ;
@@ -531,7 +533,7 @@ Class ItemActions
                 $aItem['authorEmail']    = Params::getParam('authorEmail') ;
                 $aItem['body']           = Params::getParam('body') ;
                 $aItem['title']          = Params::getParam('title') ;
-                $aItem['itemId']         = Params::getParam('id') ;
+                $aItem['id']             = Params::getParam('id') ;
 
 
             break;
