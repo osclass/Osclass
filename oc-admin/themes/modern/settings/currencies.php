@@ -19,7 +19,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $aCurrencies = $this->_get('aCurrencies');
+    $aCurrencies = __get('aCurrencies');
     $last = end($aCurrencies); $last_id = $last['pk_c_code'];
 ?>
 

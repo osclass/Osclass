@@ -61,9 +61,9 @@
 <form action="<?php echo osc_base_url(true) ; ?>" method="post" class="search" onsubmit="javascript:return doSearch();">
     <input type="hidden" name="page" value="search" />
     <fieldset class="main">
-        <input type="text" name="sPattern"  id="sPattern" value="<?php echo ( osc_get_param('sPattern') ) ? osc_get_param('sPattern') : __("ie. PHP Programmer") ; ?>" />
+        <input type="text" name="sPattern"  id="sPattern" value="<?php echo ( osc_search_pattern()!='' ) ? osc_search_pattern() : __("ie. PHP Programmer") ; ?>" />
 
-        <?php if ( osc_count_categories() ) { ?>
+        <?php  if ( osc_count_categories() ) { ?>
 
             <?php osc_goto_first_category() ; ?>
 
@@ -83,7 +83,7 @@
 
                     <?php } ?>
             </select>
-        <?php } ?>
+        <?php  } ?>
         
         <button type="submit"><?php _e('Search') ; ?></button>
     </fieldset>
