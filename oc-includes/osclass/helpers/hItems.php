@@ -168,6 +168,22 @@
         else return false ;
     }
     
+    function osc_item_status() {
+        return osc_item_field("e_status");
+    }
+    
+    function osc_item_is_active() {
+        return (osc_item_field("e_status")=="ACTIVE");
+    }
+    
+    function osc_item_is_inactive() {
+        return (osc_item_field("e_status")=="INACTIVE");
+    }
+    
+    function osc_item_is_spam() {
+        return (osc_item_field("e_status")=="SPAM");
+    }
+    
     function osc_item_link_spam() {
         return osc_base_url(true) . "?page=item&action=mark&as=spam&id=" . osc_item_id() ;
     }
