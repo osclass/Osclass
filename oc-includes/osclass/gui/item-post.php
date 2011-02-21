@@ -21,10 +21,10 @@
 ?>
 <?php
     //getting variables for this view
-    $categories = __get("categories");
+//    $categories = __get("categories");
     $currencies = __get("currencies");
     $countries  = __get("countries");
-    $locales    = __get("locales") ;
+    //$locales    = __get("locales") ;
     $regions    = __get("regions");
     $cities     = __get("cities");
     $user       = __get("user") ;
@@ -55,11 +55,11 @@
                             <h2><?php _e('General Information'); ?></h2>
                             <div class="row">
                                 <label for="catId"><?php _e('Category'); ?></label>
-                                <?php ItemForm::category_select($categories, $item['fk_i_category_id'] = Params::getParam('catId') ); ?>
+                                <?php ItemForm::category_select( osc_get_categories(), NULL ); ?>
                             </div>
 
                             <div class="box">
-                                <?php ItemForm::multilanguage_title_description($locales); ?>
+                                <?php ItemForm::multilanguage_title_description( osc_get_locales() ); ?>
                             </div>
 
                             <div class="row price">

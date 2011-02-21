@@ -44,27 +44,6 @@ function osc_checkLocales() {
             Locale::newInstance()->insert(array('pk_c_code' => $locale['code'], 's_name' => $locale['name'], 's_short_name' => $locale['short_name'], 's_description' => $locale['description'], 's_version' => $locale['version'], 's_author_name' => $locale['author_name'], 's_author_url' => $locale['author_url'], 's_currency_format' => $locale['currency_format'], 's_date_format' => $locale['date_format'], 's_stop_words' => $locale['stop_words'], 'b_enabled' => 0, 'b_enabled_bo' => 1 ));
         }
     }
-
-    $locales_db = Locale::newInstance()->listAll();
-    foreach($locales_db as $locale) {
-        $found = false;
-        foreach($locales as $test) {
-            if($test['code']==$locale['pk_c_code']) {
-                $found = true; break;
-            }
-        }
-        
-        if(!$found) {
-            try {
-                Locale::newInstance()->deleteLocale($locale['pk_c_code']);
-            } catch (Exception $e) {
-                if($e->getMessage()=='1451') {
-                    osc_add_flash_message( _m('We are missing the ').$locale['pk_c_code'].__(' language pack and it was being. Please reinstall it.'));
-                }
-            }
-        };
-    }
-
 }
 
 function osc_listLanguageCodes() {

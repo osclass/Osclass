@@ -34,6 +34,13 @@
         return($locale) ;
     }
 
+    function osc_get_locales() {
+        if (View::newInstance()->_exists('locales')) {
+            $locale = Locale::newInstance()->listAllEnabled() ;
+        }
+        return $locale;
+    }
+
     function osc_priv_count_locales() {
         return View::newInstance()->_count('locales') ;
     }

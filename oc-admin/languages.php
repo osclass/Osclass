@@ -48,7 +48,7 @@ class CAdminLanguages extends AdminSecBaseModel
                                         } else {
                                             osc_add_flash_message( _m('There was a problem adding the language. Please, try again. If the problem persists, install it manually via FTP/SSH.'), 'admin');
                                         }
-                                        
+                                        osc_checkLocales();
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
             break;
             case 'edit':                // editing a language
@@ -123,7 +123,7 @@ class CAdminLanguages extends AdminSecBaseModel
 
                                         $iUpdated = $this->localeManager->update($array, array('pk_c_code' => $languageCode));
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message(sprintf(__('%s has been updated'), $languageShortName), 'admin');
+                                            osc_add_flash_message(sprintf(_m('%s has been updated'), $languageShortName), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true).'?page=languages') ;
             break;
@@ -134,14 +134,14 @@ class CAdminLanguages extends AdminSecBaseModel
                                         
                                         if ($id) {
                                             if($action == 'enable' && $default_lang == $id && $enabled == 0) {
-                                                osc_add_flash_message($id . __(' can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'));
+                                                osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i));
                                             } else {
-                                                $msg = ($enabled == 1) ? __('The language has been enabled for the public website') : __('The language has been disabled for the public website') ;
+                                                $msg = ($enabled == 1) ? _m('The language has been enabled for the public website') : _m('The language has been disabled for the public website') ;
                                                 $aValues = array('b_enabled' => $enabled) ;
                                                 $this->localeManager->update($aValues, array('pk_c_code' => $id)) ;
                                             }
                                             if ($action == 'enable_bo') {
-                                                $msg = ($enabled == 1) ? __('The language has been enabled for the backoffice (oc-admin)') : __('The language has been disabled for the backoffice (oc-admin)') ;
+                                                $msg = ($enabled == 1) ? _m('The language has been enabled for the backoffice (oc-admin)') : _m('The language has been disabled for the backoffice (oc-admin)') ;
                                                 $aValues = array('b_enabled_bo' => $enabled) ;
                                                 $this->localeManager->update($aValues, array('pk_c_code' => $id)) ;
                                             }
@@ -152,27 +152,62 @@ class CAdminLanguages extends AdminSecBaseModel
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
             break;
-            case 'enable_selected':     $msg = __('Selected languages have been enabled for the website') ;
+            case 'enable_selected':     $msg = _m('Selected languages have been enabled for the website') ;
                                         $aValues = array('b_enabled' => 1) ;
+                                        $id = Params::getParam('id') ;
+                                        if ($id != '') {;
+                                            foreach ($id as $i) {
+                                                $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
+                                            }
+                                            osc_add_flash_message($msg) ;
+                                        } else {
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                        }
 
-            case 'disable_selected':    $msg = __('Selected languages have been disabled for the website') ;
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
+            break;
+            case 'disable_selected':    $msg = _m('Selected languages have been disabled for the website') ;
                                         $aValues = array('b_enabled' => 0) ;
 
-            case 'enable_bo_selected':  $msg = __('Selected languages have been enabled for the backoffice (oc-admin)') ;
-                                        $aValues = array('b_enabled_bo' => 1) ;
-
-            case 'disable_bo_selected': $msg = __('Selected languages have been disabled for the backoffice (oc-admin)') ;
-                                        $aValues = array('b_enabled_bo' => 0) ;
-                
                                         $id = Params::getParam('id') ;
                                         if ($id != '') {
                                             $default_lang = osc_language() ;
                                             foreach ($id as $i) {
                                                 if($default_lang == $i && $action == 'disable_selected') {
-                                                    osc_add_flash_message($i.__(' can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'));
+                                                    osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i));
                                                 } else {
                                                     $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                 }
+                                            }
+                                            osc_add_flash_message($msg) ;
+                                        } else {
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                        }
+
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
+            break;
+            case 'enable_bo_selected':  $msg = _m('Selected languages have been enabled for the backoffice (oc-admin)') ;
+                                        $aValues = array('b_enabled_bo' => 1);
+
+                                        $id = Params::getParam('id') ;
+                                        if ($id != '') {
+                                            foreach ($id as $i) {
+                                                $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
+                                            }
+                                            osc_add_flash_message($msg) ;
+                                        } else {
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                        }
+
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
+            break;
+            case 'disable_bo_selected': $msg = _m('Selected languages have been disabled for the backoffice (oc-admin)') ;
+                                        $aValues = array('b_enabled_bo' => 0) ;
+                
+                                        $id = Params::getParam('id') ;
+                                        if ($id != '') {
+                                            foreach ($id as $i) {
+                                                $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                             }
                                             osc_add_flash_message($msg) ;
                                         } else {
@@ -197,12 +232,12 @@ class CAdminLanguages extends AdminSecBaseModel
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
             break;
-            default:                    //osc_checkLocales() ;
+            default:                    
                                         $locales = Locale::newInstance()->listAll() ;
 
                                         $this->_exportVariableToView("locales", $locales);
-
                                         $this->doView('languages/index.php') ;
+            break;
         }
     }
 

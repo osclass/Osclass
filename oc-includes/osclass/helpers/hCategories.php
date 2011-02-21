@@ -31,6 +31,13 @@
         return($category) ;
     }
 
+    function osc_get_categories() {
+       if ( !View::newInstance()->_exists('categories') ) {
+            View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
+        }
+        return  View::newInstance()->_get('categories') ;
+    }
+    
     /* #dev.conquer: review that. If the result of toTree had the same format as items or comments, it would be the same as osc_field */
     function osc_field_toTree($item, $field) {
         if(isset($item[$field])) {
