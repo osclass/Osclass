@@ -24,7 +24,7 @@
 
 ?>
 <?php
-    $sCategory = $this->_get('sCategory') ;
+    /*$sCategory = $this->_get('sCategory') ;
     $aCategories = $this->_get('aCategories') ;
     $orders = $this->_get('aOrders') ;
     $iOrderType = $this->_get('iOrderType') ;
@@ -37,7 +37,7 @@
     $sPriceMin = $this->_get('sPriceMin') ;
     $sPriceMax = $this->_get('sPriceMax') ;
     $iTotalItems = $this->_get('iTotalItems') ;
-    $sShowAs = $this->_get('sShowAs') ;
+    $sShowAs = $this->_get('sShowAs') ;*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
