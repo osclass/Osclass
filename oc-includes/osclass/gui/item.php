@@ -132,7 +132,7 @@
 
                     <div id="contact">
                         <h2><?php _e("Contact publisher") ; ?></h2>
-                        <form action="<?php echo osc_base_url(true) ; ?>?page=item" method="post" onsubmit="return validate_contact();">
+                        <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="return validate_contact();">
 
                             <?php osc_prepare_user_info() ; ?>
 
@@ -146,6 +146,7 @@
                                 <label for="phoneNumber"><?php _e('Phone number') ; ?>:</label> <?php ContactForm::your_phone_number(); ?>
                                 <label for="message"><?php _e('Message') ; ?>:</label> <?php ContactForm::your_message(); ?>
                                 <input type="hidden" name="action" value="contact_post" />
+                                <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
                                 <button type="submit"><?php _e('Send') ; ?></button>
                             </fieldset>
