@@ -94,7 +94,7 @@
     }
     
     function osc_current_admin_theme_path($file = '') {
-        include AdminThemes::newInstance()->getCurrentThemePath() . $file ;
+        require AdminThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
     function osc_current_admin_theme_styles_url($file = '') {
@@ -115,7 +115,7 @@
     }
 
     function osc_current_web_theme_path($file = '') {
-        include WebThemes::newInstance()->getCurrentThemePath() . $file ;
+        require WebThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
     function osc_current_web_theme_styles_url($file = '') {
