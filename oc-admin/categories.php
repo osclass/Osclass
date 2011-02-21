@@ -36,8 +36,6 @@ class CAdminCategories extends AdminSecBaseModel
         switch ($this->action)
         {
             case 'add':
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
                 $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
                 $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
                 $this->_exportVariableToView("category", array());
@@ -66,8 +64,6 @@ class CAdminCategories extends AdminSecBaseModel
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
             case 'edit':
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
                 $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey(Params::getParam("id")));
                 $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
                 $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
@@ -170,12 +166,7 @@ class CAdminCategories extends AdminSecBaseModel
             break;
             
             default:
-                $this->add_global_js('jquery.dataTables.min.js') ;
-                $this->add_css('item_list_layout.css') ;
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
-                $this->add_css('demo_table.css') ;
-
+                
                 $parentId = Params::getParam("parentId");
                 if($parentId!='') {
                     $this->_exportVariableToView("categories", $this->categoryManager->listWhere("a.fk_i_parent_id = %d ", $parentId));

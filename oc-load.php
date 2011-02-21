@@ -50,6 +50,7 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hMessages.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hUsers.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hItems.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hSearch.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hUtils.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hCategories.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hTranslations.php';

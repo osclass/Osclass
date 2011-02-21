@@ -11,7 +11,7 @@ $(document).ready(function(){
     <h3><strong><?php _e('Subscribe to this search'); ?></strong></h3>
     <form  method="post" name="sub_alert" id="sub_alert">
         <fieldset>
-            <input type="hidden" id="alert" name="alert" value="<?php echo $this->_get('search_alert'); ?>" >
+            <input type="hidden" id="alert" name="alert" value="<?php echo osc_search_alert(); ?>" >
             <?php if(osc_is_web_user_logged_in()) {
             ?>
                 <input type="hidden" id="alert_userId" name="alert_userId" value="<?php echo osc_logged_user_id(); ?>" />
