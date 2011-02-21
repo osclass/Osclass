@@ -37,7 +37,7 @@
         return View::newInstance()->_get('search_order_type');
     }
     
-    function osc_search_patter() {
+    function osc_search_pattern() {
         return View::newInstance()->_get('search_pattern');
     }
     
