@@ -53,7 +53,7 @@
 
             <div id="form_publish">
                 <?php include("inc.search.php"); ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url($sCategory) ; ?>">Publish your ad for free</a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url(osc_category()) ; ?>"><?php _e("Publish your ad for free");?></a></strong>
             </div>
 
             <div class="content list">
@@ -69,11 +69,12 @@
                                 <p class="see_by">
                                     <?php _e('Sort by:') ; ?>
                                     <?php $i = 0 ; ?>
-                                    <?php foreach($orders as $label => $params) { ?>
-                                        <?php if($sOrder == $params['sOrder'] && $iOrderType == $params['iOrderType']) { ?>
-                                            <a class="current" href="<?php echo $this->osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>
+                                    <?php $orders = osc_list_orders();
+                                    foreach($orders as $label => $params) { ?>
+                                        <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $params['iOrderType']) { ?>
+                                            <a class="current" href="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>
                                         <?php } else { ?>
-                                            <a href="<?php echo $this->osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>
+                                            <a href="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>
                                         <?php } ?>
                                         <?php if ($i != count($orders)-1) { ?>
                                             <span>|</span>
@@ -87,17 +88,17 @@
 
 
                         <?php if(osc_count_items() == 0) { ?>
-                            <p class="empty" ><?php printf(__('There are no results matching "%s".'), $sPattern) ; ?></p>
+                            <p class="empty" ><?php printf(__('There are no results matching "%s".'), osc_search_pattern()) ; ?></p>
                         <?php } else { ?>
-                            <?php require($sShowAs == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
+                            <?php require(osc_search_show_as() == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
                         <?php } ?>
 
                         <div class="paginate" >
-                        <?php for($i = 0 ; $i < $iNumPages ; $i++) {
-                            if($i == $iPage) {
-                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', $this->osc_update_search_url(array('iPage' => $i)), ($i + 1));
+                        <?php for($i = 0 ; $i < osc_search_total_pages() ; $i++) {
+                            if($i == osc_search_page()) {
+                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
                             } else {
-                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', $this->osc_update_search_url(array('iPage' => $i)), ($i + 1));
+                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
                             }
                         } ?>
                         </div>
@@ -121,7 +122,7 @@
                                 <h3><strong><?php _e('Location') ; ?></strong></h3>
                                 <div class="row one_input">
                                     <h6><?php _e('City'); ?></h6>
-                                    <input type="text" id="sCity" name="sCity" value="<?php echo $sCity ; ?>" />
+                                    <input type="text" id="sCity" name="sCity" value="<?php echo osc_search_city() ; ?>" />
                                 </div>
                             </fieldset>
 
@@ -131,10 +132,10 @@
                                 <div class="row checkboxes">
                                     <ul>
                                         <li>
-                                            <?php if($bPic==1) { ?>
-                                                <input type="checkbox" name="bPic" id="withPicture" onchange="document.location = '<?php echo $this->osc_update_search_url(array('bPic' => 0)); ?>';" checked="checked" />
+                                            <?php if(osc_search_has_pic()==1) { ?>
+                                                <input type="checkbox" name="bPic" id="withPicture" onchange="document.location = '<?php echo osc_update_search_url(array('bPic' => 0)); ?>';" checked="checked" />
                                             <?php } else { ?>
-                                                <input type="checkbox" name="bPic" id="withPicture" value="false" onchange="document.location = '<?php echo $this->osc_update_search_url(array('bPic' => 1)); ?>';" />
+                                                <input type="checkbox" name="bPic" id="withPicture" value="false" onchange="document.location = '<?php echo osc_update_search_url(array('bPic' => 1)); ?>';" />
                                             <?php } ?>
                                             <label for="withPicture"><?php _e('Show only items with pictures') ; ?></label>
                                         </li>
@@ -144,20 +145,20 @@
                                 <div class="row two_input">
                                     <h6><?php _e('Price') ; ?></h6>
                                     <?php _e('Min.') ; ?>
-                                    <input type="text" id="priceMin" name="sPriceMin" value="<?php echo $sPriceMin ; ?>" size="6" maxlength="6" />
+                                    <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min() ; ?>" size="6" maxlength="6" />
                                     <?php _e('Max.') ; ?>
-                                    <input type="text" id="priceMax" name="sPriceMax" value="<?php echo $sPriceMax ; ?>" size="6" maxlength="6" />
+                                    <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
                                 <div class="row checkboxes">
                                     <h6><?php _e('Category'); ?></h6>
                                     <ul>
-                                        <?php foreach($aCategories as $cat) { ?>
+                                        <?php while(osc_has_categories()) { ?>
                                             <li>
-                                                <?php if(in_array($cat['pk_i_id'], $sCategory)) { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
+                                                <?php if(in_array(osc_category_id(), osc_search_category())) { ?>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_id(); ?></strong></label>
                                                 <?php } else { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo $cat['pk_i_id']; ?>" /> <label for="cat<?php echo $cat['pk_i_id']; ?>"><strong><?php echo $cat['s_name']; ?></strong></label>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 <?php } ?>
                                             </li>
                                         <?php } ?>
@@ -166,8 +167,8 @@
                             </fieldset>
 
                             <?php
-                                if($sCategory != '') {
-                                    osc_run_hook('search_form', $sCategory) ;
+                                if(osc_search_category() != '') {
+                                    osc_run_hook('search_form', osc_search_category()) ;
                                 } else {
                                     osc_run_hook('search_form') ;
                                 }
@@ -176,7 +177,7 @@
                             <button type="submit"><?php _e('Apply') ; ?></button>
                         </form>
 
-                        <?php $this->alert_form() ; ?>
+                        <?php osc_alert_form() ; ?>
                         
                     </div>
                 </div>
