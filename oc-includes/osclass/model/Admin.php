@@ -53,6 +53,10 @@ class Admin extends DAO {
 	}
 
 	public function updateArray($admin) {
+        $admin['name'] = addslashes($admin['name']);
+        $admin['userName'] = addslashes($admin['userName']);
+        $admin['email'] = addslashes($admin['email']);
+        $admin['password'] = addslashes($admin['password']);
 		$this->conn->osc_dbExec("UPDATE %s SET s_name = '%s', s_username = '%s', s_email = '%s', s_password = '%s' WHERE pk_i_id = %d", $this->getTableName(),
 			$admin['name'], $admin['userName'], $admin['email'], $admin['password'], $admin['id']);
 	}

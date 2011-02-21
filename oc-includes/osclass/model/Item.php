@@ -364,6 +364,9 @@ class Item extends DAO
 
     public function insertLocale($id, $locale, $title, $description, $what)
     {
+        $title = addslashes($title);
+        $description = addslashes($description);
+        $what = addslashes($what);
         $sql = sprintf("INSERT INTO %st_item_description (`fk_i_item_id`, `fk_c_locale_code`, `s_title`, `s_description`, `s_what`) VALUES ('%s', '%s', '%s', '%s', '%s')", DB_TABLE_PREFIX, $id, $locale, $title, $description, $what) ;
         return $this->conn->osc_dbExec($sql);
     }
@@ -467,6 +470,9 @@ class Item extends DAO
 
     public function updateLocaleForce($id, $locale, $title, $text)
     {
+        $title = addslashes($title);
+        $text  = addslashes($text);
+        
         $sql = sprintf("REPLACE INTO %st_item_description SET `s_title` = '%s', `s_description` = '%s', `fk_c_locale_code` = '%s', `fk_i_item_id` = %s, `s_what` = '%s'", DB_TABLE_PREFIX, $title, $text, $locale, $id, $title . " " . $text);
         $this->conn->osc_dbExec($sql);
         $date = date('Y-m-d H:i:s');

@@ -33,14 +33,14 @@ class UserEmailTmp extends DAO {
                             'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', now())'
                             ,$this->getTableName()
                             ,$userEmailTmp['fk_i_user_id']
-                            ,$userEmailTmp['s_new_email']
+                            ,  addslashes($userEmailTmp['s_new_email'])
                     ) ;
 
         if (!$status) {
             $this->conn->osc_dbExec(
                             'UPDATE %s SET s_new_email = \'%s\', dt_date = now() WHERE fk_i_user_id = %d'
                             ,$this->getTableName()
-                            ,$userEmailTmp['s_new_email']
+                            ,  addslashes($userEmailTmp['s_new_email'])
                             ,$userEmailTmp['fk_i_user_id']
                     ) ;
 

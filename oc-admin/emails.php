@@ -56,7 +56,7 @@ class CAdminEmails extends AdminSecBaseModel
                 }
 
                 foreach($aFieldsDescription as $k => $_data) {
-                    $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
+                    $this->emailManager->updateDescription($id, $k, addslashes($_data['s_title']), addslashes($_data['s_text']));
                 }
                 
                 if(!$this->emailManager->internalNameExists($id, $s_internal_name)) {
