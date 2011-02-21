@@ -24,7 +24,7 @@
 
 ?>
 <?php
-    $sCategory = $this->_get('sCategory') ;
+    /*$sCategory = $this->_get('sCategory') ;
     $aCategories = $this->_get('aCategories') ;
     $orders = $this->_get('aOrders') ;
     $iOrderType = $this->_get('iOrderType') ;
@@ -37,19 +37,19 @@
     $sPriceMin = $this->_get('sPriceMin') ;
     $sPriceMax = $this->_get('sPriceMax') ;
     $iTotalItems = $this->_get('iTotalItems') ;
-    $sShowAs = $this->_get('sShowAs') ;
+    $sShowAs = $this->_get('sShowAs') ;*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php osc_current_web_theme_url('head.php') ; ?>
+        <?php osc_current_web_theme_path('head.php') ; ?>
     </head>
     <body>
 
         <div class="container">
 
-            <?php osc_current_web_theme_url('header.php') ; ?>
+            <?php osc_current_web_theme_path('header.php') ; ?>
 
             <div id="form_publish">
                 <?php include("inc.search.php"); ?>
@@ -204,7 +204,7 @@
 
             </div>
 
-            <?php osc_current_web_theme_url('footer.php') ; ?>
+            <?php osc_current_web_theme_path('footer.php') ; ?>
 
         </div>
 

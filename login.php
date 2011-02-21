@@ -21,14 +21,6 @@ class CWebLogin extends BaseModel
 
     function __construct() {
         parent::__construct() ;
-
-        $this->add_css('style.css') ;
-        $this->add_css('jquery-ui.css') ;
-        $this->add_global_js('tiny_mce/tiny_mce.js') ;
-        $this->add_global_js('jquery.js') ;
-        $this->add_global_js('jquery-ui.js') ;
-        $this->add_js('jquery-extends.js') ;
-        $this->add_js('global.js') ;
     }
 
     //Business Layer...
@@ -116,7 +108,7 @@ class CWebLogin extends BaseModel
 
     //hopefully generic...
     function doView($file) {
-        osc_current_web_theme_url($file) ;
+        osc_current_web_theme_path($file) ;
     }
 }
 

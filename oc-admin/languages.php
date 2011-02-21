@@ -212,7 +212,7 @@ class CAdminLanguages extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        osc_current_admin_theme_url($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 
