@@ -22,13 +22,13 @@
 
     <head>
 
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_url('head.php') ; ?>
         
     </head>
 
     <body>
 
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_url('header.php') ; ?>
 
         <div id="update_version" style="display:none;"></div>
 
@@ -64,7 +64,7 @@
 
         </div> <!-- end of container -->
 
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
 
     </body>
 

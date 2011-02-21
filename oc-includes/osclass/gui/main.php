@@ -25,13 +25,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_url('head.php') ; ?>
     </head>
     <body>
 
         <div class="container">
 
-            <?php $this->osc_print_header() ; ?>
+            <?php osc_current_web_theme_url('header.php') ; ?>
 
             <div id="form_publish">
                 <?php include("inc.search.php") ; ?>
@@ -106,7 +106,7 @@
                                                 
                                                 <?php } else { ?>
 
-                                                    <img src="<?php echo $this->osc_get_theme_url('images/no_photo.gif') ; ?>" />
+                                                    <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" />
 
                                                 <?php } ?>
                                              </td>
@@ -152,7 +152,7 @@
 
             </div>
 
-            <?php $this->osc_print_footer() ; ?>
+            <?php osc_current_web_theme_url('footer.php') ; ?>
 
         </div>
 

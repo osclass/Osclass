@@ -116,7 +116,7 @@ class CWebLogin extends BaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_web_theme_url($file) ;
     }
 }
 

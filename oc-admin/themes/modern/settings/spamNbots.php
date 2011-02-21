@@ -28,10 +28,10 @@
             var s_close     = '<?php _e('Close'); ?>';
             var s_view_more = '<?php _e('View more'); ?>';
         </script>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_url('head.php') ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_url('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Spam and bots settings'); ?></div>
         <div id="content">
@@ -84,6 +84,6 @@
                 </div>
             </div><!-- end of right column -->
         </div><!-- end of container -->
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
     </body>
 </html>
