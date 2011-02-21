@@ -52,7 +52,7 @@
                             <label for="friendEmail"><?php _e("Your friend's e-mail address"); ?></label> <?php SendFriendForm::friend_email(); ?> <br/>
                             <label for="message"><?php _e('Message'); ?></label> <?php SendFriendForm::your_message(); ?> <br/>
 
-                            <input onclick="validate_form()" type="button" value="<?php _e('Send'); ?>" />
+                            <input onclick="return validate_form();" type="button" value="<?php _e('Send'); ?>" />
                         </fieldset>
                     </form>
 

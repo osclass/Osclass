@@ -46,7 +46,7 @@
                             <label for="yourEmail"><?php _e('Your e-mail address'); ?></label> <?php ContactForm::your_email(); ?><br />
                             <label for="phoneNumber"><?php _e('Phone number'); ?></label><?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message'); ?></label> <?php ContactForm::your_message(); ?><br />
-                            <button onclick="validate_contact();" type="submit"><?php _e('Send message') ?></button>
+                            <button onclick="return validate_contact();" type="submit"><?php _e('Send message') ?></button>
                             <input type="hidden" name="action" value="contact_post" />
                             <input type="hidden" name="page" value="item" />
                             <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
