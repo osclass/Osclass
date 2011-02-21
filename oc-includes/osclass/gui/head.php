@@ -29,10 +29,10 @@
 <link href="<?php osc_current_web_theme_styles_url('style.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php osc_current_web_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="<?php osc_current_web_theme_styles_url('tiny_mce/tiny_mce.js') ; ?>"></script>
-<script type="text/javascript" src="<?php osc_current_web_theme_styles_url('jquery.js') ; ?>"></script>
-<script type="text/javascript" src="<?php osc_current_web_theme_styles_url('jquery-ui.js') ; ?>"></script>
-<script type="text/javascript" src="<?php osc_current_web_theme_styles_url('jquery-extends.js') ; ?>"></script>
-<script type="text/javascript" src="<?php osc_current_web_theme_styles_url('global.js') ; ?>"></script>
+<script type="text/javascript" src="<?php osc_current_web_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
+<script type="text/javascript" src="<?php osc_current_web_theme_js_url('jquery.js') ; ?>"></script>
+<script type="text/javascript" src="<?php osc_current_web_theme_js_url('jquery-ui.js') ; ?>"></script>
+<script type="text/javascript" src="<?php osc_current_web_theme_js_url('jquery-extends.js') ; ?>"></script>
+<script type="text/javascript" src="<?php osc_current_web_theme_js_url('global.js') ; ?>"></script>
 
 <?php osc_run_hook('header') ; ?>
