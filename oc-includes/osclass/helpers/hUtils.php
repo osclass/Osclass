@@ -19,6 +19,11 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+     //getting from View
+     function __get($key) {
+         return View::newInstance()->_get($key) ;
+     }
+
     //get params
     function osc_get_param($key) {
         return Params::getParam($key) ;
