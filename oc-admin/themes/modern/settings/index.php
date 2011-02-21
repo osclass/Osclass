@@ -21,8 +21,8 @@
     $dateFormats = array('F j, Y', 'Y/m/d', 'm/d/Y', 'd/m/Y');
     $timeFormats = array('g:i a', 'g:i A', 'H:i');
 
-    $aLanguages  = $this->_get('aLanguages');
-    $aCurrencies = $this->_get('aCurrencies');
+    $aLanguages  = __get('aLanguages');
+    $aCurrencies = __get('aCurrencies');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

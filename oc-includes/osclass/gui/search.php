@@ -136,7 +136,8 @@
                                 <div class="row checkboxes">
                                     <h6><?php _e('Category'); ?></h6>
                                     <ul>
-                                        <?php while(osc_has_categories()) { ?>
+                                        <?php osc_goto_first_category(); // RESET CATEGORIES IF WE USED THEN IN THE HEADER
+                                        while(osc_has_categories()) { ?>
                                             <li>
                                                 <?php if(in_array(osc_category_id(), osc_search_category())) { ?>
                                                     <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_id(); ?></strong></label>
