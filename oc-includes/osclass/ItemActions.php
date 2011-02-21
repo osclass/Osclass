@@ -26,9 +26,6 @@ Class ItemActions
         $this->manager = Item::newInstance() ;
     }
 
-    // delete
-    // activate
-    // mark
     /**
      * @return boolean
      */
@@ -221,8 +218,8 @@ Class ItemActions
 
     /**
      * Mark an item
-     * @param <type> $itemId
-     * @param <type> $column
+     * @param <type> $id
+     * @param <type> $as
      */
     public function mark( $id, $as )
     {
@@ -326,9 +323,16 @@ Class ItemActions
 
     public function contact()
     {
-        //$aItem = $this->prepareDataForFunction( 'contact' );
+        $aItem = $this->prepareDataForFunction( 'contact' );
+
+        $id         = $aItem['id'];
+        $yourEmail  = $aItem['yourEmail'];
+        $yourName   = $aItem['yourName'];
+        $phoneNumber= $aItem['phoneNumber'];
+        $message    = $aItem['message'];
+
         $path = NULL;
-        $item = $this->manager->findByPrimaryKey( Params::getParam('id') ) ;
+        $item = $this->manager->findByPrimaryKey( $id ) ;
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_item_inquiry');
@@ -345,8 +349,8 @@ Class ItemActions
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
                          '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
 
-        $words[] = array($item['s_contact_name'], Params::getParam('yourName'), Params::getParam('yourEmail'),
-                         Params::getParam('phoneNumber'), osc_base_url(), $item['s_title'], osc_item_url($item), Params::getParam('message'));
+        $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
+                         $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url($item), $message );
 
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
@@ -366,7 +370,7 @@ Class ItemActions
                             ,'to_name'   => $item['s_contact_name']
                             ,'body'      => $body
                             ,'alt_body'  => $body
-                            ,'reply_to'  => Params::getParam('yourEmail')
+                            ,'reply_to'  => $yourEmail
                         ) ;
 
 
@@ -401,11 +405,12 @@ Class ItemActions
      */
     public function add_comment()
     {
-       $authorName     = Params::getParam('authorName') ;
-        $authorEmail    = Params::getParam('authorEmail') ;
-        $body           = Params::getParam('body') ;
-        $title          = Params::getParam('title') ;
-        $itemId         = Params::getParam('id') ;
+        $aItem  = $this->prepareDataForFunction('add_comment');
+        $authorName     = $aItem['authorName'] ;
+        $authorEmail    = $aItem['authorEmail'] ;
+        $body           = $aItem['body'] ;
+        $title          = $aItem['title'] ;
+        $itemId         = $aItem['id'] ;
 
         $item = $this->manager->findByPrimaryKey($itemId) ;
 
@@ -488,6 +493,7 @@ Class ItemActions
             osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
         }
     }
+    
     /**
      * Return an array with all data necessary for do the action
      * @param <type> $action
@@ -512,19 +518,22 @@ Class ItemActions
                 $aItem['message']       = Params::getParam('message');
             break;
             case 'contact':
-                // TODO CARLOS
-//                $path = null;
-//                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
-//
-//                $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
-//
-//
-//                $aItem['path']      = $path;
-//                $aItem['item']      = $item;
-//                $aItem['category']  = $category;
+
+                $aItem['id']            = Params::getParam('id') ;
+                $aItem['yourEmail']     = Params::getParam('yourEmail') ;
+                $aItem['yourName']      = Params::getParam('yourName') ;
+                $aItem['message']       = Params::getParam('message') ;
+                $aItem['phoneNumber']   = Params::getParam('phoneNumber') ;
             break;
             case 'add_comment':
-                // TODO CARLOS
+
+                $aItem['authorName']     = Params::getParam('authorName') ;
+                $aItem['authorEmail']    = Params::getParam('authorEmail') ;
+                $aItem['body']           = Params::getParam('body') ;
+                $aItem['title']          = Params::getParam('title') ;
+                $aItem['itemId']         = Params::getParam('id') ;
+
+
             break;
             default:
         }

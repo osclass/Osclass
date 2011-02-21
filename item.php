@@ -31,6 +31,7 @@ class CWebItem extends BaseModel
         $this->add_global_js('jquery.js');
         $this->add_js('jquery-extends.js');
         $this->add_js('global.js');
+        // here allways userId == ''
         if( Session::newInstance()->_get('userId') != '' ){
             $this->userId = Session::newInstance()->_get('userId');
             $this->user = User::newInstance()->findByPrimaryKey($this->userId);
@@ -212,7 +213,6 @@ class CWebItem extends BaseModel
                         $this->redirectTo( osc_item_edit_url($secret) ) ;
                     }
                 }
-
             break;
             case 'activate':
                 $secret = Params::getParam('secret');
@@ -295,11 +295,6 @@ class CWebItem extends BaseModel
 
                 $this->doView('item-contact.php');
             break;
-
-
-
-
-
             case 'contact_post':
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
@@ -324,102 +319,11 @@ class CWebItem extends BaseModel
                 
                 break;
             case 'add_comment':
-//                $authorName     = Params::getParam('authorName') ;
-//                $authorEmail    = Params::getParam('authorEmail') ;
-//                $body           = Params::getParam('body') ;
-//                $title          = Params::getParam('title') ;
-//                $itemId         = Params::getParam('id') ;
-//
-//                $item = $this->itemManager->findByPrimaryKey($itemId) ;
-//
-//                $itemURL = osc_item_url($item) ;
-//
-//                if (osc_moderate_comments()) {
-//                    $status = 'INACTIVE' ;
-//                } else {
-//                    $status = 'ACTIVE' ;
-//                }
-//                if (osc_akismet_key()) {
-//                    require_once LIB_PATH . 'Akismet.class.php' ;
-//                    $akismet = new Akismet(osc_base_url(), osc_akismet_key()) ;
-//                    $akismet->setCommentAuthor($authorName) ;
-//                    $akismet->setCommentAuthorEmail($authorEmail) ;
-//                    $akismet->setCommentContent($body) ;
-//                    $akismet->setPermalink($itemURL) ;
-//
-//                    $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
-//                }
-//
-//
-//                $mComments = new Comment() ;
-//                $aComment  = array(
-//                                'dt_pub_date'    => DB_FUNC_NOW
-//                                ,'fk_i_item_id'   => $itemId
-//                                ,'s_author_name'  => $authorName
-//                                ,'s_author_email' => $authorEmail
-//                                ,'s_title'        => $title
-//                                ,'s_body'         => $body
-//                                ,'e_status'       => $status
-//                            );
-//
-//                if( $mComments->insert($aComment) ){
-//
-//                    $notify = osc_notify_new_comment() ;
-//                    $admin_email = osc_contact_email() ;
-//                    $prefLocale = osc_language;
-//
-//                    //Notify admin
-//                    if ($notify) {
-//                        $mPages = new Page() ;
-//                        $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
-//                        $locale = osc_get_user_locale() ;
-//
-//                        $content = array();
-//                        if(isset($aPage['locale'][$locale]['s_title'])) {
-//                            $content = $aPage['locale'][$locale];
-//                        } else {
-//                            $content = current($aPage['locale']);
-//                        }
-//
-//                        $words   = array();
-//                        $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
-//                                         '{COMMENT_TEXT}', '{ITEM_NAME}', '{ITEM_ID}', '{ITEM_URL}');
-//                        $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
-//                        $title_email = osc_mailBeauty($content['s_title'], $words);
-//                        $body_email = osc_mailBeauty($content['s_text'], $words);
-//
-//                        $from = osc_contact_email() ;
-//                        $from_name = osc_page_title ;
-//                        if (osc_notify_contact_item()) {
-//                            $add_bbc = osc_contact_email() ;
-//                        }
-//
-//                        $emailParams = array(
-//                                        'from'      => $admin_email
-//                                        ,'from_name' => __('Admin mail system')
-//                                        ,'subject'   => $title_email
-//                                        ,'to'        => $admin_email
-//                                        ,'to_name'   => __('Admin mail system')
-//                                        ,'body'      => $body_email
-//                                        ,'alt_body'  => $body_email
-//                                        );
-//                        osc_sendMail($emailParams) ;
-//                    }
-//                    osc_run_hook('add_comment', $item);
-//                }else{
-//                    osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
-//                }
+                $mItem = new ItemActions(false);
+                $mItem->add_comment();
 
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
-
-            case('dashboard'):      //dashboard...
-
-            break;
-            
-            
-
-            
             default:
                 if( Params::getParam('id') == ''){
                     $this->redirectTo(osc_base_url());
@@ -471,6 +375,11 @@ class CWebItem extends BaseModel
 
                     $this->doView('item.php') ;
                 }
+            break;
+            
+            case('dashboard'):      //dashboard...
+
+            break;
         }
     }
 
