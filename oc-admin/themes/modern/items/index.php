@@ -21,9 +21,9 @@
 ?>
 
 <?php
-    $last_item = end( $this->_get("items") ) ;
+    $last_item = end( __get("items") ) ;
     $last_id = $last_item['pk_i_id'] ;
-    $stat = $this->_get("stat");
+    $stat = __get("stat");
 ?>
 
 
@@ -128,7 +128,7 @@
         <div id="content">
             <div id="separator"></div>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php' ; ?>
+            <?php osc_current_admin_theme_path('include/backoffice_menu.php') ; ?>
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
