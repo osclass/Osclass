@@ -40,14 +40,13 @@ class CWebMain extends BaseModel
                                     //$this->_exportVariableToView('categories', $categories) ;
                                     //$this->_exportVariableToView('locales', $locales) ;
                                     //$this->_exportVariableToView('latestItems', $latestItems) ;
-
                                     $this->doView('main.php') ;
         }
     }
 
     //hopefully generic...
     function doView($file) {
-        osc_current_web_theme_url($file) ;
+        osc_current_web_theme_path($file) ;
     }
 }
 

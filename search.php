@@ -232,7 +232,7 @@
 
         //hopefully generic...
         function doView($file) {
-            osc_current_web_theme_url($file) ;
+            osc_current_web_theme_path($file) ;
         }
 
         function osc_update_search_url($params, $delimiter = '&amp;') {

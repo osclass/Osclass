@@ -31,15 +31,15 @@
             var s_close     = '<?php _e('Close'); ?>';
             var s_view_more = '<?php _e('View more'); ?>';
         </script>
-        <?php osc_current_admin_theme_url('head.php') ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
-        <?php osc_current_admin_theme_url('header.php') ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Dashboard'); ?></div>
 		<div id="content">
             <div id="separator"></div>
-			<?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;">

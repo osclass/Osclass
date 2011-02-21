@@ -22,13 +22,13 @@
 
     <head>
 
-        <?php osc_current_admin_theme_url('head.php') ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
         
     </head>
 
     <body>
 
-        <?php osc_current_admin_theme_url('header.php') ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
 
         <div id="update_version" style="display:none;"></div>
 
@@ -38,7 +38,7 @@
 
             <div id="separator"></div>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
 
