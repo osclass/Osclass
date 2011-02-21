@@ -46,14 +46,14 @@ class CAdminAppearance extends AdminSecBaseModel
                 if ( isset( $themes ) && is_array( $themes ) ) {
                     foreach ($themes as $theme) {
                         if (!osc_deleteDir(THEMES_PATH . $theme))
-                            osc_add_flash_message(__('Directory "%s" can\'t be removed'), $theme);
+                            osc_add_flash_message( _m('Directory "%s" can\'t be removed'), $theme);
                     }
                 } else if (isset( $themes )) {
                     if (!osc_deleteDir(THEMES_PATH . $themes)){
-                        osc_add_flash_message(__('Directory "%s" can\'t be removed'), $themes);
+                        osc_add_flash_message( _m('Directory "%s" can\'t be removed'), $themes);
                     }
                 } else {
-                    osc_add_flash_message(__('No theme selected'));
+                    osc_add_flash_message( _m('No theme selected'));
                 }
                 $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
             break;

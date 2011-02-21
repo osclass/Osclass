@@ -52,9 +52,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been activated')) ;
+                                                osc_add_flash_message( _m('The items have been activated')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'deactivate_all':
@@ -71,9 +71,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been deactivated')) ;
+                                                osc_add_flash_message( _m('The items have been deactivated')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'premium_all':
@@ -88,9 +88,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been marked as premium')) ;
+                                                osc_add_flash_message( _m('The items have been marked as premium')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'depremium_all':
@@ -105,9 +105,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The changes have been made')) ;
+                                                osc_add_flash_message( _m('The changes have been made')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'delete_all':
@@ -122,9 +122,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         $this->itemManager->deleteByIPrimaryKey($i);
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been deleted')) ;
+                                                osc_add_flash_message( _m('The items have been deleted')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         break;
@@ -143,9 +143,9 @@ class CAdminItems extends AdminSecBaseModel
                                                 $this->itemManager->deleteByPrimaryKey($i) ;
                                             }
                                         }
-                                        osc_add_flash_message(__('The items have been deleted')) ;
+                                        osc_add_flash_message( _m('The items have been deleted')) ;
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                        osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
@@ -180,9 +180,9 @@ class CAdminItems extends AdminSecBaseModel
                                                 break;
                                         }
 
-                                        osc_add_flash_message(__('The item has been activated'));
+                                        osc_add_flash_message( _m('The item has been activated'));
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                        osc_add_flash_message( _m('Error: ') . $e->getMessage());
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
@@ -206,9 +206,9 @@ class CAdminItems extends AdminSecBaseModel
                                                 array('b_premium' => $value),
                                                 array('pk_i_id' => $id)
                                         );
-                                        osc_add_flash_message(__('Changes have been applied'));
+                                        osc_add_flash_message( _m('Changes have been applied'));
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                        osc_add_flash_message( _m('Error: ') . $e->getMessage());
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;

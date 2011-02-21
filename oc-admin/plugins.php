@@ -52,7 +52,7 @@ class CAdminPlugins extends AdminSecBaseModel
 		        Plugins::runHook('install_'.$pn) ;
 		        
 
-                osc_add_flash_message(__('Plugin installed'));
+                osc_add_flash_message( _m('Plugin installed'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
 	        case 'uninstall':
@@ -61,7 +61,7 @@ class CAdminPlugins extends AdminSecBaseModel
                 Plugins::runHook($pn.'_uninstall') ;
 		        Plugins::deactivate($pn);
 
-                osc_add_flash_message(__('Plugin uninstalled'));
+                osc_add_flash_message( _m('Plugin uninstalled'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
 	        case 'admin':
@@ -118,10 +118,10 @@ class CAdminPlugins extends AdminSecBaseModel
 				        Plugins::addToCategoryPlugin($categories, $plugin_short_name);
 			        }
 		        } else {
-			        osc_add_flash_message(__('No plugin selected'));
+			        osc_add_flash_message( _m('No plugin selected'));
 			        $this->doView("plugins/index.php");
 		        }
-		        osc_add_flash_message(__('Configuration was saved'));
+		        osc_add_flash_message( _m('Configuration was saved'));
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
 	        default:

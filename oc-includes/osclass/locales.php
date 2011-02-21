@@ -59,7 +59,7 @@ function osc_checkLocales() {
                 Locale::newInstance()->deleteLocale($locale['pk_c_code']);
             } catch (Exception $e) {
                 if($e->getMessage()=='1451') {
-                    osc_add_flash_message(__('We are missing the ').$locale['pk_c_code'].__(' language pack and it was being. Please reinstall it.'));
+                    osc_add_flash_message( _m('We are missing the ').$locale['pk_c_code'].__(' language pack and it was being. Please reinstall it.'));
                 }
             }
         };

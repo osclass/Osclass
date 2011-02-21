@@ -41,7 +41,7 @@ class CWebSecItem extends WebSecBaseModel
                 // hacer igual que item.php solo hace falta pasar el item
                 // los demas parametros se obtienen en las vistas gracias a los helpers.
                 if(!osc_users_enabled()) {
-                    osc_add_flash_message(__('Users are not enable')) ;
+                    osc_add_flash_message( _m('Users are not enable')) ;
                     $this->redirectTo(osc_base_url(true));
                 }
 
@@ -81,7 +81,7 @@ class CWebSecItem extends WebSecBaseModel
                 
             case 'post_item': // add_post
                 if(!osc_users_enabled()) {
-                    osc_add_flash_message(__('Users are not enable'));
+                    osc_add_flash_message( _m('Users are not enable'));
                     osc_redirectTo(osc_base_url());
                 }
                 
@@ -117,12 +117,12 @@ class CWebSecItem extends WebSecBaseModel
                     $success = $mItems->activate( $item[0]['pk_i_id'], $item[0]['s_secret'] );
 
                     if( $success ){
-                        osc_add_flash_message( __('Item validated') ) ;
+                        osc_add_flash_message( _m('Item validated') ) ;
                     }else{
-                        osc_add_flash_message( __('Item could not be validated') ) ;
+                        osc_add_flash_message( _m('Item could not be validated') ) ;
                     }
                 }else{
-                    osc_add_flash_message( __('The item was validated before') );
+                    osc_add_flash_message( _m('The item was validated before') );
                 }
                 $this->redirectTo( osc_item_url($item[0]) );
             break;
@@ -137,14 +137,14 @@ class CWebSecItem extends WebSecBaseModel
                 if (count($item) == 1) {
                     $mItems = new ItemActions(false);
                     $success = $mItems->deleteByPrimaryKey($id);
-                    osc_add_flash_message( __('Your item has been deleted.') ) ;
+                    osc_add_flash_message( _m('Your item has been deleted.') ) ;
                     if($this->user!=null) {
                         $this->redirectTo(osc_user_list_items_url());
                     } else {
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 }else{
-                    osc_add_flash_message( __('The item you are trying to delete has not been deleted.') ) ;
+                    osc_add_flash_message( _m('The item you are trying to delete has not been deleted.') ) ;
                     $this->redirectTo( osc_base_url() ) ;
                 }
             break;
@@ -156,7 +156,7 @@ class CWebSecItem extends WebSecBaseModel
 
                 $mItem->mark($id, $as) ;
 
-                osc_add_flash_message( __('Thanks! That helps us') ) ;
+                osc_add_flash_message( _m('Thanks! That helps us') ) ;
                 $this->redirectTo( osc_item_url($id) );
 
             break;
@@ -182,7 +182,7 @@ class CWebSecItem extends WebSecBaseModel
                     $date = time() ;
                     if($item_date < $date) {
                         // The item is expired, we can not contact the seller
-                        osc_add_flash_message(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                        osc_add_flash_message( _m('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
                         $this->redirectTo(osc_create_item_url($item));
                     }
                 }
@@ -202,7 +202,7 @@ class CWebSecItem extends WebSecBaseModel
                     $date = time();
                     if($item_date < $date) {
                         // The item is expired, we can not contact the seller
-                        osc_add_flash_message(__('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
+                        osc_add_flash_message( _m('We\'re sorry, but the item is expired. You can not contact the seller.')) ;
                         $this->redirectTo(osc_item_url($item));
                     }
                 }
@@ -210,7 +210,7 @@ class CWebSecItem extends WebSecBaseModel
                 $mItem = new ItemActions(false);
                 $mItem->contact();
 
-                osc_add_flash_message(__('We\'ve just sent an e-mail to the seller.')) ;
+                osc_add_flash_message( _m('We\'ve just sent an e-mail to the seller.')) ;
                 $this->redirectTo( osc_item_url($item) );
 
                 break;
@@ -228,16 +228,16 @@ class CWebSecItem extends WebSecBaseModel
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 // if item doesn't exist redirect to base url
                 if( !$item['fk_i_item_id'] ){
-                    osc_add_flash_message( __('This item doesn\'t exist.') );
+                    osc_add_flash_message( _m('This item doesn\'t exist.') );
                     $this->redirectTo( osc_base_url(true) );
                 }else{
 
                     if ($item['e_status'] != 'ACTIVE') {
                         if( $this->userId == $item['fk_i_user_id'] ) {
-                            osc_add_flash_message(__('This item is NOT validated. You should validate it in order to show this item
+                            osc_add_flash_message( _m('This item is NOT validated. You should validate it in order to show this item
                                 to the rest of the users. You could do that in your profile menu.') );
                         } else {
-                            osc_add_flash_message( __('This item is NOT validated.') );  // el item no esta activado,  tienes el enlace de activacion en el correo
+                            osc_add_flash_message( _m('This item is NOT validated.') );  // el item no esta activado,  tienes el enlace de activacion en el correo
                             $this->redirectTo( osc_base_url(true) );
                         }
                     }

@@ -54,7 +54,7 @@ Class ItemActions
         $contactEmail   = $aItem['contactEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
+            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item.'));
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -119,12 +119,12 @@ Class ItemActions
 
 
             if($this->is_admin) {
-                osc_add_flash_message(__('A new item has been added')) ;
+                osc_add_flash_message( _m('A new item has been added')) ;
             } else {
                 if( osc_item_validation_enabled() ) {
-                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item.')) ;
                 } else {
-                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
+                    osc_add_flash_message( _m('Great! We\'ve just published your item.')) ;
                 }
 
             }
@@ -316,9 +316,9 @@ Class ItemActions
         Params::setParam( 'item_url', $item_url );
 
         if(osc_sendMail($params)) {
-            osc_add_flash_message(__('We just send your message to ') . $aItem['friendName'] . ".") ;
+            osc_add_flash_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
         } else {
-            osc_add_flash_message(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
+            osc_add_flash_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
         }
     }
 
@@ -384,7 +384,7 @@ Class ItemActions
             $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
 
             if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
-                osc_add_flash_message(__('There has been some erro sending the message')) ;
+                osc_add_flash_message( _m('There has been some erro sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
 
@@ -492,7 +492,7 @@ Class ItemActions
             }
             osc_run_hook('add_comment', $item);
         }else{
-            osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
+            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later.')) ;
         }
     }
     
@@ -1084,7 +1084,7 @@ Class ItemActions
 //        $_POST['pk_i_id'] = $_POST['id'];
 //        osc_run_hook('item_edit_post');
 //
-//        osc_add_flash_message(__('Great! We\'ve just update your item.'));
+//        osc_add_flash_message( _m('Great! We\'ve just update your item.'));
 //        break;
 
 //    case 'post_item':
@@ -1109,7 +1109,7 @@ Class ItemActions
 //
 //            if (osc_reg_user_post()) {
 //                if ($userId == null) {
-//                    osc_add_flash_message(__('You new to log-in in order to post a new item.')) ;
+//                    osc_add_flash_message( _m('You new to log-in in order to post a new item.')) ;
 //                    osc_redirectTo(osc_login_url()) ;
 //                    break ;
 //                }
@@ -1169,7 +1169,7 @@ Class ItemActions
 //        if($Pprice == '') $Pprice = null;
 //
 //        if(!isset($PcontactName) || !isset($PcontactEmail) || $PcontactName==null || $PcontactEmail==null || $PcontactName=='' || $PcontactEmail=='') {
-//            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
+//            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item.'));
 //            $success = false;
 //        } else {
 //            $dao_item = new Item() ;
@@ -1461,12 +1461,12 @@ Class ItemActions
 //            osc_run_hook('after_item_post') ;
 //
 //            if($is_admin) {
-//                osc_add_flash_message(__('A new item has been added')) ;
+//                osc_add_flash_message( _m('A new item has been added')) ;
 //            } else {
 //                if(osc_enabled_item_validation()) {
-//                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+//                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item.')) ;
 //                } else {
-//                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
+//                    osc_add_flash_message( _m('Great! We\'ve just published your item.')) ;
 //                }
 //            }
 //        }
