@@ -200,10 +200,6 @@ class CAdminLanguages extends AdminSecBaseModel
             default:                    //osc_checkLocales() ;
                                         $locales = Locale::newInstance()->listAll() ;
 
-                                        $this->add_css('languages_layout.css');
-                                        $this->add_css('demo_table.css');
-                                        $this->add_global_js('jquery.dataTables.min.js');
-
                                         $this->_exportVariableToView("locales", $locales);
 
                                         $this->doView('languages/index.php') ;

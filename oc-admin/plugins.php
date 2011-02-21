@@ -125,10 +125,8 @@ class CAdminPlugins extends AdminSecBaseModel
 		        $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
 		        break;
 	        default:
-                $this->add_global_js('jquery.dataTables.min.js') ;
-                $this->add_css('item_list_layout.css') ;
-                $this->add_css('demo_table.css') ;
-                $this->_exportVariableToView("plugins", Plugins::listAll());
+                
+                        $this->_exportVariableToView("plugins", Plugins::listAll());
 		        $this->doView("plugins/index.php");
         }
     }

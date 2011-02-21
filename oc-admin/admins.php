@@ -28,11 +28,7 @@ class CAdminAdmins extends AdminSecBaseModel
 
     function __construct() {
         parent::__construct() ;
-
-        $this->add_css('admins_list_layout.css');
-        $this->add_css('demo_table.css');
-        $this->add_global_js('jquery.dataTables.min.js');
-
+        
         //specific things for this class
         $this->adminManager = Admin::newInstance() ;
     }

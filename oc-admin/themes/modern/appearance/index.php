@@ -23,8 +23,8 @@
 <?php
 
     //getting variables for this view
-    $themes = $this->_get("themes") ;
-    $info = $this->_get("info") ;
+    $themes = __get("themes") ;
+    $info = __get("info") ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

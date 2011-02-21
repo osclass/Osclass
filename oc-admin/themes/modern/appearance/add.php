@@ -37,8 +37,8 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/pages-icon.png" /></div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Add new page'); ?></div>
+                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url('images/pages-icon.png') ; ?>" /></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Add new page') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -72,7 +72,7 @@
                                     <?php _e('To make a directory writable under UNIX execute this command from the shell'); ?>:
                                 </p>
                                 <p style="background-color: white; border: 1px solid black; padding: 8px;">
-                                    chmod a+w <?php echo osc_themes_path(); ?>
+                                    chmod a+w <?php echo osc_themes_path() ; ?>
                                 </p>
                             </div>
                         <?php } ?>

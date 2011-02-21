@@ -16,11 +16,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $user = $this->_get("user");
-    $countries = $this->_get("countries");
-    $regions = $this->_get("regions");
-    $cities = $this->_get("cities");
-    $locales = $this->_get("locales");
+    $user = __get("user");
+    $countries = __get("countries");
+    $regions = __get("regions");
+    $cities = __get("cities");
+    $locales = __get("locales");
 
     if(isset($user['pk_i_id'])) {
         // editing...
@@ -58,7 +58,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url(); ?>images/user-group-icon.png" title="" alt=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/user-group-icon.png'); ?>" title="" alt=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php echo $title ; ?></div>
                     <div style="clear: both;"></div>

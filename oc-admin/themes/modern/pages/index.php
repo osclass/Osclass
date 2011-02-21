@@ -17,8 +17,8 @@
  */
 ?>
 <?php
-    $pages = $this->_get("pages");
-    $prefLocale = $this->_get("prefLocale");
+    $pages = __get("pages");
+    $prefLocale = __get("prefLocale");
     $last = end($pages); $last_id = $last['pk_i_id'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
