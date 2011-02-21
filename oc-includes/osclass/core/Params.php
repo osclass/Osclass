@@ -58,13 +58,13 @@ class Params
     static function getParamsAsArray($what = "")
     {
         switch ($what) {
-            case("get"):    return($_GET) ;
+            case("get"):    return(strip_slashes_extended($_GET)) ;
             break;
-            case("post"):   return($_POST) ;
+            case("post"):   return(strip_slashes_extended($_POST)) ;
             break;
             case("cookie"): return($_COOKIE) ;
             break;
-            default:        return($_REQUEST) ;
+            default:        return(strip_slashes_extended($_REQUEST)) ;
             break;
         }
     }
