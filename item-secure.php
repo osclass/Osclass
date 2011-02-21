@@ -24,9 +24,6 @@ class CWebSecItem extends WebSecBaseModel
     function __construct() {
         parent::__construct() ;
         $this->itemManager = Item::newInstance();
-        $this->add_css('style.css');
-        $this->add_css('jquery-ui.css');
-        $this->add_global_js('jquery.js');
     }
 
     //Business Layer...
