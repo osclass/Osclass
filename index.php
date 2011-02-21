@@ -21,7 +21,7 @@
      */
 
     require_once 'oc-load.php' ;
-
+    
     switch( Params::getParam('page') )
     {
         case ('user'):      //user pages (with security)
