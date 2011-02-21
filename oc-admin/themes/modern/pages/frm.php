@@ -22,7 +22,7 @@
 
 <?php 
 
-    $page = $this->_get("page");
+    $page = __get("page");
 
     if(isset($page['pk_i_id'])) {
         //editing...

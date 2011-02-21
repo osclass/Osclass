@@ -40,9 +40,6 @@ class CAdminPages extends AdminSecBaseModel
                 if(Params::getParam("id")=='') {
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                 }
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
-                $this->add_global_js('tiny_mce/tiny_mce.js') ;
                 $this->_exportVariableToView("page", $this->pageManager->findByPrimaryKey(Params::getParam("id")));
                 $this->doView("pages/frm.php");
                 break;
@@ -73,9 +70,6 @@ class CAdminPages extends AdminSecBaseModel
                 $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
                 break;
             case 'add':
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
-                $this->add_global_js('tiny_mce/tiny_mce.js') ;
                 $this->_exportVariableToView("page", array());
                 $this->doView("pages/frm.php");
                 break;   
@@ -160,9 +154,6 @@ class CAdminPages extends AdminSecBaseModel
                 } else {
                     $this->_exportVariableToView("prefLocale", Session::_get("adminLocale"));
                 }
-                $this->add_global_js('jquery.dataTables.min.js') ;
-                $this->add_css('item_list_layout.css') ;
-                $this->add_css('demo_table.css') ;
                 $this->_exportVariableToView("pages", $this->pageManager->listAll(0));
                 $this->doView("pages/index.php");
                 

@@ -17,8 +17,8 @@
  */
 ?>
 <?php
-    $emails = $this->_get("emails");
-    $prefLocale = $this->_get("prefLocale");
+    $emails = __get("emails");
+    $prefLocale = __get("prefLocale");
     $last = end($emails); $last_id = $last['pk_i_id'];
 ?>
 

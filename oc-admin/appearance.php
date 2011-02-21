@@ -25,8 +25,6 @@ class CAdminAppearance extends AdminSecBaseModel
 
     function __construct() {
         parent::__construct() ;
-        // common css
-        $this->add_css('appearance_layout.css');
     }
 
     //Business Layer...

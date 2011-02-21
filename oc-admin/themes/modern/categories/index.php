@@ -21,7 +21,7 @@
 ?>
 
 <?php
-    $categories = $this->_get("categories");
+    $categories = __get("categories");
     $last = end($categories);
     $last_id = $last['pk_i_id'];
 ?>
@@ -121,7 +121,7 @@
 		
 	        });
         </script>
-        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
 		<div id="content">
 			<div id="separator"></div>	
 			
@@ -129,7 +129,7 @@
 		    
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/cat-icon.png" /></div>
+					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/cat-icon.png" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
 					<div style="clear: both;"></div>
 				</div>

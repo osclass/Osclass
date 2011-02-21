@@ -21,7 +21,6 @@ class CAdminSettings extends AdminSecBaseModel
 
     function __construct() {
         parent::__construct() ;
-        $this->add_css('settings_layout.css');
     }
 
     //Business Layer...
@@ -256,8 +255,6 @@ class CAdminSettings extends AdminSecBaseModel
                                     $aCountries = $mCountries->listAll();
                                     $this->_exportVariableToView('aCountries', $aCountries);
 
-                                    $this->add_css('location_layout.css');
-                                    $this->add_js('location.js');
                                     $this->doView('settings/locations.php');
             break;
             case('permalinks'):     // calling the permalinks view
@@ -455,9 +452,7 @@ class CAdminSettings extends AdminSecBaseModel
                                         default:            // calling the currencies view
                                                             $aCurrencies = Currency::newInstance()->listAll();
                                                             $this->_exportVariableToView('aCurrencies', $aCurrencies);
-
-                                                            $this->add_global_js('jquery.dataTables.min.js');
-                                                            $this->add_css('demo_table.css');
+                                                            
                                                             $this->doView('settings/currencies.php');
                                         break;
                                     }
@@ -502,7 +497,6 @@ class CAdminSettings extends AdminSecBaseModel
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
             break;
             case('media'):          // calling the media view
-                                    $this->add_css('demo_table.css') ;
                                     $this->doView('settings/media.php') ;
             break;
             case('media_post'):     // updating the media config

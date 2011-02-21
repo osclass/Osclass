@@ -287,9 +287,6 @@ class CAdminItems extends AdminSecBaseModel
                                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                                     }
                                     
-                                    $this->add_css('demo_table.css') ;
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('new_item_layout.css') ;
                                     $this->_exportVariableToView("users", User::newInstance()->listAll());
                                     $this->_exportVariableToView("categories", Category::newInstance()->toTree());
                                     $this->_exportVariableToView("countries", $countries);
@@ -311,12 +308,6 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             default:                //default
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('item_list_layout.css') ;
-                                    $this->add_css('tabs.css') ;
-                                    $this->add_global_js('tabber-minimized.js') ;
-                                    $this->add_css('demo_table.css') ;
-
                                     $catId = Params::getParam('catId') ;
 
                                     //preparing variables for the view

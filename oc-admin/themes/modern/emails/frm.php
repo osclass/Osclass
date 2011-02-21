@@ -22,7 +22,7 @@
 
 <?php 
 
-    $email = $this->_get("email");
+    $email = __get("email");
 
     if(isset($email['pk_i_id'])) {
         //editing...

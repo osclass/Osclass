@@ -47,10 +47,8 @@ class CAdminMedia extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;
             break;
             default:                $resourceId = Params::getParam("id");
-                                    !is_null($resourceId) ? $resources = $this->resourcesManager->getAllResources($resourceId) :	$resources = $this->resourcesManager->getAllResources();
+                                    !is_null($resourceId) ? $resources = $this->resourcesManager->getAllResources($resourceId) : $resources = $this->resourcesManager->getAllResources();
                                     //calling the view...
-                                    $this->add_global_js('jquery.dataTables.min.js');
-                                    $this->add_css('demo_table.css');
                                     $this->_exportVariableToView("resources", $resources) ;
                                     $this->_exportVariableToView("resourceId", $resourceId) ;
                                     $this->doView('media/index.php');

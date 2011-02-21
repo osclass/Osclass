@@ -20,7 +20,7 @@
  */
 ?>
 <?php
-    $users = $this->_get("users");
+    $users = __get("users");
     $last = end($users); $last_id = $last['pk_i_id'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -101,7 +101,7 @@
 		        });
 	        });
         </script>
-        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
 		<div id="content">
 			<div id="separator"></div>	
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>

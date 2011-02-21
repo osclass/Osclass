@@ -22,7 +22,7 @@
 
 ?>
 <?php 
-    $last = end($this->_get('comments')) ;
+    $last = end(__get('comments')) ;
     $last_id = $last['pk_i_id'] ;
 ?>
 
@@ -74,7 +74,7 @@
                      }
                     ,"sPaginationType": "full_numbers"
                     ,"aaData": [
-                        <?php foreach($this->_get('comments') as $c) { ?>
+                        <?php foreach(__get('comments') as $c) { ?>
                             [
                                 "<input type='checkbox' name='id[]' value='<?php echo $c['pk_i_id']; ?>' />"
                                 ,"<?php echo $c['s_author_name']; ?> <?php _e('on'); ?> <a target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ?>' id='dt_link'><?php echo $c['s_title']; ?></a> item<div id='datatables_quick_edit'><a href='comments.php?action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_edit'><?php _e('Edit'); ?></a><?php
@@ -109,7 +109,7 @@
                 });
             });
         </script>
-        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
                 <div id="content">
                     <div id="separator"></div>
 
@@ -117,7 +117,7 @@
 
                     <div id="right_column">
                         <div id="content_header" class="content_header">
-                            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/comments-icon2.png" /></div>
+                            <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url('images/comments-icon2.png') ; ?>" /></div>
                             <div id="content_header_arrow">&raquo; <?php _e('Manage Comments'); ?></div>
                             <div style="clear: both;"></div>
                         </div>

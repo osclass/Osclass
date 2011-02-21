@@ -193,10 +193,6 @@ class CAdminUsers extends AdminSecBaseModel
             default:                // manage users view
                                     $aUsers = $this->userManager->listAll();
 
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('item_list_layout.css') ;
-                                    $this->add_css('demo_table.css') ;
-
                                     $this->_exportVariableToView("users", $aUsers);
                                     $this->doView("users/index.php");
             break;

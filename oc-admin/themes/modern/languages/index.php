@@ -20,7 +20,7 @@
  */
 ?>
 <?php
-    $locales = $this->_get('locales');
+    $locales = __get('locales');
     $last = end($locales);
     $last_id = $last['pk_c_code'] ;
     $default_lang = osc_language() ;

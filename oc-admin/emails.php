@@ -40,9 +40,6 @@ class CAdminEmails extends AdminSecBaseModel
                 if(Params::getParam("id")=='') {
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
-                $this->add_global_js('tiny_mce/tiny_mce.js') ;
                 $this->_exportVariableToView("email", $this->emailManager->findByPrimaryKey(Params::getParam("id")));
                 $this->doView("emails/frm.php");
                 break;
@@ -79,8 +76,6 @@ class CAdminEmails extends AdminSecBaseModel
                 } else {
                     $this->_exportVariableToView("prefLocale", Session::_get("adminLocale"));
                 }
-                $this->add_css('item_list_layout.css') ;
-                $this->add_css('demo_table.css') ;
                 $this->_exportVariableToView("emails", $this->emailManager->listAll(1));
                 $this->doView("emails/index.php");
 
