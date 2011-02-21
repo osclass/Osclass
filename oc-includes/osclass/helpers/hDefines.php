@@ -349,7 +349,9 @@
         }
     }
 
-
+    function osc_item_send_friend_url() {
+        return osc_base_url(true)."?page=item&action=send_friend&id=".osc_item_id();
+    }
     /////////////////////////////////////
     //functions for locations & search //
     /////////////////////////////////////

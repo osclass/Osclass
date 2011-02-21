@@ -72,6 +72,8 @@
                         <p><?php echo  osc_item_description() ; ?></p>
                         <p class="contact_button">
                             <strong><a href="#contact"><?php _e('Contact publisher') ; ?></a></strong>
+
+                            <strong><a href="<?php echo osc_item_send_friend_url();?>"><?php _e('Send to friend') ; ?></a></strong>
                         </p>
                     </div>
 
