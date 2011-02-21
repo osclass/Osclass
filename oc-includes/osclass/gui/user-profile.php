@@ -66,12 +66,12 @@
                             </p>
 
                             <p>
-                                <label for="phoneMobile"><?php _e('Mobile phone') ; ?></label><br />
+                                <label for="phoneMobile"><?php _e('Cell phone') ; ?></label><br />
                                 <?php UserForm::mobile_text(osc_user()) ; ?>
                             </p>
 
                             <p>
-                                <label for="phoneLand"><?php _e('Land phone') ; ?></label><br />
+                                <label for="phoneLand"><?php _e('Phone') ; ?></label><br />
                                 <?php UserForm::phone_land_text(osc_user()) ; ?>
                             </p>
 
@@ -91,7 +91,7 @@
                             </p>
 
                             <p>
-                                <label for="city_area"><?php _e('City Area') ; ?></label><br />
+                                <label for="city_area"><?php _e('City area') ; ?></label><br />
                                 <?php UserForm::city_area_text(osc_user()) ; ?>
                             </p>
 
@@ -101,11 +101,11 @@
                             </p>
 
                             <p>
-                                <label for="webSite"><?php _e('Web site') ; ?></label><br />
+                                <label for="webSite"><?php _e('Website') ; ?></label><br />
                                 <?php UserForm::website_text(osc_user()) ; ?>
                             </p>
 
-                            <button type="submit"><?php _e('Update profile') ; ?></button>
+                            <button type="submit"><?php _e('Update') ; ?></button>
 
                             <?php osc_run_hook('user_form') ; ?>
                         </fieldset>

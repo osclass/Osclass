@@ -183,8 +183,8 @@
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
                 $aOrders   = array(
                                  __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
-                                ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
-                                ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
+                                ,__('Lowest price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
+                                ,__('Highest price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
                              );
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
 

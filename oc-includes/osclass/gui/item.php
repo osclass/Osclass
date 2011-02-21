@@ -40,11 +40,11 @@
                         <h1><span class="price"><?php echo osc_item_formated_price() ; ?></span> <strong><?php echo osc_item_title() ; ?></strong></h1>
 
                         <p id="report">
-                            <strong><?php _e('Mark as ') ; ?></strong>
+                            <strong><?php _e('Mark as') ; ?></strong>
                             <span>
                                 <a id="item_spam" href="<?php echo osc_item_link_spam() ; ?>"><?php _e('spam') ; ?></a>
-                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category() ; ?>"><?php _e('bad category') ; ?></a>
-                                <a id="item_repeated" href="<?php echo osc_item_link_repeated() ; ?>"><?php _e('repeated') ; ?></a>
+                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category() ; ?>"><?php _e('misclassified') ; ?></a>
+                                <a id="item_repeated" href="<?php echo osc_item_link_repeated() ; ?>"><?php _e('duplicated') ; ?></a>
                                 <a id="item_expired" href="<?php echo osc_item_link_expired() ; ?>"><?php _e('expired') ; ?></a>
                                 <a id="item_offensive" href="<?php echo osc_item_link_offensive() ; ?>"><?php _e('offensive') ; ?></a>
                             </span>
@@ -71,9 +71,9 @@
                     <div id="description">
                         <p><?php echo  osc_item_description() ; ?></p>
                         <p class="contact_button">
-                            <strong><a href="#contact"><?php _e('Contact publisher') ; ?></a></strong>
+                            <strong><a href="#contact"><?php _e('Contact seller') ; ?></a></strong>
 
-                            <strong><a href="<?php echo osc_item_send_friend_url();?>"><?php _e('Send to friend') ; ?></a></strong>
+                            <strong><a href="<?php echo osc_item_send_friend_url();?>"><?php _e('Share') ; ?></a></strong>
                         </p>
                     </div>
 
@@ -101,22 +101,22 @@
                                 <input type="hidden" name="action" value="add_comment" />
                                 <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
-                                <label for="authorName"><?php _e('Your name:') ; ?></label> <input type="text" name="authorName" id="authorName" /><br />
-                                <label for="authorEmail"><?php _e('Your email:') ; ?></label> <input type="text" name="authorEmail" id="authorEmail" /><br />
-                                <label for="title"><?php _e('Title:') ; ?></label><br /><input type="text" name="title" id="title" /><br />
-                                <label for="body"><?php _e('Comment:') ; ?></label><br /><textarea name="body" id="body" rows="5" cols="40"></textarea><br />
-                                <button type="submit"><?php _e('Send comment') ; ?></button>
+                                <label for="authorName"><?php _e('Your name') ; ?>:</label> <input type="text" name="authorName" id="authorName" /><br />
+                                <label for="authorEmail"><?php _e('Your e-mail') ; ?>:</label> <input type="text" name="authorEmail" id="authorEmail" /><br />
+                                <label for="title"><?php _e('Title') ; ?>:</label><br /><input type="text" name="title" id="title" /><br />
+                                <label for="body"><?php _e('Comment') ; ?>:</label><br /><textarea name="body" id="body" rows="5" cols="40"></textarea><br />
+                                <button type="submit"><?php _e('Send') ; ?></button>
                             </fieldset>
                             </form>
                         </div>
                     <?php } ?>
 
                     <div id="useful_info">
-                        <h2><?php _e('Helpful information') ; ?></h2>
+                        <h2><?php _e('Useful information') ; ?></h2>
                         <ul>
-                            <li><?php _e('Avoid scams by dealing locally or paying with PayPal') ; ?></li>
-                            <li><?php _e('Never pay with Western Union, Moneygram or other anonymous payment services') ; ?></li>
-                            <li><?php _e("Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country") ; ?></li>
+                            <li><?php _e('Avoid scams by acting locally or paying with PayPal'); ?></li>
+                            <li><?php _e('Never pay with Western Union, Moneygram or other anonymous payment services'); ?></li>
+                            <li><?php _e('Don\'t buy or sell outside of your country. Don\'t accept cashier cheques from outside your country'); ?></li>
                             <li><?php _e('This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer "buyer protection" or "seller certification"') ; ?></li>
                         </ul>
                     </div>
@@ -141,13 +141,13 @@
                                 <?php if ( osc_user_phone() != '' ) { ?>
                                     <p class="phone"><?php _e("Tel.: ") ; ?> <?php echo osc_user_phone() ; ?></p>
                                 <?php } ?>
-                                <label for="yourName"><?php _e('Your name') ; ?> <?php _e('(optional)') ; ?>:</label><input type="text" name="yourName" value="" id="yourName" />
-                                <label for="yourEmail"><?php _e('Your email address') ; ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
+                                <label for="yourName"><?php _e('Your name (optional)') ; ?>:</label><input type="text" name="yourName" value="" id="yourName" />
+                                <label for="yourEmail"><?php _e('Your e-mail address') ; ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
                                 <label for="phoneNumber"><?php _e('Phone number') ; ?>:</label><input type="text" name="phoneNumber" value="" id="phoneNumber" />
                                 <label for="message"><?php _e('Message') ; ?>:</label><textarea name="message" rows="8" cols="30"></textarea>
                                 <input type="hidden" name="action" value="contact_post" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
-                                <button type="submit"><?php _e('Send message') ; ?></button>
+                                <button type="submit"><?php _e('Send') ; ?></button>
                             </fieldset>
                         </form>
                     </div>

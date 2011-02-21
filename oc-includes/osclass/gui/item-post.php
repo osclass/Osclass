@@ -46,7 +46,7 @@
             <?php ItemForm::location_javascript(); ?>
 
             <div class="content add_item">
-                <h1><strong><?php _e('Post your item'); ?></strong></h1>
+                <h1><strong><?php _e('Publish an item'); ?></strong></h1>
                 <form action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
                     <fieldset>
                     <input type="hidden" name="action" value="item_add_post" />
@@ -119,7 +119,7 @@
                         <!-- seller info -->
                         <?php if(!osc_is_web_user_logged_in() ) { ?>
                         <div class="box seller_info">
-                            <h2><?php _e('Seller information'); ?></h2>
+                            <h2><?php _e('Seller\'s information'); ?></h2>
                             <div class="row">
                                 <label for="contactName"><?php _e('Name'); ?></label>
                                 <?php ItemForm::contact_name_text() ; ?>
@@ -132,7 +132,7 @@
                                 <div style="width: 120px;text-align: right;float:left;">
                                     <?php ItemForm::show_email_checkbox() ; ?>
                                 </div>
-                                <label for="showEmail" style="width: 250px;float:right;"><?php _e('Show email publically within the item page'); ?></label>
+                                <label for="showEmail" style="width: 250px;float:right;"><?php _e('Show e-mail on the item page'); ?></label>
                             </div>
                         </div>
                         <?php }; ?>

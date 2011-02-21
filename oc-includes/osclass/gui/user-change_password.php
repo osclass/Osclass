@@ -49,7 +49,7 @@
                 </div>
 
                 <div id="main" class="modify_profile">
-                    <h2><?php _e('Change your Password') ; ?></h2>
+                    <h2><?php _e('Change your password') ; ?></h2>
 
                     <form action="<?php osc_base_url(true) ; ?>" method="post">
 
@@ -70,7 +70,7 @@
                                 <input type="password" name="new_password2" value="" />
                             </p>
 
-                            <button type="submit"><?php _e('Update your password') ; ?></button>
+                            <button type="submit"><?php _e('Update') ; ?></button>
 
                         </fieldset>
                     </form>

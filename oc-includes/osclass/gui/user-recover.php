@@ -48,13 +48,13 @@
 
             <div class="content user_forms">
                 <div class="inner">
-                    <h1><?php _e('Retrieve your password') ; ?></h1>
+                    <h1><?php _e('Recover your password') ; ?></h1>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="recover_post" />
                         <fieldset>
                             <label for="email"><?php _e('E-mail') ; ?></label> <?php UserForm::email_text() ; ?><br />
-                            <button type="submit"><?php _e('Send me another password') ; ?></button>
+                            <button type="submit"><?php _e('Send me a new password') ; ?></button>
                         </fieldset>
                     </form>
                 </div>
