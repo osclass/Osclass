@@ -37,7 +37,7 @@
 
         /* PRIVATE */
         private function setCurrentThemePath() {
-            if (file_exists(osc_base_path() . 'oc-content/themes/')) {
+            if ( file_exists( osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ) ) {
                 $this->theme_path = osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ;
             } else {
                 $this->theme_path = osc_base_path()  . 'oc-includes/osclass/gui/' ;
@@ -46,7 +46,7 @@
 
         /* PUBLIC */
         private function setCurrentThemeUrl() {
-            if (file_exists(osc_base_url() . 'oc-content/themes/')) {
+            if ( file_exists ( osc_base_url() . 'oc-content/themes/' . $this->theme  . '/' ) ) {
                 $this->theme_url = osc_base_url() . 'oc-content/themes/' . $this->theme . '/' ;
             } else {
                 $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/' ;
