@@ -282,6 +282,9 @@ class Page extends DAO
      */
     private function insertDescription($id, $locale, $title, $text)
     {
+        $title = addslashes($title);
+        $text  = addslashes($text);
+
         $sql = 'INSERT INTO ' . $this->getDescriptionTableName() . ' (fk_i_pages_id, fk_c_locale_code, s_title, ';
         $sql .= 's_text) VALUES (' . sprintf('%d, \'%s\', \'%s\', \'%s\')', $id, $locale, $title, $text);
 
@@ -314,7 +317,7 @@ class Page extends DAO
         }
 
         $sql = 'UPDATE ' . $this->getDescriptionTableName() . ' SET ';
-        $sql .= ' s_title = \'' . $title . '\', s_text = \'' . $text . '\'';
+        $sql .= ' s_title = \'' . addslashes($title) . '\', s_text = \'' . addslashes($text) . '\'';
         $sql .= ' WHERE fk_c_locale_code = \'' . $locale . '\' AND fk_i_pages_id = ' . $id;
 
         $this->conn->osc_dbExec($sql);

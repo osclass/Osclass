@@ -89,7 +89,7 @@
             //ONLY 0 ( => 'asc' ), 1 ( => 'desc' ) AS ALLOWED VALUES
             $p_iOrderType = Params::getParam('iOrderType');
             $allowedTypesForSorting = Search::getAllowedTypesForSorting() ;
-            if(!array_key_exists($p_iOrderType, $allowedTypesForSorting)) {
+            if(!in_array($p_iOrderType, array_values($allowedTypesForSorting))) {
                 $p_iOrderType = osc_default_order_type_at_search() ;
             }
 
@@ -157,7 +157,7 @@
             $this->mSearch->priceRange($p_sPriceMin, $p_sPriceMax);
 
             //ORDERING THE SEARCH RESULTS
-            $this->mSearch->order($p_sOrder, $allowedTypesForSorting[$p_iOrderType]) ;
+            $this->mSearch->order($p_sOrder, $p_iOrderType) ;
 
             //SET PAGE
             $this->mSearch->page($p_iPage, $p_iPageSize);

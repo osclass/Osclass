@@ -31,6 +31,17 @@ class Params
                 return htmlspecialchars(stripslashes($value), ENT_QUOTES);
             }
         }
+
+        if(get_magic_quotes_gpc()) {
+            if(is_array($value)) {
+                foreach($value as &$v) {
+                    stripslashes($v);
+                }
+            } else {
+                stripslashes($value);
+            }
+        }
+
         return ($value);
     }
 

@@ -56,17 +56,17 @@ class CAdminEmails extends AdminSecBaseModel
                 }
 
                 foreach($aFieldsDescription as $k => $_data) {
-                    $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
+                    $this->emailManager->updateDescription($id, $k, addslashes($_data['s_title']), addslashes($_data['s_text']));
                 }
                 
                 if(!$this->emailManager->internalNameExists($id, $s_internal_name)) {
                     if(!$this->emailManager->isIndelible($id)) {
                         $this->emailManager->updateInternalName($id, $s_internal_name);
                     }
-                    osc_add_flash_message( __('The email/alert has been updated'), 'admin' );
+                    osc_add_flash_message( _m('The email/alert has been updated'), 'admin' );
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
-                osc_add_flash_message(__('You can\'t repeat internal name'), 'admin');
+                osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
                 $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                 break;
             default:

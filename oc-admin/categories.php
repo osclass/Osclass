@@ -57,9 +57,9 @@ class CAdminCategories extends AdminSecBaseModel
                     }
                     $this->categoryManager->insert($fields, $aFieldsDescription);
 
-                    osc_add_flash_message(__('The category has been added'));
+                    osc_add_flash_message( _m('The category has been added'));
                 } catch (Exception $e) {
-                    osc_add_flash_message(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message( _m('Error: ') . $e->getMessage());
                 }
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
@@ -86,9 +86,9 @@ class CAdminCategories extends AdminSecBaseModel
                 
                 try {
                     $this->categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
-                    osc_add_flash_message(__('The category has been updated.'));
+                    osc_add_flash_message( _m('The category has been updated.'));
                 } catch (Exception $e) {
-                    osc_add_flash_message(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message( _m('Error: ') . $e->getMessage());
                 }
                 if( !is_null( $fields['fk_i_parent_id'] ) ) {
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories&parentId=' . $fields['fk_i_parent_id']);
@@ -105,9 +105,9 @@ class CAdminCategories extends AdminSecBaseModel
                             $this->categoryManager->deleteByPrimaryKey($i);
                         }
                     }
-                    osc_add_flash_message(__('The categories have been deleted'));
+                    osc_add_flash_message( _m('The categories have been deleted'));
                 } catch (Exception $e) {
-                    osc_add_flash_message(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message( _m('Error: ') . $e->getMessage());
                 }
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
@@ -128,7 +128,7 @@ class CAdminCategories extends AdminSecBaseModel
                     }
                     osc_add_flash_message($msg) ;
                 } catch (Exception $e) {
-                    osc_add_flash_message(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message( _m('Error: ') . $e->getMessage());
                 }
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
@@ -142,9 +142,9 @@ class CAdminCategories extends AdminSecBaseModel
                             $this->categoryManager->update(array('b_enabled' => 1), array('pk_i_id' => $id));
                         }
                     }
-                    osc_add_flash_message(__('The categories have been enabled'));
+                    osc_add_flash_message( _m('The categories have been enabled'));
                 } catch (Exception $e) {
-                    osc_add_flash_message(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message( _m('Error: ') . $e->getMessage());
                 }
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;
@@ -158,9 +158,9 @@ class CAdminCategories extends AdminSecBaseModel
                             $this->categoryManager->update(array('b_enabled' => 0), array('pk_i_id' => $id));
                         }
                     }
-                    osc_add_flash_message(__('The selected categories have been disabled'));
+                    osc_add_flash_message( _m('The selected categories have been disabled'));
                 } catch (Exception $e) {
-                    osc_add_flash_message(__('Error: ') . $e->getMessage());
+                    osc_add_flash_message( _m('Error: ') . $e->getMessage());
                 }
                 $this->redirectTo(osc_admin_base_url(true).'?page=categories');
             break;

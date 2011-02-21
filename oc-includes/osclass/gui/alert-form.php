@@ -12,8 +12,7 @@ $(document).ready(function(){
     <form  method="post" name="sub_alert" id="sub_alert">
         <fieldset>
             <input type="hidden" id="alert" name="alert" value="<?php echo osc_search_alert(); ?>" >
-            <?php if(osc_is_web_user_logged_in()) {
-            ?>
+            <?php if(osc_is_web_user_logged_in()) { ?>
                 <input type="hidden" id="alert_userId" name="alert_userId" value="<?php echo osc_logged_user_id(); ?>" />
                 <input type="hidden" id="alert_email" name="alert_email" value="<?php echo osc_logged_user_email(); ?>" />
             <?php } else { ?>

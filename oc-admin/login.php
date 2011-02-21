@@ -58,11 +58,11 @@ class CAdminLogin extends BaseModel
                                             Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
                                         } else {
-                                            osc_add_flash_message(__('The password is incorrect')) ;
+                                            osc_add_flash_message( _m('The password is incorrect')) ;
                                         }
 
                                     } else {
-                                        osc_add_flash_message(__('That username does not exist')) ;
+                                        osc_add_flash_message( _m('That username does not exist')) ;
                                     }
 
                                     //returning logged in to the main page...
@@ -94,9 +94,9 @@ class CAdminLogin extends BaseModel
                                         );
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_message(__('A new password has been sent to your e-mail.')) ;
+                                        osc_add_flash_message( _m('A new password has been sent to your e-mail.')) ;
                                     } else {
-                                        osc_add_flash_message(__('The email you have entered does not belong to a valid administrator.')) ;
+                                        osc_add_flash_message( _m('The email you have entered does not belong to a valid administrator.')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=login&action=recover') ;
                                     }
 

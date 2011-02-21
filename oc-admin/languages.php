@@ -44,9 +44,9 @@ class CAdminLanguages extends AdminSecBaseModel
                                         $path        = osc_translations_path();
 
                                         if(osc_packageExtract($filePackage['tmp_name'], $path)) {
-                                            osc_add_flash_message(__('The language has been installed correctly'), 'admin');
+                                            osc_add_flash_message( _m('The language has been installed correctly'), 'admin');
                                         } else {
-                                            osc_add_flash_message(__('There was a problem adding the language. Please, try again. If the problem persists, install it manually via FTP/SSH.'), 'admin');
+                                            osc_add_flash_message( _m('There was a problem adding the language. Please, try again. If the problem persists, install it manually via FTP/SSH.'), 'admin');
                                         }
                                         
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
@@ -54,14 +54,14 @@ class CAdminLanguages extends AdminSecBaseModel
             case 'edit':                // editing a language
                                         $sLocale = Params::getParam('id');
                                         if( !preg_match('/.{2}_.{2}/', $sLocale) ) {
-                                            osc_add_flash_message(__('Language id isn\'t in the correct format'), 'admin');
+                                            osc_add_flash_message( _m('Language id isn\'t in the correct format'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                         }
 
                                         $aLocale = $this->localeManager->findByPrimaryKey($sLocale);
 
                                         if(count($aLocale) == 0) {
-                                            osc_add_flash_message(__('Language id doesn\'t exist'), 'admin');
+                                            osc_add_flash_message( _m('Language id doesn\'t exist'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                         }
 
@@ -82,7 +82,7 @@ class CAdminLanguages extends AdminSecBaseModel
 
                                         // formatting variables
                                         if( !preg_match('/.{2}_.{2}/', $languageCode) ) {
-                                            osc_add_flash_message(__('Language id isn\'t in the correct format'), 'admin');
+                                            osc_add_flash_message( _m('Language id isn\'t in the correct format'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                         }
                                         $enabledWebstie         = ($enabledWebstie != '' ? true : false);
@@ -90,19 +90,19 @@ class CAdminLanguages extends AdminSecBaseModel
                                         $languageName           = strip_tags($languageName);
                                         $languageName           = trim($languageName);
                                         if( $languageName == '' ) {
-                                            osc_add_flash_message(__('Language name can\'t be empty'), 'admin');
+                                            osc_add_flash_message( _m('Language name can\'t be empty'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                         }
                                         $languageShortName      = strip_tags($languageShortName);
                                         $languageShortName      = trim($languageShortName);
                                         if ($languageShortName == '') {
-                                            osc_add_flash_message(__('Language short name can\'t be empty'), 'admin');
+                                            osc_add_flash_message( _m('Language short name can\'t be empty'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                         }
                                         $languageDescription    = strip_tags($languageDescription);
                                         $languageDescription    = trim($languageDescription);
                                         if ($languageDescription == '') {
-                                            osc_add_flash_message(__('Language description can\'t be empty'), 'admin');
+                                            osc_add_flash_message( _m('Language description can\'t be empty'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                         }
                                         $languageCurrencyFormat = strip_tags($languageCurrencyFormat);
@@ -148,7 +148,7 @@ class CAdminLanguages extends AdminSecBaseModel
 
                                             osc_add_flash_message( $msg ) ;
                                         } else {
-                                            osc_add_flash_message(__('There was a problem updating the language. The language id was lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the language. The language id was lost')) ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
             break;
@@ -176,7 +176,7 @@ class CAdminLanguages extends AdminSecBaseModel
                                             }
                                             osc_add_flash_message($msg) ;
                                         } else {
-                                            osc_add_flash_message(__('There was a problem updating the languages. The language ids were lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -188,10 +188,10 @@ class CAdminLanguages extends AdminSecBaseModel
                                                 if( $default_lang != $code ) {
                                                     $this->localeManager->deleteLocale($code) ;
                                                     if (!osc_deleteDir(osc_translations_path() . $code)) {
-                                                        osc_add_flash_message(__('Directory "%s" couldn\'t be removed'), $code) ;
+                                                        osc_add_flash_message( _m('Directory "%s" couldn\'t be removed'), $code) ;
                                                     }
                                                 } else {
-                                                        osc_add_flash_message(__('Directory "%s" couldn\'t be removed because it\'s the default language. Set another language as default first and try again'), $code) ;
+                                                        osc_add_flash_message( _m('Directory "%s" couldn\'t be removed because it\'s the default language. Set another language as default first and try again'), $code) ;
                                                 }
                                             }
                                         }
