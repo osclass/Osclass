@@ -158,7 +158,7 @@ function oc_install( ) {
     require_once ABS_PATH . 'config.php';
 
     try {
-        $sql = file_get_contents(ABS_PATH . 'oc-includes/data/struct.sql');
+        $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
         $conn->osc_dbImportSQL($sql);
     } catch (Exception $e) {
         $error_num = $e->getMessage();
@@ -197,8 +197,8 @@ function oc_install( ) {
 
     	$sql = '';
     	foreach($required_files as $file) {
-            if ( !file_exists(ABS_PATH . 'oc-includes/data/' . $file) ) return array('error' => 'the file ' . $file . ' doesn\'t exist in data folder' );
-            else $sql .= file_get_contents(ABS_PATH . 'oc-includes/data/' . $file);
+            if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) return array('error' => 'the file ' . $file . ' doesn\'t exist in data folder' );
+            else $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
         }
 
         $conn->osc_dbImportSQL($sql, ')');
