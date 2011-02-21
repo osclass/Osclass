@@ -341,6 +341,14 @@
         }
     }
 
+    function osc_item_activate_url($secret = '') {
+        if($secret!='') {
+            return osc_base_url(true)."?page=item&action=activate&id=".osc_item_id()."&secret=".$secret;
+        } else {
+            return osc_base_url(true)."?page=item&action=activate&id=".osc_item_id();
+        }
+    }
+
 
     /////////////////////////////////////
     //functions for locations & search //

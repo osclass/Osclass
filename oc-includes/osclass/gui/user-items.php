@@ -59,6 +59,10 @@
                                             <strong><a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit'); ?></a></strong>
                                             <span>|</span>
                                             <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete'); ?></a>
+                                            <?php if(osc_item_is_inactive()) {?>
+                                            <span>|</span>
+                                            <a href="<?php echo osc_item_activate_url();?>" ><?php _e('Activate'); ?></a>
+                                            <?php } ?>
                                         </p>
                                         <br />
                                 </div>
