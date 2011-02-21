@@ -45,7 +45,7 @@
                 </div>
 
                 <div id="main" class="modify_profile">
-                    <h2><?php _e('Change your Email') ; ?></h2>
+                    <h2><?php _e('Change your e-mail') ; ?></h2>
 
                     <form action="<?php osc_base_url(true) ; ?>" method="post">
 
@@ -62,7 +62,7 @@
                                 <input type="text" name="new_email" value="" />
                             </p>
 
-                            <button type="submit"><?php _e('Update your e-mail') ; ?></button>
+                            <button type="submit"><?php _e('Update') ; ?></button>
 
                         </fieldset>
                     </form>

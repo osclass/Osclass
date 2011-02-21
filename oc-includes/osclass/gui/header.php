@@ -28,14 +28,14 @@
         <ul>
             <?php if( osc_is_web_user_logged_in() ) { ?>
                 <li class="first logged">
-                    <?php _e('Hello ' . osc_logged_user_name() . '!') ; ?>  &middot;
+                    <?php echo sprintf(_('Hi %s'), osc_logged_user_name() . '!'); ?>  &middot;
                     <strong><a href="<?php echo osc_user_dashboard_url() ; ?>"><?php _e('My account') ; ?></a></strong> &middot;
                     <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout') ; ?></a>
                 </li>
             <?php } else { ?>
                 <li class="first">
                     <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login') ; ?></a>  &middot;
-                    <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register a free account') ; ?></a>
+                    <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account'); ?></a>
                     <form id="login" action="<?php osc_base_url(true) ; ?>" method="post">
                         <fieldset>
                             <input type="hidden" name="page" value="login" />
@@ -44,7 +44,7 @@
                             <?php UserForm::email_login_text() ; ?>
                             <label for="password"><?php _e('Password') ; ?></label>
                             <?php UserForm::password_login_text() ; ?>
-                            <button type="submit"><?php _e('Login') ; ?></button>
+                            <button type="submit"><?php _e('Log in') ; ?></button>
                             &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?");?></a>
                         </fieldset>
                     </form>
