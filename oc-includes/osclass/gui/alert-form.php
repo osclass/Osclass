@@ -10,17 +10,17 @@ $(document).ready(function(){
 <div class="alert_form">
     <h3><strong><?php _e('Subscribe to this search'); ?></strong></h3>
     <form  method="post" name="sub_alert" id="sub_alert">
-    <fieldset>
-        <input type="hidden" id="alert" name="alert" value="<?php echo osc_search_alert(); ?>" >
-        <?php if(osc_is_web_user_logged_in()) {
-        ?>
-            <input type="hidden" id="alert_userId" name="alert_userId" value="<?php echo osc_logged_user_id(); ?>" />
-            <input type="hidden" id="alert_email" name="alert_email" value="<?php echo osc_logged_user_email(); ?>" />
-        <?php } else { ?>
-            <input type="hidden" id="alert_userId" name="alert_userId" value="" />
-            <input type="text" id="alert_email" name="alert_email" value="<?php _e('Enter your e-mail'); ?>" />
-        <?php }; ?>
-        <button type="submit" class="sub_button" ><?php _e('Subscribe now!');?></button>
-    </fieldset>
+        <fieldset>
+            <input type="hidden" id="alert" name="alert" value="<?php echo osc_search_alert(); ?>" >
+            <?php if(osc_is_web_user_logged_in()) {
+            ?>
+                <input type="hidden" id="alert_userId" name="alert_userId" value="<?php echo osc_logged_user_id(); ?>" />
+                <input type="hidden" id="alert_email" name="alert_email" value="<?php echo osc_logged_user_email(); ?>" />
+            <?php } else { ?>
+                <input type="hidden" id="alert_userId" name="alert_userId" value="" />
+                <input type="text" id="alert_email" name="alert_email" value="<?php _e('Enter your e-mail'); ?>" />
+            <?php }; ?>
+            <button type="submit" class="sub_button" ><?php _e('Subscribe now!');?></button>
+        </fieldset>
     </form>
 </div>
