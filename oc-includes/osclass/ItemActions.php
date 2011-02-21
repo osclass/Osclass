@@ -373,8 +373,8 @@ Class ItemActions
                             ,'alt_body'  => $body
                             ,'reply_to'  => $yourEmail
                         ) ;
-
-
+                        
+                        
         if(osc_item_attachment()) {
             $attachment = Params::getFiles('attachment');
             $resourceName = $attachment['name'] ;
@@ -890,8 +890,8 @@ Class ItemActions
                              '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
                              '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}',
                              '{WEB_TITLE}', '{VALIDATION_LINK}');
-            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=item&action=item_edit&id=' .
-                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=item&action=item_edit&id=' .
+            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
+                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
                              $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                              $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
