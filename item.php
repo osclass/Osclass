@@ -240,7 +240,7 @@ class CWebItem extends BaseModel
 
                 if (count($item) == 1) {
                     $mItems = new ItemActions(false);
-                    $success = $mItems->deleteByPrimaryKey($id);
+                    $success = $mItems->delete($item['s_secret'], $item['pk_i_id']);
                     osc_add_flash_message( __('Your item has been deleted.') ) ;
                     if($this->user!=null) {
                         $this->redirectTo(osc_user_list_items_url());
