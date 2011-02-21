@@ -21,17 +21,14 @@
 ?>
 <?php
     //getting variables for this view
-    $categories = $this->_get("categories");
-    $currencies = $this->_get("currencies");
-    $countries  = $this->_get("countries");
-    $locales    = $this->_get("locales") ;
-    $regions    = $this->_get("regions");
-    $cities     = $this->_get("cities");
-    $user       = $this->_get("user") ;
-    $item       = $this->_get("item") ;
-
-    $this->add_css('tabs.css');
-    $this->add_global_js('tabber-minimized.js')
+    $categories = __get("categories");
+    $currencies = __get("currencies");
+    $countries  = __get("countries");
+    $locales    = __get("locales") ;
+    $regions    = __get("regions");
+    $cities     = __get("cities");
+    $user       = __get("user") ;
+    $item       = __get("item") ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -54,8 +51,8 @@
                     <fieldset>
                         <input type="hidden" name="action" value="item_edit_post" />
                         <input type="hidden" name="page" value="item" />
-                        <input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
-                        <input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
+                        <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
+                        <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
                         <input type="hidden" name="fk_location_id" value="<?php echo $item['fk_i_user_location_id'];?>" />
 
                         <div class="left_column">

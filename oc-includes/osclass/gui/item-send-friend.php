@@ -108,12 +108,12 @@
 
                             <label><?php _e('Item'); ?>: <a href="<?php echo osc_item_url($item); ?>"><?php echo $item['s_title']; ?></a></label><br/>
                             <label for="yourName"><?php _e('Your name'); ?></label><input type="text" name="yourName" id="yourName" /><br/>
-                            <label for="yourEmail"><?php _e('Your email address'); ?></label><input type="text" name="yourEmail" id="yourEmail" /><br/>
+                            <label for="yourEmail"><?php _e('Your e-mail address'); ?></label><input type="text" name="yourEmail" id="yourEmail" /><br/>
                             <label for="friendName"><?php _e("Your friend's name"); ?></label><input type="text" name="friendName" id="friendName" /><br/>
-                            <label for="friendEmail"><?php _e("Your friend's email address"); ?></label><input type="text" name="friendEmail" id="friendEmail" /><br/>
+                            <label for="friendEmail"><?php _e("Your friend's e-mail address"); ?></label><input type="text" name="friendEmail" id="friendEmail" /><br/>
                             <label for="message"><?php _e('Message'); ?></label><textarea cols="50" name="message" id="message"></textarea><br/>
 
-                            <input onclick="validate_form()" type="button" value="<?php _e('Send message'); ?>" />
+                            <input onclick="validate_form()" type="button" value="<?php _e('Send'); ?>" />
                         </fieldset>
                     </form>
 

@@ -45,7 +45,7 @@
                     <h2><?php _e('Your items'); ?> <a href="<?php echo osc_item_post_url() ; ?>">+ <?php _e('Post a new item'); ?></a></h2>
 
                     <?php if(osc_count_items() == 0) { ?>
-                        <h3><?php _e('You do not have any items yet.'); ?></h3>
+                        <h3><?php _e('You don\'t have any items yet'); ?></h3>
                     <?php } else { ?>
                         <?php while(osc_has_items()) { ?>
                                 <div class="item" >
@@ -58,7 +58,7 @@
                                         <p class="options">
                                             <strong><a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit'); ?></a></strong>
                                             <span>|</span>
-                                            <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete'); ?></a>
+                                            <a class="delete" onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete'); ?></a>
                                             <?php if(osc_item_is_inactive()) {?>
                                             <span>|</span>
                                             <a href="<?php echo osc_item_activate_url();?>" ><?php _e('Activate'); ?></a>

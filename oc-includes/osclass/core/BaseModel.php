@@ -42,10 +42,11 @@
             View::newInstance()->_exportVariableToView($key, $value) ;
         }
 
+        /*
         //to get the exported variables for the view (deprecated, all inside View.php)
         function _get($key) {
             return ( View::newInstance()->_get($key) ) ;
-        }
+        }*/
 
         //only for debug (deprecated, all inside View.php)
         function _view($key = null) {
