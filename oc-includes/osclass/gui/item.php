@@ -85,7 +85,7 @@
                     <?php if( osc_comments_enabled() ) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments'); ?></h2>
-                            <?php if( osc_count_item_comments() > 1 ) { ?>
+                            <?php if( osc_count_item_comments() >= 1 ) { ?>
                                 <div class="comments_list">
                                     <?php while ( osc_has_item_comments() ) { ?>
                                         <div class="comment">
