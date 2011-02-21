@@ -41,13 +41,14 @@ class ItemForm extends Form {
     
     static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
     {
-        $deep_string = "";
-        for($var = 0;$var<$deep;$var++) {
-            $deep_string .= '&nbsp;&nbsp;';
+        $deep_string = "0";
+        if( $deep > 0 ){
+            $deep_string = (string) 15*$deep;
         }
+
         $deep++;
         foreach($categories as $c) {
-            echo '<option value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
+            echo '<option style="padding-left: '.$deep_string.'px;" value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' .$c['s_name'] . '</option>' ;
             if(isset($c['categories']) && is_array($c['categories'])) {
                 ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
             }
