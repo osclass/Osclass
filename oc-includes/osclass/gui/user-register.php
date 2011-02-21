@@ -36,7 +36,7 @@
 
             <div class="content user_forms">
                 <div class="inner">
-                    <h1><?php _e('Register an account (free)') ; ?></h1>
+                    <h1><?php _e('Register an account for free') ; ?></h1>
                     <form action="<?php osc_base_url(true) ; ?>" method="post" onSubmit="javascript:return checkForm();">
                         <input type="hidden" name="page" value="register" />
                         <input type="hidden" name="action" value="register_post" />
@@ -55,7 +55,7 @@
                                 echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
                             }
                             ?>
-                            <button type="submit"><?php _e('Create user') ; ?></button>
+                            <button type="submit"><?php _e('Create') ; ?></button>
                             <?php osc_run_hook('user_register_form') ; ?>
                         </fieldset>
                     </form>

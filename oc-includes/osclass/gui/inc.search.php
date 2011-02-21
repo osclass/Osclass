@@ -61,6 +61,6 @@
             </select>
         <?php } ?>
         
-        <button type="submit"><?php _e('Send') ; ?></button>
+        <button type="submit"><?php _e('Search') ; ?></button>
     </fieldset>
 </form>
