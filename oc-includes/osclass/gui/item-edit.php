@@ -53,7 +53,6 @@
                         <input type="hidden" name="page" value="item" />
                         <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
                         <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
-                        <input type="hidden" name="fk_location_id" value="<?php echo $item['fk_i_user_location_id'];?>" />
 
                         <div class="left_column">
                             <div class="box general_info">

@@ -36,18 +36,20 @@
                 <div id="contact" class="inner">
                     <h2><?php _e('Contact seller'); ?></h2>
 
-                    <form action="<?php echo osc_base_url(true); ?>" method="post" onsubmit="return contact();">
+                    <?php ContactForm::js_validation(); ?>
+
+                    <form action="<?php echo osc_base_url(true); ?>" method="post" >
                         <fieldset>
-                            <label><?php _e('To (seller)'); ?>: <?php echo $item['s_contact_name']; ?></label><br/>
-                            <label><?php _e('Item'); ?>: <a href="<?php echo osc_item_url($item); ?>"><?php echo $item['s_title']; ?></a></label><br/>
+                            <label><?php _e('To (seller)'); ?>: <?php echo osc_item_contact_name() ;?></label><br/>
+                            <label><?php _e('Item'); ?>: <a href="<?php echo osc_item_url($item); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
                             <label for="yourName"><?php _e('Your name'); ?></label> <?php ContactForm::your_name(); ?><br/>
                             <label for="yourEmail"><?php _e('Your e-mail address'); ?></label> <?php ContactForm::your_email(); ?><br />
                             <label for="phoneNumber"><?php _e('Phone number'); ?></label><?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message'); ?></label> <?php ContactForm::your_message(); ?><br />
-                            <button type="submit"><?php _e('Send message') ?></button>
+                            <button onclick="return validate_contact();" type="submit"><?php _e('Send message') ?></button>
                             <input type="hidden" name="action" value="contact_post" />
                             <input type="hidden" name="page" value="item" />
-                            <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
+                            <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
                         </fieldset>
                     </form>
                 </div>
