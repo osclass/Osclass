@@ -121,9 +121,6 @@ class CAdminItemComments extends AdminSecBaseModel
                                         $this->_exportVariableToView('comments', $comments) ;
 
                                         //calling the view...
-                                        $this->add_global_js('jquery.dataTables.min.js') ;
-                                        $this->add_css('item_list_layout.css') ;
-                                        $this->add_css('demo_table.css') ;
                                         $this->doView('comments/index.php') ;
 
         }
