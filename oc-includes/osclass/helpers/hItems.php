@@ -171,6 +171,10 @@
     function osc_item_status() {
         return osc_item_field("e_status");
     }
+
+    function osc_item_secret() {
+        return osc_item_field("s_secret");
+    }
     
     function osc_item_is_active() {
         return (osc_item_field("e_status")=="ACTIVE");
