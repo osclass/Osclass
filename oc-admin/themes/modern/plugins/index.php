@@ -21,7 +21,7 @@
 ?>
 
 <?php
-    $plugins = $this->_get("plugins");
+    $plugins = __get("plugins");
     $last = end($plugins); $last_id = $last['int_name'];
     $active_plugins = osc_get_plugins();
 ?>
