@@ -242,6 +242,7 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
                                     $this->_exportVariableToView("item", $item);
                                     $this->_exportVariableToView("resources", $resources);
+                                    $this->_exportVariableToView("new_item", FALSE);
 
                                     $this->doView('items/frm.php') ;
             break;
