@@ -25,6 +25,10 @@
         return true ;
     }
 
+    function osc_logged_user_id() {
+        return Session::newInstance()->_get("userId") ;
+    }
+
     function osc_logged_user_email() {
         return Session::newInstance()->_get('userEmail') ;
     }
@@ -36,6 +40,10 @@
     function osc_is_admin_user_logged_in() {
         if (Session::newInstance()->_get("adminId") == '') return false ;
         return true ;
+    }
+
+    function osc_logged_admin_id() {
+        return Session::newInstance()->_get("adminId") ;
     }
 
     function osc_logged_admin_username() {
