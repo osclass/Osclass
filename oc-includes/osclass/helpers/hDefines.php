@@ -89,41 +89,41 @@
         return( AdminThemes::newInstance()->getCurrentTheme() ) ;
     }
 
-    function osc_current_admin_theme_url() {
-        return( AdminThemes::newInstance()->getCurrentThemeUrl() ) ;
+    function osc_current_admin_theme_url($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemeUrl() . $file ;
     }
     
-    function osc_current_admin_theme_path() {
-        return( AdminThemes::newInstance()->getCurrentThemePath() ) ;
+    function osc_current_admin_theme_path($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
-    function osc_current_admin_theme_styles_url() {
-        return( AdminThemes::newInstance()->getCurrentThemeStyles() ) ;
+    function osc_current_admin_theme_styles_url($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemeStyles() . $file ;
     }
 
-    function osc_current_admin_theme_js_url() {
-        return( AdminThemes::newInstance()->getCurrentThemeJs() ) ;
+    function osc_current_admin_theme_js_url($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
     //ONLY USED AT PUBLIC WEBSITE
     function osc_current_web_theme() {
-        return( WebThemes::newInstance()->getCurrentTheme() ) ;
+        return WebThemes::newInstance()->getCurrentTheme() ;
     }
 
-    function osc_current_web_theme_url() {
-        return( WebThemes::newInstance()->getCurrentThemeUrl() ) ;
+    function osc_current_web_theme_url($file = '') {
+        return WebThemes::newInstance()->getCurrentThemeUrl() . $file ;
     }
 
-    function osc_current_web_theme_path() {
-        return( WebThemes::newInstance()->getCurrentThemePath() ) ;
+    function osc_current_web_theme_path($file = '') {
+        return WebThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
-    function osc_current_web_theme_styles_url() {
-        return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
+    function osc_current_web_theme_styles_url($file = '') {
+        return WebThemes::newInstance()->getCurrentThemeStyles() . $file ;
     }
 
-    function osc_current_web_theme_js_url() {
-        return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
+    function osc_current_web_theme_js_url($file = '') {
+        return WebThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
     

@@ -131,7 +131,7 @@ class CAdminItemComments extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_url($file) ;
     }
 }
 

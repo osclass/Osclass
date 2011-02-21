@@ -61,6 +61,7 @@
             exit ;
         }
 
+        /*
         function osc_get_theme_path($file) {
             if (file_exists(osc_current_web_theme_path() . $file)) {
                 return osc_current_web_theme_path() . $file ;
@@ -77,7 +78,9 @@
             }
         }
 
-        function osc_print_head() {
+        */
+
+        /*function osc_print_head() {
             require $this->osc_get_theme_path('head.php') ;
         }
 
@@ -116,6 +119,7 @@
         function get_js() {
             return ( $this->aJs ) ;
         }
+        */
     }
 
 ?>

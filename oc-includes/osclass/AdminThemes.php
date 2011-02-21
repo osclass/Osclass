@@ -40,11 +40,19 @@
 
         /* PRIVATE */
         private function setCurrentThemeUrl() {
-            $this->theme_url = osc_base_url() . 'oc-admin/themes/' . $this->theme . '/' ;
+            if (file_exists(osc_admin_base_url() . 'oc-admin/themes/' . $this->theme . '/')) {
+                $this->theme_url = osc_admin_base_url() . 'oc-admin/themes/' . $this->theme . '/' ;
+            } else {
+                $this->theme_url = osc_admin_base_url() . 'gui/' ;
+            }
         }
 
         private function setCurrentThemePath() {
-            $this->theme_path = osc_base_path() . 'oc-admin/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
+            if (file_exists(osc_admin_base_path() . 'oc-admin/themes/' . $this->theme . '/')) {
+                $this->theme_path = osc_admin_base_path() . 'oc-admin/themes/' . $this->theme . '/' ;
+            } else {
+                $this->theme_path = osc_admin_base_path() . 'gui/' ;
+            }
         }
 
         /* PUBLIC */

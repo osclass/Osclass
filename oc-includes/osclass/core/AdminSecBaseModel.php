@@ -42,6 +42,7 @@
             exit ;
         }
 
+        /*
         function osc_get_theme_path($file) {
             if (file_exists(osc_current_admin_theme_path() . $file)) {
                 return osc_current_admin_theme_path() . $file ;
@@ -57,6 +58,7 @@
                 return osc_admin_base_url() . 'gui/' . $file ;
             }
         }
+        */
     }
 
 ?>
