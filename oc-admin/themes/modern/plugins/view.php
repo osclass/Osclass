@@ -49,7 +49,7 @@
 			        </div>
 			
 			        <div>
-                    <?php require $this->_get("file") ; ?>
+                    <?php require __get("file") ; ?>
                     </div>
 		        </div> <!-- end of right column -->
             <div style="clear: both;"></div>
