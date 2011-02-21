@@ -21,9 +21,9 @@
 ?>
 <?php 
 
-    $categories = $this->_get("categories");
-    $category = $this->_get("category");
-    $languages = $this->_get("languages");
+    $categories = __get("categories");
+    $category = __get("category");
+    $languages = __get("languages");
 
     if(isset($category['pk_i_id'])) {
         //editing...
