@@ -36,7 +36,7 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/icon-language.png" /></div>
+                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url('images/icon-language.png') ; ?>" /></div>
                     <div id="content_header_arrow">&raquo; <?php _e('Add a language'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
