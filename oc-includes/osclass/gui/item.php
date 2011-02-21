@@ -141,10 +141,10 @@
                                 <?php if ( osc_user_phone() != '' ) { ?>
                                     <p class="phone"><?php _e("Tel.: ") ; ?> <?php echo osc_user_phone() ; ?></p>
                                 <?php } ?>
-                                <label for="yourName"><?php _e('Your name (optional)') ; ?>:</label><input type="text" name="yourName" value="" id="yourName" />
-                                <label for="yourEmail"><?php _e('Your e-mail address') ; ?>:</label><input type="text" name="yourEmail" value="" id="yourEmail" />
-                                <label for="phoneNumber"><?php _e('Phone number') ; ?>:</label><input type="text" name="phoneNumber" value="" id="phoneNumber" />
-                                <label for="message"><?php _e('Message') ; ?>:</label><textarea name="message" rows="8" cols="30"></textarea>
+                                <label for="yourName"><?php _e('Your name (optional)') ; ?>:</label> <?php ContactForm::your_name(); ?>
+                                <label for="yourEmail"><?php _e('Your e-mail address') ; ?>:</label> <?php ContactForm::your_email(); ?>
+                                <label for="phoneNumber"><?php _e('Phone number') ; ?>:</label> <?php ContactForm::your_phone_number(); ?>
+                                <label for="message"><?php _e('Message') ; ?>:</label> <?php ContactForm::your_message(); ?>
                                 <input type="hidden" name="action" value="contact_post" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
                                 <button type="submit"><?php _e('Send') ; ?></button>

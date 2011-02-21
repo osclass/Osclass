@@ -44,7 +44,7 @@
                             <label><?php _e('Item'); ?>: <a href="<?php echo osc_item_url($item); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
                             <label for="yourName"><?php _e('Your name'); ?></label> <?php ContactForm::your_name(); ?><br/>
                             <label for="yourEmail"><?php _e('Your e-mail address'); ?></label> <?php ContactForm::your_email(); ?><br />
-                            <label for="phoneNumber"><?php _e('Phone number'); ?></label><?php ContactForm::your_phone_number(); ?><br/>
+                            <label for="phoneNumber"><?php _e('Phone number'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message'); ?></label> <?php ContactForm::your_message(); ?><br />
                             <button onclick="return validate_contact();" type="submit"><?php _e('Send message') ?></button>
                             <input type="hidden" name="action" value="contact_post" />
