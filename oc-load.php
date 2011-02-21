@@ -123,6 +123,6 @@ if(!defined('__FROM_CRON__')) {
 
 Plugins::init() ;
 
-//Rewrite::newInstance()->init();
+Rewrite::newInstance()->init();
 
 ?>
