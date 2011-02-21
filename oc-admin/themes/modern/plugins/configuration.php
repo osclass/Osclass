@@ -21,9 +21,9 @@
 ?>
 <?php 
 
-    $categories = $this->_get("categories");
-    $selected = $this->_get("selected");
-    $plugin_data = $this->_get("plugin_data");
+    $categories = __get("categories");
+    $selected = __get("selected");
+    $plugin_data = __get("plugin_data");
     $numCols = 1;
     $catsPerCol = round(count($categories)/$numCols);
 
@@ -64,7 +64,7 @@
 	                <div id="right_column">
 
 			            <div id="content_header" class="content_header">
-				            <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/plugins-icon.png" /></div>
+				            <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url('images/plugins-icon.png') ; ?>" /></div>
 				            <div id="content_header_arrow">&raquo; <?php _e('Plugins'); ?></div>
 				            <a href="<?php echo osc_admin_base_url(true);?>?page=plugins&action=add" id="button_open"><?php _e('Add a new plugin') ; ?></a>
 				            <div style="clear: both;"></div>
