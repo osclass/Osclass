@@ -25,13 +25,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php _e('OSClass Admin Panel'); ?></title>
 
-        <link href="<?php echo osc_current_web_theme_styles_url('backoffice.css') ; ?>" rel="stylesheet" type="text/css" />
-        <link href="<?php echo osc_current_web_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo osc_current_admin_theme_styles_url('backoffice.css') ; ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo osc_current_admin_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
 
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery-ui.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.cookie.js') ; ?>"></script>
-        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.json.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.cookie.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.json.js') ; ?>"></script>
             
         <script>
             $(function() {

@@ -23,13 +23,13 @@
 <?php
 
     //getting variables for this view
-    $numUsers = $this->_get("numUsers") ;
-    $numAdmins = $this->_get("numAdmins") ;
-    $numItems = $this->_get("numItems") ;
-    $numItemsPerCategory = $this->_get("numItemsPerCategory") ;
-    $categories = $this->_get("categories") ;
-    $newsList = $this->_get("newsList") ;
-    $comments = $this->_get("comments") ;
+    $numUsers = __get("numUsers") ;
+    $numAdmins = __get("numAdmins") ;
+    $numItems = __get("numItems") ;
+    $numItemsPerCategory = __get("numItemsPerCategory") ;
+    $categories = __get("categories") ;
+    $newsList = __get("newsList") ;
+    $comments = __get("comments") ;
 
 ?>
 
