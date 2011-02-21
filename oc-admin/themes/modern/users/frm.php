@@ -53,8 +53,8 @@
         <div class="Header"><?php _e('Users'); ?></div>
         <div id="content">
             <div id="separator"></div>
-            <?php UserForm::location_javascript("admin"); ?>
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php' ; ?>
+            <?php UserForm::location_javascript("admin") ; ?>
+            <?php osc_current_admin_theme_path('include/backoffice_menu.php') ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
