@@ -37,7 +37,6 @@ class Test extends DAO {
         
         //and locales...
         $this->aLocales = Locale::newInstance()->listAllEnabled() ;
-        print_r($this->aLocales) ;
         //and countries...
         $this->aCountries = Country::newInstance()->listAll() ;
     }
@@ -105,7 +104,7 @@ class Test extends DAO {
         //CATEGORY STATS
         $aSqlInserts = array() ;
         foreach($aTotalPerCategory as $catId => $total) {
-            $aSqlInserts[] = "(" . $catId . "," . $total . ")" ;
+            $aSqlInserts[] = "fk_i_category_id = " . $catId . ", i_num_items = " . $total . ")" ;
         }
         $sql = "UPDATE `oc_t_category_stats` SET " ;
         $sql .= implode($aSqlInserts, ",") ;
