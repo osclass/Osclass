@@ -22,7 +22,7 @@
 ?>
 
 <?php
-    $aLocale = $this->_get('aLocale');
+    $aLocale = __get('aLocale') ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -40,7 +40,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/icon-language.png" title="" alt="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/icon-language.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Edit'); ?></div>
                     <div style="clear: both;"></div>
