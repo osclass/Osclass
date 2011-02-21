@@ -51,13 +51,13 @@
             }
 
             // load core
-            $core_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/messages.mo';
+            $core_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/core.mo';
             $this->_load($core_file, 'core');
 
             // load messages
             $messages_file = osc_base_path() . 'oc-content/themes/' . osc_theme() . '/languages/' . $locale . '/messages.mo';
             if(!file_exists($messages_file)) {
-                $messages_file = osc_base_path() . 'oc-includes/osclass/gui/languages/' . $locale . '/messages.mo';
+                $messages_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/messages.mo';
             }
             $this->_load($messages_file, 'messages');
 
@@ -65,7 +65,7 @@
             $domain = (osc_theme() != '') ? osc_theme() : 'gui';
             $theme_file = osc_base_path() . 'oc-content/themes/' . $domain . '/languages/' . $locale . '/theme.mo';
             if(!file_exists($theme_file)) {
-                $theme_file = osc_base_path() . 'oc-includes/osclass/gui/languages/' . $locale . '/theme.mo';
+                $theme_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/theme.mo';
             }
             $this->_load($theme_file, $domain);
         }
