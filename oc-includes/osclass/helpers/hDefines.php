@@ -357,7 +357,7 @@
     /////////////////////////////////////
 
 
-    function osc_list_countries() {
+    function osc_get_countries() {
         if (View::newInstance()->_exists('countries')) {
             return View::newInstance()->_get('countries') ;
         } else {
@@ -365,7 +365,7 @@
         }
     }
     
-    function osc_list_regions($country = '') {
+    function osc_get_regions($country = '') {
         if (View::newInstance()->_exists('regions')) {
             return View::newInstance()->_get('regions') ;
         } else {
@@ -377,7 +377,7 @@
         }
     }
     
-    function osc_list_cities($region = '') {
+    function osc_get_cities($region = '') {
         if (View::newInstance()->_exists('cities')) {
             return View::newInstance()->_get('cities') ;
         } else {
@@ -411,6 +411,15 @@
         return Search::newInstance()->listCities($region);
     }
     
+
+
+    function osc_get_currencies() {
+        if (!View::newInstance()->_exists('currencies')) {
+            View::newInstance()->_exportVariableToView('currencies', Currency::newInstance()->listAll());
+        }
+        return View::newInstance()->_get('currencies');
+    }
+
 
     
     

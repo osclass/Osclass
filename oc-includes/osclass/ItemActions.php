@@ -551,7 +551,7 @@ Class ItemActions
     {
         $aItem = array();
         
-        if( $is_add ){   // ADD
+        if( $is_add ) {   // ADD
 
             if($this->is_admin){
                 $userId = Session::newInstance()->_get('adminId');
@@ -579,8 +579,13 @@ Class ItemActions
             $aItem['show_email'] = $show_email;
 
             if ($userId != null) {
-                if(isset($admin) && $admin==TRUE) {
-                    $data = Admin::newInstance()->findByPrimaryKey($userId);
+                if( $this->is_admin ) {
+                    if( Params::getParam('contactName') != '' && Params::getParam('contactEmail') != '' ) {
+                        $data['s_name']     = Params::getParam('contactName');
+                        $data['s_email']    = Params::getParam('contactEmail');
+                    }else{
+                        $data = Admin::newInstance()->findByPrimaryKey($userId);
+                    }
                     $userId = null;
                 } else {
                     $data = User::newInstance()->findByPrimaryKey($userId);
