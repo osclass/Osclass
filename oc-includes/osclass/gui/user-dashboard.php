@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -19,11 +18,6 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
-?>
-
-<?php
-    //$aItems = $this->_get('aItems') ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -32,52 +26,37 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
     </head>
     <body>
-
         <div class="container">
-
             <?php osc_current_web_theme_path('header.php') ; ?>
-
             <div class="content user_account">
-
-                <h1><strong><?php _e('User account manager') ; ?></strong></h1>
-
+                <h1>
+                    <strong><?php _e('User account manager', 'gui') ; ?></strong>
+                </h1>
                 <div id="sidebar">
-
                     <?php echo osc_private_user_menu() ; ?>
-
                 </div>
-
                 <div id="main">
-
-                    <h2><?php echo sprintf(_('Items from %s') ,osc_logged_user_name()); ?></h2>
-
+                    <h2><?php echo sprintf(_('Items from %s', 'gui') ,osc_logged_user_name()); ?></h2>
                     <?php if(osc_count_items() == 0) { ?>
-                        <h3><?php _e('No items have been added yet') ; ?></h3>
+                        <h3><?php _e('No items have been added yet', 'gui'); ?></h3>
                     <?php } else { ?>
                         <?php while(osc_has_items()) { ?>
                             <div class="userItem" >
-                                <div><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></div>
-
-                                <div class="userItemData" >
-                                <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                <?php _e('Price') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
+                                <div>
+                                    <a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a>
                                 </div>
-
+                                <div class="userItemData" >
+                                <?php _e('Publication date', 'gui') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
+                                <?php _e('Price', 'gui') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
+                                </div>
                             </div>
                             <br />
                         <?php } ?>
                     <?php } ?>
-
                 </div>
-
             </div>
-
             <?php osc_current_web_theme_path('footer.php') ; ?>
-
         </div>
-
         <?php osc_show_flash_message() ; ?>
-
     </body>
-
 </html>

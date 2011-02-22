@@ -26,7 +26,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
-
         <script type="text/javascript">
             function validateForm() {
                 var validator = new FormValidator();
@@ -42,34 +41,26 @@
         </script>
     </head>
     <body>
-
         <div class="container">
-
             <?php osc_current_web_theme_path('header.php') ; ?>
-
             <div class="content user_forms">
                 <div class="inner">
-                    <h1><?php _e('Access to your account'); ?></h1>
-                    <form action="<?php ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
+                    <h1><?php _e('Access to your account', 'gui'); ?></h1>
+                    <form action="<?php osc_base_url(true); ?>" method="post" onsubmit="javascript:return validateForm() ;">
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="login_post" />
                         <fieldset>
-                            <label for="email"><?php _e('E-mail'); ?></label> <?php UserForm::email_login_text() ; ?><br />
-                            <label for="password"><?php _e('Password'); ?></label> <?php UserForm::password_login_text() ; ?><br />
-                            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me') ; ?></label></p>
-                            <button type="submit"><?php _e("Log in");?></button>
-                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?");?></a>
+                            <label for="email"><?php _e('E-mail', 'gui'); ?></label> <?php UserForm::email_login_text() ; ?><br />
+                            <label for="password"><?php _e('Password', 'gui'); ?></label> <?php UserForm::password_login_text() ; ?><br />
+                            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'gui') ; ?></label></p>
+                            <button type="submit"><?php _e("Log in", 'gui');?></button>
+                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'gui');?></a>
                         </fieldset>
                     </form>
                 </div>
             </div>
-
             <?php osc_current_web_theme_path('footer.php') ; ?>
-
         </div>
-
         <?php osc_show_flash_message() ; ?>
-
     </body>
-
 </html>
