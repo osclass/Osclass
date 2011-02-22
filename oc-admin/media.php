@@ -47,7 +47,14 @@ class CAdminMedia extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;
             break;
             default:                $resourceId = Params::getParam("id");
-                                    !is_null($resourceId) ? $resources = $this->resourcesManager->getAllResources($resourceId) : $resources = $this->resourcesManager->getAllResources();
+
+
+                                    if( $resourceId != '' ) {
+                                        $resources = $this->resourcesManager->getAllResources($resourceId);
+                                    } else {
+                                        $resources = $this->resourcesManager->getAllResources(NULL);
+                                    }
+
                                     //calling the view...
                                     $this->_exportVariableToView("resources", $resources) ;
                                     $this->_exportVariableToView("resourceId", $resourceId) ;

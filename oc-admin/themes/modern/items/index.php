@@ -153,7 +153,7 @@
                                 &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
                             </div>
                             <div id="TableToolsLinks">
-                                <strong><?php _e('Filter by') ?>:</strong> <a href="items.php"><?php _e('All') ?></a> |
+                                <strong><?php _e('Filter by') ?>:</strong> <a href="<?php echo osc_admin_base_url(true); ?>?page=items"><?php _e('All') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=pending"><?php _e('Pending') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=spam"><?php _e('Spam') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=duplicated"><?php _e('Duplicated') ?></a> |

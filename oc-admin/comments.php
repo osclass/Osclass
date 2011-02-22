@@ -116,7 +116,11 @@ class CAdminItemComments extends AdminSecBaseModel
             break;
             case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
             break;
-            default:                    $comments = $this->itemCommentManager->getAllComments();//Params::getParam('id') ) ;
+            default:                    if( Params::getParam('id') != '' ){
+                                            $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;
+                                        } else {
+                                            $comments = $this->itemCommentManager->getAllComments( ) ;
+                                        }
                                         
                                         $this->_exportVariableToView('comments', $comments) ;
 
