@@ -99,6 +99,20 @@ class Page extends DAO
             $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
         }
 
+        // ---
+        $locale = Session::newInstance()->_get('locale') ;
+
+        if(isset($row['locale'][$locale])) {
+            $row['s_title'] = $row['locale'][$locale]['s_title'] ;
+            $row['s_text']    = $row['locale'][$locale]['s_text'] ;
+        } else {
+            $data = current($row['locale']) ;
+            $row['s_title'] = $data['s_title'] ;
+            $row['s_text']    = $data['s_text'] ;
+            unset($data) ;
+        }
+        // ---
+
         return $row;
     }
 

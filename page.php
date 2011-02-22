@@ -32,26 +32,13 @@
         function doModel() {
             $id = Params::getParam('id') ;
             $page = $this->pageManager->findByPrimaryKey($id) ;
-
+//            print_r( $page );
             if( $page == '' || $page['b_indelible'] == 1 ) {
                 echo "404 ERROR!!!" ;
                 exit() ;
             } else {
-                $locale = Session::newInstance()->_get('locale') ;
-
-                if(isset($page['locale'][$locale])) {
-                    $title = $page['locale'][$locale]['s_title'] ;
-                    $text = $page['locale'][$locale]['s_text'] ;
-                } else {
-                    $data = current($page['locale']) ;
-                    $title = $data['s_title'] ;
-                    $text = $data['s_text'] ;
-                    unset($data) ;
-                }
-
                 //calling the view...
-                $this->_exportVariableToView('title', $title) ;
-                $this->_exportVariableToView('text', $text) ;
+                $this->_exportVariableToView('page', $page ) ;
 
                 $this->doView('page.php') ;
             }
