@@ -54,7 +54,7 @@ Class ItemActions
         $contactEmail   = $aItem['contactEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item.'));
+            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item'));
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -122,9 +122,9 @@ Class ItemActions
                 osc_add_flash_message( _m('A new item has been added')) ;
             } else {
                 if( osc_item_validation_enabled() ) {
-                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item.')) ;
+                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
                 } else {
-                    osc_add_flash_message( _m('Great! We\'ve just published your item.')) ;
+                    osc_add_flash_message( _m('Great! We\'ve just published your item')) ;
                 }
 
             }
@@ -318,7 +318,7 @@ Class ItemActions
         if(osc_sendMail($params)) {
             osc_add_flash_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
         } else {
-            osc_add_flash_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
+            osc_add_flash_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
         }
     }
 
@@ -492,7 +492,7 @@ Class ItemActions
             }
             osc_run_hook('add_comment', $item);
         }else{
-            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later.')) ;
+            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later')) ;
         }
     }
     
