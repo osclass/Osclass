@@ -20,11 +20,14 @@ class ItemForm extends Form {
 
     static public function primary_input_hidden($item)
     {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_hidden("id", $item["pk_i_id"]) ;
     }
     
-    static public function category_select($categories, $item, $default_item = null)
+    static public function category_select($categories = null, $item = null, $default_item = null)
     {
+        if($categories==null) { $categories = osc_get_categories(); };
+        if($item==null) { $item = osc_item(); };
         echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -55,8 +58,10 @@ class ItemForm extends Form {
         }
     }
 
-    static public function user_select($users, $item, $default_item = null)
+    static public function user_select($users = null, $item = null, $default_item = null)
     {
+        if($users==null) { $users = osc_get_users(); };
+        if($item==null) { $item = osc_item(); };
         echo '<select name="userId" id="userId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -80,7 +85,8 @@ class ItemForm extends Form {
         return true ;
     }
 
-    static public function multilanguage_title_description($locales, $item = null) {
+    static public function multilanguage_title_description($locales = null, $item = null) {
+        if($locales==null) { $locales = osc_get_locales(); };
         $num_locales = count($locales);
         if($num_locales>1) { echo '<div class="tabber">'; };
         foreach($locales as $locale) {
@@ -101,10 +107,13 @@ class ItemForm extends Form {
     
     static public function price_input_text($item = null)
     {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
     }
 
-    static public function currency_select($currencies, $item = null) {
+    static public function currency_select($currencies = null, $item = null) {
+        if($currencies==null) { $currencies = osc_get_currencies(); };
+        if($item==null) { $item = osc_item(); };
         if(count($currencies) > 1 ) {
             $default_key = null;
             $currency = Preference::newInstance()->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency')) ;
@@ -124,7 +133,9 @@ class ItemForm extends Form {
     }
 
 
-    static public function country_select($countries, $item = null) {
+    static public function country_select($countries = null, $item = null) {
+        if($countries==null) { $countries = osc_get_countries(); };
+        if($item==null) { $item = osc_item(); };
         if( count($countries) > 1 ) {
             parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
             return true ;
@@ -139,11 +150,14 @@ class ItemForm extends Form {
     }
 
     static public function country_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
         return true ;
     }
 
-    static public function region_select($regions, $item = null) {
+    static public function region_select($regions = null, $item = null) {
+        if($regions==null) { $regions = osc_get_regions(); };
+        if($item==null) { $item = osc_item(); };
         if( count($regions) > 1 ) {
             parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
             return true ;
@@ -158,10 +172,13 @@ class ItemForm extends Form {
     }
 
     static public function region_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
     }
 
-    static public function city_select($cities, $item = null) {
+    static public function city_select($cities = null, $item = null) {
+        if($cities==null) { $cities = osc_get_cities(); };
+        if($item==null) { $item = osc_item(); };
         if( count($cities) > 1 ) {
             parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
             return true ;
@@ -175,26 +192,31 @@ class ItemForm extends Form {
     }
 
     static public function city_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
         return true ;
     }
 
     static public function city_area_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('cityArea', (isset($item['s_city_area'])) ? $item['s_city_area'] : null) ;
         return true ;
     }
 
     static public function address_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('address', (isset($item['s_address'])) ? $item['s_address'] : null) ;
         return true ;
     }
 
     static public function contact_name_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('contactName', (isset($item['s_contact_name'])) ? $item['s_contact_name'] : null) ;
         return true ;
     }
 
     static public function contact_email_text($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_text('contactEmail', (isset($item['s_contact_email'])) ? $item['s_contact_email'] : null) ;
         return true ;
     }
@@ -211,6 +233,7 @@ class ItemForm extends Form {
     }
 
     static public function show_email_checkbox($item = null) {
+        if($item==null) { $item = osc_item(); };
         parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );
         return true ;
     }
@@ -348,7 +371,7 @@ class ItemForm extends Form {
     }
 
     static public function photos($resources = null) {
-
+        if($resources==null) { $resources = osc_get_item_resources(); };
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
@@ -418,9 +441,10 @@ class ItemForm extends Form {
 </script>
 <div id="plugin-hook">
 <?php
-    if (isset($_GET['catId'])) {
-        osc_run_hook('item_form', $_GET['catId']);
+    if (Params::getParam('catId')!='') {
+        osc_run_hook('item_form', Params::getParam('catId'));
     } else {
+        $categories = osc_category();
         if(is_array($categories)) {
             osc_run_hook('item_form', $categories[0]['pk_i_id']);
         } else {

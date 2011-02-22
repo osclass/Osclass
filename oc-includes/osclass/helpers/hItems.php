@@ -25,8 +25,10 @@
     function osc_item() {
         if (View::newInstance()->_exists('items')) {
             $item = View::newInstance()->_current('items') ;
-        } else {
+        } else if(View::newInstance()->_exists('item')) {
             $item = View::newInstance()->_get('item') ;
+        } else {
+            $item = null;
         }
 
         return($item) ;
@@ -314,6 +316,13 @@
             View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
         }
         return View::newInstance()->_next('resources') ;
+    }
+
+    function osc_get_item_resources() {
+        if ( !View::newInstance()->_exists('resources') ) {
+            View::newInstance()->_exportVariableToView('resources', ItemResource::newInstance()->getAllResources( osc_item_id() ) ) ;
+        }
+        return View::newInstance()->_get('resources') ;
     }
 
     function osc_count_item_comments() {

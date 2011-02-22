@@ -27,16 +27,21 @@
     function osc_locale() {
         if (View::newInstance()->_exists('locales')) {
             $locale = View::newInstance()->_current('locales') ;
-        } else {
+        } else if (View::newInstance()->_exists('locale')) {
             $locale = View::newInstance()->_get('locale') ;
+        } else {
+            osc_get_locales() ;
+            $locale = osc_locale();
         }
-
         return($locale) ;
     }
 
     function osc_get_locales() {
-        if (View::newInstance()->_exists('locales')) {
+        if (!View::newInstance()->_exists('locales')) {
             $locale = Locale::newInstance()->listAllEnabled() ;
+            View::newInstance()->_exportVariableToView("locales", $locale);
+        } else {
+            $locale = View::newInstance()->_get('locales');
         }
         return $locale;
     }

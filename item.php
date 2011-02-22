@@ -58,8 +58,8 @@ class CWebItem extends BaseModel
                     $this->redirectTo(osc_base_url(true));
                 }
 
-                $categories = Category::newInstance()->toTree();
-                $currencies = Currency::newInstance()->listAll();
+                //$categories = Category::newInstance()->toTree();
+                //$currencies = Currency::newInstance()->listAll();
 
                 $countries = Country::newInstance()->listAll();
                 $regions = array(); 
@@ -75,8 +75,8 @@ class CWebItem extends BaseModel
                     $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                 }
 
-                $this->_exportVariableToView('categories', $categories) ;
-                $this->_exportVariableToView('currencies', $currencies) ;
+                //$this->_exportVariableToView('categories', $categories) ;
+                //$this->_exportVariableToView('currencies', $currencies) ;
                 $this->_exportVariableToView('countries',$countries ) ;
                 $this->_exportVariableToView('regions', $regions) ;
                 $this->_exportVariableToView('cities', $cities) ;
