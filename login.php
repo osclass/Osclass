@@ -27,9 +27,6 @@ class CWebLogin extends BaseModel
     //Business Layer...
     function doModel() {
         switch( $this->action ) {
-            case('login'):          //login
-                                    $this->doView( 'user-login.php' ) ;
-            break;
             case('login_post'):     //post execution for the login
                                     $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
                                     if ($user) {
@@ -103,6 +100,8 @@ class CWebLogin extends BaseModel
 
                                     $this->redirectTo( osc_base_url() ) ;
             break ;
+            default:                //login
+                                    $this->doView( 'user-login.php' ) ;
         }
        
     }

@@ -28,10 +28,6 @@
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div id="form_publish">
-                <?php include("inc.search.php") ; ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url_in_category() ; ?>"><?php _e("Publish your ad for free", 'gui') ; ?></a></strong>
-            </div>
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
@@ -113,7 +109,7 @@
                 <div id="sidebar">
                     <div id="photos">
                         <?php while ( osc_has_item_resources() ) { ?>
-                            <img src="<?php echo osc_resource_url() ; ?>" width="350" />
+                            <img src="<?php echo osc_resource_url() ; ?>" width="320" />
                         <?php } ?>
                     </div>
                     <div id="contact">

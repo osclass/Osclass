@@ -18,12 +18,11 @@ a:hover { color:#F80; }
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
 #FlashMessage { background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:absolute; text-align: center; top:0; width:100%; }
 .container { margin:0 auto; width:970px; }
-.content { clear:both; float:left; margin-bottom:20px; width:100%; }
-.content.home,
-.content.list { border-top:1px solid #BBB; }
+.content { clear:both; float:left; margin-bottom:20px; width:960px; }
+.content.home { border-top:1px solid #BBB; }
 
 /* Header */
-#header { border-bottom:1px solid #BBB; clear:both; float:left; margin:25px 0 12px; padding:0 0 12px 10px; position: relative; width:960px; }
+#header { border-bottom: 1px solid #BBB; clear:both; float:left; margin:25px 0 0 0; padding:0 0 30px 0; position: relative; width:960px; }
 #header #logo { color:#000; font:30px Georgia, Times, 'Times New Roman', serif; text-decoration:none; }
 #header #logo strong { font-weight:normal; }
 #header #user_menu { display:inline; font-size:11px; position:absolute; right:10px; top:0; }
@@ -44,18 +43,18 @@ a:hover { color:#F80; }
 #footer .inner strong { color:#666; }
 
 /* Search form */
-.search { padding:9px 10px 22px; }
 .search input { border:1px solid #b4b4b4; font-size:12px; height: 26px; line-height: 26px; margin-right:10px; padding:0 10px; vertical-align: middle; }
-.search input#query { width:325px; }
+.search input#query { width:375px; }
 .search select { margin-right:10px; }
 .home .search a { display:none; }
 .search .extras { padding-top:10px; }
 .search .extras .fieldset_title { color:#999; margin-bottom:5px; }
+.search fieldset { padding:15px 10px; }
 /* NOTE: see Uniform.js styles at the bottom for the fake select and fake button styles */
 
 /* List & Item Search Row */
-#form_publish .search { float:left; width:725px; }
-#form_publish .search input#query { width:270px; }
+#form_publish .search { float:left; width:960px; }
+/*#form_publish .search input#query { width:375px; }*/
 #form_publish .search #expand_advanced { font-size:11px; margin-left:10px;}
 #form_publish .search .extras { display:none; }
 #form_publish .publish_button { background:#ec4901 url(../images/button_link_bg.gif) repeat-x top; border:1px solid #c54f00; float:right; margin:9px 10px 0 0; padding:6px 10px 7px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
@@ -65,7 +64,7 @@ a:hover { color:#F80; }
 
 /* -- HOME --------------------------------------- */
 .home #main { float:left; width:695px; }
-.home #sidebar { float:right; padding-right:10px; width:240px; }
+.home #sidebar { float:right; width:240px; }
 .home .search { border-bottom: 1px solid #BBB; margin-bottom:15px; }
 
 /* Latest ads list */
@@ -114,7 +113,7 @@ a:hover { color:#F80; }
 
 
 /* -- AD LISTINGS --------------------------------------- */
-.list #main { float:right; margin-right:10px; padding-top:18px; width:690px; }
+.list #main { float:right; padding-top:18px; width:690px; }
 .list #sidebar { float:left; padding-left:10px; width:240px; }
 
 /* List */
@@ -186,9 +185,9 @@ a:hover { color:#F80; }
 
 
 /* -- ITEM --------------------------------------- */
-#item_head  { border-bottom:2px solid #f2f2f2; clear:both; float:left; padding-top:20px; width:100%; }
+#item_head  { border-bottom:2px solid #f2f2f2; clear:both; float:left; width:100%; }
 #item_head .inner { border-bottom:1px solid #dddddd; clear:both; float:left; padding-bottom:8px; width:100%; }
-#item_head h1 { float:left; font:20px Georgia, Times, 'Times New Roman', serif; width:700px; }
+#item_head h1 { float:left; font:20px Georgia, Times, 'Times New Roman', serif; width:700px; margin-left:10px; }
 #item_head h1 span { border-right:2px solid #e8e8e8; color:#F60; font-weight:bold; margin-right:5px; padding-right:13px; }
 #item_head #report { background:url(../images/report_flag.gif) no-repeat 0 4px; float:right; padding:5px 0 0 20px; position:relative; width: 90px; }
 #item_head #report strong {background:url(../images/language_arrow.gif) no-repeat right center; color:#999; font-size:11px; font-weight:normal; padding-right:9px; }
@@ -253,7 +252,7 @@ a:hover { color:#F80; }
 .item #photos .mini_photos img { margin:0 1px 1px 0; }
 
 /* Contact form */
-.item .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:20px auto; padding:13px; width:350px; -moz-border-radius:10px; border-radius:10px; }
+.item .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:5px 0; padding:13px 0; width:350px; -moz-border-radius:10px; border-radius:10px; }
 .item #contact { background:#e9f5f9; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px; }
 .item #contact h2 { color:#000; font-size:14px; margin-bottom:8px; padding-left:12px; }
 .item #contact fieldset { background:#FFF; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px;  }

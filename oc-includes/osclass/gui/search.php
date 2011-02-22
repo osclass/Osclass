@@ -27,9 +27,6 @@
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div id="form_publish">
-                <strong class="publish_button margin-bottom"><a href="<?php echo osc_item_post_url( osc_category() ) ; ?>"><?php _e("Publish your ad for free", 'gui');?></a></strong>
-            </div>
             <div class="content list">
                 <div id="main">
                     <div class="ad_list">
