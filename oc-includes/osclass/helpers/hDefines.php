@@ -34,7 +34,7 @@
     }
     
     function osc_ajax_plugin_url($file = '') {
-        return(WEB_PATH . "index.php?page=ajax&file=" . $file);
+        return(WEB_PATH . "index.php?page=ajax&action=custom&ajaxfile=" . $file);
     }
 
     function osc_admin_configure_plugin_url($file = '') {
