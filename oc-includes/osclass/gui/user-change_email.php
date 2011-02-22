@@ -29,52 +29,36 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
     </head>
     <body>
-
         <div class="container">
-
             <?php osc_current_web_theme_path('header.php') ; ?>
-
             <div class="content user_account">
-
-                <h1><strong><?php _e('User account manager') ; ?></strong></h1>
-
+                <h1>
+                    <strong><?php _e('User account manager', 'gui') ; ?></strong>
+                </h1>
                 <div id="sidebar">
-
                     <?php echo osc_private_user_menu() ; ?>
-
                 </div>
-
                 <div id="main" class="modify_profile">
-                    <h2><?php _e('Change your e-mail') ; ?></h2>
-
+                    <h2><?php _e('Change your e-mail', 'gui') ; ?></h2>
                     <form action="<?php osc_base_url(true) ; ?>" method="post">
-
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="change_email_post" />
-
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current e-mail') ; ?></label><br />
+                                <label for="email"><?php _e('Current e-mail', 'gui') ; ?></label><br />
                                 <input type="text" name="email" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New e-mail') ; ?></label><br />
+                                <label for="new_email"><?php _e('New e-mail', 'gui') ; ?></label><br />
                                 <input type="text" name="new_email" value="" />
                             </p>
-
-                            <button type="submit"><?php _e('Update') ; ?></button>
-
+                            <button type="submit"><?php _e('Update', 'gui') ; ?></button>
                         </fieldset>
                     </form>
                 </div>
             </div>
-
             <?php osc_current_web_theme_path('footer.php') ; ?>
-
         </div>
-
         <?php osc_show_flash_message() ; ?>
-
     </body>
-
 </html>

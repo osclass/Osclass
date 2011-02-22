@@ -62,9 +62,12 @@
             $this->_load($messages_file, 'messages');
 
             // load theme
-            $domain = (osc_theme() != '') ? osc_theme() : 'gui';
+            $domain = osc_theme();
             $theme_file = osc_base_path() . 'oc-content/themes/' . $domain . '/languages/' . $locale . '/theme.mo';
             if(!file_exists($theme_file)) {
+                if(!file_exists(osc_base_path() . 'oc-content/themes/' . $domain)) {
+                    $domain = 'gui';
+                }
                 $theme_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/theme.mo';
             }
             $this->_load($theme_file, $domain);

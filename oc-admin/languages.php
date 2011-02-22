@@ -134,7 +134,7 @@ class CAdminLanguages extends AdminSecBaseModel
                                         
                                         if ($id) {
                                             if($action == 'enable' && $default_lang == $id && $enabled == 0) {
-                                                osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i));
+                                                osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i), 'admin');
                                             } else {
                                                 $msg = ($enabled == 1) ? _m('The language has been enabled for the public website') : _m('The language has been disabled for the public website') ;
                                                 $aValues = array('b_enabled' => $enabled) ;
@@ -146,9 +146,9 @@ class CAdminLanguages extends AdminSecBaseModel
                                                 $this->localeManager->update($aValues, array('pk_c_code' => $id)) ;
                                             }
 
-                                            osc_add_flash_message( $msg ) ;
+                                            osc_add_flash_message( $msg , 'admin') ;
                                         } else {
-                                            osc_add_flash_message( _m('There was a problem updating the language. The language id was lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the language. The language id was lost'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
             break;
@@ -159,9 +159,9 @@ class CAdminLanguages extends AdminSecBaseModel
                                             foreach ($id as $i) {
                                                 $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                             }
-                                            osc_add_flash_message($msg) ;
+                                            osc_add_flash_message($msg, 'admin') ;
                                         } else {
-                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -174,14 +174,14 @@ class CAdminLanguages extends AdminSecBaseModel
                                             $default_lang = osc_language() ;
                                             foreach ($id as $i) {
                                                 if($default_lang == $i && $action == 'disable_selected') {
-                                                    osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i));
+                                                    osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i), 'admin');
                                                 } else {
                                                     $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                 }
                                             }
-                                            osc_add_flash_message($msg) ;
+                                            osc_add_flash_message($msg, 'admin') ;
                                         } else {
-                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -194,9 +194,9 @@ class CAdminLanguages extends AdminSecBaseModel
                                             foreach ($id as $i) {
                                                 $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                             }
-                                            osc_add_flash_message($msg) ;
+                                            osc_add_flash_message($msg, 'admin') ;
                                         } else {
-                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -209,9 +209,9 @@ class CAdminLanguages extends AdminSecBaseModel
                                             foreach ($id as $i) {
                                                 $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                             }
-                                            osc_add_flash_message($msg) ;
+                                            osc_add_flash_message($msg, 'admin') ;
                                         } else {
-                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost')) ;
+                                            osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;

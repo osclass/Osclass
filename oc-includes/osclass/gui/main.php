@@ -28,19 +28,14 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
     </head>
     <body>
-
         <div class="container">
-
             <?php osc_current_web_theme_path('header.php') ; ?>
-
             <div id="form_publish">
                 <?php include("inc.search.php") ; ?>
-                <strong class="publish_button"><a href="<?php echo osc_item_post_url() ; ?>"><?php _e('Publish your ad for free') ; ?></a></strong>
+                <strong class="publish_button"><a href="<?php echo osc_item_post_url() ; ?>"><?php _e('Publish your ad for free', 'gui') ; ?></a></strong>
             </div>
-
             <div class="content home">
                 <div id="main">
-
                     <?php
                         $total_categories   = osc_count_categories() ;
                         $col1_max_cat       = ceil($total_categories/3);
@@ -54,13 +49,10 @@
                             $col    = 1;
                             echo '<div class="col c1">';
                         ?>
-
                         <?php osc_goto_first_category() ; ?>
-                        
                         <?php while ( osc_has_categories() ) { ?>
                             <div class="category">
                                 <h1><strong><a href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></strong></h1>
-
                                 <?php if ( osc_count_subcategories() > 0 ) { ?>
                                     <ul>
                                         <?php while ( osc_has_subcategories() ) { ?>
@@ -86,14 +78,10 @@
                    </div>
 
                    <div class="latest_ads">
-                        <h1><strong><?php _e('Latest Items') ; ?></strong></h1>
-                        
+                        <h1><strong><?php _e('Latest Items', 'gui') ; ?></strong></h1>
                         <?php if( osc_count_latest_items() == 0) { ?>
-
-                            <p class="empty"><?php _e('No Latest Items') ; ?></p>
-                            
+                            <p class="empty"><?php _e('No Latest Items', 'gui') ; ?></p>
                         <?php } else { ?>
-
                             <table border="0" cellspacing="0">
                                  <tbody>
                                     <?php $class = "even"; ?>
@@ -101,13 +89,11 @@
                                         <tr class="<?php echo $class ; ?>">
                                              <td class="photo">
                                                 <?php if( osc_count_item_resources() ) { ?>
-
-                                                    <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" /></a>
-                                                
+                                                    <a href="<?php echo osc_item_url() ; ?>">
+                                                        <img src="<?php echo osc_resource_thumbnail_url() ; ?>" />
+                                                    </a>
                                                 <?php } else { ?>
-
                                                     <img src="<?php echo osc_current_web_theme_path('images/no_photo.gif') ; ?>" />
-
                                                 <?php } ?>
                                              </td>
                                              <td class="text">
@@ -123,21 +109,16 @@
                                     <?php } ?>
                                 </tbody>
                             </table>
-
                             <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
-                                <p class="see_more_link"><a href="#"><strong><?php _e("See all offers");?> &raquo;</strong></a></p>
+                                <p class="see_more_link"><a href="#"><strong><?php _e("See all offers", 'gui'); ?> &raquo;</strong></a></p>
                             <?php } ?>
-
                         <?php } ?>
                     </div>
                 </div>
-
                 <div id="sidebar">
-
                     <div class="navigation">
-
                         <div class="box location">
-                            <h3><strong><?php _e("Location");?></strong></h3>
+                            <h3><strong><?php _e("Location", 'gui'); ?></strong></h3>
                             <ul>
                             <?php $regions = osc_search_list_regions();
                                 foreach($regions as $region) { ?>
@@ -145,19 +126,11 @@
                             <?php } ?>
                             </ul>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
             <?php osc_current_web_theme_path('footer.php') ; ?>
-
         </div>
-
         <?php osc_show_flash_message() ; ?>
-
     </body>
-    
 </html>
