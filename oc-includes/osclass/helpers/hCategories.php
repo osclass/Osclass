@@ -19,6 +19,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+
     function osc_category() {
         if (View::newInstance()->_exists('subcategories')) {
             $category = View::newInstance()->_current('subcategories') ;
@@ -34,6 +35,17 @@
         return($category) ;
     }
 
+    /**
+     * Low level function: Gets the list of categories as a tree
+     *
+     * <code>
+     * <?php
+     *  $c = osc_get_categories() ;
+     * ?>
+     * </code>
+     *
+     * @return <array>
+     */
     function osc_get_categories() {
        if ( !View::newInstance()->_exists('categories') ) {
             View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
@@ -49,6 +61,11 @@
         return '' ;
     }
 
+    /**
+     * Low level function: Gets the value of the category attribute
+     *
+     * @return <array>
+     */
     function osc_category_field($field, $locale = '') {
         return osc_field_toTree(osc_category(), $field) ;
     }
@@ -61,6 +78,11 @@
         return View::newInstance()->_count('subcategories') ;
     }
 
+    /**
+     * Gets the total of categories. If categories are not loaded, this function will load them.
+     *
+     * @return <int>
+     */
     function osc_count_categories() {
         if ( !View::newInstance()->_exists('categories') ) {
             View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
@@ -68,6 +90,11 @@
         return osc_priv_count_categories() ;
     }
 
+    /**
+     * Let you know if there are more categories in the list. If categories are not loaded, this function will load them.
+     *
+     * @return <boolean>
+     */
     function osc_has_categories() {
         if ( !View::newInstance()->_exists('categories') ) {
             View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
@@ -76,6 +103,12 @@
         return View::newInstance()->_next('categories') ;
     }
 
+    /**
+     * Gets the total of subcategories for the current category. If subcategories are not loaded, this function will load them and
+     * it will prepare the the pointer to the first element
+     *
+     * @return <int>
+     */
     function osc_count_subcategories() {
         $category = View::newInstance()->_current('categories') ;
         if ( $category == '' ) return -1 ;
@@ -87,6 +120,12 @@
         return osc_priv_count_subcategories() ;
     }
 
+    /**
+     * Let you know if there are more subcategories for the current category in the list. If subcategories are not loaded, this
+     * function will load them and it will prepare the pointer to the first element
+     *
+     * @return <boolean>
+     */
     function osc_has_subcategories() {
         $category = View::newInstance()->_current('categories') ;
         if ( $category == '' ) return -1 ;
@@ -101,21 +140,39 @@
         return $ret ;
     }
 
+    /**
+     * Gets the name of the current category
+     *
+     * @return <string>
+     */
     function osc_category_name($locale = "") {
         if ($locale == "") $locale = osc_get_user_locale() ;
         return osc_category_field("s_name", $locale) ;
     }
 
+    /**
+     * Gets the id of the current category
+     *
+     * @return <string>
+     */
     function osc_category_id($locale = "") {
         if ($locale == "") $locale = osc_get_user_locale() ;
         return osc_category_field("pk_i_id", $locale) ;
     }
 
+    /**
+     * Gets the total items related with the current category
+     *
+     * @return <int>
+     */
     function osc_category_total_items() {
         $category = osc_category() ;
         return CategoryStats::newInstance()->getNumItems($category) ;
     }
 
+    /**
+     * Reset the pointer of the array to the first category
+     */
     function osc_goto_first_category() {
         View::newInstance()->_reset('categories') ;
     }
