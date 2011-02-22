@@ -80,6 +80,7 @@
                                         <div class="comment">
                                             <h3><strong><?php echo osc_comment_title() ; ?></strong> <em><?php _e("by", 'gui') ; ?> <?php echo osc_comment_author_name() ; ?>:</em></h3>
                                             <p><?php echo osc_comment_author_email() ; ?></p>
+                                            <p><?php echo osc_comment_body() ; ?> </p>
                                         </div>
                                     <?php } ?>
                                 </div>
