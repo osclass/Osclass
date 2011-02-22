@@ -63,6 +63,11 @@
                             $do = new CWebLanguage();
                             $do->doModel();
         break;
+        case ('contact'):   //contact
+                            require_once(osc_base_path() . 'contact.php') ;
+                            $do = new CWebContact() ;
+                            $do->doModel() ;
+        break;
         default:            // home and static pages that are mandatory...
                             require_once(osc_base_path() . 'main.php') ;
                             $do = new CWebMain() ;
