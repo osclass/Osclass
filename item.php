@@ -143,8 +143,9 @@ class CWebItem extends BaseModel
                     }
 
                     osc_run_hook('posted_item', $item);
-                    $category = Category::newInstance()->findByPrimaryKey($catId);
-                    $this->redirectTo(osc_search_category_url($category));
+                    $category = Category::newInstance()->findByPrimaryKey(Params::getParam('catId'));
+                    View::newInstance()->_exportVariableToView('category', $category);
+                    $this->redirectTo(osc_search_category_url());
                 } else {
                     $this->redirectTo( osc_item_post_url() );
                 }
