@@ -134,7 +134,7 @@
 					<div style="clear: both;"></div>
 				</div>
 				<div id="content_separator"></div>
-				<?php osc_show_flash_message() ; ?>
+				<?php osc_show_flash_message('admin') ; ?>
 				
 				<div id="TableToolsToolbar">
 				<select id="bulk_actions" class="display">
