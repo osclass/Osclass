@@ -55,6 +55,7 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hUtils.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hCategories.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hTranslations.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hPage.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/View.php';
