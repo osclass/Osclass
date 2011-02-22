@@ -151,12 +151,6 @@ class CWebItem extends BaseModel
             break;
             case 'item_edit':
                 
-                /*if( osc_reg_user_post() && $this->user==null) {
-                    osc_add_flash_message( _m('Only allow registered users to post items') ) ;
-                    $this->redirectTo(osc_base_url(true));
-                }*/
-                // not logged user
-                // only can edit item if have a secret and idItem
                 $secret = Params::getParam('secret');
                 $id     = Params::getParam('id');
                 $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
@@ -179,14 +173,9 @@ class CWebItem extends BaseModel
                     }
 
                     $currencies = Currency::newInstance()->listAll();
-
-                    $this->_exportVariableToView('categories', $categories) ;
-                    $this->_exportVariableToView('currencies', $currencies) ;
-                    $this->_exportVariableToView('countries',$countries ) ;
-                    $this->_exportVariableToView('regions', $regions) ;
-                    $this->_exportVariableToView('cities', $cities) ;
+                    
                     $this->_exportVariableToView('item', $item) ;
-                    $this->_exportVariableToView('user', $this->user) ;
+                    //$this->_exportVariableToView('user', $this->user) ;
 
                     $this->doView('item-edit.php');
                 }else{

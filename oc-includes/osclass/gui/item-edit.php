@@ -19,18 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php
-    //getting variables for this view
-    $categories = __get("categories");
-    $currencies = __get("currencies");
-    $countries  = __get("countries");
-    $locales    = __get("locales") ;
-    $regions    = __get("regions");
-    $cities     = __get("cities");
-    $user       = __get("user") ;
-    $item       = __get("item") ;
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -53,22 +41,22 @@
                                 <h2><?php _e('General Information', 'gui'); ?></h2>
                                 <div class="row">
                                     <label><?php _e('Category', 'gui'); ?></label>
-                                    <?php ItemForm::category_select($categories, $item); ?>
+                                    <?php ItemForm::category_select(); ?>
                                 </div>
                                 <div class="row">
-                                    <?php ItemForm::multilanguage_title_description($locales, $item); ?>
+                                    <?php ItemForm::multilanguage_title_description(osc_get_locales(), osc_item()); ?>
                                 </div>
                                 <div class="row price">
                                     <label><?php _e('Price', 'gui'); ?></label>
-                                    <?php ItemForm::price_input_text($item); ?>
-                                    <?php ItemForm::currency_select($currencies,$item); ?>
+                                    <?php ItemForm::price_input_text(); ?>
+                                    <?php ItemForm::currency_select(); ?>
                                 </div>
                             </div>
 
                             <div class="box photos">
-                                <?php ItemForm::photos_javascript($item); ?>
+                                <?php ItemForm::photos_javascript(); ?>
                                 <h2><?php _e('Photos', 'gui'); ?></h2>
-                                <?php ItemForm::photos($resources); ?>
+                                <?php ItemForm::photos(); ?>
                                 <div id="photos">
                                     <div class="row">
                                         <input type="file" name="photos[]" /> (<?php _e('optional', 'gui'); ?>)
@@ -83,26 +71,26 @@
                                 <h2><?php _e('Location', 'gui'); ?></h2>
                                 <div class="row">
                                     <label><?php _e('Country', 'gui'); ?></label>
-                                    <?php ItemForm::country_select($countries, $item) ; ?>
+                                    <?php ItemForm::country_select() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Region', 'gui'); ?></label>
-                                    <?php ItemForm::region_select($regions, $item) ; ?>
+                                    <?php ItemForm::region_select() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City', 'gui'); ?></label>
-                                    <?php ItemForm::city_select($cities, $item) ; ?>
+                                    <?php ItemForm::city_select() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City area', 'gui'); ?></label>
-                                    <?php ItemForm::city_area_text($item) ; ?>
+                                    <?php ItemForm::city_area_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Address', 'gui'); ?></label>
-                                    <?php ItemForm::address_text($item) ; ?>
+                                    <?php ItemForm::address_text() ; ?>
                                 </div>
                             </div>
-                            <?php osc_run_hook('item_edit', $item) ;?>
+                            <?php osc_run_hook('item_edit', osc_item() ) ;?>
                         </div>
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'gui'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'gui'); ?></a>
