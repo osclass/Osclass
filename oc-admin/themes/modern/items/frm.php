@@ -141,22 +141,21 @@
 
                                             gebi('photos').appendChild(d);
                                         }
-
-                                        $(document).ready(function() {
-                                            $('a.delete').click(function(e) {
-                                                e.preventDefault();
-                                                var parent = $(this).parent();
+                                        function deleteResource( divId ){
+                                            if( confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>') ){
+                                                var parent = $('#'+divId);
                                                 $.ajax({
-                                                    type: 'get',
-                                                    url: 'items.php',
-                                                    data: '<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
-                                                    success: function() {
-                                                        parent.slideUp(300,function() {
-                                                            parent.remove();
-                                                        });
-                                                    }
-                                                });
-                                            });
+                                                        type: 'get',
+                                                        url: '<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
+                                                        success: function() {
+                                                            parent.slideUp(300,function() {
+                                                                parent.remove();
+                                                            });
+                                                        }
+                                                    });
+                                            }
+                                        }
+                                        $(document).ready(function() {
                                         });
                                     </script>
 
@@ -164,7 +163,7 @@
                                     <div id="photos">
                                         <?php foreach($resources as $_r) {?>
                                             <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                                <img src="../<?php echo $_r['s_path'];?>" /><a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id=<?php echo $_r['pk_i_id'] ; ?>&fkid=<?php echo $_r['fk_i_item_id'] ; ?>&name=<?php echo $_r['s_name'] ; ?>" class="delete"><?php _e('Delete'); ?></a>
+                                                <img src="../<?php echo $_r['s_path'];?><?php echo $_r['s_name'];?>_original.<?php echo $_r['s_extension']?>" /><a onclick="deleteResource(<?php echo $_r['pk_i_id'];?>)" style="cursor:pointer;" class="delete"><?php _e('Delete'); ?></a>
                                             </div>
                                         <?php } ?>
                                         <div>

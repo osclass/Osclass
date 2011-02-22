@@ -36,7 +36,7 @@
                     <?php echo osc_private_user_menu() ; ?>
                 </div>
                 <div id="main">
-                    <h2><?php echo sprintf(_('Items from %s', 'gui') ,osc_logged_user_name()); ?></h2>
+                    <h2><?php echo sprintf(__('Items from %s', 'gui') ,osc_logged_user_name()); ?></h2>
                     <?php if(osc_count_items() == 0) { ?>
                         <h3><?php _e('No items have been added yet', 'gui'); ?></h3>
                     <?php } else { ?>

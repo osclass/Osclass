@@ -244,10 +244,9 @@ class CWebItem extends BaseModel
                 $secret = Params::getParam('secret');
                 $id     = Params::getParam('id');
                 $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
-
                 if (count($item) == 1) {
                     $mItems = new ItemActions(false);
-                    $success = $mItems->delete($item['s_secret'], $item['pk_i_id']);
+                    $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
                     osc_add_flash_message( _m('Your item has been deleted') ) ;
                     if($this->user!=null) {
                         $this->redirectTo(osc_user_list_items_url());
