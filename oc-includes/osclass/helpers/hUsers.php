@@ -146,7 +146,7 @@
     
     function osc_prepare_user_info() {
         if ( !View::newInstance()->_exists('users') ) {
-            View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_id() ) ) ) ;
+            View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_user_id() ) ) ) ;
         }
         return View::newInstance()->_next('users') ;
     }

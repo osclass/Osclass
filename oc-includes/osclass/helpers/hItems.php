@@ -77,6 +77,10 @@
         return osc_item_field("pk_i_id");
     }
 
+    function osc_item_user_id() {
+        return osc_item_field("fk_i_user_id") ;
+    }
+
     function osc_item_description($locale = "") {
         if ($locale == "") $locale = osc_get_user_locale() ;
         return osc_item_field("s_description", $locale) ;
