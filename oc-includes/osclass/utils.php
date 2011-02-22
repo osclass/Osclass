@@ -30,13 +30,13 @@ function osc_deleteResource( $id ) {
         $id = $id[0];
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
+    if( !is_null($resource) ){
+        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".png";
+        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*.png";
     
-    $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".png";
-    $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*.png";
-    
-    array_map( "unlink" , glob($resource_thum));
-    array_map( "unlink" , glob($resource_original));
-    
+        array_map( "unlink" , glob($resource_thum));
+        array_map( "unlink" , glob($resource_original));
+    }
 }
 /**
  * Tries to delete the directory recursivaly.
