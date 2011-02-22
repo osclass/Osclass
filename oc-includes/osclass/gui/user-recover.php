@@ -25,8 +25,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
-
+        <?php osc_current_web_theme_path('head.php') ; ?>
         <script type="text/javascript">
             function validateForm() {
                 var validator = new FormValidator();
@@ -41,31 +40,23 @@
         </script>
     </head>
     <body>
-
         <div class="container">
-
-            <?php $this->osc_print_header() ; ?>
-
+            <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_forms">
                 <div class="inner">
-                    <h1><?php _e('Retrieve your password') ; ?></h1>
+                    <h1><?php _e('Recover your password', 'gui') ; ?></h1>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="recover_post" />
                         <fieldset>
-                            <label for="email"><?php _e('E-mail') ; ?></label> <?php UserForm::email_text() ; ?><br />
-                            <button type="submit"><?php _e('Send me another password') ; ?></button>
+                            <label for="email"><?php _e('E-mail', 'gui') ; ?></label> <?php UserForm::email_text() ; ?><br />
+                            <button type="submit"><?php _e('Send me a new password', 'gui') ; ?></button>
                         </fieldset>
                     </form>
                 </div>
             </div>
-
-            <?php $this->osc_print_footer() ; ?>
-
+            <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
-
         <?php osc_show_flash_message() ; ?>
-
     </body>
-
 </html>

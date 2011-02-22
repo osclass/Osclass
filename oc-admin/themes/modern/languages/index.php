@@ -20,7 +20,7 @@
  */
 ?>
 <?php
-    $locales = $this->_get('locales');
+    $locales = __get('locales');
     $last = end($locales);
     $last_id = $last['pk_c_code'] ;
     $default_lang = osc_language() ;
@@ -28,10 +28,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Languages'); ?></div>
 
@@ -81,7 +81,7 @@
                             <?php foreach ($locales as $l) { ?>
                             [
                                 "<input type='checkbox' name='id[]' value='<?php echo $l['pk_c_code']; ?>' />"
-                                ,"<?php echo $l['s_name']; ?> <div id='datatables_quick_edit'> <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=edit&amp;id=<?php echo $l['pk_c_code'] ; ?>'><?php _e('Edit') ; ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled'] == 1 ? 'Disable (website)' : 'Enable (website)'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action==<?php echo $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled_bo'] == 1 ? 'Disable (oc-admin)' : 'Enable (oc-admin)'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=delete&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e('Delete'); ?></a></div>"
+                                ,"<?php echo $l['s_name']; ?> <div id='datatables_quick_edit'> <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=edit&amp;id=<?php echo $l['pk_c_code'] ; ?>'><?php _e('Edit') ; ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled'] == 1 ? 'Disable (website)' : 'Enable (website)'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled_bo'] == 1 ? 'Disable (oc-admin)' : 'Enable (oc-admin)'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=delete&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e('Delete'); ?></a></div>"
                                 ,"<?php echo $l['s_short_name']; ?>"
                                 ,"<?php echo $l['s_description']; ?>"
                                 ,"<?php echo ($l['b_enabled']) ? __("Yes") : __("No"); ?>"
@@ -112,7 +112,7 @@
         <div id="content">
             <div id="separator"></div>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
 
@@ -158,7 +158,7 @@
                 });
             </script>
         </div> <!-- end of container -->
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
     </body>
 </html>
 

@@ -26,9 +26,7 @@ Class ItemActions
         $this->manager = Item::newInstance() ;
     }
 
-    // delete
-    // activate
-    // mark
+
     /**
      * @return boolean
      */
@@ -56,7 +54,7 @@ Class ItemActions
         $contactEmail   = $aItem['contactEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
+            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item.'));
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -121,12 +119,12 @@ Class ItemActions
 
 
             if($this->is_admin) {
-                osc_add_flash_message(__('A new item has been added')) ;
+                osc_add_flash_message( _m('A new item has been added')) ;
             } else {
                 if( osc_item_validation_enabled() ) {
-                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item.')) ;
                 } else {
-                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
+                    osc_add_flash_message( _m('Great! We\'ve just published your item.')) ;
                 }
 
             }
@@ -196,7 +194,7 @@ Class ItemActions
      * @param <type> $itemId
      * @return boolean
      */
-    public function activate( $secret, $itemId )
+    public function activate( $id, $secret )
     {
         $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
         $result = $this->manager->update(
@@ -221,21 +219,30 @@ Class ItemActions
 
     /**
      * Mark an item
-     * @param <type> $column
-     * @param <type> $itemId
+     * @param <type> $id
+     * @param <type> $as
      */
-    public function mark( )
+    public function mark( $id, $as )
     {
-        $aItem = $this->prepareDataForFunction( 'mark' ) ;
+        switch ($as) {
+            case 'spam':
+                $column = 'i_num_spam';
+            break;
+            case 'badcat':
+                $column = 'i_num_bad_classified';
+            break;
+            case 'offensive':
+                $column = 'i_num_offensive';
+            break;
+            case 'repeated':
+                $column = 'i_num_repeated';
+            break;
+            case 'expired':
+                $column = 'i_num_expired';
+            break;
+        }
         
-        $dao_itemStats = new ItemStats() ;
-        $dao_itemStats->increase( $aItem['column'], $aItem['id'] ) ;
-        unset($dao_itemStats) ;
-
-        $item   = $aItem['item'];
-        setcookie("mark_" . $item['pk_i_id'], "1", time() + 86400);
-
-        Params::setParam( 'item', $item );
+        ItemStats::newInstance()->increase( $column, $id ) ;
     }
 
     public function send_friend()
@@ -309,17 +316,24 @@ Class ItemActions
         Params::setParam( 'item_url', $item_url );
 
         if(osc_sendMail($params)) {
-            osc_add_flash_message(__('We just send your message to ') . $aItem['friendName'] . ".") ;
+            osc_add_flash_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
         } else {
-            osc_add_flash_message(__('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
+            osc_add_flash_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later.')) ;
         }
     }
 
     public function contact()
     {
-        //$aItem = $this->prepareDataForFunction( 'contact' );
+        $aItem = $this->prepareDataForFunction( 'contact' );
+
+        $id         = $aItem['id'];
+        $yourEmail  = $aItem['yourEmail'];
+        $yourName   = $aItem['yourName'];
+        $phoneNumber= $aItem['phoneNumber'];
+        $message    = $aItem['message'];
+
         $path = NULL;
-        $item = $this->manager->findByPrimaryKey( Params::getParam('id') ) ;
+        $item = $this->manager->findByPrimaryKey( $id ) ;
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_item_inquiry');
@@ -336,8 +350,8 @@ Class ItemActions
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
                          '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
 
-        $words[] = array($item['s_contact_name'], Params::getParam('yourName'), Params::getParam('yourEmail'),
-                         Params::getParam('phoneNumber'), osc_base_url(), $item['s_title'], osc_item_url($item), Params::getParam('message'));
+        $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
+                         $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url($item), $message );
 
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
@@ -357,10 +371,10 @@ Class ItemActions
                             ,'to_name'   => $item['s_contact_name']
                             ,'body'      => $body
                             ,'alt_body'  => $body
-                            ,'reply_to'  => Params::getParam('yourEmail')
+                            ,'reply_to'  => $yourEmail
                         ) ;
-
-
+                        
+                        
         if(osc_item_attachment()) {
             $attachment = Params::getFiles('attachment');
             $resourceName = $attachment['name'] ;
@@ -370,7 +384,7 @@ Class ItemActions
             $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
 
             if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
-                osc_add_flash_message(__('There has been some erro sending the message')) ;
+                osc_add_flash_message( _m('There has been some erro sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
 
@@ -392,11 +406,13 @@ Class ItemActions
      */
     public function add_comment()
     {
-       $authorName     = Params::getParam('authorName') ;
-        $authorEmail    = Params::getParam('authorEmail') ;
-        $body           = Params::getParam('body') ;
-        $title          = Params::getParam('title') ;
-        $itemId         = Params::getParam('id') ;
+        $aItem  = $this->prepareDataForFunction('add_comment');
+        
+        $authorName     = $aItem['authorName'] ;
+        $authorEmail    = $aItem['authorEmail'] ;
+        $body           = $aItem['body'] ;
+        $title          = $aItem['title'] ;
+        $itemId         = $aItem['id'] ;
 
         $item = $this->manager->findByPrimaryKey($itemId) ;
 
@@ -476,9 +492,10 @@ Class ItemActions
             }
             osc_run_hook('add_comment', $item);
         }else{
-            osc_add_flash_message(__('We are very sorry but could not save your comment. Try again later.')) ;
+            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later.')) ;
         }
     }
+    
     /**
      * Return an array with all data necessary for do the action
      * @param <type> $action
@@ -488,35 +505,6 @@ Class ItemActions
         $aItem = array();
 
         switch ( $action ){
-            case 'mark':
-                
-                $id     = Params::getParam('id');
-                $item   = $this->manager->findByPrimaryKey( $id ) ;
-                $column = null;
-                
-                switch (Params::getParam('as')) {
-                    case 'spam':
-                        $column = 'i_num_spam';
-                        break;
-                    case 'badcat':
-                        $column = 'i_num_bad_classified';
-                        break;
-                    case 'offensive':
-                        $column = 'i_num_offensive';
-                        break;
-                    case 'repeated':
-                        $column = 'i_num_repeated';
-                        break;
-                    case 'expired':
-                        $column = 'i_num_expired';
-                        break;
-                }
-
-                $aItem['id']            = $id;
-                $aItem['item']          = $item;
-                $aItem['column']        = $column;
-
-            break;
             case 'send_friend':
                 $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
 
@@ -532,19 +520,22 @@ Class ItemActions
                 $aItem['message']       = Params::getParam('message');
             break;
             case 'contact':
-                // TODO CARLOS
-//                $path = null;
-//                $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
-//
-//                $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
-//
-//
-//                $aItem['path']      = $path;
-//                $aItem['item']      = $item;
-//                $aItem['category']  = $category;
+
+                $aItem['id']            = Params::getParam('id') ;
+                $aItem['yourEmail']     = Params::getParam('yourEmail') ;
+                $aItem['yourName']      = Params::getParam('yourName') ;
+                $aItem['message']       = Params::getParam('message') ;
+                $aItem['phoneNumber']   = Params::getParam('phoneNumber') ;
             break;
             case 'add_comment':
-                // TODO CARLOS
+
+                $aItem['authorName']     = Params::getParam('authorName') ;
+                $aItem['authorEmail']    = Params::getParam('authorEmail') ;
+                $aItem['body']           = Params::getParam('body') ;
+                $aItem['title']          = Params::getParam('title') ;
+                $aItem['id']             = Params::getParam('id') ;
+
+
             break;
             default:
         }
@@ -596,6 +587,8 @@ Class ItemActions
                 }
                 $aItem['contactName']   = $data['s_name'];
                 $aItem['contactEmail']  = $data['s_email'];
+                Params::setParam('contactName', $data['s_name']);
+                Params::setParam('contactEmail', $data['s_email']);
             }else{
                 $aItem['contactName']   = Params::getParam('contactName');
                 $aItem['contactEmail']  = Params::getParam('contactEmail');
@@ -897,8 +890,8 @@ Class ItemActions
                              '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
                              '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}',
                              '{WEB_TITLE}', '{VALIDATION_LINK}');
-            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=item&action=editItem&id=' .
-                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=item&action=editItem&id=' .
+            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
+                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
                              $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                              $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
@@ -1091,7 +1084,7 @@ Class ItemActions
 //        $_POST['pk_i_id'] = $_POST['id'];
 //        osc_run_hook('item_edit_post');
 //
-//        osc_add_flash_message(__('Great! We\'ve just update your item.'));
+//        osc_add_flash_message( _m('Great! We\'ve just update your item.'));
 //        break;
 
 //    case 'post_item':
@@ -1116,7 +1109,7 @@ Class ItemActions
 //
 //            if (osc_reg_user_post()) {
 //                if ($userId == null) {
-//                    osc_add_flash_message(__('You new to log-in in order to post a new item.')) ;
+//                    osc_add_flash_message( _m('You new to log-in in order to post a new item.')) ;
 //                    osc_redirectTo(osc_login_url()) ;
 //                    break ;
 //                }
@@ -1176,7 +1169,7 @@ Class ItemActions
 //        if($Pprice == '') $Pprice = null;
 //
 //        if(!isset($PcontactName) || !isset($PcontactEmail) || $PcontactName==null || $PcontactEmail==null || $PcontactName=='' || $PcontactEmail=='') {
-//            osc_add_flash_message(__('You need to input your name and email to be able to publish a new item.'));
+//            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item.'));
 //            $success = false;
 //        } else {
 //            $dao_item = new Item() ;
@@ -1468,12 +1461,12 @@ Class ItemActions
 //            osc_run_hook('after_item_post') ;
 //
 //            if($is_admin) {
-//                osc_add_flash_message(__('A new item has been added')) ;
+//                osc_add_flash_message( _m('A new item has been added')) ;
 //            } else {
 //                if(osc_enabled_item_validation()) {
-//                    osc_add_flash_message(__('Great! You\'ll receive an e-mail to activate your item.')) ;
+//                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item.')) ;
 //                } else {
-//                    osc_add_flash_message(__('Great! We\'ve just published your item.')) ;
+//                    osc_add_flash_message( _m('Great! We\'ve just published your item.')) ;
 //                }
 //            }
 //        }

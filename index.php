@@ -21,7 +21,7 @@
      */
 
     require_once 'oc-load.php' ;
-
+    
     switch( Params::getParam('page') )
     {
         case ('user'):      //user pages (with security)
@@ -29,16 +29,10 @@
                             $do = new CWebUser() ;
                             $do->doModel() ;
         break;
-        case ('item'):      //item pages (with security)
-                            if( !osc_is_web_user_logged_in()) {
-                                require_once(osc_base_path() . 'item.php');
-                                $do = new CWebItem() ;
-                                $do->doModel() ;
-                            }else{
-                                require_once(osc_base_path() . 'item-secure.php');
-                                $do = new CWebSecItem() ;
-                                $do->doModel() ;
-                            }
+        case ('item'):      //item pages
+                            require_once(osc_base_path() . 'item.php');
+                            $do = new CWebItem() ;
+                            $do->doModel() ;
         break;
         case ('search'):    //search pages
                             require_once(osc_base_path() . 'search.php') ;
@@ -158,7 +152,7 @@ try {
 				,'alt_body' => $message
 			);
 			osc_sendMail($params) ;
-			osc_add_flash_message(__('Your message has been sent and will be answered soon, thank you.')) ;
+			osc_add_flash_message( _m('Your message has been sent and will be answered soon, thank you.')) ;
 			osc_redirectToReferer(osc_base_url()) ;
         break;
         default:

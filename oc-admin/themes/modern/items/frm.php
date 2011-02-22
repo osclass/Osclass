@@ -18,24 +18,24 @@
 ?>
 
 <?php
-    $new_item = $this->_get("new_item");
-    $users = $this->_get("users");
-    $categories = $this->_get("categories");
-    $countries = $this->_get("countries");
-    $regions = $this->_get("regions");
-    $cities = $this->_get("cities");
-    $currencies = $this->_get("currencies");
-    $locales = $this->_get("locales");
-    $item = $this->_get("item");
-    $resources = $this->_get("resources");
+    $new_item = __get("new_item");
+    $users = __get("users");
+    $categories = __get("categories");
+    $countries = __get("countries");
+    $regions = __get("regions");
+    $cities = __get("cities");
+    $currencies = __get("currencies");
+    $locales = __get("locales");
+    $item = __get("item");
+    $resources = __get("resources");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e("Items");?></div>
 
@@ -60,7 +60,7 @@
         <div id="content">
             <div id="separator"></div>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
                 <div id="home_header" style="margin-left: 40px;">
@@ -208,7 +208,7 @@
                 </div>
             </div>
         </div>
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
 
     </body>
 

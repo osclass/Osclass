@@ -23,23 +23,23 @@
  <table border="0" cellspacing="0">
      <tbody>
         <?php $class = "even" ; ?>
-        <?php foreach($aItems as $item) { ?>
+        <?php while(osc_has_items()) { ?>
             <tr class="<?php echo $class; ?>">
                  <td class="photo">
-                     <?php if(osc_item_has_thumbnail($item)) { ?>
-                        <a href="<?php echo osc_item_url($item) ; ?>"><img src="<?php echo osc_item_thumbnail($item) ; ?>" /></a>
+                     <?php if(osc_count_item_resources()) { ?>
+                        <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" /></a>
                     <?php } else { ?>
-                        <img src="<?php echo $this->osc_get_theme_url('images/no_photo.gif') ; ?>" />
+                        <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" />
                     <?php } ?>
                  </td>
                  <td class="text">
-                     <h3><a href="<?php echo osc_item_url($item) ; ?>"><?php echo $item['s_title'] ; ?></a></h3>
+                     <h3><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></h3>
                      <!--
                          <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
                      -->
-                     <p><?php echo strip_tags($i['s_description']) ; ?></p>
+                     <p><?php echo strip_tags(osc_item_description()) ; ?></p>
                  </td>
-                 <td class="price"><strong><?php echo osc_format_price($item) ; ?></strong></td>
+                 <td class="price"><strong><?php echo osc_format_price(osc_item_price()) ; ?></strong></td>
              </tr>
             <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
         <?php } ?>

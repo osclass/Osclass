@@ -28,11 +28,7 @@ class CAdminAdmins extends AdminSecBaseModel
 
     function __construct() {
         parent::__construct() ;
-
-        $this->add_css('admins_list_layout.css');
-        $this->add_css('demo_table.css');
-        $this->add_global_js('jquery.dataTables.min.js');
-
+        
         //specific things for this class
         $this->adminManager = Admin::newInstance() ;
     }
@@ -71,9 +67,9 @@ class CAdminAdmins extends AdminSecBaseModel
                                 $isInserted = $this->adminManager->insert($array);
 
                                 if($isInserted) {
-                                    osc_add_flash_message(__('The admin has been added'), 'admin');
+                                    osc_add_flash_message( _m('The admin has been added'), 'admin');
                                 } else {
-                                    osc_add_flash_message(__('There have been an error adding a new admin'), 'admin') ;
+                                    osc_add_flash_message( _m('There have been an error adding a new admin'), 'admin') ;
                                 }
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins');
             break;
@@ -88,7 +84,7 @@ class CAdminAdmins extends AdminSecBaseModel
                                 }
 
                                 if(count($adminEdit) == 0) {
-                                    osc_add_flash_message(__('It doesn\'t exist an admin with this id'), 'admin');
+                                    osc_add_flash_message( _m('It doesn\'t exist an admin with this id'), 'admin');
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                 }
 
@@ -102,13 +98,13 @@ class CAdminAdmins extends AdminSecBaseModel
                                 $aAdmin   = $this->adminManager->findByPrimaryKey($adminId);
 
                                 if(count($aAdmin) == 0) {
-                                    osc_add_flash_message(__('There admin doesn\'t exist'), 'admin');
+                                    osc_add_flash_message( _m('There admin doesn\'t exist'), 'admin');
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                 }
 
                                 if( $aAdmin['s_username'] != Params::getParam('s_username') ){
                                     if($this->adminManager->findByUsername( Params::getParam('s_username') ) ) {
-                                        osc_add_flash_message(__('Existing username'), 'admin');
+                                        osc_add_flash_message( _m('Existing username'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
                                     }
                                 }
@@ -122,7 +118,7 @@ class CAdminAdmins extends AdminSecBaseModel
                                     if( $firstCondition && $secondCondition ) {
                                         $array['s_password'] = sha1(Params::getParam('s_password') );
                                     } else {
-                                        osc_add_flash_message(__('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
+                                        osc_add_flash_message( _m('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
                                     }
                                 }
@@ -134,7 +130,7 @@ class CAdminAdmins extends AdminSecBaseModel
                                 $iUpdated = $this->adminManager->update($array, $conditions);
 
                                 if($iUpdated > 0) {
-                                    osc_add_flash_message(__('The admin has been updated'), 'admin');
+                                    osc_add_flash_message( _m('The admin has been updated'), 'admin');
                                 }
 
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins');
@@ -144,22 +140,22 @@ class CAdminAdmins extends AdminSecBaseModel
                                 $adminId   = Params::getParam('id');
 
                                 if(!is_array($adminId)) {
-                                    osc_add_flash_message(__('The admin id isn\'t in the correct format'), 'admin');
+                                    osc_add_flash_message( _m('The admin id isn\'t in the correct format'), 'admin');
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                 }
                                 
                                 // Verification to avoid an administrator trying to remove to itself
                                 if(in_array(Session::newInstance()->_get('adminId'), $adminId)) {
-                                    osc_add_flash_message(__('The operation hasn\'t been completed. You\'re trying to remove yourself!'), 'admin');
+                                    osc_add_flash_message( _m('The operation hasn\'t been completed. You\'re trying to remove yourself!'), 'admin');
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                 }
 
                                 $isDeleted = $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $adminId) . ')')) ;
 
                                 if($isDeleted) {
-                                    osc_add_flash_message(__('The admin has been deleted correctly'), 'admin');
+                                    osc_add_flash_message( _m('The admin has been deleted correctly'), 'admin');
                                 } else {
-                                    osc_add_flash_message(__('The admin couldn\'t be deleted'), 'admin');
+                                    osc_add_flash_message( _m('The admin couldn\'t be deleted'), 'admin');
                                 }
                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
             break;
@@ -174,7 +170,7 @@ class CAdminAdmins extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

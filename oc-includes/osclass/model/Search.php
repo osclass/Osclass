@@ -251,7 +251,8 @@ class Search extends DAO
 
     public function makeSQL($count = false) {
 
-        $this->makeCompatible();
+        //DEPRECATED. MARK FOR DELETE
+        //$this->makeCompatible();
 
         if(count($this->cities)>0) {
             $this->addConditions("( ".implode(' || ', $this->cities)." )");
@@ -370,7 +371,7 @@ class Search extends DAO
         $this->conn = getConnection();
     }
  
-    public function makeCompatible() {
+    /*public function makeCompatible() {
         // COMPATIBILITY (DEPRECATED)
         global $conditions;
         global $search_tables;
@@ -385,6 +386,6 @@ class Search extends DAO
                 $this->addTable($t);
             }
         }
-    }
+    }*/
 }
 

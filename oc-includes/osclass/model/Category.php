@@ -293,7 +293,8 @@ class Category extends DAO
             foreach ($fieldsDescription as $key => $value) {
                 if ($set != "")
                     $set .= ", ";
-                $set .= $key . " = '$value'";
+                $set .= $key . " = " . $this->formatValue($value);
+
             }
 
             $sql = 'UPDATE ' . $this->getTableDescriptionName() . ' SET ' . $set . " WHERE fk_i_category_id = " . $pk . " AND fk_c_locale_code = '" . $fieldsDescription["fk_c_locale_code"] . "'";
@@ -334,7 +335,7 @@ class Category extends DAO
             foreach ($fieldsDescription as $value) {
                 if ($set != "")
                     $set .= ", ";
-                $set .= "'$value'";
+                $set .= $this->formatValue($value);
             }
             $sql = 'INSERT INTO ' . $this->getTableDescriptionName() . ' (' . $columns . ') VALUES (' . $set . ')';
             $this->conn->osc_dbExec($sql);

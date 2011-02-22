@@ -46,7 +46,7 @@ class CAdminItemComments extends AdminSecBaseModel
                                                 case 'delete_all':      $this->itemCommentManager->delete(array(
                                                                             DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $id) . ')'
                                                                         ));
-                                                                        osc_add_flash_message(__('The comments have been deleted')) ;
+                                                                        osc_add_flash_message( _m('The comments have been deleted')) ;
                                                 break;
                                                 case 'activate_all':    $value = 'ACTIVE' ;
                                                                         foreach ($id as $_id) {
@@ -55,7 +55,7 @@ class CAdminItemComments extends AdminSecBaseModel
                                                                                 array('pk_i_id' => $_id)
                                                                             );
                                                                         }
-                                                                        osc_add_flash_message(__('The comments have been approved')) ;
+                                                                        osc_add_flash_message( _m('The comments have been approved')) ;
                                                 break;
                                                 case 'deactivate_all':  $value = 'INACTIVE' ;
                                                                         foreach ($id as $_id) {
@@ -64,7 +64,7 @@ class CAdminItemComments extends AdminSecBaseModel
                                                                                 array('pk_i_id' => $_id)
                                                                             );
                                                                         }
-                                                                        osc_add_flash_message(__('The comments have been unapproved')) ;
+                                                                        osc_add_flash_message( _m('The comments have been unapproved')) ;
                                                 break;
                                             }
                                         }
@@ -83,9 +83,9 @@ class CAdminItemComments extends AdminSecBaseModel
                                                 ,array('pk_i_id' => $id)
                                         );
                                         if( $value == 'ACTIVE' ) {
-                                            osc_add_flash_message(__('The comment has been approved'));
+                                            osc_add_flash_message( _m('The comment has been approved'));
                                         } else {
-                                            osc_add_flash_message(__('The comment has been unapproved'));
+                                            osc_add_flash_message( _m('The comment has been unapproved'));
                                         }
                                         
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
@@ -111,19 +111,16 @@ class CAdminItemComments extends AdminSecBaseModel
 
                                         osc_run_hook('item_edit_post') ;
 
-                                        osc_add_flash_message(__('Great! We just updated your comment')) ;
+                                        osc_add_flash_message( _m('Great! We just updated your comment')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
             break;
-            case 'delete':              $this->itemCommentManager->deleteByID( Params::getParam('id') );
+            case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
             break;
-            default:                    $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;
+            default:                    $comments = $this->itemCommentManager->getAllComments();//Params::getParam('id') ) ;
                                         
                                         $this->_exportVariableToView('comments', $comments) ;
 
                                         //calling the view...
-                                        $this->add_global_js('jquery.dataTables.min.js') ;
-                                        $this->add_css('item_list_layout.css') ;
-                                        $this->add_css('demo_table.css') ;
                                         $this->doView('comments/index.php') ;
 
         }
@@ -131,7 +128,7 @@ class CAdminItemComments extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

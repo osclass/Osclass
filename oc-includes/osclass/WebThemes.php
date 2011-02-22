@@ -23,6 +23,7 @@
         private $theme ;
         private $theme_url ;
         private $theme_path ;
+        private $theme_exists ;
 
         public static function newInstance() {
             if(!self::$instance instanceof self) {
@@ -36,19 +37,29 @@
         }
 
         /* PRIVATE */
-        private function setCurrentThemeUrl() {
-            $this->theme_url = osc_base_url() . 'oc-content/themes/' . $this->theme . '/' ;
-        }
-
         private function setCurrentThemePath() {
-            $this->theme_path = osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ; //XXX: must take data from defined global var.
+            if ( file_exists( osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ) ) {
+                $this->theme_exists = true ;
+                $this->theme_path = osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ;
+            } else {
+                $this->theme_exists = false ;
+                $this->theme_path = osc_base_path()  . 'oc-includes/osclass/gui/' ;
+            }
         }
 
         /* PUBLIC */
+        private function setCurrentThemeUrl() {
+            if ( $this->theme_exists ) {
+                $this->theme_url = osc_base_url() . 'oc-content/themes/' . $this->theme . '/' ;
+            } else {
+                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/' ;
+            }
+        }
+
         public function setCurrentTheme($theme) {
             $this->theme = $theme ;
-            $this->setCurrentThemeUrl() ;
             $this->setCurrentThemePath() ;
+            $this->setCurrentThemeUrl() ;
         }
 
         public function getCurrentTheme() {

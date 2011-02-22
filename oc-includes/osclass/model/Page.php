@@ -213,7 +213,7 @@ class Page extends DAO
      * @param int $id Page id which is going to be deleted
      * @return bool True on successful removal, false on failure
      */
-    public function deleteByID($id)
+    public function deleteByPrimaryKey($id)
     {
         $this->conn->osc_dbExec('DELETE FROM %s WHERE fk_i_pages_id = %d', $this->getDescriptionTableName(), $id);
         $result = $this->delete(array('pk_i_id' => $id));
@@ -237,7 +237,7 @@ class Page extends DAO
             return false;
         }
 
-        return $this->deleteByID($id);
+        return $this->deleteByPrimaryKey($id);
     }
 
     /**
@@ -282,6 +282,9 @@ class Page extends DAO
      */
     private function insertDescription($id, $locale, $title, $text)
     {
+        $title = addslashes($title);
+        $text  = addslashes($text);
+
         $sql = 'INSERT INTO ' . $this->getDescriptionTableName() . ' (fk_i_pages_id, fk_c_locale_code, s_title, ';
         $sql .= 's_text) VALUES (' . sprintf('%d, \'%s\', \'%s\', \'%s\')', $id, $locale, $title, $text);
 
@@ -314,7 +317,7 @@ class Page extends DAO
         }
 
         $sql = 'UPDATE ' . $this->getDescriptionTableName() . ' SET ';
-        $sql .= ' s_title = \'' . $title . '\', s_text = \'' . $text . '\'';
+        $sql .= ' s_title = \'' . addslashes($title) . '\', s_text = \'' . addslashes($text) . '\'';
         $sql .= ' WHERE fk_c_locale_code = \'' . $locale . '\' AND fk_i_pages_id = ' . $id;
 
         $this->conn->osc_dbExec($sql);

@@ -110,7 +110,7 @@ class User extends DAO {
 	        $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
 	        $itemManager = Item::newInstance();
 	        foreach($items as $item) {
-                    $itemManager->deleteByID($item['pk_i_id']);
+                    $itemManager->deleteByPrimaryKey($item['pk_i_id']);
                 }
                 $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
@@ -124,7 +124,7 @@ class User extends DAO {
         private function insertDescription($id, $locale, $info)
         {
             $sql = 'INSERT INTO ' . $this->getDescriptionTableName() . ' (fk_i_user_id, fk_c_locale_code, s_info)';
-            $sql .= ' VALUES (' . sprintf('%d, \'%s\', \'%s\')', $id, $locale, $info);
+            $sql .= ' VALUES (' . sprintf('%d, \'%s\', \'%s\')', $id, $locale, addslashes($info));
 
             $this->conn->osc_dBExec($sql);
 
@@ -146,7 +146,7 @@ class User extends DAO {
             }
 
             $sql = 'UPDATE ' . $this->getDescriptionTableName() . ' SET ';
-            $sql .= ' s_info = \'' . $info . '\'';
+            $sql .= ' s_info = \'' . addslashes($info) . '\'';
             $sql .= ' WHERE fk_c_locale_code = \'' . $locale . '\' AND fk_i_user_id = ' . $id;
 
             $this->conn->osc_dbExec($sql);

@@ -19,6 +19,11 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+     //getting from View
+     function __get($key) {
+         return View::newInstance()->_get($key) ;
+     }
+
     //get params
     function osc_get_param($key) {
         return Params::getParam($key) ;
@@ -45,16 +50,6 @@
         $widgets = Widget::newInstance()->findByLocation($location);
         foreach ($widgets as $w)
             echo $w['s_content'] ;
-    }
-
-    /**
-     * @return true if the item has uploaded a thumbnail.
-     */
-    //osc_itemHasThumbnail
-    function osc_item_has_thumbnail($item) {
-        $conn = getConnection() ;
-        $resource = $conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']) ;
-        return!is_null($resource) ;
     }
 
     /**

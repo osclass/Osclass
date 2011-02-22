@@ -21,7 +21,6 @@
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 
-//require_once ABS_PATH . 'common.php';
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
@@ -64,13 +63,13 @@ switch ($step) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>OSClass Installation</title>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery-ui.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/vtip/vtip.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/jquery.jsonp.js" type="text/javascript"></script>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/js/install.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/css/install.css" />
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/js/vtip/css/vtip.css" />
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery-ui.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/css/vtip.css" />
     </head>
     <body>
         <div id="wrapper">

@@ -61,11 +61,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     $userActions = new UserActions(true) ;
                                     $success = $userActions->add() ;
                                     switch($success) {
-                                        case 1: osc_add_flash_message(__('The user has been created. We\'ve sent an activation e-mail'), 'admin') ;
+                                        case 1: osc_add_flash_message( _m('The user has been created. We\'ve sent an activation e-mail'), 'admin') ;
                                         break;
-                                        case 2: osc_add_flash_message(__('The user has been created and activated'), 'admin') ;
+                                        case 2: osc_add_flash_message( _m('The user has been created and activated'), 'admin') ;
                                         break;
-                                        case 3: osc_add_flash_message(__('Sorry, but that e-mail is already in use'), 'admin') ;
+                                        case 3: osc_add_flash_message( _m('Sorry, but that e-mail is already in use'), 'admin') ;
                                         break;
                                     }
                                     
@@ -105,11 +105,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     $success = $userActions->edit( Params::getParam("id") ) ;
 
                                     switch($success) {
-                                        case (1):  osc_add_flash_message(__('Passwords don\'t match'), 'admin') ;
+                                        case (1):  osc_add_flash_message( _m('Passwords don\'t match'), 'admin') ;
                                         break;
-                                        case (2):  osc_add_flash_message(__('The user has been updated and activated'), 'admin') ;
+                                        case (2):  osc_add_flash_message( _m('The user has been updated and activated'), 'admin') ;
                                         break;
-                                        default:   osc_add_flash_message(__('The user has been updated'), 'admin');
+                                        default:   osc_add_flash_message( _m('The user has been updated'), 'admin');
                                         break;
                                     }
 
@@ -193,10 +193,6 @@ class CAdminUsers extends AdminSecBaseModel
             default:                // manage users view
                                     $aUsers = $this->userManager->listAll();
 
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('item_list_layout.css') ;
-                                    $this->add_css('demo_table.css') ;
-
                                     $this->_exportVariableToView("users", $aUsers);
                                     $this->doView("users/index.php");
             break;
@@ -205,7 +201,7 @@ class CAdminUsers extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

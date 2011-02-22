@@ -19,21 +19,21 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $aCurrency = $this->_get('aCurrency');
+    $aCurrency = __get('aCurrency');
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Edit currency'); ?></div>
 		<div id="content">
 			<div id="separator"></div>	
-			<?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;">
@@ -77,6 +77,6 @@
 				</div>
 			</div>
 		</div><!-- end of container -->
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
     </body>
 </html>

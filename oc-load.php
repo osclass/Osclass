@@ -50,8 +50,10 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hMessages.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hUsers.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hItems.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hSearch.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hUtils.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hCategories.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hTranslations.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
@@ -60,10 +62,10 @@ require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/WebSecBaseModel.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Translation.php';
 
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
-require_once LIB_PATH . 'osclass/translations.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
@@ -110,6 +112,7 @@ require_once LIB_PATH . 'osclass/frm/Item.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Contact.form.class.php';
 require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
+require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
@@ -120,6 +123,6 @@ if(!defined('__FROM_CRON__')) {
 
 Plugins::init() ;
 
-//Rewrite::newInstance()->init();
+Rewrite::newInstance()->init();
 
 ?>

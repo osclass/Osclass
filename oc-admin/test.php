@@ -39,11 +39,11 @@ class CAdminTest extends AdminSecBaseModel
             case 'add':     //adding items and item descriptions
                             $this->testManager->loadUserInfo( Session::newInstance()->_get('adminEmail'), Session::newInstance()->_get('adminName') ) ;
                             $this->testManager->loadItemInfo( Session::newInstance()->_get('adminEmail') ) ;
-                            osc_add_flash_message(__('Population of the database done properly')) ;
+                            osc_add_flash_message( _m('Population of the database done properly')) ;
                             $this->doView("test/index.php");
             break;
             case 'del':     //adding items and item descriptions
-                            osc_add_flash_message(__('Population of the database reverted')) ;
+                            osc_add_flash_message( _m('Population of the database reverted')) ;
                             $this->doView("test/index.php");
             break;
             default:        //Page with two buttons... "populate DB with fake data" and "revert"
@@ -54,7 +54,7 @@ class CAdminTest extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

@@ -52,9 +52,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been activated')) ;
+                                                osc_add_flash_message( _m('The items have been activated')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'deactivate_all':
@@ -71,9 +71,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been deactivated')) ;
+                                                osc_add_flash_message( _m('The items have been deactivated')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'premium_all':
@@ -88,9 +88,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been marked as premium')) ;
+                                                osc_add_flash_message( _m('The items have been marked as premium')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'depremium_all':
@@ -105,9 +105,9 @@ class CAdminItems extends AdminSecBaseModel
                                                         ) ;
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The changes have been made')) ;
+                                                osc_add_flash_message( _m('The changes have been made')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                         break;
                                         case 'delete_all':
@@ -119,12 +119,12 @@ class CAdminItems extends AdminSecBaseModel
                                                         if( $item['e_status'] == 'ACTIVE' ) {
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                         }
-                                                        $this->itemManager->deleteByID($i);
+                                                        $this->itemManager->deleteByIPrimaryKey($i);
                                                     }
                                                 }
-                                                osc_add_flash_message(__('The items have been deleted')) ;
+                                                osc_add_flash_message( _m('The items have been deleted')) ;
                                             } catch (Exception $e) {
-                                                osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                                osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         break;
@@ -140,12 +140,12 @@ class CAdminItems extends AdminSecBaseModel
                                                 if( $item['e_status'] == 'ACTIVE' ) {
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                 }
-                                                $this->itemManager->deleteByID($i) ;
+                                                $this->itemManager->deleteByPrimaryKey($i) ;
                                             }
                                         }
-                                        osc_add_flash_message(__('The items have been deleted')) ;
+                                        osc_add_flash_message( _m('The items have been deleted')) ;
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage()) ;
+                                        osc_add_flash_message( _m('Error: ') . $e->getMessage()) ;
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
@@ -180,9 +180,9 @@ class CAdminItems extends AdminSecBaseModel
                                                 break;
                                         }
 
-                                        osc_add_flash_message(__('The item has been activated'));
+                                        osc_add_flash_message( _m('The item has been activated'));
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                        osc_add_flash_message( _m('Error: ') . $e->getMessage());
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
@@ -206,9 +206,9 @@ class CAdminItems extends AdminSecBaseModel
                                                 array('b_premium' => $value),
                                                 array('pk_i_id' => $id)
                                         );
-                                        osc_add_flash_message(__('Changes have been applied'));
+                                        osc_add_flash_message( _m('Changes have been applied'));
                                     } catch (Exception $e) {
-                                        osc_add_flash_message(__('Error: ') . $e->getMessage());
+                                        osc_add_flash_message( _m('Error: ') . $e->getMessage());
                                     }
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
@@ -242,6 +242,7 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
                                     $this->_exportVariableToView("item", $item);
                                     $this->_exportVariableToView("resources", $resources);
+                                    $this->_exportVariableToView("new_item", FALSE);
 
                                     $this->doView('items/frm.php') ;
             break;
@@ -287,9 +288,6 @@ class CAdminItems extends AdminSecBaseModel
                                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                                     }
                                     
-                                    $this->add_css('demo_table.css') ;
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('new_item_layout.css') ;
                                     $this->_exportVariableToView("users", User::newInstance()->listAll());
                                     $this->_exportVariableToView("categories", Category::newInstance()->toTree());
                                     $this->_exportVariableToView("countries", $countries);
@@ -311,12 +309,6 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
             default:                //default
-                                    $this->add_global_js('jquery.dataTables.min.js') ;
-                                    $this->add_css('item_list_layout.css') ;
-                                    $this->add_css('tabs.css') ;
-                                    $this->add_global_js('tabber-minimized.js') ;
-                                    $this->add_css('demo_table.css') ;
-
                                     $catId = Params::getParam('catId') ;
 
                                     //preparing variables for the view
@@ -331,7 +323,7 @@ class CAdminItems extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

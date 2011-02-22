@@ -84,6 +84,5 @@ function update_cat_stats() {
 
 update_cat_stats();
 osc_runAlert('HOURLY');
-print_r("loL");
 
 ?>

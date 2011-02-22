@@ -22,21 +22,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Languages'); ?></div>
 
         <div id="content">
             <div id="separator"></div>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url() ; ?>images/icon-language.png" /></div>
+                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url('images/icon-language.png') ; ?>" /></div>
                     <div id="content_header_arrow">&raquo; <?php _e('Add a language'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
@@ -59,7 +59,7 @@
                         </form>
                     <?php } else { ?>
                         <p>
-                            <?php _e('The translations folder '); ?> (<?php echo osc_translations_path() ; ?>) <?php _e(' is not writable on your server, this'); ?> <span class="OSClass"><?php _e('OSClass') ; ?></span> <?php _e("can't upload translations from the administration panel. Please copy the translation package using FTP or SSH, or make the translation folder writable"); ?>.
+                            <?php _e('The translations folder'); ?> (<?php echo osc_translations_path() ; ?>) <?php _e('is not writable on your server, this'); ?> <span class="OSClass"><?php _e('OSClass') ; ?></span> <?php _e("can't upload translations from the administration panel. Please make the translation folder writable"); ?>.
                         </p>
                         <p>
                             <?php _e('To make a directory writable under UNIX execute this command from the shell:') ; ?>
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
     </body>
 </html>
 

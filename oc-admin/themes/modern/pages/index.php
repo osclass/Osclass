@@ -17,17 +17,17 @@
  */
 ?>
 <?php
-    $pages = $this->_get("pages");
-    $prefLocale = $this->_get("prefLocale");
+    $pages = __get("pages");
+    $prefLocale = __get("prefLocale");
     $last = end($pages); $last_id = $last['pk_i_id'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
     <body>
-        <?php $this->osc_print_header() ; ?>
+        <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Pages'); ?></div>              
         <script type="text/javascript">
@@ -113,7 +113,7 @@
         <div id="content">
             <div id="separator"></div>
 
-            <?php include_once osc_current_admin_theme_path() . 'include/backoffice_menu.php'; ?>
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
                 <?php
@@ -158,6 +158,6 @@
             </script>
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
-        <?php $this->osc_print_footer() ; ?>
+        <?php osc_current_admin_theme_url('footer.php') ; ?>
     </body>
 </html>				

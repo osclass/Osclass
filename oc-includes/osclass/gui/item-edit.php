@@ -21,52 +21,45 @@
 ?>
 <?php
     //getting variables for this view
-    $categories = $this->_get("categories");
-    $currencies = $this->_get("currencies");
-    $countries  = $this->_get("countries");
-    $locales    = $this->_get("locales") ;
-    $regions    = $this->_get("regions");
-    $cities     = $this->_get("cities");
-    $user       = $this->_get("user") ;
-    $item       = $this->_get("item") ;
-
-    $this->add_css('tabs.css');
-    $this->add_global_js('tabber-minimized.js')
+    $categories = __get("categories");
+    $currencies = __get("currencies");
+    $countries  = __get("countries");
+    $locales    = __get("locales") ;
+    $regions    = __get("regions");
+    $cities     = __get("cities");
+    $user       = __get("user") ;
+    $item       = __get("item") ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_web_theme_path('head.php') ; ?>
     </head>
     <body>
         <div class="container">
-            <?php $this->osc_print_header() ; ?>
+            <?php osc_current_web_theme_path('header.php') ; ?>
             <?php ItemForm::location_javascript(); ?>
-
             <div class="content add_item">
-                <h1><strong><?php _e('Update your item'); ?></strong></h1>
-
+                <h1><strong><?php _e('Update your item', 'gui'); ?></strong></h1>
                     <form action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <input type="hidden" name="action" value="item_edit_post" />
                         <input type="hidden" name="page" value="item" />
-                        <input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
-                        <input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
-                        <input type="hidden" name="fk_location_id" value="<?php echo $item['fk_i_user_location_id'];?>" />
-
+                        <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
+                        <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
                         <div class="left_column">
                             <div class="box general_info">
-                                <h2><?php _e('General Information'); ?></h2>
+                                <h2><?php _e('General Information', 'gui'); ?></h2>
                                 <div class="row">
-                                    <label><?php _e('Category'); ?></label>
+                                    <label><?php _e('Category', 'gui'); ?></label>
                                     <?php ItemForm::category_select($categories, $item); ?>
                                 </div>
                                 <div class="row">
                                     <?php ItemForm::multilanguage_title_description($locales, $item); ?>
                                 </div>
                                 <div class="row price">
-                                    <label><?php _e('Price'); ?></label>
+                                    <label><?php _e('Price', 'gui'); ?></label>
                                     <?php ItemForm::price_input_text($item); ?>
                                     <?php ItemForm::currency_select($currencies,$item); ?>
                                 </div>
@@ -74,53 +67,50 @@
 
                             <div class="box photos">
                                 <?php ItemForm::photos_javascript($item); ?>
-                                <h2><?php _e('Photos'); ?></h2>
+                                <h2><?php _e('Photos', 'gui'); ?></h2>
                                 <?php ItemForm::photos($resources); ?>
                                 <div id="photos">
                                     <div class="row">
-                                        <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
+                                        <input type="file" name="photos[]" /> (<?php _e('optional', 'gui'); ?>)
                                     </div>
                                 </div>
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo'); ?></a>
+                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'gui'); ?></a>
                             </div>
                         </div>
 
-                            <div class="right_column">
-                        <div class="box location">
-                            <h2><?php _e('Location'); ?></h2>
-                            <div class="row">
-                                <label><?php _e('Country'); ?></label>
-                                <?php ItemForm::country_select($countries, $item) ; ?>
+                        <div class="right_column">
+                            <div class="box location">
+                                <h2><?php _e('Location', 'gui'); ?></h2>
+                                <div class="row">
+                                    <label><?php _e('Country', 'gui'); ?></label>
+                                    <?php ItemForm::country_select($countries, $item) ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('Region', 'gui'); ?></label>
+                                    <?php ItemForm::region_select($regions, $item) ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('City', 'gui'); ?></label>
+                                    <?php ItemForm::city_select($cities, $item) ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('City area', 'gui'); ?></label>
+                                    <?php ItemForm::city_area_text($item) ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('Address', 'gui'); ?></label>
+                                    <?php ItemForm::address_text($item) ; ?>
+                                </div>
                             </div>
-                            <div class="row">
-                                <label><?php _e('Region'); ?></label>
-                                <?php ItemForm::region_select($regions, $item) ; ?>
-                            </div>
-                            <div class="row">
-                                <label><?php _e('City'); ?></label>
-                                <?php ItemForm::city_select($cities, $item) ; ?>
-                            </div>
-                            <div class="row">
-                                <label><?php _e('City area'); ?></label>
-                                <?php ItemForm::city_area_text($item) ; ?>
-                            </div>
-                            <div class="row">
-                                <label><?php _e('Address'); ?></label>
-                                <?php ItemForm::address_text($item) ; ?>
-                            </div>
-                        </div>
-
                             <?php osc_run_hook('item_edit', $item) ;?>
-                            </div>
-
-                    <button class="itemFormButton" type="submit"><?php _e('Update'); ?></button>
-                    <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel'); ?></a>
+                        </div>
+                        <button class="itemFormButton" type="submit"><?php _e('Update', 'gui'); ?></button>
+                        <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'gui'); ?></a>
                     </fieldset>
-                    </form>
+                </form>
             </div>
-                    </div>
-        <?php $this->osc_print_footer() ; ?>
-
+            <?php osc_current_web_theme_path('footer.php') ; ?>
+        </div>
+        <?php osc_show_flash_message() ; ?>
     </body>
-
 </html>

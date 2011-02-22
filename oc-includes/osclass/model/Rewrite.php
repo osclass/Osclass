@@ -24,9 +24,17 @@ class Rewrite extends DAO
 {
     private static $instance ;
     private $rules;
+    private $request_uri;
+    private $uri;
+    private $location;
+    private $section;
     
     public function __construct() {
         $this->rules = $this->getRules();
+        $this->request_uri = '';
+        $this->uri = '';
+        $this->location = '';
+        $this->section = '';
         parent::__construct() ;
     }
 
@@ -75,15 +83,13 @@ class Rewrite extends DAO
     }
 
     public function init() {
-        global $osc_request ;
-        $osc_request['uri'] = null ;
+        // $_SERVER is not supported by Params Class... we should fix that
         if(isset($_SERVER['REQUEST_URI'])) {
-            //$rules = Permalink::newInstance()->getRules();
             $request_uri = urldecode(str_replace(REL_WEB_URL, "", $_SERVER['REQUEST_URI']));
-            
             if(osc_rewrite_enabled()) {
                 foreach($this->rules as $match => $uri) {
-                    //echo '#'.$match.'#'.$request_uri."<br />";
+                    // UNCOMMENT TO DEBUG
+                    //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
                     if(preg_match('#'.$match.'#', $request_uri, $m)) {
                         $request_uri = preg_replace('#'.$match.'#', $uri, $request_uri);
                         break;
@@ -91,10 +97,10 @@ class Rewrite extends DAO
                 }
             }
             $this->extractParams($request_uri);
-            $osc_request['request_uri'] = $request_uri;
-            $osc_request['uri'] = $this->extractURL($request_uri);
-            $osc_request['location'] = str_replace(".php", "", $osc_request['uri']);
-            if(isset($_REQUEST['action'])) { $osc_request['section'] = $_REQUEST['action']; };
+            $this->request_uri = $request_uri;
+            $this->uri = $this->extractURL($request_uri);
+            $this->location = str_replace(".php", "", $this->uri);
+            if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
         }
     }
 
@@ -115,8 +121,9 @@ class Rewrite extends DAO
             if(preg_match_all('|&([^=]+)=([^&]*)|', '&'.$uri_array[$var_i].'&', $matches)) {
                 $length = count($matches[1]);
                 for($var_k = 0;$var_k<$length;$var_k++) {
-                    $_GET[$matches[1][$var_k]] = $matches[2][$var_k];
-                    $_REQUEST[$matches[1][$var_k]] = $matches[2][$var_k];
+                    Params::setParam($matches[1][$var_k], $matches[2][$var_k]);
+                    //$_GET[$matches[1][$var_k]] = $matches[2][$var_k];
+                    //$_REQUEST[$matches[1][$var_k]] = $matches[2][$var_k];
                 }
             }
         }
@@ -129,6 +136,22 @@ class Rewrite extends DAO
     public function clearRules() {
         unset($this->rules);
         $this->rules = array();
+    }
+    
+    public function get_request_uri() {
+        return $this->request_uri;
+    }
+
+    public function get_uri() {
+        return $this->uri;
+    }
+
+    public function get_location() {
+        return $this->location;
+    }
+
+    public function get_section() {
+        return $this->section;
     }
 
 

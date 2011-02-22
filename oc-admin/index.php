@@ -22,6 +22,8 @@
 
     require_once '../oc-load.php' ;
 
+    define('OC_ADMIN', 'true');
+
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;

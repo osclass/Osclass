@@ -24,13 +24,6 @@
     {
 	    function __construct() {
 		    parent::__construct() ;
-
-            $this->add_css('backoffice.css') ;
-            $this->add_global_css('jquery-ui.css') ;
-            $this->add_global_js('jquery.js') ;
-            $this->add_global_js('jquery-ui.js') ;
-            $this->add_js('jquery.cookie.js') ;
-            $this->add_js('jquery.json.js') ;
 	    }
 
 	    function isLogged() {
@@ -42,6 +35,7 @@
             exit ;
         }
 
+        /*
         function osc_get_theme_path($file) {
             if (file_exists(osc_current_admin_theme_path() . $file)) {
                 return osc_current_admin_theme_path() . $file ;
@@ -57,6 +51,7 @@
                 return osc_admin_base_url() . 'gui/' . $file ;
             }
         }
+        */
     }
 
 ?>

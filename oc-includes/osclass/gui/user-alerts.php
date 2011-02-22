@@ -25,43 +25,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
-        <?php $this->osc_print_head() ; ?>
+        <?php osc_current_web_theme_path('head.php') ; ?>
     </head>
     <body>
-
         <div class="container">
-
-            <?php $this->osc_print_header() ; ?>
-
+            <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_account">
-
-                <h1><strong><?php _e('User account manager') ; ?></strong></h1>
-
+                <h1><strong><?php _e('User account manager', 'gui') ; ?></strong></h1>
                 <div id="sidebar">
-
                     <?php echo osc_private_user_menu() ; ?>
-
                 </div>
-
                 <div id="main">
-
-                    <h2><?php _e('Your alerts') ; ?></h2>
-
+                    <h2><?php _e('Your alerts', 'gui') ; ?></h2>
                     <?php if(osc_count_alerts() == 0) { ?>
-                        <h3><?php _e('You do not have any alerts yet.'); ?></h3>
+                        <h3><?php _e('You do not have any alerts yet', 'gui'); ?>.</h3>
                     <?php } else { ?>
                         <?php while(osc_has_alerts()) { ?>
                             <div class="userItem" >
-                                <div><?php _e('Alert'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?'); ?>');" href="<?php echo osc_user_unsubscribe_alert_url() ; ?>"><?php _e('Delete this alert') ; ?></a></div>
-
+                                <div><?php _e('Alert', 'gui'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?', 'gui'); ?>');" href="<?php echo osc_user_unsubscribe_alert_url() ; ?>"><?php _e('Delete this alert', 'gui') ; ?></a></div>
                                 <div style="width: 75%; padding-left: 100px;" >
                                 <?php while(osc_has_items()) { ?>
                                     <div class="userItem" >
                                         <div><a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></div>
-
                                         <div class="userItemData" >
-                                        <?php _e('Publication date') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                        <?php _e('Price') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
+                                        <?php _e('Publication date', 'gui') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
+                                        <?php _e('Price', 'gui') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
                                         </div>
                                     </div>
                                     <br />
@@ -73,13 +61,8 @@
                     <?php } ?>
                 </div>
             </div>
-
-            <?php $this->osc_print_footer() ; ?>
-
+            <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
-
         <?php osc_show_flash_message() ; ?>
-
     </body>
-
 </html>

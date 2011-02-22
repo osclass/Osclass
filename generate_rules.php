@@ -14,18 +14,18 @@ $rewrite->clearRules() ;
 $rewrite->addRule('^(.+?).php(.*)$', '$1.php$2');
 
 // Contact rules
-$rewrite->addRule('^contact/?$', 'index.php?action=contact');
+//$rewrite->addRule('^contact/?$', 'index.php?action=contact');
 
 // Feed rules
-$rewrite->addRule('^feed$', 'search?feed=rss');
-$rewrite->addRule('^feed/(.+)$', 'search.php?feed=$1');
+//$rewrite->addRule('^feed$', 'search?feed=rss');
+//$rewrite->addRule('^feed/(.+)$', 'search.php?feed=$1');
 
 // Search rules
-$rewrite->addRule('^search/(.*)$', 'search.php?pattern=$1');
-$rewrite->addRule('^s/(.*)$', 'search.php?pattern=$1');
+$rewrite->addRule('^search/(.*)$', 'index.php?page=search&sPattern=$1');
+//$rewrite->addRule('^s/(.*)$', 'search.php?pattern=$1');
 
 // Item rules
-$rewrite->addRule('^item/mark$', 'item.php?action=mark');
+/*$rewrite->addRule('^item/mark$', 'item.php?action=mark');
 $rewrite->addRule('^item/send-friend/([0-9]+)$', 'item.php?action=send_friend&id=$1');
 $rewrite->addRule('^item/send-friend/done$', 'item.php?action=send_friend_post');
 $rewrite->addRule('^item/contact/([0-9]+)$', 'item.php?action=contact&id=$1');
@@ -39,10 +39,10 @@ $rewrite->addRule('^item/update/stats$', 'item.php?action=update_cat_stats');
 $rewrite->addRule('^item/([0-9]+)$', 'item.php?id=$1');
 $rewrite->addRule('^item/(.*)$', 'item.php?action=$1');
 $rewrite->addRule('^item$', 'item.php');
-$rewrite->addRule('^(.+)_([0-9]+)$', 'item.php?id=$2');
+$rewrite->addRule('^(.+)_([0-9]+)$', 'item.php?id=$2');*/
 
 // User rules
-$rewrite->addRule('^user/login$', 'user.php?action=login');
+/*$rewrite->addRule('^user/login$', 'user.php?action=login');
 $rewrite->addRule('^user/logout$', 'user.php?action=logout');
 $rewrite->addRule('^user/register$', 'user.php?action=register');
 $rewrite->addRule('^user/register/done$', 'user.php?action=register_post');
@@ -66,13 +66,13 @@ $rewrite->addRule('^user/change/password/done$', 'user.php?action=forgot_change_
 $rewrite->addRule('^user/options/(.*)', 'user.php?action=options&option=$1');
 $rewrite->addRule('^user/options_post/(.*)$', 'user.php?action=options_post&option=$1');
 $rewrite->addRule('^user/(.*)$', 'user.php?action=$1');
-$rewrite->addRule('^user$', 'user.php');
+$rewrite->addRule('^user$', 'user.php');*/
 
 // Page rules
-$rewrite->addRule('^page/([0-9]*)$', 'page.php?id=$1');
+//$rewrite->addRule('^page/([0-9]*)$', 'page.php?id=$1');
 
 // Category rules
-$rewrite->addRule('^(.+)$', 'search.php?sCategory=$1');
+//$rewrite->addRule('^(.+)$', 'search.php?sCategory=$1');
 
 //Write rule to DB
 $rewrite->setRules();

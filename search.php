@@ -24,14 +24,6 @@
         function __construct() {
             parent::__construct() ;
 
-            $this->add_css('style.css') ;
-            $this->add_css('jquery-ui.css') ;
-            $this->add_global_js('tiny_mce/tiny_mce.js') ;
-            $this->add_global_js('jquery.js') ;
-            $this->add_global_js('jquery-ui.js') ;
-            $this->add_js('jquery-extends.js') ;
-            $this->add_js('global.js') ;
-
             $this->mSearch = new Search() ;
         }
 
@@ -97,9 +89,14 @@
             //ONLY 0 ( => 'asc' ), 1 ( => 'desc' ) AS ALLOWED VALUES
             $p_iOrderType = Params::getParam('iOrderType');
             $allowedTypesForSorting = Search::getAllowedTypesForSorting() ;
-            if(!array_key_exists($p_iOrderType, $allowedTypesForSorting)) {
-                $p_iOrderType = osc_default_order_type_at_search() ;
+            $orderType = osc_default_order_type_at_search();
+            foreach($allowedTypesForSorting as $k => $v) {
+                if($p_iOrderType==$v) {
+                    $orderType = $k;
+                    break;
+                }
             }
+            $p_iOrderType = $orderType;
 
             $p_sFeed      = Params::getParam('sFeed');
             $p_iPage      = intval(Params::getParam('iPage'));
@@ -181,11 +178,12 @@
             if($p_sFeed == '') {
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
-                $aOrders   = array(
+                //Static data, which is the point?
+                /*$aOrders   = array(
                                  __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
                                 ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
                                 ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
-                             );
+                             );*/
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
 
                 //Categories for select at view "search.php"
@@ -205,21 +203,22 @@
                 osc_run_hook('search', $this->mSearch) ;
 
                 //preparing variables...
-                $this->_exportVariableToView('aCategories', $aCategories) ;
-                $this->_exportVariableToView('sCategory', $p_sCategory) ;
-                $this->_exportVariableToView('aOrders', $aOrders) ;
-                $this->_exportVariableToView('iOrderType', $p_iOrderType) ;
-                $this->_exportVariableToView('sOrder', $p_sOrder) ;
-                $this->_exportVariableToView('sPattern', $p_sPattern) ;
-                $this->_exportVariableToView('iNumPages', $iNumPages) ;
-                $this->_exportVariableToView('iPage', $p_iPage) ;
-                $this->_exportVariableToView('bPic', $p_bPic) ;
-                $this->_exportVariableToView('sCity', $p_sCity) ;
-                $this->_exportVariableToView('sPriceMin', $p_sPriceMin) ;
-                $this->_exportVariableToView('sPriceMax', $p_sPriceMax) ;
-                $this->_exportVariableToView('iTotalItems', $iTotalItems) ;
-                $this->_exportVariableToView('aItems', $aItems) ;
-                $this->_exportVariableToView('sShowAs', $p_sShowAs);
+                $this->_exportVariableToView('categories', $aCategories) ;
+                //$this->_exportVariableToView('orders', $aOrders) ;
+                $this->_exportVariableToView('search_category', $p_sCategory) ;
+                $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
+                $this->_exportVariableToView('search_order', $p_sOrder) ;
+                $this->_exportVariableToView('search_pattern', $p_sPattern) ;
+                $this->_exportVariableToView('search_total_pages', $iNumPages) ;
+                $this->_exportVariableToView('search_page', $p_iPage) ;
+                $this->_exportVariableToView('search_has_pic', $p_bPic) ;
+                $this->_exportVariableToView('search_city', $p_sCity) ;
+                $this->_exportVariableToView('search_price_min', $p_sPriceMin) ;
+                $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
+                $this->_exportVariableToView('search_total_items', $iTotalItems) ;
+                $this->_exportVariableToView('items', $aItems) ;
+                $this->_exportVariableToView('search_show_as', $p_sShowAs);
+                $this->_exportVariableToView('search', $this->mSearch);
                 
                 //calling the view...
                 $this->doView('search.php') ;
@@ -231,21 +230,9 @@
 
         //hopefully generic...
         function doView($file) {
-            $this->osc_print_html($file) ;
+            osc_current_web_theme_path($file) ;
         }
 
-        function osc_update_search_url($params, $delimiter = '&amp;') {
-            $merged = array_merge($_REQUEST, $params);
-            return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
-        }
-
-        function alert_form() {
-            $this->mSearch->order() ;
-            $this->mSearch->limit() ;
-            //$search_alert = base64_encode(serialize($this->mSearch)) ;
-
-            $this->doView('alert-form.php') ;
-        }
     }
 
 ?>

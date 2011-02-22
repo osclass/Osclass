@@ -83,7 +83,7 @@ class CAdminTools extends AdminSecBaseModel
 
                                     }
                                     closedir($dir) ;
-                                    osc_add_flash_message(__('Re-generation complete'), 'admin') ;
+                                    osc_add_flash_message( _m('Re-generation complete'), 'admin') ;
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
             break;
             case 'upgrade':
@@ -128,7 +128,7 @@ class CAdminTools extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

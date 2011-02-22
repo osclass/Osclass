@@ -89,41 +89,41 @@
         return( AdminThemes::newInstance()->getCurrentTheme() ) ;
     }
 
-    function osc_current_admin_theme_url() {
-        return( AdminThemes::newInstance()->getCurrentThemeUrl() ) ;
+    function osc_current_admin_theme_url($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemeUrl() . $file ;
     }
     
-    function osc_current_admin_theme_path() {
-        return( AdminThemes::newInstance()->getCurrentThemePath() ) ;
+    function osc_current_admin_theme_path($file = '') {
+        require AdminThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
-    function osc_current_admin_theme_styles_url() {
-        return( AdminThemes::newInstance()->getCurrentThemeStyles() ) ;
+    function osc_current_admin_theme_styles_url($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemeStyles() . $file ;
     }
 
-    function osc_current_admin_theme_js_url() {
-        return( AdminThemes::newInstance()->getCurrentThemeJs() ) ;
+    function osc_current_admin_theme_js_url($file = '') {
+        return AdminThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
     //ONLY USED AT PUBLIC WEBSITE
     function osc_current_web_theme() {
-        return( WebThemes::newInstance()->getCurrentTheme() ) ;
+        return WebThemes::newInstance()->getCurrentTheme() ;
     }
 
-    function osc_current_web_theme_url() {
-        return( WebThemes::newInstance()->getCurrentThemeUrl() ) ;
+    function osc_current_web_theme_url($file = '') {
+        return WebThemes::newInstance()->getCurrentThemeUrl() . $file ;
     }
 
-    function osc_current_web_theme_path() {
-        return( WebThemes::newInstance()->getCurrentThemePath() ) ;
+    function osc_current_web_theme_path($file = '') {
+        require WebThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
-    function osc_current_web_theme_styles_url() {
-        return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
+    function osc_current_web_theme_styles_url($file = '') {
+        return WebThemes::newInstance()->getCurrentThemeStyles() . $file ;
     }
 
-    function osc_current_web_theme_js_url() {
-        return( WebThemes::newInstance()->getCurrentThemeStyles() ) ;
+    function osc_current_web_theme_js_url($file = '') {
+        return WebThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
     
@@ -140,7 +140,7 @@
             if ( osc_rewrite_enabled() ) {
                 $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
             } else {
-                $path = sprintf(osc_base_url(true) . '?page=item&action=post&catId=%d', $category['pk_i_id']) ;
+                $path = sprintf(osc_base_url(true) . '?page=item&action=item_add&catId=%d', $category['pk_i_id']) ;
             }
         } else {
             $path = osc_item_post_url() ;
@@ -152,7 +152,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'item/new' ;
         } else {
-            $path = sprintf(osc_base_url(true) . '?page=item&action=post') ;
+            $path = sprintf(osc_base_url(true) . '?page=item&action=item_add') ;
         }
         return $path ;
     }
@@ -231,11 +231,6 @@
         return $path ;
     }
 
-    //osc_itemThumbnail
-    /*function osc_item_thumbnail_url($file) {
-        return ('NOT IMPLEMENTED YET. THE PARAMETER RECEIVED IS "' . $file . '"') ;
-    }*/
-    
     //osc_createItemURL
     function osc_item_url($item = null) {
         if($item==null) {
@@ -330,15 +325,33 @@
     /////////////////////////////////////
     //       functions for items       //
     /////////////////////////////////////
-    function osc_item_edit_url() {
-        return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id();
+    function osc_item_edit_url($secret = '') {
+        if($secret!='') {
+            return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id()."&secret=".$secret;
+        } else {
+            return osc_base_url(true)."?page=item&action=item_edit&id=".osc_item_id();
+        }
     }
 
-    function osc_item_delete_url() {
-        return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
+    function osc_item_delete_url($secret = '') {
+        if($secret!='') {
+            return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id()."&secret=".$secret;
+        } else {
+            return osc_base_url(true)."?page=item&action=item_delete&id=".osc_item_id();
+        }
     }
 
+    function osc_item_activate_url($secret = '') {
+        if($secret!='') {
+            return osc_base_url(true)."?page=item&action=activate&id=".osc_item_id()."&secret=".$secret;
+        } else {
+            return osc_base_url(true)."?page=item&action=activate&id=".osc_item_id();
+        }
+    }
 
+    function osc_item_send_friend_url() {
+        return osc_base_url(true)."?page=item&action=send_friend&id=".osc_item_id();
+    }
     /////////////////////////////////////
     //functions for locations & search //
     /////////////////////////////////////

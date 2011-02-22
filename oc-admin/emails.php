@@ -40,9 +40,6 @@ class CAdminEmails extends AdminSecBaseModel
                 if(Params::getParam("id")=='') {
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
-                $this->add_css('tabs.css') ;
-                $this->add_global_js('tabber-minimized.js') ;
-                $this->add_global_js('tiny_mce/tiny_mce.js') ;
                 $this->_exportVariableToView("email", $this->emailManager->findByPrimaryKey(Params::getParam("id")));
                 $this->doView("emails/frm.php");
                 break;
@@ -57,7 +54,7 @@ class CAdminEmails extends AdminSecBaseModel
                         $aFieldsDescription[$m[1]][$m[2]] = $v;
                     }
                 }
-
+                
                 foreach($aFieldsDescription as $k => $_data) {
                     $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
                 }
@@ -66,10 +63,10 @@ class CAdminEmails extends AdminSecBaseModel
                     if(!$this->emailManager->isIndelible($id)) {
                         $this->emailManager->updateInternalName($id, $s_internal_name);
                     }
-                    osc_add_flash_message( __('The email/alert has been updated'), 'admin' );
+                    osc_add_flash_message( _m('The email/alert has been updated'), 'admin' );
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                 }
-                osc_add_flash_message(__('You can\'t repeat internal name'), 'admin');
+                osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
                 $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                 break;
             default:
@@ -79,8 +76,6 @@ class CAdminEmails extends AdminSecBaseModel
                 } else {
                     $this->_exportVariableToView("prefLocale", Session::_get("adminLocale"));
                 }
-                $this->add_css('item_list_layout.css') ;
-                $this->add_css('demo_table.css') ;
                 $this->_exportVariableToView("emails", $this->emailManager->listAll(1));
                 $this->doView("emails/index.php");
 
@@ -89,7 +84,7 @@ class CAdminEmails extends AdminSecBaseModel
 
     //hopefully generic...
     function doView($file) {
-        $this->osc_print_html($file) ;
+        osc_current_admin_theme_path($file) ;
     }
 }
 

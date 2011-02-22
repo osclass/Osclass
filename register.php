@@ -22,14 +22,6 @@
 
         function __construct() {
             parent::__construct() ;
-
-            $this->add_css('style.css') ;
-            $this->add_css('jquery-ui.css') ;
-            $this->add_global_js('tiny_mce/tiny_mce.js') ;
-            $this->add_global_js('jquery.js') ;
-            $this->add_global_js('jquery-ui.js') ;
-            $this->add_js('jquery-extends.js') ;
-            $this->add_js('global.js') ;
         }
 
         //Business Layer...
@@ -43,13 +35,13 @@
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
-                                            case 1: osc_add_flash_message(__('The user has been created. An activation email has been sent')) ;
+                                            case 1: osc_add_flash_message( _m('The user has been created. An activation email has been sent')) ;
                                                     $this->redirectTo( osc_base_url() ) ;
                                             break;
-                                            case 2: osc_add_flash_message(__('Your account has been created successfully')) ;
+                                            case 2: osc_add_flash_message( _m('Your account has been created successfully')) ;
                                                     $this->doView('user-login.php') ;
                                             break;
-                                            case 3: osc_add_flash_message(__('The specified e-mail is already in use')) ;
+                                            case 3: osc_add_flash_message( _m('The specified e-mail is already in use')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
                                         }
@@ -95,12 +87,12 @@
                                                     osc_sendMail($emailParams) ;
                                                 }
                                                 osc_run_hook('validate_user', $user) ;
-                                                osc_add_flash_message(__('Your account has been validated')) ;
+                                                osc_add_flash_message( _m('Your account has been validated')) ;
                                             } else {
-                                                osc_add_flash_message(__('Your account has already been activated')) ;
+                                                osc_add_flash_message( _m('Your account has already been activated')) ;
                                             }
                                         } else {
-                                            osc_add_flash_message(__('The link is not valid anymore. Sorry for the inconvenience!')) ;
+                                            osc_add_flash_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
                                         }
                                         $this->redirectTo( osc_base_url() ) ;
                 break;
@@ -110,7 +102,7 @@
 
         //hopefully generic...
         function doView($file) {
-            $this->osc_print_html($file) ;
+            osc_current_web_theme_path($file) ;
         }
     }
 
