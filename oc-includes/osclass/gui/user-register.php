@@ -34,7 +34,7 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Register an account for free', 'gui') ; ?></h1>
-                    <form action="<?php osc_base_url(true) ; ?>" method="post" onSubmit="javascript:return checkForm();">
+                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" onSubmit="javascript:return checkForm();">
                         <input type="hidden" name="page" value="register" />
                         <input type="hidden" name="action" value="register_post" />
                         

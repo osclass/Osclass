@@ -44,7 +44,11 @@
 
         //to get the exported variables for the view
         function _get($key) {
-            return($this->aExported[$key]) ;
+            if ($this->_exists($key)) {
+                return($this->aExported[$key]) ;
+            } else {
+                return '' ;
+            }
         }
 
         //only for debug

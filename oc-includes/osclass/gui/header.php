@@ -36,7 +36,7 @@
                 <li class="first">
                     <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login', 'gui') ; ?></a>  &middot;
                     <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'gui'); ?></a>
-                    <form id="login" action="<?php osc_base_url(true) ; ?>" method="post">
+                    <form id="login" action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <fieldset>
                             <input type="hidden" name="page" value="login" />
                             <input type="hidden" name="action" value="login_post" />
@@ -45,7 +45,7 @@
                             <label for="password"><?php _e('Password', 'gui') ; ?></label>
                             <?php UserForm::password_login_text() ; ?>
                             <button type="submit"><?php _e('Log in', 'gui') ; ?></button>
-                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'gui');?></a>
+                            &nbsp;&nbsp;<a href="<?php echo osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'gui');?></a>
                         </fieldset>
                     </form>
                 </li>
