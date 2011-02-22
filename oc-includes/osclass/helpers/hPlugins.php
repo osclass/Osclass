@@ -60,4 +60,28 @@
         return osc_admin_base_url(true).'?page=plugins&action=configure&plugin='.$plugin;
     }
     
+    
+    function osc_ajax_plugin_url($file = '') {
+        $file = str_replace(osc_base_path().'oc-content/plugins/', '', $file);
+        return (osc_base_url(true). "?page=ajax&action=custom&ajaxfile=" . $file);
+    }
+
+    function osc_admin_configure_plugin_url($file = '') {
+        $file = str_replace(osc_base_path().'oc-content/plugins/', '', $file);
+        return osc_admin_base_url(true).'?page=plugins&action=configure&plugin=' . $file;
+    }
+
+    function osc_admin_render_plugin_url($file = '') {
+        $file = str_replace(osc_base_path().'oc-content/plugins/', '', $file);
+        return osc_admin_base_url(true).'?page=plugins&action=renderplugin&file=' . $file;
+    }
+
+    function osc_admin_render_plugin($file = '') {
+        header('Location: ' . osc_admin_render_plugin_url($file) ) ;
+        exit ;
+        //osc_redirectTo( osc_admin_render_plugin_url($file) ) ;
+    }
+
+
+    
 ?>
