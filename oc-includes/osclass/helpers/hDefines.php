@@ -20,74 +20,139 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    //URL Helpers
+
+    /**
+     * Gets the root url for your installation
+     *
+     * @param <boolean> $with_index true if index.php in the url is needed
+     * @return <string>
+     */
     function osc_base_url($with_index = false) {
         $path = WEB_PATH ;
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
 
+    /**
+     * Gets the root url of oc-admin for your installation
+     * 
+     * @param <boolean> $with_index true if index.php in the url is needed
+     * @return <string>
+     */
     function osc_admin_base_url($with_index = false) {
         $path = WEB_PATH . "oc-admin/" ;
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
     
-    //Path Helpers
+    /**
+    * Gets the root path for your installation
+    *
+    * @return <string>
+    */
     function osc_base_path() {
         return(ABS_PATH) ;
     }
 
+    /**
+    * Gets the root path of oc-admin
+    *
+    * @return <string>
+    */
     function osc_admin_base_path() {
         return(osc_base_path() . "oc-admin/") ;
     }
 
+    /**
+    * Gets the librarieas path
+    *
+    * @return <string>
+    */
     function osc_lib_path() {
         return(LIB_PATH) ;
     }
 
+    /**
+    * Gets the themes path
+    *
+    * @return <string>
+    */
     function osc_themes_path() {
         return(THEMES_PATH) ;
     }
 
+    /**
+    * Gets the plugins path
+    *
+    * @return <string>
+    */
     function osc_plugins_path() {
         return(PLUGINS_PATH) ;
     }
 
+    /**
+    * Gets the translations path
+    *
+    * @return <string>
+    */
     function osc_translations_path() {
         return(TRANSLATIONS_PATH) ;
     }
 
-    function osc_css_url() {
-        return(osc_base_url() . 'oc-includes/css/') ;
-    }
-
-    function osc_js_url() {
-        return(osc_base_url() . 'oc-includes/js/') ;
-    }
-
-    //ONLY USED AT OC-ADMIN
+    /**
+    * Gets the current oc-admin theme
+    *
+    * @return <string>
+    */
     function osc_current_admin_theme() {
         return( AdminThemes::newInstance()->getCurrentTheme() ) ;
     }
 
+    /**
+     * Gets the complete url of a given admin's file
+     *
+     * @param <string> $file the admin's file
+     * @return <string>
+     */
     function osc_current_admin_theme_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeUrl() . $file ;
     }
-    
+
+
+    /**
+     * Gets the complete path of a given admin's file
+     *
+     * @param <string> $file the admin's file
+     * @return <string>
+     */
     function osc_current_admin_theme_path($file = '') {
         require AdminThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
+    /**
+     * Gets the complete url of a given style's file
+     *
+     * @param <string> $file the style's file
+     * @return <string>
+     */
     function osc_current_admin_theme_styles_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeStyles() . $file ;
     }
 
+    /**
+     * Gets the complete url of a given js's file
+     *
+     * @param <type> $file the js's file
+     * @return <type>
+     */
     function osc_current_admin_theme_js_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
-    //ONLY USED AT PUBLIC WEBSITE
+    /**
+     *
+     * @return <type> 
+     */
     function osc_current_web_theme() {
         return WebThemes::newInstance()->getCurrentTheme() ;
     }
