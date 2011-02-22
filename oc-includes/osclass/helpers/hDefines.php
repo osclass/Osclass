@@ -33,24 +33,6 @@
         return($path) ;
     }
     
-    function osc_ajax_plugin_url($file = '') {
-        return(WEB_PATH . "index.php?page=ajax&action=custom&ajaxfile=" . $file);
-    }
-
-    function osc_admin_configure_plugin_url($file = '') {
-        return(osc_base_url() . "oc-admin/index.php?page=plugins&action=configure&plugin=" . $file);
-    }
-
-    function osc_admin_render_plugin_url($file = '') {
-        return(osc_base_url() . "oc-admin/index.php?page=plugins&action=renderplugin&file=" . $file);
-    }
-
-    function osc_admin_render_plugin($file = '') {
-        header('Location: ' . osc_admin_render_plugin_url($file) ) ;
-        exit ;
-        //osc_redirectTo( osc_admin_render_plugin_url($file) ) ;
-    }
-
     //Path Helpers
     function osc_base_path() {
         return(ABS_PATH) ;
@@ -387,30 +369,6 @@
         }
     }
     
-    function osc_search_url($params = null) {
-        $url = osc_base_url(true) . '?page=search';
-        if($params!=null) {
-            foreach($params as $k => $v) {
-                $url .= "&" . $k . "=" . $v;
-            }
-        }
-        return $url;
-    }
-    
-    function osc_search_list_countries() {
-        return Search::newInstance()->listCountries();
-    }
-    
-    function osc_search_list_regions($country = '%%%%') {
-        return Search::newInstance()->listRegions($country);
-    }
-    
-    function osc_search_list_cities($region = '%%%%') {
-        return Search::newInstance()->listCities($region);
-    }
-    
-
-
     function osc_get_currencies() {
         if (!View::newInstance()->_exists('currencies')) {
             View::newInstance()->_exportVariableToView('currencies', Currency::newInstance()->listAll());

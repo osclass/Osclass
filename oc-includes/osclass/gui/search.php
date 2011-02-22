@@ -122,7 +122,7 @@
 
                             <?php
                                 if(osc_search_category() != '') {
-                                    osc_run_hook('search_form', osc_search_category()) ;
+                                    osc_run_hook('search_form', osc_search_category_id()) ;
                                 } else {
                                     osc_run_hook('search_form') ;
                                 }

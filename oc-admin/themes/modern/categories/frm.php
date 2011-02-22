@@ -63,7 +63,7 @@
 
                 <div id="content_separator"></div>
                 
-                <?php osc_show_flash_message() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
 
                 <div id="settings_form">
 			

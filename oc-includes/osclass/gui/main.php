@@ -116,15 +116,16 @@
                 </div>
                 <div id="sidebar">
                     <div class="navigation">
+                        <?php if(osc_count_list_regions()>0) {?>
                         <div class="box location">
                             <h3><strong><?php _e("Location", 'gui'); ?></strong></h3>
                             <ul>
-                            <?php $regions = osc_search_list_regions();
-                                foreach($regions as $region) { ?>
-                                <li><a href="<?php echo osc_search_url(array('sRegion' => $region['region_name']));?>"><?php echo $region['region_name'];?></a> <em>(<?php echo $region['items'];?>)</em></li>
+                            <?php while(osc_has_list_regions()) { ?>
+                                <li><a href="<?php echo osc_search_url(array('sRegion' => osc_list_region_name()));?>"><?php echo osc_list_region_name();?></a> <em>(<?php echo osc_list_region_items();?>)</em></li>
                             <?php } ?>
                             </ul>
                         </div>
+                        <?php }; ?>
                     </div>
                 </div>
             </div>

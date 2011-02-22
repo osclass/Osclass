@@ -100,7 +100,7 @@ class Rewrite extends DAO
             $this->request_uri = $request_uri;
             //$this->uri = $this->extractURL($request_uri);
             //$this->location = str_replace(".php", "", $this->uri);
-            if(Params::getParam('page')!='') { $this->location = Params::getParam('location'); };
+            if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
             if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
         }
     }
@@ -141,10 +141,6 @@ class Rewrite extends DAO
     
     public function get_request_uri() {
         return $this->request_uri;
-    }
-
-    public function get_uri() {
-        return $this->uri;
     }
 
     public function get_location() {

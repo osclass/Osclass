@@ -126,21 +126,21 @@ class CAdminPages extends AdminSecBaseModel
                     if($page_indelible == 1) {
                         osc_add_flash_message( _m('One page can\'t be deleted because it is indelible'), 'admin');
                     } else {
-                        osc_add_flash_message($page_indelible . ' ' .__('pages couldn\'t be deleted because are indelible'), 'admin');
+                        osc_add_flash_message($page_indelible . ' ' ._m('pages couldn\'t be deleted because are indelible'), 'admin');
                     }
                 }
                 if($page_deleted_error > 0) {
                     if($page_deleted_error == 1) {
                         osc_add_flash_message( _m('One page couldn\'t be deleted'), 'admin');
                     } else {
-                        osc_add_flash_message($page_deleted_error . ' ' .__('pages couldn\'t be deleted'), 'admin');
+                        osc_add_flash_message($page_deleted_error . ' ' ._m('pages couldn\'t be deleted'), 'admin');
                     }
                 }
                 if($page_deleted_correcty > 0) {
                     if($page_deleted_correcty == 1) {
                         osc_add_flash_message( _m('One page has been deleted correctly'), 'admin');
                     } else {
-                        osc_add_flash_message($page_deleted_correcty . ' ' .__('pages have been deleted correctly'), 'admin');
+                        osc_add_flash_message($page_deleted_correcty . ' ' ._m('pages have been deleted correctly'), 'admin');
                     }
                 }
                 $this->redirectTo(osc_admin_base_url(true)."?page=pages");
