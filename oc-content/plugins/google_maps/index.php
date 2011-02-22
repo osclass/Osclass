@@ -29,14 +29,13 @@ function google_maps_call_after_uninstall() {
 }
 
 function google_maps_admin() {
-    osc_admin_render_plugin(dirname(__FILE__) . '/admin.php') ;
+    osc_admin_render_plugin('google_maps/admin.php') ;
 }
 
 function google_maps_location() {
-	global $item;
-	$preferences = Preference::newInstance()->toArray();
-	if(isset($preferences['google_maps_key']) && !empty($preferences['google_maps_key'])) {
-		$key = $preferences['google_maps_key'];
+	$item = osc_item();
+	if(osc_google_maps_key()!='') {
+		$key = osc_google_maps_key();
         require 'map.php';
 	}
 }
