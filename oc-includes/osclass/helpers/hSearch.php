@@ -38,7 +38,11 @@
     }
     
     function osc_search_pattern() {
-        return View::newInstance()->_get('search_pattern');
+        if(View::newInstance()->_exists('search_pattern')) {
+            return View::newInstance()->_get('search_pattern');
+        } else {
+            return '';
+        }
     }
     
     function osc_search_city() {
