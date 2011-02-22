@@ -247,24 +247,23 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->doView('items/frm.php') ;
             break;
             case 'item_edit_post':
-            //case 'editItemPost':    //item edit (post)
-                                    require_once LIB_PATH . 'osclass/itemActions.php';
-
-                                    if(isset($_REQUEST['userId'])) {
-                                        if($_REQUEST['userId']!='') {
-                                            $user = User::newInstance()->findByPrimaryKey($_REQUEST['userId']);
-                                            Item::newInstance()->update(array(
-                                                'fk_i_user_id' => $_REQUEST['userId'],
-                                                's_contact_name' => $user['s_name'],
-                                                's_contact_email' => $user['s_email']
-                                            ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
-                                        } else {
-                                            Item::newInstance()->update(array(
-                                                'fk_i_user_id' => NULL,
-                                                's_contact_name' => $_REQUEST['contactName'],
-                                                's_contact_email' => $_REQUEST['contactEmail']
-                                            ), array('pk_i_id' => $Pid, 's_secret' => $Psecret));
-                                        }
+                                    $mItems = new ItemActions(true);
+                                    $success = $mItems->edit();
+                                    
+                                    $id = Params::getParam('userId') ;
+                                    if($id !='') {
+                                        $user = User::newInstance()->findByPrimaryKey( $id );
+                                        Item::newInstance()->update(array(
+                                            'fk_i_user_id' => $id,
+                                            's_contact_name' => $user['s_name'],
+                                            's_contact_email' => $user['s_email']
+                                        ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
+                                    } else {
+                                        Item::newInstance()->update(array(
+                                            'fk_i_user_id' => NULL,
+                                            's_contact_name' => Params::getParam('contactName'),
+                                            's_contact_email' => Params::getParam('contactEmail')
+                                        ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                     }
 
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
