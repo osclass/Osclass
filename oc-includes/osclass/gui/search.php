@@ -42,7 +42,6 @@
                                     <?php _e('Sort by', 'gui'); ?>:
                                     <?php $i = 0 ; ?>
                                     <?php $orders = osc_list_orders();
-                                    print_r($orders);
                                     foreach($orders as $label => $params) { ?>
                                         <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $params['iOrderType']) { ?>
                                             <a class="current" href="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>
