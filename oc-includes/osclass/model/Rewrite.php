@@ -98,8 +98,9 @@ class Rewrite extends DAO
             }
             $this->extractParams($request_uri);
             $this->request_uri = $request_uri;
-            $this->uri = $this->extractURL($request_uri);
-            $this->location = str_replace(".php", "", $this->uri);
+            //$this->uri = $this->extractURL($request_uri);
+            //$this->location = str_replace(".php", "", $this->uri);
+            if(Params::getParam('page')!='') { $this->location = Params::getParam('location'); };
             if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
         }
     }
