@@ -46,7 +46,7 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Access to your account', 'gui'); ?></h1>
-                    <form action="<?php osc_base_url(true); ?>" method="post" onsubmit="javascript:return validateForm() ;">
+                    <form action="<?php echo osc_base_url(true); ?>" method="post" onsubmit="javascript:return validateForm() ;">
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="login_post" />
                         <fieldset>
@@ -54,7 +54,7 @@
                             <label for="password"><?php _e('Password', 'gui'); ?></label> <?php UserForm::password_login_text() ; ?><br />
                             <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'gui') ; ?></label></p>
                             <button type="submit"><?php _e("Log in", 'gui');?></button>
-                            &nbsp;&nbsp;<a href="<?php osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'gui');?></a>
+                            &nbsp;&nbsp;<a href="<?php echo osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'gui') ; ?></a>
                         </fieldset>
                     </form>
                 </div>
