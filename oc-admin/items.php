@@ -301,12 +301,15 @@ class CAdminItems extends AdminSecBaseModel
                                     $this->doView('items/frm.php') ;
             break;
             case 'post_item':       //post item
-                                    $admin = TRUE;
-                                    $manager = Item::newInstance() ;
-
-                                    require_once LIB_PATH . 'osclass/itemActions.php';
-
-                                    $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                    $mItem = new ItemActions(true);
+                                    $success = $mItem->add();
+                                    if( $success ) {
+                                        osc_add_flash_message( _m('A new item has been added'), 'admin') ;
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                    } else {
+                                        osc_add_flash_message( _m('The item can\'t be added'), 'admin') ;
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                    }
             break;
             default:                //default
                                     $catId = Params::getParam('catId') ;

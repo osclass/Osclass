@@ -138,7 +138,7 @@
                 </div>
 
                 <div id="content_separator"></div>
-                <?php osc_show_flash_message() ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
 
                 <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
                             <div id="TableToolsToolbar">
