@@ -216,7 +216,7 @@
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/login' ;
         } else {
-            $path = osc_base_url(true) . '?page=login&action=login' ;
+            $path = osc_base_url(true) . '?page=login' ;
         }
         return $path ;
     }
