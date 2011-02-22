@@ -1,3 +1,0 @@
-<?php
-//antes no existia
-?>
