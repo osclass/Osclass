@@ -21,6 +21,24 @@
  */
 
 /**
+ * Remove resources from disk
+ * @param <type> $id
+ * @return boolean
+ */
+function osc_deleteResource( $id ) {
+    if( is_array( $id ) ){
+        $id = $id[0];
+    }
+    $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
+    
+    $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".png";
+    $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*.png";
+    
+    array_map( "unlink" , glob($resource_thum));
+    array_map( "unlink" , glob($resource_original));
+    
+}
+/**
  * Tries to delete the directory recursivaly.
  * @return true on success.
  */

@@ -273,6 +273,9 @@ class CAdminItems extends AdminSecBaseModel
                                     $name = Params::getParam('name') ;
                                     $fkid = Params::getParam('fkid') ;
 
+                                    // delete files
+                                    osc_deleteResource($id);
+
                                     ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
                                     $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
             break;
