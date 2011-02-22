@@ -122,24 +122,24 @@
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
-                                <div class="row checkboxes">
-                                    <h6><?php _e('Category', 'gui') ; ?></h6>
-                                    <ul>
-                                        <?php
-                                            // RESET CATEGORIES IF WE USED THEN IN THE HEADER
-                                            osc_goto_first_category() ;
-                                        ?>
-                                        <?php while(osc_has_categories()) { ?>
-                                            <li>
-                                                <?php if(in_array(osc_category_id(), osc_search_category())) { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
-                                                <?php } else { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
-                                                <?php } ?>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                </div>
+                                <?php  if ( osc_count_categories() ) { ?>
+                                    <div class="row checkboxes">
+                                        <h6><?php _e('Category', 'gui') ; ?></h6>
+                                        <ul>
+                                            <?php // RESET CATEGORIES IF WE USED THEN IN THE HEADER ?>
+                                            <?php osc_goto_first_category() ; ?>
+                                            <?php while(osc_has_categories()) { ?>
+                                                <li>
+                                                    <?php if(in_array(osc_category_id(), osc_search_category())) { ?>
+                                                        <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <?php } else { ?>
+                                                        <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <?php } ?>
+                                                </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
+                                <?php } ?>
                             </fieldset>
 
                             <?php
