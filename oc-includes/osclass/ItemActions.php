@@ -104,7 +104,7 @@ Class ItemActions
             //uploading resources from the input form
             $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
 
-            osc_run_hook('item_form_post', $aItem['catId'], array('id' => $itemId));
+            osc_run_hook('item_form_post', $aItem['catId'], $itemId);
 
             $item = $this->manager->findByPrimaryKey($itemId);
             $aItem['item'] = $item;
