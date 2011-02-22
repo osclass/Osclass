@@ -32,7 +32,7 @@
         function doModel() {
             $id = Params::getParam('id') ;
             $page = $this->pageManager->findByPrimaryKey($id) ;
-//            print_r( $page );
+
             if( $page == '' || $page['b_indelible'] == 1 ) {
                 echo "404 ERROR!!!" ;
                 exit() ;
