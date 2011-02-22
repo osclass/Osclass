@@ -115,11 +115,7 @@
                                             <?php osc_goto_first_category() ; ?>
                                             <?php while(osc_has_categories()) { ?>
                                                 <li>
-                                                    <?php if(in_array(osc_category_id(), osc_search_category())) { ?>
-                                                        <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
-                                                    <?php } else { ?>
-                                                        <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
-                                                    <?php } ?>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php echo ( in_array(osc_category_id(), osc_search_category() )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 </li>
                                             <?php } ?>
                                         </ul>
