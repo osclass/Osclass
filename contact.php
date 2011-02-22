@@ -36,7 +36,7 @@
                                         $params = array(
                                             'from' => $yourEmail
                                             ,'from_name' => $yourName
-                                            ,'subject' => __('Contact form') . ': ' . $subject
+                                            ,'subject' => '[' . osc_page_title() . '] ' . __('Contact form') . ': ' . $subject
                                             ,'to' => osc_contact_email()
                                             ,'to_name' => __('Administrator')
                                             ,'body' => $message
