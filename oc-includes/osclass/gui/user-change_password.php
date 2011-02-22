@@ -39,7 +39,7 @@
                 </div>
                 <div id="main" class="modify_profile">
                     <h2><?php _e('Change your password', 'gui') ; ?></h2>
-                    <form action="<?php osc_base_url(true) ; ?>" method="post">
+                    <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="change_password_post" />
                         <fieldset>
