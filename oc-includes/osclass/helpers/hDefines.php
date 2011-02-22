@@ -134,13 +134,11 @@
 
     //osc_createItemPostURL
     function osc_item_post_url_in_category() {
-        $category = osc_category() ;
-        
-        if ($category != '' && isset($category['pk_i_id'])) {
+        if (osc_category_id() > 0) {
             if ( osc_rewrite_enabled() ) {
-                $path = osc_base_url() . 'item/new/' . $category['pk_i_id'] ;
+                $path = osc_base_url() . 'item/new/' . osc_category_id();
             } else {
-                $path = sprintf(osc_base_url(true) . '?page=item&action=item_add&catId=%d', $category['pk_i_id']) ;
+                $path = sprintf(osc_base_url(true) . '?page=item&action=item_add&catId=%d', osc_category_id()) ;
             }
         } else {
             $path = osc_item_post_url() ;

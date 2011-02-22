@@ -65,7 +65,7 @@
             <?php } ?>
         </ul>
         <div id="form_publish">
-            <strong class="publish_button"><a href="<?php echo osc_item_post_url( osc_category() ) ; ?>"><?php _e("Publish your ad for free", 'gui');?></a></strong>
+            <strong class="publish_button"><a href="<?php echo osc_item_post_url( ) ; ?>"><?php _e("Publish your ad for free", 'gui');?></a></strong>
         </div>
         <div class="empty"></div>
     </div>
