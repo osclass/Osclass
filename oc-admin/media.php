@@ -40,6 +40,9 @@ class CAdminMedia extends AdminSecBaseModel
         switch ($this->action)
         {
             case 'delete':          if(Params::getParam("id")!="") {
+                                        // delete files
+                                        osc_deleteResource( Params::getParam("id") );
+                                        //delete db entry
                                         $this->resourcesManager->delete(array(
                                             DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', Params::getParam("id")). ')'
                                         ));
