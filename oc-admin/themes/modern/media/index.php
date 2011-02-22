@@ -24,6 +24,9 @@
     $resources = __get("resources");
     $resourceId = __get("resourceId");
     $last = end($resources); $last_id = $last['pk_i_id'];
+
+    
+    
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -79,7 +82,7 @@
 				        <?php foreach($resources as $r) { ?>
 					        [
 						        "<input type='checkbox' name='id[]' value='<?php echo $r['pk_i_id']; ?>' />",
-						        "<div id='media_list_pic'><img src='<?php echo osc_createResourceURL($r) ; ?>' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'><?php echo $r['s_content_type']; ?><br /><span id='datatables_quick_edit'><a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=media&action=delete&amp;id[]=<?php echo $r['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></span></div>",
+						        "<div id='media_list_pic'><img src='<?php echo osc_base_url().$r['s_path'].$r['s_name'].".".$r['s_extension'] ; ?>' style='max-width: 60px; max-height: 60px;' /></div> <div id='media_list_filename'><?php echo $r['s_content_type']; ?><br /><span id='datatables_quick_edit'><a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=media&action=delete&amp;id[]=<?php echo $r['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></span></div>",
 						        "<a target='_blank' href='<?php echo osc_base_url(true) . '?page=item&id=' . $r['fk_i_item_id'] ?>'><?php echo $r['s_title']; ?></a>",
 						        "<?php echo $r['dt_pub_date']; ?>"
 					        ] <?php echo $last_id != $r['pk_i_id'] ? ',' : ''; ?>
