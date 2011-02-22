@@ -375,7 +375,7 @@ class ItemForm extends Form {
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo $_r['s_path'];?>" /><a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')" href="user.php?action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
+                    <img src="<?php echo $_r['s_path'];?><?php echo $_r['s_name'];?>_original.<?php echo $_r['s_extension']?>" /><a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_base_url(true); ?>?page=user&action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
                 </div>						
             <?php }
         }
