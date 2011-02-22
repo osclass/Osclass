@@ -28,7 +28,7 @@
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div id="form_publish">
-                <strong class="publish_button margin-bottom"><a href="<?php echo osc_item_post_url(osc_category()) ; ?>"><?php _e("Publish your ad for free", 'gui');?></a></strong>
+                <strong class="publish_button margin-bottom"><a href="<?php echo osc_item_post_url( osc_category() ) ; ?>"><?php _e("Publish your ad for free", 'gui');?></a></strong>
             </div>
             <div class="content list">
                 <div id="main">
@@ -78,9 +78,9 @@
                         <form action="<?php echo osc_base_url(true); ?>" method="get">
                             <input type="hidden" name="page" value="search" />
                             <fieldset class="box location">
-                                <h3><strong><?php _e('Your search', 'gui') ; ?></strong></h3>
+                                <h3><strong><?php _e('Your search', 'offerum'); ?></strong></h3>
                                 <div class="row one_input">
-                                    <input type="text" value="<?php echo osc_search_pattern(); ?>" id="query" name="sPattern" />
+                                    <input type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
                                 </div>
                                 <h3><strong><?php _e('Location', 'gui') ; ?></strong></h3>
                                 <div class="row one_input">
@@ -109,13 +109,16 @@
                                 </div>
 
                                 <div class="row checkboxes">
-                                    <h6><?php _e('Category', 'gui'); ?></h6>
+                                    <h6><?php _e('Category', 'gui') ; ?></h6>
                                     <ul>
-                                        <?php osc_goto_first_category(); // RESET CATEGORIES IF WE USED THEN IN THE HEADER
-                                            while(osc_has_categories()) { ?>
+                                        <?php
+                                            // RESET CATEGORIES IF WE USED THEN IN THE HEADER
+                                            osc_goto_first_category() ;
+                                        ?>
+                                        <?php while(osc_has_categories()) { ?>
                                             <li>
                                                 <?php if(in_array(osc_category_id(), osc_search_category())) { ?>
-                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_id(); ?></strong></label>
+                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" checked="checked" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 <?php } else { ?>
                                                     <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 <?php } ?>

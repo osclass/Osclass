@@ -93,7 +93,7 @@ class CAdminItemComments extends AdminSecBaseModel
             case 'comment_edit':        $itemId = Params::getParam('id') ;
                                         $comment = Comment::newInstance()->findByPrimaryKey($itemId) ;
 
-                                        $this->_exportVariableToView('comments', $comments) ;
+                                        $this->_exportVariableToView('comment', $comment) ;
                                         
                                         $this->doView('comments/frm.php') ;
             break;
@@ -110,11 +110,12 @@ class CAdminItemComments extends AdminSecBaseModel
                                         );
 
                                         osc_run_hook('item_edit_post') ;
-
+                                        
                                         osc_add_flash_message( _m('Great! We just updated your comment')) ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
             break;
             case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
             break;
             default:                    if( Params::getParam('id') != '' ){
                                             $comments = $this->itemCommentManager->getAllComments( Params::getParam('id') ) ;

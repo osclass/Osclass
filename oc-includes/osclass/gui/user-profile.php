@@ -64,15 +64,15 @@
                             </p>
                             <p>
                                 <label for="country"><?php _e('Country', 'gui') ; ?></label><br />
-                                <?php UserForm::country_select(osc_list_countries(), osc_user()) ; ?>
+                                <?php UserForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </p>
                             <p>
                                 <label for="region"><?php _e('Region', 'gui') ; ?></label><br />
-                                <?php UserForm::region_select(osc_list_regions(), osc_user()) ; ?>
+                                <?php UserForm::region_select(osc_get_regions(), osc_user()) ; ?>
                             </p>
                             <p>
                                 <label for="city"><?php _e('City', 'gui') ; ?></label><br />
-                                <?php UserForm::city_select(osc_list_cities(), osc_user()) ; ?>
+                                <?php UserForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </p>
                             <p>
                                 <label for="city_area"><?php _e('City area', 'gui') ; ?></label><br />

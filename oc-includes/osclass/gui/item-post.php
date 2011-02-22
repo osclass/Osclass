@@ -19,17 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 ?>
-<?php
-    //getting variables for this view
-//    $categories = __get("categories");
-    $currencies = __get("currencies");
-    $countries  = __get("countries");
-    //$locales    = __get("locales") ;
-    $regions    = __get("regions");
-    $cities     = __get("cities");
-    $user       = __get("user") ;
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -51,15 +40,15 @@
                             <h2><?php _e('General Information', 'gui'); ?></h2>
                             <div class="row">
                                 <label for="catId"><?php _e('Category', 'gui'); ?></label>
-                                <?php ItemForm::category_select( osc_get_categories(), NULL ); ?>
+                                <?php ItemForm::category_select(); ?>
                             </div>
                             <div class="box">
-                                <?php ItemForm::multilanguage_title_description( osc_get_locales() ); ?>
+                                <?php ItemForm::multilanguage_title_description(); ?>
                             </div>
                             <div class="row price">
                                 <label for="price"><?php _e('Price', 'gui'); ?></label>
                                 <?php ItemForm::price_input_text(); ?>
-                                <?php ItemForm::currency_select($currencies); ?>
+                                <?php ItemForm::currency_select(); ?>
                             </div>
                         </div>
                         <div class="box photos">
@@ -79,23 +68,23 @@
                             <h2><?php _e('Item Location', 'gui'); ?></h2>
                             <div class="row">
                                 <label for="countryId"><?php _e('Country', 'gui'); ?></label>
-                                <?php ItemForm::country_select($countries, $user) ; ?>
+                                <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="regionId"><?php _e('Region', 'gui'); ?></label>
-                                <?php ItemForm::region_select($regions, $user) ; ?>
+                                <?php ItemForm::region_select(osc_get_regions(), osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="city"><?php _e('City', 'gui'); ?></label>
-                                <?php ItemForm::city_select($cities, $user) ; ?>
+                                <?php ItemForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="city"><?php _e('City Area', 'gui'); ?></label>
-                                <?php ItemForm::city_area_text($user) ; ?>
+                                <?php ItemForm::city_area_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="address"><?php _e('Address', 'gui'); ?></label>
-                                <?php ItemForm::address_text($user) ; ?>
+                                <?php ItemForm::address_text(osc_user()) ; ?>
                             </div>
                         </div>
                         <!-- seller info -->
@@ -118,7 +107,7 @@
                             </div>
                         </div>
                         <?php }; ?>
-                        <?php ItemForm::plugin_post_item($categories); ?>
+                        <?php ItemForm::plugin_post_item(osc_category()); ?>
                     </div>
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'gui'); ?></button>
