@@ -65,8 +65,8 @@
                         <p><?php echo  osc_item_description() ; ?></p>
                         <p class="contact_button">
                             <strong><a href="#contact"><?php _e('Contact seller', 'gui') ; ?></a></strong>
-                            <strong><a href="<?php echo osc_item_send_friend_url();?>"><?php _e('Share', 'gui') ; ?></a></strong>
-                        </p>
+                            <strong><a href="<?php echo osc_item_send_friend_url() ; ?>"><?php _e('Share', 'gui') ; ?></a></strong>
+                        
                     </div>
                     <!-- plugins -->
                     <?php osc_run_hook('item_detail', osc_item() ) ; ?>
