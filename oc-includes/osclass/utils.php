@@ -34,8 +34,8 @@ function osc_deleteResource( $id ) {
         $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".png";
         $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*.png";
     
-        array_map( "unlink" , glob($resource_thum));
-        array_map( "unlink" , glob($resource_original));
+        @array_map( "unlink" , glob($resource_thum));
+        @array_map( "unlink" , glob($resource_original));
     }
 }
 /**

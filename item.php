@@ -252,11 +252,13 @@ class CWebItem extends BaseModel
 
                 $id = Params::getParam('id') ;
                 $as = Params::getParam('as') ;
-                
+
+                $item = Item::newInstance()->findByPrimaryKey($id);
+                View::newInstance()->_exportVariableToView('item', $item);
                 $mItem->mark($id, $as) ;
 
                 osc_add_flash_message( _m('Thanks! That\'s very helpful') ) ;
-                $this->redirectTo( osc_item_url($id) );
+                $this->redirectTo( osc_item_url( ) );
 
             break;
             case 'send_friend':

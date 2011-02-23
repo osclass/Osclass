@@ -36,7 +36,7 @@
                             <input type="hidden" name="action" value="send_friend_post" />
                             <input type="hidden" name="page" value="item" />
                             <input type="hidden" name="id" value="<?php echo osc_item_id(); ?>" />
-                            <label><?php _e('Item', 'gui'); ?>: <a href="<?php echo osc_item_url( osc_item() ); ?>"><?php echo osc_item_title(); ?></a></label><br/>
+                            <label><?php _e('Item', 'gui'); ?>: <a href="<?php echo osc_item_url( ); ?>"><?php echo osc_item_title(); ?></a></label><br/>
                             <label for="yourName"><?php _e('Your name', 'gui'); ?></label> <?php SendFriendForm::your_name(); ?> <br/>
                             <label for="yourEmail"><?php _e('Your e-mail address', 'gui'); ?></label> <?php SendFriendForm::your_email(); ?> <br/>
                             <label for="friendName"><?php _e("Your friend's name", 'gui'); ?></label> <?php SendFriendForm::friend_name(); ?> <br/>
