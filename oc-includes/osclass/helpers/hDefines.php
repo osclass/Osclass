@@ -24,8 +24,8 @@
     /**
      * Gets the root url for your installation
      *
-     * @param <boolean> $with_index true if index.php in the url is needed
-     * @return <string>
+     * @param boolean $with_index true if index.php in the url is needed
+     * @return string
      */
     function osc_base_url($with_index = false) {
         $path = WEB_PATH ;
@@ -36,8 +36,8 @@
     /**
      * Gets the root url of oc-admin for your installation
      * 
-     * @param <boolean> $with_index true if index.php in the url is needed
-     * @return <string>
+     * @param boolean $with_index true if index.php in the url is needed
+     * @return string
      */
     function osc_admin_base_url($with_index = false) {
         $path = WEB_PATH . "oc-admin/" ;
@@ -142,33 +142,58 @@
     /**
      * Gets the complete url of a given js's file
      *
-     * @param <type> $file the js's file
-     * @return <type>
+     * @param <string> $file the js's file
+     * @return <string>
      */
     function osc_current_admin_theme_js_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
 
     /**
+     * Gets the current theme for the public website
      *
-     * @return <type> 
+     * @return <string>
      */
     function osc_current_web_theme() {
         return WebThemes::newInstance()->getCurrentTheme() ;
     }
 
+    /**
+     * Gets the complete url of a given file using the theme url as a root
+     *
+     * @param <string> $file the given file
+     * @return <string>
+     */
     function osc_current_web_theme_url($file = '') {
         return WebThemes::newInstance()->getCurrentThemeUrl() . $file ;
     }
 
+    /**
+     * Gets the complete path of a given file using the theme path as a root
+     *
+     * @param <type> $file
+     * @return <string>
+     */
     function osc_current_web_theme_path($file = '') {
         require WebThemes::newInstance()->getCurrentThemePath() . $file ;
     }
 
+    /**
+     * Gets the complete path of a given styles file using the theme path as a root
+     *
+     * @param string $file
+     * @return string
+     */
     function osc_current_web_theme_styles_url($file = '') {
         return WebThemes::newInstance()->getCurrentThemeStyles() . $file ;
     }
 
+    /**
+     * Gets the complete path of a given js file using the theme path as a root
+     *
+     * @param string $file
+     * @return string
+     */
     function osc_current_web_theme_js_url($file = '') {
         return WebThemes::newInstance()->getCurrentThemeJs() . $file ;
     }
@@ -179,7 +204,11 @@
     /////////////////////////////////////
 
 
-    //osc_createItemPostURL
+    /**
+     * Create automatically the url to post an item in a category
+     *
+     * @return string
+     */
     function osc_item_post_url_in_category() {
         if (osc_category_id() > 0) {
             if ( osc_rewrite_enabled() ) {
@@ -193,6 +222,11 @@
         return $path ;
     }
 
+    /**
+     *  Create automatically the url to post an item
+     *
+     * @return string
+     */
     function osc_item_post_url() {
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'item/new' ;
@@ -205,11 +239,8 @@
     /**
      * Create automatically the url of a category
      *
-     * @param array $cat An array with the category information
-     * @param bool $echo If you want to echo or not the path automatically
-     * @return string If $echo is false, it returns the path, if not it return blank string
+     * @return string the url 
      */
-    //osc_createSearchURL y lo mismo con category...
     function osc_search_category_url($pattern = '') {
         $category = osc_category() ;
 
@@ -236,7 +267,11 @@
         return $path ;
     }
 
-    //osc_createUserAccountURL
+    /**
+     * Create automatically the url of the users' dashboard
+     *
+     * @return string
+     */
     function osc_user_dashboard_url() {
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/dashboard' ;
@@ -246,7 +281,11 @@
         return $path ;
     }
 
-    //osc_createLogoutURL
+    /**
+     * Create automatically the logout url
+     *
+     * @return string
+     */
     function osc_user_logout_url() {
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/logout' ;
@@ -256,7 +295,11 @@
         return $path ;
     }
 
-    //
+    /**
+     * Create automatically the login url
+     *
+     * @return string
+     */
     function osc_user_login_url() {
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/login' ;
@@ -266,7 +309,11 @@
         return $path ;
     }
 
-    //osc_createRegisterURL
+    /**
+     * Create automatically the url to register an account
+     *
+     * @return string
+     */
     function osc_register_account_url() {
         if ( osc_rewrite_enabled() ) {
             $path = osc_base_url() . 'user/register' ;
