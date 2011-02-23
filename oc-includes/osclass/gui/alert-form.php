@@ -13,14 +13,17 @@ $(document).ready(function(){
     </h3>
     <form action="<?php echo osc_base_url(true); ?>" method="post" name="sub_alert" id="sub_alert">
         <fieldset>
-            <input type="hidden" name="page" value="search" >
-            <input type="hidden" id="alert" name="alert" value="<?php echo osc_search_alert(); ?>" >
+            <?php AlertForm::page_search_hidden(); ?>
+            <?php AlertForm::alert_hidden(); ?>
+
             <?php if(osc_is_web_user_logged_in()) { ?>
-                <input type="hidden" id="alert_userId" name="alert_userId" value="<?php echo osc_logged_user_id(); ?>" />
-                <input type="hidden" id="alert_email" name="alert_email" value="<?php echo osc_logged_user_email(); ?>" />
+                <?php AlertForm::user_id_hidden(); ?>
+                <?php AlertForm::email_hidden(); ?>
+
             <?php } else { ?>
-                <input type="hidden" id="alert_userId" name="alert_userId" value="" />
-                <input type="text" id="alert_email" name="alert_email" value="<?php _e('Enter your e-mail', 'gui'); ?>" />
+                <?php AlertForm::user_id_hidden(); ?>
+                <?php AlertForm::email_text(); ?>
+
             <?php }; ?>
             <button type="submit" class="sub_button" ><?php _e('Subscribe now!', 'gui');?></button>
         </fieldset>
