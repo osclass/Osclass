@@ -150,15 +150,13 @@
 							<h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
 							<div id="last_items_body">
 							<?php foreach($categories as $c) { ?>
-								<?php $totalWithItems = 0 ; ?>
-                                <?php if ( $numItemsPerCategory[$c['pk_i_id']] != 0 ) { ?>
-                                    <?php if (isset($numItemsPerCategory[$c['pk_i_id']])) { ?>
-                                        <a href="items.php?catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
-                                        <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
-                                        <br />
-                                        <?php $totalWithItems++ ; ?>
-                                    <?php } ?>
-                                <?php } ?>
+                                                            <?php $totalWithItems = 0 ; ?>
+                                                            <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
+                                                                <a href="items.php?catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
+                                                                <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                                                <br />
+                                                                <?php $totalWithItems++ ; ?>
+                                                            <?php } ?>
 							<?php } ?>
 							
 							<?php if ($totalWithItems == 0) {
