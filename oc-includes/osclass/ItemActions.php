@@ -183,7 +183,7 @@ Class ItemActions
         // UPLOAD item resources
         $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
 
-        osc_run_hook('item_edit_post');
+        osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
         
         return $result;
     }
@@ -607,10 +607,11 @@ Class ItemActions
             $aItem['idItem']    = Params::getParam('id');
             // get input hidden name=fk_location_id ?
         }
-
         // get params
-        $aItem['active']        = $active;
-        $aItem['userId']        = $userId;
+        //$aItem['active']        = $active;
+        if(Params::getParam('userId')!='') {
+            $aItem['userId']        = Params::getParam('userId');
+        }
         $aItem['catId']         = Params::getParam('catId');            // OK
         $aItem['region']        = Params::getParam('region');           // OK
         $aItem['city']          = Params::getParam('city');             // OK
