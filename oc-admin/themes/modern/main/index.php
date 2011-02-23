@@ -114,7 +114,7 @@
             
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/home.png" /></div>
+					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url('images/home.png') ; ?>" /></div>
 					<div id="content_header_arrow">&raquo; <?php _e('Dashboard') ; ?></div>
 					<div id="button_open"><?php _e('Settings') ; ?></div>
 					<div style="clear: both;"></div>
@@ -147,17 +147,19 @@
 					<div id="sortable_left" class="sortable_div">
 
 						<div id="last_items" class="ui-widget-content ui-corner-all">
-							<h3 class="ui-state-default"><?php _e('Items by category'); ?></h3>
+							<h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
 							<div id="last_items_body">
 							<?php foreach($categories as $c) { ?>
 								<?php $totalWithItems = 0 ; ?>
-								<?php if (isset($numItemsPerCategory[$c['pk_i_id']])) { ?>
-    								<a href="items.php?catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name']; ?></a>
-    								<?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
-									<br />
-									<?php $totalWithItems++ ; ?>
-								<?php } //end if ?>
-							<?php } //end foreach ?>
+                                <?php if ( $numItemsPerCategory[$c['pk_i_id']] != 0 ) { ?>
+                                    <?php if (isset($numItemsPerCategory[$c['pk_i_id']])) { ?>
+                                        <a href="items.php?catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
+                                        <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                        <br />
+                                        <?php $totalWithItems++ ; ?>
+                                    <?php } ?>
+                                <?php } ?>
+							<?php } ?>
 							
 							<?php if ($totalWithItems == 0) {
 								_e('There aren\'t any uploaded items yet');
@@ -183,7 +185,7 @@
 							<h3 class="ui-state-default"><?php _e('Latest comments') ; ?></h3>
 							<div id="statistics_body">
 								<?php foreach($comments as $c) { ?>
-									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
+									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '/?page=item&id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
 								<?php } ?>
 							</div>
 						</div>
@@ -192,14 +194,23 @@
 							<h3 class="ui-state-default"><?php _e('Latest news from OSClass') ; ?></h3>
 							<div id="last_news_body">
 							<?php
-								$xml = @osc_file_get_contents('http://osclass.org/feed') ;
-								if($xml) {
+								$xml = osc_file_get_contents('http://osclass.org/feed') ;
+                                if($xml) {
 	 								$xml = simplexml_load_string($xml) ;
-									echo '<ul>';
-                                        foreach($xml->channel->item as $item) {
-                                            printf('<li><a href="%s">%s</a></li>', $item->link, $item->title) ;
-                                        }
-									echo '</ul>';
+                                    echo '<ul>' ;
+                                    $total = 7 ;
+                                    for ($i = 0 ; $i < $total ; $i++) {
+                                        $t = strtotime($xml->channel->item[$i]->pubDate) ;
+                                        if ($t > strtotime('-1 week') ) $new = true ;
+                                        else $new = false ; ?>
+                                        <li>
+                                            <a href="<?php echo $xml->channel->item[$i]->link ; ?>" target="_blank">
+                                                <?php echo $xml->channel->item[$i]->title ; ?>
+                                            </a>
+                                            <?php if ($new) { ?><span style="color:red;font-family: arial; font-size:10px;font-weight:bold;">(new)</span><?php } ?>
+                                        </li>
+                                    <?php }
+									echo '</ul>' ;
 								} else {
                                     _e('Unable to fetch news from OSClass. Please try again later.') ;
 								}
