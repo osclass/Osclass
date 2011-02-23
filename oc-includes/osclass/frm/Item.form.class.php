@@ -447,7 +447,7 @@ class ItemForm extends Form {
     } else {
         $categories = osc_category();
         if(is_array($categories)) {
-            osc_run_hook('item_form', $categories[0]['pk_i_id']);
+            osc_run_hook('item_form', $categories['pk_i_id']);
         } else {
             osc_run_hook('item_form', $categories);
         }
