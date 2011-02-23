@@ -418,7 +418,7 @@ Class ItemActions
 
         $item = $this->manager->findByPrimaryKey($itemId) ;
 
-        $itemURL = osc_item_url($item) ;
+        $itemURL = osc_item_url() ;
         
         Params::setParam('itemURL', $itemURL);
 
@@ -522,7 +522,10 @@ Class ItemActions
                 $aItem['message']       = Params::getParam('message');
             break;
             case 'contact':
+                $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
 
+                $aItem['item']          = $item;
+                View::newInstance()->_exportVariableToView('item', $aItem['item']);
                 $aItem['id']            = Params::getParam('id') ;
                 $aItem['yourEmail']     = Params::getParam('yourEmail') ;
                 $aItem['yourName']      = Params::getParam('yourName') ;
@@ -530,7 +533,10 @@ Class ItemActions
                 $aItem['phoneNumber']   = Params::getParam('phoneNumber') ;
             break;
             case 'add_comment':
+                $item = $this->manager->findByPrimaryKey( Params::getParam('id') );
 
+                $aItem['item']          = $item;
+                View::newInstance()->_exportVariableToView('item', $aItem['item']);
                 $aItem['authorName']     = Params::getParam('authorName') ;
                 $aItem['authorEmail']    = Params::getParam('authorEmail') ;
                 $aItem['body']           = Params::getParam('body') ;

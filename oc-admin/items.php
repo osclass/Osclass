@@ -35,7 +35,7 @@ class CAdminItems extends AdminSecBaseModel
         //specific things for this class
         switch ($this->action)
         {
-            case 'bulk_actions':    echo "BULK ACTIONS (to change): " . Params::getParam('bulk_actions') ;
+            case 'bulk_actions':    
                                     switch ( Params::getParam('bulk_actions') )
                                     {
                                         case 'activate_all':
@@ -119,7 +119,7 @@ class CAdminItems extends AdminSecBaseModel
                                                         if( $item['e_status'] == 'ACTIVE' ) {
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                         }
-                                                        $this->itemManager->deleteByIPrimaryKey($i);
+                                                        $this->itemManager->deleteByPrimaryKey($i);
                                                     }
                                                 }
                                                 osc_add_flash_message( _m('The items have been deleted')) ;

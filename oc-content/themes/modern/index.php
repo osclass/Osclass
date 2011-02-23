@@ -22,12 +22,12 @@
 
 function modern_theme_info() {
 	return array(
-		'name' => 'OSClass Modern Theme'
-		,'version' => '1.0'
+		 'name'        => 'OSClass Modern Theme'
+		,'version'     => '2.0'
 		,'description' => 'This is the OSClass modern theme'
 		,'author_name' => 'OSClass Team'
-		,'author_url' => 'http://osclass.org'
-                ,'locations' => array('header', 'categories', 'footer')
+		,'author_url'  => 'http://osclass.org'
+        ,'locations'   => array('header', 'categories', 'footer')
 	);
 }
 

@@ -152,7 +152,7 @@
 							<?php $totalWithItems = 0 ; ?>
                                                         <?php foreach($categories as $c) { ?>
                                                             <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
-                                                                <a href="items.php?catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
+                                                                <a href="<?php osc_admin_base_url(true); ?>?page=item&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
                                                                 <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
                                                                 <br />
                                                                 <?php $totalWithItems++ ; ?>
@@ -184,7 +184,7 @@
 							<div id="statistics_body">
                                 <?php if (count($comments) > 0) { ?>
                                     <?php foreach($comments as $c) { ?>
-                                        <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '/?page=item&id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
+                                        <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '?page=item&id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
                                     <?php } ?>
                                 <?php } else {
                                     _e('There aren\'t any comments yet');
