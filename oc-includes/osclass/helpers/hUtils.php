@@ -95,7 +95,7 @@
         echo '</ul>' ;
     }
 
-    function osc_highlight($txt, $start_tag = '<b>', $end_tag = '</b>', $len = 300) {
+    function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
 
         if (strlen($txt) > $len) {
             $txt = substr($txt, 0, $len) . "..." ;
