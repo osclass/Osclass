@@ -78,7 +78,7 @@ class Plugins
 			    if(file_exists($pluginPath)) {
 				    $plugins[] = $file."/index.php";
 			    } else {
-				    trigger_error(__('Plugin ') . $file . __(' is missing the index.php file').$pluginPath);
+				    trigger_error(sprintf(__('Plugin %s is missing the index.php file %s'), $file, $pluginPath));
 			    }
 		    }
 	    }
@@ -97,7 +97,7 @@ class Plugins
 					    //This should include the file and adds the hooks
 					    include_once $pluginPath;
 				    } else {
-					    trigger_error(__('Plugin ') . $plugin_name . __(' is missing its main file'));
+					    trigger_error(sprintf(__('Plugin %s is missing its main file'), $plugin_name));
 				    }
 			    }
 		    }

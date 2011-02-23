@@ -30,7 +30,7 @@ switch($action) {
 
 
 	case 'check-update':
-		$message = "Checking for update files.";
+		$message = __("Checking for update files");
 		break;
 
 	case 'download-file':
@@ -41,14 +41,14 @@ switch($action) {
 
 			osc_downloadFile($_REQUEST['file'], $filename);
 
-			$message = __('File downloaded correctly.');
+			$message = __('File downloaded correctly');
 		} else {
-			$message = __('Missing filename.');
+			$message = __('Missing filename');
 		}
 		break;
 
 	case 'empty-temp':
-		$message = "Removing temp-directory.";
+		$message = __("Removing temp-directory");
 		$path = ABS_PATH . 'oc-temp';
 		$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
 		for ($dir->rewind(); $dir->valid(); $dir->next()) {
@@ -94,7 +94,7 @@ switch($action) {
 			}
 						
 		} else {
-			$message = __('Filename incorrect.');
+			$message = __('Filename incorrect');
 			
 		}
 		break;
@@ -108,10 +108,10 @@ switch($action) {
 				if(!$unlink) { $message .= __('Error removing file: ').$r_file."<br/>"; }
 			}
 			if($message=="") {
-				$message = __('Files removed ;)');
+				$message = __('Files removed');
 			}
 		} else {
-			$message = __('No files to remove ;)');
+			$message = __('No files to remove');
 		}
 		
 		break;
@@ -132,15 +132,15 @@ switch($action) {
 			closedir($handle);
 
 			if($fail==-1) {
-				$message = __('Nothing to copy.');
+				$message = __('Nothing to copy');
 			} else if($fail==0) {
-				$message = __('Files copied.');
+				$message = __('Files copied');
 			} else {
-				$message = __('There were problems copying files. Maybe the file permissions are not set correctly.');
+				$message = __('There were problems copying files. Maybe the file permissions are not set correctly');
 			}
 
 		} else {
-			$message = __('Nothing to copy.');
+			$message = __('Nothing to copy');
 		}
 		
 		break;
@@ -158,18 +158,18 @@ switch($action) {
             $sql = file_get_contents(ABS_PATH . 'oc-includes/data/struct.sql');
     		$conn = getConnection();
             $queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
-			$message = __('Tables updated correctly.') ;
+			$message = __('Tables updated correctly') ;
 		} else {
-			$message = __('No tables update to execute.') ;
+			$message = __('No tables update to execute') ;
 		}
 		break ;
 
 	case 'execute-actions':
 		if(file_exists(ABS_PATH.'oc-includes/osclass/upgrade-funcs.php')) {
 			require_once ABS_PATH.'oc-includes/osclass/upgrade-funcs.php';
-			$message = __('Custom actions executed.') ;
+			$message = __('Custom actions executed') ;
 		} else {
-			$message = __('No action to execute.') ;
+			$message = __('No action to execute') ;
 		}
 		
 		break ;

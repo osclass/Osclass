@@ -333,8 +333,7 @@ class CWebItem extends BaseModel
                     
                     if ($item['e_status'] != 'ACTIVE') {
                         if( $this->userId == $item['fk_i_user_id'] ) {
-                            osc_add_flash_message( _m('The item hasn\'t been validated. Please validate it in order to
-                                show it to the rest of users') );
+                            osc_add_flash_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
                         } else {
                             osc_add_flash_message( _m('This item hasn\'t been validated') );
                             $this->redirectTo( osc_base_url(true) );

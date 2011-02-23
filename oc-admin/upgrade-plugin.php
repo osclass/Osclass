@@ -26,29 +26,25 @@ require_once ABS_PATH . 'oc-admin/oc-load.php';
 $action = Params::getParam('action');
 $message = "";
 switch($action) {
-
-
-
 	case 'check-update':
 		$message = __("Checking for update files.");
 		break;
 
 	case 'download-file':
 		if(isset($_REQUEST['file'])) {
-
 			$tmp = explode("/", $_REQUEST['file']);
 			$filename = end($tmp);
 
 			osc_downloadFile($_REQUEST['file'], $filename);
 
-			$message = __('File downloaded correctly.');
+			$message = __('File downloaded correctly');
 		} else {
-			$message = __('Missing filename.');
+			$message = __('Missing filename');
 		}
 		break;
 
 	case 'empty-temp':
-		$message = __("Removing temp-directory.");
+		$message = __("Removing temp-directory");
 		$path = ABS_PATH . 'oc-temp';
 		$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
 		for ($dir->rewind(); $dir->valid(); $dir->next()) {
@@ -61,12 +57,9 @@ switch($action) {
 		rmdir($path);
 		
 		break;
-
-
 	case 'db-backup':
 		osc_dbdump();
 		break;
-
 	case 'zip-osclass':
 		$archive_name = ABS_PATH . "OSClass_backup.".date('YmdHis').".zip";
 		$archive_folder = ABS_PATH;
@@ -92,7 +85,7 @@ switch($action) {
 			}
 						
 		} else {
-			$message = __('Filename incorrect.');
+			$message = __('Filename incorrect');
 			
 		}
 		break;
@@ -106,10 +99,10 @@ switch($action) {
 				if(!$unlink) { $message .= __('Error removing file: ').$r_file."<br/>"; }
 			}
 			if($message=="") {
-				$message = __('Files removed ;)');
+				$message = __('Files removed');
 			}
 		} else {
-			$message = __('No files to remove ;)');
+			$message = __('No files to remove');
 		}
 		
 		break;
@@ -128,15 +121,15 @@ switch($action) {
 			closedir($handle);
 
 			switch($fail) {
-			    case(0): $message = __('There were problems copying files.') ;
+			    case(0): $message = __('There were problems copying files') ;
                 break;
-			    case(1): $message = __('Nothing to copy.') ;
+			    case(1): $message = __('Nothing to copy') ;
 			    break;
-			    default: $message = __('Files copied.') ;
+			    default: $message = __('Files copied') ;
 			}
 
 		} else {
-			$message = __('Nothing to copy.') ;
+			$message = __('Nothing to copy') ;
 		}
 		
 		break;
@@ -146,9 +139,9 @@ switch($action) {
 			$sql = file_get_contents(ABS_PATH.'oc-temp/upgrade.sql') ;
 			$conn = getConnection() ;
 	        $conn->osc_dbImportSQL($sql) ;
-			$message = __('upgrade.sql executed.') ;
+			$message = __('upgrade.sql executed') ;
 		} else {
-			$message = __('No SQL to execute.') ;
+			$message = __('No SQL to execute') ;
 		}
 		
 		break;
@@ -156,9 +149,9 @@ switch($action) {
 	case 'execute-actions':
 		if(file_exists(ABS_PATH.'oc-temp/custom.actions')) {
 			require_once ABS_PATH . 'oc-temp/custom.actions' ;
-			$message = __('Custom actions executed.') ;
+			$message = __('Custom actions executed') ;
 		} else {
-			$message = __('No action to execute.') ;
+			$message = __('No action to execute') ;
 		}
 		
 		break;

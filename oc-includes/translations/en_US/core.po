@@ -1,0 +1,2080 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-02-23 09:43+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
+"Language-Team: OSClass <info@osclass.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /Users/juanramon/htdocs/osclass-git\n"
+
+#: /Users/juanramon/htdocs/osclass-git/ajax.php:89
+#: /Users/juanramon/htdocs/osclass-git/ajax.php:94
+msgid "no action defined"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/contact.php:39
+msgid "Contact form"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/contact.php:41
+msgid "Administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/login.php:78
+#, php-format
+msgid "Your new password is \"%s\""
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/login.php:87
+msgid "Recover your password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:88
+msgid "OSClass application"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/login.php:91
+msgid "OSClass administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:139
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:670
+#, php-format
+msgid "%s has been added as a new country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:150
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:194
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:238
+#, php-format
+msgid "%s has been edited"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:167
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:211
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:249
+#, php-format
+msgid "%s has been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:181
+#, php-format
+msgid "%s has been added as a new region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:226
+#, php-format
+msgid "%s has been added as a new city"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:441
+msgid "No currencies have been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:443
+msgid "One currency has been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:445
+#, php-format
+msgid "%s currencies have been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:726
+#, php-format
+msgid "%s has been added as a region of %s"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:106
+msgid "Backup made correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:117
+msgid "Archiving successful!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:119
+msgid "Error, couldn't create a zip file!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:30
+msgid "Checking for update files."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:40
+msgid "File downloaded correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:42
+msgid "Missing filename"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:47
+msgid "Removing temp-directory"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:68
+msgid "Archiving is sucessful!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:70
+msgid "Error, can't create a zip file!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:82
+msgid "OK"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:84
+msgid "Unzip failed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:88
+msgid "Filename incorrect"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:99
+msgid "Error removing file: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:102
+msgid "Files removed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:105
+msgid "No files to remove"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:124
+msgid "There were problems copying files"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:126
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:132
+msgid "Nothing to copy"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:128
+msgid "Files copied"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:142
+msgid "upgrade.sql executed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:144
+msgid "No SQL to execute"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:152
+msgid "Custom actions executed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:154
+msgid "No action to execute"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade-plugin.php:162
+msgid "Update"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:33
+msgid "Checking for update files"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:139
+msgid "There were problems copying files. Maybe the file permissions are not set correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:161
+msgid "Tables updated correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/upgrade.php:163
+msgid "No tables update to execute"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:122
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:147
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:172
+msgid "User id isn't in the correct format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:132
+msgid "Any user has been activated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:134
+msgid "One user has been activated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:136
+#, php-format
+msgid "%s users have been activated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:157
+msgid "Any user has been deactivated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:159
+msgid "One user has been deactivated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:161
+#, php-format
+msgid "%s users have been deactivated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:182
+msgid "Any user has been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:184
+msgid "One user has been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:186
+#, php-format
+msgid "%s users have been deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:101
+msgid "View comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:102
+msgid "View media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:104
+msgid "Deactivate"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:106
+msgid "Activate"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:109
+msgid "Unmark as premium"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:111
+msgid "Mark as premium"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:113
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:84
+msgid "Edit"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:114
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:84
+msgid "This action can't be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/ajax/items_processing.php:115
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:84
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:126
+msgid "Delete"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:28
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:29
+msgid "OSClass admin panel login"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:97
+msgid "Username"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:77
+msgid "Password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:55
+msgid "Language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:69
+msgid "Remember me"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:73
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:54
+msgid "Log in"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:78
+msgid "Forgot your password?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:81
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:58
+msgid "Back to"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:39
+msgid "Please enter your username or e-mail address"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:40
+msgid "You will receive a new password via e-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:62
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:63
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:102
+msgid "E-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:50
+msgid "Get new password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:28
+msgid "Thank you for using"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:28
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:33
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:26
+msgid "OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:29
+msgid "Documentation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/footer.php:30
+msgid "Feedback"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/head.php:26
+msgid "OSClass Admin Panel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/head.php:82
+#, php-format
+msgid "OSClass %s is available!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/head.php:82
+msgid "Please upgrade now"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:29
+msgid "Visit website"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:30
+msgid "Hi"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:30
+msgid "Your profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/header.php:30
+msgid "Log Out"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:32
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:34
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:116
+msgid "Admins"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:117
+msgid "Add new admin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:55
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:56
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:100
+msgid "Real name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:55
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:70
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:77
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:56
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:71
+msgid "required"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:70
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:71
+msgid "User name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:82
+msgid "Create"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:42
+msgid "Edit admin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:78
+msgid "Current password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:80
+msgid "New password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:82
+msgid "Re-type new password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:85
+msgid "Leave it blank if you don't want to change your password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:51
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:63
+msgid "Search"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:56
+msgid "Processing"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:57
+msgid "Show _MENU_ entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:58
+msgid "No matching records found"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:59
+msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:60
+msgid "Showing 0 to 0 of 0 entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:61
+msgid "filtered from _MAX_ total entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:66
+msgid "First"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:67
+msgid "Previous"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:68
+msgid "Next"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:69
+msgid "Last"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:71
+msgid "Show"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:76
+msgid "entries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:125
+msgid "Bulk actions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:128
+msgid "Apply"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:31
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:35
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:38
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/widgets.php:34
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:29
+msgid "Dashboard"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:41
+msgid "Add new page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:59
+msgid "Theme package"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:62
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:58
+msgid "Upload"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:69
+msgid "The theme folder "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:69
+msgid " is not writable on your server, "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:69
+msgid " can't upload themes from the administration panel. Please copy the theme package using FTP or SSH, or make the mentioned themes folder writable."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add.php:72
+msgid "To make a directory writable under UNIX execute this command from the shell"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:54
+msgid "Dashboard - Add New Widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:80
+#, php-format
+msgid "Create widget in %s"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:96
+msgid "Description (only for internal purposes)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:101
+msgid "HTML Code for the Widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/add_widget.php:105
+msgid "Publish widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:43
+msgid "Are you sure you want to cancel?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:60
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:86
+msgid "Appearance"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:61
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:93
+msgid "Add a new theme"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:72
+msgid "Current theme"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:77
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:146
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:99
+msgid "Author"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:82
+msgid "Available themes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/index.php:97
+msgid "Preview"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/widgets.php:43
+msgid "Widgets"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/appearance/widgets.php:59
+msgid "Add HTML widget"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:49
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:133
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:52
+msgid "Categories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:77
+msgid "Parent category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:79
+msgid "- No parent -"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:83
+msgid "Expirations days"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:83
+msgid "(0 = no expiration)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:89
+msgid "Position (order in relation to other categories)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:98
+msgid "Enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:112
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:173
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/frm.php:99
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:202
+msgid "Cancel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/frm.php:113
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:71
+msgid "Save"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:90
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:143
+msgid "Disable"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:90
+msgid "View subcategories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:90
+msgid "WARNING: This will also delete the items under that category. This action can't be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:103
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/index.php:56
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:88
+msgid "Name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:106
+msgid "Parent"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:107
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/index.php:57
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:109
+msgid "Description"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/categories/index.php:142
+msgid "Enable"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:59
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:44
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:135
+msgid "Comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:62
+msgid "Invalid OSClass request."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:69
+msgid "Edit comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:75
+msgid "Add a comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:77
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/frm.php:38
+msgid "Add"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:85
+msgid "You have to write a title."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:90
+msgid "You have to write a comment."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:95
+msgid "Author's name can not be empty."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:100
+msgid "Author's email can not be empty."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:131
+msgid "Edit a comment on item:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:136
+msgid "View"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:142
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:100
+msgid "Title"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:148
+msgid "It's a registered user."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:149
+msgid "Edit user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:154
+msgid "Author's e-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:158
+msgid "Status"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:158
+msgid "De-activate"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/frm.php:162
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:102
+msgid "Comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:80
+msgid "on"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:103
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:117
+msgid "Date"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/comments/index.php:121
+msgid "Manage Comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/frm.php:30
+msgid "Edit email/alert"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/frm.php:36
+msgid "Add an email/alert"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/frm.php:49
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:75
+msgid "Emails & Alerts"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/frm.php:85
+msgid "Internal name (name to easily identify this email/alert)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/index.php:33
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/emails/index.php:45
+msgid "Emails & alerts"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:132
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:40
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:38
+msgid "Items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:40
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:136
+msgid "Manage items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:42
+msgid "Add new item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:47
+msgid "Manage media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:56
+msgid "Manage categories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:59
+msgid "Add a new category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:64
+msgid "Pages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:68
+msgid "Manage pages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:71
+msgid "Create page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:79
+msgid "Manage emails & alerts"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:90
+msgid "Manage themes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:96
+msgid "Add or remove widgets"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:101
+msgid "Plugins"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:105
+msgid "Manage plugins"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:108
+msgid "Add new plugin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:113
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:30
+msgid "Languages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:117
+msgid "Manage languages"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:120
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:40
+msgid "Add a language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:125
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:129
+msgid "General settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:138
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:188
+msgid "Users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:141
+msgid "Locations"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:144
+msgid "Permalinks"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:147
+msgid "Spam and bots"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:150
+msgid "Currencies"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:153
+msgid "Mail Server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:156
+msgid "Media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:159
+msgid "Cron system"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:164
+msgid "Tools"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:168
+msgid "Import data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:171
+msgid "Backup data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:174
+msgid "Upgrade OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:177
+msgid "Regenerate thumbnails"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:192
+msgid "Manage users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:195
+msgid "Add new user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:200
+msgid "Administrators"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:204
+msgid "List administrators"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:207
+msgid "Add new administrator"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:210
+msgid "Edit Your Profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:215
+msgid "Tests"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/include/backoffice_menu.php:219
+msgid "Database"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:69
+msgid "New item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:69
+msgid "Edit item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:85
+msgid "User"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:86
+msgid "Item posted by"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:86
+msgid "Non-registered user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:90
+msgid "E-Mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:95
+msgid "General information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:98
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:113
+msgid "Category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:106
+msgid "Price"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:134
+msgid "Remove"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:145
+msgid "This action can\\'t be undone. Are you sure you want to continue?"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:162
+msgid "Photos"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:170
+msgid "optional"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:173
+msgid "Add new photo"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:179
+msgid "Location"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:181
+msgid "Country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:183
+msgid "Region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:185
+msgid "City"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:187
+msgid "City area"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:189
+msgid "Address"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/frm.php:203
+msgid "Add item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:105
+msgid "Count"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:156
+msgid "Filter by"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:156
+msgid "All"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:157
+msgid "Pending"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:158
+msgid "Spam"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:159
+msgid "Duplicated"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:160
+msgid "Misclassified"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:161
+msgid "Offensive"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/items/index.php:162
+msgid "Expired"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:55
+msgid "Language package"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:62
+msgid "The translations folder"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:62
+msgid "is not writable on your server, this"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:62
+msgid "can't upload translations from the administration panel. Please make the translation folder writable"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/add.php:65
+msgid "To make a directory writable under UNIX execute this command from the shell:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:62
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:100
+msgid "Short name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:74
+msgid "Currency format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:80
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:95
+msgid "Date format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:86
+msgid "Stopwords"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:94
+msgid "Enabled for the public website"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/frm.php:100
+msgid "Enabled for the backoffice (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:84
+msgid "Disable (website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:84
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:136
+msgid "Disable (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:87
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:88
+msgid "Yes"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:87
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:88
+msgid "No"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:102
+msgid "Enabled (website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:103
+msgid "Enabled (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:132
+msgid "Bulk Actions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:133
+msgid "Enable (Website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:134
+msgid "Disable (Website)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/languages/index.php:135
+msgid "Enable (oc-admin)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:119
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/index.php:125
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:55
+msgid "Settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:127
+msgid "Which of the following do you want to see on your dashboard"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:129
+msgid "Latest items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:132
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:169
+msgid "Statistics"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:135
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:183
+msgid "Latest comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:138
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:192
+msgid "Latest news from OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:150
+msgid "Items by category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:156
+msgid "Item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:163
+msgid "There aren't any uploaded items yet"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:171
+msgid "Number of items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:172
+msgid "Number of public users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:173
+msgid "Number of administrators"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:186
+msgid "Commented on item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:204
+msgid "Unable to fetch news from OSClass. Please try again later."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/index.php:98
+msgid "File"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/media/index.php:101
+msgid "Attached to"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/pages/frm.php:30
+msgid "Edit page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/pages/frm.php:36
+msgid "Add page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/pages/frm.php:85
+msgid "Internal name (name to easily identify this page)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:40
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:69
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:128
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/view.php:41
+msgid "Add a new plugin"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:56
+msgid "Plugin package"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:67
+#, php-format
+msgid "The plugin folder %s is not writable on your server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:68
+msgid "OSClass can't upload plugins from the administration panel"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/add.php:69
+msgid "Please copy the plugin package using FTP or SSH, or make the mentioned plugins folder writable"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:88
+msgid "Select the categories where you want to apply these attributes:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:94
+msgid "Preset categories"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:95
+msgid "Check all"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/configuration.php:95
+msgid "Uncheck all"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:87
+msgid "Configure"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:87
+msgid "There's a new version. You should update!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:87
+msgid "Uninstall"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/plugins/index.php:87
+msgid "Install"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/add_currency.php:31
+msgid "Add currency"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/add_currency.php:51
+msgid "Create currency"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/add_currency.php:53
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/currencies.php:92
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/edit_currency.php:57
+msgid "Code"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/add_currency.php:55
+msgid "It should be a three-character code"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:40
+msgid "Comments settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:57
+msgid "Comments enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:60
+msgid "Moderate comments"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:66
+msgid "Notifications"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/comments.php:68
+msgid "Notify when there's a new comment"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/cron.php:40
+msgid "Cron"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/cron.php:54
+msgid "Auto-cron"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/cron.php:56
+msgid "Some OSClass functionalities require a cron in order to work. Check if your host isn't able to do them. Uncheck if you want to set up your cron manually. Refer to the manual to know more about the OSClass cron system."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/edit_currency.php:33
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/edit_currency.php:55
+msgid "Edit currency"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/edit_currency.php:59
+msgid "Once it's created, it can't be modified"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:36
+msgid "General Settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:58
+msgid "Page title"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:65
+msgid "Page description"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:74
+msgid "Admin e-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:81
+msgid "Default language"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:110
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:160
+msgid "Custom"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:118
+msgid "Default currency"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:128
+msgid "Week starts on"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:130
+msgid "Sunday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:131
+msgid "Monday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:132
+msgid "Tuesday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:133
+msgid "Wednesday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:134
+msgid "Thursday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:135
+msgid "Friday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:136
+msgid "Saturday"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:145
+msgid "Time format"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/index.php:168
+msgid "Number of items in the RSS"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:30
+msgid "Items settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:56
+msgid "Enabled reCAPTCHA"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:59
+msgid "Item validation by users"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:62
+msgid "Only allow registered users to post items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:70
+msgid "Notify admin of new items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:73
+msgid "Notify admin of contact items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:76
+msgid "Notify admin of share"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:82
+msgid "Optional fields"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:84
+msgid "Enable price"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/items.php:87
+msgid "Enable images"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:30
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:73
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:31
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:28
+msgid "Close"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:31
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:79
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:32
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:29
+msgid "View more"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:59
+msgid "Countries"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:63
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:98
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:116
+msgid "Add new"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:94
+msgid "Regions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:112
+msgid "Cities"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:132
+msgid "Add new country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:146
+msgid "Country code"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:151
+msgid "Country code should have two characters"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:165
+msgid "Edit country"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:190
+msgid "Add new region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:217
+msgid "Edit region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:242
+msgid "Add new city"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/locations.php:270
+msgid "Edit city"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:30
+msgid "Mail server settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:51
+msgid "Mail server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:64
+msgid "Configuration"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:65
+msgid "Server type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:67
+msgid "Custom Server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:68
+msgid "GMail Server"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:71
+msgid "Hostname"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:76
+msgid "Server port"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:91
+msgid "Encryption"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:94
+msgid "Options: blank, ssl or tls"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:98
+msgid "Enable SMTP authentication"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:105
+msgid "Help"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/mailserver.php:106
+msgid "Enter your e-mail server configuration."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:31
+msgid "Media settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:40
+msgid "Configure media"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:47
+msgid "Please set the preferred dimensions for all the images on the website. (format: WIDTHxHEIGHT, eg: 640x480)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:52
+msgid "Restrictions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:54
+msgid "Maximum size, in KB"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:59
+msgid "Allowed format extensions (eg: png, jpg, gif)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:65
+msgid "Dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:67
+msgid "Thumbnail dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:72
+msgid "Preview dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:77
+msgid "Normal dimensions"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:82
+msgid "Keep original image"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/media.php:84
+msgid "Keeping original image files requires extra storage. This option ensures that the original quality of the file is un-altered. Be careful when using this option."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:48
+msgid "Permalinks settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:63
+msgid "Friendly urls"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:64
+msgid "By default OSClass uses web URLs which have question marks and lots of numbers in them. However, OSClass offers you friendly urls. This can improve the aesthetics, usability, and forward-compatibility of your links"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:67
+msgid "Enable friendly urls"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:74
+msgid ".htaccess file"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:76
+msgid "Module <em>mod_rewrite</em> was found on the server."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:78
+msgid "Warning! Rewrite module wasn't found on the server. This means you don't have it enabled or you're running PHP as CGI (or fastCGI). In the case you don't have mod_rewrite you could still use friendly urls if AllowPathInfo option is on in your Apache configuration (we can't know if it's enabled or not, but it usually is). \"Index.php\" will appear as a part of your URL (ie. http://www.example.com/index.php/nice/url)."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:84
+msgid "Error. We couldn't write the .htaccess file on your server. Please create a file called .htaccess in the root of your OSClass installation with the following content."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:86
+msgid "File .htaccess already exists. Please check that the .htaccess file has the following content."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:88
+msgid "We've created a .htaccess file on the root of your OSClass installation."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:94
+msgid "Content of .htaccess file should look like this:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/permalinks.php:112
+msgid "Current content of your .htaccess file:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:36
+msgid "Spam and bots settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:58
+msgid "Akismet"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:60
+msgid "Akismet key (same as Wordpress.com)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:62
+msgid "If the field is empty it's because the Akismet service is disabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:62
+msgid "Get your free key at"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:67
+msgid "ReCAPTCHA"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:69
+msgid "If the field is empty it's because the reCAPTCHA service is disabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:69
+msgid "Get your free keys at"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:72
+msgid "reCAPTCHA private key"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/spamNbots.php:76
+msgid "reCAPTCHA public key"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/users.php:40
+msgid "Users settings"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/users.php:56
+msgid "User functionality enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/users.php:59
+msgid "User validation enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/settings/users.php:62
+msgid "User registration enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/test/index.php:35
+msgid "Database test"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/test/index.php:47
+msgid "Test Your installation with fake data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/test/index.php:56
+msgid "Add Fake Data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/test/index.php:57
+msgid "Delete Fake Data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:31
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:97
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:103
+msgid "Backup"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:37
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:37
+msgid "You're offline! Please check your connection"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:39
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:39
+msgid "Requested URL not found"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:41
+msgid "Internal server error"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:43
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:43
+msgid "Error. Parsing JSON request failed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:45
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:45
+msgid "Request timeout"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:47
+msgid "Unknown error"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:61
+msgid "Backing up data... please wait"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:77
+msgid "Backup OSClass"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:85
+msgid "You can back up OSClass here. WARNING: Backup files will be created in the root of your OSClass installation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:90
+msgid "Backup folder"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:92
+msgid "This is the folder in which your backups will be created. We recommend that you choose a non-public path. For more information, please refer to OSClass' documentation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:96
+msgid "Back up database"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/backup.php:102
+msgid "Back up OSClass installation"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/images.php:31
+msgid "Regenerate images"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/images.php:49
+msgid "You can regenerate your thumbnails and previews images here. It's useful if you changed your theme and images are not showing up correctly. Please, check the size values defined in the settings/media section"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/import.php:31
+msgid "Import"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/import.php:49
+msgid "You can modify your database to add, remove or modify its data here. It\\'s usually used to import countries, regions and cities"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/import.php:55
+msgid "Data"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:53
+msgid "Checking for update (installed version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:57
+msgid "HORRAY! Your plugin installation is up to date! (current version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:59
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:63
+msgid "current version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:60
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:64
+msgid "Downloading update file: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:67
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:70
+msgid "Unzipping file: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:72
+msgid "Copying old files: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:77
+msgid "Removing new files: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:82
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:79
+msgid "Executing SQL: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:87
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:82
+msgid "Executing additional actions: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:92
+msgid "Cleanning all the mesh: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade-plugins.php:98
+msgid "Satisfaying user with awesome and easy auto-upgrade: Done!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:31
+msgid "Upgrade"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:57
+msgid "Checking for updates (installed version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:61
+msgid "Congratulations! Your OSClass installation is up to date! (current version: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:73
+msgid "Copying new files: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:76
+msgid "Removing old files: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:85
+msgid "Cleaning all the mess: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/tools/upgrade.php:88
+msgid "Awesome and easy auto-upgrade: done!"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:88
+msgid "Re-type the password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:92
+msgid "Passwords don't match."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:104
+msgid "Cell phone"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:108
+msgid "Phone"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:112
+msgid "Website"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:116
+msgid "Additional information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/frm.php:134
+msgid "City Area"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:80
+msgid "Activate user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:80
+msgid "Deactivate user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:99
+msgid "Update Date"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/users/index.php:114
+msgid "Add a new user"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:30
+msgid "You can freely obtain a developer key after signing up on this URL:"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:484
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:487
+msgid "Admin mail system"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:788
+msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:81
+#, php-format
+msgid "Plugin %s is missing the index.php file %s"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/plugins.php:100
+#, php-format
+msgid "Plugin %s is missing its main file"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:140
+msgid "Select a country..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:162
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:264
+msgid "Select a region..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:183
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:304
+msgid "Select a city..."
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:271
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:311
+msgid "No results"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:338
+msgid "You have to select a region"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:343
+msgid "You have to select a city"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:348
+msgid "You have to enter a city"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:354
+msgid "You have to enter a name"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:361
+msgid "You have to enter an e-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Page.form.class.php:48
+msgid "Body"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:112
+msgid "User Description"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hItems.php:369
+msgid "Check with seller"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hItems.php:370
+msgid "Free"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:15
+msgid "Newly listed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:16
+msgid "Lower price first"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:17
+msgid "Higher price first"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hUtils.php:76
+msgid "Manage your items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hUtils.php:77
+msgid "Manage your alerts"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hUtils.php:78
+msgid "My account"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hUtils.php:79
+msgid "Logout"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/model/Item.php:118
+#, php-format
+msgid "%s in"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/model/Item.php:127
+msgid "There's no description available in your language"
+msgstr ""
+

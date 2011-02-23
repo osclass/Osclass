@@ -115,17 +115,16 @@ class Item extends DAO
             $mCategories = new Category();
             $aCategory = $mCategories->findByPrimaryKey($item['fk_i_category_id']);
 
-            $title = $aCategory['s_name'];
-            $title .= __(' in ');
+            $title = sprintf(__('%s in'), $aCategory['s_name']);
             if(isset($item['s_city'])) {
-                $title .= $item['s_city'];
+                $title .= ' ' . $item['s_city'];
             } else if(isset($item['s_region'])) {
-                $title .= $item['s_region'];
+                $title .= ' ' .$item['s_region'];
             } else if(isset($item['s_country'])) {
-                $title .= $item['s_country'];
+                $title .= ' ' . $item['s_country'];
             }
             $item['s_title'] = $title;
-            $item['s_description'] = __('There\'s no description available in your language.');
+            $item['s_description'] = __('There\'s no description available in your language');
             unset($data);
         }
         return $item;
