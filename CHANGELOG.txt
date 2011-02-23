@@ -1,3 +1,20 @@
+OSClass 2.0 RC 2010-02-23
+---------------------------
+- New structure based on Classes
+- Helpers: now there are a lot of functions that help the developer to modify the themes easily
+- Added a test that add fake content
+- New class to get external params (get, post, cookies, request)
+- New e-mails added in the installer
+- Translation uses a singleton
+- There are three files in languages: core.po, messages.po (for flash_messages), theme.po
+
+OSClass 1.2 delta 2010-01-12
+----------------------------
+- New whole system of permalinks
+- Improved user profiles
+- ImageResize Class improved
+- Minor bugs fixed
+
 OSClass 1.2 beta 2010-12-14
 ---------------------------
 - Users can register without confirmation
