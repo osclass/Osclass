@@ -60,7 +60,7 @@ class ItemForm extends Form {
 
     static public function user_select($users = null, $item = null, $default_item = null)
     {
-        if($users==null) { $users = osc_get_users(); };
+        if($users==null) { $users = User::newInstance()->listAll(); };
         if($item==null) { $item = osc_item(); };
         echo '<select name="userId" id="userId">' ;
             if(isset($default_item)) {
