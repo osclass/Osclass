@@ -23,7 +23,7 @@
 ?>
 
 <script type="text/javascript">
-    var sQuery = '<?php _e("ie. PHP Programmer", 'gui') ; ?>' ;
+    var sQuery = '<?php _e("ie. PHP Programmer", 'modern') ; ?>' ;
 
     $(document).ready(function(){
         if($('input[name=sPattern]').val() == sQuery) {
@@ -60,12 +60,12 @@
 <form action="<?php echo osc_base_url(true) ; ?>" method="post" class="search" onsubmit="javascript:return doSearch();">
     <input type="hidden" name="page" value="search" />
     <fieldset class="main">
-        <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : __("ie. PHP Programmer", 'gui') ; ?>" />
+        <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : __("ie. PHP Programmer", 'modern') ; ?>" />
 
         <?php  if ( osc_count_categories() ) { ?>
             <?php osc_goto_first_category() ; ?>
             <select name="sCategory" id="sCategory">
-                    <option value=""><?php _e("Select a category", 'gui') ; ?></option>
+                    <option value=""><?php _e("Select a category", 'modern') ; ?></option>
                     <?php while ( osc_has_categories() ) { ?>
                         <option value="<?php echo osc_category_id() ; ?>"><?php echo osc_category_name() ; ?></option>
                         <?php if ( osc_count_subcategories() > 0 ) { ?>
@@ -79,6 +79,6 @@
             </select>
         <?php  } ?>
 
-        <button type="submit"><?php _e('Search', 'gui') ; ?></button>
+        <button type="submit"><?php _e('Search', 'modern') ; ?></button>
     </fieldset>
 </form>

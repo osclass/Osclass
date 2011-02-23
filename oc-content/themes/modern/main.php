@@ -77,9 +77,9 @@
                    </div>
 
                    <div class="latest_ads">
-                        <h1><strong><?php _e('Latest Items', 'gui') ; ?></strong></h1>
+                        <h1><strong><?php _e('Latest Items', 'modern') ; ?></strong></h1>
                         <?php if( osc_count_latest_items() == 0) { ?>
-                            <p class="empty"><?php _e('No Latest Items', 'gui') ; ?></p>
+                            <p class="empty"><?php _e('No Latest Items', 'modern') ; ?></p>
                         <?php } else { ?>
                             <table border="0" cellspacing="0">
                                  <tbody>
@@ -109,7 +109,7 @@
                                 </tbody>
                             </table>
                             <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
-                                <p class="see_more_link"><a href="#"><strong><?php _e("See all offers", 'gui'); ?> &raquo;</strong></a></p>
+                                <p class="see_more_link"><a href="#"><strong><?php _e("See all offers", 'modern'); ?> &raquo;</strong></a></p>
                             <?php } ?>
                         <?php } ?>
                     </div>
@@ -118,7 +118,7 @@
                     <div class="navigation">
                         <?php if(osc_count_list_regions()>0) {?>
                         <div class="box location">
-                            <h3><strong><?php _e("Location", 'gui'); ?></strong></h3>
+                            <h3><strong><?php _e("Location", 'modern'); ?></strong></h3>
                             <ul>
                             <?php while(osc_has_list_regions()) { ?>
                                 <li><a href="<?php echo osc_search_url(array('sRegion' => osc_list_region_name()));?>"><?php echo osc_list_region_name();?></a> <em>(<?php echo osc_list_region_items();?>)</em></li>

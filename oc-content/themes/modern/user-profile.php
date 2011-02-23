@@ -32,61 +32,61 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_account">
                 <h1>
-                    <strong><?php _e('User account manager', 'gui') ; ?></strong>
+                    <strong><?php _e('User account manager', 'modern') ; ?></strong>
                 </h1>
                 <div id="sidebar">
                     <?php echo osc_private_user_menu() ; ?>
                 </div>
                 <div id="main" class="modify_profile">
-                    <h2><?php _e('Update your profile', 'gui') ; ?></h2>
+                    <h2><?php _e('Update your profile', 'modern') ; ?></h2>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="profile_post" />
                         <fieldset>
                             <p>
-                                <label for="name"><?php _e('Name', 'gui') ; ?></label><br />
+                                <label for="name"><?php _e('Name', 'modern') ; ?></label><br />
                                 <?php UserForm::name_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="email"><?php _e('E-mail', 'gui') ; ?></label><br />
+                                <label for="email"><?php _e('E-mail', 'modern') ; ?></label><br />
                                 <span>
                                     <?php echo osc_user_email() ; ?><br />
-                                    <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'gui') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'gui') ; ?></a>
+                                    <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'modern') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'modern') ; ?></a>
                                 </span>
                             </p>
                             <p>
-                                <label for="phoneMobile"><?php _e('Cell phone', 'gui') ; ?></label><br />
+                                <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label><br />
                                 <?php UserForm::mobile_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="phoneLand"><?php _e('Phone', 'gui') ; ?></label><br />
+                                <label for="phoneLand"><?php _e('Phone', 'modern') ; ?></label><br />
                                 <?php UserForm::phone_land_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="country"><?php _e('Country', 'gui') ; ?></label><br />
+                                <label for="country"><?php _e('Country', 'modern') ; ?></label><br />
                                 <?php UserForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="region"><?php _e('Region', 'gui') ; ?></label><br />
+                                <label for="region"><?php _e('Region', 'modern') ; ?></label><br />
                                 <?php UserForm::region_select(osc_get_regions(), osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="city"><?php _e('City', 'gui') ; ?></label><br />
+                                <label for="city"><?php _e('City', 'modern') ; ?></label><br />
                                 <?php UserForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="city_area"><?php _e('City area', 'gui') ; ?></label><br />
+                                <label for="city_area"><?php _e('City area', 'modern') ; ?></label><br />
                                 <?php UserForm::city_area_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="address"><?php _e('Address', 'gui') ; ?></label><br />
+                                <label for="address"><?php _e('Address', 'modern') ; ?></label><br />
                                 <?php UserForm::address_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="webSite"><?php _e('Website', 'gui') ; ?></label><br />
+                                <label for="webSite"><?php _e('Website', 'modern') ; ?></label><br />
                                 <?php UserForm::website_text(osc_user()) ; ?>
                             </p>
-                            <button type="submit"><?php _e('Update', 'gui') ; ?></button>
+                            <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                             <?php osc_run_hook('user_form') ; ?>
                         </fieldset>
                     </form>
