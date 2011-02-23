@@ -34,11 +34,10 @@
             $page = $this->pageManager->findByPrimaryKey($id) ;
 
             if( $page == '' || $page['b_indelible'] == 1 ) {
-                echo "404 ERROR!!!" ;
-                exit() ;
+                $this->do404() ;
             } else {
                 //calling the view...
-                $this->_exportVariableToView('page', $page ) ;
+                $this->_exportVariableToView('page', $page) ;
 
                 $this->doView('page.php') ;
             }

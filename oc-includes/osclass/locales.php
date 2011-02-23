@@ -68,19 +68,14 @@ function osc_listLanguageCodes() {
  *
  * @return string Locale Code
  */
-function osc_get_user_locale($typeUser = 'user') {
-    $locale = null ;
-    if(isset($_SESSION['locale'])) {
-        return $_SESSION['locale'] ;
+function osc_get_user_locale($is_admin = false) {
+    if( Session::newInstance()->_get('locale') != '') {
+        return Session::newInstance()->_get('locale') ;
     }
 
-    if ($typeUser == 'user') {
-        $locale = osc_language() ;
-    } else {
-        $locale = osc_admin_language() ;
-    }
-
-    return $locale ;
+    return ( ($is_admin) ? osc_admin_language() : osc_language() ) ;
 }
+
+
 
 ?>
