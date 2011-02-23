@@ -26,12 +26,12 @@ class ContactForm extends Form {
         return true;
     }
 
-    static public function page_item_hidden() {
+    static public function page_hidden() {
         parent::generic_input_hidden("page", 'item') ;
         return true;
     }
 
-    static public function action_contact_hidden() {
+    static public function action_hidden() {
         parent::generic_input_hidden("action", 'contact_post') ;
         return true;
     }
