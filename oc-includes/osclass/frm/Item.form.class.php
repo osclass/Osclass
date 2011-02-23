@@ -86,7 +86,8 @@ class ItemForm extends Form {
     }
 
     static public function multilanguage_title_description($locales = null, $item = null) {
-        if($locales==null) { $locales = osc_get_locales(); };
+        if($locales==null) { $locales = osc_get_locales(); }
+        if($item==null) { $item = osc_item(); }
         $num_locales = count($locales);
         if($num_locales>1) { echo '<div class="tabber">'; };
         foreach($locales as $locale) {
@@ -113,7 +114,7 @@ class ItemForm extends Form {
 
     static public function currency_select($currencies = null, $item = null) {
         if($currencies==null) { $currencies = osc_get_currencies(); };
-        if($item==null) { $item = osc_item(); };
+        if($item==null) { $item = osc_item(); }
         if(count($currencies) > 1 ) {
             $default_key = null;
             $currency = Preference::newInstance()->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency')) ;

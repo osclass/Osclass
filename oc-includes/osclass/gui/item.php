@@ -35,11 +35,11 @@
                         <p id="report">
                             <strong><?php _e('Mark as', 'gui') ; ?></strong>
                             <span>
-                                <a id="item_spam" href="<?php echo osc_item_link_spam() ; ?>"><?php _e('spam', 'gui') ; ?></a>
-                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category() ; ?>"><?php _e('misclassified', 'gui') ; ?></a>
-                                <a id="item_repeated" href="<?php echo osc_item_link_repeated() ; ?>"><?php _e('duplicated', 'gui') ; ?></a>
-                                <a id="item_expired" href="<?php echo osc_item_link_expired() ; ?>"><?php _e('expired', 'gui') ; ?></a>
-                                <a id="item_offensive" href="<?php echo osc_item_link_offensive() ; ?>"><?php _e('offensive', 'gui') ; ?></a>
+                                <a id="item_spam" href="<?php echo osc_item_link_spam() ; ?>" rel="nofollow"><?php _e('spam', 'gui') ; ?></a>
+                                <a id="item_bad_category" href="<?php echo osc_item_link_bad_category() ; ?>" rel="nofollow"><?php _e('misclassified', 'gui') ; ?></a>
+                                <a id="item_repeated" href="<?php echo osc_item_link_repeated() ; ?>" rel="nofollow"><?php _e('duplicated', 'gui') ; ?></a>
+                                <a id="item_expired" href="<?php echo osc_item_link_expired() ; ?>" rel="nofollow"><?php _e('expired', 'gui') ; ?></a>
+                                <a id="item_offensive" href="<?php echo osc_item_link_offensive() ; ?>" rel="nofollow"><?php _e('offensive', 'gui') ; ?></a>
                             </span>
                         </p>
                     </div>
@@ -61,7 +61,7 @@
                         <p><?php echo  osc_item_description() ; ?></p>
                         <p class="contact_button">
                             <strong><a href="#contact"><?php _e('Contact seller', 'gui') ; ?></a></strong>
-                            <strong class="share"><a href="<?php echo osc_item_send_friend_url() ; ?>"><?php _e('Share', 'gui') ; ?></a></strong>
+                            <strong class="share"><a href="<?php echo osc_item_send_friend_url() ; ?>" rel="nofollow"><?php _e('Share', 'gui') ; ?></a></strong>
                         </p>
                     </div>
                     <!-- plugins -->

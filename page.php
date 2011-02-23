@@ -32,13 +32,12 @@
         function doModel() {
             $id = Params::getParam('id') ;
             $page = $this->pageManager->findByPrimaryKey($id) ;
-
-            if( $page == '' || $page['b_indelible'] == 1 ) {
-                echo "404 ERROR!!!" ;
-                exit() ;
+            
+            if(empty($page) || $page['b_indelible'] == 1 ) {
+                $this->do404() ;
             } else {
                 //calling the view...
-                $this->_exportVariableToView('page', $page ) ;
+                $this->_exportVariableToView('page', $page) ;
 
                 $this->doView('page.php') ;
             }
