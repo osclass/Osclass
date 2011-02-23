@@ -32,8 +32,8 @@
         function doModel() {
             $id = Params::getParam('id') ;
             $page = $this->pageManager->findByPrimaryKey($id) ;
-
-            if( $page == '' || $page['b_indelible'] == 1 ) {
+            
+            if(empty($page) || $page['b_indelible'] == 1 ) {
                 $this->do404() ;
             } else {
                 //calling the view...

@@ -20,6 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+
     // Adds an ephemeral message to the session.
     function osc_add_flash_message($msg, $section = 'pubMessages') {
         Session::newInstance()->_setMessage($section, $msg) ;
