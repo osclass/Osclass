@@ -72,7 +72,7 @@
                 </div>
                 <div id="sidebar">
                     <div class="filters">
-                        <form action="<?php echo osc_base_url(true); ?>" method="get">
+                        <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
                             <input type="hidden" name="page" value="search" />
                             <fieldset class="box location">
                                 <h3><strong><?php _e('Your search', 'offerum'); ?></strong></h3>
@@ -113,7 +113,7 @@
                                             <?php osc_goto_first_category() ; ?>
                                             <?php while(osc_has_categories()) { ?>
                                                 <li>
-                                                    <input onchange="updateFilter();" type="checkbox" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php echo ( in_array(osc_category_id(), osc_search_category() )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <input type="checkbox" name="sCategory[]" id="sCategory" value="<?php echo osc_category_id(); ?>" <?php echo ( in_array(osc_category_id(), osc_search_category() )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -151,6 +151,15 @@
                             }
                         });
                     });
+                    
+                    function checkEmptyCategories() {
+                        var n = $("#sCategory:checked").length;
+                        if(n>0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
                 </script>
             </div>
             <?php osc_current_web_theme_path('footer.php') ; ?>
