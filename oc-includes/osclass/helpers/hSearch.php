@@ -1,5 +1,25 @@
 <?php
 
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
+
     function osc_search() {
         if(View::newInstance()->_exists('search')) {
             return View::newInstance()->_get('search');
@@ -11,10 +31,11 @@
     }
 
     function osc_list_orders() {
-        return array(
-                                 __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
-                                ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
-                                ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc'));
+        return  array(
+                     __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
+                    ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
+                    ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
+                );
     }
     
     function osc_search_page() {

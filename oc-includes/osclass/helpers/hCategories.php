@@ -23,13 +23,12 @@
     function osc_category() {
         if (View::newInstance()->_exists('subcategories')) {
             $category = View::newInstance()->_current('subcategories') ;
-        } else if (View::newInstance()->_exists('categories')) {
+        } elseif (View::newInstance()->_exists('categories')) {
             $category = View::newInstance()->_current('categories') ;
-        } else if (View::newInstance()->_exists('category')) {
+        } elseif (View::newInstance()->_exists('category')) {
             $category = View::newInstance()->_get('category') ;
         } else {
-            osc_get_categories();
-            $category = osc_category();
+            $category = null;
         }
 
         return($category) ;

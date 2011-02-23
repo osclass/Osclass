@@ -25,6 +25,8 @@
             $page = View::newInstance()->_current('pages') ;
         } else if (View::newInstance()->_exists('page')) {
             $page = View::newInstance()->_get('page') ;
+        } else {
+            $page = null ;
         }
         return($page) ;
     }
