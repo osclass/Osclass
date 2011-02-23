@@ -99,11 +99,7 @@
     
     function osc_search_category_id() {
         $category = osc_search_category();
-        if(is_array($category)) {
-            return $category[0];
-        } else {
-            return $category;    
-        }
+        return $category;    
     }
     
     function osc_update_search_url($params, $delimiter = '&amp;') {
