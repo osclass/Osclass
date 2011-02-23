@@ -34,6 +34,9 @@
                     <?php ContactForm::js_validation(); ?>
                     <form action="<?php echo osc_base_url(true); ?>" method="post" >
                         <fieldset>
+                            <?php ContactForm::primary_input_hidden() ; ?>
+                            <?php ContactForm::action_hidden() ; ?>
+                            <?php ContactForm::page_hidden() ; ?>
                             <label><?php _e('To (seller)', 'gui'); ?>: <?php echo osc_item_contact_name() ;?></label><br/>
                             <label><?php _e('Item', 'gui'); ?>: <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
                             <label for="yourName"><?php _e('Your name', 'gui'); ?></label> <?php ContactForm::your_name(); ?><br/>
@@ -41,10 +44,6 @@
                             <label for="phoneNumber"><?php _e('Phone number', 'gui'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message', 'gui'); ?></label> <?php ContactForm::your_message(); ?><br />
                             <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'gui'); ?></button>
-                            <?php ContactForm::action_hidden() ; ?>
-                            <?php ContactForm::page_hidden() ; ?>
-                            <?php ContactForm::primary_input_hidden() ; ?>
-
                         </fieldset>
                     </form>
                 </div>

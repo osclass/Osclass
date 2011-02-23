@@ -95,4 +95,19 @@
         echo '</ul>' ;
     }
 
+    function osc_highlight($txt, $start_tag = '<b>', $end_tag = '</b>', $len = 300) {
+
+        if (strlen($txt) > $len) {
+            $txt = substr($txt, 0, $len) . "..." ;
+        }
+
+        $query = osc_search_pattern() . " " . osc_search_city() ;
+        $query = trim(preg_replace('/\s\s+/', ' ', $query)) ;
+        $aQuery = explode(' ', $query) ;
+        foreach ($aQuery as $word) {
+            $txt = str_replace($word, $start_tag . $word. $end_tag, $txt) ;
+        }
+        return $txt ;
+    }
+
 ?>

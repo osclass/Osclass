@@ -37,7 +37,7 @@
                      <!--
                          <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
                      -->
-                     <p><?php echo strip_tags(osc_item_description()) ; ?></p>
+                     <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ) ; ?></p>
                  </td>
                  <td class="price"><strong><?php echo osc_format_price(osc_item_price()) ; ?></strong></td>
              </tr>
