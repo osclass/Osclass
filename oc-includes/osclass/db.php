@@ -44,6 +44,7 @@ class DB
         $this->dbPassword = $dbPassword ;
         $this->dbName = $dbName ;
         $this->dbLogLevel = $dbLogLevel ;
+        $this->db_errno = 0;
         
         $this->osc_dbConnect() ;
     }
@@ -95,6 +96,7 @@ class DB
             $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
         }
         
+        $this->db_errno = $this->db->connect_errno;
         $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser . ' | [DBPWD] = ' . $this->dbPassword) ;
     	$this->db->set_charset('UTF8');
     }
@@ -138,6 +140,7 @@ class DB
     	    $this->debug($sql) ;
     	}
     
+        $this->db_errno = $this->db->errno;
     	return $result;
     }
     
@@ -163,7 +166,7 @@ class DB
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
     	}
-    	
+    	$this->db_errno = $this->db->errno;
     	return $result;
     }
     
@@ -192,6 +195,7 @@ class DB
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
     	}
+        $this->db_errno = $this->db->errno;
     	return $results;
     }
     
@@ -217,7 +221,7 @@ class DB
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
     	}
-    	
+    	$this->db_errno = $this->db->errno;
     	return $result;
     }
     
@@ -243,7 +247,7 @@ class DB
     	} else {
     	    $this->debug($sql . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
     	}
-    	
+    	$this->db_errno = $this->db->errno;
     	return $results;
     }
     
@@ -265,6 +269,7 @@ class DB
                 }
             }
     	}
+        $this->db_errno = $this->db->errno;
     }
     
     function autocommit($b_value) {
@@ -286,7 +291,10 @@ class DB
     function get_affected_rows() {
         return($this->db->affected_rows) ;
     }
-    
+
+    function get_errno() {
+        return($this->db_errno);
+    }
     
     /**
      * Given some queries, it will check against the installed database if the information is the same

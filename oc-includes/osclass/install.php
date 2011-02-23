@@ -21,6 +21,7 @@
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 
+error_reporting(0);
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
