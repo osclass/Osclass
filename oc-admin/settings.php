@@ -627,9 +627,9 @@ class CAdminSettings extends AdminSecBaseModel
         $countries = json_decode($countries_json);
         foreach($countries as $c) {
             $manager_country->insert(array(
-                "pk_c_code" => addslashes($c->id)
-                ,"fk_c_locale_code" => addslashes($c->locale_code)
-                ,"s_name" => addslashes($c->name)
+                "pk_c_code" => $c->id
+                ,"fk_c_locale_code" => $c->locale_code
+                ,"s_name" => $c->name
             ));
         }
 
@@ -639,8 +639,8 @@ class CAdminSettings extends AdminSecBaseModel
         $regions = json_decode($regions_json);
         foreach($regions as $r) {
             $manager_region->insert(array(
-                "fk_c_country_code" => addslashes($r->country_code),
-                "s_name" => addslashes($r->name)
+                "fk_c_country_code" => $r->country_code,
+                "s_name" => $r->name
             ));
         }
         unset($regions);
@@ -656,9 +656,9 @@ class CAdminSettings extends AdminSecBaseModel
                 if(!isset($cities->error)) {
                     foreach($cities as $ci) {
                         $manager_city->insert(array(
-                            "fk_i_region_id" => addslashes($region['pk_i_id'])
-                            ,"s_name" => addslashes($ci->name)
-                            ,"fk_c_country_code" => addslashes($ci->country_code)
+                            "fk_i_region_id" => $region['pk_i_id']
+                            ,"s_name" => $ci->name
+                            ,"fk_c_country_code" => $ci->country_code
                         ));
                     }
                 }
@@ -696,8 +696,8 @@ class CAdminSettings extends AdminSecBaseModel
         $regions = json_decode($regions_json);
         foreach($regions as $r) {
             $manager_region->insert(array(
-                "fk_c_country_code" => addslashes($r->country_code),
-                "s_name" => addslashes($r->name)
+                "fk_c_country_code" => $r->country_code,
+                "s_name" => $r->name
             ));
         }
         unset($regions);
@@ -713,9 +713,9 @@ class CAdminSettings extends AdminSecBaseModel
             if(!isset($cities->error)) {
                 foreach($cities as $ci) {
                     $manager_city->insert(array(
-                        "fk_i_region_id" => addslashes($regions['pk_i_id']),
-                        "s_name" => addslashes($ci->name),
-                        "fk_c_country_code" => addslashes($ci->country_code)
+                        "fk_i_region_id" => $regions['pk_i_id'],
+                        "s_name" => $ci->name,
+                        "fk_c_country_code" => $ci->country_code
                     ));
                 }
             }

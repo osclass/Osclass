@@ -39,8 +39,9 @@
                                     <?php _e('Sort by', 'gui'); ?>:
                                     <?php $i = 0 ; ?>
                                     <?php $orders = osc_list_orders();
-                                    foreach($orders as $label => $params) { ?>
-                                        <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $params['iOrderType']) { ?>
+                                    foreach($orders as $label => $params) {
+                                        $orderType = ($params['iOrderType'] == 'asc') ? '0' : '1'; ?>
+                                        <?php if(osc_search_order() == $params['sOrder'] && osc_search_order_type() == $orderType) { ?>
                                             <a class="current" href="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>
                                         <?php } else { ?>
                                             <a href="<?php echo osc_update_search_url($params) ; ?>"><?php echo $label; ?></a>

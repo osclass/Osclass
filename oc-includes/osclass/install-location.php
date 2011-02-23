@@ -64,9 +64,9 @@ function location_international() {
 
     foreach($countries as $c) {
         $manager_country->insert(array(
-            "pk_c_code" => addslashes($c->id),
-            "fk_c_locale_code" => addslashes($c->locale_code),
-            "s_name" => addslashes($c->name)
+            "pk_c_code" => $c->id,
+            "fk_c_locale_code" => $c->locale_code,
+            "s_name" => $c->name
         )) ;
     }
     
@@ -75,9 +75,9 @@ function location_international() {
 
     foreach($regions as $r) {
         $manager_region->insert(array(
-            "pk_i_id" => addslashes($r->id),
-            "fk_c_country_code" => addslashes($r->country_code),
-            "s_name" => addslashes($r->name)
+            "pk_i_id" => $r->id,
+            "fk_c_country_code" => $r->country_code,
+            "s_name" => $r->name
         ));
     }
 
@@ -89,10 +89,10 @@ function location_international() {
         if(!isset($cities->error)) {
             foreach($cities as $ci) {
                 $manager_city->insert(array(
-                    "pk_i_id" => addslashes($ci->id),
-                    "fk_i_region_id" => addslashes($ci->region_id),
-                    "s_name" => addslashes($ci->name),
-                    "fk_c_country_code" => addslashes($ci->country_code)
+                    "pk_i_id" => $ci->id,
+                    "fk_i_region_id" => $ci->region_id,
+                    "s_name" => $ci->name,
+                    "fk_c_country_code" => $ci->country_code
                 ));
             }
         }
@@ -115,9 +115,9 @@ function location_by_country() {
 
     foreach($countries as $c) {
         $manager_country->insert(array(
-            "pk_c_code" => addslashes($c->id),
-            "fk_c_locale_code" => addslashes($c->locale_code),
-            "s_name" => addslashes($c->name)
+            "pk_c_code" => $c->id,
+            "fk_c_locale_code" => $c->locale_code,
+            "s_name" => $c->name
         ));
     }
 
@@ -128,9 +128,9 @@ function location_by_country() {
 
     foreach($regions as $r) {
         $manager_region->insert(array(
-            "pk_i_id" => addslashes($r->id),
-            "fk_c_country_code" => addslashes($r->country_code),
-            "s_name" => addslashes($r->name)
+            "pk_i_id" => $r->id,
+            "fk_c_country_code" => $r->country_code,
+            "s_name" => $r->name
         ));
     }
 
@@ -143,10 +143,10 @@ function location_by_country() {
         if(!isset($cities->error)) {
             foreach($cities as $ci) {
                 $manager_city->insert(array(
-                    "pk_i_id" => addslashes($ci->id),
-                    "fk_i_region_id" => addslashes($ci->region_id),
-                    "s_name" => addslashes($ci->name),
-                    "fk_c_country_code" => addslashes($ci->country_code)
+                    "pk_i_id" => $ci->id,
+                    "fk_i_region_id" => $ci->region_id,
+                    "s_name" => $ci->name,
+                    "fk_c_country_code" => $ci->country_code
                 ));
             }
         }
@@ -173,9 +173,9 @@ function location_by_region() {
     $manager_country = Country::newInstance();
     foreach($countries as $c) {
         $manager_country->insert(array(
-            "pk_c_code" => addslashes($c->id),
-            "fk_c_locale_code" => addslashes($c->locale_code),
-            "s_name" => addslashes($c->name)
+            "pk_c_code" => $c->id,
+            "fk_c_locale_code" => $c->locale_code,
+            "s_name" => $c->name
         ));
     }
 
@@ -185,9 +185,9 @@ function location_by_region() {
     $manager_region = Region::newInstance();
     foreach($regions as $r) {
         $manager_region->insert(array(
-            "pk_i_id" => addslashes($r->id),
-            "fk_c_country_code" => addslashes($r->country_code),
-            "s_name" => addslashes($r->name)
+            "pk_i_id" => $r->id,
+            "fk_c_country_code" => $r->country_code,
+            "s_name" => $r->name
         ));
     }
 
@@ -198,10 +198,10 @@ function location_by_region() {
         if(!isset($cities->error)) {
             foreach($cities as $ci) {
                 $manager_city->insert(array(
-                    "pk_i_id" => addslashes($ci->id),
-                    "fk_i_region_id" => addslashes($ci->region_id),
-                    "s_name" => addslashes($ci->name),
-                    "fk_c_country_code" => addslashes($ci->country_code)
+                    "pk_i_id" => $ci->id,
+                    "fk_i_region_id" => $ci->region_id,
+                    "s_name" => $ci->name,
+                    "fk_c_country_code" => $ci->country_code
                 ));
             }
         }
@@ -226,9 +226,9 @@ function location_by_city() {
     $manager_country = Country::newInstance();
     foreach($countries as $c) {
         $manager_country->insert(array(
-            "pk_c_code" => addslashes($c->id),
-            "fk_c_locale_code" => addslashes($c->locale_code),
-            "s_name" => addslashes($c->name)
+            "pk_c_code" => $c->id,
+            "fk_c_locale_code" => $c->locale_code,
+            "s_name" => $c->name
         ));
     }
 
@@ -244,17 +244,17 @@ function location_by_city() {
 
                 foreach($regions as $r) {
                     $manager_region->insert(array(
-                        "pk_i_id" => addslashes($r->id),
-                        "fk_c_country_code" => addslashes($r->country_code),
-                        "s_name" => addslashes($r->name)
+                        "pk_i_id" => $r->id,
+                        "fk_c_country_code" => $r->country_code,
+                        "s_name" => $r->name
                     ));
                 }
 
                 $manager_city->insert(array(
-                    "pk_i_id" => addslashes($ci->id),
-                    "fk_i_region_id" => addslashes($ci->region_id),
-                    "s_name" => addslashes($ci->name),
-                    "fk_c_country_code" => addslashes($ci->country_code)
+                    "pk_i_id" => $ci->id,
+                    "fk_i_region_id" => $ci->region_id,
+                    "s_name" => $ci->name,
+                    "fk_c_country_code" => $ci->country_code
                 ));
             }
         }

@@ -89,10 +89,10 @@
                                              <td class="photo">
                                                 <?php if( osc_count_item_resources() ) { ?>
                                                     <a href="<?php echo osc_item_url() ; ?>">
-                                                        <img src="<?php echo osc_resource_thumbnail_url() ; ?>" />
+                                                        <img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="" alt="" />
                                                     </a>
                                                 <?php } else { ?>
-                                                    <img src="<?php echo osc_current_web_theme_path('images/no_photo.gif') ; ?>" />
+                                                    <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" alt="" title=""/>
                                                 <?php } ?>
                                              </td>
                                              <td class="text">

@@ -205,6 +205,7 @@ a:hover { color:#F80; }
 .item #item_location li { border-bottom:1px dotted #DDD; float:left; padding:10px 10px 10px 0; width:190px; }
 .item #description { clear:both; float:left; line-height:18px; margin-bottom:20px; width:100%; }
 .item #description .contact_button { line-height:normal; padding-top:10px; }
+.item #description .contact_button .share { margin-left: 10px; }
 .item #description .contact_button strong { background:#ff7f26 url(../images/button_light_orange_bg.gif) repeat-x top; border:1px solid #e67020; float:left; padding:6px 10px 7px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
 .item #description .contact_button strong a { color:#FFF; float:left; text-decoration:none; text-shadow: 1px 1px 0px #cc3300; filter: dropshadow(color=#cc3300, offx=1, offy=1); }
 .item #description .contact_button strong a:hover { text-decoration: underline;}
@@ -235,7 +236,7 @@ a:hover { color:#F80; }
 .item #comments form .button { clear:both; float:left; margin:10px 0 0 150px; }
 
 /* Useful info */
-.item #useful_info { background:#f7f7f7; border: 1px solid #DDD; clear:both; padding:15px 20px; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px; }
+.item #useful_info { background:#f7f7f7; border: 1px solid #DDD; clear:both; padding:15px 20px; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px; margin-bottom: 10px; }
 .item #useful_info h2 { border:none; margin:0; }
 .item #useful_info ul { list-style:disc outside; padding-left:20px; }
 .item #useful_info ul li { line-height:18px; margin-top:8px; }

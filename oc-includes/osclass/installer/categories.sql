@@ -15,7 +15,7 @@ INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_local
 INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id) VALUES (7);
 INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug) VALUES (7, 'en_US', 'Personals','personals');
 INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id) VALUES (8);
-INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug) VALUES (8, 'en_US', 'Jobs', 'jobs');
+INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug, i_position) VALUES (8, 'en_US', 'Jobs', 'jobs', '1');
 
 /* SUBCATEGORIES */
 INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id, fk_i_parent_id) VALUES (9, 1);
