@@ -445,9 +445,11 @@ class ItemForm extends Form {
     if (Params::getParam('catId')!='') {
         osc_run_hook('item_form', Params::getParam('catId'));
     } else {
-        $category = osc_category();
-        if($category!=null) {
+        $categories = osc_category();
+        if(is_array($categories)) {
             osc_run_hook('item_form', $categories['pk_i_id']);
+        } else {
+            osc_run_hook('item_form', $categories);
         }
     }
 ?>
