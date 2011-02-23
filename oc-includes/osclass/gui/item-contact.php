@@ -41,8 +41,8 @@
                             <label for="phoneNumber"><?php _e('Phone number', 'gui'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message', 'gui'); ?></label> <?php ContactForm::your_message(); ?><br />
                             <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'gui'); ?></button>
-                            <?php ContactForm::action_contact_hidden() ; ?>
-                            <?php ContactForm::page_item_hidden() ; ?>
+                            <?php ContactForm::action_hidden() ; ?>
+                            <?php ContactForm::page_hidden() ; ?>
                             <?php ContactForm::primary_input_hidden() ; ?>
 
                         </fieldset>
