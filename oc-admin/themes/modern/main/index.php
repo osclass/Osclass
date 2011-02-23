@@ -184,9 +184,13 @@
 						<div id="last_comments" class="ui-widget-content ui-corner-all">
 							<h3 class="ui-state-default"><?php _e('Latest comments') ; ?></h3>
 							<div id="statistics_body">
-								<?php foreach($comments as $c) { ?>
-									<strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '/?page=item&id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
-								<?php } ?>
+                                <?php if (count($comments) > 0) { ?>
+                                    <?php foreach($comments as $c) { ?>
+                                        <strong><?php echo $c['s_author_name'] ; ?></strong> <?php _e('Commented on item') ; ?> <i><a title="<?php echo $c['s_body'] ; ?>" target='_blank' href='<?php echo osc_base_url(true) . '/?page=item&id=' . $c['fk_i_item_id'] ; ?>' id='dt_link'><?php echo $c['s_title'] ; ?></a></i><br />
+                                    <?php } ?>
+                                <?php } else {
+                                    _e('There aren\'t any comments yet');
+                                } ?>
 							</div>
 						</div>
 
