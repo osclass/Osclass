@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-23 09:43+0100\n"
+"POT-Creation-Date: 2011-02-23 23:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -287,59 +287,59 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:28
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:29
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:26
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:28
 msgid "OSClass admin panel login"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:39
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:97
 msgid "Username"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:45
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:77
 msgid "Password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:55
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:53
 msgid "Language"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:69
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:67
 msgid "Remember me"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:73
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:54
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:71
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:53
 msgid "Log in"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:78
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:76
 msgid "Forgot your password?"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:81
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:58
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/login.php:79
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:57
 msgid "Back to"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:39
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:38
 msgid "Please enter your username or e-mail address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:40
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:39
 msgid "You will receive a new password via e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:46
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/add.php:62
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/edit.php:63
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/admins/index.php:102
 msgid "E-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:50
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/gui/recover.php:49
 msgid "Get new password"
 msgstr ""
 
@@ -1194,7 +1194,7 @@ msgid "Latest comments"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:138
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:192
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:196
 msgid "Latest news from OSClass"
 msgstr ""
 
@@ -1222,11 +1222,15 @@ msgstr ""
 msgid "Number of administrators"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:186
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:187
 msgid "Commented on item"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:204
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:190
+msgid "There aren't any comments yet"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/themes/modern/main/index.php:217
 msgid "Unable to fetch news from OSClass. Please try again later."
 msgstr ""
 
@@ -1963,16 +1967,16 @@ msgstr ""
 msgid "Add a new user"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:30
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:31
 msgid "You can freely obtain a developer key after signing up on this URL:"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:484
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:487
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:486
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:489
 msgid "Admin mail system"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:788
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:799
 msgid "The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: "
 msgstr ""
 
@@ -1986,42 +1990,53 @@ msgstr ""
 msgid "Plugin %s is missing its main file"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:140
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Alert.form.class.php:35
+msgid "Enter your e-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:141
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:122
 msgid "Select a country..."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:162
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:264
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:163
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:265
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:141
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:320
 msgid "Select a region..."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:183
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:304
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:184
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:305
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:159
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:359
 msgid "Select a city..."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:271
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:311
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:272
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:312
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:327
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/User.form.class.php:366
 msgid "No results"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:338
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:339
 msgid "You have to select a region"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:343
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:344
 msgid "You have to select a city"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:348
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:349
 msgid "You have to enter a city"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:354
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:355
 msgid "You have to enter a name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:361
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/frm/Item.form.class.php:362
 msgid "You have to enter an e-mail"
 msgstr ""
 
@@ -2033,23 +2048,23 @@ msgstr ""
 msgid "User Description"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hItems.php:369
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hItems.php:401
 msgid "Check with seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hItems.php:370
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hItems.php:402
 msgid "Free"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:15
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:35
 msgid "Newly listed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:16
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:36
 msgid "Lower price first"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:17
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/helpers/hSearch.php:37
 msgid "Higher price first"
 msgstr ""
 
