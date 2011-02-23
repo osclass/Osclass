@@ -600,16 +600,18 @@ Class ItemActions
             }
 
 
+            $aItem['active']        = $active;
+            $aItem['userId']        = $userId;
+
         }else{          // EDIT
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
             // get input hidden name=fk_location_id ?
+            if(Params::getParam('userId')!='') {
+                $aItem['userId']        = Params::getParam('userId');
+            }
         }
         // get params
-        //$aItem['active']        = $active;
-        if(Params::getParam('userId')!='') {
-            $aItem['userId']        = Params::getParam('userId');
-        }
         $aItem['catId']         = Params::getParam('catId');            // OK
         $aItem['region']        = Params::getParam('region');           // OK
         $aItem['city']          = Params::getParam('city');             // OK
