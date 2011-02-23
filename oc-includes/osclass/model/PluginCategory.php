@@ -47,7 +47,7 @@ class PluginCategory extends DAO {
 
 	public function isThisCategory($catName, $catId) {
 		$var = $this->listWhereCount('`s_plugin_name` LIKE \'' . $catName . '\' AND fk_i_category_id = ' . $catId);
-		if($var[0]['count']==0) {
+		if(!isset($var[0]) || $var[0]['count']==0) {
 			return false;
 		}
 		return true;

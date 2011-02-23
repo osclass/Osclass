@@ -54,7 +54,7 @@
                     $email = Params::getParam("email");
                     $userid = Params::getParam("userid");
                     if($alert!='' && $email!='') {
-                            Alerts::newInstance()->insert(array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => 'DAILY'));
+                            Alerts::newInstance()->createAlert($userid, $email, $alert);
                         echo "1";
                         return true;
                     }

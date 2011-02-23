@@ -64,6 +64,13 @@ class Alerts extends DAO {
     public function getAlertsFromEmailByType($email, $type) {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $type, $email);
     }
+    
+    public function createAlert($userid = null, $email, $alert, $type = 'DAILY') {
+        $results = $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_search LIKE \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $alert, $email);
+        if(count($results)==0) {
+            $this->insert(array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => $type));
+        }
+    }
 
 
 }
