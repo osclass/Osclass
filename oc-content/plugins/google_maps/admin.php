@@ -17,7 +17,8 @@
     
 ?>
 
-<form action="plugins.php" method="post">
+<form action="<?php osc_admin_base_url(true); ?>" method="post">
+    <input type="hidden" name="page" value="plugins" />
     <input type="hidden" name="action" value="renderplugin" />
     <input type="hidden" name="file" value="google_maps/admin.php" />
     <input type="hidden" name="option" value="stepone" />
