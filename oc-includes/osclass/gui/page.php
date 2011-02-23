@@ -30,8 +30,8 @@
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <h1><?php echo osc_pages_title() ; ?></h1>
-            <div><?php echo osc_pages_text() ; ?></div>
+            <h1><?php echo osc_static_page_title() ; ?></h1>
+            <div><?php echo osc_static_page_text() ; ?></div>
             <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
         <?php osc_show_flash_message() ; ?>

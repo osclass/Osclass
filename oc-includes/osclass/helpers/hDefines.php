@@ -323,8 +323,12 @@
         return $path ;
     }
 
-    //osc_createItemURL
-    function osc_item_url( ) {
+    /**
+     * Create automatically the url of the item details page
+     *
+     * @return string
+     */
+    function osc_item_url() {
         if ( osc_rewrite_enabled() ) {
             $sanitized_title = osc_sanitizeString(osc_item_title()) ;
             $sanitized_category = '';
@@ -340,12 +344,12 @@
     }
 
     //osc_createPageURL
-    function osc_page_url($page) {
+    function osc_page_url() {
         if ( osc_rewrite_enabled() ) {
-            $sanitizedString = osc_sanitizeString($page['s_title']);
-            $path = sprintf(osc_base_url() . '%s-p%d', urlencode($sanitizedString), $page['pk_i_id']) ;
+            $sanitizedString = osc_sanitizeString( osc_pages_title() ) ;
+            $path = sprintf( osc_base_url() . '%s-p%d', urlencode($sanitizedString), osc_pages_id() ) ;
         } else {
-            $path = sprintf(osc_base_url(true) . '?page=page&id=%d', $page['pk_i_id']) ;
+            $path = sprintf( osc_base_url(true) . '?page=page&id=%d', osc_pages_id() ) ;
         }
         return $path ;
     }

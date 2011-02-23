@@ -45,6 +45,11 @@
         protected abstract function doModel() ;
         protected abstract function doView($file) ;
 
+        function do404() {
+            header('HTTP/1.1 404 Not Found') ;
+            osc_current_web_theme_path('404.php') ;
+        }
+        
         function redirectTo($url) {
             header('Location: ' . $url) ;
             exit ;
