@@ -35,7 +35,7 @@
                     <form action="<?php echo osc_base_url(true); ?>" method="post" >
                         <fieldset>
                             <label><?php _e('To (seller)', 'gui'); ?>: <?php echo osc_item_contact_name() ;?></label><br/>
-                            <label><?php _e('Item', 'gui'); ?>: <a href="<?php echo osc_item_url( osc_item() ); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
+                            <label><?php _e('Item', 'gui'); ?>: <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
                             <label for="yourName"><?php _e('Your name', 'gui'); ?></label> <?php ContactForm::your_name(); ?><br/>
                             <label for="yourEmail"><?php _e('Your e-mail address', 'gui'); ?></label> <?php ContactForm::your_email(); ?><br />
                             <label for="phoneNumber"><?php _e('Phone number', 'gui'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>

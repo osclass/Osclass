@@ -254,7 +254,7 @@ a:hover { color:#F80; }
 
 /* Contact form */
 .item .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:5px 0; padding:13px 0; width:350px; -moz-border-radius:10px; border-radius:10px; }
-.item #contact { background:#e9f5f9; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px; }
+.item #contact { background:#e9f5f9; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px; margin: 20px auto; }
 .item #contact h2 { color:#000; font-size:14px; margin-bottom:8px; padding-left:12px; }
 .item #contact fieldset { background:#FFF; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px;  }
 .item #contact fieldset h3 { color:#000; font-size:12px; margin-bottom:3px; }

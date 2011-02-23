@@ -44,7 +44,7 @@
                                     <?php ItemForm::category_select(); ?>
                                 </div>
                                 <div class="row">
-                                    <?php ItemForm::multilanguage_title_description(osc_get_locales(), osc_item()); ?>
+                                    <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
                                 </div>
                                 <div class="row price">
                                     <label><?php _e('Price', 'gui'); ?></label>

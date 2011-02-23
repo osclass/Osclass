@@ -323,28 +323,20 @@
         return $path ;
     }
 
-    /**
-     * Create automatically the url to register an account
-     *
-     * @return string
-     */
-    function osc_item_url($item = null) {
-        if($item==null) {
-            return osc_base_url(true)."?page=item&id=".osc_item_id();        
-        } else {//This part is deprecated
-            if ( osc_rewrite_enabled() ) {
-                $sanitized_title = osc_sanitizeString($item['s_title']) ;
-                $sanitized_category = '';
-                $cat = Category::newInstance()->hierarchy($item['fk_i_category_id']) ;
-                for ($i = (count($cat)); $i > 0; $i--) {
-                    $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
-                }
-                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, $item['pk_i_id']) ;
-            } else {
-                $path = osc_base_url(true) . sprintf('?page=item&id=%d', $item['pk_i_id']) ;
+    //osc_createItemURL
+    function osc_item_url( ) {
+        if ( osc_rewrite_enabled() ) {
+            $sanitized_title = osc_sanitizeString(osc_item_title()) ;
+            $sanitized_category = '';
+            $cat = Category::newInstance()->hierarchy(osc_item_category_id()) ;
+            for ($i = (count($cat)); $i > 0; $i--) {
+                $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
             }
-            return $path ;
+            $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_item_id()) ;
+        } else {
+            $path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
         }
+        return $path ;
     }
 
     //osc_createPageURL
