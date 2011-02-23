@@ -117,11 +117,11 @@ function oc_install( ) {
         $adminuser = trim($_POST['admin_username']);
         $adminpwd = trim($_POST['admin_password']);
 
-    	try {
-    	    $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
-            $master_conn->osc_dbExec(sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname)) ;
-    	} catch (Exception $e) {
-            $error_num = $e->getMessage();
+    	
+        $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
+        $master_conn->osc_dbExec(sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname)) ;
+        $error_num = $master_conn->get_errno();
+        if($error_num > 0) {
             if($error_num == 1006 || $error_num == 1044 || $error_num == 1045) {
                 return array('error' => 'Cannot create the database. Check if the admin username and password are correct.');
             }
@@ -129,17 +129,17 @@ function oc_install( ) {
         }
     }
 
-    try {
-        $conn = getConnection($dbhost, $username, $password, $dbname, DEBUG_LEVEL) ;
-    } catch (Exception $e) {
-        $error_num = $e->getMessage();
+    $conn = getConnection($dbhost, $username, $password, $dbname, DEBUG_LEVEL) ;
+    $error_num = $conn->get_errno();
+
+    if($error_num > 0) {
         if ( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
         if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
         if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
 
         return array('error' => 'Cannot connect to database. Unknown error.');
     }
-
+    
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
             return array('error' => 'Cannot write in config.php file. Check if the file is writable.');
@@ -157,53 +157,52 @@ function oc_install( ) {
 
     require_once ABS_PATH . 'config.php';
 
-    try {
-        $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
-        $conn->osc_dbImportSQL($sql);
-    } catch (Exception $e) {
-        $error_num = $e->getMessage();
+
+    $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
+    $conn->osc_dbImportSQL($sql);
+    $error_num = $conn->get_errno();
+    if($error_num > 0) {
         if ( $error_num == 1050 ) {
             return array('error' => 'There are tables with the same name in the database. Change the table prefix or the database and try again.');
         }
         return array('error' => 'Cannot create the database structure. Unknown error.');
     }
 
-    try {
-    	require_once ABS_PATH . 'oc-includes/osclass/locales.php';
-    	require_once ABS_PATH . 'oc-includes/osclass/model/Locale.php';
-    	$localeManager = Locale::newInstance();
+    require_once ABS_PATH . 'oc-includes/osclass/locales.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Locale.php';
+    $localeManager = Locale::newInstance();
 
-    	$locales = osc_listLocales();
-    	foreach($locales as $locale) {
-            $values = array(
-                'pk_c_code' => $locale['code'],
-                's_name' => $locale['name'],
-                's_short_name' => $locale['short_name'],
-                's_description' => $locale['description'],
-                's_version' => $locale['version'],
-                's_author_name' => $locale['author_name'],
-                's_author_url' => $locale['author_url'],
-                's_currency_format' => $locale['currency_format'],
-                's_date_format' => $locale['date_format'],
-                'b_enabled' => ($locale['code'] == 'en_US') ? 1 : 0,
-                'b_enabled_bo' => 1
-            );
-            if(isset($locale['stop_words'])) $values['s_stop_words'] = $locale['stop_words'];
+    $locales = osc_listLocales();
+    foreach($locales as $locale) {
+        $values = array(
+            'pk_c_code' => $locale['code'],
+            's_name' => $locale['name'],
+            's_short_name' => $locale['short_name'],
+            's_description' => $locale['description'],
+            's_version' => $locale['version'],
+            's_author_name' => $locale['author_name'],
+            's_author_url' => $locale['author_url'],
+            's_currency_format' => $locale['currency_format'],
+            's_date_format' => $locale['date_format'],
+            'b_enabled' => ($locale['code'] == 'en_US') ? 1 : 0,
+            'b_enabled_bo' => 1
+        );
+        if(isset($locale['stop_words'])) $values['s_stop_words'] = $locale['stop_words'];
 
-            $localeManager->insert($values);
-        }
+        $localeManager->insert($values);
+    }
 
-        $required_files = array('basic_data.sql', 'categories.sql', 'pages.sql');
+    $required_files = array('basic_data.sql', 'categories.sql', 'pages.sql');
 
-    	$sql = '';
-    	foreach($required_files as $file) {
-            if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) return array('error' => 'the file ' . $file . ' doesn\'t exist in data folder' );
-            else $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
-        }
+    $sql = '';
+    foreach($required_files as $file) {
+        if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) return array('error' => 'the file ' . $file . ' doesn\'t exist in data folder' );
+        else $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
+    }
 
-        $conn->osc_dbImportSQL($sql, ')');
-    } catch (Exception $e) {
-        $error_num = $e->getMessage();
+    $conn->osc_dbImportSQL($sql, ')');
+    $error_num = $conn->get_errno();
+    if($error_num > 0) {
         if ( $error_num == 1471 ) {
             return array('error' => 'Cannot insert basic configuration. This user has no privileges to \'INSERT\' into the database.');
         }
@@ -309,18 +308,14 @@ function is_osclass_installed( ) {
 
     require_once ABS_PATH . 'config.php' ;
 
-    try {
-        $conn = getConnection() ;
-        $sql = sprintf('SELECT * FROM %st_preference WHERE s_name = \'osclass_installed\' AND s_value = \'1\'', DB_TABLE_PREFIX) ;
-        $results = $conn->osc_dbFetchResults($sql) ;
-        if( count($results) > 0 ) {
-            return true;
-        }
-
-        return false;
-    } catch (Exception $e) {
-        return false;
+    $conn = getConnection() ;
+    $sql = sprintf('SELECT * FROM %st_preference WHERE s_name = \'osclass_installed\' AND s_value = \'1\'', DB_TABLE_PREFIX) ;
+    $results = $conn->osc_dbFetchResults($sql) ;
+    if( count($results) > 0 ) {
+        return true;
     }
+
+    return false;
 }
 
 function finish_installation( ) {
