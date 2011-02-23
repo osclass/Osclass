@@ -4,6 +4,27 @@ $(document).ready(function(){
         $.post('<?php echo osc_base_url(true); ?>', {email:$("#alert_email").val(), userid:$("#alert_userId").val(), alert:$("#alert").val(), page:"ajax", action:"alerts"}, function(data){ if(data==1) { alert('<?php _e('You have sucessfully subscribed to the alert', 'gui'); ?>'); } else { alert('<?php _e('There was a problem with the alert', 'gui');?>');}; });
         return false;
     });
+
+    var sQuery = '<?php echo AlertForm::default_email_text() ; ?>' ;
+
+    if($('input[name=alert_email]').val() == sQuery) {
+        $('input[name=alert_email]').css('color', 'gray');
+    }
+    $('input[name=alert_email]').click(function(){
+        if($('input[name=alert_email]').val() == sQuery) {
+            $('input[name=alert_email]').val('');
+            $('input[name=alert_email]').css('color', '');
+        }
+    });
+    $('input[name=alert_email]').blur(function(){
+        if($('input[name=alert_email]').val() == '') {
+            $('input[name=alert_email]').val(sQuery);
+            $('input[name=alert_email]').css('color', 'gray');
+        }
+    });
+    $('input[name=alert_email]').keypress(function(){
+        $('input[name=alert_email]').css('background','');
+    })
 });
 </script>
 
@@ -13,7 +34,7 @@ $(document).ready(function(){
     </h3>
     <form action="<?php echo osc_base_url(true); ?>" method="post" name="sub_alert" id="sub_alert">
         <fieldset>
-            <?php AlertForm::page_search_hidden(); ?>
+            <?php AlertForm::page_hidden(); ?>
             <?php AlertForm::alert_hidden(); ?>
 
             <?php if(osc_is_web_user_logged_in()) { ?>

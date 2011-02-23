@@ -31,16 +31,20 @@ class AlertForm extends Form {
         return true;
     }
 
+    static public function default_email_text() {
+        return __('Enter your e-mail', 'gui') ;
+    }
+
     static public function email_text() {
         if( osc_logged_user_email() == '' ){
-            $value = __('Enter your e-mail', 'gui');
+            $value = self::default_email_text() ;
         }
         parent::generic_input_text('alert_email', $value ) ;
         return true;
     }
 
-    static public function page_search_hidden() {
-        parent::generic_input_hidden('page', 'search' ) ;
+    static public function page_hidden() {
+        parent::generic_input_hidden('page', 'search') ;
         return true;
     }
 
