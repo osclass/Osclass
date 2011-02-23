@@ -21,9 +21,20 @@
 
 class ContactForm extends Form {
 
-    /*static public function primary_input_hidden($page) {
-        parent::generic_input_hidden("id", $page["pk_i_id"]) ;    
-    }*/
+    static public function primary_input_hidden() {
+        parent::generic_input_hidden("id", osc_item_id() ) ;
+        return true;
+    }
+
+    static public function page_item_hidden() {
+        parent::generic_input_hidden("page", 'item') ;
+        return true;
+    }
+
+    static public function action_contact_hidden() {
+        parent::generic_input_hidden("action", 'contact_post') ;
+        return true;
+    }
     
     static public function your_name() {
         parent::generic_input_text("yourName", "", null, false);
