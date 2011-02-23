@@ -195,23 +195,53 @@
     }
     
     function osc_item_link_spam() {
-        return osc_base_url(true) . "?page=item&action=mark&as=spam&id=" . osc_item_id() ;
+        if(!osc_rewrite_enabled ()) {
+            $url = osc_base_url(true) . "?page=item&action=mark&as=spam&id=" . osc_item_id() ;
+        } else {
+            $url = osc_base_url() . "item/mark/spam/" . osc_item_id() ;
+        }
+
+        return $url;
     }
 
     function osc_item_link_bad_category() {
-        return osc_base_url(true) . "?page=item&action=mark&as=badcat&id=" . osc_item_id() ;
+        if(!osc_rewrite_enabled ()) {
+            $url = osc_base_url(true) . "?page=item&action=mark&as=badcat&id=" . osc_item_id() ;
+        } else {
+            $url = osc_base_url() . "item/mark/badcat/" . osc_item_id() ;
+        }
+
+        return $url;
     }
 
     function osc_item_link_repeated() {
-        return osc_base_url(true) . "?page=item&action=mark&as=repeated&id=" . osc_item_id() ;
+        if(!osc_rewrite_enabled ()) {
+            $url = osc_base_url(true) . "?page=item&action=mark&as=repeated&id=" . osc_item_id() ;
+        } else {
+            $url = osc_base_url() . "item/mark/repeated/" . osc_item_id() ;
+        }
+
+        return $url;
     }
 
     function osc_item_link_offensive() {
-        return osc_base_url(true) ."?page=item&action=mark&as=offensive&id=" . osc_item_id() ;
+        if(!osc_rewrite_enabled ()) {
+            $url = osc_base_url(true) . "?page=item&action=mark&as=offensive&id=" . osc_item_id() ;
+        } else {
+            $url = osc_base_url() . "item/mark/offensive/" . osc_item_id() ;
+        }
+
+        return $url;
     }
 
     function osc_item_link_expired() {
-        return osc_base_url(true) . "?page=item&action=mark&as=expired&id=" . osc_item_id() ;
+        if(!osc_rewrite_enabled ()) {
+            $url = osc_base_url(true) . "?page=item&action=mark&as=expired&id=" . osc_item_id() ;
+        } else {
+            $url = osc_base_url() . "item/mark/expired/" . osc_item_id() ;
+        }
+
+        return $url;
     }
     ///////////////////////
     // HELPERS FOR ITEMS //
