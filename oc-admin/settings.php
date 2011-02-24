@@ -535,6 +535,24 @@ class CAdminSettings extends AdminSecBaseModel
 
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media');
             break ;
+            case('contact'):        // calling the media view
+                                    $this->doView('settings/contact.php') ;
+            break;
+            case('contact_post'):   // updating the media config
+                                    $enabled_attachment = Params::getParam('enabled_attachment');
+                                    if ($enabled_attachment == '') $enabled_attachment = 0 ;
+                                    else $enabled_attachment = 1 ;
+
+                                    // format parameters
+                                    $iUpdated = Preference::newInstance()->update(array('s_value' => $enabled_attachment)
+                                                                                  ,array('s_name'  => 'contact_attachment'));
+
+                                    if($iUpdated > 0) {
+                                        osc_add_flash_message( _m('Contact configuration has been updated'), 'admin');
+                                    }
+
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=contact');
+            break ;
             case('cron'):           // viewing the cron view
                                     $this->doView('settings/cron.php');
             break;

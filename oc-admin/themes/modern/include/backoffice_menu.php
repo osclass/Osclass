@@ -1,4 +1,5 @@
 <?php
+
 /*
  *      OSCLass – software for creating and publishing online classified
  *                           advertising platforms
@@ -18,13 +19,14 @@
  *      You should have received a copy of the GNU Affero General Public
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 ?>
 
 <!-- menu -->
 <div id="left_column"> 
     <div style="padding-top: 9px;">
         <div style="float: left; padding-left: 5px; padding-top: 5px;">
-            <img src="<?php echo osc_current_admin_theme_url() ; ?>images/home_icon.gif" alt="" title="" />
+            <img src="<?php echo osc_current_admin_theme_url('images/home_icon.gif') ; ?>" alt="" title="" />
         </div>
         <div style="float: left; padding-top: 5px; padding-left: 5px;">&raquo; <a href="<?php echo osc_admin_base_url(); ?>"><?php _e('Dashboard'); ?></a></div>
         <div style="clear: both;"></div>
@@ -136,6 +138,9 @@
             </li>
             <li>
                 <a href="index.php?page=settings&action=users">&raquo; <?php _e('Users'); ?></a>
+            </li>
+            <li>
+                <a href="index.php?page=settings&action=contact">&raquo; <?php _e('Contact'); ?></a>
             </li>
             <li>
                 <a href="index.php?page=settings&action=locations">&raquo; <?php _e('Locations'); ?></a>
