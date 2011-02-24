@@ -84,7 +84,7 @@
      *
      * @return <boolean>
      */
-    function osc_has_categories() {
+    function osc_has_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
             View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(0) ) ;
         }
