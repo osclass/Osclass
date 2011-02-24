@@ -69,7 +69,7 @@ $rewrite->addRule('^user/(.*)$', 'index.php?page=user&action=$1');
 $rewrite->addRule('^user$', 'index.php?page=user');
 
 // Page rules
-$rewrite->addRule('^(.*?)-p([0-9]*)$', 'index.php?page=page&id=$1');
+$rewrite->addRule('^(.*?)-p([0-9]*)$', 'index.php?page=page&id=$2');
 
 // Category rules
 $rewrite->addRule('^(.+)$', 'index.php?page=search&sCategory=$1');
