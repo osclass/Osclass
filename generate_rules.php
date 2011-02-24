@@ -31,14 +31,14 @@ $rewrite->addRule('^item/send-friend/done$', 'index.php?page=item&action=send_fr
 $rewrite->addRule('^item/contact/([0-9]+)$', 'index.php?page=item&action=contact&id=$1');
 $rewrite->addRule('^item/contact/done$', 'index.php?page=item&action=contact_post');
 $rewrite->addRule('^item/comment$', 'index.php?page=item&action=add_comment');
-$rewrite->addRule('^item/new/([0-9]+)$', 'index.php?page=item&action=post&catId=$1');
+$rewrite->addRule('^item/new$', 'index.php?page=item&action=item_add');
+$rewrite->addRule('^item/new/([0-9]+)$', 'index.php?page=item&action=item_add&catId=$1');
 $rewrite->addRule('^item/new/done$', 'index.php?page=item&action=post_item');
 $rewrite->addRule('^item/activate$', 'index.php?page=item&action=activate');
 $rewrite->addRule('^item/update/stats$', 'index.php?page=item&action=update_cat_stats');
 $rewrite->addRule('^item/([0-9]+)$', 'index.php?page=item&id=$1');
 $rewrite->addRule('^item/(.*)$', 'index.php?page=item&action=$1');
 $rewrite->addRule('^item$', 'index.php?page=item');
-$rewrite->addRule('^item/new$', 'index.php?page=item&action=item_add');
 $rewrite->addRule('^(.+)_([0-9]+)$', 'index.php?page=item&id=$2');
 
 // User rules

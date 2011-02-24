@@ -41,7 +41,7 @@ class CAdminAppearance extends AdminSecBaseModel
                 osc_packageExtract($filePackage['tmp_name'], $path);
                 $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
             break;
-            case 'delete':
+            /*case 'delete':
                 $themes = Params::getParam('theme') ;
                 if ( isset( $themes ) && is_array( $themes ) ) {
                     foreach ($themes as $theme) {
@@ -56,7 +56,7 @@ class CAdminAppearance extends AdminSecBaseModel
                     osc_add_flash_message( _m('No theme selected'));
                 }
                 $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
-            break;
+            break;*/
             case 'widgets':
                 $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
@@ -89,6 +89,8 @@ class CAdminAppearance extends AdminSecBaseModel
                         array('s_value' => Params::getParam('theme') )
                         ,array('s_section' => 'osclass', 's_name' => 'theme')
                 );
+                $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
+            break;
             default:
                 $themes = WebThemes::newInstance()->getListThemes();
                 $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
