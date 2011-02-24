@@ -254,7 +254,8 @@ Class ItemActions
 
         $item       = $aItem['item'];
         $s_title    = $aItem['s_title'];
-        $item_url   = osc_item_url($item);
+        View::newInstance()->_exportVariableToView('item', $item);
+        $item_url   = osc_item_url();
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_send_friend');
@@ -336,6 +337,7 @@ Class ItemActions
 
         $path = NULL;
         $item = $this->manager->findByPrimaryKey( $id ) ;
+        View::newInstance()->_exportVariableToView('item', $item);
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_item_inquiry');
@@ -353,7 +355,7 @@ Class ItemActions
                          '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
 
         $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
-                         $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url($item), $message );
+                         $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url(), $message );
 
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
@@ -807,7 +809,7 @@ Class ItemActions
         $title  = $aItem['title'];
         $contactEmail   = $aItem['contactEmail'];
         $contactName    = $aItem['contactName'];
-
+        View::newInstance()->_exportVariableToView('item', $item);
         $mPages = new Page();
         $locale = osc_get_user_locale();
         
@@ -821,7 +823,7 @@ Class ItemActions
                 $content = current($aPage['locale']);
             }
 
-            $item_url = osc_item_url($item);
+            $item_url = osc_item_url();
 
             $all = '';
 
@@ -878,7 +880,7 @@ Class ItemActions
                 $content = current($aPage['locale']) ;
             }
 
-            $item_url = osc_item_url($item) ;
+            $item_url = osc_item_url() ;
 
             $all = '' ;
 
