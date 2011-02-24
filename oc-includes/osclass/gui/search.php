@@ -33,10 +33,10 @@
                         <div id="list_head">
                             <div class="inner">
                                 <h1>
-                                    <strong><?php _e('Search results', 'gui') ; ?></strong>
+                                    <strong><?php _e('Search results', 'modern') ; ?></strong>
                                 </h1>
                                 <p class="see_by">
-                                    <?php _e('Sort by', 'gui'); ?>:
+                                    <?php _e('Sort by', 'modern'); ?>:
                                     <?php $i = 0 ; ?>
                                     <?php $orders = osc_list_orders();
                                     foreach($orders as $label => $params) {
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <?php if(osc_count_items() == 0) { ?>
-                            <p class="empty" ><?php printf(__('There are no results matching "%s"', 'gui'), osc_search_pattern()) ; ?></p>
+                            <p class="empty" ><?php printf(__('There are no results matching "%s"', 'modern'), osc_search_pattern()) ; ?></p>
                         <?php } else { ?>
                             <?php require(osc_search_show_as() == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
                         <?php } ?>
@@ -79,41 +79,41 @@
                                 <div class="row one_input">
                                     <input type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
                                 </div>
-                                <h3><strong><?php _e('Location', 'gui') ; ?></strong></h3>
+                                <h3><strong><?php _e('Location', 'modern') ; ?></strong></h3>
                                 <div class="row one_input">
-                                    <h6><?php _e('City', 'gui'); ?></h6>
+                                    <h6><?php _e('City', 'modern'); ?></h6>
                                     <input type="text" id="sCity" name="sCity" value="<?php echo osc_search_city() ; ?>" />
                                 </div>
                             </fieldset>
 
                             <fieldset class="box show_only">
-                                <h3><strong><?php _e('Show only', 'gui') ; ?></strong></h3>
+                                <h3><strong><?php _e('Show only', 'modern') ; ?></strong></h3>
                                 <div class="row checkboxes">
                                     <ul>
                                         <li>
                                             <input type="checkbox" name="bPic" id="withPicture" value="1" <?php echo (osc_search_has_pic() ? 'checked' : ''); ?> />
-                                            <label for="withPicture"><?php _e('Show only items with pictures', 'gui') ; ?></label>
+                                            <label for="withPicture"><?php _e('Show only items with pictures', 'modern') ; ?></label>
                                         </li>
                                     </ul>
                                 </div>
 
                                 <div class="row two_input">
-                                    <h6><?php _e('Price', 'gui') ; ?></h6>
-                                    <?php _e('Min', 'gui') ; ?>.
+                                    <h6><?php _e('Price', 'modern') ; ?></h6>
+                                    <?php _e('Min', 'modern') ; ?>.
                                     <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min() ; ?>" size="6" maxlength="6" />
-                                    <?php _e('Max', 'gui') ; ?>.
+                                    <?php _e('Max', 'modern') ; ?>.
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
                                 <?php  if ( osc_count_categories() ) { ?>
                                     <div class="row checkboxes">
-                                        <h6><?php _e('Category', 'gui') ; ?></h6>
+                                        <h6><?php _e('Category', 'modern') ; ?></h6>
                                         <ul>
                                             <?php // RESET CATEGORIES IF WE USED THEN IN THE HEADER ?>
                                             <?php osc_goto_first_category() ; ?>
                                             <?php while(osc_has_categories()) { ?>
                                                 <li>
-                                                    <input type="checkbox" name="sCategory[]" id="sCategory" value="<?php echo osc_category_id(); ?>" <?php echo ( (in_array(osc_category_id(), osc_search_category()) || in_array(osc_category_slug()."/", osc_search_category()) )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <input type="checkbox" name="sCategory[]" id="sCategory" value="<?php echo osc_category_id(); ?>" <?php echo ( (in_array(osc_category_id(), osc_search_category())  || in_array(osc_category_slug()."/", osc_search_category()) )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -129,7 +129,7 @@
                                 }
                             ?>
 
-                            <button type="submit"><?php _e('Apply', 'gui') ; ?></button>
+                            <button type="submit"><?php _e('Apply', 'modern') ; ?></button>
                         </form>
                         <?php osc_alert_form() ; ?>
                     </div>
@@ -146,8 +146,8 @@
                             minLength: 2,
                             select: function( event, ui ) {
                                 log( ui.item ?
-                                    "<?php _e('Selected', 'gui'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                    "<?php _e('Nothing selected, input was', 'gui'); ?> " + this.value );
+                                    "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
+                                    "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
                             }
                         });
                     });

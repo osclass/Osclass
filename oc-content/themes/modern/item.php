@@ -47,8 +47,8 @@
                 <div id="main">
                     <div id="type_dates">
                         <strong><?php echo osc_item_category() ; ?></strong>
-                        <em class="publish"><?php if ( osc_item_pub_date() != '' ) echo date("d/m/Y", strtotime(osc_item_pub_date())); ?></em>
-                        <em class="update"><?php if ( osc_item_mod_date() != '' ) echo date("d/m/Y", strtotime(osc_item_mod_date())); ?></em>
+                        <em class="publish"><?php if ( osc_item_pub_date() != '' ) echo osc_format_date( osc_item_pub_date() ) ; ?></em>
+                        <em class="update"><?php if ( osc_item_mod_date() != '' ) echo osc_format_date( osc_item_mod_date() ) ; ?></em>
                     </div>
                     <ul id="item_location">
                         <?php if ( osc_item_country() != "" ) { ?><li><?php _e("Country", 'modern'); ?>: <strong><?php echo osc_item_country() ; ?></strong></li><?php } ?>

@@ -1,6 +1,5 @@
 /* Global reset by Eric Meyer */
 html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
-textarea { font:12px Arial,Helvetica,Verdana,sans-serif; }
 ol, ul {list-style: none;}
 blockquote, q {quotes: none;}
 blockquote:before, blockquote:after,
@@ -15,6 +14,7 @@ input:focus { outline:none; }
 body { line-height:1; color:#333; font: 12px Arial, Helvetica, Verdana, sans-serif; }
 a { color:#069; text-decoration:underline; }
 a:hover { color:#F80; }
+option.pad { margin-left:10px;}
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
 #FlashMessage { background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:absolute; text-align: center; top:0; width:100%; }
 .container { margin:0 auto; width:970px; }

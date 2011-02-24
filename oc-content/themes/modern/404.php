@@ -21,5 +21,5 @@
 ?>
 
 <div style="text-align: center;">
-    <h1><?php _e('Page not found'); ?></h1>
+    <h1><?php _e('Page not found', 'newcorp') ; ?></h1>
 </div>

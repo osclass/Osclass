@@ -294,21 +294,14 @@ Class ItemActions
         $title = osc_mailBeauty($content['s_title'], $words) ;
         $body  = osc_mailBeauty($content['s_text'], $words) ;
 
-        $from = osc_contact_email();
-        if( $yourEmail != '' ){
-            $from = $yourEmail;
-        }
-
-        $from_name = $aItem['yourName'];
-
         if (osc_notify_contact_friends()) {
             $add_bbc = osc_contact_email() ;
         }
 
         $params = array(
                     'add_bcc'    => $add_bbc
-                    ,'from'      => $from
-                    ,'from_name' => $from_name
+                    ,'from'      => $aItem['yourEmail']
+                    ,'from_name' => $aItem['yourName']
                     ,'subject'   => $title
                     ,'to'        => $aItem['friendEmail']
                     ,'to_name'   => $aItem['friendName']

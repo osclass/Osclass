@@ -33,26 +33,26 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_account">
                 <h1>
-                    <strong><?php _e('User account manager', 'gui') ; ?></strong>
+                    <strong><?php _e('User account manager', 'modern') ; ?></strong>
                 </h1>
                 <div id="sidebar">
                     <?php echo osc_private_user_menu() ; ?>
                 </div>
                 <div id="main" class="modify_profile">
-                    <h2><?php _e('Change your e-mail', 'gui') ; ?></h2>
+                    <h2><?php _e('Change your e-mail', 'modern') ; ?></h2>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="change_email_post" />
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current e-mail', 'gui') ; ?></label><br />
+                                <label for="email"><?php _e('Current e-mail', 'modern') ; ?></label><br />
                                 <input type="text" name="email" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New e-mail', 'gui') ; ?></label><br />
+                                <label for="new_email"><?php _e('New e-mail', 'modern') ; ?></label><br />
                                 <input type="text" name="new_email" value="" />
                             </p>
-                            <button type="submit"><?php _e('Update', 'gui') ; ?></button>
+                            <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>
                     </form>
                 </div>
