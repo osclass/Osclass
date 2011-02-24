@@ -159,6 +159,11 @@
         return osc_category_field("pk_i_id", $locale) ;
     }
 
+    function osc_category_slug($locale = "") {
+        if ($locale == "") $locale = osc_get_user_locale() ;
+        return osc_category_field("s_slug", $locale) ;
+    }
+
     /**
      * Gets the total items related with the current category
      *
