@@ -33,7 +33,9 @@
         }
 
         public function __construct() {
-            $this->setCurrentTheme( osc_theme() ) ;
+            //#dev.conquer this fix is needed for the preview of appearance in oc-admin
+            if (Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '') $this->setCurrentTheme( Params::getParam('theme') ) ;
+            else $this->setCurrentTheme( osc_theme() ) ;
         }
 
         /* PRIVATE */

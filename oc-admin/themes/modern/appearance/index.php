@@ -94,8 +94,7 @@
                                             </div>
                                             <div id="available_theme_actions">
                                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=activate&amp;theme=<?php echo $theme ; ?>"><?php _e('Activate') ; ?></a> |
-                                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?action=testTheme&theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a> |
-                                                <a id="theme_delete" onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>');" href="appearance.php?action=delete&amp;theme=<?php echo $theme ; ?>"><?php _e('Delete') ; ?></a>
+                                                <a target="_blank" href="<?php echo osc_base_url(true) ; ?>?theme=<?php echo $theme ; ?>"><?php _e('Preview') ; ?></a>
                                             </div>
                                             <div id="available_theme_pic"><img src="<?php echo osc_base_url() ; ?>/oc-content/themes/<?php echo $theme ; ?>/screenshot.png" style="width: 280px;" /></div>
                                             <div id="available_theme_desc"><?php echo $info['description'] ; ?></div>
