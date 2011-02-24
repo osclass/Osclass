@@ -31,7 +31,7 @@
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div id="form_publish">
-                <?php include("inc.search.php") ; ?>
+                <?php osc_current_web_theme_path('inc.search.php') ; ?>
             </div>
             <div class="content home">
                 <div id="main">

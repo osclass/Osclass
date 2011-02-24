@@ -120,7 +120,6 @@ class Page extends DAO
         }
 
         $result = $this->extendDescription($row, $locale);
-
         return $result;
     }
 
