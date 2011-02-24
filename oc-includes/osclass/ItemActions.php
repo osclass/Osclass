@@ -155,8 +155,8 @@ Class ItemActions
             $this->geocodeAddress( $aItem['address'],$aItem['regionName'], $aItem['cityName'], $aItem['idItem'] );
         }
 
-        $contactName    = $aItem['contactName'] ;
-        $contactEmail   = $aItem['contactEmail'] ;
+        $contactName    = @$aItem['contactName'] ;
+        $contactEmail   = @$aItem['contactEmail'] ;
 
         // Update category numbers
         $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
@@ -617,8 +617,29 @@ Class ItemActions
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
             // get input hidden name=fk_location_id ?
-            if(Params::getParam('userId')!='') {
+            /*if(Params::getParam('userId')!='') {
                 $aItem['userId']        = Params::getParam('userId');
+            }*/
+            $userId = Params::getParam('userId');
+            if ($userId != null) {
+                if( $this->is_admin ) {
+                    if( Params::getParam('contactName') != '' && Params::getParam('contactEmail') != '' ) {
+                        $data['s_name']     = Params::getParam('contactName');
+                        $data['s_email']    = Params::getParam('contactEmail');
+                    }else{
+                        $data = Admin::newInstance()->findByPrimaryKey($userId);
+                    }
+                    $userId = null;
+                } else {
+                    $data = User::newInstance()->findByPrimaryKey($userId);
+                }
+                $aItem['contactName']   = $data['s_name'];
+                $aItem['contactEmail']  = $data['s_email'];
+                Params::setParam('contactName', $data['s_name']);
+                Params::setParam('contactEmail', $data['s_email']);
+            }else{
+                $aItem['contactName']   = Params::getParam('contactName');
+                $aItem['contactEmail']  = Params::getParam('contactEmail');
             }
         }
         // get params
