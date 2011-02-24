@@ -30,15 +30,15 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_account">
                 <h1>
-                    <strong><?php _e('User account manager', 'gui') ; ?></strong>
+                    <strong><?php _e('User account manager', 'modern') ; ?></strong>
                 </h1>
                 <div id="sidebar">
                     <?php echo osc_private_user_menu() ; ?>
                 </div>
                 <div id="main">
-                    <h2><?php echo sprintf(__('Items from %s', 'gui') ,osc_logged_user_name()); ?></h2>
+                    <h2><?php echo sprintf(__('Items from %s', 'modern') ,osc_logged_user_name()); ?></h2>
                     <?php if(osc_count_items() == 0) { ?>
-                        <h3><?php _e('No items have been added yet', 'gui'); ?></h3>
+                        <h3><?php _e('No items have been added yet', 'modern'); ?></h3>
                     <?php } else { ?>
                         <?php while(osc_has_items()) { ?>
                             <div class="userItem" >
@@ -46,8 +46,8 @@
                                     <a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a>
                                 </div>
                                 <div class="userItemData" >
-                                <?php _e('Publication date', 'gui') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                <?php _e('Price', 'gui') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
+                                <?php _e('Publication date', 'modern') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
+                                <?php _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
                                 </div>
                             </div>
                             <br />

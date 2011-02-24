@@ -29,7 +29,7 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <?php ItemForm::location_javascript(); ?>
             <div class="content add_item">
-                <h1><strong><?php _e('Update your item', 'gui'); ?></strong></h1>
+                <h1><strong><?php _e('Update your item', 'modern'); ?></strong></h1>
                     <form action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <input type="hidden" name="action" value="item_edit_post" />
@@ -38,16 +38,16 @@
                         <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
                         <div class="left_column">
                             <div class="box general_info">
-                                <h2><?php _e('General Information', 'gui'); ?></h2>
+                                <h2><?php _e('General Information', 'modern'); ?></h2>
                                 <div class="row">
-                                    <label><?php _e('Category', 'gui'); ?></label>
+                                    <label><?php _e('Category', 'modern'); ?></label>
                                     <?php ItemForm::category_select(); ?>
                                 </div>
                                 <div class="row">
                                     <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
                                 </div>
                                 <div class="row price">
-                                    <label><?php _e('Price', 'gui'); ?></label>
+                                    <label><?php _e('Price', 'modern'); ?></label>
                                     <?php ItemForm::price_input_text(); ?>
                                     <?php ItemForm::currency_select(); ?>
                                 </div>
@@ -55,45 +55,45 @@
 
                             <div class="box photos">
                                 <?php ItemForm::photos_javascript(); ?>
-                                <h2><?php _e('Photos', 'gui'); ?></h2>
+                                <h2><?php _e('Photos', 'modern'); ?></h2>
                                 <?php ItemForm::photos(); ?>
                                 <div id="photos">
                                     <div class="row">
-                                        <input type="file" name="photos[]" /> (<?php _e('optional', 'gui'); ?>)
+                                        <input type="file" name="photos[]" /> (<?php _e('optional', 'modern'); ?>)
                                     </div>
                                 </div>
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'gui'); ?></a>
+                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                             </div>
                         </div>
 
                         <div class="right_column">
                             <div class="box location">
-                                <h2><?php _e('Location', 'gui'); ?></h2>
+                                <h2><?php _e('Location', 'modern'); ?></h2>
                                 <div class="row">
-                                    <label><?php _e('Country', 'gui'); ?></label>
+                                    <label><?php _e('Country', 'modern'); ?></label>
                                     <?php ItemForm::country_select() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('Region', 'gui'); ?></label>
+                                    <label><?php _e('Region', 'modern'); ?></label>
                                     <?php ItemForm::region_select() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('City', 'gui'); ?></label>
+                                    <label><?php _e('City', 'modern'); ?></label>
                                     <?php ItemForm::city_select() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('City area', 'gui'); ?></label>
+                                    <label><?php _e('City area', 'modern'); ?></label>
                                     <?php ItemForm::city_area_text() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('Address', 'gui'); ?></label>
+                                    <label><?php _e('Address', 'modern'); ?></label>
                                     <?php ItemForm::address_text() ; ?>
                                 </div>
                             </div>
                             <?php osc_run_hook('item_edit', osc_item() ) ;?>
                         </div>
-                        <button class="itemFormButton" type="submit"><?php _e('Update', 'gui'); ?></button>
-                        <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'gui'); ?></a>
+                        <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
+                        <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>
                     </fieldset>
                 </form>
             </div>

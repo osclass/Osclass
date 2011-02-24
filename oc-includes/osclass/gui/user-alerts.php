@@ -31,25 +31,25 @@
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_account">
-                <h1><strong><?php _e('User account manager', 'gui') ; ?></strong></h1>
+                <h1><strong><?php _e('User account manager', 'modern') ; ?></strong></h1>
                 <div id="sidebar">
                     <?php echo osc_private_user_menu() ; ?>
                 </div>
                 <div id="main">
-                    <h2><?php _e('Your alerts', 'gui') ; ?></h2>
+                    <h2><?php _e('Your alerts', 'modern') ; ?></h2>
                     <?php if(osc_count_alerts() == 0) { ?>
-                        <h3><?php _e('You do not have any alerts yet', 'gui'); ?>.</h3>
+                        <h3><?php _e('You do not have any alerts yet', 'modern'); ?>.</h3>
                     <?php } else { ?>
                         <?php while(osc_has_alerts()) { ?>
                             <div class="userItem" >
-                                <div><?php _e('Alert', 'gui'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?', 'gui'); ?>');" href="<?php echo osc_user_unsubscribe_alert_url() ; ?>"><?php _e('Delete this alert', 'gui') ; ?></a></div>
+                                <div><?php _e('Alert', 'modern'); ?> | <a onclick="javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?', 'modern'); ?>');" href="<?php echo osc_user_unsubscribe_alert_url() ; ?>"><?php _e('Delete this alert', 'modern') ; ?></a></div>
                                 <div style="width: 75%; padding-left: 100px;" >
                                 <?php while(osc_has_items()) { ?>
                                     <div class="userItem" >
                                         <div><a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></div>
                                         <div class="userItemData" >
-                                        <?php _e('Publication date', 'gui') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                        <?php _e('Price', 'gui') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
+                                        <?php _e('Publication date', 'modern') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
+                                        <?php _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
                                         </div>
                                     </div>
                                     <br />
