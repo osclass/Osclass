@@ -71,7 +71,7 @@
                         <?php if ( osc_count_subcategories() > 0 ) { ?>
                             <ul>
                                 <?php while ( osc_has_subcategories() ) { ?>
-                                    <option value="<?php echo osc_category_id() ; ?>">&nbsp;&nbsp;&nbsp;<?php echo osc_category_name() ; ?></option>
+                                    <option class="pad" value="<?php echo osc_category_id() ; ?>"><?php echo osc_category_name() ; ?></option>
                                 <?php } ?>
                             </ul>
                         <?php } ?>
