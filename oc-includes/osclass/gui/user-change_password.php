@@ -32,30 +32,30 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_account">
                 <h1>
-                    <strong><?php _e('User account manager', 'gui') ; ?></strong>
+                    <strong><?php _e('User account manager', 'modern') ; ?></strong>
                 </h1>
                 <div id="sidebar">
                     <?php echo osc_private_user_menu() ; ?>
                 </div>
                 <div id="main" class="modify_profile">
-                    <h2><?php _e('Change your password', 'gui') ; ?></h2>
+                    <h2><?php _e('Change your password', 'modern') ; ?></h2>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="change_password_post" />
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current password', 'gui') ; ?></label><br />
+                                <label for="email"><?php _e('Current password', 'modern') ; ?></label><br />
                                 <input type="password" name="password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New pasword', 'gui') ; ?></label><br />
+                                <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
                                 <input type="password" name="new_password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('Repeat new pasword', 'gui') ; ?></label><br />
+                                <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
                                 <input type="password" name="new_password2" value="" />
                             </p>
-                            <button type="submit"><?php _e('Update', 'gui') ; ?></button>
+                            <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>
                     </form>
                 </div>
