@@ -37,17 +37,9 @@
             // get user/admin locale
             $locale = '';
             if(defined('OC_ADMIN')) {
-                if(Session::newInstance()->_get('adminLocale') != '') {
-                    $locale = Session::newInstance()->_get('adminLocale');
-                } else {
-                    $locale = osc_admin_language();
-                }
+                $locale = osc_current_admin_locale();
             } else {
-                if(Session::newInstance()->_get('locale') != '') {
-                    $locale = Session::newInstance()->_get('locale');
-                } else {
-                    $locale = osc_language();
-                }
+                $locale = osc_current_user_locale();
             }
 
             // load core

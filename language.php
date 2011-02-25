@@ -28,7 +28,7 @@ class CWebLanguage extends BaseModel
         $locale = Params::getParam('locale');
         
         if(preg_match('/.{2}_.{2}/', $locale)) {
-            Session::newinstance()->_set('locale', $locale);
+            Session::newinstance()->_set('userLocale', $locale);
         }
 
         $redirect_url = '';
