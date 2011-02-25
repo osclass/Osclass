@@ -37,17 +37,9 @@
             // get user/admin locale
             $locale = '';
             if(defined('OC_ADMIN')) {
-                if(Session::newInstance()->_get('adminLocale') != '') {
-                    $locale = Session::newInstance()->_get('adminLocale');
-                } else {
-                    $locale = osc_admin_language();
-                }
+                $locale = osc_current_admin_locale();
             } else {
-                if(Session::newInstance()->_get('locale') != '') {
-                    $locale = Session::newInstance()->_get('locale');
-                } else {
-                    $locale = osc_language();
-                }
+                $locale = osc_current_user_locale();
             }
 
             // load core
@@ -66,7 +58,7 @@
             $theme_file = osc_base_path() . 'oc-content/themes/' . $domain . '/languages/' . $locale . '/theme.mo';
             if(!file_exists($theme_file)) {
                 if(!file_exists(osc_base_path() . 'oc-content/themes/' . $domain)) {
-                    $domain = 'gui';
+                    $domain = 'modern';
                 }
                 $theme_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/theme.mo';
             }

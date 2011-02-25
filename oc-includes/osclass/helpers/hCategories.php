@@ -30,7 +30,6 @@
         } else {
             $category = null;
         }
-
         return($category) ;
     }
 
@@ -98,7 +97,6 @@
         if ( !View::newInstance()->_exists('categories') ) {
             View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
         }
-        
         return View::newInstance()->_next('categories') ;
     }
 
@@ -112,7 +110,8 @@
         $category = View::newInstance()->_current('categories') ;
         if ( $category == '' ) return -1 ;
         if ( !isset($category['categories']) ) return 0 ;
-
+        if ( !is_array($category['categories']) ) return 0 ; 
+        if ( count($category['categories']) == 0 ) return 0;
         if ( !View::newInstance()->_exists('subcategories') ) {
             View::newInstance()->_exportVariableToView('subcategories', $category['categories']) ;
         }
@@ -145,7 +144,7 @@
      * @return <string>
      */
     function osc_category_name($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_category_field("s_name", $locale) ;
     }
 
@@ -155,12 +154,12 @@
      * @return <string>
      */
     function osc_category_id($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_category_field("pk_i_id", $locale) ;
     }
 
     function osc_category_slug($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_category_field("s_slug", $locale) ;
     }
 

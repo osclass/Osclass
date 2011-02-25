@@ -36,17 +36,60 @@
     }
 
     function osc_static_page_title($locale = '') {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_static_page_field("s_title", $locale) ;
     }
 
     function osc_static_page_text($locale = '') {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_static_page_field("s_text", $locale) ;
     }
 
     function osc_static_page_id() {
         return osc_static_page_field("pk_i_id") ;
+    }
+
+    function osc_static_page_url() {
+        if(osc_rewrite_enabled()) {
+            return osc_base_url().osc_static_page_field("s_internal_name")."-p".osc_static_page_field("pk_i_id");
+        } else {
+            return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id");
+        }
+    }
+    
+    /**
+     * Gets the specified static page by internal name.
+     *
+     * @return <boolean>
+     */
+    function osc_get_static_page($internal_name, $locale = '') {
+        if ($locale == "") $locale = osc_current_user_locale() ;
+        return View::newInstance()->_exportVariableToView('page', Page::newInstance()->findByInternalName($internal_name, $locale) ) ;
+    }    
+    
+    /**
+     * Gets the total of static pages. If static pages are not loaded, this function will load them.
+     *
+     * @return <int>
+     */
+    function osc_count_static_pages() {
+        if ( !View::newInstance()->_exists('pages') ) {
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(0) ) ;
+        }
+        return View::newInstance()->_count('pages') ;
+    }
+
+    /**
+     * Let you know if there are more static pages in the list. If static pages are not loaded, this function will load them.
+     *
+     * @return <boolean>
+     */
+    function osc_has_static_pages() {
+        if ( !View::newInstance()->_exists('pages') ) {
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(0) ) ;
+        }
+        
+        return View::newInstance()->_next('pages') ;
     }
 
 ?>

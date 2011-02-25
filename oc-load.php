@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0 RC') ;
+define('OSCLASS_VERSION', '2.0 RC3') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -57,6 +57,7 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hTranslations.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPage.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Cookie.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/View.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';

@@ -84,9 +84,8 @@
         function _reset($key) {
             if (is_array($this->aExported[$key])) {
                 return reset($this->aExported[$key]) ;
-            } else {
-                die("YOU ARE USING _RESET FUNCTION WITH A NON ARRAY") ;
             }
+            return array();
         }
 
         function _exists($key) {
@@ -102,6 +101,7 @@
 
         function _erase($key) {
             unset($this->aExported[$key]) ;
+            unset($this->aCurrent[$key]) ;
         }
     }
 

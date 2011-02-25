@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-24 18:51+0100\n"
+"POT-Creation-Date: 2011-02-23 23:37+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -202,6 +202,16 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/admins.php:158
 msgid "The admin couldn't be deleted"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:49
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:53
+#, php-format
+msgid "Directory \"%s\" can't be removed"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/appearance.php:56
+msgid "No theme selected"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/categories.php:60
@@ -538,15 +548,11 @@ msgstr ""
 msgid "Media config has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:551
-msgid "Contact configuration has been updated"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:568
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:550
 msgid "Cron config has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:616
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:598
 msgid "General settings have been updated"
 msgstr ""
 
@@ -594,19 +600,19 @@ msgstr ""
 msgid "Great! We've just published your item"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:322
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:321
 msgid "We just send your message to "
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:324
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:323
 msgid "We are very sorry but we could not deliver your message to your friend. Try again later"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:391
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:389
 msgid "There has been some erro sending the message"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:499
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:497
 msgid "We are very sorry but could not save your comment. Try again later"
 msgstr ""
 

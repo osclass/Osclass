@@ -31,8 +31,7 @@ class CWebLogin extends BaseModel
                                     $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
                                     if ($user) {
                                         if ( $user["s_password"] == sha1( Params::getParam('password') ) ) {
-                                            if ( Params::getParam('remember') ) {
-                                                $life = time() + COOKIE_LIFE ;
+                                            if ( Params::getParam('remember') == 1 ) {
 
                                                 //this include contains de osc_genRandomPassword function
                                                 require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
@@ -43,18 +42,16 @@ class CWebLogin extends BaseModel
                                                     ,array('pk_i_id' => $user['pk_i_id'])
                                                 );
 
-                                                //setcookie('oc_adminId', $admin['pk_i_id'], $life, '/', $_SERVER['SERVER_NAME']);
-                                                //setcookie('oc_adminSecret', $secret, $life, '/', $_SERVER['SERVER_NAME']);
-                                            } else {
-                                                //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                                //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                                Cookie::newInstance()->set_expires( osc_time_cookie() ) ;
+                                                Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
+                                                Cookie::newInstance()->push('oc_userSecret', $secret) ;
+                                                Cookie::newInstance()->set() ;
                                             }
 
                                             //we are logged in... let's go!
                                             Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                                             Session::newInstance()->_set('userName', $user['s_name']) ;
                                             Session::newInstance()->_set('userEmail', $user['s_email']) ;
-                                            Session::newInstance()->_set('userLocale', Params::getParam('locale')) ;
                                             
                                         } else {
                                             osc_add_flash_message( _m('The password is incorrect')) ;

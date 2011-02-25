@@ -1,7 +1,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $(".sub_button").click(function(){
-        $.post('<?php echo osc_base_url(true); ?>', {email:$("#alert_email").val(), userid:$("#alert_userId").val(), alert:$("#alert").val(), page:"ajax", action:"alerts"}, function(data){ if(data==1) { alert('<?php _e('You have sucessfully subscribed to the alert', 'gui'); ?>'); } else { alert('<?php _e('There was a problem with the alert', 'gui');?>');}; });
+        $.post('<?php echo osc_base_url(true); ?>', {email:$("#alert_email").val(), userid:$("#alert_userId").val(), alert:$("#alert").val(), page:"ajax", action:"alerts"}, function(data){ if(data==1) { alert('<?php _e('You have sucessfully subscribed to the alert', 'modern'); ?>'); } else { alert('<?php _e('There was a problem with the alert', 'modern');?>');}; });
         return false;
     });
 
@@ -30,7 +30,7 @@ $(document).ready(function(){
 
 <div class="alert_form">
     <h3>
-        <strong><?php _e('Subscribe to this search', 'gui'); ?></strong>
+        <strong><?php _e('Subscribe to this search', 'modern'); ?></strong>
     </h3>
     <form action="<?php echo osc_base_url(true); ?>" method="post" name="sub_alert" id="sub_alert">
         <fieldset>
@@ -46,7 +46,7 @@ $(document).ready(function(){
                 <?php AlertForm::email_text(); ?>
 
             <?php }; ?>
-            <button type="submit" class="sub_button" ><?php _e('Subscribe now!', 'gui');?></button>
+            <button type="submit" class="sub_button" ><?php _e('Subscribe now!', 'modern');?></button>
         </fieldset>
     </form>
 </div>

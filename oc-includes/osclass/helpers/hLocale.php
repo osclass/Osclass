@@ -81,4 +81,35 @@
         return ( Locale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
     }
 
+    /**
+     * Get the actual locale of the user.
+     *
+     * You get the right locale code. If an user is using the website in another language different of the default one, or
+     * the user uses the default one, you'll get it.
+     *
+     * @return string Locale Code
+     */
+    function osc_current_user_locale( ) {
+        if(Session::newInstance()->_get('userLocale') != '') {
+            return Session::newInstance()->_get('userLocale') ;
+        }
+
+        return osc_language();
+    }
+
+    /**
+     * Get the actual locale of the admin.
+     *
+     * You get the right locale code. If an admin is using the website in another language different of the default one, or
+     * the admin uses the default one, you'll get it.
+     *
+     * @return string Locale Code
+     */
+    function osc_current_admin_locale( ) {
+        if(Session::newInstance()->_get('adminLocale') != '') {
+            return Session::newInstance()->_get('adminLocale') ;
+        }
+
+        return osc_admin_language();
+    }
 ?>

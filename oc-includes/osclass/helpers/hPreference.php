@@ -20,6 +20,10 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function osc_time_cookie() {
+        return ( 31536000 ) ; // one year in seconds
+    }
+
     function osc_comments_enabled() {
         return (getBoolPreference('enabled_comments')) ;
     }

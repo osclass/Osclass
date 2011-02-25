@@ -41,6 +41,8 @@ function count_items_subcategories($category = null) {
             $total += count_items_subcategories($c);
         }
     }
+    $conn = getConnection();
+    $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $category['pk_i_id'], $total, $total);
     return $total;
 }
 
@@ -75,7 +77,7 @@ function update_cat_stats() {
 			), array('fk_i_category_id' => $c['pk_i_id'])
 		);*/
 		$total = count_items_subcategories($c);
-        $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
+        //$conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
 
 			
 	}

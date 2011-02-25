@@ -103,7 +103,7 @@ class CWebUser extends WebSecBaseModel
                                                     ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
                                                 );
 
-                                                $locale = Session::newInstance()->_get('userLocale') ;
+                                                $locale = osc_current_user_locale() ;
                                                 $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
                                                 if(isset($aPage['locale'][$locale]['s_title'])) {
                                                     $content = $aPage['locale'][$locale] ;

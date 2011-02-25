@@ -44,13 +44,13 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_forms">
                 <div class="inner">
-                    <h1><?php _e('Recover your password', 'gui') ; ?></h1>
+                    <h1><?php _e('Recover your password', 'modern') ; ?></h1>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="recover_post" />
                         <fieldset>
-                            <label for="email"><?php _e('E-mail', 'gui') ; ?></label> <?php UserForm::email_text() ; ?><br />
-                            <button type="submit"><?php _e('Send me a new password', 'gui') ; ?></button>
+                            <label for="email"><?php _e('E-mail', 'modern') ; ?></label> <?php UserForm::email_text() ; ?><br />
+                            <button type="submit"><?php _e('Send me a new password', 'modern') ; ?></button>
                         </fieldset>
                     </form>
                 </div>

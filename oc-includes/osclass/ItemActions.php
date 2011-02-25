@@ -155,8 +155,8 @@ Class ItemActions
             $this->geocodeAddress( $aItem['address'],$aItem['regionName'], $aItem['cityName'], $aItem['idItem'] );
         }
 
-        $contactName    = $aItem['contactName'] ;
-        $contactEmail   = $aItem['contactEmail'] ;
+        $contactName    = @$aItem['contactName'] ;
+        $contactEmail   = @$aItem['contactEmail'] ;
 
         // Update category numbers
         $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
@@ -259,7 +259,7 @@ Class ItemActions
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_send_friend');
-        $locale = osc_get_user_locale();
+        $locale = osc_current_user_locale();
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -294,21 +294,14 @@ Class ItemActions
         $title = osc_mailBeauty($content['s_title'], $words) ;
         $body  = osc_mailBeauty($content['s_text'], $words) ;
 
-        $from = osc_contact_email();
-        if( $yourEmail != '' ){
-            $from = $yourEmail;
-        }
-
-        $from_name = $aItem['yourName'];
-
         if (osc_notify_contact_friends()) {
             $add_bbc = osc_contact_email() ;
         }
 
         $params = array(
                     'add_bcc'    => $add_bbc
-                    ,'from'      => $from
-                    ,'from_name' => $from_name
+                    ,'from'      => $aItem['yourEmail']
+                    ,'from_name' => $aItem['yourName']
                     ,'subject'   => $title
                     ,'to'        => $aItem['friendEmail']
                     ,'to_name'   => $aItem['friendName']
@@ -341,7 +334,7 @@ Class ItemActions
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_item_inquiry');
-        $locale = osc_get_user_locale() ;
+        $locale = osc_current_user_locale() ;
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -461,7 +454,7 @@ Class ItemActions
             if ($notify) {
                 $mPages = new Page() ;
                 $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
-                $locale = osc_get_user_locale() ;
+                $locale = osc_current_user_locale() ;
 
                 $content = array();
                 if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -617,8 +610,29 @@ Class ItemActions
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
             // get input hidden name=fk_location_id ?
-            if(Params::getParam('userId')!='') {
+            /*if(Params::getParam('userId')!='') {
                 $aItem['userId']        = Params::getParam('userId');
+            }*/
+            $userId = Params::getParam('userId');
+            if ($userId != null) {
+                if( $this->is_admin ) {
+                    if( Params::getParam('contactName') != '' && Params::getParam('contactEmail') != '' ) {
+                        $data['s_name']     = Params::getParam('contactName');
+                        $data['s_email']    = Params::getParam('contactEmail');
+                    }else{
+                        $data = Admin::newInstance()->findByPrimaryKey($userId);
+                    }
+                    $userId = null;
+                } else {
+                    $data = User::newInstance()->findByPrimaryKey($userId);
+                }
+                $aItem['contactName']   = $data['s_name'];
+                $aItem['contactEmail']  = $data['s_email'];
+                Params::setParam('contactName', $data['s_name']);
+                Params::setParam('contactEmail', $data['s_email']);
+            }else{
+                $aItem['contactName']   = Params::getParam('contactName');
+                $aItem['contactEmail']  = Params::getParam('contactEmail');
             }
         }
         // get params
@@ -811,7 +825,7 @@ Class ItemActions
         $contactName    = $aItem['contactName'];
         View::newInstance()->_exportVariableToView('item', $item);
         $mPages = new Page();
-        $locale = osc_get_user_locale();
+        $locale = osc_current_user_locale();
         
         if ( osc_item_validation_enabled() ) {
             $aPage = $mPages->findByInternalName('email_item_validation') ;

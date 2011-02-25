@@ -21,8 +21,19 @@
 
 
     function osc_is_web_user_logged_in() {
-        if (Session::newInstance()->_get("userId") == '') return false ;
-        return true ;
+        if (Session::newInstance()->_get("userId") != '') return true ;
+
+        //can already be a logged user or not, we'll take a look into the cookie
+        if ( Cookie::newInstance()->get_value('oc_userId') != '' && Cookie::newInstance()->get_value('oc_userSecret') != '') {
+            $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') ) ;
+            Session::newInstance()->_set('userId', $user['pk_i_id']) ;
+            Session::newInstance()->_set('userName', $user['s_name']) ;
+            Session::newInstance()->_set('userEmail', $user['s_email']) ;
+
+            return true ;
+        }
+
+        return false ;
     }
 
     function osc_logged_user_id() {
@@ -38,8 +49,21 @@
     }
 
     function osc_is_admin_user_logged_in() {
-        if (Session::newInstance()->_get("adminId") == '') return false ;
-        return true ;
+        if (Session::newInstance()->_get("adminId") != '') return true ;
+
+        //can already be a logged user or not, we'll take a look into the cookie
+        if ( Cookie::newInstance()->get_value('oc_adminId') != '' && Cookie::newInstance()->get_value('oc_adminSecret') != '') {
+            $user = Admin::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_adminId'), Cookie::newInstance()->get_value('oc_adminSecret') ) ;
+            Session::newInstance()->_set('adminId', $admin['pk_i_id']) ;
+            Session::newInstance()->_set('adminUserName', $admin['s_username']) ;
+            Session::newInstance()->_set('adminName', $admin['s_name']) ;
+            Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
+            Session::newInstance()->_set('adminLocale', Cookie::newInstance()->get_value('oc_adminLocale')) ;
+
+            return true ;
+        }
+
+        return false ;
     }
 
     function osc_logged_admin_id() {

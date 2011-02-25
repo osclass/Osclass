@@ -61,7 +61,7 @@
                                                 ) ;
                                                 
                                                 $pageManager = new Page() ;
-                                                $locale = osc_get_user_locale() ;
+                                                $locale = osc_current_user_locale() ;
                                                 $aPage = $pageManager->findByInternalName('email_user_registration') ;
                                                 $content = array() ;
                                                 if(isset($aPage['locale'][$locale]['s_title'])) {

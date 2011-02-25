@@ -1,6 +1,5 @@
 /* Global reset by Eric Meyer */
 html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td {margin: 0;padding: 0;border: 0;outline: 0;font-size: 100%;vertical-align: baseline;background: transparent;}
-textarea { font:12px Arial,Helvetica,Verdana,sans-serif; }
 ol, ul {list-style: none;}
 blockquote, q {quotes: none;}
 blockquote:before, blockquote:after,
@@ -15,6 +14,7 @@ input:focus { outline:none; }
 body { line-height:1; color:#333; font: 12px Arial, Helvetica, Verdana, sans-serif; }
 a { color:#069; text-decoration:underline; }
 a:hover { color:#F80; }
+option.pad { margin-left:10px;}
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
 #FlashMessage { background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:absolute; text-align: center; top:0; width:100%; }
 .container { margin:0 auto; width:970px; }
@@ -33,8 +33,8 @@ a:hover { color:#F80; }
 #header #user_menu li ul li.first { border:none; }
 #header #user_menu li.with_sub strong { background:url(../images/language_arrow.gif) no-repeat right center; color:#069; font-weight:normal; padding-right:10px !important; text-decoration: underline; }
 #header #user_menu li form { background:#FFF; border:1px solid #333; display:none; left:7px; padding:13px; position:absolute; top:16px; z-index:9999; -moz-border-radius:5px; border-radius:5px; }
-#header #user_menu li form label { color:#000; display:block; font-weight:bold; margin-bottom:3px; }
-#header #user_menu li form input { border: 1px solid #BBB; display:block; margin-bottom:10px; padding:3px; }
+#header #user_menu li form label { color:#000; display:inline; font-weight:bold; margin-bottom:3px; }
+#header #user_menu li form input { border: 1px solid #BBB; display:inline; margin-bottom:10px; padding:3px; }
 
 /* Footer */
 #footer { clear:both; border-top:1px solid #f2f2f2; padding-top:1px; }

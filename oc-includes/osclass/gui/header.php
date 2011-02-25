@@ -28,24 +28,25 @@
         <ul>
             <?php if( osc_is_web_user_logged_in() ) { ?>
                 <li class="first logged">
-                    <?php echo sprintf(__('Hi %s', 'gui'), osc_logged_user_name() . '!'); ?>  &middot;
-                    <strong><a href="<?php echo osc_user_dashboard_url() ; ?>"><?php _e('My account', 'gui') ; ?></a></strong> &middot;
-                    <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout', 'gui') ; ?></a>
+                    <?php echo sprintf(__('Hi %s', 'modern'), osc_logged_user_name() . '!'); ?>  &middot;
+                    <strong><a href="<?php echo osc_user_dashboard_url() ; ?>"><?php _e('My account', 'modern') ; ?></a></strong> &middot;
+                    <a href="<?php echo osc_user_logout_url() ; ?>"><?php _e('Logout', 'modern') ; ?></a>
                 </li>
             <?php } else { ?>
                 <li class="first">
-                    <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login', 'gui') ; ?></a>  &middot;
-                    <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'gui'); ?></a>
+                    <a id="login_open" href="<?php echo osc_user_login_url(); ?>"><?php _e('Login', 'modern') ; ?></a>  &middot;
+                    <a href="<?php echo osc_register_account_url() ; ?>"><?php _e('Register for a free account', 'modern'); ?></a>
                     <form id="login" action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <fieldset>
                             <input type="hidden" name="page" value="login" />
                             <input type="hidden" name="action" value="login_post" />
-                            <label for="email"><?php _e('E-mail', 'gui') ; ?></label>
+                            <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
                             <?php UserForm::email_login_text() ; ?>
-                            <label for="password"><?php _e('Password', 'gui') ; ?></label>
+                            <label for="password"><?php _e('Password', 'modern') ; ?></label>
                             <?php UserForm::password_login_text() ; ?>
-                            <button type="submit"><?php _e('Log in', 'gui') ; ?></button>
-                            &nbsp;&nbsp;<a href="<?php echo osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'gui');?></a>
+                            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
+                            <button type="submit"><?php _e('Log in', 'modern') ; ?></button>
+                            &nbsp;&nbsp;<a href="<?php echo osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'modern');?></a>
                         </fieldset>
                     </form>
                 </li>
@@ -53,7 +54,7 @@
             <?php if ( osc_count_web_enabled_locales() > 1) { ?>
                 <?php osc_goto_first_locale() ; ?>
                 <li class="last with_sub">
-                    <strong><?php _e("Language", 'gui') ; ?></strong>
+                    <strong><?php _e("Language", 'modern') ; ?></strong>
                     <ul>
                         <?php $i = 0 ;  ?>
                         <?php while ( osc_has_web_enabled_locales() ) { ?>
@@ -65,7 +66,7 @@
             <?php } ?>
         </ul>
         <div id="form_publish">
-            <strong class="publish_button"><a href="<?php echo osc_item_post_url() ; ?>"><?php _e("Publish your ad for free", 'gui');?></a></strong>
+            <strong class="publish_button"><a href="<?php echo osc_item_post_url() ; ?>"><?php _e("Publish your ad for free", 'modern');?></a></strong>
         </div>
         <div class="empty"></div>
     </div>

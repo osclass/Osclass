@@ -34,24 +34,6 @@
             require osc_admin_base_path() . 'gui/login.php' ;
             exit ;
         }
-
-        /*
-        function osc_get_theme_path($file) {
-            if (file_exists(osc_current_admin_theme_path() . $file)) {
-                return osc_current_admin_theme_path() . $file ;
-            } else {
-                return osc_admin_base_path() . 'gui/' . $file ;
-            }
-        }
-
-        function osc_get_theme_url($file) {
-            if (file_exists(osc_current_admin_theme_path() . $file)) {
-                return osc_current_admin_theme_url() . $file ;
-            } else {
-                return osc_admin_base_url() . 'gui/' . $file ;
-            }
-        }
-        */
     }
 
 ?>

@@ -30,20 +30,20 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content item">
                 <div id="contact" class="inner">
-                    <h2><?php _e('Contact seller', 'gui'); ?></h2>
+                    <h2><?php _e('Contact seller', 'modern'); ?></h2>
                     <?php ContactForm::js_validation(); ?>
                     <form action="<?php echo osc_base_url(true); ?>" method="post" >
                         <fieldset>
                             <?php ContactForm::primary_input_hidden() ; ?>
                             <?php ContactForm::action_hidden() ; ?>
                             <?php ContactForm::page_hidden() ; ?>
-                            <label><?php _e('To (seller)', 'gui'); ?>: <?php echo osc_item_contact_name() ;?></label><br/>
-                            <label><?php _e('Item', 'gui'); ?>: <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
-                            <label for="yourName"><?php _e('Your name', 'gui'); ?></label> <?php ContactForm::your_name(); ?><br/>
-                            <label for="yourEmail"><?php _e('Your e-mail address', 'gui'); ?></label> <?php ContactForm::your_email(); ?><br />
-                            <label for="phoneNumber"><?php _e('Phone number', 'gui'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
-                            <label for="message"><?php _e('Message', 'gui'); ?></label> <?php ContactForm::your_message(); ?><br />
-                            <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'gui'); ?></button>
+                            <label><?php _e('To (seller)', 'modern'); ?>: <?php echo osc_item_contact_name() ;?></label><br/>
+                            <label><?php _e('Item', 'modern'); ?>: <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
+                            <label for="yourName"><?php _e('Your name', 'modern'); ?></label> <?php ContactForm::your_name(); ?><br/>
+                            <label for="yourEmail"><?php _e('Your e-mail address', 'modern'); ?></label> <?php ContactForm::your_email(); ?><br />
+                            <label for="phoneNumber"><?php _e('Phone number', 'modern'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
+                            <label for="message"><?php _e('Message', 'modern'); ?></label> <?php ContactForm::your_message(); ?><br />
+                            <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'modern'); ?></button>
                         </fieldset>
                     </form>
                 </div>

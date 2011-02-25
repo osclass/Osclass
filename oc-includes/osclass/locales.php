@@ -60,22 +60,4 @@ function osc_listLanguageCodes() {
     return $codes;
 }
 
-/**
- * Get the actual locale of the user.
- *
- * You get the right locale code. If an user is using the website in another language different of the default one, or
- * the user uses the default one, you'll get it.
- *
- * @return string Locale Code
- */
-function osc_get_user_locale($is_admin = false) {
-    if( Session::newInstance()->_get('locale') != '') {
-        return Session::newInstance()->_get('locale') ;
-    }
-
-    return ( ($is_admin) ? osc_admin_language() : osc_language() ) ;
-}
-
-
-
 ?>

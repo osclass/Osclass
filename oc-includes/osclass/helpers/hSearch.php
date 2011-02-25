@@ -98,7 +98,20 @@
     }
     
     function osc_search_category_id() {
-        $category = osc_search_category();
+        $categories = osc_search_category();
+        $category = array();
+        $where = array();
+        foreach($categories as $cat) {
+            if(is_numeric($cat)) {
+                $where[] = "a.pk_i_id = " . $cat;
+            } else {
+                $where[] = "b.s_slug = '" . trim($cat, "/") . "'";
+            }
+        }
+        $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
+        foreach($categories as $cat) {
+            $category[] = $cat['pk_i_id'];
+        }
         return $category;    
     }
     
