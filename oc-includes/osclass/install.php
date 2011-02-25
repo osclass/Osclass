@@ -27,6 +27,8 @@ require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 
 ( isset($_REQUEST['step']) ) ? $step = (int) $_REQUEST['step'] : $step = '1' ;
