@@ -148,12 +148,7 @@ class CAdminPages extends AdminSecBaseModel
              
 
             default:
-
-                if(Session::_get("adminLocale")=='') {
-                    $this->_exportVariableToView("prefLocale", osc_language());
-                } else {
-                    $this->_exportVariableToView("prefLocale", Session::_get("adminLocale"));
-                }
+                $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
                 $this->_exportVariableToView("pages", $this->pageManager->listAll(0));
                 $this->doView("pages/index.php");
                 

@@ -34,11 +34,7 @@ class Item extends DAO
 
     public function extendCategoryName($items)
     {
-        if (isset($_SESSION['locale'])) {
-            $prefLocale = $_SESSION['locale'];
-        } else {
-            $prefLocale = osc_language() ;
-        }
+        $prefLocale = osc_current_user_locale();
 
         $results = array();
         foreach ($items as $item) {
@@ -60,11 +56,7 @@ class Item extends DAO
 
     public function extendData($items)
     {
-        if (isset($_SESSION['locale'])) {
-            $prefLocale = $_SESSION['locale'] ;
-        } else {
-            $prefLocale = osc_language() ;
-        }
+        $prefLocale = osc_current_user_locale();
 
         $results = array();
         foreach ($items as $item) {
@@ -93,11 +85,7 @@ class Item extends DAO
 
     public function extendDataSingle($item)
     {
-        if (isset($_SESSION['locale'])) {
-            $prefLocale = $_SESSION['locale'] ;
-        } else {
-            $prefLocale = osc_language() ;
-        }
+        $prefLocale = osc_current_user_locale();
 
         $descriptions = $this->conn->osc_dbFetchResults('SELECT * FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['pk_i_id']);
         $item['locale'] = array();

@@ -43,12 +43,7 @@ class ItemComment extends DAO {
 	
 
 	public function extendData($items) {
-
-		if(isset($_SESSION['locale'])) {
-			$prefLocale = $_SESSION['locale'] ;
-		} else {
-			$prefLocale = osc_language() ;
-		}
+        $prefLocale = osc_current_user_locale();
 
 		$results = array();
 		foreach($items as $item) {
@@ -87,7 +82,7 @@ class ItemComment extends DAO {
 	public function getLastComments($num) {
             if(!intval($num)) return false;
 
-            $lang = osc_language() ;
+            $lang = osc_current_user_locale() ;
             return $this->conn->osc_dbFetchResults('SELECT i.*, d.s_title
                 FROM %st_item_comment i
                 JOIN %st_item c ON c.pk_i_id = i.fk_i_item_id

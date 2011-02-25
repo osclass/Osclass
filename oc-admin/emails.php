@@ -71,11 +71,7 @@ class CAdminEmails extends AdminSecBaseModel
                 break;
             default:
 
-                if(Session::_get("adminLocale")=='') {
-                    $this->_exportVariableToView("prefLocale", osc_language());
-                } else {
-                    $this->_exportVariableToView("prefLocale", Session::_get("adminLocale"));
-                }
+                $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
                 $this->_exportVariableToView("emails", $this->emailManager->listAll(1));
                 $this->doView("emails/index.php");
 
