@@ -117,7 +117,7 @@ class CWebItem extends BaseModel
                         }
                         $item =  $this->itemManager->findByPrimaryKey($itemId);
                         
-                        $item_url = osc_item_url($item) ;
+                        $item_url = osc_item_url( ) ;
                         // before page = user , action = item_edit
                         $edit_link = osc_base_url(true). "?page=item&action=item_edit&id=$itemId&secret=".$item['s_secret'];
                         // before page = user , action = item_delete
@@ -214,6 +214,7 @@ class CWebItem extends BaseModel
                 $secret = Params::getParam('secret');
                 $id     = Params::getParam('id');
                 $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                View::newInstance()->_exportVariableToView('item', $item[0]);
                 if ($item[0]['e_status']=='INACTIVE') {
                     // ACTIVETE ITEM
                     $mItems = new ItemActions(false) ;
@@ -227,7 +228,8 @@ class CWebItem extends BaseModel
                 }else{
                     osc_add_flash_message( _m('The item has already been validated') );
                 }
-                $this->redirectTo( osc_item_url($item[0]) );
+                
+                $this->redirectTo( osc_item_url( ) );
             break;
             case 'item_delete':
                 $secret = Params::getParam('secret');
@@ -304,7 +306,7 @@ class CWebItem extends BaseModel
                     if($item_date < $date) {
                         // The item is expired, we can not contact the seller
                         osc_add_flash_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
-                        $this->redirectTo(osc_item_url($item));
+                        $this->redirectTo(osc_item_url( ));
                     }
                 }
 
@@ -312,7 +314,7 @@ class CWebItem extends BaseModel
                 $mItem->contact();
 
                 osc_add_flash_message( _m('We\'ve just sent an e-mail to the seller')) ;
-                $this->redirectTo( osc_item_url($item) );
+                $this->redirectTo( osc_item_url( ) );
                 
                 break;
             case 'add_comment':
