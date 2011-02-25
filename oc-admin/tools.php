@@ -24,8 +24,6 @@ class CAdminTools extends AdminSecBaseModel
 {
     function __construct() {
         parent::__construct() ;
-        // common css
-        $this->add_css('tools_layout.css');
     }
 
     //Business Layer...
