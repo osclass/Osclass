@@ -23,18 +23,14 @@
 class Category extends DAO
 {
     private static $instance ;
-    private $language;
+    private $language ;
 
     public function __construct($l = "") {
-    if($l == "") {
-            if(isset($_SESSION['locale'])) {
-                $l = $_SESSION['locale'];
-            } else {
-                $l = osc_language() ;
-            }
+        if($l == "") {
+            $l = osc_current_user_locale() ;
         }
         
-        $this->language = $l;
+        $this->language = $l ;
         parent::__construct() ;
     }
 

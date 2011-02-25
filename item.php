@@ -107,7 +107,7 @@ class CWebItem extends BaseModel
                     if( Session::newInstance()->_get('userId') == '' ){
                         $mPages = new Page() ;
                         $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
-                        $locale = osc_get_user_locale() ;
+                        $locale = osc_current_user_locale() ;
 
                         $content = array();
                         if(isset($aPage['locale'][$locale]['s_title'])) {

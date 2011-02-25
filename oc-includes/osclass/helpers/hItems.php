@@ -86,23 +86,23 @@
     }
 
     function osc_item_description($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_item_field("s_description", $locale) ;
     }
 
     function osc_item_title($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_item_field("s_title");
     }
 
     function osc_item_category($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
         return osc_field($category, "s_name", $locale) ;
     }
 
     function osc_item_category_description($locale = "") {
-        if ($locale == "") $locale = osc_get_user_locale() ;
+        if ($locale == "") $locale = osc_current_user_locale() ;
         $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
         return osc_field($category, "s_description", $locale) ;
     }

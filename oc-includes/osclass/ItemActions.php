@@ -259,7 +259,7 @@ Class ItemActions
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_send_friend');
-        $locale = osc_get_user_locale();
+        $locale = osc_current_user_locale();
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -334,7 +334,7 @@ Class ItemActions
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_item_inquiry');
-        $locale = osc_get_user_locale() ;
+        $locale = osc_current_user_locale() ;
 
         $content = array();
         if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -454,7 +454,7 @@ Class ItemActions
             if ($notify) {
                 $mPages = new Page() ;
                 $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
-                $locale = osc_get_user_locale() ;
+                $locale = osc_current_user_locale() ;
 
                 $content = array();
                 if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -825,7 +825,7 @@ Class ItemActions
         $contactName    = $aItem['contactName'];
         View::newInstance()->_exportVariableToView('item', $item);
         $mPages = new Page();
-        $locale = osc_get_user_locale();
+        $locale = osc_current_user_locale();
         
         if ( osc_item_validation_enabled() ) {
             $aPage = $mPages->findByInternalName('email_item_validation') ;

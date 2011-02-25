@@ -20,50 +20,37 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-	class SiteCookie 
+	class Cookie
 	{
 		public $name ;
 		public $val ;
 		public $expires ;
-		public $dir ;  		// all dirs
-		public $site ;
 		
-		function init() 
+		private static $instance ;
+
+        public static function newInstance() {
+            if(!self::$instance instanceof self) {
+                self::$instance = new self ;
+            }
+            return self::$instance ;
+        }
+
+        function __construct()
 		{
-			$this->name = "" ;
 			$this->val = array() ;
-			$this->dir = '/' ;
-			$this->site = TrovitConf::$DOMAIN_COOKIE;
-		}
-		
-		function __construct($cname, $cexpires = "", $cdir = "")
-		{
-			$this->init() ;
-		
-			$this->name = $cname ;
-			if($cexpires){
-				$this->expires = $cexpires ;
-			} else {
-				$this->expires = time() + 1200 ; // expiración de 20 mins por defecto...
-			}
-			if($cdir) $this->dir = $cdir ;
-            if (isset($_COOKIE[$cname])) 
+			$this->name = substr( md5(WEB_PATH), 0, 5 ) ;
+			$this->expires = time() + 3600 ; // 1 hour by default
+			if ( isset( $_COOKIE[$this->name] ) )
             {
-			    list($vars, $vals) = explode("&", $_COOKIE[$cname]);
-			    $vars = explode(".....", $vars);
-			    $vals = explode(".....", $vals);
+			    list($vars, $vals) = explode("&", $_COOKIE[$this->name]) ;
+			    $vars = explode("._.", $vars);
+			    $vals = explode("._.", $vals);
 			    while(list($key, $var) = each($vars))
 			    {
-                    /*if(eregi(':',$var)){
-                        list($var,$exp) = explode(':',$var);
-                        if($exp=='-1') break;
-                        elseif(mktime() <= $exp+60) break;
-                    }*/
 				    $this->val["$var"] = $vals[$key] ;
 				    $_COOKIE["$var"] = $vals[$key] ;
 			    }
             }
-            //print_r($_COOKIE);
 		}
 		
 		function push($var, $value)
@@ -100,12 +87,10 @@
 					}
 				}
 				if(count($vars) > 0 && count($vals) > 0) {
-					$cookie_val = implode(".....", $vars) . "&" . implode(".....", $vals) ;
+					$cookie_val = implode("._.", $vars) . "&" . implode("._.", $vals) ;
 				}
 			}
-			//echo "COOKIE:".$cookie_val."nombre:".$this->name;
-			//$cookie_val = urldecode($cookie_val);
-            setcookie($this->name, $cookie_val, $this->expires, $this->dir, $this->site) ;
+            setcookie($this->name, $cookie_val, $this->expires, '/') ;
 		}
         
         function num_vals() {
@@ -114,12 +99,12 @@
         
         function get_value($str) {
             if (isset($this->val[$str])) return($this->val[$str]) ;
-            return("") ;
+            return('') ;
         }
 
+        //$tm: time in seconds
         function set_expires($tm) {
-        	//$tm: time in seconds
-			$this->expires = time() + $tm ;
+        	$this->expires = time() + $tm ;
 		}
 	}
 ?>

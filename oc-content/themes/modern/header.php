@@ -44,6 +44,7 @@
                             <?php UserForm::email_login_text() ; ?>
                             <label for="password"><?php _e('Password', 'modern') ; ?></label>
                             <?php UserForm::password_login_text() ; ?>
+                            <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
                             <button type="submit"><?php _e('Log in', 'modern') ; ?></button>
                             &nbsp;&nbsp;<a href="<?php echo osc_base_url(true) ; ?>?page=login&action=recover"><?php _e("Forgot password?", 'modern');?></a>
                         </fieldset>

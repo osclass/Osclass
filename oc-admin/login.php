@@ -31,8 +31,6 @@ class CAdminLogin extends BaseModel
                                     if ($admin) {
                                         if ( $admin["s_password"] == sha1( Params::getParam('password') ) ) {
                                             if ( Params::getParam('remember') ) {
-                                                $life = time() + COOKIE_LIFE ;
-
                                                 //this include contains de osc_genRandomPassword function
                                                 require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
                                                 $secret = osc_genRandomPassword() ;
@@ -42,11 +40,11 @@ class CAdminLogin extends BaseModel
                                                     ,array('pk_i_id' => $admin['pk_i_id'])
                                                 );
 
-                                                //setcookie('oc_adminId', $admin['pk_i_id'], $life, '/', $_SERVER['SERVER_NAME']);
-                                                //setcookie('oc_adminSecret', $secret, $life, '/', $_SERVER['SERVER_NAME']);
-                                            } else {
-                                                //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                                //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
+                                                Cookie::newInstance()->set_expires( osc_time_cookie() ) ;
+                                                Cookie::newInstance()->push('oc_adminId', $user['pk_i_id']) ;
+                                                Cookie::newInstance()->push('oc_adminSecret', $secret) ;
+                                                Cookie::newInstance()->push('oc_adminLocale', Params::getParam('locale')) ;
+                                                Cookie::newInstance()->set() ;
                                             }
 
                                             //we are logged in... let's go!
@@ -54,7 +52,6 @@ class CAdminLogin extends BaseModel
                                             Session::newInstance()->_set('adminUserName', $admin['s_username']) ;
                                             Session::newInstance()->_set('adminName', $admin['s_name']) ;
                                             Session::newInstance()->_set('adminEmail', $admin['s_email']) ;
-                                            //Session::newInstance()->_set('adminTheme', Params::getParam('theme')) ;
                                             Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
                                         } else {
@@ -103,7 +100,6 @@ class CAdminLogin extends BaseModel
                                     $this->redirectTo( osc_admin_base_url() ) ;
             break ;
         }
-       
     }
 
     //in this case, this function is prepared for the "recover your password" form
