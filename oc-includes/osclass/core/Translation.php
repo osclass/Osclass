@@ -66,7 +66,7 @@
             $theme_file = osc_base_path() . 'oc-content/themes/' . $domain . '/languages/' . $locale . '/theme.mo';
             if(!file_exists($theme_file)) {
                 if(!file_exists(osc_base_path() . 'oc-content/themes/' . $domain)) {
-                    $domain = 'gui';
+                    $domain = 'modern';
                 }
                 $theme_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/theme.mo';
             }
