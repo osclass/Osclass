@@ -101,7 +101,7 @@ class Category extends DAO
     public function toTreeAll() {
         $roots = $this->findRootCategories();
         foreach ($roots as &$r) {
-            $r['categories'] = $this->toSubTree($r['pk_i_id']);//$this->listWhere("a.fk_i_parent_id = " . $r['pk_i_id'] . "");
+            $r['categories'] = $this->toSubTreeAll($r['pk_i_id']);
         }
         unset($r);
         return $roots;
