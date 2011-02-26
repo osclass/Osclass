@@ -322,7 +322,9 @@ function finish_installation( ) {
     require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
     require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
     require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
-
+    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
+    require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
+    
     $data = array();
     $password = osc_genRandomPassword() ;
 
@@ -341,7 +343,19 @@ function finish_installation( ) {
             ,'s_value' => '1'
             ,'e_type' => 'BOOLEAN'
         )
-    ) ;
+    );
+
+    // update categories
+    if(Params::getParam('submit') != '') {
+        $mCategories = new Category();
+        $categories = Params::getParam('categories');
+        if(is_array($categories)) {
+            foreach($categories as $category_id) {
+                $mCategories->update(array('b_enabled' => '1')
+                                    ,array('pk_i_id'   => $category_id));
+            }
+        }
+    }
 
     $admin = $mAdmin->findByPrimaryKey(1) ;
 
