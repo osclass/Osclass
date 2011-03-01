@@ -61,7 +61,7 @@
                                                     <?php
                                                     $widgets = Widget::newInstance()->findByLocation($location);
                                                     foreach($widgets as $w) {
-                                                            printf('<div>Widget #%d - <a href="%s?page=appearance.php&action=delete_widget&amp;id=%1$d">' . __("Delete") .'</a>', osc_admin_base_url(true),$w['pk_i_id']);
+                                                            printf('<div>Widget #%d - <a href="%s?page=appearance&action=delete_widget&amp;id=%1$d">' . __("Delete") .'</a>',$w['pk_i_id'], osc_admin_base_url(true),$w['pk_i_id']);
                                                             printf('<div style="border: 1px dashed gray;">%s</div></div>', $w['content']);
                                                     }
                                                     ?>
