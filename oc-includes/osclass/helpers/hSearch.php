@@ -86,6 +86,14 @@
         return View::newInstance()->_get('search_show_as');
     }
     
+    function osc_search_start() {
+        return View::newInstance()->_get('search_start');
+    }
+    
+    function osc_search_end() {
+        return View::newInstance()->_get('search_end');
+    }
+    
     function osc_search_category() {
         if (View::newInstance()->_exists('search_subcategories')) {
             $category = View::newInstance()->_current('search_subcategories') ;
