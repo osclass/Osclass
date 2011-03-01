@@ -41,7 +41,7 @@ class CAdminLogin extends BaseModel
                                                 );
 
                                                 Cookie::newInstance()->set_expires( osc_time_cookie() ) ;
-                                                Cookie::newInstance()->push('oc_adminId', $user['pk_i_id']) ;
+                                                Cookie::newInstance()->push('oc_adminId', $admin['pk_i_id']) ;
                                                 Cookie::newInstance()->push('oc_adminSecret', $secret) ;
                                                 Cookie::newInstance()->push('oc_adminLocale', Params::getParam('locale')) ;
                                                 Cookie::newInstance()->set() ;
