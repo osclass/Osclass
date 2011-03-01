@@ -27,20 +27,15 @@ class CWebMain extends BaseModel
     //Business Layer...
     function doModel() {
         switch($this->action) {
-            case('logout'):         //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                    //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                    Session::newInstance()->session_destroy() ;
+            case('logout'):         Session::newInstance()->session_destroy() ;
+
+                                    Cookie::newInstance()->pop('oc_userId') ;
+                                    Cookie::newInstance()->pop('oc_userSecret') ;
+                                    Cookie::newInstance()->set() ;
+
                                     $this->redirectTo( osc_base_url() ) ;
             break;
-            default:                //recovering data needed at main.php
-                                    //$categories = Category::newInstance()->toTree();
-                                    //$locales = Locale::newInstance()->listAllEnabled() ;
-                                    
-                                    //calling the view...
-                                    //$this->_exportVariableToView('categories', $categories) ;
-                                    //$this->_exportVariableToView('locales', $locales) ;
-                                    //$this->_exportVariableToView('latestItems', $latestItems) ;
-                                    $this->doView('main.php') ;
+            default:                $this->doView('main.php') ;
         }
     }
 

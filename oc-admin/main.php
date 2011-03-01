@@ -26,9 +26,13 @@ class CAdminMain extends AdminSecBaseModel
     //Business Layer...
     function doModel() {
         switch($this->action) {
-            case('logout'):     //setcookie('oc_adminId', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                //setcookie('oc_adminSecret', null, time() - 3600, '/', $_SERVER['SERVER_NAME']);
-                                Session::newInstance()->session_destroy() ;
+            case('logout'):     Session::newInstance()->session_destroy() ;
+
+                                Cookie::newInstance()->pop('oc_adminId') ;
+                                Cookie::newInstance()->pop('oc_adminSecret') ;
+                                Cookie::newInstance()->pop('oc_adminLocale') ;
+                                Cookie::newInstance()->set() ;
+
                                 $this->redirectTo( osc_admin_base_url(true) ) ;
             break;
             default:            //default dashboard page (main page at oc-admin)
