@@ -33,8 +33,8 @@ option.pad { margin-left:10px;}
 #header #user_menu li ul li.first { border:none; }
 #header #user_menu li.with_sub strong { background:url(../images/language_arrow.gif) no-repeat right center; color:#069; font-weight:normal; padding-right:10px !important; text-decoration: underline; }
 #header #user_menu li form { background:#FFF; border:1px solid #333; display:none; left:7px; padding:13px; position:absolute; top:16px; z-index:9999; -moz-border-radius:5px; border-radius:5px; }
-#header #user_menu li form label { color:#000; display:block; font-weight:bold; margin-bottom:3px; }
-#header #user_menu li form input { border: 1px solid #BBB; display:block; margin-bottom:10px; padding:3px; }
+#header #user_menu li form label { color:#000; display:inline; font-weight:bold; margin-bottom:3px; }
+#header #user_menu li form input { border: 1px solid #BBB; display:inline; margin-bottom:10px; padding:3px; }
 
 /* Footer */
 #footer { clear:both; border-top:1px solid #f2f2f2; padding-top:1px; }
