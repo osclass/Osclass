@@ -97,9 +97,6 @@
                                              </td>
                                              <td class="text">
                                                  <h3><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></h3>
-                                                 <!--
-                                                     <h4><strong>Full time</strong> <span>|</span> <strong>Web development</strong></h4>
-                                                 -->
                                                  <p><?php echo osc_item_description() ; ?></p>
                                              </td>
                                             <td class="price"><strong><?php echo osc_item_formated_price() ; ?></strong></td>
@@ -125,12 +122,13 @@
                             <?php } ?>
                             </ul>
                         </div>
-                        <?php }; ?>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
             <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
         <?php osc_show_flash_message() ; ?>
+        <?php osc_run_hook('footer'); ?>
     </body>
 </html>

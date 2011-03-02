@@ -28,4 +28,3 @@
         <a href="<?php echo osc_base_url(true) ; ?>?page=contact"><?php _e('Contact') ; ?></a> | <?php _e('This website is proudly using the <a title="OSClass web" href="http://osclass.org/">open source classifieds</a> software <strong>OSClass</strong>', 'modern'); ?>.
     </div>
 </div>
-<?php osc_run_hook('footer'); ?>
