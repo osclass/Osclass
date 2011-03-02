@@ -113,7 +113,8 @@
             if(is_numeric($cat)) {
                 $where[] = "a.pk_i_id = " . $cat;
             } else {
-                $where[] = "b.s_slug = '" . trim($cat, "/") . "'";
+                $slug_cat = explode("/", trim($cat, "/"));
+                $where[] = "b.s_slug = '" . $slug_cat[count($slug_cat)-1] . "'";
             }
         }
         $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
