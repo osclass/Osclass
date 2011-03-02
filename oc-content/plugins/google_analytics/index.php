@@ -3,14 +3,13 @@
 Plugin Name: Google Analytics
 Plugin URI: http://www.osclass.org/
 Description: This plugin adds the Google Analytics script at the footer of every page.
-Version: 1.0
+Version: 2.0
 Author: OSClass
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.php
 */
 
-function google_analytics_call_after_install() 
-{
+function google_analytics_call_after_install() {
     $fields = array() ;
     $fields["s_section"] = 'plugin-google_analytics' ;
     $fields["s_name"] = 'google_analytics_id' ;
@@ -19,7 +18,7 @@ function google_analytics_call_after_install()
     
     $dao_preference = new Preference() ;
     $dao_preference->insert($fields) ;
-    unset($dao_preference) ;die;
+    unset($dao_preference);
 }
 
 function google_analytics_call_after_uninstall() {
@@ -29,25 +28,21 @@ function google_analytics_call_after_uninstall() {
 }
 
 function google_analytics_admin() {
-	
 	osc_admin_render_plugin('google_analytics/admin.php') ;
 }
-
-
 
 // HELPER
 function osc_google_analytics_id() {
     return(osc_get_preference('google_analytics_id', 'plugin-google_analytics')) ;
 }
 
-
 /**
  * This function is called every time the page footer is being rendered
  */
 function google_analytics_footer() {
-	if(osc_google_analytics_id()!='') {
+	if(osc_google_analytics_id() != '') {
 		$id = osc_google_analytics_id();
-		require 'footer.php' ;
+		require osc_plugins_path() . 'google_analytics/footer.php' ;
 	}
 }
 
@@ -57,3 +52,5 @@ osc_register_plugin(__FILE__, 'google_analytics_call_after_install') ;
 osc_add_hook(__FILE__."_uninstall", 'google_analytics_call_after_uninstall') ;
 osc_add_hook(__FILE__."_configure", 'google_analytics_admin') ;
 osc_add_hook('footer', 'google_analytics_footer') ;
+
+?>
