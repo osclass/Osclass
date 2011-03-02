@@ -40,6 +40,16 @@ function google_maps_location() {
 	}
 }
 
+// HELPER
+function osc_google_maps_key() {
+    return(osc_get_preference('google_maps_key', 'plugin-google_maps')) ;
+}
+
+
+
+
+
+
 // This is needed in order to be able to activate the plugin
 osc_register_plugin(__FILE__, 'google_maps_call_after_install') ;
 // This is a hack to show a Uninstall link at plugins table (you could also use some other hook to show a custom option panel)

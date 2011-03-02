@@ -4,8 +4,7 @@
     if(isset($_REQUEST['webid'])) {
         $webid = $_REQUEST['webid'];
     } else {
-        $preferences = $dao_preference->toArray() ;
-    	$webid = isset($preferences['google_analytics_id']) ? $preferences['google_analytics_id'] : '';
+    	$webid = (osc_google_analytics_id()!='') ? osc_google_analytics_id() : '';
     }
     
     if(isset($_REQUEST['option']) && $_REQUEST['option']=='stepone') 

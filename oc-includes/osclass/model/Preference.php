@@ -66,5 +66,10 @@ class Preference extends DAO
     public function set($key, $value, $section = "osclass") {
         $this->pref[$section][$key] = $value ;
     }
+    
+    public function replace($key, $value, $section = "osclass") {
+        $this->conn->osc_dbExec("REPLACE INTO %s (s_name, s_value, s_section, e_type) VALUES ('%s', '%s', '%s', 'STRING')", $this->getTableName(), $key, $value, $section );
+    }
+
 }
 
