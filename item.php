@@ -202,7 +202,6 @@ class CWebItem extends BaseModel
                     $success = $mItems->edit();
 
                     if($success){
-                        osc_run_hook('item_edit_post');
                         osc_add_flash_message( _m('Great! We\'ve just updated your item')) ;
                         $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                     } else {

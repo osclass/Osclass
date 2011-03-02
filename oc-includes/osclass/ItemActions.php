@@ -26,7 +26,6 @@ Class ItemActions
         $this->manager = Item::newInstance() ;
     }
 
-
     /**
      * @return boolean
      */
@@ -92,10 +91,6 @@ Class ItemActions
             $locationManager = ItemLocation::newInstance();
             $locationManager->insert($location);
 
-            // If the Google Maps plugin is well configured, we can try to geodecode the address
-            if (osc_google_maps_key()) {
-                $this->geocodeAddress($aItem['address'],$aItem['regionName'], $aItem['cityName'], $itemId);
-            }
             // OJO
             if ( $this->is_admin || !$has_to_validate) {
                 CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
@@ -116,7 +111,6 @@ Class ItemActions
             }
 
             osc_run_hook('after_item_post') ;
-
 
             if($this->is_admin) {
                 osc_add_flash_message( _m('A new item has been added')) ;
@@ -149,11 +143,6 @@ Class ItemActions
 
         $locationManager = ItemLocation::newInstance();
         $locationManager->update( $location, array( 'fk_i_item_id' => $aItem['idItem'] ) );
-
-        // If the Google Maps plugin is well configured, we can try to geodecode the address
-        if (osc_google_maps_key()) {
-            $this->geocodeAddress( $aItem['address'],$aItem['regionName'], $aItem['cityName'], $aItem['idItem'] );
-        }
 
         $contactName    = @$aItem['contactName'] ;
         $contactEmail   = @$aItem['contactEmail'] ;
@@ -191,7 +180,7 @@ Class ItemActions
     /**
      * Activetes an item
      * @param <type> $secret
-     * @param <type> $itemId
+     * @param <type> $id
      * @return boolean
      */
     public function activate( $id, $secret )
@@ -201,7 +190,7 @@ Class ItemActions
             array('e_status' => 'ACTIVE'),
             array('s_secret' => $secret)
         );
-        osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($itemId) );
+        osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
         CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
 
         return $result;
@@ -713,26 +702,6 @@ Class ItemActions
         }
 
         return $aItem;
-    }
-
-    public function geocodeAddress($address,$regionName, $cityName, $itemId)
-    {
-        $locationManager = ItemLocation::newInstance();
-
-        $key = osc_google_maps_key() ;
-        $address = sprintf('%s, %s %s', $address, $regionName, $cityName);
-        $temp = osc_file_get_contents(sprintf('http://maps.google.com/maps/geo?q=%s&output=json&sensor=false&key=%s', urlencode($address), $key));
-        $temp = json_decode($temp);
-        if (isset($temp->Placemark) && count($temp->Placemark[0]) > 0) {
-            $coord = $temp->Placemark[0]->Point->coordinates;
-            $locationManager->update (
-                    array(
-                        'd_coord_lat' => $coord[1]
-                        ,'d_coord_long' => $coord[0]
-                    )
-                    ,array('fk_i_item_id' => $itemId)
-            );
-        }
     }
 
     function insertItemLocales($type, $title, $description, $itemId )
