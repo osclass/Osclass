@@ -192,14 +192,6 @@
         return(getPreference('currency')) ;
     }
 
-    function osc_google_analytics_id() {
-        return(getPreference('google_analytics_id')) ;
-    }
-
-    function osc_google_maps_key() {
-        return(getPreference('google_maps_key')) ;
-    }
-
     function osc_akismet_key() {
         return(getPreference('akismetKey')) ;
     }
@@ -264,6 +256,9 @@
         return(getPreference('maxLatestItems@home')) ;
     }
 
+    function osc_get_preference($key, $section = 'osclass') {
+        return getPreference($key, $section);
+    }
 
     
 
@@ -279,8 +274,8 @@
     }
 
     //PRIVATE FUNCTION FOR GETTING NO BOOLEAN INFORMATION (if there was a class :P)
-    function getPreference($key) {
+    function getPreference($key, $section = 'osclass') {
         $_P = Preference::newInstance() ;
-        return($_P->get($key)) ;
+        return($_P->get($key, $section)) ;
     }
 ?>
