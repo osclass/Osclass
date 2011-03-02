@@ -5,7 +5,7 @@
         $key = $_REQUEST['key'] ;
     } else {
         $preferences = $dao_preference->toArray() ;
-        $key = isset($preferences['google_maps_key']) ? $preferences['google_maps_key'] : '' ;
+        $key =(osc_google_maps_key()!='') ? osc_google_maps_key() : '' ;
     }
     
     if ( isset($_REQUEST['option']) && $_REQUEST['option'] == 'stepone' ) 
