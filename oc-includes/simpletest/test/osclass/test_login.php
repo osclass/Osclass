@@ -8,14 +8,16 @@
 
 class TestOfLogin extends WebTestCase {
     
-    function testLoginPage() {
+    function testLoginLogout() {
         // MOD_REWRITE DOESN'T WORK, DE-ACTIVATE IT FIRST
         $this->assertTrue($this->get(osc_user_login_url()));
-        $this->setField('email', 'test@osclass.org');
+        $this->setField('email', 'nodani@gmail.com');
         $this->setField('password', 'password');
         $this->click('Log in');
         // CHECK IF WE ENTERED THE USER'S ACCOUNT
         $this->assertText('Items from nodani@gmail.com');
+        $this->assertTrue($this->get(osc_user_logout_url()));
+        $this->assertNoText('Items from nodani@gmail.com');
     }        
     
 }
