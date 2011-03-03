@@ -342,30 +342,28 @@ function osc_copyemz($file1,$file2){
 
 
 
-function osc_dbdump($db_filename = null) {
+function osc_dbdump($path, $file)
+{
+    if ( !is_writable($path) ) return -5 ;
+	if($path == '') return -1 ;
 
-	global $db_file;
-	if($db_filename==null) {
-		$db_file = ABS_PATH."OSClass.mysqlbackup".date('YmdHis').".sql";
-	} else {
-		$db_file = $db_filename;
-	}
-	$f = fopen($db_file, "a");
+    $path .= $file ;
+    $f = fopen($path, "a") ;
 
-	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) ;
 	if (!$link) {
-	   echo 'Could not connect: ' . mysql_error();
+	   return -2 ;
 	} else {
-		$db_selected = mysql_select_db(DB_NAME, $link);
-		if (!$db_selected) {
-			echo 'Can\'t use $mysql_database : ' . mysql_error();
+		$db = mysql_select_db(DB_NAME, $link) ;
+		if (!$db) {
+			return -3 ;
 		} else {
-			$sql="show tables;";
-			$result= mysql_query($sql);
+			$sql = 'show tables;' ;
+			$result = mysql_query($sql) ;
 			if($result) {
 				fwrite($f, "/* OSCLASS MYSQL Autobackup (".date('Y-m-d H:i:s').") */\n");
-				fclose($f);
-				$tables = array();
+				fclose($f) ;
+				$tables = array() ;
 				while($row = mysql_fetch_row($result)) {
 				    $tables[$row[0]] = $row[0];
 				}
@@ -374,32 +372,33 @@ function osc_dbdump($db_filename = null) {
                 // Backup default OSClass tables in order, so no problem when importing them back
                 foreach($tables_order as $table) {
                     if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
-    					osc_dump_table_structure(DB_TABLE_PREFIX . $table) ;
-    					osc_dump_table_data(DB_TABLE_PREFIX . $table) ;
+    					osc_dump_table_structure($path, DB_TABLE_PREFIX . $table) ;
+    					osc_dump_table_data($path, DB_TABLE_PREFIX . $table) ;
     					unset($tables[DB_TABLE_PREFIX . $table]) ;
                     }
                 }
 				// Backup the rest of tables
 				foreach($tables as $table) {
-					osc_dump_table_structure($table) ;
-					osc_dump_table_data($table) ;
+					osc_dump_table_structure($path, $table) ;
+					osc_dump_table_data($path, $table) ;
 				}
 			} else {
 				fwrite($f, "/* no tables in " . DB_NAME . " */\n") ;
 				fclose() ;
+                return -4 ;
 			}
 			mysql_free_result($result) ;
 			mysql_close() ;
 		}
 	}
-
-
+    return 1;
 }
 
-function osc_dump_table_structure($table) {
+function osc_dump_table_structure($path, $table) {
 
-	global $db_file ;
-	$f = fopen($db_file, "a") ;
+    if ( !is_writable($path) ) return false ;
+    
+    $f = fopen($path, "a") ;
 
 	fwrite($f, "/* Table structure for table `$table` */\n") ;
 
@@ -415,14 +414,17 @@ function osc_dump_table_structure($table) {
 	}
 	mysql_free_result($result) ;
 	fclose($f) ;
+
+    return true ;
 }
 
-function osc_dump_table_data($table) {
+function osc_dump_table_data($path, $table)
+{
+	if ( !is_writable($path) ) return false ;
 
-	global $db_file;
-	$f = fopen($db_file, "a");
+    $f = fopen($path, "a") ;
 
-	$output = "";
+	$output = "" ;
 	$sql="select * from `$table`;";
 	$result=mysql_query($sql);
 	if($result) {
@@ -479,6 +481,8 @@ function osc_dump_table_data($table) {
 	mysql_free_result($result);
 	fwrite($f, "\n");
 	fclose($f);
+
+    return true ;
 }
 
 
@@ -498,8 +502,8 @@ function osc_downloadFile($sourceFile, $downloadedFile) {
 
 }
 
-function osc_zipFolder($archive_folder, $archive_name) {
-
+function osc_zipFolder($archive_folder, $archive_name)
+{
 	$zip = new ZipArchive;
 	if ($zip -> open($archive_name, ZipArchive::CREATE) === TRUE) {
 		$dir = preg_replace('/[\/]{2,}/', '/', $archive_folder."/");
