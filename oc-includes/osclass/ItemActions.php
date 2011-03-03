@@ -595,23 +595,10 @@ Class ItemActions
         }else{          // EDIT
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
-            // get input hidden name=fk_location_id ?
-            /*if(Params::getParam('userId')!='') {
-                $aItem['userId']        = Params::getParam('userId');
-            }*/
+
             $userId = Params::getParam('userId');
             if ($userId != null) {
-                if( $this->is_admin ) {
-                    if( Params::getParam('contactName') != '' && Params::getParam('contactEmail') != '' ) {
-                        $data['s_name']     = Params::getParam('contactName');
-                        $data['s_email']    = Params::getParam('contactEmail');
-                    }else{
-                        $data = Admin::newInstance()->findByPrimaryKey($userId);
-                    }
-                    $userId = null;
-                } else {
-                    $data = User::newInstance()->findByPrimaryKey($userId);
-                }
+                $data = User::newInstance()->findByPrimaryKey($userId);
                 $aItem['contactName']   = $data['s_name'];
                 $aItem['contactEmail']  = $data['s_email'];
                 Params::setParam('contactName', $data['s_name']);
