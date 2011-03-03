@@ -7,9 +7,9 @@
     // LOAD OSCLASS
     require_once '../../../../oc-load.php';
 
-class TestOfLogin extends WebTestCase {
+class TestOfUserAccount extends WebTestCase {
     
-    function testLoginLogout() {
+    function testUserAccount() {
         // LOAD USER DATA TO WORK WITH
         $user = User::newInstance()->findByPrimaryKey(1);
         // TEST LOAD OF URL CORRECTLY (if fails, something is very wrong)
