@@ -82,40 +82,61 @@ class CAdminTools extends AdminSecBaseModel
                                     }
                                     closedir($dir) ;
                                     osc_add_flash_message( _m('Re-generation complete'), 'admin') ;
-                                    $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
+                                    $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images') ;
             break;
             case 'upgrade':
-                                    $this->doView('tools/upgrade.php');
+                                    $this->doView('tools/upgrade.php') ;
             break;
             case 'backup':
-                                    $this->doView('tools/backup.php');
+                                    $this->doView('tools/backup.php') ;
             break;
-            case 'backup-sql':
+            case 'backup-sql':      //databasse dump...
                                     if( Params::getParam('bck_dir') != '' ) {
-                                        if(substr(trim(Params::getParam('bck_dir')), -1, 1) == "/") {
-                                            $sql_name = trim(Params::getParam('bck_dir')) . "/OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
-                                        } else {
-                                            $sql_name = trim(Params::getParam('bck_dir')) . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
+                                        $path = trim( Params::getParam('bck_dir') ) ;
+                                        if(substr($path, -1, 1) != "/") {
+                                             $path .= '/' ;
                                         }
                                     } else {
-                                        $sql_name = osc_base_path() . "OSClass_mysqlbackup." . date('YmdHis') . ".sql" ;
+                                        $path = osc_base_path() ;
                                     }
-                                    osc_dbdump($sql_name) ;
-                                    _e('Backup made correctly') ;
+                                    $filename = 'OSClass_mysqlbackup.' . date('YmdHis') . '.sql' ;
+
+                                    switch ( osc_dbdump($path, $filename) ) {
+                                        case(-1):   $msg = _m('Path is empty') ;
+                                        break;
+                                        case(-2):   $msg = _m('Could not connect with the database') . '. Error: ' . mysql_error() ;
+                                        break;
+                                        case(-3):   $msg = _m('Could not select the database') . '. Error: ' . mysql_error() ;
+                                        break;
+                                        case(-4):   $msg = _m('There are no tables to back up') ;
+                                        break;
+                                        case(-5):   $msg = _m('The folder is not writable') ;
+                                        break;
+                                        default:    $msg = _m('Backup has been done properly') ;
+                                        break;
+                                    }
+                                    osc_add_flash_message( $msg, 'admin') ;
+                                    $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
             break;
-            case 'backup-zip':
+            case 'backup-zip':      //zip of the code just to back it up
                                     if( Params::getParam('bck_dir') != '' ) {
-                                        $archive_name = Params::getParam('bck_dir') . "/OSClass_backup." . date('YmdHis') . ".zip" ;
+                                        $archive_name = trim( Params::getParam('bck_dir') ) ;
+                                        if(substr(trim($archive_name), -1, 1) != "/") {
+                                             $archive_name .= '/' ;
+                                        }
+                                        $archive_name = Params::getParam('bck_dir') . '/OSClass_backup.' . date('YmdHis') . '.zip' ;
                                     } else {
                                         $archive_name = osc_base_path() . "OSClass_backup." . date('YmdHis') . ".zip" ;
                                     }
                                     $archive_folder = osc_base_path() ;
 
-                                    if (osc_zipFolder($archive_folder, $archive_name)) {
-                                        _e('Archiving successful!') ;
+                                    if ( osc_zipFolder($archive_folder, $archive_name) ) {
+                                        $msg = _m('Archiving successful!') ;
                                     }else{
-                                        _e('Error, couldn\'t create a zip file!') ;
+                                        $msg = _m('Error, the zip file was not created at the specified directory') ;
                                     }
+                                    osc_add_flash_message( $msg, 'admin') ;
+                                    $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
             break;
             case 'backup_post':
                                     $this->doView('tools/backup.php');
