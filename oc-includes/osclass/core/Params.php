@@ -33,13 +33,7 @@ class Params
         }
 
         if(get_magic_quotes_gpc()) {
-            if(is_array($value)) {
-                foreach($value as &$v) {
-                    stripslashes($v);
-                }
-            } else {
-                stripslashes($value);
-            }
+            $value = strip_slashes_extended($value);
         }
 
         return ($value);
