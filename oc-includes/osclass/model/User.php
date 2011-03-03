@@ -112,6 +112,7 @@ class User extends DAO {
 	        foreach($items as $item) {
                     $itemManager->deleteByPrimaryKey($item['pk_i_id']);
                 }
+                $this->conn->osc_dbExec('DELETE FROM %st_user_email_tmp WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_user_preferences WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);

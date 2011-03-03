@@ -194,13 +194,34 @@ class TestOfUserAccount extends WebTestCase {
             $this->setField('password', 'password');
             $this->click('Log in');
             $this->assertText('Items from Test User');
-        
-        
-        
-        //osc_change_user_email_url()
+            
+        // CHANGE EMAIL
+        $this->get(osc_change_user_email_url());
+        $this->setField('email', 'test@test.net');
+        $this->setField('new_email', 'new_test@test.net');
+        $this->click('Update');
+        $this->get(osc_user_logout_url());
+        // WE SENT SOME EMAIL WITH A VALIDATION LINK
+        // REPRODUCE THIS WITH CODE
+        $user = User::newInstance()->findByEmail('test@test.net');
+        $validationLink = osc_change_user_email_confirm_url( $user['pk_i_id'], $user['s_pass_code'] ) ;
+        $this->assertTrue($this->get($validationLink));
+        // TRY TO LOG IN WITH OLD EMAIL
+        $this->get(osc_user_login_url());
+        $this->setField('email', 'test@test.net');
+        $this->setField('password', 'password');
+        $this->click('Log in');
+        $this->assertNoText('Items from Test User');
+        // TRY TO LOG IN WITH NEW EMAIL
+        $this->get(osc_user_login_url());
+        $this->setField('email', 'new_test@test.net');
+        $this->setField('password', 'password');
+        $this->click('Log in');
+        $this->assertText('Items from Test User');
+
         
         // We did our tests, lets get back to normal
-        $user = User::newInstance()->findByEmail('test@test.net');
+        $user = User::newInstance()->findByEmail('new_test@test.net');
         User::newInstance()->deleteUser($user['pk_i_id']);
     }        
     
