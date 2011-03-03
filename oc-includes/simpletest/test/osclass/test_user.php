@@ -10,7 +10,8 @@
 class TestOfUserAccount extends WebTestCase {
     
     function testUserAccount() {
-        // LOAD SOME DATA 
+        // LOAD SOME DATA (Registration form uses some JS magic, so we can not test it with simpletest)
+        // Instead, we create an user "by hand"
         $conn = getConnection();
         $conn->osc_dbExec(sprintf("INSERT INTO `%st_user` (`dt_reg_date` ,`dt_mod_date` ,`s_name` ,`s_username` ,`s_password` ,`s_secret` ,`s_email` ,`s_website` ,`s_phone_land` ,`s_phone_mobile` ,`b_enabled` ,`s_pass_code` ,`s_pass_date` ,`s_pass_question` ,`s_pass_answer` ,`s_pass_ip` ,`fk_c_country_code` ,`s_country` ,`s_address` ,`s_zip` ,`fk_i_region_id` ,`s_region` ,`fk_i_city_id` ,`s_city` ,`fk_i_city_area_id` ,`s_city_area` ,`d_coord_lat` ,`d_coord_long` ,`i_permissions`) VALUES (NOW(), NULL,'Test User','','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','mvqdnrpt','test@test.net','http://www.example.com','123456','654321',1,NULL,NULL,NULL,NULL,NULL,'ES','Spain','Calle False',NULL,3,'Barcelona',3,'Sabadell',NULL,'La Salut',NULL,NULL,'0')", DB_TABLE_PREFIX));
 
