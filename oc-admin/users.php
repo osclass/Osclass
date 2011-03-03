@@ -20,7 +20,7 @@ class CAdminUsers extends AdminSecBaseModel
 {
     //specific for this class
     private $userManager;
-    
+
     function __construct() {
         parent::__construct() ;
 
@@ -39,7 +39,7 @@ class CAdminUsers extends AdminSecBaseModel
                                     $aCountries = array();
                                     $aRegions   = array();
                                     $aCities    = array();
-                                    
+
                                     $aCountries = Country::newInstance()->listAll();
                                     if(isset($aCountries[0]['pk_c_code'])) {
                                         $aRegions = Region::newInstance()->getByCountry($aCountries[0]['pk_c_code']);
@@ -68,7 +68,7 @@ class CAdminUsers extends AdminSecBaseModel
                                         case 3: osc_add_flash_message( _m('Sorry, but that e-mail is already in use'), 'admin') ;
                                         break;
                                     }
-                                    
+
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
             case 'edit':            // calling the edit view
@@ -91,7 +91,7 @@ class CAdminUsers extends AdminSecBaseModel
                                     } else if( count($aRegions) > 0 ) {
                                         $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
                                     }
-                                    
+
                                     $this->_exportVariableToView("user", $aUser);
                                     $this->_exportVariableToView("countries", $aCountries);
                                     $this->_exportVariableToView("regions", $aRegions);
@@ -119,7 +119,7 @@ class CAdminUsers extends AdminSecBaseModel
                                     $iUpdated = 0;
                                     $userId   = Params::getParam('id');
                                     if(!is_array($userId)) {
-                                        osc_admin_flash_message(__('User id isn\'t in the correct format'), 'admin');
+                                        osc_add_flash_message(_m('User id isn\'t in the correct format'), 'admin');
                                     }
 
                                     foreach($userId as $id) {
@@ -129,14 +129,14 @@ class CAdminUsers extends AdminSecBaseModel
                                     }
 
                                     switch ($iUpdated) {
-                                        case (0):   $msg = __('Any user has been activated');
+                                        case (0):   $msg = _m('Any user has been activated');
                                         break;
-                                        case (1):   $msg = __('One user has been activated');
+                                        case (1):   $msg = _m('One user has been activated');
                                         break;
-                                        default:    $msg = sprintf(__('%s users have been activated'), $iUpdated);
+                                        default:    $msg = sprintf(_m('%s users have been activated'), $iUpdated);
                                         break;
                                     }
-                                    
+
                                     osc_add_flash_message($msg, 'admin');
                                     $this->redirectTo(osc_admin_base_url(true) . '?page=users');
             break;
@@ -144,7 +144,7 @@ class CAdminUsers extends AdminSecBaseModel
                                     $iUpdated = 0;
                                     $userId   = Params::getParam('id');
                                     if(!is_array($userId)) {
-                                        osc_admin_flash_message(__('User id isn\'t in the correct format'), 'admin');
+                                        osc_add_flash_message(_m('User id isn\'t in the correct format'), 'admin');
                                     }
 
                                     foreach($userId as $id) {
@@ -154,11 +154,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     }
 
                                     switch ($iUpdated) {
-                                        case (0):   $msg = __('Any user has been deactivated');
+                                        case (0):   $msg = _m('Any user has been deactivated');
                                         break;
-                                        case (1):   $msg = __('One user has been deactivated');
+                                        case (1):   $msg = _m('One user has been deactivated');
                                         break;
-                                        default:    $msg = sprintf(__('%s users have been deactivated'), $iUpdated);
+                                        default:    $msg = sprintf(_m('%s users have been deactivated'), $iUpdated);
                                         break;
                                     }
 
@@ -169,7 +169,7 @@ class CAdminUsers extends AdminSecBaseModel
                                     $iDeleted = 0;
                                     $userId   = Params::getParam('id');
                                     if(!is_array($userId)) {
-                                        osc_admin_flash_message(__('User id isn\'t in the correct format'), 'admin');
+                                        osc_add_flash_message(_m('User id isn\'t in the correct format'), 'admin');
                                     }
 
                                     foreach($userId as $id) {
@@ -179,11 +179,11 @@ class CAdminUsers extends AdminSecBaseModel
                                     }
 
                                     switch ($iDeleted) {
-                                        case (0):   $msg = __('Any user has been deleted');
+                                        case (0):   $msg = _m('Any user has been deleted');
                                         break;
-                                        case (1):   $msg = __('One user has been deleted');
+                                        case (1):   $msg = _m('One user has been deleted');
                                         break;
-                                        default:    $msg = sprintf(__('%s users have been deleted'), $iDeleted);
+                                        default:    $msg = sprintf(_m('%s users have been deleted'), $iDeleted);
                                         break;
                                     }
 
