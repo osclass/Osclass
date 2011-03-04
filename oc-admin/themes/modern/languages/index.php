@@ -1,25 +1,21 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-?>
-<?php
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
+
     $locales = __get('locales');
     $last = end($locales);
     $last_id = $last['pk_c_code'] ;
@@ -35,7 +31,7 @@
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e('Languages'); ?></div>
 
-        <script>
+        <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
                 {
@@ -117,7 +113,9 @@
             <div id="right_column">
 
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/icon-language.png" /></div>
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/icon-language.png" title="" alt=""/>
+                    </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Languages'); ?></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&action=add" id="button_open"><?php _e('Add') ; ?></a>
                     <div style="clear: both;"></div>
@@ -158,7 +156,6 @@
                 });
             </script>
         </div> <!-- end of container -->
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>
-

@@ -147,6 +147,6 @@
             </div>
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

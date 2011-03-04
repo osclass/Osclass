@@ -1,22 +1,19 @@
 <?php
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2010 OSCLASS
      *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
      *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
      *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
     $aCurrency = __get('aCurrency');
@@ -53,21 +50,21 @@
 
                             <fieldset>
                                 <legend><?php _e('Edit currency') ; ?></legend>
-                                    <p>
-                                        <label for="code"><?php _e('Code'); ?></label><br />
-                                        <input type="text" name="pk_c_code" id="code" value="<?php echo $aCurrency['pk_c_code'];?>" disabled/>
-                                        <span><?php _e('Once it\'s created, it can\'t be modified') ?>.</span>
-                                    </p>
-							
-                                    <p>
-                                        <label for="name"><?php _e('Name'); ?></label><br />
-                                        <input type="text" name="s_name" id="name" value="<?php echo $aCurrency['s_name'];?>" />
-                                    </p>
-							
-                                    <p>
-                                        <label for="description"><?php _e('Description'); ?></label><br />
-                                        <input type="text" name="s_description" id="description" value="<?php echo $aCurrency['s_description'];?>" />
-                                    </p>
+                                <p>
+                                    <label for="code"><?php _e('Code'); ?></label><br />
+                                    <input type="text" name="pk_c_code" id="code" value="<?php echo $aCurrency['pk_c_code'];?>" disabled/>
+                                    <span><?php _e('Once it\'s created, it can\'t be modified') ?>.</span>
+                                </p>
+
+                                <p>
+                                    <label for="name"><?php _e('Name'); ?></label><br />
+                                    <input type="text" name="s_name" id="name" value="<?php echo $aCurrency['s_name'];?>" />
+                                </p>
+
+                                <p>
+                                    <label for="description"><?php _e('Description'); ?></label><br />
+                                    <input type="text" name="s_description" id="description" value="<?php echo $aCurrency['s_description'];?>" />
+                                </p>
                             </fieldset>
 							
                             <input id="button_save" onclick="javascript:history.back();" value="<?php _e('Cancel'); ?>" />
@@ -77,6 +74,6 @@
 				</div>
 			</div>
 		</div><!-- end of container -->
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>
