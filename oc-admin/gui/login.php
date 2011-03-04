@@ -1,23 +1,20 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -29,8 +26,12 @@
     </head>
     <body class="login">
         <div id="login">
-            <h1><a href="<?php echo osc_base_url() ; ?>" title="OSClass"><img src="images/osclass-logo.png" border="0" /></a></h1>
-            <?php osc_show_flash_message() ; ?>
+            <h1>
+                <a href="<?php echo osc_base_url() ; ?>" title="OSClass">
+                    <img src="images/osclass-logo.png" border="0" title="" alt=""/>
+                </a>
+            </h1>
+            <?php osc_show_flash_message('admin') ; ?>
             <form name="loginform" id="loginform" action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
                 <input type="hidden" name="page" value="login" />
                 <input type="hidden" name="action" value="login_post" />
@@ -76,7 +77,7 @@
                 <a href="index.php?page=login&action=recover" title="<?php _e('Forgot your password?') ; ?>"><?php _e('Forgot your password?') ; ?></a>
             </p>
         </div>
-        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php echo __('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
+        <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>
         <script type="text/javascript">
             try{
                 document.getElementById('user_login').focus();

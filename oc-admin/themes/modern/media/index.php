@@ -1,33 +1,26 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-?>
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 
-<?php
     $resources = __get("resources");
     $resourceId = __get("resourceId");
     $last = end($resources); $last_id = $last['pk_i_id'];
-
-    
-    
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -110,57 +103,59 @@
 	        });
         </script>
         <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
-		        <div id="content">
-			        <div id="separator"></div>	
-			
-			        <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-		            
-			        <div id="right_column">
-			            <?php
-				        /* this is header for right side. */ 
-				        ?>
-				        <div id="content_header" class="content_header">
-					        <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/media-icon.png" /></div>
-					        <div id="content_header_arrow">&raquo; <?php _e('Media') ; ?></div>
-					        <a href="<?php echo osc_admin_base_url(true);?>?page=media&action=config" id="button_open"><?php _e('Settings') ; ?></a>
-					        <div style="clear: both;"></div>
-				        </div>
-								
-				        <div id="content_separator"></div>
-				        <?php osc_show_flash_message() ; ?>
-				
-				        <div id="TableToolsToolbar">
-				        <select id="bulk_actions" class="display">
-					        <option value=""><?php _e('Bulk actions') ; ?></option>
-					        <option value="delete_all"><?php _e('Delete') ; ?></option>
-				        </select>
-				        &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>
-				        </div>
-						
-				
-				        <form id="datatablesForm" action="<?php echo osc_admin_base_url(true);?>?page=media" method="post">
-				        <input type="hidden" name="action" value="delete" />
-					        <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
-					        <br />
-				        </form>
-				
-				        <div style="clear: both;"></div>
+        <div id="content">
+            <div id="separator"></div>
 
-			        </div> <!-- end of right column -->
-        <script type="text/javascript">
-	        $(document).ready(function() {
-		
-		        $('#datatables_list tr').live('mouseover', function(event) {
-			        $('#datatables_quick_edit', this).show();
-		        });
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
-		        $('#datatables_list tr').live('mouseleave', function(event) {
-			        $('#datatables_quick_edit', this).hide();
-		        });
-	        });
-        </script>
-        <div style="clear: both;"></div>
+            <div id="right_column">
+                <?php
+                /* this is header for right side. */
+                ?>
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/media-icon.png" title="" alt="" />
+                    </div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Media') ; ?></div>
+                    <a href="<?php echo osc_admin_base_url(true);?>?page=media&action=config" id="button_open"><?php _e('Settings') ; ?></a>
+                    <div style="clear: both;"></div>
+                </div>
+
+                <div id="content_separator"></div>
+                <?php osc_show_flash_message('admin') ; ?>
+
+                <div id="TableToolsToolbar">
+                <select id="bulk_actions" class="display">
+                    <option value=""><?php _e('Bulk actions') ; ?></option>
+                    <option value="delete_all"><?php _e('Delete') ; ?></option>
+                </select>
+                &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>
+                </div>
+
+
+                <form id="datatablesForm" action="<?php echo osc_admin_base_url(true);?>?page=media" method="post">
+                <input type="hidden" name="action" value="delete" />
+                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
+                    <br />
+                </form>
+
+                <div style="clear: both;"></div>
+
+            </div> <!-- end of right column -->
+            <script type="text/javascript">
+                $(document).ready(function() {
+
+                    $('#datatables_list tr').live('mouseover', function(event) {
+                        $('#datatables_quick_edit', this).show();
+                    });
+
+                    $('#datatables_list tr').live('mouseleave', function(event) {
+                        $('#datatables_quick_edit', this).hide();
+                    });
+                });
+            </script>
+            <div style="clear: both;"></div>
         </div> <!-- end of container -->
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

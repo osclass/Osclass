@@ -1,26 +1,20 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-?>
-
-<?php
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 
     //getting variables for this view
     $numUsers = __get("numUsers") ;
@@ -30,7 +24,6 @@
     $categories = __get("categories") ;
     $newsList = __get("newsList") ;
     $comments = __get("comments") ;
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -98,7 +91,7 @@
 			
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
-            <script>
+            <script type="text/javascript">
 
                 // this must be loaded after backoffice menu is loaded.
                 $(function() {
@@ -114,12 +107,14 @@
             
 			<div id="right_column">
 			    <div id="content_header" class="content_header">
-					<div style="float: left;"><img src="<?php echo osc_current_admin_theme_url('images/home.png') ; ?>" /></div>
+					<div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url('images/home.png') ; ?>" title="" alt=""/>
+                    </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Dashboard') ; ?></div>
 					<div id="button_open"><?php _e('Settings') ; ?></div>
 					<div style="clear: both;"></div>
 				</div>
-				<?php osc_show_flash_message() ; ?>
+				<?php osc_show_flash_message('admin') ; ?>
 				
 				<!-- settings div -->
 				<div id="main_div">
@@ -150,13 +145,13 @@
 							<h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
 							<div id="last_items_body">
 							<?php $totalWithItems = 0 ; ?>
-                                                        <?php foreach($categories as $c) { ?>
-                                                            <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
-                                                                <a href="<?php osc_admin_base_url(true); ?>?page=item&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
-                                                                <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
-                                                                <br />
-                                                                <?php $totalWithItems++ ; ?>
-                                                            <?php } ?>
+                            <?php foreach($categories as $c) { ?>
+                                <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
+                                    <a href="<?php osc_admin_base_url(true); ?>?page=item&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
+                                    <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                    <br />
+                                    <?php $totalWithItems++ ; ?>
+                                <?php } ?>
 							<?php } ?>
 							
 							<?php if ($totalWithItems == 0) {
@@ -229,9 +224,6 @@
             <div style="clear: both;"></div>
 
         </div> <!-- end of container -->
-
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
-
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
-    
 </html>

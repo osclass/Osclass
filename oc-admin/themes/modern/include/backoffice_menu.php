@@ -1,25 +1,20 @@
 <?php
-
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 ?>
 
 <!-- menu -->
@@ -39,14 +34,14 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=items">&raquo; <?php _e('Manage items'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=items">&raquo; <?php _e('Manage items'); ?></a>
             </li>
-            <li><a href="index.php?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a></li>
+            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a></li>
             <li>
-                <a href="index.php?page=comments">&raquo; <?php _e('Comments'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=media">&raquo; <?php _e('Manage media'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=media">&raquo; <?php _e('Manage media'); ?></a>
             </li>
         </ul>
 
@@ -55,10 +50,10 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=categories&action=add">&raquo; <?php _e('Add a new category'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add">&raquo; <?php _e('Add a new category'); ?></a>
             </li>
         </ul>
 
@@ -67,10 +62,10 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=pages">&raquo; <?php _e('Manage pages'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=pages">&raquo; <?php _e('Manage pages'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=pages&action=add">&raquo; <?php _e('Create page'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&action=add">&raquo; <?php _e('Create page'); ?></a>
             </li>
         </ul>
         <h3>
@@ -78,7 +73,7 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=emails">&raquo; <?php _e('Manage emails & alerts'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=emails">&raquo; <?php _e('Manage emails & alerts'); ?></a>
             </li>
         </ul>
 
@@ -89,13 +84,13 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=appearance">&raquo; <?php _e('Manage themes'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance">&raquo; <?php _e('Manage themes'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=appearance&action=add">&raquo; <?php _e('Add a new theme'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=add">&raquo; <?php _e('Add a new theme'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=appearance&action=widgets">&raquo; <?php _e('Add or remove widgets'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=appearance&action=widgets">&raquo; <?php _e('Add or remove widgets'); ?></a>
             </li>
         </ul>
 
@@ -104,10 +99,10 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=plugins">&raquo; <?php _e('Manage plugins'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins">&raquo; <?php _e('Manage plugins'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=plugins&action=add">&raquo; <?php _e('Add new plugin'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=plugins&action=add">&raquo; <?php _e('Add new plugin'); ?></a>
             </li>
         </ul>
 
@@ -116,10 +111,10 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=languages">&raquo; <?php _e('Manage languages'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=languages">&raquo; <?php _e('Manage languages'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=languages&action=add">&raquo; <?php _e('Add a language'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&action=add">&raquo; <?php _e('Add a language'); ?></a>
             </li>
         </ul>
 
@@ -128,40 +123,40 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=settings">&raquo; <?php _e('General settings'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings">&raquo; <?php _e('General settings'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=items">&raquo; <?php _e('Items'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=items">&raquo; <?php _e('Items'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=users">&raquo; <?php _e('Users'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=users">&raquo; <?php _e('Users'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=contact">&raquo; <?php _e('Contact'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=contact">&raquo; <?php _e('Contact'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=locations">&raquo; <?php _e('Locations'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations">&raquo; <?php _e('Locations'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=permalinks">&raquo; <?php _e('Permalinks'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=permalinks">&raquo; <?php _e('Permalinks'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=spamNbots">&raquo; <?php _e('Spam and bots'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=spamNbots">&raquo; <?php _e('Spam and bots'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=currencies">&raquo; <?php _e('Currencies'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=currencies">&raquo; <?php _e('Currencies'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=mailserver">&raquo; <?php _e('Mail Server'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=mailserver">&raquo; <?php _e('Mail Server'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=media">&raquo; <?php _e('Media'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=media">&raquo; <?php _e('Media'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>
             </li>
         </ul>
 
@@ -170,16 +165,16 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=tools&action=import">&raquo; <?php _e('Import data'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=import">&raquo; <?php _e('Import data'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=tools&action=backup">&raquo; <?php _e('Backup data'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=backup">&raquo; <?php _e('Backup data'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=tools&action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade">&raquo; <?php _e('Upgrade OSClass'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=tools&action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
             </li>
         </ul>
 
@@ -194,10 +189,10 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=users">&raquo; <?php _e('Manage users'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=users">&raquo; <?php _e('Manage users'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=users&action=create">&raquo; <?php _e('Add new user'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=create">&raquo; <?php _e('Add new user'); ?></a>
             </li>
         </ul>
 
@@ -206,13 +201,13 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=admins">&raquo; <?php _e('List administrators'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins">&raquo; <?php _e('List administrators'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=admins&action=add">&raquo; <?php _e('Add new administrator'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add">&raquo; <?php _e('Add new administrator'); ?></a>
             </li>
             <li>
-                <a href="index.php?page=admins&action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
             </li>
         </ul>
 
@@ -221,7 +216,7 @@
         </h3>
         <ul>
             <li>
-                <a href="index.php?page=test">&raquo; <?php _e('Database'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=test">&raquo; <?php _e('Database'); ?></a>
             </li>
         </ul>
     </div>
