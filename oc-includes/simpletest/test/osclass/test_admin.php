@@ -180,9 +180,8 @@ class TestOfAdminAccount extends WebTestCase {
             $this->setField('password', 'password');
             $this->click('Log in');
             $this->assertText('Visit website');
-
-        
-       
+            
+            
         
         
         // We did our tests, lets get back to normal
