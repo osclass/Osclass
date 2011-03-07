@@ -204,12 +204,12 @@
                                             <a href="<?php echo $xml->channel->item[$i]->link ; ?>" target="_blank">
                                                 <?php echo $xml->channel->item[$i]->title ; ?>
                                             </a>
-                                            <?php if ($new) { ?><span style="color:red;font-family: arial; font-size:10px;font-weight:bold;">(new)</span><?php } ?>
+                                            <?php if ($new) { ?><span style="color:red;font-family: arial; font-size:10px;font-weight:bold;"><?php _e('new') ; ?></span><?php } ?>
                                         </li>
                                     <?php }
 									echo '</ul>' ;
 								} else {
-                                    _e('Unable to fetch news from OSClass. Please try again later.') ;
+                                    _e('Unable to fetch news from OSClass. Please try again later') ;
 								}
 							?>								
 							</div>

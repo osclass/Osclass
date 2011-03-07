@@ -80,7 +80,7 @@
                         <p>
                             <?php echo "<b>".$plugin_data['plugin_name']."</b>,<br/>".$plugin_data['description']; ?>
                             <br/>
-                            <?php _e('Select the categories where you want to apply these attributes:'); ?>
+                            <?php _e('Select the categories where you want to apply these attributes'); ?>:
                         </p>
                         <p>
                             <table>
