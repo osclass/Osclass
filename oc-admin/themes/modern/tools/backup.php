@@ -70,7 +70,7 @@
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e('You can back up OSClass here. WARNING: Backup files will be created in the root of your OSClass installation') ; ?>
+                        <?php _e('You can back up OSClass here. WARNING: If you don\'t specify a backup folder, the backup files will be created in the root of your OSClass installation') ; ?>
                         <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" id="bckform" name="bckform" >
                             <input type="hidden" name="page" value="tools" />
                             <input type="hidden" name="action" value="" />

@@ -101,7 +101,7 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Help'); ?></legend>
-                                    <label><?php _e('Enter your e-mail server configuration.'); ?></label>
+                                    <label><?php _e('Enter your e-mail server configuration'); ?></label>
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
