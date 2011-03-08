@@ -370,7 +370,7 @@ Class ItemActions
             $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
 
             if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
-                osc_add_flash_message( _m('There has been some erro sending the message')) ;
+                osc_add_flash_message( _m('There has been some errors sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
 

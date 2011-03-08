@@ -59,10 +59,10 @@
                         </form>
                     <?php } else { ?>
                         <p>
-                            <?php _e('The translations folder'); ?> (<?php echo osc_translations_path() ; ?>) <?php _e('is not writable on your server, this'); ?> <span class="OSClass"><?php _e('OSClass') ; ?></span> <?php _e("can't upload translations from the administration panel. Please make the translation folder writable"); ?>.
+                            <?php _e('The translations folder is not writable on your server and you cannot upload translations from the administration panel. Please make the translation folder writable') ; ?>
                         </p>
                         <p>
-                            <?php _e('To make a directory writable under UNIX execute this command from the shell:') ; ?>
+                            <?php _e('To make the directory writable under UNIX execute this command from the shell:') ; ?>
                         </p>
                         <div style="background-color: white; border: 1px solid black; padding: 8px;">
                             chmod a+w <?php echo osc_translations_path() ; ?>

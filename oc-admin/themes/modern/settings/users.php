@@ -32,9 +32,9 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url( 'images/settings-icon.png' ) ; ?>" alt="" title="" />
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Users settings'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Users settings') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
@@ -50,17 +50,17 @@
                                 <fieldset>
                                     <legend><?php _e('Settings'); ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_users" id="enabled_users" <?php echo (osc_users_enabled() ? 'checked="checked"' : ''); ?> value="1" />
-                                    <label for="enabled_users"><?php _e('User functionality enabled'); ?></label>
+                                    <label for="enabled_users"><?php _e('Users enabled') ; ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_validation" id="enabled_user_validation" <?php echo (osc_user_validation_enabled() ? 'checked="checked"' : ''); ?> value="1" />
-                                    <label for="enabled_user_validation"><?php _e('User validation enabled'); ?></label>
+                                    <label for="enabled_user_validation"><?php _e('User validation enabled') ; ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_registration" id="enabled_user_registration" <?php echo (osc_user_registration_enabled() ? 'checked="checked"' : ''); ?> value="1" />
-                                    <label for="enabled_user_registration"><?php _e('User registration enabled'); ?></label>
+                                    <label for="enabled_user_registration"><?php _e('User registration enabled') ; ?></label>
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Update'); ?>" />
+                            <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
                         </form>
                     </div>
                 </div>

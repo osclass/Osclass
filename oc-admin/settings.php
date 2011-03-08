@@ -382,7 +382,7 @@
                                                                 $currencyCode = trim($currencyCode);
 
                                                                 if($currencyCode == '') {
-                                                                    osc_add_flash_message( _m('Error: the currency code isn\'t in the correct format'), 'admin');
+                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
@@ -408,7 +408,7 @@
                                                                 $currencyCode        = trim($currencyCode);
 
                                                                 if(!preg_match('/.{1,3}/', $currencyCode)) {
-                                                                    osc_add_flash_message( _m('Error: the currency code isn\'t in the correct format'), 'admin');
+                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
@@ -426,7 +426,7 @@
                                                                 $aCurrencyCode = Params::getParam('code');
 
                                                                 if(!is_array($aCurrencyCode)) {
-                                                                    osc_add_flash_message( _m('Error: the currency code isn\'t in the correct format'), 'admin');
+                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
