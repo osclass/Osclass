@@ -97,8 +97,8 @@ class DB
         }
         
         $this->db_errno = $this->db->connect_errno;
-        $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser . ' | [DBPWD] = ' . $this->dbPassword) ;
-    	$this->db->set_charset('UTF8');
+        $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser) ;
+    	$this->db->set_charset('utf8') ;
     }
     
     /**
