@@ -34,8 +34,8 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php' ;
 
     $title = 'OSClass &raquo; Error' ;
-    $message = 'There doesn\'t exist config.php file. OSClass seems that is not installed.</p>' ;
-    $message .= '<p><a class="button" href="oc-includes/osclass/install.php">Install</a></p>' ;
+    $message = 'There doesn\'t seem to be a <code>config.php</code> file. OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
+    $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
 
     osc_die($title, $message) ;
 }
