@@ -361,7 +361,8 @@ function osc_dbdump($path, $file)
 			$sql = 'show tables;' ;
 			$result = mysql_query($sql) ;
 			if($result) {
-				fwrite($f, "/* OSCLASS MYSQL Autobackup (".date('Y-m-d H:i:s').") */\n");
+				fwrite($f, '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */') ;
+                fwrite($f, "\n") ;
 				fclose($f) ;
 				$tables = array() ;
 				while($row = mysql_fetch_row($result)) {
@@ -383,7 +384,8 @@ function osc_dbdump($path, $file)
 					osc_dump_table_data($path, $table) ;
 				}
 			} else {
-				fwrite($f, "/* no tables in " . DB_NAME . " */\n") ;
+				fwrite($f, '/* no tables in ' . DB_NAME . ' */') ;
+                fwrite($f, "\n") ;
 				fclose() ;
                 return -4 ;
 			}
@@ -400,19 +402,21 @@ function osc_dump_table_structure($path, $table) {
     
     $f = fopen($path, "a") ;
 
-	fwrite($f, "/* Table structure for table `$table` */\n") ;
+	fwrite($f, '/* Table structure for table `' . $table . '` */') ;
+    fwrite($f, "\n") ;
 
 	// DANGEROUS LINE
 	//fwrite($f, "DROP TABLE IF EXISTS `$table`;\n\n";
 
-	$sql="show create table `$table`; " ;
+	$sql = 'show create table `' . $table . '`;' ;
 	$result=mysql_query($sql) ;
 	if($result) {
 		if($row = mysql_fetch_assoc($result)) {
-			fwrite($f, $row['Create Table'].";\n\n") ;
+			fwrite($f, $row['Create Table'] . ';') ;
+            fwrite($f, "\n\n") ;
 		}
+        mysql_free_result($result) ;
 	}
-	mysql_free_result($result) ;
 	fclose($f) ;
 
     return true ;
@@ -432,7 +436,8 @@ function osc_dump_table_data($path, $table)
 		$num_fields= mysql_num_fields($result);
 
 		if( $num_rows > 0) {
-			fwrite($f, "/* dumping data for table `$table` */\n");
+			fwrite($f, '/* dumping data for table `' . $table . '` */') ;
+            fwrite($f, "\n") ;
 
 			$field_type=array();
 			$i=0;
@@ -442,9 +447,10 @@ function osc_dump_table_data($path, $table)
 				$i++;
 			}
 
-			fwrite($f, "insert into `$table` values\n");
+			fwrite($f, 'insert into `' . $table . '` values') ;
+            fwrite($f, "\n") ;
 			$index=0;
-			while( $row= mysql_fetch_row($result)) {
+			while( $row = mysql_fetch_row($result) ) {
 				fwrite($f, "(");
 				for($i=0; $i < $num_fields; $i++) {
 					if(is_null( $row[$i])) {
@@ -457,7 +463,7 @@ function osc_dump_table_data($path, $table)
 							case 'string':
 							case 'blob' :
 							default:
-								fwrite($f, "'".mysql_real_escape_string($row[$i])."'");
+								fwrite($f, "'" . mysql_real_escape_string($row[$i]) . "'") ;
 
 						}
 					}
