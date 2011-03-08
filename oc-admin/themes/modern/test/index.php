@@ -49,6 +49,6 @@
             </div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
-        <?php osc_current_admin_theme_admin('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>
