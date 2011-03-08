@@ -85,7 +85,7 @@ class Rewrite extends DAO
     public function init() {
         // $_SERVER is not supported by Params Class... we should fix that
         if(isset($_SERVER['REQUEST_URI'])) {
-            $request_uri = urldecode(str_replace(REL_WEB_URL, "", $_SERVER['REQUEST_URI']));
+            $request_uri = urldecode(preg_replace('@^' . REL_WEB_URL . '@', "", $_SERVER['REQUEST_URI']));
             if(osc_rewrite_enabled()) {
                 foreach($this->rules as $match => $uri) {
                     // UNCOMMENT TO DEBUG
