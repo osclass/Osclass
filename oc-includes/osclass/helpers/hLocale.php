@@ -81,6 +81,10 @@
         return ( Locale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
     }
 
+    function osc_get_current_user_locale() {
+        View::newInstance()->_exportVariableToView('locale', Locale::newInstance()->findByPrimaryKey(osc_current_user_locale()) ) ;
+    }
+
     /**
      * Get the actual locale of the user.
      *
