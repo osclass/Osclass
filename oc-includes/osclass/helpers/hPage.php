@@ -74,7 +74,7 @@
      */
     function osc_count_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
-            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(0) ) ;
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
         }
         return View::newInstance()->_count('pages') ;
     }
@@ -86,10 +86,14 @@
      */
     function osc_has_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
-            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(0) ) ;
+            View::newInstance()->_exportVariableToView('pages', Page::newInstance()->listAll(false) ) ;
         }
         
         return View::newInstance()->_next('pages') ;
+    }
+
+    function osc_reset_static_pages() {
+        return View::newInstance()->_erase('pages') ;
     }
 
 ?>
