@@ -86,6 +86,14 @@
         return View::newInstance()->_get('search_show_as');
     }
     
+    function osc_search_start() {
+        return View::newInstance()->_get('search_start');
+    }
+    
+    function osc_search_end() {
+        return View::newInstance()->_get('search_end');
+    }
+    
     function osc_search_category() {
         if (View::newInstance()->_exists('search_subcategories')) {
             $category = View::newInstance()->_current('search_subcategories') ;
@@ -105,7 +113,8 @@
             if(is_numeric($cat)) {
                 $where[] = "a.pk_i_id = " . $cat;
             } else {
-                $where[] = "b.s_slug = '" . trim($cat, "/") . "'";
+                $slug_cat = explode("/", trim($cat, "/"));
+                $where[] = "b.s_slug = '" . $slug_cat[count($slug_cat)-1] . "'";
             }
         }
         $categories = Category::newInstance()->listWhere(implode(" OR ", $where));

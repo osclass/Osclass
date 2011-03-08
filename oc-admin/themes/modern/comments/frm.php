@@ -1,51 +1,22 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-?>
-
-<?php
-
-    /*
-     *      OSCLass – software for creating and publishing online classified
-     *                           advertising platforms
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
      *
-     *                        Copyright (C) 2010 OSCLASS
+     * Copyright (C) 2010 OSCLASS
      *
-     *       This program is free software: you can redistribute it and/or
-     *     modify it under the terms of the GNU Affero General Public License
-     *     as published by the Free Software Foundation, either version 3 of
-     *            the License, or (at your option) any later version.
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
      *
-     *     This program is distributed in the hope that it will be useful, but
-     *         WITHOUT ANY WARRANTY; without even the implied warranty of
-     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *             GNU Affero General Public License for more details.
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
      *
-     *      You should have received a copy of the GNU Affero General Public
-     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-?>
-<?php
     $comment = __get('comment') ;
-//    $last_id = $last['pk_i_id'] ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -57,12 +28,7 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e("Comments");?></div>
-
-
-        <?php defined('ABS_PATH') or die( __('Invalid OSClass request.') ); ?>
-
         <?php
-
             if(isset($comment['pk_i_id'])) {
                 //editing...
                 $edit = true ;
@@ -76,9 +42,7 @@
                 $action_frm = "add_comment_post";
                 $btn_text = __('Add');
             }
-
         ?>
-
         <script type="text/javascript">
             function checkForm() {
                 if(document.getElementById('s_title').value == "") {
@@ -103,7 +67,6 @@
 
                 return true;
             }
-
         </script>
         <div id="content">
             <div id="separator"></div>
@@ -112,13 +75,15 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo  osc_current_admin_theme_url('images/comments-icon2.png') ; ?>" /></div>
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url('images/comments-icon2.png') ; ?>" title="" alt=""/>
+                    </div>
                     <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
                 <div id="content_separator"></div>
-                <?php osc_show_flash_message(); ?>
+                <?php osc_show_flash_message('admin'); ?>
 
                 <!-- add new page form -->
                 <div id="settings_form">
@@ -178,9 +143,6 @@
                 </div>
             </div>
         </div>
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
-
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
-
 </html>
-

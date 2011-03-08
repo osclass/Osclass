@@ -24,9 +24,15 @@
     switch( Params::getParam('page') )
     {
         case ('user'):      // user pages (with security)
-                            require_once(osc_base_path() . 'user.php') ;
-                            $do = new CWebUser() ;
-                            $do->doModel() ;
+                            if(Params::getParam('action')=='change_email_confirm') {
+                                require_once(osc_base_path() . 'user-non-secure.php') ;
+                                $do = new CWebUserNonSecure() ;
+                                $do->doModel() ;
+                            } else {
+                                require_once(osc_base_path() . 'user.php') ;
+                                $do = new CWebUser() ;
+                                $do->doModel() ;
+                            }
         break;
         case ('item'):      // item pages
                             require_once(osc_base_path() . 'item.php');

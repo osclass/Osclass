@@ -323,7 +323,9 @@ function finish_installation( ) {
     require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
     require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
     require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
+    require_once ABS_PATH . 'oc-includes/osclass/model/Item.php';
     require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
+    require_once ABS_PATH . 'oc-includes/osclass/utils.php';
     
     $data = array();
     $password = osc_genRandomPassword() ;
@@ -346,8 +348,8 @@ function finish_installation( ) {
     );
 
     // update categories
+    $mCategories = new Category();
     if(Params::getParam('submit') != '') {
-        $mCategories = new Category();
         $categories = Params::getParam('categories');
         if(is_array($categories)) {
             foreach($categories as $category_id) {
@@ -355,6 +357,10 @@ function finish_installation( ) {
                                     ,array('pk_i_id'   => $category_id));
             }
         }
+    }
+    $aCategoriesToDelete = $mCategories->listWhere("a.b_enabled = 0");
+    foreach($aCategoriesToDelete as $aCategory) {
+        $mCategories->deleteByPrimaryKey($aCategory['pk_i_id']);
     }
 
     $admin = $mAdmin->findByPrimaryKey(1) ;
@@ -438,12 +444,12 @@ function display_database_config() {
                 <tr id="admin_username_row">
                     <th><label for="admin_username">DB admin username</label></th>
                     <td><input type="text" id="admin_username" name="admin_username" size="25" disabled/></td>
-                    <td>Check here if the database is not created and you want to create it now</td>
+                    <td></td>
                 </tr>
                 <tr id="admin_password_row">
                     <th><label for="admin_password">DB admin password</label></th>
                     <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled/></td>
-                    <td>Check here if the database is not created and you want to create it now</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>

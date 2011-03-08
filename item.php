@@ -103,7 +103,8 @@ class CWebItem extends BaseModel
                     $PcontactName   = Params::getParam('contactName');
                     $PcontactEmail  = Params::getParam('contactEmail');
                     $itemId         = Params::getParam('itemId');
-
+                    $item           = array();
+                    
                     if( Session::newInstance()->_get('userId') == '' ){
                         $mPages = new Page() ;
                         $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
@@ -202,7 +203,6 @@ class CWebItem extends BaseModel
                     $success = $mItems->edit();
 
                     if($success){
-                        osc_run_hook('item_edit_post');
                         osc_add_flash_message( _m('Great! We\'ve just updated your item')) ;
                         $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                     } else {

@@ -91,7 +91,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_admin (
     s_secret VARCHAR(40) NULL,
 
         PRIMARY KEY (pk_i_id),
-        UNIQUE KEY (s_username)
+        UNIQUE KEY (s_username),
+        UNIQUE KEY (s_email)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_user (

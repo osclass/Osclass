@@ -19,7 +19,7 @@
 class UserForm extends Form {
 
     static public function primary_input_hidden($user) {
-        parent::generic_input_hidden("id", $user["pk_i_id"]) ;    
+        parent::generic_input_hidden("id", (isset($user["pk_i_id"]) ? $user['pk_i_id'] : '') );
     }
     
     static public function name_text($user = null) {
@@ -104,13 +104,21 @@ class UserForm extends Form {
 
     static public function multilanguage_info($locales, $user = null) {
         $num_locales = count($locales);
-        if($num_locales>1) { echo '<div class="tabber">'; };
+        if($num_locales > 1) { echo '<div class="tabber">'; }
             foreach($locales as $locale) {
                 if($num_locales>1) { echo '<div class="tabbertab">'; };
-                    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
+                    if($num_locales > 1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
                     echo '<div class="description">';
                         echo '<div><label for="description">' . __('User Description') . '</label></div>';
-                        self::info_textarea('s_info', $locale['pk_c_code'], (isset($user) && isset($user['locale'][$locale['pk_c_code']]) && isset($user['locale'][$locale['pk_c_code']]['s_info'])) ? $user['locale'][$locale['pk_c_code']]['s_info'] : '');
+                        $info = '';
+                        if( is_array($user) ) {
+                            if( isset($user['locale'][$locale['pk_c_code']])) {
+                                if(isset($user['locale'][$locale['pk_c_code']]['s_info'])) {
+                                    $info = $user['locale'][$locale['pk_c_code']]['s_info'];
+                                }
+                            }
+                        }
+                        self::info_textarea('s_info', $locale['pk_c_code'], $info);
                     echo '</div>';
                 if($num_locales>1) { echo '</div>'; };
              }

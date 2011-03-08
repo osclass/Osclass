@@ -204,7 +204,8 @@
 
                 //preparing variables...
                 $this->_exportVariableToView('categories', $aCategories) ;
-                //$this->_exportVariableToView('orders', $aOrders) ;
+                $this->_exportVariableToView('search_start', $iStart) ;
+                $this->_exportVariableToView('search_end', $iEnd) ;
                 $this->_exportVariableToView('search_category', $p_sCategory) ;
                 $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
                 $this->_exportVariableToView('search_order', $p_sOrder) ;

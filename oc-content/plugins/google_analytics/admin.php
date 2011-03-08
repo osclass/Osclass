@@ -1,22 +1,22 @@
 <?php
 
     $dao_preference = new Preference() ;
-    if(isset($_REQUEST['webid'])) {
-        $webid = $_REQUEST['webid'];
-    } else {
-        $preferences = $dao_preference->toArray() ;
-    	$webid = isset($preferences['google_analytics_id']) ? $preferences['google_analytics_id'] : '';
+    $webid = Params::getParam('webid');
+    $option = Params::getParam('option');
+    
+    if($webid == '') {
+    	$webid = (osc_google_analytics_id() != '') ? osc_google_analytics_id() : '';
     }
     
-    if(isset($_REQUEST['option']) && $_REQUEST['option']=='stepone') 
-    {
-        $dao_preference->update(array("s_value" => $webid), array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")) ;
+    if( $option == 'stepone' ) {
+        $dao_preference->update(array("s_value" => $webid)
+                               ,array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")) ;
         echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>Congratulations. The plugin is now configured.</p></div>' ;
     }
 
 ?>
 
-<form action="<?php osc_admin_base_url(true); ?>" method="post">
+<form action="<?php osc_admin_base_url(true); ?>" method="get">
     <input type="hidden" name="page" value="plugins" />
     <input type="hidden" name="action" value="renderplugin" />
     <input type="hidden" name="file" value="google_analytics/admin.php" />

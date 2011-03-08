@@ -1,24 +1,22 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -53,10 +51,10 @@
                                 <fieldset>
                                     <legend><?php _e('Settings'); ?></legend>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_recaptcha_items_enabled() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" value="1" />
-                                    <label for="enabled_recaptcha_items"><?php _e('Enabled reCAPTCHA'); ?></label>
+                                    <label for="enabled_recaptcha_items"><?php _e('Enable reCAPTCHA'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_validation_enabled() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" value="1" />
-                                    <label for="enabled_item_validation"><?php _e('Item validation by users'); ?></label>
+                                    <label for="enabled_item_validation"><?php _e('Enable item validation by users'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" value="1" />
                                     <label for="reg_user_post"><?php _e('Only allow registered users to post items'); ?></label>
@@ -94,6 +92,6 @@
                 </div>
             </div> <!-- end of right column -->
         </div><!-- end of container -->
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

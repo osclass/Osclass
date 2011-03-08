@@ -1,23 +1,20 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,22 +47,13 @@
                 });
             });
 
-            function submitForm(typ) {
-                bck_dir = document.forms['bckform'].backup_dir.value;
-                $(function() {
-                    if(typ=='zip') {
-                        var result = document.getElementById('steps_zip') ;
-                    } else {
-                        var result = document.getElementById('steps_sql') ;
-                    }
-                    result.innerHTML = "<?php _e('Backing up data... please wait'); ?>";
-
-                    $.get('<?php echo osc_admin_base_url(true); ?>?page=tools&bck_dir='+bck_dir+'&action=backup-'+typ, function(data) {
-                        result.innerHTML = data;
-                    });
-                });
+            function submitForm(frm, type) {
+                frm.action.value = 'backup-' + type ;
+                frm.submit() ;
             }
+
         </script>
+        
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
@@ -82,25 +70,26 @@
                 <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
-                        <?php _e('You can back up OSClass here. WARNING: Backup files will be created in the root of your OSClass installation'); ?>.
-                        <form action="<?php echo osc_admin_base_url(true);?>" method="post" id="bckform" name="bckform" >
-                            <input type="hidden" name="action" value="backup_post" />
+                        <?php _e('You can back up OSClass here. WARNING: If you don\'t specify a backup folder, the backup files will be created in the root of your OSClass installation') ; ?>
+                        <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" id="bckform" name="bckform" >
                             <input type="hidden" name="page" value="tools" />
+                            <input type="hidden" name="action" value="" />
+
                             <p>
                                 <label for="data"><?php _e('Backup folder'); ?></label>
-                                <input id="backup_dir" type="text" value="<?php echo osc_base_path(); ?>" />
+                                <input type="text" id="backup_dir" name="bck_dir" value="<?php echo osc_base_path() ; ?>" />
                                 <?php _e('This is the folder in which your backups will be created. We recommend that you choose a non-public path. For more information, please refer to OSClass\' documentation')?>.
                             </p>
 
                             <p>
                                 <label for="data"><?php _e('Back up database'); ?> (.sql)</label>
-                                <button class="formButton" type="button" onclick="submitForm('sql')" ><?php _e('Backup'); ?></button>
+                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'sql');" ><?php _e('Backup') ; ?></button>
                                 <div id="steps_sql"></div>
                             </p>
 
                             <p>
                                 <label for="data"><?php _e('Back up OSClass installation'); ?> (.zip)</label>
-                                <button class="formButton" type="button" onclick="submitForm('zip')" ><?php _e('Backup'); ?></button>
+                                <button class="formButton" type="button" onclick="javascript:submitForm(this.form, 'zip');" ><?php _e('Backup') ; ?></button>
                                 <div id="steps_zip"></div>
                             </p>
                         </form>
@@ -108,6 +97,6 @@
                 </div>
             </div> <!-- end of right column -->
         </div>
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

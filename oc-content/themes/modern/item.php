@@ -58,15 +58,15 @@
                         <?php if ( osc_item_address() != "" ) { ?><li><?php _e("Address", 'modern') ; ?>: <strong><?php echo osc_item_address() ; ?></strong></li><?php } ?>
                     </ul>
                     <div id="description">
-                        <p><?php echo  osc_item_description() ; ?></p>
+                        <p><?php echo osc_item_description() ; ?></p>
+                        <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                         <p class="contact_button">
                             <strong><a href="#contact"><?php _e('Contact seller', 'modern') ; ?></a></strong>
                             <strong class="share"><a href="<?php echo osc_item_send_friend_url() ; ?>" rel="nofollow"><?php _e('Share', 'modern') ; ?></a></strong>
                         </p>
+                        <?php osc_run_hook('location') ; ?>
                     </div>
                     <!-- plugins -->
-                    <?php osc_run_hook('item_detail', osc_item() ) ; ?>
-                    <?php osc_run_hook('location') ; ?>
                     <div id="useful_info">
                         <h2><?php _e('Useful information', 'modern') ; ?></h2>
                         <ul>
@@ -160,5 +160,6 @@
             <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
         <?php osc_show_flash_message() ; ?>
+        <?php osc_run_hook('footer'); ?>
     </body>
 </html>

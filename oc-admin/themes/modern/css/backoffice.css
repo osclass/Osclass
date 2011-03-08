@@ -194,7 +194,7 @@ a:hover {
 	width: 99%;
 	height: auto !important;
 	vertical-align: top;
-	padding-bottom: 100%;
+	padding-bottom: 20px;
 }
 
 #menu ul {
