@@ -155,7 +155,8 @@ class Plugins
 			    $conn->commit();
 			    Plugins::reload();
 		    } else {
-			    echo "Error: Plugin already installed." ;
+			    osc_add_flash_message( _m('Error: Plugin already installed'), 'admin') ;
+
 		    }
 	    } catch (Exception $e) {
 		    $conn->rollback();
