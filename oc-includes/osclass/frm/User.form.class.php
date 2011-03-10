@@ -27,13 +27,8 @@ class UserForm extends Form {
         return true ;
     }
     
-    /*static public function username_text($user = null) {
-        parent::generic_input_text("profile_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
-        return true ;
-    }*/
-    
     static public function email_login_text($user = null) {
-        parent::generic_input_text("email", isset($user['s_username'])? $user['s_username'] : '', null, false);
+        parent::generic_input_text("email", isset($user['s_email'])? $user['s_email'] : '', null, false);
         return true ;
     }
 
@@ -51,11 +46,6 @@ class UserForm extends Form {
         parent::generic_password("old_password", '', null, false);
         return true ;
     }
-    
-    /*static public function username_register_text($user = null) {
-        parent::generic_input_text("s_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
-        return true ;
-    }*/
     
     static public function password_text($user = null) {
         parent::generic_password("profile_password", '', null, false);
