@@ -87,7 +87,7 @@
                                     "<a href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=edit&id=<?php echo  $page["pk_i_id"] ?>'>" +
                                     "<?php _e('Edit'); ?></a><?php if(!$page['b_indelible']) { ?> | " +
                                     "<a onclick=\"javascript:return confirm('" +
-                                    "<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\"" +
+                                    "<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\"" +
                                     "href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=delete&id=<?php echo $page['pk_i_id']; ?>'>" +
                                     "<?php _e('Delete'); ?></a><?php }; ?></div>",
                                     '<?php echo $p_body; ?>'

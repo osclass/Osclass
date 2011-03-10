@@ -77,7 +77,7 @@
                                         echo ' | <a href=\'index.php?page=comments&action=status&amp;id='. $c['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
                                     } else if (isset($c['e_status']) && ($c['e_status'] == 'INACTIVE')) {
                                         echo ' | <a href=\'index.php?page=comments&action=status&amp;id='. $c['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
-                                    }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='index.php?page=comments&action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></div>"
+                                    }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='index.php?page=comments&action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></div>"
                                 ,"<?php echo $c['s_body']; ?>"
                                 ,"<?php echo $c['dt_pub_date']; ?>"
                             ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
