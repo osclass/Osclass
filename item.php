@@ -49,7 +49,7 @@ class CWebItem extends BaseModel
         switch( $this->action ){
             case 'item_add': // post
                 if( !osc_users_enabled () ){
-                    osc_add_flash_message( _m('Users not enable')) ;
+                    osc_add_flash_message( _m('Users not enabled') ) ;
                     $this->redirectTo(osc_base_url(true));
                 }
                 if( osc_reg_user_post() && $this->user==null) {
