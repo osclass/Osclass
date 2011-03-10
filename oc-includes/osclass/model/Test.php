@@ -213,7 +213,7 @@ class Test extends DAO {
 
     public function getUserInserts() {
         $inserts = array (
-                        "(1, NOW(), NULL,'%NAME%','','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3','mvqdnrpt','%EMAIL%','http://www.danielgimenez.net','933978100','607787640',1,NULL,NULL,NULL,NULL,NULL,'ES','Spain','Av. Alfons XIII 352',NULL,3,'Barcelona',3,'Sabadell',NULL,'La Salut',NULL,NULL,'0')"
+                        "(1, NOW(), NULL,'%NAME%','a94a8fe5ccb19ba61c4c0873d391e987982fbbd3','mvqdnrpt','%EMAIL%','http://www.danielgimenez.net','933978100','607787640',1,NULL,NULL,NULL,NULL,NULL,'ES','Spain','Av. Alfons XIII 352',NULL,3,'Barcelona',3,'Sabadell',NULL,'La Salut',NULL,NULL,'0')"
         ) ;
 
         return($inserts) ;
