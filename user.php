@@ -59,7 +59,7 @@ class CWebUser extends WebSecBaseModel
             case('profile_post'):   //profile post...
                                     $userId = Session::newInstance()->_get('userId') ;
 
-                                    require_once LIB_PATH . 'osclass/users.php' ;
+                                    require_once LIB_PATH . 'osclass/UserActions.php' ;
                                     $userActions = new UserActions(false) ;
                                     $success = $userActions->edit( $userId ) ;
 

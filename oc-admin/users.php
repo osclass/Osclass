@@ -57,7 +57,7 @@
                                         $this->doView("users/frm.php");
                 break;
                 case 'create_post':     // creating the user...
-                                        require_once LIB_PATH . 'osclass/users.php' ;
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
@@ -100,7 +100,7 @@
                                         $this->doView("users/frm.php");
                 break;
                 case 'edit_post':       // edit post
-                                        require_once LIB_PATH . 'osclass/users.php' ;
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->edit( Params::getParam("id") ) ;
 
