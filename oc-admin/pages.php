@@ -109,7 +109,7 @@
                     }
 
                     foreach($id as $_id) {
-                        $result = $this->pageManager->deleteByPrimaryKey($_id);
+                        $result = (int) $this->pageManager->deleteByPrimaryKey($_id);
                         switch ($result) {
                             case -1:
                                 $page_indelible++;
