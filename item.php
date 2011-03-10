@@ -49,7 +49,7 @@ class CWebItem extends BaseModel
         switch( $this->action ){
             case 'item_add': // post
                 if( !osc_users_enabled () ){
-                    osc_add_flash_message( _m('Users not enable')) ;
+                    osc_add_flash_message( _m('Users not enabled') ) ;
                     $this->redirectTo(osc_base_url(true));
                 }
                 if( osc_reg_user_post() && $this->user==null) {
@@ -103,7 +103,8 @@ class CWebItem extends BaseModel
                     $PcontactName   = Params::getParam('contactName');
                     $PcontactEmail  = Params::getParam('contactEmail');
                     $itemId         = Params::getParam('itemId');
-
+                    $item           = array();
+                    
                     if( Session::newInstance()->_get('userId') == '' ){
                         $mPages = new Page() ;
                         $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
@@ -329,7 +330,7 @@ class CWebItem extends BaseModel
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 // if item doesn't exist redirect to base url
-                if( !$item['fk_i_item_id'] ){
+                if( count($item) == 0 ){
                     osc_add_flash_message( _m('This item doesn\'t exist') );
                     $this->redirectTo( osc_base_url(true) );
                 }else{

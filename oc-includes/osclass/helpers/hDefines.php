@@ -338,8 +338,22 @@
             }
             $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_item_id()) ;
         } else {
-            $path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            $path = osc_item_url_ns( osc_item_id() ) ;
         }
+        return $path ;
+    }
+
+    /**
+     * Create the no friendly url of the item using the id of the item
+     * 
+     * @param int the primary key of the item
+     *
+     * @return string
+     */
+    function osc_item_url_ns($id) {
+        $path = osc_base_url(true) . '?page=item&id=' . $id ;
+
         return $path ;
     }
 

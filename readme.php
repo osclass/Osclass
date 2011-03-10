@@ -17,7 +17,7 @@
     <head>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
             <title>OSClass - Readme</title>
-            <link rel="stylesheet" type="text/css" media="all" href="oc-includes/css/install.css" />
+            <link rel="stylesheet" type="text/css" media="all" href="oc-includes/osclass/installer/install.css" />
     </head>
     <body>
         <div id="wrapper">
@@ -28,7 +28,7 @@
                             <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
                         </a>
                         <br/>
-                        Version 1.0
+                        Version 2.0
                     </h1>
                 </div>
                 <div id="content">
@@ -49,22 +49,21 @@
                             <ol>
                                 <li>Download and unzip the OSClass package.</li>
                                 <li>Move the OSClass unzipped files to the desired location on your server.</li>
-                                <li>Execute the OSClass installation script by accessing <em>oc-installer/index.php</em> from your browser:
+                                <li>Execute the OSClass installation script by accessing <code>oc-includes/osclass/install.php</code> from your browser:
                                     <ul>
-                                        <li>If you’ve installed it in the domain’s root directory, you’ll have to go to: <em>http://example.com/oc-installer/index.php</em></li>
-                                        <li>If you’ve installed it in a subdirectory inside the domain, <em>classifieds</em>, for example, go to: <em>http://example.com/clasificados/oc-installer/index.php</em></li>
+                                        <li>If you’ve installed it in the domain’s root directory, you’ll have to go to: <code>http://example.com/oc-includes/osclass/install.php</code></li>
+                                        <li>If you’ve installed it in a subdirectory inside the domain, <em>classifieds</em>, for example, go to: <code>http://example.com/classifieds/oc-includes/osclass/install.php</code></li>
                                     </ul>
                                 </li>
                                 <li>Follow the installer’s instructions:
                                     <ul>
-                                        <li>Step 1: Make sure the server has the required permissions to write in the files and directories specified. This will allow you to create a basic configuration file as well as upload images, documents, etc.</li>
-                                        <li>Step 2: Add your access details to the database. If you haven’t created it yet, the installer will ask for another account with permissions that allows it to do it for you.</li>
-                                        <li>Step 3: Add the basic installation details and select your classfieds site’s reach: international, local, regional…</li>
-                                        <li>Step 4: Choose the categories you want to use on your site. If you don’t select a category, you’ll have to add it later from your admin panel.</li>
-                                        <li>Step 5: Your installation is finished! Use the automatically generated password to access your admin panel (/oc-admin).</li>
+                                        <li>First of all, make sure the server has the required permissions to write in the files and directories specified. This will allow you to create a basic configuration file as well as upload images, documents, etc.</li>
+                                        <li>Step 1: Add your access details to the database. If you haven’t created it yet, the installer will ask for another account with permissions that allows it to do it for you.</li>
+                                        <li>Step 2: Add the basic installation details and select your classfieds site’s reach: international, local, regional…</li>
+                                        <li>Step 3: Choose the categories you want to use on your site. If you don’t select a category, you’ll have to add it later from your admin panel.</li>
+                                        <li>Your installation is finished! Use the automatically generated password to access your admin panel (/oc-admin).</li>
                                     </ul>
                                 </li>
-                                <li>To finalize the installation, rename the <em>oc-installer</em> directory in order to access the page.</li>
                             </ol>
                         </div>
                     </div>
@@ -83,10 +82,6 @@
 						</p>
 						<p>If you experienced any problem during the process, please don't hesitate in contact us in <a href="http://forums.osclass.org/">OSClass Support Forums</a>. We recommend to perform a backup of database and files before each upgrade. You could backup your data from the "Backup" option in the admin panel. If you want to run the autoupgrade manually you could do that from the following URL : http://www.yourdomain.com/path/to/osclass/oc-admin/tools.php?action=upgrade </p>
                     </div>
-                    <div id="upgrade">
-                        <h2 class="title">How to upgrade plugins</h2>
-						The process is pretty much as the upgrade process for OSClass core files: if a new version is available of a plugin a message will inform you. You just have to follow that link and we'll take care of the rest, after a few moments, the plugin will be upgraded. Note: not all plugin have autoupgrade feature, in that case, you should contact the plugin's author to know more about manually upgrading it.
-					</div>
                     <div id="resources">
                         <h2 class="title">Online Resources</h2>
                         <div class="space-left-10">

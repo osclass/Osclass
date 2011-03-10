@@ -79,7 +79,7 @@
                                     }
 
                                     if(count($adminEdit) == 0) {
-                                        osc_add_flash_message( _m('It doesn\'t exist an admin with this id'), 'admin');
+                                        osc_add_flash_message( _m('There is no admin admin with this id'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
@@ -93,7 +93,7 @@
                                     $aAdmin   = $this->adminManager->findByPrimaryKey($adminId);
 
                                     if(count($aAdmin) == 0) {
-                                        osc_add_flash_message( _m('There admin doesn\'t exist'), 'admin');
+                                        osc_add_flash_message( _m('This admin doesn\'t exist'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 

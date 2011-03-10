@@ -53,7 +53,7 @@ Class ItemActions
         $contactEmail   = $aItem['contactEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item'));
+            osc_add_flash_message( _m('You need to insert your name and email to be able to publish a new item'));
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -344,6 +344,8 @@ Class ItemActions
 
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
+
+        $add_bbc = '';
         if (osc_notify_contact_item()) {
             $add_bbc = osc_contact_email() ;
         }
@@ -437,7 +439,7 @@ Class ItemActions
 
             $notify = osc_notify_new_comment() ;
             $admin_email = osc_contact_email() ;
-            $prefLocale = osc_language;
+            $prefLocale = osc_language() ;
 
             //Notify admin
             if ($notify) {
@@ -460,7 +462,7 @@ Class ItemActions
                 $body_email = osc_mailBeauty($content['s_text'], $words);
 
                 $from = osc_contact_email() ;
-                $from_name = osc_page_title ;
+                $from_name = osc_page_title() ;
                 if (osc_notify_contact_item()) {
                     $add_bbc = osc_contact_email() ;
                 }
@@ -478,7 +480,7 @@ Class ItemActions
             }
             osc_run_hook('add_comment', $item);
         }else{
-            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later')) ;
+            osc_add_flash_message( _m('We are very sorry but we could not save your comment. Try again later')) ;
         }
     }
     

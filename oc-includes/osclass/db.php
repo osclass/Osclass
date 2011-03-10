@@ -97,8 +97,8 @@ class DB
         }
         
         $this->db_errno = $this->db->connect_errno;
-        $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser . ' | [DBPWD] = ' . $this->dbPassword) ;
-    	$this->db->set_charset('UTF8');
+        $this->debug('Connected to \'' . $this->dbName . '\': [DBHOST] = ' . $this->dbHost . ' | [DBUSER] = ' . $this->dbUser) ;
+    	$this->db->set_charset('utf8') ;
     }
     
     /**
@@ -257,7 +257,7 @@ class DB
     function osc_dbImportSQL($sql, $needle = '')
     {
     	$sql = str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
-    	$sentences = explode( $needle . ';', $sql);
+        $sentences = explode( $needle . ';', $sql);
     	foreach($sentences as $s) {
             $s = trim($s);
             if( !empty($s) ) {
@@ -268,8 +268,11 @@ class DB
                     $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
                 }
             }
-    	}
-        $this->db_errno = $this->db->errno;
+        }
+        $this->db_errno = $this->db->errno ;
+
+        if ($this->db_errno != 0) return false ;
+        return true ;
     }
     
     function autocommit($b_value) {

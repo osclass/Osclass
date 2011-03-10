@@ -347,72 +347,91 @@ function osc_dbdump($path, $file)
     if ( !is_writable($path) ) return -5 ;
 	if($path == '') return -1 ;
 
-    $path .= $file ;
-    $f = fopen($path, "a") ;
+    //checking connection
+    $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) ;
+    if (!$link) return -2 ;
+    
+    //selecting database
+    mysql_query("SET NAMES 'utf8'", $link) ;
+    $db = mysql_select_db(DB_NAME, $link) ;
+    if (!$db) return -3 ;
 
-	$link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) ;
-	if (!$link) {
-	   return -2 ;
-	} else {
-		$db = mysql_select_db(DB_NAME, $link) ;
-		if (!$db) {
-			return -3 ;
-		} else {
-			$sql = 'show tables;' ;
-			$result = mysql_query($sql) ;
-			if($result) {
-				fwrite($f, "/* OSCLASS MYSQL Autobackup (".date('Y-m-d H:i:s').") */\n");
-				fclose($f) ;
-				$tables = array() ;
-				while($row = mysql_fetch_row($result)) {
-				    $tables[$row[0]] = $row[0];
-				}
-				
-                $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
-                // Backup default OSClass tables in order, so no problem when importing them back
-                foreach($tables_order as $table) {
-                    if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
-    					osc_dump_table_structure($path, DB_TABLE_PREFIX . $table) ;
-    					osc_dump_table_data($path, DB_TABLE_PREFIX . $table) ;
-    					unset($tables[DB_TABLE_PREFIX . $table]) ;
-                    }
-                }
-				// Backup the rest of tables
-				foreach($tables as $table) {
-					osc_dump_table_structure($path, $table) ;
-					osc_dump_table_data($path, $table) ;
-				}
-			} else {
-				fwrite($f, "/* no tables in " . DB_NAME . " */\n") ;
-				fclose() ;
-                return -4 ;
-			}
-			mysql_free_result($result) ;
-			mysql_close() ;
-		}
-	}
-    return 1;
+    $path .= $file ;
+    
+    $sql = 'show tables;' ;
+    $result = mysql_query($sql) ;
+    
+    if(!$result) {
+        $_str = '' ;
+        $_str .= '/* no tables in ' . DB_NAME . ' */' ;
+        $_str .= "\n" ;
+
+        $f = fopen($path, "a") ;
+        fwrite($f, $_str) ;
+        fclose() ;
+
+        return -4 ;
+    }
+
+
+    $_str = '' ;
+    $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
+    $_str .= "\n" ;
+
+    $f = fopen($path, "a") ;
+    fwrite($f, $_str) ;
+    fclose($f) ;
+
+    $tables = array() ;
+    while($row = mysql_fetch_row($result)) {
+        $tables[$row[0]] = $row[0];
+    }
+
+    $tables_order = array('t_locale', 't_country', 't_currency', 't_region', 't_city', 't_city_area', 't_widget', 't_admin', 't_user', 't_user_description', 't_category', 't_category_description', 't_category_stats', 't_item', 't_item_description', 't_item_location', 't_item_stats', 't_item_resource', 't_item_comment', 't_preference', 't_user_preferences', 't_pages', 't_pages_description', 't_plugin_category', 't_cron', 't_alerts', 't_keywords');
+    // Backup default OSClass tables in order, so no problem when importing them back
+    foreach($tables_order as $table) {
+        if(array_key_exists(DB_TABLE_PREFIX . $table, $tables)) {
+            osc_dump_table_structure($path, DB_TABLE_PREFIX . $table) ;
+            osc_dump_table_data($path, DB_TABLE_PREFIX . $table) ;
+            unset($tables[DB_TABLE_PREFIX . $table]) ;
+        }
+    }
+    
+    // Backup the rest of tables
+    foreach($tables as $table) {
+        osc_dump_table_structure($path, $table) ;
+        osc_dump_table_data($path, $table) ;
+    }
+
+    mysql_free_result($result) ;    
+    mysql_close() ;
+    
+    return 1 ;
 }
 
 function osc_dump_table_structure($path, $table) {
 
     if ( !is_writable($path) ) return false ;
     
-    $f = fopen($path, "a") ;
-
-	fwrite($f, "/* Table structure for table `$table` */\n") ;
+    $_str = '' ;
+	$_str .= '/* Table structure for table `' . $table . '` */' ;
+    $_str .= "\n" ;
 
 	// DANGEROUS LINE
 	//fwrite($f, "DROP TABLE IF EXISTS `$table`;\n\n";
 
-	$sql="show create table `$table`; " ;
-	$result=mysql_query($sql) ;
+	$sql = 'show create table `' . $table . '`;' ;
+	$result = mysql_query($sql) ;
 	if($result) {
 		if($row = mysql_fetch_assoc($result)) {
-			fwrite($f, $row['Create Table'].";\n\n") ;
+			$_str .= $row['Create Table'] . ';' ;
+            $_str .= "\n\n" ;
 		}
+        mysql_free_result($result) ;
 	}
-	mysql_free_result($result) ;
+
+    $f = fopen($path, "a") ;
+    fwrite($f, $_str) ;
 	fclose($f) ;
 
     return true ;
@@ -422,65 +441,70 @@ function osc_dump_table_data($path, $table)
 {
 	if ( !is_writable($path) ) return false ;
 
-    $f = fopen($path, "a") ;
-
-	$output = "" ;
-	$sql="select * from `$table`;";
-	$result=mysql_query($sql);
+    $sql = "select * from `$table`;" ;
+	$result = mysql_query($sql) ;
+    $_str = '' ;
 	if($result) {
-		$num_rows= mysql_num_rows($result);
-		$num_fields= mysql_num_fields($result);
+		$num_rows = mysql_num_rows($result) ;
+		$num_fields = mysql_num_fields($result) ;
 
-		if( $num_rows > 0) {
-			fwrite($f, "/* dumping data for table `$table` */\n");
+		if( $num_rows > 0 ) {
+			$_str .= '/* dumping data for table `' . $table . '` */' ;
+            $_str .= "\n" ;
 
-			$field_type=array();
-			$i=0;
+			$field_type = array() ;
+			$i = 0 ;
 			while( $i < $num_fields) {
-				$meta= mysql_fetch_field($result, $i);
+				$meta = mysql_fetch_field($result, $i);
 				array_push($field_type, $meta->type);
 				$i++;
 			}
 
-			fwrite($f, "insert into `$table` values\n");
-			$index=0;
-			while( $row= mysql_fetch_row($result)) {
-				fwrite($f, "(");
-				for($i=0; $i < $num_fields; $i++) {
+			$_str .= 'insert into `' . $table . '` values' ;
+            $_str .= "\n" ;
+
+            $index = 0 ;
+			while( $row = mysql_fetch_row($result) ) {
+				$_str .= "(" ;
+
+                for( $i = 0 ; $i < $num_fields ; $i++ ) {
 					if(is_null( $row[$i])) {
-						fwrite($f, "null");
+                        $_str .= 'null' ;
 					} else {
 						switch( $field_type[$i]) {
 							case 'int':
-								fwrite($f, $row[$i]);
-								break;
+                                $_str .= $row[$i] ;
+                                break;
 							case 'string':
 							case 'blob' :
 							default:
-								fwrite($f, "'".mysql_real_escape_string($row[$i])."'");
-
+								$_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
 						}
 					}
 					if($i < $num_fields-1) {
-						fwrite($f, ",");
+                        $_str .= ',' ;
 					}
 				}
-				fwrite($f, ")");
+                $_str .= ')' ;
 
 				if($index < $num_rows-1) {
-					fwrite($f, ",");
+                    $_str .= ',' ;
 				} else {
-					fwrite($f, ";");
+                    $_str .= ';' ;
 				}
-				fwrite($f, "\n");
+                $_str .= "\n" ;
 
-				$index++;
+				$index++ ;
 			}
 		}
+        mysql_free_result($result) ;
 	}
-	mysql_free_result($result);
-	fwrite($f, "\n");
-	fclose($f);
+	
+	$_str .= "\n" ;
+
+    $f = fopen($path, "a") ;
+    fwrite($f, $_str) ;
+    fclose($f) ;
 
     return true ;
 }
