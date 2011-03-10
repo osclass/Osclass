@@ -85,8 +85,8 @@
 
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
-                case 'comment_edit':        $itemId = Params::getParam('id') ;
-                                            $comment = Comment::newInstance()->findByPrimaryKey($itemId) ;
+                case 'comment_edit':        $id = Params::getParam('id') ;
+                                            $comment = Comment::newInstance()->findByPrimaryKey($id) ;
 
                                             $this->_exportVariableToView('comment', $comment) ;
 

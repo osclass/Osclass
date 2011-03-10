@@ -72,14 +72,14 @@
                         <?php foreach(__get('comments') as $c) { ?>
                             [
                                 "<input type='checkbox' name='id[]' value='<?php echo $c['pk_i_id']; ?>' />"
-                                ,"<?php echo $c['s_author_name']; ?> <?php _e('on'); ?> <a target='_blank' href='<?php echo osc_base_url() . '/item.php?id=' . $c['fk_i_item_id'] ?>' id='dt_link'><?php echo $c['s_title']; ?></a> item<div id='datatables_quick_edit'><a href='index.php?page=comments&action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_edit'><?php _e('Edit'); ?></a><?php
+                                ,"<?php echo $c['s_author_name']; ?> (<a target='_blank' href='<?php echo osc_item_url_ns( $c['fk_i_item_id'] ) ; ?>'><?php echo $c['s_title']; ?></a>)<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true) ; ?>?page=comments&action=comment_edit&id=<?php echo $c['pk_i_id'] ; ?>' id='dt_link_edit'><?php _e('Edit'); ?></a><?php
                                     if(isset($c['e_status']) && ($c['e_status'] == 'ACTIVE')) {
-                                        echo ' | <a href=\'index.php?page=comments&action=status&amp;id='. $c['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
+                                        echo ' | <a href=\'' . osc_admin_base_url(true) . '?page=comments&action=status&id='. $c['pk_i_id'] .'&value=INACTIVE\'>' . __('Deactivate') . '</a>' ;
                                     } else if (isset($c['e_status']) && ($c['e_status'] == 'INACTIVE')) {
-                                        echo ' | <a href=\'index.php?page=comments&action=status&amp;id='. $c['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
-                                    }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='index.php?page=comments&action=delete&amp;id=<?php echo $c['pk_i_id']; ?>' id='dt_link_delete'><?php _e('Delete'); ?></a></div>"
-                                ,"<?php echo $c['s_body']; ?>"
-                                ,"<?php echo $c['dt_pub_date']; ?>"
+                                        echo ' | <a href=\'' . osc_admin_base_url(true) . '?page=comments&action=status&id='. $c['pk_i_id'] .'&value=ACTIVE\'>' . __('Activate') . '</a>' ;
+                                    }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true) ; ?>?page=comments&action=delete&id=<?php echo $c['pk_i_id'] ; ?>' id='dt_link_delete'><?php _e('Delete') ; ?></a></div>"
+                                ,"<?php echo $c['s_body'] ; ?>"
+                                ,"<?php echo $c['dt_pub_date'] ; ?>"
                             ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
                         <?php } ?>
                     ]
@@ -115,7 +115,7 @@
                     <div style="float: left;">
                         <img src="<?php echo  osc_current_admin_theme_url('images/comments-icon2.png') ; ?>" title="" alt=""/>
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Manage Comments'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Manage Comments') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
 

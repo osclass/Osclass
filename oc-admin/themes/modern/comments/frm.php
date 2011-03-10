@@ -93,13 +93,12 @@
                         <?php PageForm::primary_input_hidden($comment); ?>
 
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Edit a comment on item:'); ?>
-                            <?php
-                                $item = Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']);
-                                echo '<b>'.$item['s_title'].'</b>';?>
-
-                                <a href="<?php echo osc_item_url($item);?>"><button><?php _e('View');?></button></a>
-                                <a href=<?php echo osc_admin_base_url(true);?>?page=items&action=item_edit&id=<?php echo $item['pk_i_id'];?>"><button><?php _e('Edit');?></button></a>
+                            <div class="FormElementName">
+                                <?php _e('Edit a comment on item:'); ?>
+                                <?php $item = Item::newInstance()->findByPrimaryKey($comment['fk_i_item_id']) ; ?>
+                                <b><?php echo $item['s_title'] ; ?></b>
+                                ( <a href="<?php echo osc_item_url_ns( $comment['fk_i_item_id'] ) ; ?>" target="_blank"><?php _e('View') ; ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true) ; ?>?page=items&action=item_edit&id=<?php echo $item['pk_i_id'] ; ?>"><?php _e('Edit') ; ?></a> )
                             </div>
                         </div>
 
@@ -110,8 +109,8 @@
                         <div class="FormElement">
                             <div class="FormElementName"><?php _e('Author'); ?> <?php CommentForm::author_input_text($comment); ?>
                                 <?php if(isset($comment['fk_i_user_id']) && $comment['fk_i_user_id']!='') {
-                                _e("It's a registered user.");?>
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&id=<?php echo $comment['fk_i_user_id'];?>"><button><?php _e('Edit user');?></button></a>
+                                _e("It's a registered user") ; ?>
+                                <a href="<?php echo osc_admin_base_url(true) ; ?>?page=users&action=edit&id=<?php echo $comment['fk_i_user_id'] ; ?>"><?php _e('Edit user') ; ?></a>
                                 <?php }?>
                             </div>
                         </div>
@@ -120,7 +119,7 @@
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo $comment['e_status']; ?><a href="<?php echo osc_admin_base_url(true);?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['e_status']=='ACTIVE')?'INACTIVE':'ACTIVE');?>"><button><?php echo (($comment['e_status']=='ACTIVE')?__('De-activate'):__('Activate'));?></button></a>
+                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo $comment['e_status']; ?> ( <a href="<?php echo osc_admin_base_url(true);?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['e_status']=='ACTIVE')?'INACTIVE':'ACTIVE');?>"><?php echo (($comment['e_status']=='ACTIVE')?__('De-activate'):__('Activate'));?></a> )
                             </div>
                         </div>
                         <div class="FormElement">
