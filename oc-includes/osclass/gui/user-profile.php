@@ -49,6 +49,10 @@
                                 <?php UserForm::name_text(osc_user()) ; ?>
                             </p>
                             <p>
+                                <label for="user_type"><?php _e('User type', 'modern') ; ?></label><br />
+                                <?php UserForm::is_company_select(osc_user()) ; ?>
+                            </p>
+                            <p>
                                 <label for="email"><?php _e('E-mail', 'modern') ; ?></label><br />
                                 <span>
                                     <?php echo osc_user_email() ; ?><br />
