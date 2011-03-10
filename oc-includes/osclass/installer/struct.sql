@@ -125,6 +125,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     d_coord_lat DECIMAL(10, 6),
     d_coord_long DECIMAL(10, 6),
     i_permissions VARCHAR(2) DEFAULT 0,
+    b_company BOOLEAN NOT NULL DEFAULT FALSE,
+
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),

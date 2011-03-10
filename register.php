@@ -31,7 +31,7 @@
                                         $this->doView('user-register.php') ;
                 break;
                 case('register_post'):  //register user
-                                        require_once LIB_PATH . 'osclass/users.php' ;
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->add() ;
                                         switch($success) {

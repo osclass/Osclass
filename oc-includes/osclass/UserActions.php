@@ -147,7 +147,7 @@
                     $input['s_password'] = sha1( Params::getParam('s_password') ) ;
                 }
             }
-            
+
             $input['s_name'] = Params::getParam('s_name') ;
             $input['s_website'] = Params::getParam('s_website') ;
             $input['s_phone_land'] = Params::getParam('s_phone_land') ;
@@ -193,6 +193,7 @@
             $input['s_city'] = $cityName ;
             $input['s_city_area'] = Params::getParam('cityArea') ;
             $input['s_address'] = Params::getParam('address') ;
+            $input['b_company'] = Params::getParam('b_company') ;
             
             return($input) ;
         }

@@ -56,6 +56,10 @@
                                 </span>
                             </p>
                             <p>
+                                <label for="user_type"><?php _e('User type', 'modern') ; ?></label><br />
+                                <?php UserForm::is_company_select(osc_user()) ; ?>
+                            </p>
+                            <p>
                                 <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label><br />
                                 <?php UserForm::mobile_text(osc_user()) ; ?>
                             </p>
