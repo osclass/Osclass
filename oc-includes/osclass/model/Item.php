@@ -141,7 +141,11 @@ class Item extends DAO
     {
         $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.* FROM %s i JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id WHERE i.pk_i_id = %d', $this->getTableName(), DB_TABLE_PREFIX, $id);
 
-        return $this->extendDataSingle($item);
+        if(count($item) > 0) {
+            return $this->extendDataSingle($item);
+        } else {
+            return array();
+        }
     }
 
     public function findResourcesByID($id)

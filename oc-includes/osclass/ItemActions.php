@@ -344,6 +344,8 @@ Class ItemActions
 
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
+
+        $add_bbc = '';
         if (osc_notify_contact_item()) {
             $add_bbc = osc_contact_email() ;
         }

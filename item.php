@@ -330,7 +330,7 @@ class CWebItem extends BaseModel
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 // if item doesn't exist redirect to base url
-                if( !$item['fk_i_item_id'] ){
+                if( count($item) == 0 ){
                     osc_add_flash_message( _m('This item doesn\'t exist') );
                     $this->redirectTo( osc_base_url(true) );
                 }else{

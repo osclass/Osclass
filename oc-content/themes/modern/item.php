@@ -134,11 +134,12 @@
                     <script type="text/javascript">
                         function validate_contact() {
                             email = $("#yourEmail");
-
-                            var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+                            message = $('#message');
+                            
+                            var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
                             var num_error = 0;
 
-                            if(!pattern.test(email.value)){
+                            if(!pattern.test(email.val())){
                                 email.css('border', '1px solid red');
                                 num_error = num_error + 1;
                             }
