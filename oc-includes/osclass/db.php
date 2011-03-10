@@ -257,7 +257,7 @@ class DB
     function osc_dbImportSQL($sql, $needle = '')
     {
     	$sql = str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql);
-    	$sentences = explode( $needle . ';', $sql);
+        $sentences = explode( $needle . ';', $sql);
     	foreach($sentences as $s) {
             $s = trim($s);
             if( !empty($s) ) {
@@ -268,8 +268,11 @@ class DB
                     $this->debug($s . ' | ' . $this->db->error . ' (' . $this->db->errno . ')', false) ;
                 }
             }
-    	}
-        $this->db_errno = $this->db->errno;
+        }
+        $this->db_errno = $this->db->errno ;
+
+        if ($this->db_errno != 0) return false ;
+        return true ;
     }
     
     function autocommit($b_value) {

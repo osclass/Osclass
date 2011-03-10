@@ -45,7 +45,7 @@
                         <p>
                             <?php _e("You can modify your database to add, remove or modify its data here. It's usually used to import countries, regions and cities"); ?>.
                         </p>
-                        <form action="<?php echo osc_admin_base_url(true);?>" method="post">
+                        <form action="<?php echo osc_admin_base_url(true);?>" enctype="multipart/form-data" method="post">
                             <input type="hidden" name="action" value="import_post" />
                             <input type="hidden" name="page" value="tools" />
                             <p>
