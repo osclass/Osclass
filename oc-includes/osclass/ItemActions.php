@@ -439,7 +439,7 @@ Class ItemActions
 
             $notify = osc_notify_new_comment() ;
             $admin_email = osc_contact_email() ;
-            $prefLocale = osc_language;
+            $prefLocale = osc_language() ;
 
             //Notify admin
             if ($notify) {
@@ -462,7 +462,7 @@ Class ItemActions
                 $body_email = osc_mailBeauty($content['s_text'], $words);
 
                 $from = osc_contact_email() ;
-                $from_name = osc_page_title ;
+                $from_name = osc_page_title() ;
                 if (osc_notify_contact_item()) {
                     $add_bbc = osc_contact_email() ;
                 }
