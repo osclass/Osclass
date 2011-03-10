@@ -54,7 +54,7 @@ die('is not implemented yet');
 
 		$.getJSON("<?php echo $info['plugin_update_uri']; ?>", function(data) {
 			if(data.version <= version) {
-				steps.innerHTML += "<?php _e('HORRAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
+				steps.innerHTML += "<?php _e('HOORAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
 			} else {
 				steps.innerHTML += "<?php _e('current version: '); ?>"+data.version+"<br/>";
 				steps.innerHTML += "<?php _e('Downloading update file: '); ?>";
@@ -89,13 +89,13 @@ die('is not implemented yet');
 									$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=execute-actions', function(data) {
 									
 										steps.innerHTML += data+"<br/>";
-										steps.innerHTML += "<?php _e('Cleanning all the mesh: '); ?>";
+										steps.innerHTML += "<?php _e('Cleaning all the mess: '); ?>";
 
 										$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=empty-temp', function(data) {
 										
 											steps.innerHTML += data+"<br/>";
 
-											steps.innerHTML += "<?php _e('Satisfaying user with awesome and easy auto-upgrade: Done!'); ?><br/><br/>";
+											steps.innerHTML += "<?php _e('Satisfying user with awesome and easy auto-upgrade: Done!'); ?><br/><br/>";
 										});
 									});
 								});

@@ -53,7 +53,7 @@ Class ItemActions
         $contactEmail   = $aItem['contactEmail'];
 
         if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item'));
+            osc_add_flash_message( _m('You need to insert your name and email to be able to publish a new item'));
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -480,7 +480,7 @@ Class ItemActions
             }
             osc_run_hook('add_comment', $item);
         }else{
-            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later')) ;
+            osc_add_flash_message( _m('We are very sorry but we could not save your comment. Try again later')) ;
         }
     }
     
