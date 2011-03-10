@@ -186,7 +186,7 @@ class UserForm extends Form {
             ,array( 'i_value' => '1', 's_text' => __('Company') )
         ) ;
 
-        parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, $user['b_company'] ) ;
+        parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null ) ;
         return true ;
     }
 
