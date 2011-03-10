@@ -49,15 +49,15 @@
                                 <?php UserForm::name_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="user_type"><?php _e('User type', 'modern') ; ?></label><br />
-                                <?php UserForm::is_company_select(osc_user()) ; ?>
-                            </p>
-                            <p>
                                 <label for="email"><?php _e('E-mail', 'modern') ; ?></label><br />
                                 <span>
                                     <?php echo osc_user_email() ; ?><br />
                                     <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'modern') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'modern') ; ?></a>
                                 </span>
+                            </p>
+                            <p>
+                                <label for="user_type"><?php _e('User type', 'modern') ; ?></label><br />
+                                <?php UserForm::is_company_select(osc_user()) ; ?>
                             </p>
                             <p>
                                 <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label><br />
