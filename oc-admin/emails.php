@@ -49,24 +49,29 @@
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray();
+                    $not_empty = false;
                     foreach ($postParams as $k => $v) {
                         if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2]=='s_title' && $v!='') { $not_empty = true; };
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
-
-                    foreach($aFieldsDescription as $k => $_data) {
-                        $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
-                    }
-
-                    if(!$this->emailManager->internalNameExists($id, $s_internal_name)) {
-                        if(!$this->emailManager->isIndelible($id)) {
-                            $this->emailManager->updateInternalName($id, $s_internal_name);
+                    if($not_empty) {
+                        foreach($aFieldsDescription as $k => $_data) {
+                            $this->emailManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
                         }
-                        osc_add_flash_message( _m('The email/alert has been updated'), 'admin' );
-                        $this->redirectTo(osc_admin_base_url(true)."?page=emails");
+
+                        if(!$this->emailManager->internalNameExists($id, $s_internal_name)) {
+                            if(!$this->emailManager->isIndelible($id)) {
+                                $this->emailManager->updateInternalName($id, $s_internal_name);
+                            }
+                            osc_add_flash_message( _m('The email/alert has been updated'), 'admin' );
+                            $this->redirectTo(osc_admin_base_url(true)."?page=emails");
+                        }
+                        osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
+                    } else {
+                        osc_add_flash_message( _m('The email couldn\'t be updated, at least one title should not be empty'), 'admin') ;
                     }
-                    osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                     break;
                 default:
