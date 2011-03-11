@@ -90,10 +90,6 @@
         return osc_user_field("s_email");
     }
     
-    function osc_user_username() {
-        return osc_user_field("s_username");
-    }
-    
     function osc_user_regdate() {
         return osc_user_field("dt_reg_date");
     }

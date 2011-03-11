@@ -49,24 +49,30 @@
 
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray();
+                    $not_empty = false;
                     foreach ($postParams as $k => $v) {
                         if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2]=='s_title' && $v!='') { $not_empty = true; };
                             $aFieldsDescription[$m[1]][$m[2]] = $v;
                         }
                     }
 
-                    foreach($aFieldsDescription as $k => $_data) {
-                        $this->pageManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
-                    }
-
-                    if(!$this->pageManager->internalNameExists($id, $s_internal_name)) {
-                        if(!$this->pageManager->isIndelible($id)) {
-                            $this->pageManager->updateInternalName($id, $s_internal_name);
+                    if($not_empty) {
+                        foreach($aFieldsDescription as $k => $_data) {
+                            $this->pageManager->updateDescription($id, $k, $_data['s_title'], $_data['s_text']);
                         }
-                        osc_add_flash_message( _m('The page has been updated'), 'admin' );
-                        $this->redirectTo(osc_admin_base_url(true)."?page=pages");
+
+                        if(!$this->pageManager->internalNameExists($id, $s_internal_name)) {
+                            if(!$this->pageManager->isIndelible($id)) {
+                                $this->pageManager->updateInternalName($id, $s_internal_name);
+                            }
+                            osc_add_flash_message( _m('The page has been updated'), 'admin' );
+                            $this->redirectTo(osc_admin_base_url(true)."?page=pages");
+                        }
+                        osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
+                    } else {
+                        osc_add_flash_message( _m('The page couldn\'t be updated, at least one title should not be empty'), 'admin') ;
                     }
-                    osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
                     break;
                 case 'add':
@@ -85,14 +91,21 @@
                         $aFields = array('s_internal_name' => $s_internal_name, 'b_indelible' => '0');
                         $aFieldsDescription = array();
                         $postParams = Params::getParamsAsArray();
+                        $not_empty = false;
                         foreach ($postParams as $k => $v) {
                             if(preg_match('|(.+?)#(.+)|', $k, $m)) {
+                                if($m[2]=='s_title' && $v!='') {
+                                    $not_empty = true;
+                                }
                                 $aFieldsDescription[$m[1]][$m[2]] = $v;
                             }
                         }
-
-                        $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
-                        osc_add_flash_message( _m('The page has been added'), 'admin') ;
+                        if($not_empty) {
+                            $result = $this->pageManager->insert($aFields, $aFieldsDescription) ;
+                            osc_add_flash_message( _m('The page has been added'), 'admin') ;
+                        } else {
+                            osc_add_flash_message( _m('The page couldn\'t be added, at least one title should not be empty'), 'admin') ;
+                        }
                     } else {
                         osc_add_flash_message( _m('Oops! That internal name is already in use. We can\'t made the changes'), 'admin') ;
                     }

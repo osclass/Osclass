@@ -42,8 +42,8 @@ $rewrite->addRule('^item$', 'index.php?page=item');
 $rewrite->addRule('^(.+)_([0-9]+)$', 'index.php?page=item&id=$2');
 
 // User rules
-$rewrite->addRule('^user/login$', 'index.php?page=user&action=login');
-$rewrite->addRule('^user/logout$', 'index.php?page=user&action=logout');
+$rewrite->addRule('^user/login$', 'index.php?page=login');
+$rewrite->addRule('^user/logout$', 'index.php?page=main&action=logout');
 $rewrite->addRule('^user/register$', 'index.php?page=register&action=register');
 $rewrite->addRule('^user/register/done$', 'index.php?page=register&action=register_post');
 $rewrite->addRule('^user/send-validation$', 'index.php?page=user&action=send_validation');

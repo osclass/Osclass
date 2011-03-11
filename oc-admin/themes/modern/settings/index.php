@@ -114,7 +114,7 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Default currency'); ?></legend>
-                                    <select name="currency" id="currency">
+                                    <select name="currency" id="currency_admin">
                                         <?php $currentCurrency = osc_currency(); ?>
                                         <?php foreach($aCurrencies as $currency) { ?>
                                             <option value="<?php echo $currency['pk_c_code'] ?>" <?php echo (($currentCurrency == $currency['pk_c_code']) ? 'selected="selected"' : ''); ?>><?php echo $currency['pk_c_code'] ?></option>

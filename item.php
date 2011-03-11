@@ -55,7 +55,7 @@ class CWebItem extends BaseModel
                 if( osc_reg_user_post() && $this->user==null) {
                     // CHANGEME: This text
                     osc_add_flash_message( _m('Only registered users are allowed to post items')) ;
-                    $this->redirectTo(osc_base_url(true));
+                    $this->redirectTo(osc_user_login_url());
                 }
 
                 //$categories = Category::newInstance()->toTree();

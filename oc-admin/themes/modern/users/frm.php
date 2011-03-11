@@ -138,6 +138,10 @@
                                     <legend><?php _e('Address'); ?></legend>
                                     <?php UserForm::address_text($user); ?>
                                 </fieldset>
+                                <fieldset>
+                                    <legend><?php _e('User type'); ?></legend>
+                                    <?php UserForm::is_company_select($user); ?>
+                                </fieldset>
                             </div>
                             <div style="clear: both;"></div>
                             <input id="button_save" type="submit" value="<?php echo $btn_text; ?>" />
