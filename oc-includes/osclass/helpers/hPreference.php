@@ -260,6 +260,10 @@
         return getPreference($key, $section);
     }
 
+    function osc_set_preference($key, $value = '', $section = 'osclass', $type = 'STRING') {
+        return Preference::newInstance()->replace($key, $value, $section, $type);
+    }
+
     
 
     //PRIVATE FUNCTION (if there was a class :P)
