@@ -28,7 +28,7 @@ if( !defined('ABS_PATH') ) {
 define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
 define('THEMES_PATH', ABS_PATH . 'oc-content/themes/') ;
 define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
-define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
+define('TRANSLATIONS_PATH', LIB_PATH . 'translations/') ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php' ;
@@ -40,31 +40,30 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     osc_die($title, $message) ;
 }
 
-require_once ABS_PATH . 'config.php';
-require_once ABS_PATH . 'oc-includes/osclass/db.php';
-require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hMessages.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hUsers.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hItems.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hSearch.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hUtils.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hCategories.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hTranslations.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPage.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Cookie.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/View.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/WebSecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Translation.php';
+require_once ABS_PATH . 'config.php' ;
+require_once ABS_PATH . 'oc-dbload.php' ;
+
+require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hDefines.php';
+require_once LIB_PATH . 'osclass/helpers/hLocale.php';
+require_once LIB_PATH . 'osclass/helpers/hMessages.php';
+require_once LIB_PATH . 'osclass/helpers/hUsers.php';
+require_once LIB_PATH . 'osclass/helpers/hItems.php';
+require_once LIB_PATH . 'osclass/helpers/hSearch.php';
+require_once LIB_PATH . 'osclass/helpers/hUtils.php';
+require_once LIB_PATH . 'osclass/helpers/hCategories.php';
+require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
+require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
+require_once LIB_PATH . 'osclass/helpers/hPage.php';
+require_once LIB_PATH . 'osclass/core/Params.php';
+require_once LIB_PATH . 'osclass/core/Cookie.php';
+require_once LIB_PATH . 'osclass/core/Session.php';
+require_once LIB_PATH . 'osclass/core/View.php';
+require_once LIB_PATH . 'osclass/core/BaseModel.php';
+require_once LIB_PATH . 'osclass/core/SecBaseModel.php';
+require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
+require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
+require_once LIB_PATH . 'osclass/core/Translation.php';
 
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
@@ -73,33 +72,10 @@ require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPlugins.php';
-//require_once LIB_PATH . 'osclass/validations.php'; xxx: to be deleted
+require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
+
 require_once LIB_PATH . 'osclass/ItemActions.php';
-require_once LIB_PATH . 'osclass/model/Admin.php';
-require_once LIB_PATH . 'osclass/model/Alerts.php';
-require_once LIB_PATH . 'osclass/model/Cron.php';
-require_once LIB_PATH . 'osclass/model/Category.php';
-require_once LIB_PATH . 'osclass/model/CategoryStats.php';
-require_once LIB_PATH . 'osclass/model/City.php';
-require_once LIB_PATH . 'osclass/model/Country.php';
-require_once LIB_PATH . 'osclass/model/Comment.php';
-require_once LIB_PATH . 'osclass/model/Currency.php';
-require_once LIB_PATH . 'osclass/model/Locale.php';
-require_once LIB_PATH . 'osclass/model/Test.php';
-require_once LIB_PATH . 'osclass/model/Item.php';
-require_once LIB_PATH . 'osclass/model/ItemComment.php';
-require_once LIB_PATH . 'osclass/model/ItemResource.php';
-require_once LIB_PATH . 'osclass/model/ItemStats.php';
-require_once LIB_PATH . 'osclass/model/Page.php';
-require_once LIB_PATH . 'osclass/model/PluginCategory.php';
-require_once LIB_PATH . 'osclass/model/Region.php';
-require_once LIB_PATH . 'osclass/model/Rewrite.php';
-require_once LIB_PATH . 'osclass/model/User.php';
-require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
-require_once LIB_PATH . 'osclass/model/ItemLocation.php';
-require_once LIB_PATH . 'osclass/model/Widget.php';
-require_once LIB_PATH . 'osclass/model/Search.php';
+
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
@@ -117,6 +93,13 @@ require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
+
+
+
+//TO REVIEW
+require_once LIB_PATH . 'osclass/model/static/Preference.php' ;
+
+
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
