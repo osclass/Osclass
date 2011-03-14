@@ -12,8 +12,6 @@ include 'test_frontend_register.php';
 class TestOfContact extends WebTestCase {
 
     private $selenium;
-    private $email;
-
 
     function setUp()
     {
