@@ -33,6 +33,11 @@
                                         $subject = Params::getParam('subject') ;
                                         $message = Params::getParam('message') ;
 
+                                        if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
+                                            osc_add_flash_message( _m('You have to introduce a correct e-mail') ) ;
+                                            $this->redirectTo(osc_contact_url());
+                                        }
+
                                         $params = array(
                                             'from' => $yourEmail
                                             ,'from_name' => $yourName
