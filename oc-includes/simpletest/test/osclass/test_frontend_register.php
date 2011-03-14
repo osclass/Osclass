@@ -34,7 +34,7 @@ class TestOfRegister extends WebTestCase {
      * insert new User
      * 
      */
-    function testRegisterNewUser()
+    public function testRegisterNewUser()
     {
         echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testRegisterNewUser</h2> -</div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert -  </div>";
@@ -253,6 +253,25 @@ class TestOfRegister extends WebTestCase {
         } else {
             $this->assertFalse("Validate an validated user. ERROR");
         }
+    }
+
+    //  STATIC FUNCTIONS
+    static function doRegisterUser($mail, $pass, $selenium)
+    {
+
+        echo "registering new user... <br>";
+
+        $selenium->open( osc_base_url(true) );
+        $selenium->click("link=Register for a free account");
+        $selenium->waitForPageToLoad("10000");
+
+        $selenium->type('s_name'      , 'testuser');
+        $selenium->type('s_password'  , $pass);
+        $selenium->type('s_password2' , $pass);
+        $selenium->type('s_email'     , $mail);
+
+        $selenium->click('xpath=//span/button');
+        $selenium->waitForPageToLoad(1000);
     }
 }
 ?>
