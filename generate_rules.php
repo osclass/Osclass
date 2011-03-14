@@ -58,7 +58,7 @@ $rewrite->addRule('^user/item/edit$', 'index.php?page=user&action=item_edit');
 $rewrite->addRule('^user/item/edit/done$', 'index.php?page=user&action=item_edit_post');
 $rewrite->addRule('^user/resource/delete$', 'index.php?page=user&action=deleteResource');
 $rewrite->addRule('^user/login/done$', 'index.php?page=user&action=login_post');
-$rewrite->addRule('^user/alert/unsub$', 'index.php?page=user&action=unsub_alert');
+//$rewrite->addRule('^user/alert/unsub$', 'index.php?page=user&action=unsub_alert');
 $rewrite->addRule('^user/forgot/password$', 'index.php?page=user&action=forgot');
 $rewrite->addRule('^user/forgot/password/done$', 'index.php?page=user&action=forgot_post');
 $rewrite->addRule('^user/change/password$', 'index.php?page=user&action=forgot_change');
