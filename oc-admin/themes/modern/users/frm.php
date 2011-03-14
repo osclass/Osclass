@@ -82,11 +82,11 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset style="float:left;">
                                     <legend><?php _e('Password'); ?></legend>
-                                    <?php UserForm::password_register_text($user); ?>
+                                    <?php UserForm::password_text($user); ?>
                                 </fieldset>
                                 <fieldset style="float:left;">
                                     <legend><?php _e('Re-type the password'); ?> </legend>
-                                    <?php UserForm::check_password_register_text($user); ?>
+                                    <?php UserForm::check_password_text($user); ?>
                                 </fieldset>
                                 <p id="password-error" style="display:none;">
                                     <?php _e('Passwords don\'t match.'); ?>

@@ -48,15 +48,16 @@ class UserForm extends Form {
     }
     
     static public function password_text($user = null) {
-        parent::generic_password("profile_password", '', null, false);
+        parent::generic_password("s_password", '', null, false);
         return true ;
     }
     
     static public function check_password_text($user = null) {
-        parent::generic_password("profile_password2", '', null, false);
+        parent::generic_password("s_password2", '', null, false);
         return true ;
     }
     
+    /*DEPRECATED
     static public function check_password_register_text($user = null) {
         parent::generic_password("s_password2", '', null, false);
         return true ;
@@ -65,7 +66,7 @@ class UserForm extends Form {
     static public function password_register_text($user = null) {
         parent::generic_password("s_password", '', null, false);
         return true ;
-    }
+    }*/
     
     static public function email_text($user = null) {
         parent::generic_input_text("s_email", isset($user['s_email'])? $user['s_email'] : '', null, false);

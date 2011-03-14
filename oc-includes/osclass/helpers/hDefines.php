@@ -203,7 +203,20 @@
     //functions for the public website //
     /////////////////////////////////////
 
-
+    /**
+     *  Create automatically the contact url
+     *
+     * @return string
+     */
+    function osc_contact_url() {
+        if ( osc_rewrite_enabled() ) {
+            $path = osc_base_url() . 'contact/' ;
+        } else {
+            $path = osc_base_url(true) . '?page=contact' ;
+        }
+        return $path ;
+    }
+    
     /**
      * Create automatically the url to post an item in a category
      *
