@@ -45,7 +45,7 @@ Class ItemActions
 
         // set params from array
         $active         = $aItem['active'];
-        if( $this->is_admin || !$has_to_validate) {
+        if( $this->is_admin || !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
             $active = 'ACTIVE';
         }
 
@@ -102,7 +102,7 @@ Class ItemActions
             $locationManager->insert($location);
 
             // OJO
-            if ( $this->is_admin || !$has_to_validate) {
+            if ( $this->is_admin || !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
                 CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
             }
 
@@ -125,10 +125,10 @@ Class ItemActions
             if($this->is_admin) {
                 osc_add_flash_message( _m('A new item has been added')) ;
             } else {
-                if( osc_item_validation_enabled() ) {
-                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
-                } else {
+                if( !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
                     osc_add_flash_message( _m('Great! We\'ve just published your item')) ;
+                } else {
+                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
                 }
 
             }
@@ -793,7 +793,7 @@ Class ItemActions
         $mPages = new Page();
         $locale = osc_current_user_locale();
         
-        if ( osc_item_validation_enabled() ) {
+        if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
             $aPage = $mPages->findByInternalName('email_item_validation') ;
 
             $content = array();
