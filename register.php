@@ -44,6 +44,9 @@
                                             case 3: osc_add_flash_message( _m('The specified e-mail is already in use')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
+                                            case 4: osc_add_flash_message( _m('The reCAPTCHA was not introduced correctly')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
                                         }
                 break;
                 case('validate'):       //validate account
