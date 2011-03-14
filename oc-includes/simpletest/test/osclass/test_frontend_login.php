@@ -54,6 +54,8 @@ class TestOfLogin extends WebTestCase {
         $this->loginMailIncorrect('some@mail.com',$pass);
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - login correct</div>";
         $this->login($mail,$pass);
+        echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - logout </div>";
+        $this->logout();
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - recover password</div>";
         $this->recoverPass($mail);
 
@@ -69,6 +71,17 @@ class TestOfLogin extends WebTestCase {
      * PRIVATE FUNCTIONS
      */
 
+    private function logout()
+    {
+        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->click("link=Logout");
+        $this->selenium->waitForPageToLoad("30000");
+
+        if($this->selenium->isTextPresent("Log in")){
+            $this->assertTrue("ok");
+        }
+    }
+
     private function login($mail,$pass)
     {
         $this->selenium->open( osc_base_url(true) );
@@ -82,7 +95,6 @@ class TestOfLogin extends WebTestCase {
         $this->email = $mail;
 
         if($this->selenium->isTextPresent("User account manager")){
-            $this->selenium->click("link=Logout");
             $this->assertTrue("ok");
         }
     }
