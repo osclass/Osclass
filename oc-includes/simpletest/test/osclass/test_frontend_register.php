@@ -106,7 +106,7 @@ class TestOfRegister extends WebTestCase {
         echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testValidation</h2> -</div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert -</div>";
         $this->registerValidate();
-        
+
         $user = User::newInstance()->findByEmail($this->email);
         User::newInstance()->deleteUser($user['pk_i_id']);
      }
@@ -164,10 +164,13 @@ class TestOfRegister extends WebTestCase {
         $this->email = 'carlos+user@osclass.org';
 
         $this->selenium->click('xpath=//span/button');
-        $this->selenium->waitForPageToLoad(1000);
+        $this->selenium->waitForPageToLoad("1000");
+
+        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
 
         if( $this->selenium->isTextPresent('The user has been created. An activation email has been sent') ){
-
+            $this->assertTrue("todo bien");
+            
             $this->selenium->click("link=Register for a free account");
             $this->selenium->waitForPageToLoad("10000");
 
@@ -179,6 +182,8 @@ class TestOfRegister extends WebTestCase {
             $this->selenium->click('xpath=//span/button');
             $this->selenium->waitForPageToLoad(1000);
 
+            echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
+            
             if( $this->selenium->isTextPresent('The specified e-mail is already in use') ){
                 $this->assertTrue("todo bien");
             } else {
@@ -223,6 +228,7 @@ class TestOfRegister extends WebTestCase {
 //      url malformed
         $url_validate = osc_base_url(true) . "?page=register&action=validate&id=".$user['pk_i_id']."&code=1231231";
         $this->selenium->open( $url_validate );
+        $this->selenium->waitForPageToLoad("1000");
         if( $this->selenium->isTextPresent('regexpi:The link is not valid anymore. Sorry for the inconvenience!') ){
             $this->assertTrue("todo bien");
         } else {
@@ -232,6 +238,7 @@ class TestOfRegister extends WebTestCase {
 //      Validation ok
         $url_validate = osc_base_url(true) . "?page=register&action=validate&id=".$user['pk_i_id']."&code=".$user['s_secret'];
         $this->selenium->open( $url_validate );
+        $this->selenium->waitForPageToLoad("1000");
         if( $this->selenium->isTextPresent('regexpi:Your account has been validated') ){
             $this->assertTrue("todo bien");
         } else {
@@ -240,6 +247,7 @@ class TestOfRegister extends WebTestCase {
 
 //      Try to revalidate new user
         $this->selenium->open( $url_validate );
+        $this->selenium->waitForPageToLoad("1000");
         if( $this->selenium->isTextPresent('regexpi:Your account has already been activated') ){
             $this->assertTrue("todo bien");
         } else {
