@@ -51,9 +51,19 @@ Class ItemActions
 
         $contactName    = $aItem['contactName'];
         $contactEmail   = $aItem['contactEmail'];
+        
+        // Anonymous
+        if(!preg_match("/([a-z][^a-z]*){2}/i",$contactName)) {
+            $contactName = __("Anonymous");
+        }
 
-        if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message( _m('You need to insert your name and email to be able to publish a new item'));
+        // Validate
+        if ( !preg_match("/([a-z][^a-z]*){3}/i", current($aItem['title']) ) ||
+            !preg_match("/([a-z][^a-z]*){8}/i", current($aItem['description']) ) ||
+            !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail) ||
+            !preg_match("/^[0-9]+$/", $aItem['catId'] )) {
+            osc_add_flash_message( _m('Some fields were too short. Try again!') );
+            //osc_add_flash_message( _m('You need to insert your name and email to be able to publish a new item'));
             $success = false;
         } else {
             $this->manager->insert(array(
