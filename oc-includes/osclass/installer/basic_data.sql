@@ -18,7 +18,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'dateFormat', 'F j, Y', 'STRING')
     ,('osclass', 'timeFormat', 'g:i a', 'STRING')
     ,('osclass', 'weekStart', '0', 'STRING')
-    ,('osclass', 'moderate_comments', '1', 'BOOLEAN')
+    ,('osclass', 'moderate_comments', '0', 'INTEGER')
     ,('osclass', 'reg_user_post', '1', 'BOOLEAN')
     ,('osclass', 'num_rss_items', '50', 'INTEGER')
     ,('osclass', 'active_plugins', '', 'STRING')

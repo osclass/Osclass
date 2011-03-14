@@ -83,13 +83,19 @@
                                         $enabledComments  = (($enabledComments != '') ? true : false);
                                         $moderateComments = Params::getParam('moderate_comments');
                                         $moderateComments = (($moderateComments != '') ? true : false);
+                                        $numModerateComments = Params::getParam('num_moderate_comments');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
                                                                                       ,array('s_name' => 'enabled_comments'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $moderateComments)
-                                                                                      ,array('s_name' => 'moderate_comments'));
+                                        if($moderateComments) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateComments)
+                                                                                          ,array('s_name' => 'moderate_comments'));
+                                        } else {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value' => '-1')
+                                                                                          ,array('s_name' => 'moderate_comments'));
+                                        }
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
                                                                                       ,array('s_name' => 'notify_new_comment'));
 

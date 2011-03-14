@@ -41,6 +41,10 @@ class ItemComment extends DAO {
 		return $this->listWhere('fk_i_item_id = ' . $id . " AND e_status = 'ACTIVE'");
 	}
 	
+	public function findByAuthorID($id) {
+		return $this->listWhere('fk_i_user_id = ' . $id . " AND e_status = 'ACTIVE'");
+	}
+	
 
 	public function extendData($items) {
         $prefLocale = osc_current_user_locale();
