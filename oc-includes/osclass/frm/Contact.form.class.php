@@ -71,7 +71,7 @@ class ContactForm extends Form {
         email = $("#yourEmail");
         message = $("#message");
 
-        var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+        var pattern=/^([a-zA-Z0-9\_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
         var num_error = 0;
         
         if(!pattern.test(email.val())){
