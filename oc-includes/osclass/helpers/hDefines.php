@@ -390,6 +390,10 @@
         }
     }
 
+    function osc_user_unsubscribe_alert_url($email = '', $alert = '') {
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.$email.'&alert='.$alert ;
+    }
+
     //osc_createProfileURL
     function osc_user_profile_url() {
         if ( osc_rewrite_enabled() ) {

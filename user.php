@@ -210,6 +210,20 @@ class CWebUser extends WebSecBaseModel
                                             $this->doView('user-items.php');
 
             break;
+            
+            case 'unsub_alert':
+                $email = Params::getParam('email');
+                $alert = Params::getParam('alert');
+                if($email!='' && $alert!='') {
+                    Alerts::newInstance()->delete(array('s_email' => $email, 's_search' => $alert));
+                    osc_add_flash_message(__('Unsubscribed correctly.'));
+                } else {
+                    osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                }
+                osc_redirectTo(osc_user_alerts_url());
+            break;
+            
+            
             case 'deleteResource':
                 $id   = Params::getParam('id') ;
                 $name = Params::getParam('name') ;
