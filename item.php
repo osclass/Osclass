@@ -319,8 +319,13 @@ class CWebItem extends BaseModel
                 break;
             case 'add_comment':
                 $mItem = new ItemActions(false);
-                $mItem->add_comment();
+                $status = $mItem->add_comment();
 
+                if($status=='INACTIVE') {
+                    osc_add_flash_message( _m('Your comment is awaiting moderation')) ;
+                } else {
+                    osc_add_flash_message( _m('Your comment has been approved')) ;
+                }
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
             default:

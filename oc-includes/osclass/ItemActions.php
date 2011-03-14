@@ -479,6 +479,7 @@ Class ItemActions
                 osc_sendMail($emailParams) ;
             }
             osc_run_hook('add_comment', $item);
+            return $status;
         }else{
             osc_add_flash_message( _m('We are very sorry but we could not save your comment. Try again later')) ;
         }
