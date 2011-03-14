@@ -442,7 +442,7 @@ Class ItemActions
             $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
         }
 
-        $mComments = new Comment() ;
+        $mComments = ItemComment::newInstance();
         $aComment  = array(
                         'dt_pub_date'    => DB_FUNC_NOW
                         ,'fk_i_item_id'   => $itemId
