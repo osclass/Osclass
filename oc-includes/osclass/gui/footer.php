@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -19,13 +18,12 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
 ?>
 
 <?php osc_show_widgets('footer'); ?>
 <div id="footer">
     <div class="inner">
-        <a href="<?php echo osc_base_url(true) ; ?>?page=contact"><?php _e('Contact') ; ?></a> |
+        <a href="<?php echo osc_contact_url(); ?>"><?php _e('Contact') ; ?></a> |
         <?php osc_reset_static_pages() ; ?>
         <?php while( osc_has_static_pages() ) { ?>
             <a href="<?php echo osc_static_page_url() ; ?>"><?php echo osc_static_page_title() ; ?></a> |
