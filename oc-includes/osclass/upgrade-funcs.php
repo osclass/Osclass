@@ -30,6 +30,11 @@ require_once "../../oc-load.php";
         osc_changeVersionTo(120) ;
     }
     
+    if($version < 121) {
+        osc_sql120() ;
+        osc_changeVersionTo(121) ;
+    }
+    
     
     
     
@@ -103,5 +108,15 @@ CREATE TABLE /*TABLE_PREFIX*/t_user_preferences (
             echo "Error: ".$e->getMessage()."\n";
         }
     }
+    
+    function osc_sql120() {
+            $conn = getConnection();
+        try {
+            $conn->osc_dbExec(sprintf("INSERT INTO /*TABLE_PREFIX*/t_preference VALUES ('osclass', 'logged_user_item_validation', true, 'BOOLEAN');", DB_TABLE_PREFIX));
+        } catch(Exception $e) {
+            echo "Error: ".$e->getMessage()."\n";
+        }
+    }
+
 
 ?>

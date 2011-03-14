@@ -22,6 +22,16 @@
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
+    <script type="text/javascript">
+        function checkbox_change() {
+            var on = $("#enabled_item_validation").is(':checked');
+            if(on==1) {
+                $("#logged_user_item_validation").attr('disabled', false);
+            } else {
+                $("#logged_user_item_validation").attr('disabled', true);
+            }
+        };
+    </script>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
@@ -53,8 +63,11 @@
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_recaptcha_items_enabled() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" value="1" />
                                     <label for="enabled_recaptcha_items"><?php _e('Enable reCAPTCHA'); ?></label>
                                     <br/>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_validation_enabled() ? 'checked="true"' : ''); ?> name="enabled_item_validation" id="enabled_item_validation" value="1" />
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_validation_enabled() ? 'checked="true"' : ''); ?> name="enabled_item_validation" onclick="checkbox_change();" id="enabled_item_validation" value="1" />
                                     <label for="enabled_item_validation"><?php _e('Enable item validation by users'); ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_logged_user_item_validation() ? 'checked="true"' : ''); ?> name="logged_user_item_validation" id="logged_user_item_validation" value="1" <?php echo (osc_item_validation_enabled() ? '' : 'disabled'); ?>/>
+                                    <label for="logged_user_item_validation"><?php _e('Logged users don\'t need to validate items'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" value="1" />
                                     <label for="reg_user_post"><?php _e('Only allow registered users to post items'); ?></label>

@@ -30,28 +30,32 @@
                                         $this->doView('settings/items.php');
                 break;
                 case('items_post'):     // update item settings
-                                        $iUpdated                = 0;
-                                        $enabledRecaptchaItems   = Params::getParam('enabled_recaptcha_items');
-                                        $enabledRecaptchaItems   = (($enabledRecaptchaItems != '') ? true : false);
-                                        $enabledItemValidation   = Params::getParam('enabled_item_validation');
-                                        $enabledItemValidation   = (($enabledItemValidation != '') ? true : false);
-                                        $regUserPost             = Params::getParam('reg_user_post');
-                                        $regUserPost             = (($regUserPost != '') ? true : false);
-                                        $notifyNewItem           = Params::getParam('notify_new_item');
-                                        $notifyNewItem           = (($notifyNewItem != '') ? true : false);
-                                        $notifyContactItem       = Params::getParam('notify_contact_item');
-                                        $notifyContactItem       = (($notifyContactItem != '') ? true : false);
-                                        $notifyContactFriends    = Params::getParam('notify_contact_friends');
-                                        $notifyContactFriends    = (($notifyContactFriends != '') ? true : false);
-                                        $enabledFieldPriceItems  = Params::getParam('enableField#f_price@items');
-                                        $enabledFieldPriceItems  = (($enabledFieldPriceItems != '') ? true : false);
-                                        $enabledFieldImagesItems = Params::getParam('enableField#images@items');
-                                        $enabledFieldImagesItems = (($enabledFieldImagesItems != '') ? true : false);
+                                        $iUpdated                   = 0;
+                                        $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
+                                        $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
+                                        $enabledItemValidation      = Params::getParam('enabled_item_validation');
+                                        $enabledItemValidation      = (($enabledItemValidation != '') ? true : false);
+                                        $loggedUserItemValidation   = Params::getParam('logged_user_item_validation');
+                                        $loggedUserItemValidation   = (($loggedUserItemValidation != '') ? true : false);
+                                        $regUserPost                = Params::getParam('reg_user_post');
+                                        $regUserPost                = (($regUserPost != '') ? true : false);
+                                        $notifyNewItem              = Params::getParam('notify_new_item');
+                                        $notifyNewItem              = (($notifyNewItem != '') ? true : false);
+                                        $notifyContactItem          = Params::getParam('notify_contact_item');
+                                        $notifyContactItem          = (($notifyContactItem != '') ? true : false);
+                                        $notifyContactFriends       = Params::getParam('notify_contact_friends');
+                                        $notifyContactFriends       = (($notifyContactFriends != '') ? true : false);
+                                        $enabledFieldPriceItems     = Params::getParam('enableField#f_price@items');
+                                        $enabledFieldPriceItems     = (($enabledFieldPriceItems != '') ? true : false);
+                                        $enabledFieldImagesItems    = Params::getParam('enableField#images@items');
+                                        $enabledFieldImagesItems    = (($enabledFieldImagesItems != '') ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
                                                                                       ,array('s_name'  => 'enabled_item_validation'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $loggedUserItemValidation)
+                                                                                      ,array('s_name'  => 'logged_user_item_validation'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPost)
                                                                                       ,array('s_name'  => 'reg_user_post'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewItem)

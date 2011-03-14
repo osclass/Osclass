@@ -40,6 +40,10 @@
         return (getBoolPreference('enabled_user_validation')) ;
     }
 
+    function osc_logged_user_item_validation() {
+        return (getBoolPreference('logged_user_item_validation')) ;
+    }
+
     function osc_moderate_comments() {
         return (getBoolPreference('moderate_comments')) ;
     }
