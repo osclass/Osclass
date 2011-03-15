@@ -211,13 +211,5 @@
             </li>
         </ul>
 
-        <h3>
-            <a href="#"><?php _e('Tests'); ?></a>
-        </h3>
-        <ul>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=test">&raquo; <?php _e('Database'); ?></a>
-            </li>
-        </ul>
     </div>
 </div>
