@@ -321,11 +321,20 @@ class CWebItem extends BaseModel
                 $mItem = new ItemActions(false);
                 $status = $mItem->add_comment();
 
-                if($status=='INACTIVE') {
-                    osc_add_flash_message( _m('Your comment is awaiting moderation')) ;
-                } else {
-                    osc_add_flash_message( _m('Your comment has been approved')) ;
+                switch ($status) {
+                    case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
+                    break;
+                    case 1:  $msg = _m('Your comment is awaiting moderation');
+                    break;
+                    case 2:  $msg = _m('Your comment has been approved');
+                    break;
+                    case 3:  $msg = _m('Please fill the required fields (name, email)');
+                    break;
+                    case 4:  $msg = _m('Please type a comment');
+                    break;
                 }
+
+                osc_add_flash_message($msg);
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
             default:
