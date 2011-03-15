@@ -407,12 +407,16 @@ Class ItemActions
         $aItem  = $this->prepareDataForFunction('add_comment');
 
         $authorName     = trim($aItem['authorName']);
+        $authorName     = strip_tags($authorName);
         $authorEmail    = trim($aItem['authorEmail']);
+        $authorEmail    = strip_tags($authorEmail);
         $body           = trim($aItem['body']);
+        $body           = strip_tags($body);
         $title          = $aItem['title'] ;
         $itemId         = $aItem['id'] ;
         $userId         = $aItem['userId'] ;
-
+        $status_num     = -1;
+        
         $item = $this->manager->findByPrimaryKey($itemId) ;
         $itemURL = osc_item_url() ;
         Params::setParam('itemURL', $itemURL);
@@ -432,10 +436,12 @@ Class ItemActions
             $num_comments = count(ItemComment::newInstance()->findByAuthorID($userId));
         }
 
-        if ($num_moderate_comments==-1 || ($num_moderate_comments!=0 && $num_comments>=$num_moderate_comments)) {
-            return 1;
+        if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {
+            $status = 'ACTIVE';
+            $status_num = 2;
         } else {
-            return 2;
+            $status = 'INACTIVE';
+            $status_num = 1;
         }
         
         if (osc_akismet_key()) {
@@ -446,7 +452,10 @@ Class ItemActions
             $akismet->setCommentContent($body) ;
             $akismet->setPermalink($itemURL) ;
 
-            $status = $akismet->isCommentSpam() ? 3 : $status ;
+            $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
+            if($status == 'SPAM') {
+                $status_num = 5;
+            }
         }
 
         $mComments = ItemComment::newInstance();
@@ -502,7 +511,7 @@ Class ItemActions
                 osc_sendMail($emailParams) ;
             }
             osc_run_hook('add_comment', $item);
-            return $status;
+            return $status_num;
         }
         
         return -1;

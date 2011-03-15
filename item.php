@@ -332,6 +332,8 @@ class CWebItem extends BaseModel
                     break;
                     case 4:  $msg = _m('Please type a comment');
                     break;
+                    case 5:  $msg = _m('Your comment has been marked as spam');
+                    break;
                 }
 
                 osc_add_flash_message($msg);
