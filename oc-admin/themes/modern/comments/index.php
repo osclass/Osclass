@@ -78,7 +78,7 @@
                                     } else if (isset($c['e_status']) && ($c['e_status'] == 'INACTIVE')) {
                                         echo ' | <a href=\'' . osc_admin_base_url(true) . '?page=comments&action=status&id='. $c['pk_i_id'] .'&value=ACTIVE\'>' . __('Activate') . '</a>' ;
                                     }?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true) ; ?>?page=comments&action=delete&id=<?php echo $c['pk_i_id'] ; ?>' id='dt_link_delete'><?php _e('Delete') ; ?></a></div>"
-                                ,"<?php echo $c['s_body'] ; ?>"
+                                ,"<?php echo addslashes(preg_replace('|\s+|',' ',$c['s_body'])); ?>"
                                 ,"<?php echo $c['dt_pub_date'] ; ?>"
                             ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
                         <?php } ?>
