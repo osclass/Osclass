@@ -27,13 +27,8 @@ class UserForm extends Form {
         return true ;
     }
     
-    /*static public function username_text($user = null) {
-        parent::generic_input_text("profile_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
-        return true ;
-    }*/
-    
     static public function email_login_text($user = null) {
-        parent::generic_input_text("email", isset($user['s_username'])? $user['s_username'] : '', null, false);
+        parent::generic_input_text("email", isset($user['s_email'])? $user['s_email'] : '', null, false);
         return true ;
     }
 
@@ -52,21 +47,17 @@ class UserForm extends Form {
         return true ;
     }
     
-    /*static public function username_register_text($user = null) {
-        parent::generic_input_text("s_username", isset($user['s_username'])? $user['s_username'] : '', null, false);
-        return true ;
-    }*/
-    
     static public function password_text($user = null) {
-        parent::generic_password("profile_password", '', null, false);
+        parent::generic_password("s_password", '', null, false);
         return true ;
     }
     
     static public function check_password_text($user = null) {
-        parent::generic_password("profile_password2", '', null, false);
+        parent::generic_password("s_password2", '', null, false);
         return true ;
     }
     
+    /*DEPRECATED
     static public function check_password_register_text($user = null) {
         parent::generic_password("s_password2", '', null, false);
         return true ;
@@ -75,7 +66,7 @@ class UserForm extends Form {
     static public function password_register_text($user = null) {
         parent::generic_password("s_password", '', null, false);
         return true ;
-    }
+    }*/
     
     static public function email_text($user = null) {
         parent::generic_input_text("s_email", isset($user['s_email'])? $user['s_email'] : '', null, false);
@@ -187,6 +178,16 @@ class UserForm extends Form {
 
     static public function address_text($user = null) {
         parent::generic_input_text('address', (isset($user['s_address'])) ? $user['s_address'] : null) ;
+        return true ;
+    }
+
+    static public function is_company_select($user = null) {
+        $options = array(
+            array( 'i_value' => '0', 's_text' => __('User') )
+            ,array( 'i_value' => '1', 's_text' => __('Company') )
+        ) ;
+
+        parent::generic_select( 'b_company', $options, 'i_value', 's_text', null, (isset($user['b_company'])) ? $user['b_company'] : null ) ;
         return true ;
     }
 

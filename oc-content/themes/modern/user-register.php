@@ -40,8 +40,8 @@
                         
                         <fieldset>
                             <label for="name"><?php _e('Name', 'modern') ; ?></label> <?php UserForm::name_text(); ?><br />
-                            <label for="password"><?php _e('Password', 'modern') ; ?></label> <?php UserForm::password_register_text(); ?><br />
-                            <label for="password"><?php _e('Re-type password', 'modern') ; ?></label> <?php UserForm::check_password_register_text(); ?><br />
+                            <label for="password"><?php _e('Password', 'modern') ; ?></label> <?php UserForm::password_text(); ?><br />
+                            <label for="password"><?php _e('Re-type password', 'modern') ; ?></label> <?php UserForm::check_password_text(); ?><br />
                             <p id="password-error" style="display:none;">
                                 <?php _e('Passwords don\'t match', 'modern') ; ?>.
                             </p>

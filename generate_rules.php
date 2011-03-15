@@ -42,8 +42,8 @@ $rewrite->addRule('^item$', 'index.php?page=item');
 $rewrite->addRule('^(.+)_([0-9]+)$', 'index.php?page=item&id=$2');
 
 // User rules
-$rewrite->addRule('^user/login$', 'index.php?page=user&action=login');
-$rewrite->addRule('^user/logout$', 'index.php?page=user&action=logout');
+$rewrite->addRule('^user/login$', 'index.php?page=login');
+$rewrite->addRule('^user/logout$', 'index.php?page=main&action=logout');
 $rewrite->addRule('^user/register$', 'index.php?page=register&action=register');
 $rewrite->addRule('^user/register/done$', 'index.php?page=register&action=register_post');
 $rewrite->addRule('^user/send-validation$', 'index.php?page=user&action=send_validation');
@@ -58,7 +58,7 @@ $rewrite->addRule('^user/item/edit$', 'index.php?page=user&action=item_edit');
 $rewrite->addRule('^user/item/edit/done$', 'index.php?page=user&action=item_edit_post');
 $rewrite->addRule('^user/resource/delete$', 'index.php?page=user&action=deleteResource');
 $rewrite->addRule('^user/login/done$', 'index.php?page=user&action=login_post');
-$rewrite->addRule('^user/alert/unsub$', 'index.php?page=user&action=unsub_alert');
+//$rewrite->addRule('^user/alert/unsub$', 'index.php?page=user&action=unsub_alert');
 $rewrite->addRule('^user/forgot/password$', 'index.php?page=user&action=forgot');
 $rewrite->addRule('^user/forgot/password/done$', 'index.php?page=user&action=forgot_post');
 $rewrite->addRule('^user/change/password$', 'index.php?page=user&action=forgot_change');

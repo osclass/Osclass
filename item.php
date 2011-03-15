@@ -49,13 +49,13 @@ class CWebItem extends BaseModel
         switch( $this->action ){
             case 'item_add': // post
                 if( !osc_users_enabled () ){
-                    osc_add_flash_message( _m('Users not enable')) ;
+                    osc_add_flash_message( _m('Users not enabled') ) ;
                     $this->redirectTo(osc_base_url(true));
                 }
                 if( osc_reg_user_post() && $this->user==null) {
                     // CHANGEME: This text
                     osc_add_flash_message( _m('Only registered users are allowed to post items')) ;
-                    $this->redirectTo(osc_base_url(true));
+                    $this->redirectTo(osc_user_login_url());
                 }
 
                 //$categories = Category::newInstance()->toTree();
@@ -319,8 +319,24 @@ class CWebItem extends BaseModel
                 break;
             case 'add_comment':
                 $mItem = new ItemActions(false);
-                $mItem->add_comment();
+                $status = $mItem->add_comment();
 
+                switch ($status) {
+                    case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
+                    break;
+                    case 1:  $msg = _m('Your comment is awaiting moderation');
+                    break;
+                    case 2:  $msg = _m('Your comment has been approved');
+                    break;
+                    case 3:  $msg = _m('Please fill the required fields (name, email)');
+                    break;
+                    case 4:  $msg = _m('Please type a comment');
+                    break;
+                    case 5:  $msg = _m('Your comment has been marked as spam');
+                    break;
+                }
+
+                osc_add_flash_message($msg);
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
             default:
@@ -330,7 +346,7 @@ class CWebItem extends BaseModel
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 // if item doesn't exist redirect to base url
-                if( !$item['fk_i_item_id'] ){
+                if( count($item) == 0 ){
                     osc_add_flash_message( _m('This item doesn\'t exist') );
                     $this->redirectTo( osc_base_url(true) );
                 }else{

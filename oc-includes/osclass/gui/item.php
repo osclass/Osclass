@@ -58,15 +58,15 @@
                         <?php if ( osc_item_address() != "" ) { ?><li><?php _e("Address", 'modern') ; ?>: <strong><?php echo osc_item_address() ; ?></strong></li><?php } ?>
                     </ul>
                     <div id="description">
-                        <p><?php echo  osc_item_description() ; ?></p>
+                        <p><?php echo osc_item_description() ; ?></p>
+                        <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                         <p class="contact_button">
                             <strong><a href="#contact"><?php _e('Contact seller', 'modern') ; ?></a></strong>
                             <strong class="share"><a href="<?php echo osc_item_send_friend_url() ; ?>" rel="nofollow"><?php _e('Share', 'modern') ; ?></a></strong>
                         </p>
+                        <?php osc_run_hook('location') ; ?>
                     </div>
                     <!-- plugins -->
-                    <?php osc_run_hook('item_detail', osc_item() ) ; ?>
-                    <?php osc_run_hook('location') ; ?>
                     <div id="useful_info">
                         <h2><?php _e('Useful information', 'modern') ; ?></h2>
                         <ul>
@@ -95,8 +95,13 @@
                                     <input type="hidden" name="action" value="add_comment" />
                                     <input type="hidden" name="page" value="item" />
                                     <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
-                                    <label for="authorName"><?php _e('Your name', 'modern') ; ?>:</label> <input type="text" name="authorName" id="authorName" /><br />
-                                    <label for="authorEmail"><?php _e('Your e-mail', 'modern') ; ?>:</label> <input type="text" name="authorEmail" id="authorEmail" /><br />
+                                    <?php if(osc_is_web_user_logged_in()) { ?>
+                                        <input type="hidden" name="authorName" value="<?php echo osc_logged_user_name(); ?>" />
+                                        <input type="hidden" name="authorEmail" value="<?php echo osc_logged_user_email();?>" />
+                                    <?php } else { ?>
+                                        <label for="authorName"><?php _e('Your name', 'modern') ; ?>:</label> <input type="text" name="authorName" id="authorName" /><br />
+                                        <label for="authorEmail"><?php _e('Your e-mail', 'modern') ; ?>:</label> <input type="text" name="authorEmail" id="authorEmail" /><br />
+                                    <?php }; ?>
                                     <label for="title"><?php _e('Title', 'modern') ; ?>:</label><br /><input type="text" name="title" id="title" /><br />
                                     <label for="body"><?php _e('Comment', 'modern') ; ?>:</label><br /><textarea name="body" id="body" rows="5" cols="40"></textarea><br />
                                     <button type="submit"><?php _e('Send', 'modern') ; ?></button>
@@ -134,11 +139,12 @@
                     <script type="text/javascript">
                         function validate_contact() {
                             email = $("#yourEmail");
-
-                            var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+                            message = $('#message');
+                            
+                            var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
                             var num_error = 0;
 
-                            if(!pattern.test(email.value)){
+                            if(!pattern.test(email.val())){
                                 email.css('border', '1px solid red');
                                 num_error = num_error + 1;
                             }

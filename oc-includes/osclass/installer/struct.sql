@@ -100,7 +100,6 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     dt_reg_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     s_name VARCHAR(100) NOT NULL,
-    s_username VARCHAR(40) NOT NULL,
     s_password VARCHAR(40) NOT NULL,
     s_secret VARCHAR(40) NULL,
     s_email VARCHAR(100) NULL,
@@ -126,6 +125,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     d_coord_lat DECIMAL(10, 6),
     d_coord_long DECIMAL(10, 6),
     i_permissions VARCHAR(2) DEFAULT 0,
+    b_company BOOLEAN NOT NULL DEFAULT FALSE,
+
 
         PRIMARY KEY (pk_i_id),
         UNIQUE KEY (s_email),

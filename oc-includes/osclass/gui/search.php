@@ -75,7 +75,7 @@
                         <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
                             <input type="hidden" name="page" value="search" />
                             <fieldset class="box location">
-                                <h3><strong><?php _e('Your search', 'offerum'); ?></strong></h3>
+                                <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
                                 <div class="row one_input">
                                     <input type="text" name="sPattern"  id="query" value="<?php echo osc_search_pattern() ; ?>" />
                                 </div>

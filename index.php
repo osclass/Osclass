@@ -24,7 +24,9 @@
     switch( Params::getParam('page') )
     {
         case ('user'):      // user pages (with security)
-                            if(Params::getParam('action')=='change_email_confirm') {
+
+                            if(Params::getParam('action')=='change_email_confirm'
+                            || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())) {
                                 require_once(osc_base_path() . 'user-non-secure.php') ;
                                 $do = new CWebUserNonSecure() ;
                                 $do->doModel() ;

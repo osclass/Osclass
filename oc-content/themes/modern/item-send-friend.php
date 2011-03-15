@@ -37,8 +37,13 @@
                             <input type="hidden" name="page" value="item" />
                             <input type="hidden" name="id" value="<?php echo osc_item_id(); ?>" />
                             <label><?php _e('Item', 'modern'); ?>: <a href="<?php echo osc_item_url( ); ?>"><?php echo osc_item_title(); ?></a></label><br/>
-                            <label for="yourName"><?php _e('Your name', 'modern'); ?></label> <?php SendFriendForm::your_name(); ?> <br/>
-                            <label for="yourEmail"><?php _e('Your e-mail address', 'modern'); ?></label> <?php SendFriendForm::your_email(); ?> <br/>
+                            <?php if(osc_is_web_user_logged_in()) { ?>
+                                <input type="hidden" name="yourName" value="<?php echo osc_logged_user_name(); ?>" />
+                                <input type="hidden" name="yourEmail" value="<?php echo osc_logged_user_email();?>" />
+                            <?php } else { ?>
+                                <label for="yourName"><?php _e('Your name', 'modern'); ?></label> <?php SendFriendForm::your_name(); ?> <br/>
+                                <label for="yourEmail"><?php _e('Your e-mail address', 'modern'); ?></label> <?php SendFriendForm::your_email(); ?> <br/>
+                            <?php }; ?>
                             <label for="friendName"><?php _e("Your friend's name", 'modern'); ?></label> <?php SendFriendForm::friend_name(); ?> <br/>
                             <label for="friendEmail"><?php _e("Your friend's e-mail address", 'modern'); ?></label> <?php SendFriendForm::friend_email(); ?> <br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php SendFriendForm::your_message(); ?> <br/>

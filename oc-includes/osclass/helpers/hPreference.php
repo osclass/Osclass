@@ -40,8 +40,12 @@
         return (getBoolPreference('enabled_user_validation')) ;
     }
 
+    function osc_logged_user_item_validation() {
+        return (getBoolPreference('logged_user_item_validation')) ;
+    }
+
     function osc_moderate_comments() {
-        return (getBoolPreference('moderate_comments')) ;
+        return (getPreference('moderate_comments')) ;
     }
 
     function osc_notify_new_comment() {
@@ -258,6 +262,10 @@
 
     function osc_get_preference($key, $section = 'osclass') {
         return getPreference($key, $section);
+    }
+
+    function osc_set_preference($key, $value = '', $section = 'osclass', $type = 'STRING') {
+        return Preference::newInstance()->replace($key, $value, $section, $type);
     }
 
     

@@ -59,7 +59,7 @@
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
                                                                             }
-                                                                            osc_add_flash_message( _m('The comments have been unapproved'), 'admin') ;
+                                                                            osc_add_flash_message( _m('The comments have been disapproved'), 'admin') ;
                                                     break;
                                                 }
                                             }
@@ -80,13 +80,13 @@
                                             if( $value == 'ACTIVE' ) {
                                                 osc_add_flash_message( _m('The comment has been approved'), 'admin');
                                             } else {
-                                                osc_add_flash_message( _m('The comment has been unapproved'), 'admin');
+                                                osc_add_flash_message( _m('The comment has been disapproved'), 'admin');
                                             }
 
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
-                case 'comment_edit':        $itemId = Params::getParam('id') ;
-                                            $comment = Comment::newInstance()->findByPrimaryKey($itemId) ;
+                case 'comment_edit':        $id = Params::getParam('id') ;
+                                            $comment = ItemComment::newInstance()->findByPrimaryKey($id) ;
 
                                             $this->_exportVariableToView('comment', $comment) ;
 

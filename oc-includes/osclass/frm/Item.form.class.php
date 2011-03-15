@@ -184,7 +184,8 @@ class ItemForm extends Form {
             parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
             return true ;
         } else if ( count($cities) == 1 ) {
-            parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
+            parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
+            echo '</span>' .$cities[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;

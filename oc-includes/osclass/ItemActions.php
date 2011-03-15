@@ -45,15 +45,25 @@ Class ItemActions
 
         // set params from array
         $active         = $aItem['active'];
-        if( $this->is_admin || !$has_to_validate) {
+        if( $this->is_admin || !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
             $active = 'ACTIVE';
         }
 
         $contactName    = $aItem['contactName'];
         $contactEmail   = $aItem['contactEmail'];
+        
+        // Anonymous
+        if(!preg_match("/([a-z][^a-z]*){2}/i",$contactName)) {
+            $contactName = __("Anonymous");
+        }
 
-        if( ($contactName == '') || ($contactEmail == '') || $contactName==null || $contactEmail==null ) {
-            osc_add_flash_message( _m('You need to input your name and email to be able to publish a new item'));
+        // Validate
+        if ( !preg_match("/([a-z][^a-z]*){3}/i", current($aItem['title']) ) ||
+            !preg_match("/([a-z][^a-z]*){8}/i", current($aItem['description']) ) ||
+            !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail) ||
+            !preg_match("/^[0-9]+$/", $aItem['catId'] )) {
+            osc_add_flash_message( _m('Some fields were too short. Try again!') );
+            //osc_add_flash_message( _m('You need to insert your name and email to be able to publish a new item'));
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -92,7 +102,7 @@ Class ItemActions
             $locationManager->insert($location);
 
             // OJO
-            if ( $this->is_admin || !$has_to_validate) {
+            if ( $this->is_admin || !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
                 CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
             }
 
@@ -115,10 +125,10 @@ Class ItemActions
             if($this->is_admin) {
                 osc_add_flash_message( _m('A new item has been added')) ;
             } else {
-                if( osc_item_validation_enabled() ) {
-                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
-                } else {
+                if( !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
                     osc_add_flash_message( _m('Great! We\'ve just published your item')) ;
+                } else {
+                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
                 }
 
             }
@@ -344,6 +354,8 @@ Class ItemActions
 
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
+
+        $add_bbc = '';
         if (osc_notify_contact_item()) {
             $add_bbc = osc_contact_email() ;
         }
@@ -393,24 +405,45 @@ Class ItemActions
     public function add_comment()
     {
         $aItem  = $this->prepareDataForFunction('add_comment');
-        
-        $authorName     = $aItem['authorName'] ;
-        $authorEmail    = $aItem['authorEmail'] ;
-        $body           = $aItem['body'] ;
+
+        $authorName     = trim($aItem['authorName']);
+        $authorName     = strip_tags($authorName);
+        $authorEmail    = trim($aItem['authorEmail']);
+        $authorEmail    = strip_tags($authorEmail);
+        $body           = trim($aItem['body']);
+        $body           = strip_tags($body);
         $title          = $aItem['title'] ;
         $itemId         = $aItem['id'] ;
-
-        $item = $this->manager->findByPrimaryKey($itemId) ;
-
-        $itemURL = osc_item_url() ;
+        $userId         = $aItem['userId'] ;
+        $status_num     = -1;
         
+        $item = $this->manager->findByPrimaryKey($itemId) ;
+        $itemURL = osc_item_url() ;
         Params::setParam('itemURL', $itemURL);
 
-        if (osc_moderate_comments()) {
-            $status = 'INACTIVE' ;
-        } else {
-            $status = 'ACTIVE' ;
+        if( $authorName == '' || !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
+            return 3;
         }
+        
+        if( ($body == '') ) {
+            return 4;
+        }
+
+        $num_moderate_comments = osc_moderate_comments();
+        if($userId==null) {
+            $num_comments = 0;
+        } else {
+            $num_comments = count(ItemComment::newInstance()->findByAuthorID($userId));
+        }
+
+        if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {
+            $status = 'ACTIVE';
+            $status_num = 2;
+        } else {
+            $status = 'INACTIVE';
+            $status_num = 1;
+        }
+        
         if (osc_akismet_key()) {
             require_once LIB_PATH . 'Akismet.class.php' ;
             $akismet = new Akismet(osc_base_url(), osc_akismet_key()) ;
@@ -420,24 +453,25 @@ Class ItemActions
             $akismet->setPermalink($itemURL) ;
 
             $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
+            if($status == 'SPAM') {
+                $status_num = 5;
+            }
         }
 
-        $mComments = new Comment() ;
-        $aComment  = array(
-                        'dt_pub_date'    => DB_FUNC_NOW
-                        ,'fk_i_item_id'   => $itemId
-                        ,'s_author_name'  => $authorName
-                        ,'s_author_email' => $authorEmail
-                        ,'s_title'        => $title
-                        ,'s_body'         => $body
-                        ,'e_status'       => $status
-                    );
+        $mComments = ItemComment::newInstance();
+        $aComment  = array('dt_pub_date'    => DB_FUNC_NOW
+                          ,'fk_i_item_id'   => $itemId
+                          ,'s_author_name'  => $authorName
+                          ,'s_author_email' => $authorEmail
+                          ,'s_title'        => $title
+                          ,'s_body'         => $body
+                          ,'e_status'       => $status
+                          ,'fk_i_user_id'   => $userId);
 
         if( $mComments->insert($aComment) ){
-
             $notify = osc_notify_new_comment() ;
             $admin_email = osc_contact_email() ;
-            $prefLocale = osc_language;
+            $prefLocale = osc_language() ;
 
             //Notify admin
             if ($notify) {
@@ -460,7 +494,7 @@ Class ItemActions
                 $body_email = osc_mailBeauty($content['s_text'], $words);
 
                 $from = osc_contact_email() ;
-                $from_name = osc_page_title ;
+                $from_name = osc_page_title() ;
                 if (osc_notify_contact_item()) {
                     $add_bbc = osc_contact_email() ;
                 }
@@ -477,9 +511,10 @@ Class ItemActions
                 osc_sendMail($emailParams) ;
             }
             osc_run_hook('add_comment', $item);
-        }else{
-            osc_add_flash_message( _m('We are very sorry but could not save your comment. Try again later')) ;
+            return $status_num;
         }
+        
+        return -1;
     }
     
     /**
@@ -526,7 +561,10 @@ Class ItemActions
                 $aItem['body']           = Params::getParam('body') ;
                 $aItem['title']          = Params::getParam('title') ;
                 $aItem['id']             = Params::getParam('id') ;
-
+                $aItem['userId']         = Session::newInstance()->_get('userId');
+                if($aItem['userId'] == ''){
+                    $aItem['userId'] = NULL;
+                }
 
             break;
             default:
@@ -780,7 +818,7 @@ Class ItemActions
         $mPages = new Page();
         $locale = osc_current_user_locale();
         
-        if ( osc_item_validation_enabled() ) {
+        if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
             $aPage = $mPages->findByInternalName('email_item_validation') ;
 
             $content = array();

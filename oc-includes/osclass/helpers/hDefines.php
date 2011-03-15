@@ -203,7 +203,20 @@
     //functions for the public website //
     /////////////////////////////////////
 
-
+    /**
+     *  Create automatically the contact url
+     *
+     * @return string
+     */
+    function osc_contact_url() {
+        if ( osc_rewrite_enabled() ) {
+            $path = osc_base_url() . 'contact/' ;
+        } else {
+            $path = osc_base_url(true) . '?page=contact' ;
+        }
+        return $path ;
+    }
+    
     /**
      * Create automatically the url to post an item in a category
      *
@@ -338,8 +351,22 @@
             }
             $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_item_id()) ;
         } else {
-            $path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            $path = osc_item_url_ns( osc_item_id() ) ;
         }
+        return $path ;
+    }
+
+    /**
+     * Create the no friendly url of the item using the id of the item
+     * 
+     * @param int the primary key of the item
+     *
+     * @return string
+     */
+    function osc_item_url_ns($id) {
+        $path = osc_base_url(true) . '?page=item&id=' . $id ;
+
         return $path ;
     }
 
@@ -361,6 +388,10 @@
         } else {
             return osc_base_url(true) . '?page=user&action=alerts' ;
         }
+    }
+
+    function osc_user_unsubscribe_alert_url($email = '', $alert = '') {
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.$email.'&alert='.$alert ;
     }
 
     //osc_createProfileURL

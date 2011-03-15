@@ -30,14 +30,20 @@
                                         $this->doView('tools/import.php');
                 break;
                 case 'import_post':     // calling
-                                        $sql = Params::getParam('sql');
-                                        $conn = getConnection() ;
-                                        $conn->osc_dbImportSQL($sql) ;
+                                        $sql = Params::getFiles('sql') ;
+                                        //dev.conquer: if the file es too big, we can have problems with the upload or with memory
+                                        $content_file = file_get_contents($sql['tmp_name']) ;
 
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=tools');
+                                        $conn = getConnection() ;
+                                        if ( $conn->osc_dbImportSQL($content_file) ) {
+                                            osc_add_flash_message( _m('Import complete'), 'admin') ;
+                                        } else {
+                                            osc_add_flash_message( _m('There was a problem importing data to the database'), 'admin') ;
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                 break;
                 case 'images':          // calling images view
-                                        $this->doView('tools/images.php');
+                                        $this->doView('tools/images.php') ;
                 break;
                 case 'images_post':
                                         $preferences = Preference::newInstance()->toArray() ;

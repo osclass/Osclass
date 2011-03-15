@@ -57,7 +57,7 @@
                                         $this->doView("users/frm.php");
                 break;
                 case 'create_post':     // creating the user...
-                                        require_once LIB_PATH . 'osclass/users.php' ;
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
@@ -100,7 +100,7 @@
                                         $this->doView("users/frm.php");
                 break;
                 case 'edit_post':       // edit post
-                                        require_once LIB_PATH . 'osclass/users.php' ;
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->edit( Params::getParam("id") ) ;
 
@@ -129,7 +129,7 @@
                                         }
 
                                         switch ($iUpdated) {
-                                            case (0):   $msg = _m('Any user has been activated');
+                                            case (0):   $msg = _m('No user has been activated');
                                             break;
                                             case (1):   $msg = _m('One user has been activated');
                                             break;
@@ -154,7 +154,7 @@
                                         }
 
                                         switch ($iUpdated) {
-                                            case (0):   $msg = _m('Any user has been deactivated');
+                                            case (0):   $msg = _m('No user has been deactivated');
                                             break;
                                             case (1):   $msg = _m('One user has been deactivated');
                                             break;
@@ -179,7 +179,7 @@
                                         }
 
                                         switch ($iDeleted) {
-                                            case (0):   $msg = _m('Any user has been deleted');
+                                            case (0):   $msg = _m('No user has been deleted');
                                             break;
                                             case (1):   $msg = _m('One user has been deleted');
                                             break;

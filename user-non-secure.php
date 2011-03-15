@@ -52,6 +52,19 @@ class CWebUserNonSecure extends BaseModel
                                                     $this->redirectTo( osc_base_url() ) ;
                                             }
             break;
+            
+            case 'unsub_alert':
+                $email = Params::getParam('email');
+                $alert = Params::getParam('alert');
+                if($email!='' && $alert!='') {
+                    Alerts::newInstance()->delete(array('s_email' => $email, 's_search' => $alert));
+                    osc_add_flash_message(__('Unsubscribed correctly.'));
+                } else {
+                    osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                }
+                osc_redirectTo(osc_base_url());
+            break;
+            
             default:
                 $this->redirectTo( osc_user_login_url() );
             break;

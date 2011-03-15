@@ -30,6 +30,12 @@
          //add...
          function add()
          {
+            if ((osc_recaptcha_private_key() != '') && !$this->is_admin) {
+                if(!$this->recaptcha()) {
+                    return 4;
+                }
+            }
+
             $input = $this->prepareData(true) ;
 
             $email_taken = $this->manager->findByEmail($input['s_email']) ;
@@ -121,6 +127,20 @@
             return 0;
         }
 
+        public function recaptcha()
+        {
+            require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+            if ( Params::getParam("recaptcha_challenge_field") != '') {
+                $resp = recaptcha_check_answer (osc_recaptcha_private_key()
+                                               ,$_SERVER["REMOTE_ADDR"]
+                                               ,Params::getParam("recaptcha_challenge_field")
+                                               ,Params::getParam("recaptcha_response_field"));
+
+                return $resp->is_valid;
+            }
+
+            return false;
+        }
 
         //   
         function prepareData($is_add)
@@ -147,7 +167,7 @@
                     $input['s_password'] = sha1( Params::getParam('s_password') ) ;
                 }
             }
-            
+
             $input['s_name'] = Params::getParam('s_name') ;
             $input['s_website'] = Params::getParam('s_website') ;
             $input['s_phone_land'] = Params::getParam('s_phone_land') ;
@@ -193,6 +213,7 @@
             $input['s_city'] = $cityName ;
             $input['s_city_area'] = Params::getParam('cityArea') ;
             $input['s_address'] = Params::getParam('address') ;
+            $input['b_company'] = Params::getParam('b_company') ;
             
             return($input) ;
         }

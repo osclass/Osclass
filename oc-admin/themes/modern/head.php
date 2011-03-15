@@ -69,7 +69,7 @@
         $(function() {
             var version = <?php echo osc_version() ; ?> ;
 
-            $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
+            $.getJSON("http://osclass.org/latest_version.php?callback=?", function(data) {
                 var update = document.getElementById('update_version') ;
                 if(data.version > version) {
                     //var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>' ;

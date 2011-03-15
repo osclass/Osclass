@@ -46,30 +46,5 @@ class UserEmailTmp extends DAO {
 
         }
 	}
-
-   /*public function findByEmail($email) {
-		$results = $this->listWhere("s_email = '%s'", $email);
-		return count($results) == 1 ? $results[0] : null;
-	}
-
-        public function findByUsername($username) {
-		$results = $this->listWhere("s_username = '%s'", $username);
-		return count($results) == 1 ? $results[0] : null;
-	}
-
-	public function findByCredentials($userName, $password) {
-		$results = $this->listWhere("s_username = '%s' AND s_password = '%s'", $userName, sha1($password));
-		return count($results) == 1 ? $results[0] : null;
-	}
-
-	public function findByIdSecret($id, $secret) {
-		return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_secret = '%s'",
-			$this->getTableName(), $id, $secret);
-	}
-
-	public function updateArray($admin) {
-		$this->conn->osc_dbExec("UPDATE %s SET s_name = '%s', s_username = '%s', s_email = '%s', s_password = '%s' WHERE pk_i_id = %d", $this->getTableName(),
-			$admin['name'], $admin['userName'], $admin['email'], $admin['password'], $admin['id']);
-	}*/
 }
 ?>
