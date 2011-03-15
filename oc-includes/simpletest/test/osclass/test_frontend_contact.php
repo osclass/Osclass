@@ -7,8 +7,6 @@ require_once('../../reporter.php');
 require_once '../../../../oc-load.php';
 require_once LIB_PATH . 'Selenium.php';
 
-include 'test_frontend_register.php';
-
 class TestOfContact extends WebTestCase {
 
     private $selenium;
@@ -29,7 +27,7 @@ class TestOfContact extends WebTestCase {
         flush();
     }
     /*           TESTS          */
-    public function testContact()
+    function testContact()
     {
         echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testContact</h2> -</div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - testContact - send mail</div>";

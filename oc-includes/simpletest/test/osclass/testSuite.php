@@ -23,6 +23,7 @@ class AllTests extends TestSuite {
     function AllTests() {
         $this->TestSuite('All tests');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_pages.php');
+
     }
 }
 

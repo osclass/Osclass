@@ -7,7 +7,7 @@ require_once('../../reporter.php');
 require_once '../../../../oc-load.php';
 require_once LIB_PATH . 'Selenium.php';
 
-include 'test_frontend_register.php';
+
 
 class TestOfLogin extends WebTestCase {
 
@@ -46,7 +46,7 @@ class TestOfLogin extends WebTestCase {
         // create a new user.
         $mail = 'carlos+user@osclass.org';
         $pass = '123456';
-        TestOfRegister::doRegisterUser($mail,$pass,$this->selenium);
+        $this->doRegisterUser($mail,$pass,$this->selenium);
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - loginPassIncorrect</div>";
         $this->loginPassIncorrect($mail,'foobar');
@@ -70,7 +70,22 @@ class TestOfLogin extends WebTestCase {
     /*
      * PRIVATE FUNCTIONS
      */
+    private function doRegisterUser($mail, $pass, $selenium)
+    {
+        echo "registering new user... <br>";
 
+        $selenium->open( osc_base_url(true) );
+        $selenium->click("link=Register for a free account");
+        $selenium->waitForPageToLoad("10000");
+
+        $selenium->type('s_name'      , 'testuser');
+        $selenium->type('s_password'  , $pass);
+        $selenium->type('s_password2' , $pass);
+        $selenium->type('s_email'     , $mail);
+
+        $selenium->click('xpath=//span/button');
+        $selenium->waitForPageToLoad(1000);
+    }
     private function logout()
     {
         $this->selenium->open( osc_base_url(true) );

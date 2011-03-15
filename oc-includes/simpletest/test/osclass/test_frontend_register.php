@@ -254,24 +254,5 @@ class TestOfRegister extends WebTestCase {
             $this->assertFalse("Validate an validated user. ERROR");
         }
     }
-
-    //  STATIC FUNCTIONS
-    static function doRegisterUser($mail, $pass, $selenium)
-    {
-
-        echo "registering new user... <br>";
-
-        $selenium->open( osc_base_url(true) );
-        $selenium->click("link=Register for a free account");
-        $selenium->waitForPageToLoad("10000");
-
-        $selenium->type('s_name'      , 'testuser');
-        $selenium->type('s_password'  , $pass);
-        $selenium->type('s_password2' , $pass);
-        $selenium->type('s_email'     , $mail);
-
-        $selenium->click('xpath=//span/button');
-        $selenium->waitForPageToLoad(1000);
-    }
 }
 ?>

@@ -179,8 +179,8 @@ class TestOfAdminPages extends WebTestCase {
             $this->selenium->waitForPageToLoad(1000);
         }
         
-        $this->selenium->type('user', 'admin');
-        $this->selenium->type('password', 'xdf9emho');
+        $this->selenium->type('user', 'testadmin');
+        $this->selenium->type('password', 'password');
         $this->selenium->click('submit');
         $this->selenium->waitForPageToLoad(1000);
         
