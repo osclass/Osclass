@@ -411,6 +411,7 @@ Class ItemActions
         $body           = $aItem['body'] ;
         $title          = $aItem['title'] ;
         $itemId         = $aItem['id'] ;
+        $userId         = $aItem['userId'] ;
 
         $item = $this->manager->findByPrimaryKey($itemId) ;
 
@@ -418,10 +419,17 @@ Class ItemActions
         
         Params::setParam('itemURL', $itemURL);
 
-        if (osc_moderate_comments()) {
-            $status = 'INACTIVE' ;
+        $num_moderate_comments = osc_moderate_comments();
+        if($userId==null) {
+            $num_comments = 0;
         } else {
-            $status = 'ACTIVE' ;
+            $num_comments = count(ItemComment::newInstance()->findByAuthorID($userId));
+        }
+
+        if ($num_moderate_comments==-1 || ($num_moderate_comments!=0 && $num_comments>=$num_moderate_comments)) {
+            $status = 'ACTIVE';
+        } else {
+            $status = 'INACTIVE' ;
         }
         if (osc_akismet_key()) {
             require_once LIB_PATH . 'Akismet.class.php' ;
@@ -434,7 +442,7 @@ Class ItemActions
             $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
         }
 
-        $mComments = new Comment() ;
+        $mComments = ItemComment::newInstance();
         $aComment  = array(
                         'dt_pub_date'    => DB_FUNC_NOW
                         ,'fk_i_item_id'   => $itemId
@@ -443,6 +451,7 @@ Class ItemActions
                         ,'s_title'        => $title
                         ,'s_body'         => $body
                         ,'e_status'       => $status
+                        ,'fk_i_user_id'   => $userId
                     );
 
         if( $mComments->insert($aComment) ){
@@ -539,7 +548,10 @@ Class ItemActions
                 $aItem['body']           = Params::getParam('body') ;
                 $aItem['title']          = Params::getParam('title') ;
                 $aItem['id']             = Params::getParam('id') ;
-
+                $aItem['userId']         = Session::newInstance()->_get('userId');
+                if($aItem['userId'] == ''){
+                    $aItem['userId'] = NULL;
+                }
 
             break;
             default:

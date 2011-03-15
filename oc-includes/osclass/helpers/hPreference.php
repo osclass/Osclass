@@ -45,7 +45,7 @@
     }
 
     function osc_moderate_comments() {
-        return (getBoolPreference('moderate_comments')) ;
+        return (getPreference('moderate_comments')) ;
     }
 
     function osc_notify_new_comment() {

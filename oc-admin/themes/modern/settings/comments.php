@@ -22,6 +22,17 @@
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
     </head>
+    <script type="text/javascript">
+        function checkbox_change() {
+            var on = $("#moderate_comments").is(':checked');
+            if(on==1) {
+                $("#num_moderate_comments_div").show();
+                $("#num_moderate_comments").val(0);
+            } else {
+                $("#num_moderate_comments_div").hide();
+            }
+        };
+    </script>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
@@ -53,8 +64,12 @@
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_comments_enabled() ? 'checked="true"' : ''); ?> name="enabled_comments" id="enabled_comments" value="1" />
                                     <label for="enabled_comments"><?php _e('Comments enabled'); ?></label>
                                     <br/>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_moderate_comments() ? 'checked="true"' : ''); ?> name="moderate_comments" id="moderate_comments" value="1" />
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" onclick="checkbox_change();" <?php echo ((osc_moderate_comments()==-1) ? '' : 'checked="true"'); ?> name="moderate_comments" id="moderate_comments" value="1" />
                                     <label for="moderate_comments"><?php _e('Moderate comments') ; ?></label>
+                                    <div name="num_moderate_comments_div" id="num_moderate_comments_div" <?php echo ((osc_moderate_comments()==-1) ? 'style="display:none"' : ''); ?>>
+                                        &nbsp;<label><?php _e('Number of comments from same author that should be validated before skipping validation (0 for always moderation)'); ?></label>
+                                        <input type="text" name="num_moderate_comments" id="num_moderate_comments" value="<?php echo ((osc_moderate_comments()==-1) ? '' : osc_moderate_comments()); ?>" />
+                                    </div>
                                 </fieldset>
                             </div>
                             

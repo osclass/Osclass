@@ -30,6 +30,12 @@
          //add...
          function add()
          {
+            if ((osc_recaptcha_private_key() != '') && !$this->is_admin) {
+                if(!$this->recaptcha()) {
+                    return 4;
+                }
+            }
+
             $input = $this->prepareData(true) ;
 
             $email_taken = $this->manager->findByEmail($input['s_email']) ;
@@ -121,6 +127,20 @@
             return 0;
         }
 
+        public function recaptcha()
+        {
+            require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+            if ( Params::getParam("recaptcha_challenge_field") != '') {
+                $resp = recaptcha_check_answer (osc_recaptcha_private_key()
+                                               ,$_SERVER["REMOTE_ADDR"]
+                                               ,Params::getParam("recaptcha_challenge_field")
+                                               ,Params::getParam("recaptcha_response_field"));
+
+                return $resp->is_valid;
+            }
+
+            return false;
+        }
 
         //   
         function prepareData($is_add)
