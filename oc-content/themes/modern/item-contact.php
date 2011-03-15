@@ -39,8 +39,13 @@
                             <?php ContactForm::page_hidden() ; ?>
                             <label><?php _e('To (seller)', 'modern'); ?>: <?php echo osc_item_contact_name() ;?></label><br/>
                             <label><?php _e('Item', 'modern'); ?>: <a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></label><br/>
-                            <label for="yourName"><?php _e('Your name', 'modern'); ?></label> <?php ContactForm::your_name(); ?><br/>
-                            <label for="yourEmail"><?php _e('Your e-mail address', 'modern'); ?></label> <?php ContactForm::your_email(); ?><br />
+                            <?php if(osc_is_web_user_logged_in()) { ?>
+                                <input type="hidden" name="yourName" value="<?php echo osc_logged_user_name(); ?>" />
+                                <input type="hidden" name="yourEmail" value="<?php echo osc_logged_user_email();?>" />
+                            <?php } else { ?>
+                                <label for="yourName"><?php _e('Your name', 'modern'); ?></label> <?php ContactForm::your_name(); ?><br/>
+                                <label for="yourEmail"><?php _e('Your e-mail address', 'modern'); ?></label> <?php ContactForm::your_email(); ?><br />
+                            <?php }; ?>
                             <label for="phoneNumber"><?php _e('Phone number', 'modern'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php ContactForm::your_message(); ?><br />
                             <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'modern'); ?></button>
