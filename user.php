@@ -135,13 +135,15 @@ class CWebUser extends WebSecBaseModel
                                                                 ,'alt_body' => $body
                                                             ) ;
                                                             osc_sendMail($params) ;
+                                                            osc_add_flash_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
+                                                        } else {
+                                                            osc_add_flash_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
                                                         }
-                                                        osc_add_flash_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
                                                         $this->redirectTo( osc_user_profile_url() ) ;
 
                                                     } else {
                                                         
-                                                        $manager->update(
+                                                        $userManager->update(
                                                             array( 's_email' => Params::getParam('new_email') )
                                                             ,array( 'pk_i_id' => Params::getParam('userId') )
                                                         ) ;
