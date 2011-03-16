@@ -63,11 +63,12 @@ class CWebUser extends WebSecBaseModel
                                     $userActions = new UserActions(false) ;
                                     $success = $userActions->edit( $userId ) ;
 
-                                    if( $success == 1 ) {
+                                    // This has been moved to special area (only password changes)
+                                    /*if( $success == 1 ) {
                                         osc_add_flash_message( _m('Passwords don\'t match') ) ;
-                                    } else {
+                                    } else {*/
                                         osc_add_flash_message( _m('Your profile has been updated successfully') ) ;
-                                    }
+                                    //}
 
                                     $this->redirectTo( osc_user_profile_url() ) ;
             break ;
