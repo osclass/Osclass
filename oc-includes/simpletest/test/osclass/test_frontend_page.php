@@ -31,7 +31,7 @@ class TestOfPage extends WebTestCase {
     /*           TESTS          */
     public function testPage()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testPage</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_page >> testPage</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - testPage - show page</div>";
         $this->showPage();
         flush();

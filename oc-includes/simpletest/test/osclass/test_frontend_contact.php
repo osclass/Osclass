@@ -29,7 +29,7 @@ class TestOfContact extends WebTestCase {
     /*           TESTS          */
     function testContact()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testContact</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_contact >> testContact</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - testContact - send mail</div>";
         $this->contact();
         flush();

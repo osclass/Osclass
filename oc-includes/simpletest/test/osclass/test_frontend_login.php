@@ -37,7 +37,7 @@ class TestOfLogin extends WebTestCase {
      */
     public function testLogin()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testLogin</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_login >> testLogin</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Create new user -</div>";
         
         // need enabled_user_validation = 0, this way isn't necessary validate

@@ -9,7 +9,7 @@ require_once LIB_PATH . 'Selenium.php';
 
 
 
-class TestOfLogin extends WebTestCase {
+class TestOfUser extends WebTestCase {
 
     private $selenium;
     private $array = array();
@@ -20,7 +20,6 @@ class TestOfLogin extends WebTestCase {
     function setUp()
     {
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
-
         $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
@@ -67,29 +66,30 @@ class TestOfLogin extends WebTestCase {
     
 
     /*           TESTS          */
-//    function testChangePassword()
-//    {
-//        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testChangePassword</h2> -</div>";
-//        $this->changePassword();
-//    }
-
-//    function testChangeEmail()
-//    {
-//        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testChangeEmail</h2> -</div>";
-//        $this->changeEmail();
-//    }
-
-//    function testUpdateProfile()
-//    {
-//        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testUpdateProfile</h2> -</div>";
-//        $this->profile();
-//    }
-
-    function testDashboard()
+    function testChangePassword()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testDashboard</h2> -</div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'></div>";
+        echo "<div style='background-color: green; color: white;'><h2>testChangePassword</h2></div>";
+        $this->changePassword();
     }
+
+    function testChangeEmail()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testChangeEmail</h2></div>";
+        $this->changeEmail();
+    }
+
+    function testUpdateProfile()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testUpdateProfile</h2></div>";
+        $this->profile();
+    }
+
+    // nothing to test ?
+//    function testDashboard()
+//    {
+//        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testDashboard</h2> -</div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'></div>";
+//    }
 
     function  testdeleteUser() {
         echo "delete user for testing<br>";
@@ -97,7 +97,6 @@ class TestOfLogin extends WebTestCase {
         User::newInstance()->deleteUser($user['pk_i_id']);
         $user = User::newInstance()->findByEmail($this->email_fixed);
         User::newInstance()->deleteUser($user['pk_i_id']);
-
     }
 
     /*

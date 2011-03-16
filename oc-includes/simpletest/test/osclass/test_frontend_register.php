@@ -36,7 +36,7 @@ class TestOfRegister extends WebTestCase {
      */
     public function testRegisterNewUser()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testRegisterNewUser</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterNewUser</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert -  </div>";
         $this->registerUser() ;
 
@@ -50,7 +50,7 @@ class TestOfRegister extends WebTestCase {
      */
     function testRegisterNewUser2()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testRegisterNewUser2</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterNewUser2</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - modifying the value of enabled_user_validation ... </div>";
 
         if(osc_user_validation_enabled() ) {
@@ -79,7 +79,7 @@ class TestOfRegister extends WebTestCase {
      */
     public function testRegisterSameUserTwice()
     {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testRegisterSameUserTwice</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterSameUserTwice</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert twice- </div>";
         $this->registerUserTwice() ;
         flush();
@@ -92,7 +92,7 @@ class TestOfRegister extends WebTestCase {
      */
      public function testRegisterUserIncorrectPasswords()
      {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testRegisterUserIncorrectPasswords</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterUserIncorrectPasswords</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - passwords incorrect</div>";
         $this->registerUserIncorrectPassword() ;
         flush();
@@ -103,7 +103,7 @@ class TestOfRegister extends WebTestCase {
       */
      public function testValidation()
      {
-        echo "<div style='background-color: green; color: white;'>FRONTEND - <h2>testValidation</h2> -</div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testValidation</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert -</div>";
         $this->registerValidate();
 
