@@ -107,7 +107,7 @@
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=1\'>'. __('Mark as premium') .'</a>';
                     }
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=item_edit&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Edit') .'</a>';
-                                            $var = 'onclick=\"javascript:return confirm(\''.__('This action can\\\\\'t be undone. Are you sure you want to continue?').'\')\"';
+                                            $var = 'onclick=\"javascript:return confirm(\''.__('This action can not be undone. Are you sure you want to continue?').'\')\"';
                     $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=delete&amp;id[]='. $aRow['pk_i_id'] .'\'>'. __('Delete') .'</a></span>",';
 
                     /* if $_GET['stat'] */

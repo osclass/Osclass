@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0 RC4') ;
+define('OSCLASS_VERSION', '2.0 RC5') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -85,7 +85,6 @@ require_once LIB_PATH . 'osclass/model/City.php';
 require_once LIB_PATH . 'osclass/model/Country.php';
 require_once LIB_PATH . 'osclass/model/Currency.php';
 require_once LIB_PATH . 'osclass/model/Locale.php';
-require_once LIB_PATH . 'osclass/model/Test.php';
 require_once LIB_PATH . 'osclass/model/Item.php';
 require_once LIB_PATH . 'osclass/model/ItemComment.php';
 require_once LIB_PATH . 'osclass/model/ItemResource.php';

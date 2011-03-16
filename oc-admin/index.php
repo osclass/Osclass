@@ -85,10 +85,6 @@
                             $do = new CAdminTools() ;
                             $do->doModel() ;
         break;
-        case('test'):       require_once(osc_admin_base_path() . 'test.php') ;
-                            $do = new CAdminTest() ;
-                            $do->doModel() ;
-        break;
         default:            //login of oc-admin
                             require_once(osc_admin_base_path() . 'main.php') ;
                             $do = new CAdminMain() ;

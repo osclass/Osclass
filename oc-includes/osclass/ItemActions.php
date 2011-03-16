@@ -405,19 +405,29 @@ Class ItemActions
     public function add_comment()
     {
         $aItem  = $this->prepareDataForFunction('add_comment');
-        
-        $authorName     = $aItem['authorName'] ;
-        $authorEmail    = $aItem['authorEmail'] ;
-        $body           = $aItem['body'] ;
+
+        $authorName     = trim($aItem['authorName']);
+        $authorName     = strip_tags($authorName);
+        $authorEmail    = trim($aItem['authorEmail']);
+        $authorEmail    = strip_tags($authorEmail);
+        $body           = trim($aItem['body']);
+        $body           = strip_tags($body);
         $title          = $aItem['title'] ;
         $itemId         = $aItem['id'] ;
         $userId         = $aItem['userId'] ;
-
-        $item = $this->manager->findByPrimaryKey($itemId) ;
-
-        $itemURL = osc_item_url() ;
+        $status_num     = -1;
         
+        $item = $this->manager->findByPrimaryKey($itemId) ;
+        $itemURL = osc_item_url() ;
         Params::setParam('itemURL', $itemURL);
+
+        if( $authorName == '' || !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
+            return 3;
+        }
+        
+        if( ($body == '') ) {
+            return 4;
+        }
 
         $num_moderate_comments = osc_moderate_comments();
         if($userId==null) {
@@ -426,11 +436,14 @@ Class ItemActions
             $num_comments = count(ItemComment::newInstance()->findByAuthorID($userId));
         }
 
-        if ($num_moderate_comments==-1 || ($num_moderate_comments!=0 && $num_comments>=$num_moderate_comments)) {
+        if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {
             $status = 'ACTIVE';
+            $status_num = 2;
         } else {
-            $status = 'INACTIVE' ;
+            $status = 'INACTIVE';
+            $status_num = 1;
         }
+        
         if (osc_akismet_key()) {
             require_once LIB_PATH . 'Akismet.class.php' ;
             $akismet = new Akismet(osc_base_url(), osc_akismet_key()) ;
@@ -440,22 +453,22 @@ Class ItemActions
             $akismet->setPermalink($itemURL) ;
 
             $status = $akismet->isCommentSpam() ? 'SPAM' : $status ;
+            if($status == 'SPAM') {
+                $status_num = 5;
+            }
         }
 
         $mComments = ItemComment::newInstance();
-        $aComment  = array(
-                        'dt_pub_date'    => DB_FUNC_NOW
-                        ,'fk_i_item_id'   => $itemId
-                        ,'s_author_name'  => $authorName
-                        ,'s_author_email' => $authorEmail
-                        ,'s_title'        => $title
-                        ,'s_body'         => $body
-                        ,'e_status'       => $status
-                        ,'fk_i_user_id'   => $userId
-                    );
+        $aComment  = array('dt_pub_date'    => DB_FUNC_NOW
+                          ,'fk_i_item_id'   => $itemId
+                          ,'s_author_name'  => $authorName
+                          ,'s_author_email' => $authorEmail
+                          ,'s_title'        => $title
+                          ,'s_body'         => $body
+                          ,'e_status'       => $status
+                          ,'fk_i_user_id'   => $userId);
 
         if( $mComments->insert($aComment) ){
-
             $notify = osc_notify_new_comment() ;
             $admin_email = osc_contact_email() ;
             $prefLocale = osc_language() ;
@@ -498,10 +511,10 @@ Class ItemActions
                 osc_sendMail($emailParams) ;
             }
             osc_run_hook('add_comment', $item);
-            return $status;
-        }else{
-            osc_add_flash_message( _m('We are very sorry but we could not save your comment. Try again later')) ;
+            return $status_num;
         }
+        
+        return -1;
     }
     
     /**
