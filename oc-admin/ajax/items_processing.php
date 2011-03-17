@@ -50,7 +50,7 @@
                 $list_items = $this->findByItemStat($this->stat);
 
             } else {
-                $list_items = $this->list_items(null, $this->start, $this->limit, null, $this->order_by, $this->search);
+                $list_items = $this->list_items((Params::getParam('catId')=='')?null:Params::getParam('catId'), $this->start, $this->limit, null, $this->order_by, $this->search);
             }
 
             $this->result = $list_items['items'];
