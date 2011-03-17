@@ -143,7 +143,7 @@ class CWebUser extends WebSecBaseModel
 
                                                     } else {
                                                         
-                                                        $userManager->update(
+                                                        User::newInstance()->update(
                                                             array( 's_email' => Params::getParam('new_email') )
                                                             ,array( 'pk_i_id' => Params::getParam('userId') )
                                                         ) ;
