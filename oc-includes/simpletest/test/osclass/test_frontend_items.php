@@ -120,40 +120,40 @@ class TestOfItems extends WebTestCase {
         flush();
     }
 
-//    function testEditUserItemBadId()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
-//        $this->editUserItemBadId();
-//    }
-//
-//    function testActivate() // Activate
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testActivate</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-//        $this->login();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Activating first item</div>";
-//        $this->activateUserItem();
-//    }
-//
-//    function testEditItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-//        $this->login();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
-//        $this->editUserItem();
-//    }
-//
-//
-//    function testDeleteItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-//        $this->login();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
-//        $this->deleteItem();
-//    }
+    function testEditUserItemBadId()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
+        $this->editUserItemBadId();
+    }
+
+    function testActivate() // Activate
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testActivate</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+        $this->login();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Activating first item</div>";
+        $this->activateUserItem();
+    }
+
+    function testEditItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+        $this->login();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
+        $this->editUserItem();
+    }
+
+
+    function testDeleteItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+        $this->login();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
+        $this->deleteItem();
+    }
 
     function  testdeleteUser() {
         echo "delete user for testing<br>";
