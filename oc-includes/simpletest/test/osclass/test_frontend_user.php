@@ -237,7 +237,6 @@ class TestOfUser extends WebTestCase {
         $this->selenium->type("new_email" , "carlos+new@osclass.org");
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-        sleep(20);
 
         $this->assertTrue( $this->selenium->isTextPresent("Your email has been changed successfully"),
                            "Can't change email!. ERROR");
