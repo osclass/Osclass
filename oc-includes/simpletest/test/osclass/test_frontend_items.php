@@ -75,57 +75,85 @@ class TestOfItems extends WebTestCase {
      *
      * REQUIRE: user logged in
      */
-    function testItemInsert()
+    function testItemInsertUserLogged()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testItemInsert</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Force osc_reg_user_post  == true . Testing insert item</div>";
-        Preference::newInstance()->update(array('s_value' => 1)
-                                         ,array('s_name'  => 'reg_user_post'));
-        $this->insertItem();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Force osc_reg_user_post  == false . Testing insert item</div>";
+        echo "<div style='background-color: green; color: white;'><h2>testItemInsertUserLogged</h2></div>";
+/*
+ *         TEST WITH NO LOGGED USER
+ */
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - </div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - YES, CAN PUBLISH ITEMS</div>";
         Preference::newInstance()->update(array('s_value' => 0)
                                          ,array('s_name'  => 'reg_user_post'));
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+
+        Preference::newInstance()->update(array('s_value' => 0)
+                                         ,array('s_name'  => 'enabled_item_validation'));
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - WITHOUT VALIDATION MAIL</div>";
+        $this->insertItem();
+
+        Preference::newInstance()->update(array('s_value' => 1)
+                                         ,array('s_name'  => 'enabled_item_validation'));
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - WITH VALIDATION MAIL</div>";
+        $this->insertItem();
+
+        Preference::newInstance()->update(array('s_value' => 1)
+                                         ,array('s_name'  => 'reg_user_post'));
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - NO, CAN'T PUBLISH ITEMS</div>";
+        $this->insertItem();
+
+/*
+ *         TEST WITH LOGGED USER
+ */
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - </div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'></div>";
+        Preference::newInstance()->update(array('s_value' => 1)
+                                         ,array('s_name'  => 'logged_user_item_validation'));
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - WITHOUT VALIDATION MAIL</div>";
+        $this->login();
+        $this->insertItem();
+        flush();
+        Preference::newInstance()->update(array('s_value' => 0)
+                                         ,array('s_name'  => 'logged_user_item_validation'));
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - WITH VALIDATION MAIL</div>";
         $this->login();
         $this->insertItem();
         flush();
     }
 
-    function testEditUserItemBadId()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
-        $this->editUserItemBadId();
-    }
-
-    function testActivate() // Activate
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testActivate</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-        $this->login();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Activating first item</div>";
-        $this->activateUserItem();
-    }
-
-    function testEditItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-        $this->login();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
-        $this->editUserItem();
-    }
-
-
-    function testDeleteItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-        $this->login();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
-        $this->deleteItem();
-    }
+//    function testEditUserItemBadId()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
+//        $this->editUserItemBadId();
+//    }
+//
+//    function testActivate() // Activate
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testActivate</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+//        $this->login();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Activating first item</div>";
+//        $this->activateUserItem();
+//    }
+//
+//    function testEditItem()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+//        $this->login();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
+//        $this->editUserItem();
+//    }
+//
+//
+//    function testDeleteItem()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+//        $this->login();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
+//        $this->deleteItem();
+//    }
 
     function  testdeleteUser() {
         echo "delete user for testing<br>";
@@ -158,15 +186,25 @@ class TestOfItems extends WebTestCase {
 
     private function insertItem()
     {
-        $bool = Preference::newInstance()->findValueByName('reg_user_post');
-        if($bool) {echo "reg_user_post == true<br>";}else{echo "reg_user_post == false<br>";}
+        $reg_user_post = Preference::newInstance()->findValueByName('reg_user_post');
+        $enabled_item_validation = Preference::newInstance()->findValueByName('enabled_item_validation');
+        $logged_user_item_validation = Preference::newInstance()->findValueByName('logged_user_item_validation');
+
+//        if($reg_user_post) {echo "reg_user_post == true<br>";}else{echo "reg_user_post == false<br>";}
+//        if($enabled_item_validation) {echo "enabled_item_validation == true<br>";}else{echo "enabled_item_validation == false<br>";}
+//        if($logged_user_item_validation) {echo "logged_user_item_validation == true NO HAY QUE VALIDAR<br>";}else{echo "logged_user_item_validation == false HAY QUE VALIDAR<br>";}
+
+        flush();
 
         $this->selenium->open( osc_base_url(true) );
 
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
 
-        if( $this->logged == 1 || !$bool) {
+        if( $this->logged == 0 && $reg_user_post ) {
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>Only registered users are allowed to post items</div>";
+            $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Allow no users to post items .reg_user_post == true. ERROR ");
+        } else {
 
             $this->selenium->select("catId", "label=Cars");
 
@@ -184,16 +222,34 @@ class TestOfItems extends WebTestCase {
             $this->selenium->type("photos[]", "/Library/Application Support/Apple/iChat Icons/Gems/Sapphire Round.gif");
             $this->selenium->click("link=Add new photo");
             $this->selenium->type("//div[@id='p-0']/input", "/Library/Application Support/Apple/iChat Icons/Gems/Ruby Round.gif");
+
+            if($this->logged == 0){
+                $this->selenium->type("contactName", "carlos");
+                $this->selenium->type("contactEmail", "carlos+usertest@osclass.org");
+            }
             
-            $this->selenium->click("//button[@type='submit']");
+            $this->selenium->click("//button[text()='Publish']");
             $this->selenium->waitForPageToLoad("30000");
 
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>Great! You'll receive an e-mail to activate your item</div>";
-            $this->assertTrue($this->selenium->isTextPresent("Great! You'll receive an e-mail to activate your item"));
-            
-        } else if ($this->logged == 0 && $bool) {
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>Only registered users are allowed to post items</div>";
-            $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Allow no users to post items .reg_user_post == true. ERROR ");
+//            echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
+
+            if( $this->logged == 0 ){
+                if($enabled_item_validation){
+//                    echo "<div style='background-color: green; color: white;padding-left:15px;'>No user and need validation item - Great! You'll receive an e-mail to activate your item</div>";
+                    $this->assertTrue($this->selenium->isTextPresent("Great! You'll receive an e-mail to activate your item","Need validation but message don't appear") );
+                } else {
+//                    echo "<div style='background-color: green; color: white;padding-left:15px;'>Great! We've just published your item</div>";
+                    $this->assertTrue($this->selenium->isTextPresent("Great! We've just published your item","no logged in error inserting ad.") );
+                }
+            } else {
+                if($logged_user_item_validation){
+//                    echo "<div style='background-color: green; color: white;padding-left:15px;'>without validation. Great! We've just published your item</div>";
+                    $this->assertTrue($this->selenium->isTextPresent("Great! We've just published your item","insert ad error ") );
+                } else {
+//                    echo "<div style='background-color: green; color: white;padding-left:15px;'>Registered user and need validation item - Great! You'll receive an e-mail to activate your item</div>";
+                    $this->assertTrue($this->selenium->isTextPresent("Great! You'll receive an e-mail to activate your item","Need validation but message don't appear") );
+                }
+            }
         }
     }
 
@@ -251,7 +307,7 @@ class TestOfItems extends WebTestCase {
 
         $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
         $this->selenium->waitForPageToLoad("30000");
-        sleep(20);
+        
         // delete first item
         $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("30000");
