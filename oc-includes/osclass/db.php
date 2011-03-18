@@ -91,7 +91,8 @@ class DB
      * @param string datatabase name
      */
     function osc_dbConnect() {
-    	$this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+        //echo "#" , $this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName ;
+    	$this->db = new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
         if ($this->db->connect_error) {
             $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
         }
