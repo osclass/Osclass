@@ -63,7 +63,9 @@ Class ItemActions
             !preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)  ||
             !preg_match("/^[0-9]+$/", $aItem['catId'] )) {
             osc_add_flash_message( _m('Some fields were too short. Try again!') );
-            //osc_add_flash_message( _m('You need to insert your name and email to be able to publish a new item'));
+            $success = false;
+        } else if((time()-Session::newInstance()->_get('last_publish_time'))<60) {
+            osc_add_flash_message( _m('Seems you posted recently. Please wait a little bit.') );
             $success = false;
         } else {
             $this->manager->insert(array(
@@ -117,6 +119,8 @@ Class ItemActions
             // send an e-mail to the admin with the data of the new item
             // and send an e-email to admin to validate the item if configured to do so
             if( !$this->is_admin ) {
+                // Stop publishing items in less than a minute
+                Session::newInstance()->_set('last_publish_time', time());
                 $this->sendEmails($aItem);
             }
 
