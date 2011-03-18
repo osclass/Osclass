@@ -57,9 +57,7 @@ Class ItemActions
             $contactName = __("Anonymous");
         }
 
-
         if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
-            
 
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
@@ -140,8 +138,10 @@ Class ItemActions
     {
         $aItem = $this->prepareData(false);
 
-        $contactEmail   = @$aItem['contactEmail'] ;
+        // QUICK FIX $contactmMail
+        $contactEmail   = "valid@mail.com" ;
         // Validate
+        
         if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
         
             $location = array(
@@ -157,9 +157,6 @@ Class ItemActions
 
             $locationManager = ItemLocation::newInstance();
             $locationManager->update( $location, array( 'fk_i_item_id' => $aItem['idItem'] ) );
-
-//            $contactName    = @$aItem['contactName'] ;
-//            $contactEmail   = @$aItem['contactEmail'] ;
 
             // Update category numbers
             $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
@@ -190,7 +187,7 @@ Class ItemActions
 
             return $result;
         } else {
-            return FALSE;
+            return false;
         }
     }
     
@@ -524,7 +521,15 @@ Class ItemActions
         return -1;
     }
     
-    // validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos'])
+    /**
+     * Validate some things previous to add or edit
+     * @param <string> $title
+     * @param <string> $description
+     * @param <string> $contactEmail
+     * @param <string> $idCat
+     * @param <array> $aPhotos
+     * @return boolean 
+     */
     private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
     {
         $success = true;
@@ -535,9 +540,15 @@ Class ItemActions
             osc_add_flash_message( _m('Some fields were too short. Try again!') );
             $success = false;
         }
-        if ( !$this->checkAlloweExt($aPhotos) ) {
+        
+        if ( !$this->checkAllowedExt($aPhotos) ) {
             $success = false;
         }
+
+        if ( !$this->checkSize($aPhotos) ) {
+            $success = false;
+        }
+        
         return $success;
     }
 
@@ -766,7 +777,31 @@ Class ItemActions
         }
     }
 
-    public function checkAlloweExt($aResources)
+    private function checkSize($aResources)
+    {
+        $success = true;
+
+        if($aResources != '') {
+            // get allowedExt
+            $maxSize = osc_max_size_kb() * 1024 ;
+            foreach ($aResources['error'] as $key => $error) {
+                $bool_img = false;
+                if ($error == UPLOAD_ERR_OK) {
+                    $size = $aResources['size'][$key];
+                    //echo "bytes: ".$size." [$size > $maxSize]<br>";
+                    if($size > $maxSize){
+                        $success = false;
+                    }
+                }
+            }
+            if(!$success){
+                osc_add_flash_message( _m("One of the files you tried to upload exceeds the maximum size")) ;
+            }
+        }
+        return $success;
+    }
+
+    private function checkAllowedExt($aResources)
     {
         $success = true;
 
@@ -774,16 +809,18 @@ Class ItemActions
             // get allowedExt
             $aExt = explode(',', osc_allowed_extension() );
             foreach ($aResources['error'] as $key => $error) {
+                $bool_img = false;
                 if ($error == UPLOAD_ERR_OK) {
                     // check mime file
                     $fileMime = $aResources['type'][$key] ;
                     preg_match_all('/.*\/(.*)/', $fileMime,$coincidencias);
                     $fileExt = $coincidencias[1][0];
-                    foreach($aExt as $validExt){
-                        if( !preg_match("/$validExt/", $fileExt) ) {
-                            $success = false;
-                        }
+
+                    if(in_array($fileExt, $aExt)) {
+                        $bool_img = true;
                     }
+
+                    if(!$bool_img && $success) {$success = false;}
                 }
             }
             if(!$success){
