@@ -57,8 +57,10 @@ Class ItemActions
             $contactName = __("Anonymous");
         }
 
+
         if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
             
+
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
@@ -110,6 +112,8 @@ Class ItemActions
             // send an e-mail to the admin with the data of the new item
             // and send an e-email to admin to validate the item if configured to do so
             if( !$this->is_admin ) {
+                // Stop publishing items in less than a minute
+                Session::newInstance()->_set('last_publish_time', time());
                 $this->sendEmails($aItem);
             }
 
