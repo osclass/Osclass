@@ -52,7 +52,7 @@
                                         <p class="options">
                                             <strong><a href="<?php echo osc_item_edit_url(); ?>"><?php _e('Edit', 'modern'); ?></a></strong>
                                             <span>|</span>
-                                            <a class="delete" onclick="javascript:return confirm('<?php _e('This action can nott be undone. Are you sure you want to continue?', 'modern'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete', 'modern'); ?></a>
+                                            <a class="delete" onclick="javascript:return confirm('<?php _e('This action can not be undone. Are you sure you want to continue?', 'modern'); ?>')" href="<?php echo osc_item_delete_url();?>" ><?php _e('Delete', 'modern'); ?></a>
                                             <?php if(osc_item_is_inactive()) {?>
                                             <span>|</span>
                                             <a href="<?php echo osc_item_activate_url();?>" ><?php _e('Activate', 'modern'); ?></a>
@@ -61,6 +61,16 @@
                                         <br />
                                 </div>
                         <?php } ?>
+                        <br />
+                        <div class="paginate" >
+                        <?php for($i = 0 ; $i < osc_list_total_pages() ; $i++) {
+                            if($i == osc_list_page()) {
+                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_user_list_items_url($i), ($i + 1));
+                            } else {
+                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_user_list_items_url($i), ($i + 1));
+                            }
+                        } ?>
+                        </div>
                     <?php } ?>
                 </div>
             </div>

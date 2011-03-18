@@ -61,6 +61,16 @@
                                         <br />
                                 </div>
                         <?php } ?>
+                        <br />
+                        <div class="paginate" >
+                        <?php for($i = 0 ; $i < osc_list_total_pages() ; $i++) {
+                            if($i == osc_list_page()) {
+                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_user_list_items_url($i), ($i + 1));
+                            } else {
+                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_user_list_items_url($i), ($i + 1));
+                            }
+                        } ?>
+                        </div>
                     <?php } ?>
                 </div>
             </div>
