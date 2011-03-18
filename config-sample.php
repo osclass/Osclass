@@ -3,6 +3,7 @@
 /**
  * The base MySQL settings of OSClass
  */
+define('MULTISITE', 1);
 
 /** MySQL database name for OSClass */
 define('DB_NAME', 'database_name');
