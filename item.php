@@ -197,8 +197,11 @@ class CWebItem extends BaseModel
                 $secret = Params::getParam('secret');
                 $id     = Params::getParam('id');
                 $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+
                 if (count($item) == 1) {
-                    
+
+                    $this->_exportVariableToView('item', $item[0]) ;
+
                     $mItems = new ItemActions(false);
                     $success = $mItems->edit();
 

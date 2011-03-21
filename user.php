@@ -28,9 +28,11 @@ class CWebUser extends WebSecBaseModel
     function doModel() {
         switch( $this->action ) {
             case('dashboard'):      //dashboard...
-                                    $aItems = Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));//list_items_by_user( Session::newInstance()->_get('userId') ) ;
+                                    $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
+                                    $aItems = Item::newInstance()->findByUserID(Session::newInstance()->_get('userId'), 0, $max_items);//Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));
                                     //calling the view...
                                     $this->_exportVariableToView('items', $aItems) ;
+                                    $this->_exportVariableToView('max_items', $max_items) ;
                                     $this->doView('user-dashboard.php') ;
             break ;
             case('profile'):        //profile...
@@ -211,9 +213,17 @@ class CWebUser extends WebSecBaseModel
                                             $this->redirectTo( osc_user_profile_url() ) ;
             break;
             case 'items':                   // view items user
-                                            $items = Item::newInstance()->findByUserID($_SESSION['userId']);
+                                            $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):5;
+                                            $page = (Params::getParam('iPage')!='')?Params::getParam('iPage'):0;
+                                            $total_items = Item::newInstance()->countByUserID($_SESSION['userId']);
+                                            $total_pages = ceil($total_items/$itemsPerPage);
+                                            $items = Item::newInstance()->findByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
 
                                             $this->_exportVariableToView('items', $items);
+                                            $this->_exportVariableToView('list_total_pages', $total_pages);
+                                            $this->_exportVariableToView('list_total_items', $total_items);
+                                            $this->_exportVariableToView('items_per_page', $itemsPerPage);
+                                            $this->_exportVariableToView('list_page', $page);
 
                                             $this->doView('user-items.php');
 

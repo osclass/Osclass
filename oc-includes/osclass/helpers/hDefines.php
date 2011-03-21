@@ -404,11 +404,19 @@
     }
 
     //osc_createUserItemsURL
-    function osc_user_list_items_url() {
+    function osc_user_list_items_url($page = '') {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/items' ;
+            if($page=='') {
+                return osc_base_url() . 'user/items' ;
+            } else {
+                return osc_base_url() . 'user/items?iPage='.$page ;
+            }
         } else {
-            return osc_base_url(true) . '?page=user&action=items' ;
+            if($page=='') {
+                return osc_base_url(true) . '?page=user&action=items' ;
+            } else {
+                return osc_base_url(true) . '?page=user&action=items&iPage='.$page ;
+            }
         }
     }
 
