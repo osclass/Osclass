@@ -16,11 +16,12 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once "../../oc-load.php";
+//require_once "../../oc-load.php";
 
     $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
-    if($version < 119) {
+    // FOR 2.x ALL THIS HAS TO BE DELETED, NOT USE ANYMORE
+    /*if($version < 119) {
         osc_sql110() ;
         osc_changeVersionTo(119) ;
     }
@@ -33,7 +34,7 @@ require_once "../../oc-load.php";
     if($version < 121) {
         osc_sql120() ;
         osc_changeVersionTo(121) ;
-    }
+    }*/
     
     
     
