@@ -218,10 +218,23 @@ Class ItemActions
     public function delete( $secret, $itemId )
     {
         $item = $this->manager->findByPrimaryKey($itemId);
+        $this->deleteResourcesFromHD($itemId);
         $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
         CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
     }
 
+    /**
+     * Delete resources from the hard drive
+     * @param <type> $itemId
+     */
+    public function deleteResourcesFromHD( $itemId )
+    {
+        $resources = ItemResource::newInstance()->getAllResources($itemId);
+        foreach($resources as $resource) {
+            osc_deleteResource($resource['pk_i_id']);
+        }
+    }
+    
     /**
      * Mark an item
      * @param <type> $id
