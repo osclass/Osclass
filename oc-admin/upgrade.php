@@ -38,7 +38,6 @@ switch($action) {
 
 			$tmp = explode("/", Params::getParam('file'));
 			$filename = end($tmp);
-            if($filename=='develop') { $filename = 'OSClass-dev.zip'; };
 
 			osc_downloadFile(Params::getParam('file'), $filename);
 
