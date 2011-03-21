@@ -56,7 +56,7 @@
                 var fileToUnzip = '';
                 steps.innerHTML += "<?php _e('Checking for updates (installed version: '); ?>" + version + "): " ;
 
-                $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
+                $.getJSON("http://www.osclass.org/latest_version.php?callback=?&dev", function(data) {
                     if(data.version <= version) {
                         steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: '); ?>" + data.version + ")" ;
                     } else {

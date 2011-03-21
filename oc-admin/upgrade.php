@@ -21,7 +21,7 @@
 
 define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
 
-require_once ABS_PATH . 'oc-admin/oc-load.php';
+require_once ABS_PATH . 'oc-load.php';
 
 $action = Params::getParam('action');
 $message = "";
@@ -34,12 +34,13 @@ switch($action) {
 		break;
 
 	case 'download-file':
-		if(isset($_REQUEST['file'])) {
+		if(Params::getParam('file')!='') {
 
-			$tmp = explode("/", $_REQUEST['file']);
+			$tmp = explode("/", Params::getParam('file'));
 			$filename = end($tmp);
+            if($filename=='develop') { $filename = 'OSClass-dev.zip'; };
 
-			osc_downloadFile($_REQUEST['file'], $filename);
+			osc_downloadFile(Params::getParam('file'), $filename);
 
 			$message = __('File downloaded correctly');
 		} else {
@@ -81,9 +82,9 @@ switch($action) {
 		break;
 
 	case 'unzip-file':
-		if(isset($_REQUEST['file'])) {
+		if(Params::getParam('file')!='') {
 			$zip = new ZipArchive;
-			$res = $zip->open(ABS_PATH.'oc-content/downloads/'.$_REQUEST['file']);
+			$res = $zip->open(ABS_PATH.'oc-content/downloads/'.Params::getParam('file'));
 			if ($res === TRUE) {
 				@mkdir(ABS_PATH.'oc-temp', 0777);
 				$zip->extractTo(ABS_PATH.'oc-temp/');
