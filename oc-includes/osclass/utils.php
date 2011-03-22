@@ -710,12 +710,12 @@ function _unzip_file_ziparchive($file, $to) {
             return -1;
         }
 
-        if (substr($file['name'], -1) == '/') {
-            @mkdir($to . $file['name'], 0777);
+        if (substr($file['name'], 0, 9) === '__MACOSX/') {
             continue;
         }
 
-        if (substr($file['name'], 0, 9) === '__MACOSX/') {
+        if (substr($file['name'], -1) == '/') {
+            @mkdir($to . $file['name'], 0777);
             continue;
         }
 
@@ -761,14 +761,15 @@ function _unzip_file_pclzip($zip_file, $to) {
 
     // Extract the files from the zip
     foreach ($files as $file) {
+        if (substr($file['filename'], 0, 9) === '__MACOSX/') {
+            continue;
+        }
+        
         if ($file['folder']) {
             @mkdir($to . $file['filename'], 0777);
             continue;
         }
 
-        if (substr($file['filename'], 0, 9) === '__MACOSX/') {
-            continue;
-        }
 
         $fp = @fopen($to . $file['filename'], 'w');
         if (!$fp) {
