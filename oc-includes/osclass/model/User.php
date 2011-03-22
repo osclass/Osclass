@@ -102,7 +102,6 @@ class User extends DAO {
                 $this->conn->osc_dbExec('DELETE FROM %st_user_email_tmp WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                $this->conn->osc_dbExec('DELETE FROM %st_user_preferences WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_user WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
                 return true;
 	    }

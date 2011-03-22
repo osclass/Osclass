@@ -39,9 +39,9 @@ class ItemResource extends DAO {
 	
 	public function getAllResources($itemId = null) {
 		if(is_null($itemId)) {
-			return $this->conn->osc_dbFetchResults('SELECT r.*,a.s_title, c.dt_pub_date FROM %s a,%s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE a.fk_i_item_id = r.fk_i_item_id', $this->getTableItemDescription(), $this->getTableName(), $this->getTableItemName());
+			return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id', $this->getTableName(), $this->getTableItemName());
 		} else {
-			return $this->conn->osc_dbFetchResults('SELECT r.*,a.s_title, c.dt_pub_date FROM %s a,%s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE a.fk_i_item_id = r.fk_i_item_id AND r.fk_i_item_id = ' . $itemId, $this->getTableItemDescription(), $this->getTableName(), $this->getTableItemName());
+			return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE r.fk_i_item_id = ' . $itemId, $this->getTableName(), $this->getTableItemName());
 		}
 	}
 	

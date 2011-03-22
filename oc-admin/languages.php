@@ -39,12 +39,24 @@
                                             $filePackage = Params::getFiles('package');
                                             $path        = osc_translations_path();
 
-                                            if(osc_packageExtract($filePackage['tmp_name'], $path)) {
-                                                osc_add_flash_message( _m('The language has been installed correctly'), 'admin');
-                                            } else {
-                                                osc_add_flash_message( _m('There was a problem adding the language. Please, try again. If the problem persists, install it manually via FTP/SSH.'), 'admin');
+                                            (int) $status = unzip_file($filePackage['tmp_name'], $path);
+
+                                            switch ($status) {
+                                                case(0):   $msg = _m('The translation folder is not writable');
+                                                break;
+                                                case(1):   $msg = _m('The language has been installed correctly');
+                                                           osc_checkLocales();
+                                                break;
+                                                case(2):   $msg = _m('The zip file is not valid');
+                                                break;
+                                                case(3):   $msg = _m('The zip file is empty');
+                                                break;
+                                                case(-1):
+                                                default:   $msg = _m('There was a problem adding the language');
+                                                break;
                                             }
-                                            osc_checkLocales();
+
+                                            osc_add_flash_message($msg, 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
                 case 'edit':                // editing a language
