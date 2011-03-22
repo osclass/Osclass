@@ -57,7 +57,7 @@ Class ItemActions
             $contactName = __("Anonymous");
         }
 
-        if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
@@ -141,7 +141,7 @@ Class ItemActions
         $contactEmail   = "valid@mail.com" ;
         // Validate
         
-        if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
         
             $location = array(
                 'fk_c_country_code' => $aItem['countryId'],
