@@ -660,4 +660,126 @@ function strip_slashes_extended($array) {
     return $array;
 }
 
+/**
+ * Unzip's a specified ZIP file to a location
+ *
+ * @param string $file Full path of the zip file
+ * @param string $to Full path where it is going to be unzipped
+ * @return int
+ */
+function unzip_file($file, $to) {
+    if (!file_exists($to)) {
+        if (!@mkdir($to, 0766)) {
+            return 0;
+        }
+    }
+
+    @chmod($to, 0777);
+
+    if (!is_writable($to)) {
+        return 0;
+    }
+
+    if (class_exists('ZipArchive')) {
+        return _unzip_file_ziparchive($file, $to);
+    }
+
+    // if ZipArchive class doesn't exist, we use PclZip
+    return _unzip_file_pclzip($file, $to);
+}
+
+/**
+ * We assume that the $to path is correct and can be written. It unzips an archive using the PclZip library.
+ *
+ * @param string $file Full path of the zip file
+ * @param string $to Full path where it is going to be unzipped
+ * @return int
+ */
+function _unzip_file_ziparchive($file, $to) {
+    $zip = new ZipArchive();
+    $zipopen = $zip->open($file, 4);
+
+    if ($zipopen !== true) {
+        return 2;
+    }
+
+    for ($i = 0; $i < $zip->numFiles; $i++) {
+        $file = $zip->statIndex($i);
+
+        if (!$file) {
+            return -1;
+        }
+
+        if (substr($file['name'], -1) == '/') {
+            @mkdir($to . $file['name'], 0777);
+            continue;
+        }
+
+        if (substr($file['name'], 0, 9) === '__MACOSX/') {
+            continue;
+        }
+
+        $content = $zip->getFromIndex($i);
+        if ($content === false) {
+            return -1;
+        }
+
+        $fp = @fopen($to . $file['name'], 'w');
+        if (!$fp) {
+            return -1;
+        }
+
+        @fwrite($fp, $content);
+        @fclose($fp);
+    }
+
+    $zip->close();
+
+    return 1;
+}
+
+/**
+ * We assume that the $to path is correct and can be written. It unzips an archive using the PclZip library.
+ *
+ * @param string $zip_file Full path of the zip file
+ * @param string $to Full path where it is going to be unzipped
+ * @return int 
+ */
+function _unzip_file_pclzip($zip_file, $to) {
+    // first, we load the library
+    require_once LIB_PATH . 'pclzip/pclzip.lib.php';
+
+    $archive = new PclZip($zip_file);
+    if (($files = $archive->extract(PCLZIP_OPT_EXTRACT_AS_STRING)) == false) {
+        return 2;
+    }
+
+    // check if the zip is not empty
+    if (count($files) == 0) {
+        return 3;
+    }
+
+    // Extract the files from the zip
+    foreach ($files as $file) {
+        if ($file['folder']) {
+            @mkdir($to . $file['filename'], 0777);
+            continue;
+        }
+
+        if (substr($file['filename'], 0, 9) === '__MACOSX/') {
+            continue;
+        }
+
+        $fp = @fopen($to . $file['filename'], 'w');
+        if (!$fp) {
+            return -1;
+        }
+
+        @fwrite($fp, $file['content']);
+        @fclose($fp);
+    }
+
+    return 1;
+}
+
 ?>
