@@ -58,7 +58,6 @@ Class ItemActions
         }
 
         if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
-
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
