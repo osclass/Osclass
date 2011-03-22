@@ -9,7 +9,7 @@ $aux = array(
     'price'         => '10',
     'regionId'      => 'Barcelona','cityId'        => 'Terrassa',
     'cityArea'      => '','address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
 );
 array_push($aData, $aux);
 
@@ -40,7 +40,7 @@ $aux = array(
     'price'         => '101',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Terrassa',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
 );
 array_push($aData, $aux);
 
@@ -63,7 +63,7 @@ $aux = array(
     'price'         => '3200',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Balsareny',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
 );
 array_push($aData, $aux);
 
@@ -107,7 +107,7 @@ para mas informacion o consultas comunicarse con José al Tel. 600 982 984 ',
     'price'         => '1300',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Balsareny',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
 );
 array_push($aData, $aux);
 
@@ -172,16 +172,6 @@ AdTech Ad
 array_push($aData, $aux);
 
 //Language Classes
-//$aux = array(
-//    "catId"         => 'Language Classes',
-//    'title'         => '',
-//    'description'   => '',
-//    'price'         => '',
-//    'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
-//    'cityArea'      => ''           ,'address'       => '',
-//    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
-//);
-//array_push($aData, $aux);
 
 $aux = array(
     "catId"         => 'Language Classes',
@@ -190,7 +180,7 @@ $aux = array(
     'price'         => '',
     'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
 );
 array_push($aData, $aux);
 
@@ -222,4 +212,15 @@ AdTech Ad
     'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
 );
 array_push($aData, $aux);
+
+//$aux = array(
+//    "catId"         => 'Language Classes',
+//    'title'         => '',
+//    'description'   => '',
+//    'price'         => '',
+//    'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
+//    'cityArea'      => ''           ,'address'       => '',
+//    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+//);
+//array_push($aData, $aux);
 ?>
