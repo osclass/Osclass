@@ -57,14 +57,7 @@ Class ItemActions
             $contactName = __("Anonymous");
         }
 
-        // Validate
-        if ( strlen( reset($aItem['title']) ) == 0 ||
-            strlen( reset($aItem['description']) ) == 0 ||
-            !preg_match("/^.*?@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail) ||
-            !preg_match("/^[0-9]+$/", $aItem['catId'] )) {
-            osc_add_flash_message( _m('Some fields were too short. Try again!') );
-            $success = false;
-        } else {
+        if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
@@ -116,6 +109,8 @@ Class ItemActions
             // send an e-mail to the admin with the data of the new item
             // and send an e-email to admin to validate the item if configured to do so
             if( !$this->is_admin ) {
+                // Stop publishing items in less than a minute
+                Session::newInstance()->_set('last_publish_time', time());
                 $this->sendEmails($aItem);
             }
 
@@ -131,7 +126,10 @@ Class ItemActions
                 }
 
             }
+        } else {
+            $success = false;
         }
+        
         return $success;
     }
 
@@ -139,51 +137,57 @@ Class ItemActions
     {
         $aItem = $this->prepareData(false);
 
-        $location = array(
-            'fk_c_country_code' => $aItem['countryId'],
-            's_country'         => $aItem['countryName'],
-            'fk_i_region_id'    => $aItem['regionId'],
-            's_region'          => $aItem['regionName'],
-            'fk_i_city_id'      => $aItem['cityId'],
-            's_city'            => $aItem['cityName'],
-            's_city_area'       => $aItem['cityArea'],
-            's_address'         => $aItem['address']
-        );
-
-        $locationManager = ItemLocation::newInstance();
-        $locationManager->update( $location, array( 'fk_i_item_id' => $aItem['idItem'] ) );
-
-        $contactName    = @$aItem['contactName'] ;
-        $contactEmail   = @$aItem['contactEmail'] ;
-
-        // Update category numbers
-        $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
-        if($old_item['fk_i_category_id'] != $aItem['catId']) {
-            CategoryStats::newInstance()->increaseNumItems($aItem['catId']) ;
-            CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
-        }
-        unset($old_item) ;
-
-        $result = $this->manager->update (
-                                array(
-                                    'dt_pub_date'           => DB_FUNC_NOW
-                                    ,'fk_i_category_id'     => $aItem['catId']
-                                    ,'f_price'              => $aItem['price']
-                                    ,'fk_c_currency_code'   => $aItem['currency']
-                                )
-                                ,array(
-                                    'pk_i_id'   => $aItem['idItem']
-                                    ,'s_secret' => $aItem['secret']
-                            )
-        ) ;
-        // UPDATE title and description locales
-        $this->insertItemLocales( 'EDIT', $aItem['title'], $aItem['description'], $aItem['idItem'] );
-        // UPLOAD item resources
-        $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
-
-        osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
+        // QUICK FIX $contactmMail
+        $contactEmail   = "valid@mail.com" ;
+        // Validate
         
-        return $result;
+        if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        
+            $location = array(
+                'fk_c_country_code' => $aItem['countryId'],
+                's_country'         => $aItem['countryName'],
+                'fk_i_region_id'    => $aItem['regionId'],
+                's_region'          => $aItem['regionName'],
+                'fk_i_city_id'      => $aItem['cityId'],
+                's_city'            => $aItem['cityName'],
+                's_city_area'       => $aItem['cityArea'],
+                's_address'         => $aItem['address']
+            );
+
+            $locationManager = ItemLocation::newInstance();
+            $locationManager->update( $location, array( 'fk_i_item_id' => $aItem['idItem'] ) );
+
+            // Update category numbers
+            $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
+            if($old_item['fk_i_category_id'] != $aItem['catId']) {
+                CategoryStats::newInstance()->increaseNumItems($aItem['catId']) ;
+                CategoryStats::newInstance()->decreaseNumItems($old_item['fk_i_category_id']) ;
+            }
+            unset($old_item) ;
+
+            $result = $this->manager->update (
+                                    array(
+                                        'dt_pub_date'           => DB_FUNC_NOW
+                                        ,'fk_i_category_id'     => $aItem['catId']
+                                        ,'f_price'              => $aItem['price']
+                                        ,'fk_c_currency_code'   => $aItem['currency']
+                                    )
+                                    ,array(
+                                        'pk_i_id'   => $aItem['idItem']
+                                        ,'s_secret' => $aItem['secret']
+                                )
+            ) ;
+            // UPDATE title and description locales
+            $this->insertItemLocales( 'EDIT', $aItem['title'], $aItem['description'], $aItem['idItem'] );
+            // UPLOAD item resources
+            $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
+
+            osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
+
+            return $result;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -213,10 +217,23 @@ Class ItemActions
     public function delete( $secret, $itemId )
     {
         $item = $this->manager->findByPrimaryKey($itemId);
+        $this->deleteResourcesFromHD($itemId);
         $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
         CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
     }
 
+    /**
+     * Delete resources from the hard drive
+     * @param <type> $itemId
+     */
+    public function deleteResourcesFromHD( $itemId )
+    {
+        $resources = ItemResource::newInstance()->getAllResources($itemId);
+        foreach($resources as $resource) {
+            osc_deleteResource($resource['pk_i_id']);
+        }
+    }
+    
     /**
      * Mark an item
      * @param <type> $id
@@ -517,6 +534,37 @@ Class ItemActions
     }
     
     /**
+     * Validate some things previous to add or edit
+     * @param <string> $title
+     * @param <string> $description
+     * @param <string> $contactEmail
+     * @param <string> $idCat
+     * @param <array> $aPhotos
+     * @return boolean 
+     */
+    private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
+    {
+        $success = true;
+        if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
+            !preg_match("/([a-z][^a-z]*){8}/i", $description ) ||
+            !preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)  ||
+            !preg_match("/^[0-9]+$/", $idCat )) {
+            osc_add_flash_message( _m('Some fields were too short. Try again!') );
+            $success = false;
+        }
+        
+        if ( !$this->checkAllowedExt($aPhotos) ) {
+            $success = false;
+        }
+
+        if ( !$this->checkSize($aPhotos) ) {
+            $success = false;
+        }
+        
+        return $success;
+    }
+
+    /**
      * Return an array with all data necessary for do the action
      * @param <type> $action
      */
@@ -740,16 +788,69 @@ Class ItemActions
             }
         }
     }
+
+    private function checkSize($aResources)
+    {
+        $success = true;
+
+        if($aResources != '') {
+            // get allowedExt
+            $maxSize = osc_max_size_kb() * 1024 ;
+            foreach ($aResources['error'] as $key => $error) {
+                $bool_img = false;
+                if ($error == UPLOAD_ERR_OK) {
+                    $size = $aResources['size'][$key];
+                    //echo "bytes: ".$size." [$size > $maxSize]<br>";
+                    if($size > $maxSize){
+                        $success = false;
+                    }
+                }
+            }
+            if(!$success){
+                osc_add_flash_message( _m("One of the files you tried to upload exceeds the maximum size")) ;
+            }
+        }
+        return $success;
+    }
+
+    private function checkAllowedExt($aResources)
+    {
+        $success = true;
+
+        if($aResources != '') {
+            // get allowedExt
+            $aExt = explode(',', osc_allowed_extension() );
+            foreach ($aResources['error'] as $key => $error) {
+                $bool_img = false;
+                if ($error == UPLOAD_ERR_OK) {
+                    // check mime file
+                    $fileMime = $aResources['type'][$key] ;
+                    preg_match_all('/.*\/(.*)/', $fileMime,$coincidencias);
+                    $fileExt = $coincidencias[1][0];
+
+                    if(in_array($fileExt, $aExt)) {
+                        $bool_img = true;
+                    }
+
+                    if(!$bool_img && $success) {$success = false;}
+                }
+            }
+            if(!$success){
+                osc_add_flash_message( _m("The file you tried to upload, haven't no valid extension")) ;
+            }
+        }
+        return $success;
+    }
     
     public function uploadItemResources($aResources,$itemId)
     {
-        
         if($aResources != '') {
         
             $itemResourceManager = ItemResource::newInstance() ;
-
+            
             foreach ($aResources['error'] as $key => $error) {
                 if ($error == UPLOAD_ERR_OK) {
+                    
                     $tmpName = $aResources['tmp_name'][$key] ;
                     $itemResourceManager->insert(array(
                         'fk_i_item_id' => $itemId

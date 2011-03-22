@@ -245,6 +245,19 @@
 
         return $url;
     }
+
+    function osc_list_page() {
+        return View::newInstance()->_get('list_page');
+    }
+    
+    function osc_list_total_pages() {
+        return View::newInstance()->_get('list_total_pages');
+    }
+
+    function osc_list_items_per_page() {
+        return View::newInstance()->_get('items_per_page');
+    }    
+    
     ///////////////////////
     // HELPERS FOR ITEMS //
     ///////////////////////

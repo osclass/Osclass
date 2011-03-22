@@ -73,7 +73,7 @@
                 var update = document.getElementById('update_version') ;
                 if(data.version > version) {
                     //var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>' ;
-                    var text = '<?php printf(__('OSClass %s is available!'), '\' + data.s_name + \'') ; ?> <a href="tools.php?action=upgrade"><?php _e('Please upgrade now') ; ?></a>' ;
+                    var text = '<?php printf(__('OSClass %s is available!'), '\' + data.s_name + \'') ; ?> <a href="index.php?page=tools&action=upgrade"><?php _e('Please upgrade now') ; ?></a>' ;
                     update.innerHTML = text ;
                     update.setAttribute('style', '') ;
                 }
