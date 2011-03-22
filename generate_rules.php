@@ -20,6 +20,9 @@ $rewrite->addRule('^contact/?$', 'index.php?page=contact');
 $rewrite->addRule('^feed$', 'index.php?page=search&sFeed=rss');
 $rewrite->addRule('^feed/(.+)$', 'index.php?page=search&sFeed=$1');
 
+// Language rules
+$rewrite->addRule('^language/(.*?)/?$', 'index.php?page=language&locale=$1');
+
 // Search rules
 $rewrite->addRule('^search/(.*)$', 'index.php?page=search&sPattern=$1');
 $rewrite->addRule('^s/(.*)$', 'index.php?page=search&pattern=$1');
