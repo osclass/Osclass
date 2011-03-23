@@ -20,6 +20,8 @@ class TestOfSearch extends WebTestCase {
     private $email_fixed;
     private $array;
     private $logged;
+    private $bool_enabled_user_validation;
+    private $bool_reg_user_post;
 
     function setUp()
     {
@@ -42,6 +44,9 @@ class TestOfSearch extends WebTestCase {
     public function __construct($label = false) {
         parent::__construct($label);
         // allow no users to add ads
+        // save status
+        $this->bool_enabled_user_validation = Preference::newInstance()->findValueByName('enabled_user_validation');
+        $this->bool_reg_user_post           = Preference::newInstance()->findValueByName('reg_user_post');
         Preference::newInstance()->update(array('s_value' => 0)
                                          ,array('s_name'  => 'reg_user_post'));
 
@@ -185,6 +190,33 @@ class TestOfSearch extends WebTestCase {
 
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 9 , "There aren't 9 items filtered by [ Show only items with pictures ]");
+    }
+
+    public function testFinal()
+    {
+       require 'itemData.php';
+        foreach($aData as $item){
+            echo "<div style='background-color: green; color: white;padding-left:15px;'> - TestOfSearch - delete()</div>";
+            flush();
+            Item::newInstance()->delete(array('s_contact_email' => 'mail@contact.com'));
+        }
+        if( $this->bool_enabled_user_validation ){
+            Preference::newInstance()->update(array('s_value' => 0)
+                                         ,array('s_name'  => 'enabled_item_validation'));
+        } else {
+            Preference::newInstance()->update(array('s_value' => 1)
+                                         ,array('s_name'  => 'enabled_item_validation'));
+        }
+        if( $this->bool_reg_user_post ){
+            Preference::newInstance()->update(array('s_value' => 0)
+                                         ,array('s_name'  => 'reg_user_post'));
+        } else {
+            Preference::newInstance()->update(array('s_value' => 1)
+                                         ,array('s_name'  => 'reg_user_post'));
+        }
+
+
+
     }
 
     /*
