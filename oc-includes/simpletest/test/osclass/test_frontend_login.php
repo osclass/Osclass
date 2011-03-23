@@ -155,7 +155,7 @@ class TestOfLogin extends WebTestCase {
         $this->selenium->click('xpath=//span/button');
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->assertTrue($this->selenium->isTextPresent("A new password has been sent to your account"));
+        $this->assertTrue($this->selenium->isTextPresent("If the email is in our database, we will send and email with instruction to reset your password"),"Can't revocer password. ERROR");
     }
 
 }
