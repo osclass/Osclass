@@ -104,6 +104,9 @@
         {
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
+            Session::newInstance()->_set('userName', $input['s_name']);
+            $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
+            Session::newInstance()->_set('userPhone', $phone);
 
             if ( is_array( Params::getParam('s_info') ) ) {
                 foreach (Params::getParam('s_info') as $key => $value) {
