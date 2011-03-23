@@ -26,7 +26,12 @@
         //Business Layer...
         function doModel() {
             switch($this->action) {
-                case('logout'):     Session::newInstance()->session_destroy() ;
+                case('logout'):     // unset only the required parameters in Session
+                                    Session::newInstance()->_drop('adminId') ;
+                                    Session::newInstance()->_drop('adminUserName') ;
+                                    Session::newInstance()->_drop('adminName') ;
+                                    Session::newInstance()->_drop('adminEmail') ;
+                                    Session::newInstance()->_drop('adminLocale') ;
 
                                     Cookie::newInstance()->pop('oc_adminId') ;
                                     Cookie::newInstance()->pop('oc_adminSecret') ;

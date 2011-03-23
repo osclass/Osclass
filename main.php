@@ -27,7 +27,11 @@ class CWebMain extends BaseModel
     //Business Layer...
     function doModel() {
         switch($this->action) {
-            case('logout'):         Session::newInstance()->session_destroy() ;
+            case('logout'):         // unset only the required parameters in Session
+                                    Session::newInstance()->_drop('userId') ;
+                                    Session::newInstance()->_drop('userName') ;
+                                    Session::newInstance()->_drop('userEmail') ;
+                                    Session::newInstance()->_drop('userPhone') ;
 
                                     Cookie::newInstance()->pop('oc_userId') ;
                                     Cookie::newInstance()->pop('oc_userSecret') ;
