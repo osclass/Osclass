@@ -444,6 +444,14 @@
         }
     }
 
+    function osc_forgot_user_password_confirm_url($userId, $code) {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/forgot/' . $userId . '/' . $code ;
+        } else {
+            return osc_base_url(true) . '?page=login&action=forgot&userId='.$userId.'&code='.$code;
+        }
+    }
+
     //doens't exists til now
     function osc_change_language_url($locale) {
         if ( osc_rewrite_enabled() ) {
