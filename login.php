@@ -52,6 +52,8 @@ class CWebLogin extends BaseModel
                                             Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                                             Session::newInstance()->_set('userName', $user['s_name']) ;
                                             Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                                            $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                                            Session::newInstance()->_set('userPhone', $phone) ;
                                             
                                         } else {
                                             osc_add_flash_message( _m('The password is incorrect')) ;
