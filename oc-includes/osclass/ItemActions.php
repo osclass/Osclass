@@ -816,27 +816,41 @@ Class ItemActions
     private function checkAllowedExt($aResources)
     {
         $success = true;
-
+        require LIB_PATH . 'osclass/classes/mimes.php';
         if($aResources != '') {
             // get allowedExt
+            $aMimesAllowed = array();
             $aExt = explode(',', osc_allowed_extension() );
+            foreach($aExt as $ext){
+                $mime = $mimes[$ext];
+                if( is_array($mime) ){
+                    foreach($mime as $aux){
+                        if( !in_array($aux, $aMimesAllowed) ) {
+                            array_push($aMimesAllowed, $aux );
+                        }
+                    }
+                } else {
+                    if( !in_array($mime, $aMimesAllowed) ) {
+                        array_push($aMimesAllowed, $mime );
+                    }
+                }
+            }
+
             foreach ($aResources['error'] as $key => $error) {
                 $bool_img = false;
                 if ($error == UPLOAD_ERR_OK) {
                     // check mime file
                     $fileMime = $aResources['type'][$key] ;
-                    preg_match_all('/.*\/(.*)/', $fileMime,$coincidencias);
-                    $fileExt = $coincidencias[1][0];
 
-                    if(in_array($fileExt, $aExt)) {
+                    if(in_array($fileMime,$aMimesAllowed)) {
                         $bool_img = true;
                     }
-
                     if(!$bool_img && $success) {$success = false;}
                 }
             }
+
             if(!$success){
-                osc_add_flash_message( _m("The file you tried to upload, haven't no valid extension")) ;
+                osc_add_flash_message( _m("The file you tried to upload does not have an allowed extension")) ;
             }
         }
         return $success;
