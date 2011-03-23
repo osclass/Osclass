@@ -704,7 +704,7 @@ Class ItemActions
         $aItem['cityArea']      = Params::getParam('cityArea');         // OK
         $aItem['address']       = Params::getParam('address');          // OK
         $aItem['currency']      = Params::getParam('currency');         // OK
-        $aItem['showEmail']     = Params::getParam('showEmail');        // OK
+        $aItem['showEmail']     = (Params::getParam('showEmail')!='')?((int)Params::getParam('showEmail')):0;        // OK
         $aItem['title']         = Params::getParam('title');
         $aItem['description']   = Params::getParam('description');
         $aItem['photos']        = Params::getFiles('photos');
