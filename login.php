@@ -130,7 +130,7 @@ class CWebLogin extends BaseModel
                                                 array('s_pass_code' => osc_genRandomPassword(50)
                                                     , 's_pass_date' => date('Y-m-d H:i:s', 0)
                                                     , 's_pass_ip' => $_SERVER['REMOTE_ADDR']
-                                                    , 's_password' => $_REQUEST['profile_password']
+                                                    , 's_password' => Params::getParam('new_password')
                                                 ), array('pk_i_id' => $user['pk_i_id'])
                                             );
                                             osc_add_flash_message( _m('The password has been changed'));
