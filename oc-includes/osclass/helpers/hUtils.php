@@ -52,6 +52,24 @@
             echo $w['s_content'] ;
     }
 
+    function osc_show_recaptcha($section = '') {
+        if( osc_recaptcha_public_key() ) {
+            require_once osc_base_path() . 'oc-includes/recaptchalib.php' ;
+            switch($section) {
+                case('recover_password'):
+                    $time  = Session::newInstance()->_get('recover_time');
+                    if((time()-$time)<=1200) {
+                       echo recaptcha_get_html( osc_recaptcha_public_key() )."<br />" ;
+                    }
+                break;
+                
+                default:
+                   echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
+                break;
+            }
+        }
+    }
+
     /**
      * Formats the date using the appropiate format.
      */

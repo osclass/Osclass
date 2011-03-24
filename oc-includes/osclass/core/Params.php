@@ -38,6 +38,12 @@ class Params
 
         return ($value);
     }
+    
+    static function existParam($param) {
+        if ($param == "") return false ;
+        if (!isset($_REQUEST[$param])) return false ;
+        return true;
+    }
 
     static function getFiles($param)
     {

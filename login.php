@@ -70,46 +70,11 @@ class CWebLogin extends BaseModel
                                     $this->doView( 'user-recover.php' ) ;
             break ;
             case('recover_post'):   //post execution to recover the password
-                                    $user = User::newInstance()->findByEmail( Params::getParam('s_email') ) ;
-                                    if($user) {
-                                        $code = osc_genRandomPassword(50);
-                                        $date = date('Y-m-d H:i:s');
-                                        $date2 = date('Y-m-d H:i:').'00';
-                                        User::newInstance()->update(
-                                            array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
-                                            array('pk_i_id' => $user['pk_i_id'])
-                                        );
-
-                                        $password_link = osc_forgot_user_password_confirm_url($user['pk_i_id'], $code);
-                                        
-                                        $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
-
-                                        $content = array();
-                                        if(isset($aPage['locale'][$locale]['s_title'])) {
-                                            $content = $aPage['locale'][$locale];
-                                        } else {
-                                            $content = current($aPage['locale']);
-                                        }
-
-                                        if (!is_null($content)) {
-                                            $words   = array();
-                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
-                                                             '{PASSWORD_LINK}', '{DATE_TIME}');
-                                            $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'],
-                                                             $_SERVER['REMOTE_ADDR'], $password_link, $date2);
-                                            $title = osc_mailBeauty($content['s_title'], $words);
-                                            $body = osc_mailBeauty($content['s_text'], $words);
-
-                                            $emailParams = array('subject'  => $title,
-                                                                 'to'       => $user['s_email'],
-                                                                 'to_name'  => $user['s_name'],
-                                                                 'body'     => $body,
-                                                                 'alt_body' => $body);
-                                            osc_sendMail($emailParams);
-                                        }
-                                    }
+                                    require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                    $userActions = new UserActions(false) ;
+                                    $userActions->recover_password() ;
                                     // We ALWAYS show the same message, so we don't give clues about which emails are in our database and which don't!
-                                    osc_add_flash_message( _m('If the email is in our database, we will send and email with instruction to reset your password')) ;
+                                    osc_add_flash_message( _m('We have sent you an email with the instructions to reset your password')) ;
                                     $this->redirectTo( osc_base_url() ) ;
             break ;
             
