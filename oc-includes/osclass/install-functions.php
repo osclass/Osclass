@@ -498,7 +498,7 @@ function display_target() {
                     <label for="worlwide">Worldwide</label>
                 </div>
                 <div id="d_country" class="box">
-                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this);"/>
+                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this, event);"/>
                     <div class="clear"></div>
                 </div>
                 <div id="a_country">
