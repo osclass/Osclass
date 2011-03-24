@@ -163,18 +163,24 @@
                                             break;
                                             case('delete_country'): // delete country
                                                                     $countryId = Params::getParam('id');
-                                                                    $mRegions = new Region();
-                                                                    $mCities = new City();
+                                                                    // HAS ITEMS?
+                                                                    $has_items = Item::newInstance()->listWhere('l.fk_c_country_code = \'%s\' LIMIT 1', $countryId);
+                                                                    if(!$has_items) {
+                                                                        $mRegions = new Region();
+                                                                        $mCities = new City();
 
-                                                                    $aCountries = $mCountries->findByCode($countryId);
-                                                                    $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
-                                                                    foreach($aRegions as $region) {
-                                                                        $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
-                                                                        $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                        $aCountries = $mCountries->findByCode($countryId);
+                                                                        $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
+                                                                        foreach($aRegions as $region) {
+                                                                            $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                                                                            $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                        }
+                                                                        $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+
+                                                                        osc_add_flash_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                    } else {
+                                                                        osc_add_flash_message(sprintf(__('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
                                                                     }
-                                                                    $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
-
-                                                                    osc_add_flash_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('add_region'):     // add region
