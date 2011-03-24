@@ -34,7 +34,7 @@ class Region extends DAO {
 	public function getTableName() { return DB_TABLE_PREFIX . 't_region'; }
 
         public function getByCountry($country_id) {
-            return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_c_country_code = '%s'", $this->getTableName(), $country_id);
+            return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_c_country_code = '%s' ORDER BY s_name ASC", $this->getTableName(), $country_id);
         }
 }
 

@@ -38,7 +38,7 @@ class City extends DAO {
     }
 
     public function getByRegion($region_id) {
-        return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_i_region_id = %d", $this->getTableName(), $region_id);
+        return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_i_region_id = %d ORDER BY s_name ASC", $this->getTableName(), $region_id);
     }
 
 
