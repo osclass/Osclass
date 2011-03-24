@@ -56,8 +56,7 @@ Class ItemActions
         if(!preg_match("/([a-z][^a-z]*){2}/i",$contactName)) {
             $contactName = __("Anonymous");
         }
-
-        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
@@ -545,14 +544,57 @@ Class ItemActions
     private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
     {
         $success = true;
-        if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
+        /*if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
             !preg_match("/([a-z][^a-z]*){8}/i", $description ) ||
             !preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)  ||
             !preg_match("/^[0-9]+$/", $idCat )) {
             osc_add_flash_message( _m('Some fields were too short. Try again!') );
             $success = false;
+        }*/
+        $flash_error = array();
+		$contactEmail = strip_tags(trim($contactEmail));
+
+		// Validate input
+		foreach($title as $key=>$value) {
+				if(!preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
+    				$flash_error[] = _m("Title too short");
+                    $success = false;
+	    			break;
+				}
+				if(strlen(strip_tags(trim($value)))>80) {
+    				$flash_error[] = _m("Title too long");
+                    $success = false;
+	    			break;
+				}
+		}
+		foreach($description as $key=>$value) {
+				if(!preg_match("/([\p{L}][^\p{L}]*){25}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+    				$flash_error[] = _m("Description too short");
+                    $success = false;
+	    			break;
+				}
+				if(strlen(strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))>5000) {
+    				$flash_error[] = _m("Description too long");
+                    $success = false;
+	    			break;
+				}
+		}
+
+        if(!preg_match("/^[0-9]+$/", $idCat)) {
+            $flash_error[] = _m("Category invalid");
+            $success = false;
         }
-        
+
+        if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
+            $flash_error[] = _m("Email invalid");
+            $success = false;
+        }
+
+		// Handle error
+        if (count($flash_error)>0) {
+            osc_add_flash_message( implode('<br />', $flash_error) );
+            $success = false;
+        }
         if ( !$this->checkAllowedExt($aPhotos) ) {
             $success = false;
         }
