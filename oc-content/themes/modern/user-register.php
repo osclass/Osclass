@@ -46,12 +46,7 @@
                                 <?php _e('Passwords don\'t match', 'modern') ; ?>.
                             </p>
                             <label for="email"><?php _e('E-mail', 'modern') ; ?></label> <?php UserForm::email_text() ; ?><br />
-                            <?php
-                            if( osc_recaptcha_public_key() ) {
-                                require_once osc_base_path() . 'oc-includes/recaptchalib.php' ;
-                                echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
-                            }
-                            ?>
+                            <?php osc_show_recaptcha('register'); ?>
                             <button type="submit"><?php _e('Create', 'modern') ; ?></button>
                             <?php osc_run_hook('user_register_form') ; ?>
                         </fieldset>
