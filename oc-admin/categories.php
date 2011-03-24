@@ -114,11 +114,11 @@
 
                 case 'enable':
                     $id = Params::getParam("id");
-                    $enabled = Params::getParam("enabled");
+                    $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
                     try {
                         if ($id!='') {
                             $this->categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
-                            if ($enabled!='') {
+                            if ($enabled==1) {
                                 $msg = _m('The category has been enabled') ;
                             } else {
                                 $msg = _m('The category has been disabled') ;
