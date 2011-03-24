@@ -125,7 +125,9 @@
     }
     
     function osc_update_search_url($params, $delimiter = '&amp;') {
-        $merged = array_merge($_REQUEST, $params);
+        $request = Params::getParamsAsArray();
+        unset($request['osclass']);
+        $merged = array_merge($request, $params);
         return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
     }
 
