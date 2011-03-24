@@ -135,7 +135,7 @@
             Session::newInstance()->_set('recover_time', time());
 
             if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
-                if(!$this->recaptcha()) { echo "CAPTCHA IS WRONG"; die;
+                if(!$this->recaptcha()) {
                     return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                 }
             }
@@ -154,6 +154,7 @@
                 $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
 
                 $content = array();
+                $locale = osc_current_user_locale() ;
                 if(isset($aPage['locale'][$locale]['s_title'])) {
                     $content = $aPage['locale'][$locale];
                 } else {
@@ -164,7 +165,7 @@
                     $words   = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
                                      '{PASSWORD_LINK}', '{DATE_TIME}');
-                    $words[] = array($user['s_name'], $user['s_email'], $preferences['pageTitle'],
+                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(),
                                      $_SERVER['REMOTE_ADDR'], $password_link, $date2);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);

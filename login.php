@@ -74,7 +74,7 @@ class CWebLogin extends BaseModel
                                     $userActions = new UserActions(false) ;
                                     $userActions->recover_password() ;
                                     // We ALWAYS show the same message, so we don't give clues about which emails are in our database and which don't!
-                                    osc_add_flash_message( _m('If the email is in our database, we will send and email with instruction to reset your password')) ;
+                                    osc_add_flash_message( _m('We have sent you an email with the instructions to reset your password')) ;
                                     $this->redirectTo( osc_base_url() ) ;
             break ;
             
