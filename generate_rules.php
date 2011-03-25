@@ -63,8 +63,8 @@ $rewrite->addRule('^user/resource/delete$', 'index.php?page=user&action=deleteRe
 $rewrite->addRule('^user/login/done$', 'index.php?page=user&action=login_post');
 $rewrite->addRule('^user/forgot/([0-9]+)/(.*)$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
 $rewrite->addRule('^user/change/password$', 'index.php?page=user&action=forgot_change');
+$rewrite->addRule('^user/change/password/done$', 'index.php?page=user&action=forgot_change_post');
 $rewrite->addRule('^user/change_email_confirm/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
-$rewrite->addRule('^user/login/done$', 'index.php?page=user&action=login_post');
 $rewrite->addRule('^user/options/(.*)', 'index.php?page=user&action=options&option=$1');
 $rewrite->addRule('^user/options_post/(.*)$', 'index.php?page=user&action=options_post&option=$1');
 $rewrite->addRule('^user/(.*)$', 'index.php?page=user&action=$1');
