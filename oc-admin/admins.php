@@ -46,15 +46,39 @@
                                     // cleaning parameters
                                     $sPassword = strip_tags($sPassword);
                                     $sPassword = trim($sPassword);
-                                    $sPassword = sha1($sPassword);
                                     $sName     = strip_tags($sName);
                                     $sName     = trim($sName);
                                     $sEmail    = strip_tags($sEmail);
                                     $sEmail    = trim($sEmail);
                                     $sUserName = strip_tags($sUserName);
                                     $sUserName = trim($sUserName);
+                                    
+                                    // Checks for legit data
+                                    if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
+                                        osc_add_flash_message( _m("Email invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
+                                    if($sUserName=='') {
+                                        osc_add_flash_message( _m("Username invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
+                                    if($sPassword=='') {
+                                        osc_add_flash_message( _m("Password invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
+                                    $admin = $this->adminManager->findByEmail($sEmail);
+                                    if($admin) {
+                                        osc_add_flash_message( _m("Email already in use"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
+                                    $admin = $this->adminManager->findByUsername($sUserName);
+                                    if($admin) {
+                                        osc_add_flash_message( _m("Username already in use"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
 
-                                    $array = array('s_password' =>  $sPassword
+
+                                    $array = array('s_password' =>  sha1($sPassword)
                                                   ,'s_name'     =>  $sName
                                                   ,'s_email'    =>  $sEmail
                                                   ,'s_username' =>  $sUserName);
@@ -90,6 +114,36 @@
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
 
+                                    $sPassword      = Params::getParam('s_password');
+                                    $sPassword2     = Params::getParam('s_password2');
+                                    $sOldPassword   = Params::getParam('old_password');
+                                    $sName          = Params::getParam('s_name');
+                                    $sEmail         = Params::getParam('s_email');
+                                    $sUserName      = Params::getParam('s_username');
+
+                                    // cleaning parameters
+                                    $sPassword      = strip_tags($sPassword);
+                                    $sPassword      = trim($sPassword);
+                                    $sPassword2     = strip_tags($sPassword2);
+                                    $sPassword2     = trim($sPassword2);
+                                    $sName          = strip_tags($sName);
+                                    $sName          = trim($sName);
+                                    $sEmail         = strip_tags($sEmail);
+                                    $sEmail         = trim($sEmail);
+                                    $sUserName      = strip_tags($sUserName);
+                                    $sUserName      = trim($sUserName);
+
+
+                                    // Checks for legit data
+                                    if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
+                                        osc_add_flash_message( _m("Email invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
+                                    }
+                                    if($sUserName=='') {
+                                        osc_add_flash_message( _m("Username invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
+                                    }
+
                                     $aAdmin   = $this->adminManager->findByPrimaryKey($adminId);
 
                                     if(count($aAdmin) == 0) {
@@ -97,8 +151,15 @@
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
-                                    if( $aAdmin['s_username'] != Params::getParam('s_username') ){
-                                        if($this->adminManager->findByUsername( Params::getParam('s_username') ) ) {
+                                    if( $aAdmin['s_email'] != $sEmail ){
+                                        if($this->adminManager->findByEmail( $sEmail ) ) {
+                                            osc_add_flash_message( _m('Existing email'), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
+                                        }
+                                    }
+
+                                    if( $aAdmin['s_username'] != $sUserName ){
+                                        if($this->adminManager->findByUsername( $sUserName ) ) {
                                             osc_add_flash_message( _m('Existing username'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
                                         }
@@ -107,20 +168,25 @@
                                     $conditions = array('pk_i_id' => $adminId);
                                     $array      = array();
 
-                                    if(Params::getParam('old_password') != '') {
-                                        $firstCondition  = sha1(Params::getParam('old_password')) == $aAdmin['s_password'];
-                                        $secondCondition = Params::getParam('s_password') == Params::getParam('s_password2');
-                                        if( $firstCondition && $secondCondition ) {
-                                            $array['s_password'] = sha1(Params::getParam('s_password') );
+                                    if($sOldPassword != '') {
+                                        if($sPassword=='') {
+                                            osc_add_flash_message( _m("Password invalid"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
                                         } else {
-                                            osc_add_flash_message( _m('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
-                                            $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
+                                            $firstCondition  = sha1($sOldPassword) == $aAdmin['s_password'];
+                                            $secondCondition = $sPassword == $sPassword2;
+                                            if( $firstCondition && $secondCondition ) {
+                                                $array['s_password'] = sha1($sPassword);
+                                            } else {
+                                                osc_add_flash_message( _m('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
+                                                $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
+                                            }
                                         }
                                     }
 
                                     $array['s_name']     = Params::getParam('s_name');
-                                    $array['s_username'] = Params::getParam('s_username');
-                                    $array['s_email']    = Params::getParam('s_email');
+                                    $array['s_username'] = $sUserName;
+                                    $array['s_email']    = $sEmail;
 
                                     $iUpdated = $this->adminManager->update($array, $conditions);
 
