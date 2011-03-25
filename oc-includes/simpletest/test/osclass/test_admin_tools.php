@@ -32,30 +32,30 @@ class TestOfAdminTools extends WebTestCase {
         flush();
     }
     /*           TESTS          */
-//    function testImportData()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testImportData</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportData - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportData - IMPORTING DATA</div>";
-//        $this->importData();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportData - IMPORTING DATA FOR RESTORE</div>";
-//        $this->importDataRestore();
-//        flush();
-//    }
-//
-//    function testImportDataFail()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testImportDataFail</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportDataFail - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportDataFail - IMPORTING DATA FAIL</div>";
-//        $this->importDataError();
-//        flush();
-//    }
+    function testImportData()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testImportData</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportData - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportData - IMPORTING DATA</div>";
+        $this->importData();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportData - IMPORTING DATA FOR RESTORE</div>";
+        $this->importDataRestore();
+        flush();
+    }
+
+    function testImportDataFail()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testImportDataFail</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportDataFail - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testImportDataFail - IMPORTING DATA FAIL</div>";
+        $this->importDataError();
+        flush();
+    }
 
     function testBackupSql()
     {
@@ -174,8 +174,7 @@ class TestOfAdminTools extends WebTestCase {
 
         $this->selenium->click("xpath=//p[3]/button");
         $this->selenium->waitForPageToLoad("3000000");
-
-        sleep(2);
+        
         $this->assertTrue($this->selenium->isTextPresent("Archiving successful!"), "Backup zip! ERROR");
     }
 }
