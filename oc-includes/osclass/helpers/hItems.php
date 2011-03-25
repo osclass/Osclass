@@ -175,7 +175,11 @@
         if ( osc_item_field("b_premium") ) return true ;
         else return false ;
     }
-    
+
+    function osc_item_views() {
+        return osc_item_field("i_num_views") ;
+    }
+
     function osc_item_status() {
         return osc_item_field("e_status");
     }

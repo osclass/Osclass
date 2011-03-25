@@ -140,7 +140,7 @@ Class ItemActions
         $contactEmail   = "valid@mail.com" ;
         // Validate
         
-        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
         
             $location = array(
                 'fk_c_country_code' => $aItem['countryId'],
@@ -218,7 +218,9 @@ Class ItemActions
         $item = $this->manager->findByPrimaryKey($itemId);
         $this->deleteResourcesFromHD($itemId);
         $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
-        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        if($item['e_status']=='ACTIVE') {
+            CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        }
     }
 
     /**
@@ -686,17 +688,11 @@ Class ItemActions
                 }
             }
             
-            $show_email = 0;
             $active = 'INACTIVE';
             if( !osc_item_validation_enabled() ){
                 $active = 'ACTIVE';
             }
-            if( Params::getParam('showEmail') != '' ){
-                $show_email = (int) Params::getParam('showEmail');
-            }
-            
             $aItem['active'] = $active;
-            $aItem['show_email'] = $show_email;
 
             if ($userId != null) {
                 if( $this->is_admin ) {
@@ -717,7 +713,7 @@ Class ItemActions
             $aItem['active']        = $active;
             $aItem['userId']        = $userId;
 
-        }else{          // EDIT
+        } else {          // EDIT
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
 
@@ -728,23 +724,24 @@ Class ItemActions
                 $aItem['contactEmail']  = $data['s_email'];
                 Params::setParam('contactName', $data['s_name']);
                 Params::setParam('contactEmail', $data['s_email']);
-            }else{
+            } else {
                 $aItem['contactName']   = Params::getParam('contactName');
                 $aItem['contactEmail']  = Params::getParam('contactEmail');
             }
         }
+
         // get params
-        $aItem['catId']         = Params::getParam('catId');            // OK
-        $aItem['region']        = Params::getParam('region');           // OK
-        $aItem['city']          = Params::getParam('city');             // OK
-        $aItem['regionId']      = Params::getParam('regionId');         // OK
-        $aItem['cityId']        = Params::getParam('cityId');           // OK
-        $aItem['price']         = Params::getParam('price');            // OK
-        $aItem['countryId']     = Params::getParam('countryId');        // OK
-        $aItem['cityArea']      = Params::getParam('cityArea');         // OK
-        $aItem['address']       = Params::getParam('address');          // OK
-        $aItem['currency']      = Params::getParam('currency');         // OK
-        $aItem['showEmail']     = (Params::getParam('showEmail')!='')?((int)Params::getParam('showEmail')):0;        // OK
+        $aItem['catId']         = Params::getParam('catId');
+        $aItem['region']        = Params::getParam('region');
+        $aItem['city']          = Params::getParam('city');
+        $aItem['regionId']      = Params::getParam('regionId');
+        $aItem['cityId']        = Params::getParam('cityId');
+        $aItem['price']         = Params::getParam('price');
+        $aItem['countryId']     = Params::getParam('countryId');
+        $aItem['cityArea']      = Params::getParam('cityArea');
+        $aItem['address']       = Params::getParam('address');
+        $aItem['currency']      = Params::getParam('currency');
+        $aItem['showEmail']     = (Params::getParam('showEmail') != '') ? 1 : 0;
         $aItem['title']         = Params::getParam('title');
         $aItem['description']   = Params::getParam('description');
         $aItem['photos']        = Params::getFiles('photos');
