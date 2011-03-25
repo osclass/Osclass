@@ -54,6 +54,17 @@ class TestOfAdminEmailsAndalerts extends WebTestCase {
         flush();
     }
 
+    function testEditYourProfile()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditYourProfile</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditYourProfile - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditYourProfile - EDIT YOUR PROFILE ADMINISTRATOR</div>";
+        $this->editYourProfileAdministrator();
+        flush();
+    }
+
     function testEditAdministrator()
     {
         echo "<div style='background-color: green; color: white;'><h2>testEditAdministrator</h2></div>";
@@ -152,6 +163,22 @@ class TestOfAdminEmailsAndalerts extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
 
         $this->assertTrue($this->selenium->isTextPresent("There have been an error adding a new admin"),"Can insert administrator twice. ERROR");
+    }
+
+    private function editYourProfileAdministrator()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Administrators");
+        $this->selenium->click("link=» Edit Your Profile");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("s_name","Administrator updated");
+        $this->selenium->type("s_username","adminUpdated");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Can edit administrator. ERROR");
     }
 
     private function editAdministrator()
