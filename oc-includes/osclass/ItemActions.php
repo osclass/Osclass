@@ -555,29 +555,27 @@ Class ItemActions
 		$contactEmail = strip_tags(trim($contactEmail));
 
 		// Validate input
+		$title_success = false;
 		foreach($title as $key=>$value) {
-				if(!preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
-    				$flash_error[] = _m("Title too short");
-                    $success = false;
-	    			break;
-				}
-				if(strlen(strip_tags(trim($value)))>80) {
-    				$flash_error[] = _m("Title too long");
-                    $success = false;
-	    			break;
-				}
+            if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
+                $title_success = true;
+                break;
+            }
+        }
+        if(!$title_success) {
+            $flash_error[] = _m("Title too short");
+            $success = false;
 		}
+		$description_success = false;
 		foreach($description as $key=>$value) {
-				if(!preg_match("/([\p{L}][^\p{L}]*){25}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
-    				$flash_error[] = _m("Description too short");
-                    $success = false;
-	    			break;
-				}
-				if(strlen(strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))>5000) {
-    				$flash_error[] = _m("Description too long");
-                    $success = false;
-	    			break;
-				}
+            if(preg_match("/([\p{L}][^\p{L}]*){25}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+                $description_success = true;
+                break;
+            }
+        }
+        if(!$description_success) {
+            $flash_error[] = _m("Description too short");
+            $success = false;
 		}
 
         if(!preg_match("/^[0-9]+$/", $idCat)) {
