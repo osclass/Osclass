@@ -140,7 +140,7 @@ Class ItemActions
         $contactEmail   = "valid@mail.com" ;
         // Validate
         
-        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
         
             $location = array(
                 'fk_c_country_code' => $aItem['countryId'],
@@ -218,7 +218,9 @@ Class ItemActions
         $item = $this->manager->findByPrimaryKey($itemId);
         $this->deleteResourcesFromHD($itemId);
         $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
-        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        if($item['e_status']=='ACTIVE') {
+            CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        }
     }
 
     /**

@@ -116,10 +116,12 @@
                                                     foreach($id as $i) {
                                                         if ($i) {
                                                             $item = $this->itemManager->findByPrimaryKey($i) ;
-                                                            if( $item['e_status'] == 'ACTIVE' ) {
+                                                            /*if( $item['e_status'] == 'ACTIVE' ) {
                                                                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                             }
-                                                            $this->itemManager->deleteByPrimaryKey($i);
+                                                            $this->itemManager->deleteByPrimaryKey($i);*/
+                                                            $mItems = new ItemActions(true);
+                                                            $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
                                                         }
                                                     }
                                                     osc_add_flash_message( _m('The items have been deleted'), 'admin') ;
@@ -137,10 +139,12 @@
                                             foreach($id as $i) {
                                                 if ($i) {
                                                     $item = $this->itemManager->findByPrimaryKey($i) ;
-                                                    if( $item['e_status'] == 'ACTIVE' ) {
+                                                    /*if( $item['e_status'] == 'ACTIVE' ) {
                                                         CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                     }
-                                                    $this->itemManager->deleteByPrimaryKey($i) ;
+                                                    $this->itemManager->deleteByPrimaryKey($i) ;*/
+                                                    $mItems = new ItemActions(true);
+                                                    $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
                                                 }
                                             }
                                             osc_add_flash_message( _m('The items have been deleted'), 'admin') ;
