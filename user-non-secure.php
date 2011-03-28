@@ -66,14 +66,6 @@ class CWebUserNonSecure extends BaseModel
                 osc_redirectTo(osc_base_url());
             break;
             
-            case 'forgot':
-            
-            break;
-            
-            case 'forgot_post':
-            
-            break;
-            
             default:
                 $this->redirectTo( osc_user_login_url() );
             break;
