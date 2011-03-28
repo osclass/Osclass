@@ -91,6 +91,12 @@
                                                 }
                                                 osc_run_hook('validate_user', $user) ;
                                                 osc_add_flash_message( _m('Your account has been validated')) ;
+                                                // Auto-login
+                                                Session::newInstance()->_set('userId', $user['pk_i_id']) ;
+                                                Session::newInstance()->_set('userName', $user['s_name']) ;
+                                                Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                                                $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                                                Session::newInstance()->_set('userPhone', $phone) ;
                                             } else {
                                                 osc_add_flash_message( _m('Your account has already been activated')) ;
                                             }
