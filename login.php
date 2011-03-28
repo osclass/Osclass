@@ -116,6 +116,9 @@ class CWebLogin extends BaseModel
             break;
             
             default:                //login
+                                    if( osc_logged_user_id() != '') {
+                                        $this->redirectTo(osc_user_dashboard_url());
+                                    }
                                     $this->doView( 'user-login.php' ) ;
         }
        
