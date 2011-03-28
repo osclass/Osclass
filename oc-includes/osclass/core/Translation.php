@@ -63,6 +63,16 @@
                 $theme_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/theme.mo';
             }
             $this->_load($theme_file, $domain);
+
+            // load plugins
+            $aPlugins = Plugins::listInstalled();
+            foreach($aPlugins as $plugin) {
+                $domain = preg_replace('|/.*|', '', $plugin);
+                $plugin_file = osc_plugins_path() . $domain . '/languages/' . $locale . '/messages.mo';
+                if(file_exists($plugin_file) ) {
+                    $this->_load($plugin_file, $domain);
+                }
+            }
         }
 
         function _get($domain) {

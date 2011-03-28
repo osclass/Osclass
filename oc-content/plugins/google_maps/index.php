@@ -3,18 +3,18 @@
 Plugin Name: Google Maps
 Plugin URI: http://www.osclass.org/
 Description: This plugin shows a Google Map on the location space of every item.
-Version: 1.0
+Version: 2.0
 Author: OSClass & kingsult
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
 */
 
     function google_maps_call_after_install() {
-        $fields = array() ;
+        $fields              = array() ;
         $fields["s_section"] = 'plugin-google_maps' ;
-        $fields["s_name"] = 'google_maps_key' ;
-        $fields["s_value"] = '' ;
-        $fields["e_type"] = 'STRING' ;
+        $fields["s_name"]    = 'google_maps_key' ;
+        $fields["s_value"]   = '' ;
+        $fields["e_type"]    = 'STRING' ;
 
         $dao_preference = new Preference() ;
         $dao_preference->insert($fields) ;
