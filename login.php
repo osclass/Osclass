@@ -29,38 +29,43 @@ class CWebLogin extends BaseModel
         switch( $this->action ) {
             case('login_post'):     //post execution for the login
                                     $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
-                                    if ($user) {
-                                        if ( $user["s_password"] == sha1( Params::getParam('password') ) ) {
-                                            if ( Params::getParam('remember') == 1 ) {
+                                    if (!$user) {
+                                        osc_add_flash_message(_m('The username doesn\'t exist')) ;
+                                        $this->redirectTo(osc_user_login_url());
+                                    }
 
-                                                //this include contains de osc_genRandomPassword function
-                                                require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
-                                                $secret = osc_genRandomPassword() ;
+                                    if(!$user['b_enabled']) {
+                                        osc_add_flash_message(_m('The user has not been validated yet'));
+                                        $this->redirectTo(osc_user_login_url());
+                                    }
 
-                                                User::newInstance()->update(
-                                                    array('s_secret' => $secret)
-                                                    ,array('pk_i_id' => $user['pk_i_id'])
-                                                );
+                                    if ( $user["s_password"] == sha1( Params::getParam('password') ) ) {
+                                        if ( Params::getParam('remember') == 1 ) {
 
-                                                Cookie::newInstance()->set_expires( osc_time_cookie() ) ;
-                                                Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
-                                                Cookie::newInstance()->push('oc_userSecret', $secret) ;
-                                                Cookie::newInstance()->set() ;
-                                            }
+                                            //this include contains de osc_genRandomPassword function
+                                            require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
+                                            $secret = osc_genRandomPassword() ;
 
-                                            //we are logged in... let's go!
-                                            Session::newInstance()->_set('userId', $user['pk_i_id']) ;
-                                            Session::newInstance()->_set('userName', $user['s_name']) ;
-                                            Session::newInstance()->_set('userEmail', $user['s_email']) ;
-                                            $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
-                                            Session::newInstance()->_set('userPhone', $phone) ;
-                                            
-                                        } else {
-                                            osc_add_flash_message( _m('The password is incorrect')) ;
+                                            User::newInstance()->update(
+                                                array('s_secret' => $secret)
+                                                ,array('pk_i_id' => $user['pk_i_id'])
+                                            );
+
+                                            Cookie::newInstance()->set_expires( osc_time_cookie() ) ;
+                                            Cookie::newInstance()->push('oc_userId', $user['pk_i_id']) ;
+                                            Cookie::newInstance()->push('oc_userSecret', $secret) ;
+                                            Cookie::newInstance()->set() ;
                                         }
 
+                                        //we are logged in... let's go!
+                                        Session::newInstance()->_set('userId', $user['pk_i_id']) ;
+                                        Session::newInstance()->_set('userName', $user['s_name']) ;
+                                        Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                                        $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                                        Session::newInstance()->_set('userPhone', $phone) ;
+
                                     } else {
-                                        osc_add_flash_message( _m('The username doesn\'t exist')) ;
+                                        osc_add_flash_message( _m('The password is incorrect')) ;
                                     }
 
                                     //returning logged in to the main page...
@@ -111,6 +116,9 @@ class CWebLogin extends BaseModel
             break;
             
             default:                //login
+                                    if( osc_logged_user_id() != '') {
+                                        $this->redirectTo(osc_user_dashboard_url());
+                                    }
                                     $this->doView( 'user-login.php' ) ;
         }
        

@@ -124,7 +124,7 @@
                                                                                       ,array('s_name'  => 'enabled_users'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Users\' settings have been updated.'), 'admin');
+                                            osc_add_flash_message( _m('Users\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
                 break;
