@@ -200,7 +200,7 @@ function oc_install( ) {
         else $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
     }
 
-    $conn->osc_dbImportSQL($sql, ')');
+    $conn->osc_dbImportSQL($sql, '');
     $error_num = $conn->get_errno();
     if($error_num > 0) {
         if ( $error_num == 1471 ) {
