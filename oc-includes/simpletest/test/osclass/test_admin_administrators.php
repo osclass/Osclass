@@ -54,6 +54,20 @@ class TestOfAdminEmailsAndalerts extends WebTestCase {
         flush();
     }
 
+    function testInsertAdministratorFail()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testInsertAdministratorFail</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertAdministratorFail - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertAdministratorFail - INSERT ADMINISTRATOR - INVALID EMAIL</div>";
+        $this->insertAdministratorInvalidEmail() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertAdministratorFail - INSERT ADMINISTRATOR - EXISTENT USERNAME</div>";
+        $this->insertAdministratorExistentUsername();
+        flush();
+    }
+
     function testEditYourProfile()
     {
         echo "<div style='background-color: green; color: white;'><h2>testEditYourProfile</h2></div>";
@@ -77,7 +91,6 @@ class TestOfAdminEmailsAndalerts extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditAdministrator - EDIT ADMINISTRATOR WITHOUT CHANGE PASSWORD</div>";
         $this->editAdministrator2();
         flush();
-        // TEST editAdministrator3 -> check valid email
     }
 
     function testEditAdministratorFailPasswMatch()
@@ -162,7 +175,45 @@ class TestOfAdminEmailsAndalerts extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->assertTrue($this->selenium->isTextPresent("There have been an error adding a new admin"),"Can insert administrator twice. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("Email already in use"),"Can insert administrator with an existent email. ERROR");
+    }
+
+    private function insertAdministratorInvalidEmail()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Administrators");
+        $this->selenium->click("link=» Add new administrator");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("s_name","Real name user one");
+        $this->selenium->type("s_username","useradminone_");
+        $this->selenium->type("s_password", "useradminpass_");
+
+        $this->selenium->type("s_email", "admin(at)mailcom");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Email invalid"),"Can insert administrator with invalid email. ERROR");
+    }
+
+    private function insertAdministratorExistentUsername()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Administrators");
+        $this->selenium->click("link=» Add new administrator");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("s_name","Real name user one");
+        $this->selenium->type("s_username","useradminone");
+        $this->selenium->type("s_password", "useradminpass");
+
+        $this->selenium->type("s_email", "admin_@mail.com");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Username already in use"),"Can insert administrator with existent username. ERROR");
     }
 
     private function editYourProfileAdministrator()
@@ -227,14 +278,6 @@ class TestOfAdminEmailsAndalerts extends WebTestCase {
 
         $this->assertTrue($this->selenium->isTextPresent("The admin has been updated"),"Can edit administrator. ERROR");
     }
-
-    /**
-     * @TODO test editing with a wrong email.
-     */
-//    public function editAdministrator3()
-//    {
-//
-//    }
 
     private function editAdministratorFailPass()
     {
