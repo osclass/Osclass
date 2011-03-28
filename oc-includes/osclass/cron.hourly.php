@@ -56,7 +56,7 @@ function update_cat_stats() {
 	
 	foreach($cats as $c) {
         $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m")-1, date("d"),   date("Y")));
-	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' AND fk_i_category_id = %d", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
+	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' AND fk_i_category_id = %d GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
         $total = $conn->osc_dbFetchResult($sql);
         $total = $total['total'];
         
