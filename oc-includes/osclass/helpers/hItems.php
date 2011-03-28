@@ -297,6 +297,11 @@
     function osc_comment_user_id() {
         return osc_comment_field("fk_i_user_id");
     }
+
+    function osc_delete_comment_url() {
+        return osc_base_url(true) . "?page=item&action=delete_comment&id=" . osc_item_id() . "&comment=" . osc_comment_id();
+    }
+
     //////////////////////////////
     // END HELPERS FOR COMMENTS //
     //////////////////////////////
