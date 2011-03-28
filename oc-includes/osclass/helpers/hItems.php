@@ -420,8 +420,9 @@
      */
     //osc_formatPrice
     function osc_format_price($price) {
-        if ($price == null) return __('Check with seller') ;
-        if ($price == 0) return __('Free') ;
+        if ($price == 0) return __('Check with seller') ;
+        //if ($price == null) return __('Check with seller') ;
+        //if ($price == 0) return __('Free') ;
         return sprintf('%.02f %s', $price, osc_item_currency() ) ;
     }
 
