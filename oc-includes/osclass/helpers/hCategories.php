@@ -153,7 +153,7 @@
      *
      * @return <string>
      */
-    function osc_category_descriprion($locale = "") {
+    function osc_category_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_category_field("s_description", $locale) ;
     }

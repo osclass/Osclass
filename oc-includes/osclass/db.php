@@ -263,7 +263,7 @@ class DB
         $s_temp = '';
     	for($var_k=0;$var_k<$var_l;$var_k++) {
             $s = $s_temp.$sentences[$var_k];
-            if(!empty($s)) {
+            if(!empty($s) && trim($s)!='') {
                 $s .= $needle;
                 $simple_comma = substr_count($s, "'");
                 $scaped_simple_comma = substr_count($s, "\'");
@@ -284,7 +284,7 @@ class DB
     	foreach($sentences as $s) {
             $s = trim($s);
             if( !empty($s) ) {
-                $s = trim($s) . $needle;
+                $s = trim($s) ;// . $needle;
                 if( $this->db->query($s) ) {
                     $this->debug($s) ;
                 } else {
