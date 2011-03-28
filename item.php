@@ -337,6 +337,49 @@ class CWebItem extends BaseModel
                 osc_add_flash_message($msg);
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
+            case 'delete_comment':
+                $mItem = new ItemActions(false);
+                $status = $mItem->add_comment();
+
+                $itemId    = Params::getParam('id');
+				$commentId = Params::getParam('comment');
+
+                $item = Item::newInstance()->findByPrimaryKey($itemId);
+
+                if( count($item) == 0 ) {
+                    osc_add_flash_message( _m('This item doesn\'t exist') );
+                    $this->redirectTo( osc_base_url(true) );
+                }
+
+                View::newInstance()->_exportVariableToView('item', $item);
+
+                if($this->userId == null) {
+                    osc_add_flash_message(_m('You have to be logged to delete a comment'));
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                $commentManager = ItemComment::newInstance();
+                $aComment = $commentManager->findByPrimaryKey($commentId);
+
+                if( count($aComment) == 0 ) {
+                    osc_add_flash_message( _m('The comment doesn\'t exist') );
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                if( $aComment['e_status'] != 'ACTIVE' ) {
+                    osc_add_flash_message( _m('The comment is not active, you cannot delete it') );
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                if($aComment['fk_i_user_id'] != $this->userId) {
+                    osc_add_flash_message( _m('You cannot delete the comment') );
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                 $commentManager->deleteByPrimaryKey($commentId);
+                 osc_add_flash_message( _m('The comment has been deleted correctly' ) ) ;
+                 $this->redirectTo( osc_item_url() );
+            break;
             default:
                 if( Params::getParam('id') == ''){
                     $this->redirectTo(osc_base_url());
