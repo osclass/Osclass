@@ -585,7 +585,7 @@ Class ItemActions
             $success = false;
         }
 
-        if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
+        if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
             $flash_error[] = _m("Email invalid");
             $success = false;
         }
