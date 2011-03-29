@@ -126,5 +126,8 @@ if(!defined('__FROM_CRON__')) {
 Plugins::init() ;
 
 Rewrite::newInstance()->init();
+// Moved from BaseModel, since we need some session magic on index.php ;)
+Session::newInstance()->session_start() ;
+
 
 ?>

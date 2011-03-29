@@ -164,10 +164,15 @@
     /////////////
     // ALERTS  //
     /////////////
+    function osc_alert_field($field) {
+        return osc_field(View::newInstance()->_current('alerts'), $field, '') ;
+    }
+
     function osc_has_alerts() {
-        $alert = View::newInstance()->_next('alerts') ;
+        $result = View::newInstance()->_next('alerts') ;
+        $alert = osc_alert();
         View::newInstance()->_exportVariableToView("items", isset($alert['items'])?$alert['items']:array());
-        return $alert;
+        return $result;
     }
 
     function osc_count_alerts() {
@@ -175,8 +180,17 @@
     }
     
     function osc_alert() {
-        return View::newInstance()->_get('alerts');
+        return View::newInstance()->_current('alerts');
     }
+    
+    function osc_alert_search() {
+        return osc_alert_field('s_search');
+    }
+    
+    function osc_alert_search_object() {
+        return osc_unserialize(base64_decode(osc_alert_field('s_search')));
+    }
+    
     
     function osc_prepare_user_info() {
         if ( !View::newInstance()->_exists('users') ) {

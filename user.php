@@ -76,13 +76,16 @@ class CWebUser extends WebSecBaseModel
             break ;
             case('alerts'):         //alerts
                                     $aAlerts = Alerts::newInstance()->getAlertsFromUser( Session::newInstance()->_get('userId') ) ;
+                                    $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId'));
                                     foreach($aAlerts as $k => $a) {
                                         $search = osc_unserialize(base64_decode($a['s_search'])) ;
                                         $search->limit(0, 3) ;
                                         $aAlerts[$k]['items'] = $search->search() ;
                                     }
-                                    
+
                                     $this->_exportVariableToView('alerts', $aAlerts) ;
+                                    View::newInstance()->_reset('alerts') ;
+                                    $this->_exportVariableToView('user', $user) ;
                                     $this->doView('user-alerts.php') ;
             break;
             case('change_email'):           //change email
@@ -238,7 +241,7 @@ class CWebUser extends WebSecBaseModel
                 } else {
                     osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
-                osc_redirectTo(osc_user_alerts_url());
+                $this->redirectTo(osc_user_alerts_url());
             break;
             
             
