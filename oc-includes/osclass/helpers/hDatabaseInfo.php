@@ -36,6 +36,10 @@
         return getSiteInfo('s_db_password', DB_PASSWORD) ;
     }
 
+    function osc_multisite_url() {
+        return getSiteInfo('s_site', '') ;
+    }
+
     //PRIVATE FUNCTION FOR GETTING NO BOOLEAN INFORMATION (if there was a class :P)
     function getSiteInfo($key, $default_value) {
         if (MULTISITE) {

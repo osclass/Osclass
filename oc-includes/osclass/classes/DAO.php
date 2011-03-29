@@ -136,7 +136,7 @@ abstract class DAO {
      * @return only for metadata.
      */
     public function findByPrimaryKeyInMetadataDB($pk) {
-        return $this->metadata_conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_site = '%s'",
+        return $this->metadata_conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_id = '%s'",
             $this->getTableName(), $pk
         );
     }

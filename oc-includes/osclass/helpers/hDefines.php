@@ -28,7 +28,12 @@
      * @return string
      */
     function osc_base_url($with_index = false) {
-        $path = WEB_PATH ;
+        $path = '';
+        if(MULTISITE) {
+            $path = osc_multisite_url();
+        } else {
+            $path = WEB_PATH ;
+        }
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
@@ -40,7 +45,13 @@
      * @return string
      */
     function osc_admin_base_url($with_index = false) {
-        $path = WEB_PATH . "oc-admin/" ;
+        $path = '';
+        if(MULTISITE) {
+            $path = osc_multisite_url();
+        } else {
+            $path = WEB_PATH ;
+        }
+        $path .= "oc-admin/" ;
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
