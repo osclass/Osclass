@@ -385,7 +385,7 @@
 
                                                                 $isInserted = Currency::newInstance()->insert($fields);
 
-                                                                if(!$isInserted) {
+                                                                if($isInserted) {
                                                                     osc_add_flash_message( _m('New currency has been added'), 'admin');
                                                                 } else {
                                                                     osc_add_flash_message( _m('Error: currency couldn\'t be added'), 'admin');
