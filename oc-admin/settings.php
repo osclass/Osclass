@@ -124,7 +124,7 @@
                                                                                       ,array('s_name'  => 'enabled_users'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Users\' settings have been updated.'), 'admin');
+                                            osc_add_flash_message( _m('Users\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
                 break;
@@ -163,18 +163,24 @@
                                             break;
                                             case('delete_country'): // delete country
                                                                     $countryId = Params::getParam('id');
-                                                                    $mRegions = new Region();
-                                                                    $mCities = new City();
+                                                                    // HAS ITEMS?
+                                                                    $has_items = Item::newInstance()->listWhere('l.fk_c_country_code = \'%s\' LIMIT 1', $countryId);
+                                                                    if(!$has_items) {
+                                                                        $mRegions = new Region();
+                                                                        $mCities = new City();
 
-                                                                    $aCountries = $mCountries->findByCode($countryId);
-                                                                    $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
-                                                                    foreach($aRegions as $region) {
-                                                                        $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
-                                                                        $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                        $aCountries = $mCountries->findByCode($countryId);
+                                                                        $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
+                                                                        foreach($aRegions as $region) {
+                                                                            $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
+                                                                            $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
+                                                                        }
+                                                                        $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
+
+                                                                        osc_add_flash_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                    } else {
+                                                                        osc_add_flash_message(sprintf(__('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
                                                                     }
-                                                                    $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
-
-                                                                    osc_add_flash_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('add_region'):     // add region
@@ -648,11 +654,17 @@
         function install_location_by_country() {
             $country    = Params::getParam('country');
             $aCountry[] = trim($country);
-
+            
             $manager_country = new Country();
             $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=' .
-                                                    implode(',', $aCountry) );
+                                                     urlencode(implode(',', $aCountry)) );
+
             $countries = json_decode($countries_json);
+            if(isset($countries->error)) {
+                osc_add_flash_message(sprintf(__('%s cannot be added'), $country), 'admin');
+                return false;
+            }
+
             foreach($countries as $c) {
                 $manager_country->insert(array(
                     "pk_c_code" => $c->id
@@ -663,7 +675,7 @@
 
             $manager_region = new Region();
             $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' .
-                                                  implode(',', $aCountry) . '&term=all');
+                                                  urlencode(implode(',', $aCountry)) . '&term=all');
             $regions = json_decode($regions_json);
             foreach($regions as $r) {
                 $manager_region->insert(array(
@@ -679,7 +691,7 @@
                 $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
                 foreach($regions as $region) {
                     $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
-                                                         $c->name . '&region=' .$region['s_name'] . '&term=all') ;
+                                                         urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
                     $cities = json_decode($cities_json) ;
                     if(!isset($cities->error)) {
                         foreach($cities as $ci) {
@@ -720,8 +732,13 @@
 
             $manager_region = new Region();
             $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' .
-                                                  implode(',', $aCountry) . '&term=' . implode(',', $aRegion));
+                                                  urlencode(implode(',', $aCountry)) . '&term=' . urlencode(implode(',', $aRegion)));
             $regions = json_decode($regions_json);
+            if(isset($regions->error)) {
+                osc_add_flash_message(sprintf(__('%s cannot be added'), $region), 'admin');
+                return false;
+            }
+
             foreach($regions as $r) {
                 $manager_region->insert(array(
                     "fk_c_country_code" => $r->country_code,
@@ -736,7 +753,7 @@
                 $regions = $manager_region->findByConditions(array('fk_c_country_code' => $country['pk_c_code']
                                                                   ,'s_name' => $region));
                 $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
-                                                     $c . '&region=' . $regions['s_name'] . '&term=all');
+                                                     urlencode($c) . '&region=' . urlencode($regions['s_name']) . '&term=all');
                 $cities = json_decode($cities_json);
                 if(!isset($cities->error)) {
                     foreach($cities as $ci) {

@@ -34,7 +34,24 @@
                 case 'add_post':
                     $filePackage = Params::getFiles('package');
                     $path = osc_themes_path() ;
-                    osc_packageExtract($filePackage['tmp_name'], $path);
+
+                    (int) $status = unzip_file($filePackage['tmp_name'], $path);
+
+                    switch ($status) {
+                        case(0):   $msg = _m('The theme folder is not writable');
+                        break;
+                        case(1):   $msg = _m('The theme has been installed correctly');
+                        break;
+                        case(2):   $msg = _m('The zip file is not valid');
+                        break;
+                        case(3):   $msg = _m('The zip file is empty');
+                        break;
+                        case(-1):
+                        default:   $msg = _m('There was a problem adding the theme');
+                        break;
+                    }
+
+                    osc_add_flash_message($msg, 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 /*case 'delete':

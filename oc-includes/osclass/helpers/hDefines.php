@@ -415,11 +415,19 @@
     }
 
     //osc_createUserItemsURL
-    function osc_user_list_items_url() {
+    function osc_user_list_items_url($page = '') {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/items' ;
+            if($page=='') {
+                return osc_base_url() . 'user/items' ;
+            } else {
+                return osc_base_url() . 'user/items?iPage='.$page ;
+            }
         } else {
-            return osc_base_url(true) . '?page=user&action=items' ;
+            if($page=='') {
+                return osc_base_url(true) . '?page=user&action=items' ;
+            } else {
+                return osc_base_url(true) . '?page=user&action=items&iPage='.$page ;
+            }
         }
     }
 
@@ -444,6 +452,14 @@
             return osc_base_url() . 'user/change_password' ;
         } else {
             return osc_base_url(true) . '?page=user&action=change_password' ;
+        }
+    }
+
+    function osc_forgot_user_password_confirm_url($userId, $code) {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/forgot/' . $userId . '/' . $code ;
+        } else {
+            return osc_base_url(true) . '?page=login&action=forgot&userId='.$userId.'&code='.$code;
         }
     }
 

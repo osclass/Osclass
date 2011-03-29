@@ -175,7 +175,11 @@
         if ( osc_item_field("b_premium") ) return true ;
         else return false ;
     }
-    
+
+    function osc_item_views() {
+        return osc_item_field("i_num_views") ;
+    }
+
     function osc_item_status() {
         return osc_item_field("e_status");
     }
@@ -245,6 +249,19 @@
 
         return $url;
     }
+
+    function osc_list_page() {
+        return View::newInstance()->_get('list_page');
+    }
+    
+    function osc_list_total_pages() {
+        return View::newInstance()->_get('list_total_pages');
+    }
+
+    function osc_list_items_per_page() {
+        return View::newInstance()->_get('items_per_page');
+    }    
+    
     ///////////////////////
     // HELPERS FOR ITEMS //
     ///////////////////////
@@ -280,6 +297,11 @@
     function osc_comment_user_id() {
         return osc_comment_field("fk_i_user_id");
     }
+
+    function osc_delete_comment_url() {
+        return osc_base_url(true) . "?page=item&action=delete_comment&id=" . osc_item_id() . "&comment=" . osc_comment_id();
+    }
+
     //////////////////////////////
     // END HELPERS FOR COMMENTS //
     //////////////////////////////
@@ -398,8 +420,9 @@
      */
     //osc_formatPrice
     function osc_format_price($price) {
-        if ($price == null) return __('Check with seller') ;
-        if ($price == 0) return __('Free') ;
+        if ($price == 0) return __('Check with seller') ;
+        //if ($price == null) return __('Check with seller') ;
+        //if ($price == 0) return __('Free') ;
         return sprintf('%.02f %s', $price, osc_item_currency() ) ;
     }
 

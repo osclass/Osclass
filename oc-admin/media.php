@@ -34,12 +34,13 @@
             //specific things for this class
             switch ($this->action)
             {
-                case 'delete':          if(Params::getParam("id")!="") {
-                                            // delete files
-                                            osc_deleteResource( Params::getParam("id") );
-                                            //delete db entry
+                case 'delete':          $ids = Params::getParam("id");
+                                        if($ids!='') {
+                                            foreach($ids as $id) {
+                                                osc_deleteResource( $id );
+                                            }
                                             $this->resourcesManager->delete(array(
-                                                DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', Params::getParam("id")). ')'
+                                                DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $ids). ')'
                                             ));
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;

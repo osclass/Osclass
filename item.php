@@ -58,9 +58,6 @@ class CWebItem extends BaseModel
                     $this->redirectTo(osc_user_login_url());
                 }
 
-                //$categories = Category::newInstance()->toTree();
-                //$currencies = Currency::newInstance()->listAll();
-
                 $countries = Country::newInstance()->listAll();
                 $regions = array(); 
                 if( isset($this->user['fk_c_country_code']) && $this->user['fk_c_country_code']!='' ) {
@@ -74,9 +71,7 @@ class CWebItem extends BaseModel
                 } else if( count($regions) > 0 ) {
                     $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                 }
-
-                //$this->_exportVariableToView('categories', $categories) ;
-                //$this->_exportVariableToView('currencies', $currencies) ;
+                
                 $this->_exportVariableToView('countries',$countries ) ;
                 $this->_exportVariableToView('regions', $regions) ;
                 $this->_exportVariableToView('cities', $cities) ;
@@ -197,8 +192,11 @@ class CWebItem extends BaseModel
                 $secret = Params::getParam('secret');
                 $id     = Params::getParam('id');
                 $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+
                 if (count($item) == 1) {
-                    
+
+                    $this->_exportVariableToView('item', $item[0]) ;
+
                     $mItems = new ItemActions(false);
                     $success = $mItems->edit();
 
@@ -339,6 +337,49 @@ class CWebItem extends BaseModel
                 osc_add_flash_message($msg);
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
+            case 'delete_comment':
+                $mItem = new ItemActions(false);
+                $status = $mItem->add_comment();
+
+                $itemId    = Params::getParam('id');
+				$commentId = Params::getParam('comment');
+
+                $item = Item::newInstance()->findByPrimaryKey($itemId);
+
+                if( count($item) == 0 ) {
+                    osc_add_flash_message( _m('This item doesn\'t exist') );
+                    $this->redirectTo( osc_base_url(true) );
+                }
+
+                View::newInstance()->_exportVariableToView('item', $item);
+
+                if($this->userId == null) {
+                    osc_add_flash_message(_m('You have to be logged to delete a comment'));
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                $commentManager = ItemComment::newInstance();
+                $aComment = $commentManager->findByPrimaryKey($commentId);
+
+                if( count($aComment) == 0 ) {
+                    osc_add_flash_message( _m('The comment doesn\'t exist') );
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                if( $aComment['e_status'] != 'ACTIVE' ) {
+                    osc_add_flash_message( _m('The comment is not active, you cannot delete it') );
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                if($aComment['fk_i_user_id'] != $this->userId) {
+                    osc_add_flash_message( _m('You cannot delete the comment') );
+                    $this->redirectTo( osc_item_url() );
+                }
+
+                 $commentManager->deleteByPrimaryKey($commentId);
+                 osc_add_flash_message( _m('The comment has been deleted correctly' ) ) ;
+                 $this->redirectTo( osc_item_url() );
+            break;
             default:
                 if( Params::getParam('id') == ''){
                     $this->redirectTo(osc_base_url());
@@ -367,7 +408,7 @@ class CWebItem extends BaseModel
 
                     foreach($item['locale'] as $k => $v) {
                         $item['locale'][$k]['s_title'] = osc_apply_filter('item_title',$v['s_title']);
-                        $item['locale'][$k]['s_description'] = osc_apply_filter('item_description',$v['s_description']);
+                        $item['locale'][$k]['s_description'] = nl2br(osc_apply_filter('item_description',$v['s_description']));
                     }
 
                     $this->_exportVariableToView('items', array($item)) ;

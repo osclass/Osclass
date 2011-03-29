@@ -56,11 +56,7 @@ Class ItemActions
         if(!preg_match("/([a-z][^a-z]*){2}/i",$contactName)) {
             $contactName = __("Anonymous");
         }
-
-
-        if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
-            
-
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
@@ -140,9 +136,11 @@ Class ItemActions
     {
         $aItem = $this->prepareData(false);
 
-        $contactEmail   = @$aItem['contactEmail'] ;
+        // QUICK FIX $contactmMail
+        $contactEmail   = "valid@mail.com" ;
         // Validate
-        if( $this->validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
         
             $location = array(
                 'fk_c_country_code' => $aItem['countryId'],
@@ -157,9 +155,6 @@ Class ItemActions
 
             $locationManager = ItemLocation::newInstance();
             $locationManager->update( $location, array( 'fk_i_item_id' => $aItem['idItem'] ) );
-
-//            $contactName    = @$aItem['contactName'] ;
-//            $contactEmail   = @$aItem['contactEmail'] ;
 
             // Update category numbers
             $old_item = $this->manager->findByPrimaryKey( $aItem['idItem'] ) ;
@@ -190,7 +185,7 @@ Class ItemActions
 
             return $result;
         } else {
-            return FALSE;
+            return false;
         }
     }
     
@@ -221,10 +216,25 @@ Class ItemActions
     public function delete( $secret, $itemId )
     {
         $item = $this->manager->findByPrimaryKey($itemId);
+        $this->deleteResourcesFromHD($itemId);
         $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
-        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        if($item['e_status']=='ACTIVE') {
+            CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        }
     }
 
+    /**
+     * Delete resources from the hard drive
+     * @param <type> $itemId
+     */
+    public function deleteResourcesFromHD( $itemId )
+    {
+        $resources = ItemResource::newInstance()->getAllResources($itemId);
+        foreach($resources as $resource) {
+            osc_deleteResource($resource['pk_i_id']);
+        }
+    }
+    
     /**
      * Mark an item
      * @param <type> $id
@@ -524,20 +534,75 @@ Class ItemActions
         return -1;
     }
     
-    // validate( current($aItem['title']), current($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos'])
+    /**
+     * Validate some things previous to add or edit
+     * @param <string> $title
+     * @param <string> $description
+     * @param <string> $contactEmail
+     * @param <string> $idCat
+     * @param <array> $aPhotos
+     * @return boolean 
+     */
     private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
     {
         $success = true;
-        if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
+        /*if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
             !preg_match("/([a-z][^a-z]*){8}/i", $description ) ||
             !preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)  ||
             !preg_match("/^[0-9]+$/", $idCat )) {
             osc_add_flash_message( _m('Some fields were too short. Try again!') );
             $success = false;
+        }*/
+        $flash_error = array();
+		$contactEmail = strip_tags(trim($contactEmail));
+
+		// Validate input
+		$title_success = false;
+		foreach($title as $key=>$value) {
+            if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
+                $title_success = true;
+                break;
+            }
         }
-        if ( !$this->checkAlloweExt($aPhotos) ) {
+        if(!$title_success) {
+            $flash_error[] = _m("Title too short");
+            $success = false;
+		}
+		$description_success = false;
+		foreach($description as $key=>$value) {
+            if(preg_match("/([\p{L}][^\p{L}]*){25}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+                $description_success = true;
+                break;
+            }
+        }
+        if(!$description_success) {
+            $flash_error[] = _m("Description too short");
+            $success = false;
+		}
+
+        if(!preg_match("/^[0-9]+$/", $idCat)) {
+            $flash_error[] = _m("Category invalid");
             $success = false;
         }
+
+        if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
+            $flash_error[] = _m("Email invalid");
+            $success = false;
+        }
+
+		// Handle error
+        if (count($flash_error)>0) {
+            osc_add_flash_message( implode('<br />', $flash_error) );
+            $success = false;
+        }
+        if ( !$this->checkAllowedExt($aPhotos) ) {
+            $success = false;
+        }
+
+        if ( !$this->checkSize($aPhotos) ) {
+            $success = false;
+        }
+        
         return $success;
     }
 
@@ -623,17 +688,11 @@ Class ItemActions
                 }
             }
             
-            $show_email = 0;
             $active = 'INACTIVE';
             if( !osc_item_validation_enabled() ){
                 $active = 'ACTIVE';
             }
-            if( Params::getParam('showEmail') != '' ){
-                $show_email = (int) Params::getParam('showEmail');
-            }
-            
             $aItem['active'] = $active;
-            $aItem['show_email'] = $show_email;
 
             if ($userId != null) {
                 if( $this->is_admin ) {
@@ -654,7 +713,7 @@ Class ItemActions
             $aItem['active']        = $active;
             $aItem['userId']        = $userId;
 
-        }else{          // EDIT
+        } else {          // EDIT
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
 
@@ -665,23 +724,24 @@ Class ItemActions
                 $aItem['contactEmail']  = $data['s_email'];
                 Params::setParam('contactName', $data['s_name']);
                 Params::setParam('contactEmail', $data['s_email']);
-            }else{
+            } else {
                 $aItem['contactName']   = Params::getParam('contactName');
                 $aItem['contactEmail']  = Params::getParam('contactEmail');
             }
         }
+
         // get params
-        $aItem['catId']         = Params::getParam('catId');            // OK
-        $aItem['region']        = Params::getParam('region');           // OK
-        $aItem['city']          = Params::getParam('city');             // OK
-        $aItem['regionId']      = Params::getParam('regionId');         // OK
-        $aItem['cityId']        = Params::getParam('cityId');           // OK
-        $aItem['price']         = Params::getParam('price');            // OK
-        $aItem['countryId']     = Params::getParam('countryId');        // OK
-        $aItem['cityArea']      = Params::getParam('cityArea');         // OK
-        $aItem['address']       = Params::getParam('address');          // OK
-        $aItem['currency']      = Params::getParam('currency');         // OK
-        $aItem['showEmail']     = Params::getParam('showEmail');        // OK
+        $aItem['catId']         = Params::getParam('catId');
+        $aItem['region']        = Params::getParam('region');
+        $aItem['city']          = Params::getParam('city');
+        $aItem['regionId']      = Params::getParam('regionId');
+        $aItem['cityId']        = Params::getParam('cityId');
+        $aItem['price']         = Params::getParam('price');
+        $aItem['countryId']     = Params::getParam('countryId');
+        $aItem['cityArea']      = Params::getParam('cityArea');
+        $aItem['address']       = Params::getParam('address');
+        $aItem['currency']      = Params::getParam('currency');
+        $aItem['showEmail']     = (Params::getParam('showEmail') != '') ? 1 : 0;
         $aItem['title']         = Params::getParam('title');
         $aItem['description']   = Params::getParam('description');
         $aItem['photos']        = Params::getFiles('photos');
@@ -766,28 +826,68 @@ Class ItemActions
         }
     }
 
-    public function checkAlloweExt($aResources)
+    private function checkSize($aResources)
     {
         $success = true;
 
         if($aResources != '') {
             // get allowedExt
-            $aExt = explode(',', osc_allowed_extension() );
+            $maxSize = osc_max_size_kb() * 1024 ;
             foreach ($aResources['error'] as $key => $error) {
+                $bool_img = false;
                 if ($error == UPLOAD_ERR_OK) {
-                    // check mime file
-                    $fileMime = $aResources['type'][$key] ;
-                    preg_match_all('/.*\/(.*)/', $fileMime,$coincidencias);
-                    $fileExt = $coincidencias[1][0];
-                    foreach($aExt as $validExt){
-                        if( !preg_match("/$validExt/", $fileExt) ) {
-                            $success = false;
-                        }
+                    $size = $aResources['size'][$key];
+                    //echo "bytes: ".$size." [$size > $maxSize]<br>";
+                    if($size > $maxSize){
+                        $success = false;
                     }
                 }
             }
             if(!$success){
-                osc_add_flash_message( _m("The file you tried to upload, haven't no valid extension")) ;
+                osc_add_flash_message( _m("One of the files you tried to upload exceeds the maximum size")) ;
+            }
+        }
+        return $success;
+    }
+
+    private function checkAllowedExt($aResources)
+    {
+        $success = true;
+        require LIB_PATH . 'osclass/classes/mimes.php';
+        if($aResources != '') {
+            // get allowedExt
+            $aMimesAllowed = array();
+            $aExt = explode(',', osc_allowed_extension() );
+            foreach($aExt as $ext){
+                $mime = $mimes[$ext];
+                if( is_array($mime) ){
+                    foreach($mime as $aux){
+                        if( !in_array($aux, $aMimesAllowed) ) {
+                            array_push($aMimesAllowed, $aux );
+                        }
+                    }
+                } else {
+                    if( !in_array($mime, $aMimesAllowed) ) {
+                        array_push($aMimesAllowed, $mime );
+                    }
+                }
+            }
+
+            foreach ($aResources['error'] as $key => $error) {
+                $bool_img = false;
+                if ($error == UPLOAD_ERR_OK) {
+                    // check mime file
+                    $fileMime = $aResources['type'][$key] ;
+
+                    if(in_array($fileMime,$aMimesAllowed)) {
+                        $bool_img = true;
+                    }
+                    if(!$bool_img && $success) {$success = false;}
+                }
+            }
+
+            if(!$success){
+                osc_add_flash_message( _m("The file you tried to upload does not have an allowed extension")) ;
             }
         }
         return $success;
