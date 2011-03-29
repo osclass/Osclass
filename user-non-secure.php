@@ -63,7 +63,7 @@ class CWebUserNonSecure extends BaseModel
                 } else {
                     osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
-                osc_redirectTo(osc_base_url());
+                $this->redirectTo(osc_base_url());
             break;
             
             case 'forgot':
