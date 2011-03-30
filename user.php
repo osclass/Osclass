@@ -162,35 +162,7 @@ class CWebUser extends WebSecBaseModel
                                                 }
                                             }
             break;
-            // THIS HAVE BEEN MOVED TO user-non-secure.php
-            /*case 'change_email_confirm':    //change email confirm
-                                            if ( Params::getParam('userId') && Params::getParam('code') ) {
-
-                                                $userManager = new User() ;
-                                                $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
-
-                                                if( $user['s_pass_code'] == Params::getParam('code') ) {
-                                                    $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') ) ;
-                                                    $userManager->update(
-                                                        array('s_email' => $userEmailTmp['s_new_email'])
-                                                        ,array('pk_i_id' => $userEmailTmp['fk_i_user_id'])
-                                                    );
-
-                                                    osc_add_flash_message( _m('Your email has been changed successfully'));die;
-                                                    //$this->redirectTo( osc_user_profile_url() ) ;
-                                                } else {
-                                                    osc_add_flash_message( _m('Sorry, the link is not valid'));
-                                                    $this->redirectTo( osc_base_url() ) ;
-                                                }
-                                            } else {
-                                                osc_add_flash_message( _m('Sorry, the link is not valid'));
-                                                    $this->redirectTo( osc_base_url() ) ;
-                                            }*/
-            break;
             case('change_password'):        //change password
-                                            // No variables needed
-                                            //$user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
-                                            //$this->_exportVariableToView('user', $user) ;
                                             $this->doView('user-change_password.php') ;
             break;
             case 'change_password_post':    //change password post

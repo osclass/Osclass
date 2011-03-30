@@ -346,6 +346,20 @@
     }
 
     /**
+     * Create automatically the url to activate an account
+     *
+     * @return string
+     */
+    function osc_user_activate_url($id, $code) {
+        if ( osc_rewrite_enabled() ) {
+            $path = osc_base_url() . 'user/activate/' . $id . '/' . $code ;
+        } else {
+            $path = osc_base_url(true) . '?page=register&action=validate&id=' . $id . '&code=' . $code ;
+        }
+        return $path ;
+    }
+
+    /**
      * Create automatically the url of the item details page
      *
      * @return string
