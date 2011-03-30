@@ -203,7 +203,7 @@ function osc_doRequest($url, $_data) {
 }
 
 function osc_sendMail($params) {
-    require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php';
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
 
     $mail = new PHPMailer(true);
     try {
@@ -514,7 +514,7 @@ function osc_downloadFile($sourceFile, $downloadedFile) {
 	set_time_limit(0);
 	ini_set('display_errors',true);
 			
-	$fp = fopen (ABS_PATH.'oc-content/downloads/'.$downloadedFile, 'w+');
+	$fp = fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
 	$ch = curl_init($sourceFile);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
 	curl_setopt($ch, CURLOPT_FILE, $fp);

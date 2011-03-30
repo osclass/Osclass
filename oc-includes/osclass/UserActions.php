@@ -183,7 +183,7 @@
 
         public function recaptcha()
         {
-            require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+            require_once osc_lib_path() . 'recaptchalib.php';
             if ( Params::getParam("recaptcha_challenge_field") != '') {
                 $resp = recaptcha_check_answer (osc_recaptcha_private_key()
                                                ,$_SERVER["REMOTE_ADDR"]

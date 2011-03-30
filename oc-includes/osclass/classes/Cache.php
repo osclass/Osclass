@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('CACHE_PATH', ABS_PATH . '/oc-content/uploads/');
+define('CACHE_PATH', CONTENT_PATH . 'uploads/');
 
 /**
  * This is the simplest cache service on earth.

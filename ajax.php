@@ -84,7 +84,7 @@
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
-                        require_once osc_base_path() . "oc-content/plugins/" . $ajaxfile;
+                        require_once osc_plugins_path() . $ajaxfile;
                     } else {
                         echo json_encode(array('error' => __('no action defined')));
                     }
