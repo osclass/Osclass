@@ -43,7 +43,7 @@ class CWebLogin extends BaseModel
                                         if ( Params::getParam('remember') == 1 ) {
 
                                             //this include contains de osc_genRandomPassword function
-                                            require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
+                                            require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
                                             $secret = osc_genRandomPassword() ;
 
                                             User::newInstance()->update(

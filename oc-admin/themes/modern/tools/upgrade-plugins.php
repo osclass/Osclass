@@ -61,37 +61,37 @@ die('is not implemented yet');
 
 				var tempAr = data.url.split('/');
 				fileToUnzip = tempAr.pop();
-				$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=download-file&file='+data.url, function(data) {
+				$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=download-file&file='+data.url, function(data) {
 				
 					steps.innerHTML += data+"<br/>";
 					steps.innerHTML += "<?php _e('Unzipping file: '); ?>";
 
-					$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=unzip-file&file='+fileToUnzip, function(data) {
+					$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=unzip-file&file='+fileToUnzip, function(data) {
 					
 						steps.innerHTML += data+"<br/>";
 						steps.innerHTML += "<?php _e('Copying old files: '); ?>";
 
-						$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=copy-files', function(data) {
+						$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=copy-files', function(data) {
 						
 							steps.innerHTML += data+"<br/>";
 							steps.innerHTML += "<?php _e('Removing new files: '); ?>";
 
-							$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=remove-files', function(data) {
+							$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=remove-files', function(data) {
 							
 								steps.innerHTML += data+"<br/>";
 								steps.innerHTML += "<?php _e('Executing SQL: '); ?>";
 
-								$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=execute-sql', function(data) {
+								$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=execute-sql', function(data) {
 								
 									steps.innerHTML += data+"<br/>";
 									steps.innerHTML += "<?php _e('Executing additional actions: '); ?>";
 
-									$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=execute-actions', function(data) {
+									$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=execute-actions', function(data) {
 									
 										steps.innerHTML += data+"<br/>";
 										steps.innerHTML += "<?php _e('Cleaning all the mess: '); ?>";
 
-										$.get('<?php echo osc_base_url() ; ?>oc-admin/plugins-update.php?action=empty-temp', function(data) {
+										$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=empty-temp', function(data) {
 										
 											steps.innerHTML += data+"<br/>";
 

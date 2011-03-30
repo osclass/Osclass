@@ -19,8 +19,8 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    require_once ABS_PATH . 'oc-includes/php-gettext/streams.php';
-    require_once ABS_PATH . 'oc-includes/php-gettext/gettext.php';
+    require_once osc_lib_path() . 'php-gettext/streams.php';
+    require_once osc_lib_path() . 'php-gettext/gettext.php';
 
     class Translation {
         private $messages;
@@ -43,24 +43,24 @@
             }
 
             // load core
-            $core_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/core.mo';
+            $core_file = osc_translations_path() . $locale . '/core.mo';
             $this->_load($core_file, 'core');
 
             // load messages
-            $messages_file = osc_base_path() . 'oc-content/themes/' . osc_theme() . '/languages/' . $locale . '/messages.mo';
+            $messages_file = osc_themes_path() . osc_theme() . '/languages/' . $locale . '/messages.mo';
             if(!file_exists($messages_file)) {
-                $messages_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/messages.mo';
+                $messages_file = osc_translations_path() . $locale . '/messages.mo';
             }
             $this->_load($messages_file, 'messages');
 
             // load theme
             $domain = osc_theme();
-            $theme_file = osc_base_path() . 'oc-content/themes/' . $domain . '/languages/' . $locale . '/theme.mo';
+            $theme_file = osc_themes_path() . $domain . '/languages/' . $locale . '/theme.mo';
             if(!file_exists($theme_file)) {
-                if(!file_exists(osc_base_path() . 'oc-content/themes/' . $domain)) {
+                if(!file_exists(osc_themes_path() . $domain)) {
                     $domain = 'modern';
                 }
-                $theme_file = osc_base_path() . 'oc-includes/translations/' . $locale . '/theme.mo';
+                $theme_file = osc_translations_path() . $locale . '/theme.mo';
             }
             $this->_load($theme_file, $domain);
 

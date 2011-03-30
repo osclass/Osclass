@@ -396,9 +396,9 @@ Class ItemActions
             $tmpName = $attachment['tmp_name'] ;
             $resourceType = $attachment['type'] ;
 
-            $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
-            if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
+            if(!is_writable(osc_content_path() . 'uploads/')) {
                 osc_add_flash_message( _m('There has been some errors sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
@@ -909,17 +909,17 @@ Class ItemActions
                     $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
                     // Create thumbnail
-                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                    $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
                     $size = explode('x', osc_thumbnail_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     // Create normal size
-                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
+                    $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
                     $size = explode('x', osc_normal_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     if( osc_keep_original_image() ) {
-                        $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                        $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
                         move_uploaded_file($tmpName, $path) ;
                     }
 
@@ -945,7 +945,7 @@ Class ItemActions
     
     public function recaptcha()
     {
-        require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+        require_once osc_lib_path() . 'recaptchalib.php';
         if ( Params::getParam("recaptcha_challenge_field") != '') {
             $resp = recaptcha_check_answer (
                 osc_recaptcha_private_key()

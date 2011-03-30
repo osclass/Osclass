@@ -73,6 +73,15 @@
     }
 
     /**
+    * Gets the content path
+    *
+    * @return <string>
+    */
+    function osc_content_path() {
+        return(CONTENT_PATH) ;
+    }
+
+    /**
     * Gets the themes path
     *
     * @return <string>
