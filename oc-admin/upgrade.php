@@ -141,8 +141,8 @@ switch($action) {
 		break;
 
 	case 'execute-sql':
-		if(file_exists(osc_lib_path() . 'data/struct.sql')) {
-            $sql = file_get_contents(osc_lib_path() . 'data/struct.sql');
+        if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
     		$conn = getConnection();
             $queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
 			$message = __('Tables updated correctly') ;
