@@ -141,18 +141,29 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 //        $this->generalSettings() ;
 //        flush();
 //    }
+//
+//    function testLocations()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
+//        $this->locationsGEO();
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
+//        $this->locationsNEW();
+//        flush();
+//    }
 
-    function testLocations()
+    function testCurrencies()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
+        echo "<div style='background-color: green; color: white;'><h2>testCurrencies</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
-        $this->locationsGEO();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
-        $this->locationsNEW();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - CURRENCIES SETTINGS </div>";
+        $this->currency() ;
         flush();
     }
 
@@ -838,11 +849,46 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->selenium->click("button_open");
         $this->selenium->waitForPageToLoad("30000");
+
         $this->selenium->type("code", "INR");
         $this->selenium->type("name", "Indian Rupee");
         $this->selenium->type("description", "Indian Rupee र");
+
         $this->selenium->click("//input[@id='button_save' and @value='Create']");
         $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:New currency has been added") , "Can't add a currency" ) ;
+
+        // edit
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=» Currencies");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Edit']");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->selenium->type("name", "Indian_Rupee");
+        $this->selenium->type("description", "Indian_Rupee र");
+
+        $this->selenium->click("//input[@id='button_save' and @value='Edit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:Currency has been updated") , "Can't edit a currency" ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't edit a currency" ) ;
+        // delete
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=» Currencies");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'INR')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'INR')]/td/div/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
+        $this->assertTrue( !$this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't delete a currency" ) ;
     }
 }
 
