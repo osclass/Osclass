@@ -23,6 +23,13 @@
     
     switch( Params::getParam('page') )
     {
+        case ('admin'):     // support permalinks for admin
+                            if(!Params::getParam('action')) {
+                                header('location: ' . osc_admin_base_url() );
+                            } else {
+                                header('location: ' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' . Params::getParam('id') );
+                            }
+        break;
         case ('user'):      // user pages (with security)
                             if(Params::getParam('action')=='change_email_confirm'
                             || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())) {
@@ -48,11 +55,6 @@
         case ('page'):      // static pages
                             require_once(osc_base_path() . 'page.php') ;
                             $do = new CWebPage() ;
-                            $do->doModel() ;
-        break;
-        case ('contact'):   //contact
-                            require_once(osc_base_path() . 'contact.php') ;
-                            $do = new CWebContact() ;
                             $do->doModel() ;
         break;
         case ('register'):  // register page

@@ -106,7 +106,7 @@ class CWebUser extends WebSecBaseModel
                                                         
                                                         UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
 
-                                                        $code = osc_genRandomPassword(50) ;
+                                                        $code = osc_genRandomPassword(30) ;
                                                         $date = date('Y-m-d H:i:s') ;
 
                                                         $userManager = new User() ;
@@ -124,11 +124,11 @@ class CWebUser extends WebSecBaseModel
                                                         }
 
                                                         if (!is_null($content)) {
-                                                            $validationLink = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+                                                            $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
 
                                                             $words = array() ;
-                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}') ;
-                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), osc_base_url(), osc_page_title(), $validationLink) ;
+                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
+                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), osc_base_url(), osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url) ;
                                                             $title = osc_mailBeauty($content['s_title'], $words) ;
                                                             $body = osc_mailBeauty($content['s_text'], $words) ;
 

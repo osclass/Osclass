@@ -115,15 +115,15 @@ class CWebItem extends BaseModel
                         
                         $item_url = osc_item_url( ) ;
                         // before page = user , action = item_edit
-                        $edit_link = osc_base_url(true). "?page=item&action=item_edit&id=$itemId&secret=".$item['s_secret'];
+                        $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
                         // before page = user , action = item_delete
-                        $delete_link = osc_base_url(true) . "?page=item&action=item_delete&id=$itemId&secret=".$item['s_secret'] ;
+                        $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
 
                         $words   = array();
                         $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
-                                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+                                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
                         $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
-                                         $item_url, osc_page_title(), $edit_link, $delete_link) ;
+                                         $item_url, osc_page_title(), '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url) ;
                         $title   = osc_mailBeauty($content['s_title'], $words) ;
                         $body    = osc_mailBeauty($content['s_text'], $words) ;
 
