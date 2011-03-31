@@ -37,7 +37,9 @@ $rewrite->addRule('^item/comment$', 'index.php?page=item&action=add_comment'); /
 $rewrite->addRule('^item/new$', 'index.php?page=item&action=item_add');
 $rewrite->addRule('^item/new/([0-9]+)$', 'index.php?page=item&action=item_add&catId=$1');
 $rewrite->addRule('^item/new/done$', 'index.php?page=item&action=post_item'); // juanramon: not used ## it doesn't exist
-$rewrite->addRule('^item/activate$', 'index.php?page=item&action=activate'); // juanramon: not used ## it doesn't work
+$rewrite->addRule('^item/activate/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
+$rewrite->addRule('^item/edit/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
+$rewrite->addRule('^item/delete/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
 $rewrite->addRule('^item/update/stats$', 'index.php?page=item&action=update_cat_stats'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^item/([0-9]+)$', 'index.php?page=item&id=$1');
 $rewrite->addRule('^item/(.*)$', 'index.php?page=item&action=$1'); // juanramon: not used ## it doesn't exist
