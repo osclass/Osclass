@@ -197,11 +197,13 @@ Class ItemActions
      */
     public function activate( $id, $secret )
     {
-        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
+        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
+
         $result = $this->manager->update(
             array('e_status' => 'ACTIVE'),
-            array('s_secret' => $secret)
+            array('s_secret' => $secret, 'pk_i_id' => $id)
         );
+        
         osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
         CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
 
@@ -1066,9 +1068,7 @@ Class ItemActions
             }
 
             // Format activation URL
-            if (!$validation_url) {
-                $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
-            }
+            $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
             
             // Format admin edit URL
             $admin_edit_url =  osc_item_admin_edit_url( $item['pk_i_id'] );

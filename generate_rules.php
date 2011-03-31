@@ -16,10 +16,6 @@ $rewrite->addRule('^(.+?).php(.*)$', '$1.php$2');
 // Contact rules
 $rewrite->addRule('^contact/?$', 'index.php?page=contact');
 
-// Admin rules
-$rewrite->addRule('^admin/?$', 'index.php?page=admin');
-$rewrite->addRule('^admin/item/edit/([0-9]+)/?$', 'index.php?page=admin&action=item_edit&id=$1');
-
 // Feed rules
 $rewrite->addRule('^feed$', 'index.php?page=search&sFeed=rss');
 $rewrite->addRule('^feed/(.+)$', 'index.php?page=search&sFeed=$1');
@@ -41,9 +37,9 @@ $rewrite->addRule('^item/comment$', 'index.php?page=item&action=add_comment'); /
 $rewrite->addRule('^item/new$', 'index.php?page=item&action=item_add');
 $rewrite->addRule('^item/new/([0-9]+)$', 'index.php?page=item&action=item_add&catId=$1');
 $rewrite->addRule('^item/new/done$', 'index.php?page=item&action=post_item'); // juanramon: not used ## it doesn't exist
-$rewrite->addRule('^item/activate/([0-9]+)/?(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
-$rewrite->addRule('^item/edit/([0-9]+)/?(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
-$rewrite->addRule('^item/delete/([0-9]+)/?(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
+$rewrite->addRule('^item/activate/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
+$rewrite->addRule('^item/edit/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
+$rewrite->addRule('^item/delete/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
 $rewrite->addRule('^item/update/stats$', 'index.php?page=item&action=update_cat_stats'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^item/([0-9]+)$', 'index.php?page=item&id=$1');
 $rewrite->addRule('^item/(.*)$', 'index.php?page=item&action=$1'); // juanramon: not used ## it doesn't exist
@@ -70,7 +66,7 @@ $rewrite->addRule('^user/resource/delete$', 'index.php?page=user&action=deleteRe
 $rewrite->addRule('^user/forgot/([0-9]+)/(.*)$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
 $rewrite->addRule('^user/change/password$', 'index.php?page=user&action=forgot_change'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/change/password/done$', 'index.php?page=user&action=forgot_change_post'); // juanramon: not used ## it doesn't exist
-$rewrite->addRule('^user/email/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
+$rewrite->addRule('^user/change_email_confirm/([0-9]+)/(.*?)/?$', 'index.php?page=user&action=change_email_confirm&userId=$1&code=$2');
 $rewrite->addRule('^user/options/(.*)', 'index.php?page=user&action=options&option=$1'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/options_post/(.*)$', 'index.php?page=user&action=options_post&option=$1'); // juanramon: not used ## it doesn'e exist
 $rewrite->addRule('^user/(.*)$', 'index.php?page=user&action=$1'); // juanramon: not used ## doesn't exist

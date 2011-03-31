@@ -398,11 +398,7 @@
      * @return string
      */
     function osc_item_admin_edit_url($id) {
-        if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'admin/item/edit/' . $id ;
-        } else {
-            return osc_admin_base_url(true) . '?page=items&action=item_edit&id=' . $id ;
-        }
+        return osc_admin_base_url(true) . '?page=items&action=item_edit&id=' . $id ;
     }
      
     //osc_createPageURL
@@ -467,7 +463,7 @@
 
     function osc_change_user_email_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
-            return osc_base_url() . 'user/email/' . $userId . '/' . $code ;
+            return osc_base_url() . 'user/change_email_confirm/' . $userId . '/' . $code ;
         } else {
             return osc_base_url(true) . '?page=user&action=change_email_confirm&userId=' . $userId . '&code=' . $code ;
         }
@@ -503,35 +499,32 @@
     /////////////////////////////////////
     
     // URL to edit an item
-    function osc_item_edit_url($secret='', $id='') {
-        if (!$id) 
-            $id = osc_item_id();
+    function osc_item_edit_url($secret = '', $id = '') {
+        if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'item/edit/' . $id . '/' . $secret ;
         } else {
-            return osc_base_url(true) . '?page=item&action=item_edit&id=' . $id . ($secret? '&secret=' . $secret : '') ;
+            return osc_base_url(true) . '?page=item&action=item_edit&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
     }
 
     // URL to delete an item
-    function osc_item_delete_url($secret='', $id='') {
-        if (!$id) 
-            $id = osc_item_id();
+    function osc_item_delete_url($secret = '', $id = '') {
+        if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'item/delete/' . $id . '/' . $secret ;
         } else {
-            return osc_base_url(true) . '?page=item&action=item_delete&id=' . $id . ($secret? '&secret=' . $secret : '') ;
+            return osc_base_url(true) . '?page=item&action=item_delete&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
     }
     
     // URL to activate an item
-    function osc_item_activate_url($secret='', $id='') {
-        if (!$id) 
-            $id = osc_item_id();
+    function osc_item_activate_url($secret = '', $id = '') {
+        if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'item/activate/' . $id . '/' . $secret ;
         } else {
-            return osc_base_url(true) . '?page=item&action=activate&id=' . $id . ($secret? '&secret=' . $secret : '') ;
+            return osc_base_url(true) . '?page=item&action=activate&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
     }
 
