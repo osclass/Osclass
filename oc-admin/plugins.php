@@ -40,8 +40,25 @@
                     break;
                 case 'add_post':
                     $package = Params::getFiles("package");
-                    $path = osc_plugins_path() ;//. pathinfo($package['name'], PATHINFO_FILENAME);
-                    osc_packageExtract($package['tmp_name'], $path);
+                    $path = osc_plugins_path() ;
+
+                    (int) $status = osc_unzip_file($package['tmp_name'], $path);
+
+                    switch ($status) {
+                        case(0):   $msg = _m('The plugin folder is not writable');
+                        break;
+                        case(1):   $msg = _m('The plugin has been installed correctly');
+                        break;
+                        case(2):   $msg = _m('The zip file is not valid');
+                        break;
+                        case(3):   $msg = _m('The zip file is empty');
+                        break;
+                        case(-1):
+                        default:   $msg = _m('There was a problem adding the plugin');
+                        break;
+                    }
+
+                    osc_add_flash_message($msg, 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'install':
@@ -91,7 +108,7 @@
                         } else {
                             $file = $_REQUEST['file'];
                         };
-                        $this->_exportVariableToView("file", osc_base_path().'oc-content/plugins/'.$file);
+                        $this->_exportVariableToView("file", osc_plugins_path() . $file);
                         //osc_renderPluginView($file);
                         $this->doView("plugins/view.php");
                     }

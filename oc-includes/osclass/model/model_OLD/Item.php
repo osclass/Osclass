@@ -139,7 +139,7 @@ class Item extends DAO
 
     public function findByPrimaryKey($id)
     {
-        $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.* FROM %s i JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id WHERE i.pk_i_id = %d', $this->getTableName(), DB_TABLE_PREFIX, $id);
+        $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.*, s.* FROM %s i LEFT JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id LEFT JOIN %st_item_stats s ON i.pk_i_id = s.fk_i_item_id WHERE i.pk_i_id = %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id);
 
         if(count($item) > 0) {
             return $this->extendDataSingle($item);
@@ -319,35 +319,6 @@ class Item extends DAO
         return $total_ads['total'];
     }
 
-    public function list_items_by_user($userId, $active = null)
-    {
-        $sql = sprintf('SELECT * FROM %s', $this->getTableName() );
-
-        $conditions = array();
-        if ($userId) {
-            $conditions[] = 'fk_i_user_id = "' . $userId . '"' ;
-        }
-
-        if (!is_null($active)) {
-            if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
-                $conditions[] = "e_status = '$active'";
-            }
-        }
-
-        if (count($conditions) > 0) {
-            $sql .= ' WHERE ';
-            for ($i = 0; $i < count($conditions); $i++) {
-                $sql .= $conditions[$i];
-                if ($i < (count($conditions) - 1)) {
-                    $sql .= ' AND ';
-                }
-            }
-        }
-
-        $total_ads = $this->conn->osc_dbFetchResults($sql) ;
-        return $total_ads ;
-    }
-
     public function listLatest($limit = 10)
     {
         return $this->listWhere(" e_status = 'ACTIVE' ORDER BY dt_pub_date DESC LIMIT " . $limit);
@@ -377,25 +348,31 @@ class Item extends DAO
         return $this->listWhere("s_title LIKE '%%%s%%' OR s_description LIKE '%%%1\$s%%'", $pattern);
     }
 
-    public function findByUserID($userId, $limit = null)
+    public function findByUserID($userId, $start = 0, $end = null)
     {
-        if($limit==null) {
+        if($end==null) {
             $limit_text = '';
         } else {
-            $limit_text = ' LIMIT '.$limit;
+            $limit_text = ' LIMIT '.$start.", ".$end;
         }
-        $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id ASC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
+        $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
         return $this->extendData($items);
     }
 
-    public function findByUserIDEnabled($userId, $limit = null)
+    public function countByUserID($userId)
     {
-        if($limit==null) {
+        $items = $this->conn->osc_dbFetchResult('SELECT count(i.pk_i_id) as total FROM %s i WHERE i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC ', $this->getTableName(), $userId);
+        return $items['total'];
+    }
+
+    public function findByUserIDEnabled($userId, $start = 0, $end = null)
+    {
+        if($end==null) {
             $limit_text = '';
         } else {
-            $limit_text = ' LIMIT '.$limit;
+            $limit_text = ' LIMIT '.$start.", ".$end;
         }
-        $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.e_status = \'ACTIVE\' AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id ASC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
+        $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.e_status = \'ACTIVE\' AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
         return $this->extendData($items);
     }
 
@@ -479,11 +456,12 @@ class Item extends DAO
         $this->conn->osc_dbExec('DELETE FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_location WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_stats WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-        $this->conn->osc_dbExec('DELETE FROM %st_item WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
+        return $this->conn->osc_dbExec('DELETE FROM %st_item WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
     }
 
     public function delete($conditions)
     {
+        $success = false;
         $where = array();
         foreach($conditions as $key => $value) {
             if($key == DB_CUSTOM_COND)
@@ -494,8 +472,9 @@ class Item extends DAO
         $where = implode(' AND ', $where);
         $items = $this->listWhere($where);
         foreach($items as $item) {
-            $this->deleteByPrimaryKey($item['pk_i_id']);
+            $success = $this->deleteByPrimaryKey($item['pk_i_id']);
         }
+        return $success;
     }
 }
 

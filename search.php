@@ -175,7 +175,7 @@
             $iTotalItems = $this->mSearch->count();
             $aItems = $this->mSearch->search();
 
-            if($p_sFeed == '') {
+            if(!Params::existParam('sFeed')) {
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
                 //Static data, which is the point?
@@ -225,7 +225,31 @@
                 $this->doView('search.php') ;
 
             } else {
-                osc_run_hook('feed_' . $p_sFeed, $aItems) ;
+                $this->_exportVariableToView('items', $aItems) ;
+                if($p_sFeed=='' || $p_sFeed=='rss') {
+                    // FEED REQUESTED!
+                    header('Content-type: text/xml; charset=utf-8');
+                    
+                    $feed = new RSSFeed;
+                    $feed->setTitle(__('Latest items added') . ' - ' . osc_page_title());
+                    $feed->setLink(osc_base_url());
+                    $feed->setDescription(__('Latest items added in') . ' ' . osc_page_title());
+
+                    if(osc_count_items()>0) {
+                        while(osc_has_items()) {
+                            $feed->addItem(array(
+                                'title' => osc_item_title(),
+                                'link' => osc_item_url(),
+                                'description' => osc_item_description()
+                            ));
+                        }
+                    }
+
+                    osc_run_hook('feed', $feed);
+                    $feed->dumpXML();
+                } else {
+                    osc_run_hook('feed_' . $p_sFeed, $aItems) ;
+                }
             }
         }
 

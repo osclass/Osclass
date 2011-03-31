@@ -112,19 +112,20 @@
                                             break;
                                             case 'delete_all':
                                                 $id = Params::getParam('id') ;
-                                                try {
-                                                    foreach($id as $i) {
-                                                        if ($i) {
-                                                            $item = $this->itemManager->findByPrimaryKey($i) ;
-                                                            if( $item['e_status'] == 'ACTIVE' ) {
-                                                                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-                                                            }
-                                                            $this->itemManager->deleteByPrimaryKey($i);
-                                                        }
+                                                $success = false;
+
+                                                foreach($id as $i) {
+                                                    if ($i) {
+                                                        $item = $this->itemManager->findByPrimaryKey($i) ;
+                                                        $mItems = new ItemActions(true);
+                                                        $success = $mItems->delete($item['s_secret'], $item['pk_i_id']);
                                                     }
-                                                    osc_add_flash_message( _m('The items have been deleted'), 'admin') ;
-                                                } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                }
+
+                                                if($success) {
+                                                    osc_add_flash_message( _m('The item has been deleted'), 'admin') ;
+                                                } else {
+                                                    osc_add_flash_message( _m('The item couldn\'t be deleted'), 'admin') ;
                                                 }
                                                 $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                             break;
@@ -133,20 +134,22 @@
                 break;
                 case 'delete':          //delete
                                         $id = Params::getParam('id') ;
-                                        try {
-                                            foreach($id as $i) {
-                                                if ($i) {
-                                                    $item = $this->itemManager->findByPrimaryKey($i) ;
-                                                    if( $item['e_status'] == 'ACTIVE' ) {
-                                                        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-                                                    }
-                                                    $this->itemManager->deleteByPrimaryKey($i) ;
-                                                }
+                                        $success = false;
+                                        
+                                        foreach($id as $i) {
+                                            if ($i) {
+                                                $item = $this->itemManager->findByPrimaryKey($i) ;
+                                                $mItems = new ItemActions(true);
+                                                $success = $mItems->delete($item['s_secret'], $item['pk_i_id']);
                                             }
-                                            osc_add_flash_message( _m('The items have been deleted'), 'admin') ;
-                                        } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
                                         }
+
+                                        if($success) {
+                                            osc_add_flash_message( _m('The item has been deleted'), 'admin') ;
+                                        } else {
+                                            osc_add_flash_message( _m('The item couldn\'t be deleted'), 'admin') ;
+                                        }
+                                        
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'status':          //status

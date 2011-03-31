@@ -49,10 +49,12 @@ class ImageResizer {
 		$h = imagesy($this->im);
 
 		if($w >= $h) {
-			$newW = $size;
+			//$newW = $size;
+    		$newW = ($w > $size)? $size : $w;
 			$newH = $h * ($newW / $w);
 		} else {
-			$newH = $size;
+			//$newH = $size;
+    		$newH = ($h > $size)? $size : $h;
 			$newW = $w * ($newH / $h);
 		}
 
@@ -74,10 +76,12 @@ class ImageResizer {
 		$h = imagesy($this->im);
 
 		if(($w/$h)>=($width/$height)) {
-			$newW = $width;
+			//$newW = $width;
+    		$newW = ($w > $width)? $width : $w;
 			$newH = $h * ($newW / $w);
 		} else {
-			$newH = $height;
+			//$newH = $height;
+			$newH = ($h > $height)? $height : $h;
 			$newW = $w * ($newH / $h);
 		}
 

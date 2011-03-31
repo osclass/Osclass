@@ -44,6 +44,9 @@
                                             case 3: osc_add_flash_message( _m('The specified e-mail is already in use')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
+                                            case 4: osc_add_flash_message( _m('The reCAPTCHA was not introduced correctly')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
                                         }
                 break;
                 case('validate'):       //validate account
@@ -72,8 +75,8 @@
 
                                                 if (!is_null($content)) {
                                                     $words   = array();
-                                                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}') ;
-                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title()) ;
+                                                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{WEB_URL}') ;
+                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), osc_base_url() ) ;
                                                     $title = osc_mailBeauty($content['s_title'], $words) ;
                                                     $body = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -88,6 +91,12 @@
                                                 }
                                                 osc_run_hook('validate_user', $user) ;
                                                 osc_add_flash_message( _m('Your account has been validated')) ;
+                                                // Auto-login
+                                                Session::newInstance()->_set('userId', $user['pk_i_id']) ;
+                                                Session::newInstance()->_set('userName', $user['s_name']) ;
+                                                Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                                                $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                                                Session::newInstance()->_set('userPhone', $phone) ;
                                             } else {
                                                 osc_add_flash_message( _m('Your account has already been activated')) ;
                                             }

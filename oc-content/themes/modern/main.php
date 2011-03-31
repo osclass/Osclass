@@ -108,7 +108,7 @@
                                 </tbody>
                             </table>
                             <?php if( osc_count_latest_items() == osc_max_latest_items() ) { ?>
-                                <p class="see_more_link"><a href="#"><strong><?php _e("See all offers", 'modern'); ?> &raquo;</strong></a></p>
+                                <p class="see_more_link"><a href="<?php echo osc_search_url();?>"><strong><?php _e("See all offers", 'modern'); ?> &raquo;</strong></a></p>
                             <?php } ?>
                         <?php } ?>
                     </div>

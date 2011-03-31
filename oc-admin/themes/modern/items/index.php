@@ -46,7 +46,7 @@
                 oTable = $('#datatables_list').dataTable({
                             "bProcessing": true
                             ,"bServerSide": true
-                            ,"sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items"
+                            ,"sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>"
                                             <?php if($stat) { ?>
                                                 ,"fnServerData": function ( sSource, aoData, fnCallback ) {
                                                         /* Add some extra data to the sender */

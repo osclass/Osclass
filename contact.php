@@ -33,6 +33,19 @@
                                         $subject = Params::getParam('subject') ;
                                         $message = Params::getParam('message') ;
 
+                                        if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                                            if(!osc_check_recaptcha()) {
+                                                osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                                                $this->redirectTo(osc_contact_url());
+                                                return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                                            }
+                                        }
+
+                                        if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
+                                            osc_add_flash_message( _m('You have to introduce a correct e-mail') ) ;
+                                            $this->redirectTo(osc_contact_url());
+                                        }
+
                                         $params = array(
                                             'from' => $yourEmail
                                             ,'from_name' => $yourName

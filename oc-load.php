@@ -19,19 +19,20 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0 RC4') ;
+define('OSCLASS_VERSION', '2.0 RC6') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
 }
 
 define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
-define('THEMES_PATH', ABS_PATH . 'oc-content/themes/') ;
-define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
+define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
+define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
+define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
 define('TRANSLATIONS_PATH', LIB_PATH . 'translations/') ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
-    require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
     $title = 'OSClass &raquo; Error' ;
     $message = 'There doesn\'t seem to be a <code>config.php</code> file. OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
@@ -39,6 +40,7 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 
     osc_die($title, $message) ;
 }
+
 
 require_once ABS_PATH . 'config.php' ;
 require_once ABS_PATH . 'oc-dbload.php' ;
@@ -73,9 +75,7 @@ require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
-
 require_once LIB_PATH . 'osclass/ItemActions.php';
-
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
@@ -111,5 +111,8 @@ if(!defined('__FROM_CRON__')) {
 Plugins::init() ;
 
 Rewrite::newInstance()->init();
+// Moved from BaseModel, since we need some session magic on index.php ;)
+Session::newInstance()->session_start() ;
+
 
 ?>

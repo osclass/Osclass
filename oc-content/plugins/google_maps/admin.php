@@ -1,17 +1,16 @@
 <?php
 
-    $dao_preference = new Preference() ;
-    if(isset($_REQUEST['key'])) {
-        $key = $_REQUEST['key'] ;
+    $key            = '';
+    $dao_preference = new Preference();
+    if(Params::getParam('key') != '') {
+        $key = Params::getParam('key');
     } else {
-        $preferences = $dao_preference->toArray() ;
-        $key =(osc_google_maps_key()!='') ? osc_google_maps_key() : '' ;
+        $key = (osc_google_maps_key() != '') ? osc_google_maps_key() : '' ;
     }
     
-    if ( isset($_REQUEST['option']) && $_REQUEST['option'] == 'stepone' ) 
-    {
+    if( Params::getParam('option') == 'stepone' ) {
         $dao_preference->update(array("s_value" => $key), array("s_section" => "plugin-google_maps", "s_name" => "google_maps_key")) ;
-        echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>Congratulations. The plugin is now configured.</p></div>';
+        echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>' . __('Congratulations. The plugin is now configured', 'google_maps') . '.</p></div>';
     }
     unset($dao_preference) ;
     
@@ -23,10 +22,11 @@
     <input type="hidden" name="file" value="google_maps/admin.php" />
     <input type="hidden" name="option" value="stepone" />
     <div>
-        Please enter your Google Maps <label for="key" style="font-weight: bold;">developer key*</label>:<br />
-        <input type="text" name="key" id="key" value="<?php echo $key; ?>" maxlength="100" size="60" /> <input type="submit" value="<?php echo __('Save'); ?>" />
+        <?php _e('Please enter your Google Maps', 'google_maps'); ?> <label for="key" style="font-weight: bold;"><?php _e('developer key', 'google_maps'); ?>*</label>:<br />
+        <input type="text" name="key" id="key" value="<?php echo $key; ?>" maxlength="100" size="60" /> <input type="submit" value="<?php _e('Save', 'google_maps'); ?>" />
     </div>
 </form>
 <br />
-<div style="font-size: small;"><strong>*</strong> <?php echo __('You can freely obtain a developer key after signing up on this URL:'); ?> <a rel="nofollow" target="_blank" href="http://code.google.com/apis/maps/signup.html">http://code.google.com/apis/maps/signup.html</a>.</div>
-
+<div style="font-size: small;">
+    <strong>*</strong> <?php _e('You can freely obtain a developer key after signing up on this URL', 'google_maps'); ?>: <a rel="nofollow" target="_blank" href="http://code.google.com/apis/maps/signup.html">http://code.google.com/apis/maps/signup.html</a>.
+</div>

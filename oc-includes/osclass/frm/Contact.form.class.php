@@ -37,17 +37,17 @@ class ContactForm extends Form {
     }
     
     static public function your_name() {
-        parent::generic_input_text("yourName", "", null, false);
+        parent::generic_input_text("yourName", osc_logged_user_name(), null, false);
         return true ;
     }
     
     static public function your_email() {
-        parent::generic_input_text("yourEmail", "", null, false);
+        parent::generic_input_text("yourEmail", osc_logged_user_email(), null, false);
         return true ;
     }
     
     static public function your_phone_number() {
-        parent::generic_input_text("phoneNumber", "", null, false);
+        parent::generic_input_text("phoneNumber", osc_logged_user_phone(), null, false);
         return true ;
     }
     
@@ -71,7 +71,7 @@ class ContactForm extends Form {
         email = $("#yourEmail");
         message = $("#message");
 
-        var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+        var pattern=/^([a-zA-Z0-9\_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
         var num_error = 0;
         
         if(!pattern.test(email.val())){
