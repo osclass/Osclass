@@ -140,14 +140,20 @@
                                                                         $countryCode     = Params::getParam('c_country');
                                                                         $countryName     = Params::getParam('country');
                                                                         $countryLanguage = osc_language();
+                                                                        
+                                                                        $exists = $mCountries->findByCode($countryCode);
+                                                                        if(!isset($exists['s_name'])) {
+                                                                            $data = array('pk_c_code'        => $countryCode,
+                                                                                          'fk_c_locale_code' => $countryLanguage,
+                                                                                          's_name'           => $countryName);
+                                                                            $mCountries->insert($data);
 
-                                                                        $data = array('pk_c_code'        => $countryCode,
-                                                                                      'fk_c_locale_code' => $countryLanguage,
-                                                                                      's_name'           => $countryName);
-                                                                        $mCountries->insert($data);
-
-                                                                        osc_add_flash_message(sprintf(__('%s has been added as a new country'),
-                                                                                                      $countryName), 'admin');
+                                                                            osc_add_flash_message(sprintf(__('%s has been added as a new country'),
+                                                                                                          $countryName), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                                                          $countryName), 'admin');
+                                                                        }
                                                                     }
 
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -191,11 +197,17 @@
                                                                         $regionName  = Params::getParam('region');
                                                                         $countryCode = Params::getParam('country_c_parent');
 
-                                                                        $data = array('fk_c_country_code' => $countryCode
-                                                                                     ,'s_name' => $regionName);
-                                                                        $mRegions->insert($data);
-                                                                        osc_add_flash_message(sprintf(__('%s has been added as a new region'),
-                                                                                                         $regionName), 'admin');
+                                                                        $exists = $mRegions->findByNameAndCode($regionName, $countryCode);
+                                                                        if(!isset($exists['s_name'])) {
+                                                                            $data = array('fk_c_country_code' => $countryCode
+                                                                                         ,'s_name' => $regionName);
+                                                                            $mRegions->insert($data);
+                                                                            osc_add_flash_message(sprintf(__('%s has been added as a new region'),
+                                                                                                             $regionName), 'admin');
+                                                                        } else {
+                                                                            osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                                                             $regionName), 'admin');
+                                                                        }
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -235,12 +247,18 @@
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
-                                                                    $mCities->insert(array('fk_i_region_id'    => $regionId
-                                                                                          ,'s_name'            => $newCity
-                                                                                          ,'fk_c_country_code' => $countryCode));
+                                                                    $exists = $mCities->findByNameAndRegion($newCity, $regionId);
+                                                                    if(!isset($exists['s_name'])) {
+                                                                        $mCities->insert(array('fk_i_region_id'    => $regionId
+                                                                                              ,'s_name'            => $newCity
+                                                                                              ,'fk_c_country_code' => $countryCode));
 
-                                                                    osc_add_flash_message(sprintf(__('%s has been added as a new city'),
-                                                                                                     $newCity), 'admin');
+                                                                        osc_add_flash_message(sprintf(__('%s has been added as a new city'),
+                                                                                                         $newCity), 'admin');
+                                                                    } else {
+                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                                                         $newCity), 'admin');
+                                                                    }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('edit_city'):      // edit city
@@ -666,6 +684,11 @@
             }
 
             foreach($countries as $c) {
+                $exists = $manager_country->findByCode($c->id);
+                if(isset($exists['s_name'])) {
+                    osc_add_flash_message(sprintf(__('%s already was in the database'), $exists['s_name']), 'admin');
+                    return false;
+                }
                 $manager_country->insert(array(
                     "pk_c_code" => $c->id
                     ,"fk_c_locale_code" => $c->locale_code
@@ -740,6 +763,11 @@
             }
 
             foreach($regions as $r) {
+                $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
+                if(isset($exists['s_name'])) {
+                    osc_add_flash_message(sprintf(__('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    return false;
+                }
                 $manager_region->insert(array(
                     "fk_c_country_code" => $r->country_code,
                     "s_name" => $r->name
