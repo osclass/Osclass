@@ -377,7 +377,7 @@ class ItemForm extends Form {
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo $_r['s_path'];?><?php echo $_r['s_name'];?>_original.<?php echo $_r['s_extension']?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_base_url(true); ?>?page=user&action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
+                    <img src="<?php echo osc_resource_thumbnail_url(); ?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_base_url(true); ?>?page=user&action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
                 </div>						
             <?php }
         }
@@ -420,7 +420,7 @@ class ItemForm extends Form {
 <?php
     }
 
-    static public function plugin_post_item($categories) {
+    static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
     $("#catId").change(function(){
@@ -432,7 +432,24 @@ class ItemForm extends Form {
             $.ajax({
                 type: "POST",
                 url: url,
-                data: 'page=ajax&action=runhook&hook=item_form&catId=' + cat_id,
+                data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
+                dataType: 'text/html',
+                success: function(data){
+                    $("#plugin-hook").html(data);
+                }
+            });
+        }
+    });
+    $(document).ready(function(){
+        var cat_id = $("#catId").val();
+        var url = '<?php echo osc_base_url(true); ?>';
+        var result = '';
+
+        if(cat_id != '') {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
                 dataType: 'text/html',
                 success: function(data){
                     $("#plugin-hook").html(data);
@@ -442,21 +459,14 @@ class ItemForm extends Form {
     });
 </script>
 <div id="plugin-hook">
-<?php
-    if (Params::getParam('catId')!='') {
-        osc_run_hook('item_form', Params::getParam('catId'));
-    } else {
-        $categories = osc_category();
-        if(is_array($categories)) {
-            osc_run_hook('item_form', $categories['pk_i_id']);
-        } else {
-            osc_run_hook('item_form', $categories);
-        }
-    }
-?>
 </div>
 <?php
     }
+    
+    static public function plugin_edit_item() {
+        ItemForm::plugin_post_item('edit&itemId='.osc_item_id());
+    }
+    
 }
 
 ?>

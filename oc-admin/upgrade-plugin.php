@@ -64,7 +64,7 @@ switch($action) {
 		$archive_name = ABS_PATH . "OSClass_backup.".date('YmdHis').".zip";
 		$archive_folder = ABS_PATH;
 
-		if (osc_zipFolder($archive_folder, $archive_name)) {
+		if (osc_zip_folder($archive_folder, $archive_name)) {
 			$message = __('Archiving is sucessful!');
 		} else {
 		    $message = __('Error, can\'t create a zip file!');
@@ -73,12 +73,15 @@ switch($action) {
 
 	case 'unzip-file':
 		if(Params::getParam('file')!='') {
-			$zip = new ZipArchive;
-			$res = $zip->open(ABS_PATH.'oc-content/downloads/'.Params::getParam('file'));
+			/*$zip = new ZipArchive;
+			$res = $zip->open(osc_content_path() . 'downloads/' . Params::getParam('file'));
 			if ($res === TRUE) {
 				@mkdir(ABS_PATH.'oc-temp', 0777);
 				$zip->extractTo(ABS_PATH.'oc-temp/');
-				$zip->close();
+				$zip->close();*/
+            @mkdir(ABS_PATH.'oc-temp', 0777);
+            $res = osc_unzip_file(osc_content_path() . 'downloads/' . Params::getParam('file'), ABS_PATH.'oc-temp/');
+            if($res==1) {
 				$message = __('OK');
 			} else {
 				$message = __('Unzip failed');
@@ -114,7 +117,7 @@ switch($action) {
 			$fail = 0;
 			while (false !== ($_file = readdir($handle))) {
 				if($_file!='.' && $_file!='..' && $_file!='remove.list' && $_file!='upgrade.sql' && $_file!='customs.actions') {
-					$fail += osc_copy(ABS_PATH."/oc-temp/".$_file, ABS_PATH.'oc-content/plugins/'.$_file);
+					$fail += osc_copy(ABS_PATH . "/oc-temp/" . $_file, osc_plugins_path() . $_file);
 				}
 			}
 

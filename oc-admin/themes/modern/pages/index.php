@@ -71,9 +71,11 @@
                      },
                     "sPaginationType": "full_numbers",
                     "aaData": [
-                        <?php foreach($pages as $page) { ?>
+                        <?php if(osc_count_static_pages()>0) {
+                        while(osc_has_static_pages()) { ?>
                         <?php
                             $body = array();
+                            $page = osc_static_page();
                             if(isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title'])) {
                                 $body = $page['locale'][$prefLocale];
                             } else {
@@ -82,17 +84,19 @@
                             $p_body = str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
                         ?>
                                   [
-                                    "<input type='checkbox' name='id[]' value='<?php echo $page['pk_i_id']; ?>' />",
+                                    "<input type='checkbox' name='id[]' value='<?php echo osc_static_page_id(); ?>' />",
                                     "<?php echo $page['s_internal_name']; ?><div id='datatables_quick_edit'>" +
-                                    "<a href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=edit&id=<?php echo  $page["pk_i_id"] ?>'>" +
+                                    "<a href='<?php echo osc_static_page_url(); ?>'>" +
+                                    "<?php _e('View page'); ?></a> | " +
+                                    "<a href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=edit&id=<?php echo osc_static_page_id(); ?>'>" +
                                     "<?php _e('Edit'); ?></a><?php if(!$page['b_indelible']) { ?> | " +
                                     "<a onclick=\"javascript:return confirm('" +
                                     "<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\"" +
-                                    "href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=delete&id=<?php echo $page['pk_i_id']; ?>'>" +
+                                    "href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=delete&id=<?php echo osc_static_page_id(); ?>'>" +
                                     "<?php _e('Delete'); ?></a><?php }; ?></div>",
                                     '<?php echo $p_body; ?>'
-                                  ] <?php echo $last_id != $page['pk_i_id'] ? ',' : ''; ?>
-                        <?php } ?>
+                                  ] <?php echo $last_id != osc_static_page_id() ? ',' : ''; ?>
+                        <?php };}; ?>
                               ],
                     "aoColumns": [
                         {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>",

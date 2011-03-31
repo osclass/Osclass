@@ -75,6 +75,12 @@
                             }
                             break;
                             
+                        case 'item_edit':
+                            $catId = Params::getParam("catId");
+                            $itemId = Params::getParam("itemId");
+                            osc_run_hook("item_edit", $catId, $itemId);
+                            break;
+                            
                         default:
                             if($hook=='') { return false; } else { osc_run_hook($hook); }
                             break;
@@ -84,7 +90,7 @@
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
-                        require_once osc_base_path() . "oc-content/plugins/" . $ajaxfile;
+                        require_once osc_plugins_path() . $ajaxfile;
                     } else {
                         echo json_encode(array('error' => __('no action defined')));
                     }

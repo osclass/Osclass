@@ -27,7 +27,8 @@
 
 
         function  __construct() {
-            Session::newInstance()->session_start() ;
+            // Moved Session start to oc-load to be able to use it on index.php
+            //Session::newInstance()->session_start() ;
             $this->action = Params::getParam('action') ;
         }
 

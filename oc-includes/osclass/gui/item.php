@@ -137,6 +137,7 @@
                                 <input type="hidden" name="action" value="contact_post" />
                                 <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
+                                <?php osc_show_recaptcha(); ?>
                                 <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                             </fieldset>
                         </form>
@@ -145,7 +146,7 @@
                         function validate_contact() {
                             email = $("#yourEmail");
                             message = $('#message');
-
+                            
                             var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
                             var num_error = 0;
 

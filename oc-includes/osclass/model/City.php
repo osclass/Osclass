@@ -41,6 +41,10 @@ class City extends DAO {
         return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_i_region_id = %d ORDER BY s_name ASC", $this->getTableName(), $region_id);
     }
 
+    public function findByNameAndRegion($name, $region_id) {
+        return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' AND fk_i_region_id = %d ORDER BY s_name ASC", $this->getTableName(), $name, $region_id);
+    }
+
 
 }
 

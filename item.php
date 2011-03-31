@@ -115,15 +115,15 @@ class CWebItem extends BaseModel
                         
                         $item_url = osc_item_url( ) ;
                         // before page = user , action = item_edit
-                        $edit_link = osc_base_url(true). "?page=item&action=item_edit&id=$itemId&secret=".$item['s_secret'];
+                        $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
                         // before page = user , action = item_delete
-                        $delete_link = osc_base_url(true) . "?page=item&action=item_delete&id=$itemId&secret=".$item['s_secret'] ;
+                        $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
 
                         $words   = array();
                         $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
-                                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{DELETE_LINK}');
+                                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
                         $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
-                                         $item_url, osc_page_title(), $edit_link, $delete_link) ;
+                                         $item_url, osc_page_title(), '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url) ;
                         $title   = osc_mailBeauty($content['s_title'], $words) ;
                         $body    = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -236,7 +236,11 @@ class CWebItem extends BaseModel
                 if (count($item) == 1) {
                     $mItems = new ItemActions(false);
                     $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
-                    osc_add_flash_message( _m('Your item has been deleted') ) ;
+                    if($success) {
+                        osc_add_flash_message( _m('Your item has been deleted') ) ;
+                    } else {
+                        osc_add_flash_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
+                    }
                     if($this->user!=null) {
                         $this->redirectTo(osc_user_list_items_url());
                     } else {
@@ -293,8 +297,18 @@ class CWebItem extends BaseModel
                 $this->doView('item-contact.php');
             break;
             case 'contact_post':
-
+            
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+                $this->_exportVariableToView('item', $item) ;
+
+                if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                    if(!osc_check_recaptcha()) {
+                        osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                        $this->redirectTo( osc_item_url( ) );
+                        return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                    }
+                }
+
 
                 $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
 

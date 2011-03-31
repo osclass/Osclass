@@ -26,12 +26,13 @@ if( !defined('ABS_PATH') ) {
 }
 
 define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
-define('THEMES_PATH', ABS_PATH . 'oc-content/themes/') ;
-define('PLUGINS_PATH', ABS_PATH . 'oc-content/plugins/') ;
-define('TRANSLATIONS_PATH', ABS_PATH . 'oc-includes/translations/') ;
+define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
+define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
+define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
+define('TRANSLATIONS_PATH', LIB_PATH . 'translations/') ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
-    require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
     $title = 'OSClass &raquo; Error' ;
     $message = 'There doesn\'t seem to be a <code>config.php</code> file. OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
@@ -41,32 +42,30 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
-require_once ABS_PATH . 'oc-includes/osclass/db.php';
-require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/SiteInfo.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hDatabaseInfo.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hMessages.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hUsers.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hItems.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hSearch.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hUtils.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hCategories.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hTranslations.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPage.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Cookie.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/View.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/BaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/SecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/WebSecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/AdminSecBaseModel.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Translation.php';
+require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/model/Preference.php';
+require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hDefines.php';
+require_once LIB_PATH . 'osclass/helpers/hLocale.php';
+require_once LIB_PATH . 'osclass/helpers/hMessages.php';
+require_once LIB_PATH . 'osclass/helpers/hUsers.php';
+require_once LIB_PATH . 'osclass/helpers/hItems.php';
+require_once LIB_PATH . 'osclass/helpers/hSearch.php';
+require_once LIB_PATH . 'osclass/helpers/hUtils.php';
+require_once LIB_PATH . 'osclass/helpers/hCategories.php';
+require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
+require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
+require_once LIB_PATH . 'osclass/helpers/hPage.php';
+require_once LIB_PATH . 'osclass/core/Params.php';
+require_once LIB_PATH . 'osclass/core/Cookie.php';
+require_once LIB_PATH . 'osclass/core/Session.php';
+require_once LIB_PATH . 'osclass/core/View.php';
+require_once LIB_PATH . 'osclass/core/BaseModel.php';
+require_once LIB_PATH . 'osclass/core/SecBaseModel.php';
+require_once LIB_PATH . 'osclass/core/WebSecBaseModel.php';
+require_once LIB_PATH . 'osclass/core/AdminSecBaseModel.php';
+require_once LIB_PATH . 'osclass/core/Translation.php';
 
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
@@ -75,7 +74,7 @@ require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
 require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPlugins.php';
+require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
@@ -127,5 +126,8 @@ if(!defined('__FROM_CRON__')) {
 Plugins::init() ;
 
 Rewrite::newInstance()->init();
+// Moved from BaseModel, since we need some session magic on index.php ;)
+Session::newInstance()->session_start() ;
+
 
 ?>

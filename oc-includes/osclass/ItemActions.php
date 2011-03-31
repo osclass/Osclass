@@ -166,7 +166,7 @@ Class ItemActions
 
             $result = $this->manager->update (
                                     array(
-                                        'dt_pub_date'           => DB_FUNC_NOW
+                                        'dt_mod_date'           => DB_FUNC_NOW
                                         ,'fk_i_category_id'     => $aItem['catId']
                                         ,'f_price'              => $aItem['price']
                                         ,'fk_c_currency_code'   => $aItem['currency']
@@ -197,11 +197,13 @@ Class ItemActions
      */
     public function activate( $id, $secret )
     {
-        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
+        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
+
         $result = $this->manager->update(
             array('e_status' => 'ACTIVE'),
-            array('s_secret' => $secret)
+            array('s_secret' => $secret, 'pk_i_id' => $id)
         );
+        
         osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
         CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
 
@@ -217,10 +219,11 @@ Class ItemActions
     {
         $item = $this->manager->findByPrimaryKey($itemId);
         $this->deleteResourcesFromHD($itemId);
-        $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
+        $result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
         if($item['e_status']=='ACTIVE') {
             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
         }
+        return $result;
     }
 
     /**
@@ -291,7 +294,7 @@ Class ItemActions
                 ,'{USER_EMAIL}'
                 ,'{FRIEND_EMAIL}'
                 ,'{WEB_URL}'
-                ,'{ITEM_NAME}'
+                ,'{ITEM_TITLE}'
                 ,'{COMMENT}'
                 ,'{ITEM_URL}'
                 ,'{WEB_TITLE}'
@@ -361,7 +364,7 @@ Class ItemActions
 
         $words   = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                         '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
+                         '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
 
         $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
                          $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url(), $message );
@@ -396,9 +399,9 @@ Class ItemActions
             $tmpName = $attachment['tmp_name'] ;
             $resourceType = $attachment['type'] ;
 
-            $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
-            if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
+            if(!is_writable(osc_content_path() . 'uploads/')) {
                 osc_add_flash_message( _m('There has been some errors sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
@@ -505,7 +508,7 @@ Class ItemActions
 
                 $words   = array();
                 $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
-                                 '{COMMENT_TEXT}', '{ITEM_NAME}', '{ITEM_ID}', '{ITEM_URL}');
+                                 '{COMMENT_TEXT}', '{ITEM_TITLE}', '{ITEM_ID}', '{ITEM_URL}');
                 $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
                 $title_email = osc_mailBeauty($content['s_title'], $words);
                 $body_email = osc_mailBeauty($content['s_text'], $words);
@@ -909,17 +912,17 @@ Class ItemActions
                     $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
                     // Create thumbnail
-                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                    $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
                     $size = explode('x', osc_thumbnail_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     // Create normal size
-                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
+                    $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
                     $size = explode('x', osc_normal_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     if( osc_keep_original_image() ) {
-                        $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                        $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
                         move_uploaded_file($tmpName, $path) ;
                     }
 
@@ -945,7 +948,7 @@ Class ItemActions
     
     public function recaptcha()
     {
-        require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+        require_once osc_lib_path() . 'recaptchalib.php';
         if ( Params::getParam("recaptcha_challenge_field") != '') {
             $resp = recaptcha_check_answer (
                 osc_recaptcha_private_key()
@@ -969,6 +972,9 @@ Class ItemActions
         $mPages = new Page();
         $locale = osc_current_user_locale();
         
+        /**
+         * Send email to user requesting item activation
+         */
         if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
             $aPage = $mPages->findByInternalName('email_item_validation') ;
 
@@ -1001,18 +1007,18 @@ Class ItemActions
                 $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
             }
 
+            // Format activation URL
+            $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
+            
             $words   = array();
             $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}',
                              '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}',
-                             '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}',
-                             '{VALIDATION_LINK}');
+                             '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
+                             '{VALIDATION_LINK}', '{VALIDATION_URL}');
             $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
                              $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                              $item['s_contact_email'], osc_base_url(), $item['s_title'], $item_url,
-                             osc_page_title(), '<a href="' . osc_base_url(true) .
-                             '?page=item&action=activate&id=' . $item['pk_i_id'] . '&secret=' .
-                             $item['s_secret'] . '" >' . osc_base_url(true) . '?page=item&action=activate&id=' .
-                             $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                             osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -1026,6 +1032,9 @@ Class ItemActions
             osc_sendMail($emailParams) ;
         }
 
+        /**
+         * Send email to admin about the new item
+         */
         if (osc_notify_new_item()) {
             $aPage = $mPages->findByInternalName('email_admin_new_item') ;
 
@@ -1058,22 +1067,21 @@ Class ItemActions
                 $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
             }
 
-
+            // Format activation URL
+            $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
+            
+            // Format admin edit URL
+            $admin_edit_url =  osc_item_admin_edit_url( $item['pk_i_id'] );
+                             
             $words   = array();
-            $words[] = array('{EDIT_LINK}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}',
+            $words[] = array('{EDIT_LINK}', '{EDIT_URL}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}',
                              '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
-                             '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}',
-                             '{WEB_TITLE}', '{VALIDATION_LINK}');
-            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
-                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
-                             $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
+                             '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}',
+                             '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}');
+            $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                              $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
-                             $item_url, osc_page_title(), '<a href="' .
-                             osc_base_url() . '?page=item&action=activate&id=' . $item['pk_i_id'] .
-                             '&secret=' . $item['s_secret'] . '" >' . osc_base_url() .
-                             '?page=item&action=activate&id=' . $item['pk_i_id'] . '&secret=' .
-                             $item['s_secret'] . '</a>' );
+                             $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body  = osc_mailBeauty($content['s_text'], $words);
 

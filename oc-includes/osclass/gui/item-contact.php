@@ -48,6 +48,7 @@
                             <?php }; ?>
                             <label for="phoneNumber"><?php _e('Phone number', 'modern'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php ContactForm::your_message(); ?><br />
+                            <?php osc_show_recaptcha(); ?>
                             <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'modern'); ?></button>
                         </fieldset>
                     </form>

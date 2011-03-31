@@ -26,9 +26,6 @@ require_once ABS_PATH . 'oc-load.php';
 $action = Params::getParam('action');
 $message = "";
 switch($action) {
-
-
-
 	case 'check-update':
 		$message = __("Checking for update files");
 		break;
@@ -64,7 +61,6 @@ switch($action) {
 		
 		break;
 
-
 	case 'db-backup':
 		osc_dbdump();
 		break;
@@ -73,7 +69,7 @@ switch($action) {
 		$archive_name = ABS_PATH . "OSClass_backup.".date('YmdHis').".zip";
 		$archive_folder = ABS_PATH;
 
-		if (osc_zipFolder($archive_folder, $archive_name)) {
+		if (osc_zip_folder($archive_folder, $archive_name)) {
 			$message = __('Archiving is sucessful!');
 		} else {
 		    $message = __('Error, can\'t create a zip file!');
@@ -82,12 +78,15 @@ switch($action) {
 
 	case 'unzip-file':
 		if(Params::getParam('file')!='') {
-			$zip = new ZipArchive;
-			$res = $zip->open(ABS_PATH.'oc-content/downloads/'.Params::getParam('file'));
+			/*$zip = new ZipArchive;
+			$res = $zip->open(osc_content_path() . 'downloads/' . Params::getParam('file'));
 			if ($res === TRUE) {
 				@mkdir(ABS_PATH.'oc-temp', 0777);
 				$zip->extractTo(ABS_PATH.'oc-temp/');
-				$zip->close();
+				$zip->close();*/
+            @mkdir(ABS_PATH.'oc-temp', 0777);
+            $res = osc_unzip_file(osc_content_path() . 'downloads/' . Params::getParam('file'), ABS_PATH.'oc-temp/');
+            if($res==1) {
 				$message = __('OK');
 			} else {
 				$message = __('Unzip failed');
@@ -142,20 +141,11 @@ switch($action) {
 		} else {
 			$message = __('Nothing to copy');
 		}
-		
 		break;
 
 	case 'execute-sql':
-		/*if(file_exists(ABS_PATH.'oc-temp/upgrade.sql')) {
-			$sql = file_get_contents(ABS_PATH.'oc-temp/upgrade.sql') ;
-			$conn = getConnection() ;
-	        $conn->osc_dbImportSQL($sql) ;
-			$message = __('upgrade.sql executed.') ;
-		} else {
-			$message = __('No SQL to execute.') ;
-		}*/
-		if(file_exists(ABS_PATH . 'oc-includes/data/struct.sql')) {
-            $sql = file_get_contents(ABS_PATH . 'oc-includes/data/struct.sql');
+        if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
     		$conn = getConnection();
             $queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
 			$message = __('Tables updated correctly') ;
@@ -165,8 +155,8 @@ switch($action) {
 		break ;
 
 	case 'execute-actions':
-		if(file_exists(ABS_PATH.'oc-includes/osclass/upgrade-funcs.php')) {
-			require_once ABS_PATH.'oc-includes/osclass/upgrade-funcs.php';
+		if(file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
+			require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
 			$message = __('Custom actions executed') ;
 		} else {
 			$message = __('No action to execute') ;
