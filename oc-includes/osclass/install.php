@@ -19,15 +19,19 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
-
 error_reporting(0);
+
+define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
+define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
+define( 'TRANSLATIONS_PATH', LIB_PATH . 'translations/' ) ;
+
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 
