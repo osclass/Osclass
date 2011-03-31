@@ -297,8 +297,18 @@ class CWebItem extends BaseModel
                 $this->doView('item-contact.php');
             break;
             case 'contact_post':
-
+            
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+                $this->_exportVariableToView('item', $item) ;
+
+                if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                    if(!osc_check_recaptcha()) {
+                        osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                        $this->redirectTo( osc_item_url( ) );
+                        return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                    }
+                }
+
 
                 $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
 
