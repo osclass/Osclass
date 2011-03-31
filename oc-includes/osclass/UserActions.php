@@ -68,7 +68,7 @@
                     }
                     
                     if (!is_null($content)) {
-                        $validationLink = sprintf('%sindex.php?page=register&action=validate&id=%d&code=%s', osc_base_url(), $user['pk_i_id'], $input['s_secret']) ;
+                        $validationLink = osc_user_activate_url($user['pk_i_id'], $input['s_secret']);
                         $words   = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}') ;
                         $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), $validationLink) ;
@@ -183,7 +183,7 @@
 
         public function recaptcha()
         {
-            require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+            require_once osc_lib_path() . 'recaptchalib.php';
             if ( Params::getParam("recaptcha_challenge_field") != '') {
                 $resp = recaptcha_check_answer (osc_recaptcha_private_key()
                                                ,$_SERVER["REMOTE_ADDR"]

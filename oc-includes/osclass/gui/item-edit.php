@@ -90,7 +90,7 @@
                                     <?php ItemForm::address_text() ; ?>
                                 </div>
                             </div>
-                            <?php osc_run_hook('item_edit', osc_item() ) ;?>
+                            <?php ItemForm::plugin_edit_item(); ?>
                         </div>
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>

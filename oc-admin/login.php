@@ -32,7 +32,7 @@
                                             if ( $admin["s_password"] == sha1( Params::getParam('password') ) ) {
                                                 if ( Params::getParam('remember') ) {
                                                     //this include contains de osc_genRandomPassword function
-                                                    require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
+                                                    require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
                                                     $secret = osc_genRandomPassword() ;
 
                                                     Admin::newInstance()->update(
@@ -72,7 +72,7 @@
                 case('recover_post'):   //post execution to recover the password
                                         $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
                                         if($admin) {
-                                            require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
+                                            require_once osc_lib_path() . 'osclass/helpers/hSecurity.php' ;
                                             $newPassword = osc_genRandomPassword() ;
                                             $body = sprintf( __('Your new password is "%s"'), $newPassword) ;
 

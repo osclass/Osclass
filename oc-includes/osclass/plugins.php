@@ -69,12 +69,12 @@ class Plugins
 
     static function listAll() {
 	    $plugins = array();
-	    $pluginsPath = ABS_PATH . 'oc-content/plugins';
+	    $pluginsPath = osc_plugins_path();
 	    $dir = opendir($pluginsPath);
 	    while($file = readdir($dir)) {
 		    if(preg_match('/^[a-zA-Z0-9_]+$/', $file, $matches)) {
 			    // This has to change in order to catch any .php file
-			    $pluginPath = $pluginsPath . "/$file/index.php";
+			    $pluginPath = $pluginsPath . "$file/index.php";
 			    if(file_exists($pluginPath)) {
 				    $plugins[] = $file."/index.php";
 			    } else {
@@ -92,7 +92,7 @@ class Plugins
 		    $plugins_list = unserialize($data['s_value']);
 		    if(is_array($plugins_list)) {
 			    foreach($plugins_list as $plugin_name) {
-				    $pluginPath = ABS_PATH . 'oc-content/plugins/'.$plugin_name;
+				    $pluginPath = osc_plugins_path() . $plugin_name;
 				    if(file_exists($pluginPath)) {
 					    //This should include the file and adds the hooks
 					    include_once $pluginPath;
@@ -124,7 +124,7 @@ class Plugins
 
 
     static function resource($path) {
-	    $fullPath = ABS_PATH . 'oc-content/plugins/' . $path;
+	    $fullPath = osc_plugins_path() . $path;
 	    return file_exists($fullPath) ? $fullPath : false;
     }
 
@@ -167,7 +167,7 @@ class Plugins
 
 
     static function register($path, $function) {
-	    $path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
+	    $path = str_replace(osc_plugins_path(), '', $path);
 	    Plugins::addHook('install_'.$path, $function);
     }
 
@@ -179,7 +179,7 @@ class Plugins
 		    $data['s_value'] = osc_active_plugins() ;
 		    $plugins_list = unserialize($data['s_value']);
 
-		    $path = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
+		    $path = str_replace(osc_plugins_path(), '', $path);
 		    if(is_array($plugins_list)) {
 			    foreach($plugins_list as $key=>$value){
 				    if($value==$path){
@@ -209,7 +209,7 @@ class Plugins
     }
 
     static function getInfo($plugin) {
-	    $s_info = file_get_contents(ABS_PATH . 'oc-content/plugins/' . $plugin);
+	    $s_info = file_get_contents(osc_plugins_path() . $plugin);
 	    $info = array();
 	    if(preg_match('|Plugin Name:([^\\r\\t\\n]*)|i', $s_info, $match)) {
 		    $info['plugin_name'] = trim($match[1]);
@@ -268,7 +268,7 @@ class Plugins
 
 
     static function configureView($path) {
-	    $plugin = str_replace(ABS_PATH . 'oc-content/plugins/', '', $path);
+	    $plugin = str_replace(osc_plugins_path(), '', $path);
 	    if(stripos($plugin, ".php")===FALSE) {
 		    $plugins_list = unserialize(osc_active_plugins());
 		    if(is_array($plugins_list)) {
@@ -320,7 +320,7 @@ class Plugins
 
     // Add a hook
     static function addHook($hook, $function, $priority = 5) {
-	    $hook = str_replace(ABS_PATH . 'oc-content/plugins/', '', $hook);
+	    $hook = str_replace(osc_plugins_path(), '', $hook);
 	    $found_plugin = false;
 	    if(isset(Plugins::$hooks[$hook])) {
 		    if(is_array(Plugins::$hooks[$hook])) {
