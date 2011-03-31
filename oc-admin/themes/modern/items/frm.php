@@ -191,9 +191,9 @@
                             </div>
 
                             <?php if(isset($new_item) && $new_item==TRUE) {
-                                    ItemForm::plugin_post_item($categories);
+                                    ItemForm::plugin_post_item();
                                 } else {
-                                    osc_run_hook('item_edit', $item);
+                                    ItemForm::plugin_edit_item();
                                 };
                             ?>
                             <div class="clear"></div>
