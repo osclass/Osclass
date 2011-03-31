@@ -32,116 +32,129 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         flush();
     }
     /*           TESTS          */
-    function testCronTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCronTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - ON/OFF CRON</div>";
-        $this->cronTab() ;
-        flush();
-    }
+//    function testCronTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testCronTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - ON/OFF CRON</div>";
+//        $this->cronTab() ;
+//        flush();
+//    }
+//
+//    function testMediaTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testMediaTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - MEDIA SETTINGS</div>";
+//        $this->mediaTab() ;
+//        flush();
+//    }
+//
+//    function testMailServerTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testMailServerTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - MAIL SERVER SETTINGS</div>";
+//        $this->mailServer() ;
+//        flush();
+//    }
+//
+//    function testSpamAndBotsTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testSpamAndBotsTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - SPAM AND BOTS SETTINGS</div>";
+//        $this->spamAndBots() ;
+//        flush();
+//    }
+//
+//    function testPermalinksTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testPermalinksTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - PERMALINKS SETTINGS</div>";
+//        $this->permalinks() ;
+//        flush();
+//    }
+//
+//    function testContactTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testContactTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - CONTACT SETTINGS</div>";
+//        $this->contact() ;
+//        flush();
+//    }
+//
+//    function testUsersTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testUsersTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testUsersTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testUsersTab - USER SETTINGS</div>";
+//        $this->users() ;
+//        flush();
+//    }
+//
+//    function testCommentsTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testCommentsTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - COMMENTS SETTINGS</div>";
+//        $this->comments() ;
+//        flush();
+//    }
+//
+//    function testItemsTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testItemsTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - ITEMS SETTINGS</div>";
+//        $this->items() ;
+//        flush();
+//    }
+//
+//    function testGeneralSettings()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testGeneralSettings</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testGeneralSettings - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testGeneralSettings - GENERAL SETTINGS </div>";
+//        $this->generalSettings() ;
+//        flush();
+//    }
 
-    function testMediaTab()
+    function testLocations()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testMediaTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - LOGIN </div>";
+        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - MEDIA SETTINGS</div>";
-        $this->mediaTab() ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
+        $this->locationsGEO();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
+        $this->locationsNEW();
         flush();
     }
-
-    function testMailServerTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testMailServerTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - MAIL SERVER SETTINGS</div>";
-        $this->mailServer() ;
-        flush();
-    }
-
-    function testSpamAndBotsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testSpamAndBotsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - SPAM AND BOTS SETTINGS</div>";
-        $this->spamAndBots() ;
-        flush();
-    }
-
-    function testPermalinksTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testPermalinksTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - PERMALINKS SETTINGS</div>";
-        $this->permalinks() ;
-        flush();
-    }
-
-    function testContactTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testContactTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - CONTACT SETTINGS</div>";
-        $this->contact() ;
-        flush();
-    }
-
-    function testUsersTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testUsersTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testUsersTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testUsersTab - USER SETTINGS</div>";
-        $this->users() ;
-        flush();
-    }
-
-    function testCommentsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCommentsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - COMMENTS SETTINGS</div>";
-        $this->comments() ;
-        flush();
-    }
-    
-    function testItemsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testItemsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - ITEMS SETTINGS</div>";
-        $this->items() ;
-        flush();
-    }
-
-    function testGeneralSettings()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testGeneralSettings</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testGeneralSettings - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testGeneralSettings - GENERAL SETTINGS </div>";
-        $this->generalSettings() ;
-        flush();
-    }
-
 
         /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -695,6 +708,141 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('weekStart')     , $pref['weekStart'] ) ;
         $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf'] ) ;
+    }
+
+    private function locationsGEO()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=» Locations");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("xpath=//a[@id='b_new_country']");
+
+        $this->selenium->type("country"     , "Andorra" ) ;
+        $this->selenium->type("c_country"   , "AN" ) ;
+        $this->selenium->type('c_manual'    , '0') ;
+
+        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" );
+
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:Andorra la Vella") , "Can't insert regions of ANDORRA" );
+
+        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:El Mas de Ribafeta") , "Can't insert cities of Andorra la Vella" );
+
+        // edit country
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");
+        $this->selenium->type("e_country"     , "Andorra_" ) ;
+
+        $this->selenium->click("xpath=//div[@id='d_edit_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit country name" );
+
+        sleep(5);
+        // delete country
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
+
+    }
+
+    private function locationsNEW()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=» Locations");
+        $this->selenium->waitForPageToLoad("10000");
+        // add Country
+        $this->selenium->click("xpath=//a[@id='b_new_country']");
+
+        $this->selenium->type("country", "ikea") ;
+        $this->selenium->type("c_country", "IK") ;
+
+        $this->selenium->click("xpath=//div[@id='d_add_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" ) ;
+        // add Region
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//a[@id='b_new_region']") ;
+
+        $this->selenium->type("region", "Republica") ;
+
+        $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000") ;
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Can't add new region" ) ;
+
+        // add City
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//a[@id='b_new_city']") ;
+
+        $this->selenium->type("city", "Mi casa") ;
+        $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Can't add new city" ) ;
+
+        // edit country/region/city
+        // add City
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_cities']/div[1]/div/a[2]") ; // edit first city
+
+        $this->selenium->type("city", "Mi casa_") ;
+        $this->selenium->click("xpath=//div[@id='d_edit_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit city name" );
+
+        // edit Region
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div[1]/a[2]") ; // edit first city
+
+        $this->selenium->type("region", "Republica_") ;
+
+        $this->selenium->click("xpath=//div[@id='d_edit_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000") ;
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit region name" ) ;
+
+        // edit Country
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");
+        $this->selenium->type("e_country"     , "ikea_" ) ;
+
+        $this->selenium->click("xpath=//div[@id='d_edit_country']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been edited") , "Can't edit country name" );
+
+        // DELETE THE LOCATION
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
+    }
+
+    private function currency()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=» Currencies");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Add");
+
+        $this->selenium->click("button_open");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->selenium->type("code", "INR");
+        $this->selenium->type("name", "Indian Rupee");
+        $this->selenium->type("description", "Indian Rupee र");
+        $this->selenium->click("//input[@id='button_save' and @value='Create']");
+        $this->selenium->waitForPageToLoad("10000");
     }
 }
 
