@@ -34,20 +34,24 @@
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
             <div class="message" style="text-align:center;">
-                <?php _e('Please enter your username or e-mail address') ; ?>.<br />
-                <?php _e('You will receive a new password via e-mail') ; ?>.
+                <?php _e('Type your new password') ; ?>.
             </div>
 
-            <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post">
-                <input type="hidden" name="page" value="login" />
-                <input type="hidden" name="action" value="recover_post" />
-                <p>
-                    <label><?php _e('E-mail') ; ?><br />
-                    <input type="text" name="email" id="user_email" class="input" value="" size="20" tabindex="10" /></label>
-                </p>
-                <?php osc_show_recaptcha(); ?>
-                <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Get new password') ; ?>" tabindex="100" /></p>
-            </form>
+                    <form action="<?php echo osc_admin_base_url(true) ; ?>" method="post" >
+                        <input type="hidden" name="page" value="login" />
+                        <input type="hidden" name="action" value="forgot_post" />
+                        <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId'); ?>" />
+                        <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
+                            <p>
+                                <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
+                                <input type="password" name="new_password" value="" />
+                            </p>
+                            <p>
+                                <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
+                                <input type="password" name="new_password2" value="" />
+                            </p>
+                            <button type="submit"><?php _e('Change password', 'modern') ; ?></button>
+                    </form>
 
             <p id="nav">
                 <a title="<?php _e('Log in') ; ?>" href="<?php echo osc_admin_base_url() ; ?>"><?php _e('Log in') ; ?></a>

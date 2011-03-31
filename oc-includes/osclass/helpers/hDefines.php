@@ -477,6 +477,10 @@
         }
     }
 
+    function osc_forgot_admin_password_confirm_url($adminId, $code) {
+        return osc_admin_base_url(true) . '?page=login&action=forgot&adminId='.$adminId.'&code='.$code;
+    }
+
     //doens't exists til now
     function osc_change_language_url($locale) {
         if ( osc_rewrite_enabled() ) {
