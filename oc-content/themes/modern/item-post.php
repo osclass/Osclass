@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <?php }; ?>
-                        <?php ItemForm::plugin_post_item(osc_category()); ?>
+                        <?php ItemForm::plugin_post_item(); ?>
                     </div>
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>

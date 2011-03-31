@@ -420,7 +420,7 @@ class ItemForm extends Form {
 <?php
     }
 
-    static public function plugin_post_item($categories) {
+    static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
     $("#catId").change(function(){
@@ -432,7 +432,24 @@ class ItemForm extends Form {
             $.ajax({
                 type: "POST",
                 url: url,
-                data: 'page=ajax&action=runhook&hook=item_form&catId=' + cat_id,
+                data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
+                dataType: 'text/html',
+                success: function(data){
+                    $("#plugin-hook").html(data);
+                }
+            });
+        }
+    });
+    $(document).ready(function(){
+        var cat_id = $("#catId").val();
+        var url = '<?php echo osc_base_url(true); ?>';
+        var result = '';
+
+        if(cat_id != '') {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
                 dataType: 'text/html',
                 success: function(data){
                     $("#plugin-hook").html(data);
@@ -442,21 +459,14 @@ class ItemForm extends Form {
     });
 </script>
 <div id="plugin-hook">
-<?php
-    if (Params::getParam('catId')!='') {
-        osc_run_hook('item_form', Params::getParam('catId'));
-    } else {
-        $categories = osc_category();
-        if(is_array($categories)) {
-            osc_run_hook('item_form', $categories['pk_i_id']);
-        } else {
-            osc_run_hook('item_form', $categories);
-        }
-    }
-?>
 </div>
 <?php
     }
+    
+    static public function plugin_edit_item() {
+        ItemForm::plugin_post_item('edit&itemId='.osc_item_id());
+    }
+    
 }
 
 ?>
