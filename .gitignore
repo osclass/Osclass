@@ -5,3 +5,4 @@
 config.php
 .gitignore
 dist
+oc-content/uploads/admin-blog_news.cache
