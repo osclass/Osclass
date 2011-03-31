@@ -42,7 +42,7 @@
                     $package = Params::getFiles("package");
                     $path = osc_plugins_path() ;
 
-                    (int) $status = unzip_file($package['tmp_name'], $path);
+                    (int) $status = osc_unzip_file($package['tmp_name'], $path);
 
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');

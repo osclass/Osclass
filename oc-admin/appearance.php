@@ -35,7 +35,7 @@
                     $filePackage = Params::getFiles('package');
                     $path = osc_themes_path() ;
 
-                    (int) $status = unzip_file($filePackage['tmp_name'], $path);
+                    (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
 
                     switch ($status) {
                         case(0):   $msg = _m('The theme folder is not writable');

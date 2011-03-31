@@ -132,7 +132,7 @@
                                         }
                                         $archive_folder = osc_base_path() ;
 
-                                        if ( osc_zipFolder($archive_folder, $archive_name) ) {
+                                        if ( osc_zip_folder($archive_folder, $archive_name) ) {
                                             $msg = _m('Archiving successful!') ;
                                         }else{
                                             $msg = _m('Error, the zip file was not created at the specified directory') ;
