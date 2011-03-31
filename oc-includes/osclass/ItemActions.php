@@ -217,10 +217,11 @@ Class ItemActions
     {
         $item = $this->manager->findByPrimaryKey($itemId);
         $this->deleteResourcesFromHD($itemId);
-        $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
+        $result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
         if($item['e_status']=='ACTIVE') {
             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
         }
+        return $result;
     }
 
     /**
