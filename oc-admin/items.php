@@ -176,14 +176,15 @@
                                             $item = $this->itemManager->findByPrimaryKey($id);
                                             switch ($value) {
                                                 case 'ACTIVE':
+                                                    osc_add_flash_message( _m('The item has been activated'), 'admin');
                                                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
                                                     break;
                                                 case 'INACTIVE':
+                                                    osc_add_flash_message( _m('The item has been deactivated'), 'admin');
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                                                     break;
                                             }
 
-                                            osc_add_flash_message( _m('The item has been activated'), 'admin');
                                         } catch (Exception $e) {
                                             osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
                                         }
@@ -269,6 +270,7 @@
                                             ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                         }
 
+                                        osc_add_flash_message( _m('Changes saved correctly'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource
@@ -280,6 +282,7 @@
                                         osc_deleteResource($id);
 
                                         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
+                                        osc_add_flash_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'post':            //post
