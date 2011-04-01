@@ -70,7 +70,7 @@
                     $this->doView("categories/frm.php");
                 break;
                 case 'quick_edit':
-                    $id = Params::getParam('pk_i_id');
+                    $id = Params::getParam('catId');
                     $name = Params::getParam('s_name');
                     $locale = Params::getParam('locale');
                     Category::newInstance()->update_name($id, $locale, $name);

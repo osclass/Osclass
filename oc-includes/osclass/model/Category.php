@@ -359,7 +359,7 @@ class Category extends DAO
     }
 
     public function update_name($pk_i_id, $locale, $name) {
-        $sql = 'UPDATE ' . $this->getTableDescriptionName() . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
+        $sql = 'UPDATE ' . $this->getTableDescriptionName() . " SET `s_name` = '".$name."' WHERE `fk_i_category_id` = " . $pk_i_id . " AND `fk_c_locale_code` = '" . $locale . "'";
         return $this->conn->osc_dbExec($sql);
     }
 
