@@ -161,10 +161,18 @@
                                             case('edit_country'):   // edit country
                                                                     $newCountry = Params::getParam('e_country');
                                                                     $oldCountry = Params::getParam('country_old');
-                                                                    $mCountries->update(array('s_name' => $newCountry)
-                                                                                       ,array('s_name' => $oldCountry));
-                                                                    osc_add_flash_message(sprintf(__('%s has been edited'),
-                                                                                                      $newCountry), 'admin');
+                                                                    $exists = $mCountries->findByName($newCountry);
+                                                                    $old_exists = $mCountries->findByName($oldCountry);
+                                                                    
+                                                                    if(!isset($exists['pk_c_code']) || $exists['pk_c_code']==$old_exists['pk_c_code']) {
+                                                                        $mCountries->update(array('s_name' => $newCountry)
+                                                                                           ,array('s_name' => $oldCountry));
+                                                                        osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                                                          $newCountry), 'admin');
+                                                                    } else {
+                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                                                           $newCountry),'admin');
+                                                                    }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('delete_country'): // delete country
@@ -215,12 +223,17 @@
                                                                     $mRegions  = new Region();
                                                                     $newRegion = Params::getParam('e_region');
                                                                     $regionId  = Params::getParam('region_id');
-
-                                                                    if($regionId != '') {
-                                                                        $mRegions->update(array('s_name' => $newRegion)
-                                                                                         ,array('pk_i_id' => $regionId));
-                                                                        osc_add_flash_message(sprintf(__('%s has been edited'),
-                                                                                                          $newRegion), 'admin');
+                                                                    $exists = $mRegions->findByName($newRegion);
+                                                                    if(!$exists['pk_i_id'] || $exists['pk_i_id']==$regionId) {
+                                                                        if($regionId != '') {
+                                                                            $mRegions->update(array('s_name' => $newRegion)
+                                                                                             ,array('pk_i_id' => $regionId));
+                                                                            osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                                                              $newRegion), 'admin');
+                                                                        }
+                                                                    } else {
+                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                                                            $newRegion), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -266,11 +279,17 @@
                                                                     $newCity = Params::getParam('e_city');
                                                                     $cityId  = Params::getParam('city_id');
 
-                                                                    $mCities->update(array('s_name' => $newCity)
-                                                                                    ,array('pk_i_id' => $cityId));
+                                                                    $exists = $mCities->findByName($newCity);
+                                                                    if(!isset($exists['pk_i_id']) || $exists['pk_i_id']==$cityId) {
+                                                                        $mCities->update(array('s_name' => $newCity)
+                                                                                        ,array('pk_i_id' => $cityId));
 
-                                                                    osc_add_flash_message(sprintf(__('%s has been edited'),
-                                                                                                     $newCity), 'admin');
+                                                                        osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                                                         $newCity), 'admin');
+                                                                    } else {
+                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                                                         $newCity), 'admin');
+                                                                    }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
                                             case('delete_city'):    // delete city

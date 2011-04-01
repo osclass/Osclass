@@ -41,5 +41,9 @@ class Region extends DAO {
     public function findByNameAndCode($name, $code) {
         return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' AND fk_c_country_code = '%s' LIMIT 1", $this->getTableName(), $name, $code);
     }
+
+    public function findByName($name) {
+        return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' LIMIT 1", $this->getTableName(), $name);
+    }
 }
 
