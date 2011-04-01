@@ -15,6 +15,8 @@ class TestOfItems extends WebTestCase {
     private $email_fixed;
     private $array;
     private $logged;
+    
+    private $to_delete = array();
 
     function setUp()
     {
@@ -81,6 +83,7 @@ class TestOfItems extends WebTestCase {
 /*
  *         TEST WITH NO LOGGED USER
  */
+        $mItem = new Item();
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - </div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - YES, CAN PUBLISH ITEMS</div>";
         Preference::newInstance()->update(array('s_value' => 0)
@@ -118,6 +121,19 @@ class TestOfItems extends WebTestCase {
         $this->login();
         $this->insertItem();
         flush();
+
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting inserted item</div>";
+
+        $item = $mItem->findByConditions( array('s_contact_email' => 'carlos+usertest@osclass.org') ) ;
+        while( $item ) {
+            echo "deleting item ... <br>";
+            flush();
+            $this->deleteItemUrl( osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] ) );
+            flush();
+            $item = $mItem->findByConditions( array('s_contact_email' => 'carlos+usertest@osclass.org') ) ;
+            flush();
+        }
+        
     }
 
     function testEditUserItemBadId()
@@ -155,7 +171,8 @@ class TestOfItems extends WebTestCase {
         $this->deleteItem();
     }
 
-    function  testdeleteUser() {
+    function  testdeleteUser()
+    {
         echo "delete user for testing<br>";
         $user = User::newInstance()->findByEmail($this->email);
         User::newInstance()->deleteUser($user['pk_i_id']);
@@ -250,7 +267,9 @@ class TestOfItems extends WebTestCase {
                     $this->assertTrue($this->selenium->isTextPresent("Great! You'll receive an e-mail to activate your item","Need validation but message don't appear") );
                 }
             }
+            return 1;
         }
+        return 0;
     }
 
     private function editUserItemBadId()
@@ -328,7 +347,13 @@ class TestOfItems extends WebTestCase {
         $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
+    }
 
+    private function deleteItemUrl($url)
+    {
+        echo "URL -> $url<br>";
+        $this->selenium->open( $url );
+        $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
     }
 }
 
