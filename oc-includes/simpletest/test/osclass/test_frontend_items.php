@@ -209,7 +209,7 @@ class TestOfItems extends WebTestCase {
             $this->selenium->select("catId", "label=Cars");
 
             $this->selenium->type("title[en_US]", "title new item");
-            $this->selenium->type("description[en_US]", "description new item");
+            $this->selenium->type("description[en_US]", "description new item new item new item");
             $this->selenium->type("price", "111");
 
             $this->selenium->select("currency", "label=Euro €");
@@ -219,9 +219,9 @@ class TestOfItems extends WebTestCase {
             $this->selenium->type("cityArea", "my area");
             $this->selenium->type("address", "my address");
 
-            $this->selenium->type("photos[]", "/Library/Application Support/Apple/iChat Icons/Gems/Sapphire Round.gif");
+            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
             $this->selenium->click("link=Add new photo");
-            $this->selenium->type("//div[@id='p-0']/input", "/Library/Application Support/Apple/iChat Icons/Gems/Ruby Round.gif");
+            $this->selenium->type("//div[@id='p-0']/input",  LIB_PATH."simpletest/test/osclass/img_test2.gif");
 
             if($this->logged == 0){
                 $this->selenium->type("contactName", "carlos");
@@ -277,7 +277,7 @@ class TestOfItems extends WebTestCase {
         $this->selenium->select("catId", "label=Car Parts");
 
         $this->selenium->type("title[en_US]", "New title new item");
-        $this->selenium->type("description[en_US]", "New description new item");
+        $this->selenium->type("description[en_US]", "New description new item new item new item");
         $this->selenium->type("price", "222");
 
         $this->selenium->select("currency", "label=Euro €");
