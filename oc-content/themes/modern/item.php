@@ -137,6 +137,7 @@
                                 <input type="hidden" name="action" value="contact_post" />
                                 <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
+                                <?php osc_show_recaptcha(); ?>
                                 <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                             </fieldset>
                         </form>

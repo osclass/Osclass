@@ -840,5 +840,19 @@ function _zip_folder_pclzip($archive_folder, $archive_name) {
     
 }
 
+function osc_check_recaptcha() {
+
+    require_once osc_lib_path() . 'recaptchalib.php';
+    if ( Params::getParam("recaptcha_challenge_field") != '') {
+        $resp = recaptcha_check_answer (osc_recaptcha_private_key()
+                                        ,$_SERVER["REMOTE_ADDR"]
+                                        ,Params::getParam("recaptcha_challenge_field")
+                                        ,Params::getParam("recaptcha_response_field"));
+                                        
+        return $resp->is_valid;
+    }
+
+    return false;
+}
 
 ?>
