@@ -137,6 +137,21 @@
                                 <input type="hidden" name="action" value="contact_post" />
                                 <input type="hidden" name="page" value="item" />
                                 <input type="hidden" name="id" value="<?php echo osc_item_id() ; ?>" />
+                                <?php if( osc_recaptcha_public_key() ) { ?>
+                                <script type="text/javascript">
+                                    var RecaptchaOptions = {
+                                        theme : 'custom',
+                                        custom_theme_widget: 'recaptcha_widget'
+                                    };
+                                </script>
+                                <style type="text/css"> div#recaptcha_widget, div#recaptcha_image > img { width:280px; } </style>
+                                <div id="recaptcha_widget">
+                                    <div id="recaptcha_image"></div>
+                                    <span class="recaptcha_only_if_image"><?php _e('Enter the words above','modern'); ?>:</span>
+                                    <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
+                                    <div><a href="javascript:Recaptcha.showhelp()"><?php _e('Help', 'modern'); ?></a></div>
+                                </div>
+                                <?php } ?>
                                 <?php osc_show_recaptcha(); ?>
                                 <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                             </fieldset>
