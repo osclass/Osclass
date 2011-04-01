@@ -810,7 +810,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_cities']/div[1]/div/a[2]") ; // edit first city
 
-        $this->selenium->type("city", "Mi casa_") ;
+        $this->selenium->type("e_city", "Mi casa_") ;
         $this->selenium->click("xpath=//div[@id='d_edit_city']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000");
 
@@ -820,7 +820,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
         $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div[1]/a[2]") ; // edit first city
 
-        $this->selenium->type("region", "Republica_") ;
+        $this->selenium->type("e_region", "Republica_") ;
 
         $this->selenium->click("xpath=//div[@id='d_edit_region']/div[2]/form/div/input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("10000") ;
@@ -919,6 +919,57 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can add city twice" ) ;
+
+        // test errors when edit countries, regions, cities
+        
+        // add another City
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//a[@id='b_new_city']") ;
+
+        $this->selenium->type("city", "Mi casa_") ;
+        $this->selenium->click("xpath=//div[@id='d_add_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new city") , "Can't add new city" ) ;
+        // edit the city and change the name to existing one
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_cities']/div/div/a[text()='Mi casa_']") ; 
+
+        $this->selenium->type("e_city", "Mi casa") ;
+        $this->selenium->click("xpath=//div[@id='d_edit_city']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can change city name to existing one" ) ;
+
+        // add another Region
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//a[@id='b_new_region']") ;
+
+        $this->selenium->type("region", "Republica_") ;
+
+        $this->selenium->click("xpath=//div[@id='d_add_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000") ;
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new region") , "Can't add new region" ) ;
+
+        // edit the region and change the name to existing one
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
+        $this->selenium->click("xpath=//div[@id='i_regions']/div/div/a[text()='Republica_']") ; 
+
+        $this->selenium->type("e_region", "Republica") ;
+
+        $this->selenium->click("xpath=//div[@id='d_edit_region']/div[2]/form/div/input[@type='submit']") ;
+        $this->selenium->waitForPageToLoad("10000") ;
+
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:already was in the database") , "Can change region name to existing one" ) ;
+
+        // DELETE THE LOCATION
+        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[1]");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
+
     }
 
     private function currency()
