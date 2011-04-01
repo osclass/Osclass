@@ -141,20 +141,20 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 //        $this->generalSettings() ;
 //        flush();
 //    }
-//
-//    function testLocations()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
-//        $this->locationsGEO();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
-//        $this->locationsNEW();
-//        flush();
-//    }
+
+    function testLocations()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
+        $this->locationsGEO();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
+        $this->locationsNEW();
+        flush();
+    }
 
     function testCurrencies()
     {
@@ -162,8 +162,14 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - CURRENCIES SETTINGS </div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD & EDIT & DELETE CURRENCIES SETTINGS </div>";
         $this->currency() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD CURRENCIES SETTINGS (INSERT TWICE) </div>";
+        $this->addCurrencyTwice() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - EDIT CURRENCIES SETTINGS (EDIT FORCE ERROR) </div>";
+        $this->editCurrencyForceError() ;
         flush();
     }
 
@@ -190,8 +196,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
             $this->assertFalse("can't loggin");
         }
     }
-//        Preference::newInstance()->update(array('s_value' => 0)
-//                                             ,array('s_name'  => 'enabled_user_validation'));
+
     private function cronTab()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -838,6 +843,11 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
     }
 
+    private function locationsNEWForceError()
+    {
+
+    }
+
     private function currency()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -889,6 +899,12 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete a currency" ) ;
         $this->assertTrue( !$this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't delete a currency" ) ;
+    }
+
+    private function editCurrencyForceError()
+    {
+        
+    
     }
 }
 
