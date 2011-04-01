@@ -18,8 +18,10 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-            
-    require_once 'oc-load.php' ;
+
+    define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+
+    require_once ABS_PATH . 'oc-load.php' ;
     
     switch( Params::getParam('page') )
     {
