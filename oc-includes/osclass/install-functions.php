@@ -58,7 +58,7 @@ function get_requirements( ) {
         'GD extension for PHP' => extension_loaded('gd'),
         'Folder <code>oc-content/uploads</code> exists' => file_exists( ABS_PATH . 'oc-content/uploads/' ),
         'Folder <code>oc-content/uploads</code> is writable' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
-        'Folder <code>oc-includes/translations</code> exists' => file_exists( ABS_PATH . 'oc-includes/translations/' )
+        'Folder <code>oc-content/languages</code> exists' => file_exists( ABS_PATH . 'oc-content/languages/' )
     );
 
     $config_writable = false;
@@ -156,7 +156,6 @@ function oc_install( ) {
     }
 
     require_once ABS_PATH . 'config.php';
-
 
     $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
     $conn->osc_dbImportSQL($sql);
