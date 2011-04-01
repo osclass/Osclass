@@ -69,6 +69,14 @@
                     $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
                     $this->doView("categories/frm.php");
                 break;
+                case 'quick_edit':
+                    $id = Params::getParam('pk_i_id');
+                    $name = Params::getParam('s_name');
+                    $locale = Params::getParam('locale');
+                    Category::newInstance()->update_name($id, $locale, $name);
+                    osc_add_flash_message( _m('The category has been updated.'), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true).'?page=categories');
+                break;
                 case 'edit_post':
                     $id = Params::getParam("id");
 

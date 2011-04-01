@@ -55,44 +55,25 @@
                                     });
                                 }, 3000);
                             }
-                        });                    }
+                        });
+                    }
                 });
                 $( "ul, li" ).disableSelection();
                 $(".quick_edit").hide();
             });
 
-            $.fn.edit_in_place = function(callback){
-              var $element = this;
-              if($element.length>1){console.error("Call $().edit_in_place only on a singular jquery object.");}
-              var $edit = $('<input type="text" class="edit_in_place" />');
-              $edit.css({'height' : $element.height()-2, 'width' : $element.width()-2});
-              $element.hide();
-              $element.after($edit);
-              $edit.focus();
-              $edit.bind('blur', function(){ // on blur, forget edits and reset.
-                $edit.remove();
-                $element.show();
-              });
-              $edit.keydown(function(e){
-                if(e.which===27)$edit.blur(); // blur on Esc: see above
-                if(e.which===13 || e.which===9){ // Enter or Tab: run the callback with the value
-                  e.preventDefault();
-                  $edit.hide();
-                  $element.show();
-                  if($edit.val()!=='') callback($element, $edit.val());
-                  // This causes a TypeError, no idea why! I'd rather use it...
-                  // callback.apply($element, $edit.val());
-                  $edit.remove();
-                }
-              });
-            };
 
-            
-            function js_edit(div) {
-                $(".edit_in_place").remove();
-                $("#"+div).edit_in_place(function(editable_thing, value){
-                    alert("You typed "+value);
-                });
+            function js_edit(element, id, locale) {
+                var d_category = $('#d_edit_category');
+
+                d_category.css('display','block');
+                $('#fade').css('display','block');
+
+                $("input[name=catId]").val(id);
+                $("input[name=locale]").val(locale);
+                $("input[name=s_name]").val(element.html());
+
+                return false;
             }
         </script>
         <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('datatables.post_init.js') ; ?>"></script>
@@ -120,7 +101,7 @@
                     <?php $data = Category::newInstance()->isParentOf($category['pk_i_id']);
                         $has_subcategories = (count($data)>0)?true:false;
                     ?>
-				        <li><div class="category_div" category_id="<?php echo $category['pk_i_id'];?>" ><div class=".quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;"><?php echo $category['s_name'];?></div><div style="float:right;"><a onclick="js_edit('<?php echo "quick_edit_".$category['pk_i_id']; ?>');" href='#'><?php _e('Quick edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $category['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $category['pk_i_id']; ?>&enabled=<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $category['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $category['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>
+				        <li><div class="category_div" category_id="<?php echo $category['pk_i_id'];?>" ><div class=".quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;"><?php echo $category['s_name'];?><a onclick="js_edit($(this),<?php echo "'".$category['pk_i_id']."', '".$category['fk_c_locale_code']; ?>');" href='#'></a></div><div style="float:right;"><a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $category['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $category['pk_i_id']; ?>&enabled=<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $category['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $category['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>
                         <div style="clear: both;"></div>
 				        </div></li>
 				    <?php }; ?>
@@ -129,6 +110,32 @@
 				</div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
+        <!-- Form edit country -->
+        <div id="d_edit_category" class="lightbox_country location" style="height: 140px;">
+            <div>
+                <h4><?php _e('Edit category') ; ?></h4>
+            </div>
+            <div style="padding: 14px;">
+                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8">
+                    <input type="hidden" name="page" value="categories" />
+                    <input type="hidden" name="action" value="quick_edit" />
+                    <input type="hidden" name="catId" value="" />
+                    <input type="hidden" name="locale" value="" />
+                    <table>
+                        <tr>
+                            <td><?php _e('Category'); ?>: </td>
+                            <td><input type="text" id="s_name" name="s_name" value="" /></td>
+                        </tr>
+                    </table>
+                    <div style="margin-top: 8px; text-align: right; ">
+                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_category').css('display','none');$('#fade').css('display','none');"/>
+                        <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End form edit country -->
+        <div id="fade" class="black_overlay"></div> 
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>				
