@@ -40,6 +40,7 @@ $rewrite->addRule('^item/new/done$', 'index.php?page=item&action=post_item'); //
 $rewrite->addRule('^item/activate/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');
 $rewrite->addRule('^item/edit/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_edit&id=$1&secret=$2');
 $rewrite->addRule('^item/delete/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
+$rewrite->addRule('^item/resource/delete/([0-9]+)/([0-9]+)/([0-9A-Za-z]+)/?(.*?)/?$', 'index.php?page=item&action=deleteResource&id=$1&item=$2&code=$3&secret=$4');
 $rewrite->addRule('^item/update/stats$', 'index.php?page=item&action=update_cat_stats'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^item/([0-9]+)$', 'index.php?page=item&id=$1');
 $rewrite->addRule('^item/(.*)$', 'index.php?page=item&action=$1'); // juanramon: not used ## it doesn't exist
@@ -62,7 +63,6 @@ $rewrite->addRule('^user/account$', 'index.php?page=user&action=account'); // ju
 $rewrite->addRule('^user/item/delete$', 'index.php?page=user&action=item_delete'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/item/edit$', 'index.php?page=user&action=item_edit'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/item/edit/done$', 'index.php?page=user&action=item_edit_post'); // juanramon: not used ## it doesn't exist
-$rewrite->addRule('^user/resource/delete$', 'index.php?page=user&action=deleteResource'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/forgot/([0-9]+)/(.*)$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
 $rewrite->addRule('^user/change/password$', 'index.php?page=user&action=forgot_change'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/change/password/done$', 'index.php?page=user&action=forgot_change_post'); // juanramon: not used ## it doesn't exist
