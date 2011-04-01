@@ -36,6 +36,10 @@ class Country extends DAO {
 		return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_c_code = '%s'", $this->getTableName(), $code);
 	}
 
+	public function findByName($name) {
+		return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s'", $this->getTableName(), $name);
+	}
+
 	public function listAll($language = "en_US") {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_c_locale_code = \'%s\' ORDER BY s_name ASC', $this->getTableName(), $language);
 	}
