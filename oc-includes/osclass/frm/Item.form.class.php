@@ -333,40 +333,174 @@ class ItemForm extends Form {
             }
         }
         
+        
+        /**
+         * Listener: automatically add new file field when the visible ones are full.
+         */
+        setInterval("add_file_field()", 250);
+    
+    
+        /**
+         * Validate form
+         */
+         
+        // Validate description without HTML.
+        $.validator.addMethod(
+            "minstriptags", 
+            function(value, element) { 
+                altered_input = strip_tags(value);
+                if (altered_input.length < 30) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }, 
+            "<?php _e("Description: needs to be longer."); ?>"
+        );
+        
+        // Validate fields in each locale.
+        $(".add_item form button").click(function() {
+            // Title
+            $(".add_item .title input").each(function(){
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 9,
+                    maxlength: 80,
+                    messages: {
+                        required: "<?php _e("Title: this field is required."); ?>",
+                        minlength: "<?php _e("Title: enter at least 9 characters."); ?>",
+                        maxlength: "<?php _e("Title: no more than 80 characters."); ?>"
+                    }
+                });                   
+            });
+            // Description
+            $(".add_item .description textarea").each(function(){
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 30,
+                    maxlength: 5000,
+                    'minstriptags': true,
+                    messages: {
+                        required: "<?php _e("Description: this field is required."); ?>",
+                        minlength: "<?php _e("Description: needs to be longer."); ?>",
+                        maxlength: "<?php _e("Description: no more than 5000 characters."); ?>"
+                    }
+                });                   
+            });
+        });
+        
+        // Code for form validation
+        $(".add_item form").validate({
+            rules: {
+                catId: {
+                    required: true,
+                    digits: true
+                },
+                price: {
+                    number: true,
+                    maxlength: 9
+                },
+                currency: "required",
+                "photos[]": {
+                    accept: "jpg,png,gif",
+                },
+                contactName: {
+                    minlength: 3,
+                    maxlength: 35
+                },
+                contactEmail: {
+                    required: true,
+                    email: true
+                },
+                regionId: {
+                    required: true,
+                    digits: true
+                },
+                cityId: {
+                    required: true,
+                    digits: true
+                },
+                cityArea: {
+                    minlength: 3,
+                    maxlength: 35
+                },
+                address: {
+                    minlength: 5,
+                    maxlength: 50
+                }
+            },
+            messages: {
+                catId: "<?php _e("Category: make your selection."); ?>",
+                price: {
+                    number: "<?php _e("Price: enter a valid number."); ?>",
+                    maxlength: "<?php _e("Price: no more than 10 characters."); ?>"
+                },
+                currency: "<?php _e("Currency: make your selection."); ?>",
+                "photos[]": {
+                    accept: "<?php _e("Photo: must be jpg, png, or gif."); ?>",
+                },
+                contactName: {
+                    minlength: "<?php _e("Name: enter at least 3 characters."); ?>",
+                    maxlength: "<?php _e("Name: no more than 35 characters."); ?>"
+                },
+                contactEmail: {
+                    required: "<?php _e("Email: this field is required."); ?>",
+                    email: "<?php _e("Email: enter a valid address."); ?>"
+                },
+                regionId: "<?php _e("Province: make your selection."); ?>",
+                cityId: "<?php _e("City: make your selection."); ?>",
+                cityArea: {
+                    minlength: "<?php _e("Municipality: enter at least 3 characters."); ?>",
+                    maxlength: "<?php _e("Municipality: no more than 35 characters."); ?>"
+                },
+                address: {
+                    minlength: "<?php _e("Address: enter at least 5 characters."); ?>",
+                    maxlength: "<?php _e("Address: no more than 50 characters."); ?>"
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
     });
-
-    function checkForm() {
-        if(document.getElementById('regionId').value == "") {
-            alert("<?php  _e('You have to select a region');?>");
-            return false;
+    
+    
+    /**
+     * Timed: if there are no empty file fields, add new file field.
+     */
+    function add_file_field() {
+        var count = 0;
+        $(".add_item form input[type='file']").each(function(index) {
+            if ( $(this).val() == '' ) {
+                count++;
+            }
+        });
+        if (count == 0) {
+            addNewPhoto();
         }
-
-        if(document.getElementById('cityId').value == "") {
-            alert("<?php  _e('You have to select a city');?>");
-            return false;
-        }
-
-        if(document.getElementById('city').value == "") {
-            alert("<?php  _e('You have to enter a city');?>");
-            return false;
-        }
-
-        if(typeof(document.getElementById('contactName'))!='undefined') {
-            if(document.getElementById('contactName').value == "") {
-                alert("<?php  _e('You have to enter a name');?>");
-                return false;
+    }
+    
+    
+    /**
+     * Strip HTML tags to count number of visible characters.
+     */
+    function strip_tags(html) {
+        if (arguments.length < 3) {
+            html=html.replace(/<\/?(?!\!)[^>]*>/gi, '');
+        } else {
+            var allowed = arguments[1];
+            var specified = eval("["+arguments[2]+"]");
+            if (allowed){
+                var regex='</?(?!(' + specified.join('|') + '))\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
+            } else{
+                var regex='</?(' + specified.join('|') + ')\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
             }
         }
-        
-        if(typeof(document.getElementById('contactEmail'))!='undefined') {
-            if(document.getElementById('contactEmail').value == "") {
-                alert("<?php  _e('You have to enter an e-mail');?>");
-                return false;
-            }
-        }
-        
-
-        return true;
+        return html;
     }
 </script>
 <?php

@@ -23,13 +23,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        
+        <!-- Javascript: only item-post.php -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <?php ItemForm::location_javascript(); ?>
+        <?php ItemForm::photos_javascript(); ?>
     </head>
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <?php ItemForm::location_javascript(); ?>
             <div class="content add_item">
                 <h1><strong><?php _e('Update your item', 'modern'); ?></strong></h1>
+                <ul id="error_list"></ul>
                     <form action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <input type="hidden" name="action" value="item_edit_post" />
@@ -54,12 +59,11 @@
                             </div>
 
                             <div class="box photos">
-                                <?php ItemForm::photos_javascript(); ?>
                                 <h2><?php _e('Photos', 'modern'); ?></h2>
                                 <?php ItemForm::photos(); ?>
                                 <div id="photos">
                                     <div class="row">
-                                        <input type="file" name="photos[]" /> (<?php _e('optional', 'modern'); ?>)
+                                        <input type="file" name="photos[]" />
                                     </div>
                                 </div>
                                 <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>

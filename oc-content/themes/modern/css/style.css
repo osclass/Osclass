@@ -325,7 +325,9 @@ option.pad { margin-left:10px;}
 .add_item .photos input { margin-right:10px; }
 .add_item .location label { float:left; margin-right:10px; width:90px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
-
+.add_item #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
+.add_item #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
+.add_item #error_list label { float:none; width:auto; line-height:1.35em; }
 
 /*
 Uniform Theme: Uniform Default
