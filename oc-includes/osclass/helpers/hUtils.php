@@ -90,11 +90,11 @@
     {
         if($options == null) {
             $options = array();
-            $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url()) ;
-            $options[] = array('name' => __('Manage your items'), 'url' => osc_user_list_items_url()) ;
-            $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url()) ;
-            $options[] = array('name' => __('My account'), 'url' => osc_user_profile_url()) ;
-            $options[] = array('name' => __('Logout'), 'url' => osc_user_logout_url()) ;
+            $options[] = array('name' => __('Dashboard'), 'url' => osc_user_dashboard_url(), 'class' => 'opt_dashboard') ;
+            $options[] = array('name' => __('Manage your items'), 'url' => osc_user_list_items_url(), 'class' => 'opt_items') ;
+            $options[] = array('name' => __('Manage your alerts'), 'url' => osc_user_alerts_url(), 'class' => 'opt_alerts') ;
+            $options[] = array('name' => __('My account'), 'url' => osc_user_profile_url(), 'class' => 'opt_account') ;
+            $options[] = array('name' => __('Logout'), 'url' => osc_user_logout_url(), 'class' => 'opt_logout') ;
         }
 
         echo '<script type="text/javascript">' ;
@@ -105,7 +105,7 @@
 
             $var_l = count($options) ;
             for($var_o = 0 ; $var_o < $var_l ; $var_o++) {
-                echo '<li><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
+                echo '<li class="' . $options[$var_o]['class'] . '" ><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
             }
 
             osc_run_hook('user_menu') ;
