@@ -44,7 +44,7 @@
                         <div class="box general_info">
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
-                                <label for="catId"><?php _e('Category', 'modern'); ?></label>
+                                <label for="catId"><?php _e('Category', 'modern'); ?> *</label>
                                 <?php ItemForm::category_select(); ?>
                             </div>
                             <div class="box">
@@ -71,15 +71,15 @@
                         <div class="box location">
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
-                                <label for="countryId"><?php _e('Country', 'modern'); ?></label>
+                                <label for="countryId"><?php _e('Country', 'modern'); ?> *</label>
                                 <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="regionId"><?php _e('Region', 'modern'); ?></label>
+                                <label for="regionId"><?php _e('Region', 'modern'); ?> *</label>
                                 <?php ItemForm::region_select(osc_get_regions(), osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="city"><?php _e('City', 'modern'); ?></label>
+                                <label for="city"><?php _e('City', 'modern'); ?> *</label>
                                 <?php ItemForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </div>
                             <div class="row">
@@ -100,7 +100,7 @@
                                 <?php ItemForm::contact_name_text() ; ?>
                             </div>
                             <div class="row">
-                                <label for="contactEmail"><?php _e('E-mail', 'modern'); ?></label>
+                                <label for="contactEmail"><?php _e('E-mail', 'modern'); ?> *</label>
                                 <?php ItemForm::contact_email_text() ; ?>
                             </div>
                             <div class="row">

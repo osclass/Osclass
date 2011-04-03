@@ -26,32 +26,40 @@ class ItemForm extends Form {
     
     static public function category_select($categories = null, $item = null, $default_item = null)
     {
+        // Did user select a specific category to post in?
+        $catId = Params::getParam('catId');
+        
         if($categories==null) { $categories = osc_get_categories(); };
         if($item==null) { $item = osc_item(); };
-        echo '<select name="catId" id="catId">' ;
-            if(isset($default_item)) {
-                echo '<option value="">' . $default_item . '</option>' ;
+        echo '<select name="catId" id="catId">' ;           
+        if(isset($default_item)) {
+            echo '<option value="">' . $default_item . '</option>' ;
+        }
+        foreach($categories as $c) {
+            echo '<option value="' . $c['pk_i_id'] . '"' . ( ((isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id'])) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+            if(isset($c['categories']) && is_array($c['categories'])) {
+                ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
             }
-            foreach($categories as $c) {
-                echo '<option value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
-                if(isset($c['categories']) && is_array($c['categories'])) {
-                    ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
-                }
-            }
+        }
         echo '</select>' ;
         return true ;
     }
     
     static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
     {
-        $deep_string = "0";
-        if( $deep > 0 ){
-            $deep_string = (string) 15*$deep;
+        // Did user select a specific category to post in?
+        $catId = Params::getParam('catId');
+        
+        // How many indents to add?
+        $deep_string = '';
+        if( $deep > 0 ) {
+            for ($i = 0; $i < $deep; $i++) {
+                $deep_string .= '--';
+            }
         }
 
-        $deep++;
         foreach($categories as $c) {
-            echo '<option style="padding-left: '.$deep_string.'px;" value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' .$c['s_name'] . '</option>' ;
+            echo '<option value="' . $c['pk_i_id'] . '"' . ( ((isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']))? 'selected="selected"' : '' ) . '>' . $deep_string . " " . $c['s_name'] . '</option>' ;
             if(isset($c['categories']) && is_array($c['categories'])) {
                 ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
             }
@@ -94,11 +102,11 @@ class ItemForm extends Form {
             if($num_locales>1) { echo '<div class="tabbertab">'; };
             if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
             echo '<div class="title">';
-            echo '<div><label for="title">' . __('Title') . '</label></div>';
+            echo '<div><label for="title">' . __('Title') . ' *</label></div>';
             self::title_input('title', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' );
             echo '</div>';
             echo '<div class="description">';
-            echo '<div><label for="description">' . __('Description') . '</label></div>';
+            echo '<div><label for="description">' . __('Description') . ' *</label></div>';
             self::description_textarea('description', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '');
             echo '</div>';
             if($num_locales>1) { echo '</div>'; };

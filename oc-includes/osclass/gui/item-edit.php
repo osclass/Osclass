@@ -45,7 +45,7 @@
                             <div class="box general_info">
                                 <h2><?php _e('General Information', 'modern'); ?></h2>
                                 <div class="row">
-                                    <label><?php _e('Category', 'modern'); ?></label>
+                                    <label><?php _e('Category', 'modern'); ?> *</label>
                                     <?php ItemForm::category_select(); ?>
                                 </div>
                                 <div class="row">
@@ -74,15 +74,15 @@
                             <div class="box location">
                                 <h2><?php _e('Location', 'modern'); ?></h2>
                                 <div class="row">
-                                    <label><?php _e('Country', 'modern'); ?></label>
+                                    <label><?php _e('Country', 'modern'); ?> *</label>
                                     <?php ItemForm::country_select() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('Region', 'modern'); ?></label>
+                                    <label><?php _e('Region', 'modern'); ?> *</label>
                                     <?php ItemForm::region_select() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('City', 'modern'); ?></label>
+                                    <label><?php _e('City', 'modern'); ?> *</label>
                                     <?php ItemForm::city_select() ; ?>
                                 </div>
                                 <div class="row">
