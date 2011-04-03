@@ -26,12 +26,12 @@ option.pad { margin-left:10px;}
 #header #logo { color:#000; font:30px Georgia, Times, 'Times New Roman', serif; text-decoration:none; }
 #header #logo strong { font-weight:normal; }
 #header #user_menu { display:inline; font-size:11px; position:absolute; right:10px; top:0; }
-#header #user_menu li { border-right:2px solid #e8e8e8; color:#999; display:inline; padding:1px 7px 3px; position:relative; }
+#header #user_menu li { border-right:2px solid #e8e8e8; color:#999; display:inline-block; padding:0 7px; position:relative; }
 #header #user_menu li.last { border:none; padding-right:0; }
 #header #user_menu li ul { background:#FFF; border:1px solid #333; display:none; left:7px; position:absolute; top:16px; -moz-border-radius:5px; border-radius:5px; }
 #header #user_menu li ul li { border-top:1px dotted #DDD; border-right:none; display:block; padding:7px 12px; width:100px; position:static; }
 #header #user_menu li ul li.first { border:none; }
-#header #user_menu li.with_sub strong { background:url(../images/language_arrow.gif) no-repeat right center; color:#069; font-weight:normal; padding-right:10px !important; text-decoration: underline; }
+#header #user_menu li.with_sub strong { background:url(../images/language_arrow.gif) no-repeat right center; color:#069; font-weight:normal; padding-right:10px !important; text-decoration: underline; cursor:pointer; }
 #header #user_menu li form { background:#FFF; border:1px solid #333; display:none; left:7px; padding:13px; position:absolute; top:16px; z-index:9999; -moz-border-radius:5px; border-radius:5px; }
 #header #user_menu li form label { color:#000; display:inline; font-weight:bold; margin-bottom:3px; }
 #header #user_menu li form input { border: 1px solid #BBB; display:inline; margin-bottom:10px; padding:3px; }
