@@ -367,31 +367,33 @@ class ItemForm extends Form {
         );
         
         // Validate fields in each locale.
-        $(".add_item form button").click(function() {
+        $(".add_item form button").click(function() {          
             // Title
             $(".add_item .title input").each(function(){
+                str = $(this).attr('name').replace(/^title\[(.+)_(.+)\]$/,'$2');
                 $(this).rules("add", {
                     required: true,
                     minlength: 9,
                     maxlength: 80,
                     messages: {
-                        required: "<?php _e("Title: this field is required."); ?>",
-                        minlength: "<?php _e("Title: enter at least 9 characters."); ?>",
-                        maxlength: "<?php _e("Title: no more than 80 characters."); ?>"
+                        required: "<?php _e("Title: this field is required."); ?> (" +  str + ")",
+                        minlength: "<?php _e("Title: enter at least 9 characters."); ?> (" +  str + ")",
+                        maxlength: "<?php _e("Title: no more than 80 characters."); ?> (" +  str + ")"
                     }
                 });                   
             });
             // Description
             $(".add_item .description textarea").each(function(){
+                str = $(this).attr('name').replace(/^description\[(.+)_(.+)\]$/,'$2');
                 $(this).rules("add", {
                     required: true,
                     minlength: 30,
                     maxlength: 5000,
                     'minstriptags': true,
                     messages: {
-                        required: "<?php _e("Description: this field is required."); ?>",
-                        minlength: "<?php _e("Description: needs to be longer."); ?>",
-                        maxlength: "<?php _e("Description: no more than 5000 characters."); ?>"
+                        required: "<?php _e("Description: this field is required."); ?> (" +  str + ")",
+                        minlength: "<?php _e("Description: needs to be longer."); ?> (" +  str + ")",
+                        maxlength: "<?php _e("Description: no more than 5000 characters."); ?> (" +  str + ")"
                     }
                 });                   
             });
