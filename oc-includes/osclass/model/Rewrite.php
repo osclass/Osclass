@@ -123,8 +123,6 @@ class Rewrite extends DAO
                 $length = count($matches[1]);
                 for($var_k = 0;$var_k<$length;$var_k++) {
                     Params::setParam($matches[1][$var_k], $matches[2][$var_k]);
-                    //$_GET[$matches[1][$var_k]] = $matches[2][$var_k];
-                    //$_REQUEST[$matches[1][$var_k]] = $matches[2][$var_k];
                 }
             }
         }

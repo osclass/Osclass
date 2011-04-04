@@ -58,7 +58,7 @@ function get_requirements( ) {
         'GD extension for PHP' => extension_loaded('gd'),
         'Folder <code>oc-content/uploads</code> exists' => file_exists( ABS_PATH . 'oc-content/uploads/' ),
         'Folder <code>oc-content/uploads</code> is writable' => is_writable( ABS_PATH . 'oc-content/uploads/' ),
-        'Folder <code>oc-includes/translations</code> exists' => file_exists( ABS_PATH . 'oc-includes/translations/' )
+        'Folder <code>oc-content/languages</code> exists' => file_exists( ABS_PATH . 'oc-content/languages/' )
     );
 
     $config_writable = false;
@@ -157,7 +157,6 @@ function oc_install( ) {
 
     require_once ABS_PATH . 'config.php';
 
-
     $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
     $conn->osc_dbImportSQL($sql);
     $error_num = $conn->get_errno();
@@ -200,7 +199,7 @@ function oc_install( ) {
         else $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
     }
 
-    $conn->osc_dbImportSQL($sql, ')');
+    $conn->osc_dbImportSQL($sql, '');
     $error_num = $conn->get_errno();
     if($error_num > 0) {
         if ( $error_num == 1471 ) {
@@ -498,7 +497,7 @@ function display_target() {
                     <label for="worlwide">Worldwide</label>
                 </div>
                 <div id="d_country" class="box">
-                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this);"/>
+                    <input type="text" id="t_country" class="left" name="t_country" size="1" onkeydown="more_size(this, event);"/>
                     <div class="clear"></div>
                 </div>
                 <div id="a_country">

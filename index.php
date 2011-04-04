@@ -51,11 +51,6 @@
                             $do = new CWebPage() ;
                             $do->doModel() ;
         break;
-        case ('contact'):   //contact
-                            require_once(osc_base_path() . 'contact.php') ;
-                            $do = new CWebContact() ;
-                            $do->doModel() ;
-        break;
         case ('register'):  // register page
                             require_once(osc_base_path() . 'register.php') ;
                             $do = new CWebRegister() ;

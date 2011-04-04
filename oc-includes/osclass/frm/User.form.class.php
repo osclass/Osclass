@@ -141,7 +141,7 @@ class UserForm extends Form {
             return true ;
         } else if ( count($regions) == 1 ) {
             parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-            echo '</span>' .$regions[0]['s_name'] . '</span>';
+            echo '<span>' .$regions[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
@@ -159,6 +159,7 @@ class UserForm extends Form {
             return true ;
         } else if ( count($cities) == 1 ) {
             parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+            echo '<span>' .$cities[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;

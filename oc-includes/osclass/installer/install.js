@@ -322,8 +322,12 @@ function no_internet() {
     $('#skip-location-h').attr('value','1');
 }
 
-function more_size(input) {
-    input.setAttribute("size", (parseInt(input.getAttribute('size')) + 1) );
+function more_size(input, event) {
+    if(event.keyCode==8) {
+        input.setAttribute("size", (parseInt(input.getAttribute('size')) - 1) );
+    } else {
+        input.setAttribute("size", (parseInt(input.getAttribute('size')) + 1) );
+    }
 }
 
 function change_to_international(input) {

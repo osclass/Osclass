@@ -56,8 +56,7 @@ Class ItemActions
         if(!preg_match("/([a-z][^a-z]*){2}/i",$contactName)) {
             $contactName = __("Anonymous");
         }
-
-        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
             $this->manager->insert(array(
                 'fk_i_user_id'          => $aItem['userId'],
                 'dt_pub_date'           => DB_FUNC_NOW,
@@ -141,7 +140,7 @@ Class ItemActions
         $contactEmail   = "valid@mail.com" ;
         // Validate
         
-        if( $this->validate( reset($aItem['title']), reset($aItem['description']), $contactEmail, $aItem['catId'], $aItem['photos']) ) {
+        if( $this->validate( $aItem['title'], $aItem['description'], $contactEmail, $aItem['catId'], $aItem['photos']) ) {
         
             $location = array(
                 'fk_c_country_code' => $aItem['countryId'],
@@ -167,7 +166,7 @@ Class ItemActions
 
             $result = $this->manager->update (
                                     array(
-                                        'dt_pub_date'           => DB_FUNC_NOW
+                                        'dt_mod_date'           => DB_FUNC_NOW
                                         ,'fk_i_category_id'     => $aItem['catId']
                                         ,'f_price'              => $aItem['price']
                                         ,'fk_c_currency_code'   => $aItem['currency']
@@ -198,11 +197,13 @@ Class ItemActions
      */
     public function activate( $id, $secret )
     {
-        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' AND i.fk_i_user_id IS NULL ", $secret, $id);
+        $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
+
         $result = $this->manager->update(
             array('e_status' => 'ACTIVE'),
-            array('s_secret' => $secret)
+            array('s_secret' => $secret, 'pk_i_id' => $id)
         );
+        
         osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
         CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
 
@@ -218,8 +219,11 @@ Class ItemActions
     {
         $item = $this->manager->findByPrimaryKey($itemId);
         $this->deleteResourcesFromHD($itemId);
-        $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
-        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        $result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
+        if($item['e_status']=='ACTIVE') {
+            CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        }
+        return $result;
     }
 
     /**
@@ -290,7 +294,7 @@ Class ItemActions
                 ,'{USER_EMAIL}'
                 ,'{FRIEND_EMAIL}'
                 ,'{WEB_URL}'
-                ,'{ITEM_NAME}'
+                ,'{ITEM_TITLE}'
                 ,'{COMMENT}'
                 ,'{ITEM_URL}'
                 ,'{WEB_TITLE}'
@@ -360,7 +364,7 @@ Class ItemActions
 
         $words   = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                         '{WEB_URL}', '{ITEM_NAME}','{ITEM_URL}', '{COMMENT}');
+                         '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
 
         $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
                          $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url(), $message );
@@ -395,9 +399,9 @@ Class ItemActions
             $tmpName = $attachment['tmp_name'] ;
             $resourceType = $attachment['type'] ;
 
-            $path = osc_base_path() . 'oc-content/uploads/' . time() . '_' . $resourceName ;
+            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
-            if(!is_writable(osc_base_path() . 'oc-content/uploads/')) {
+            if(!is_writable(osc_content_path() . 'uploads/')) {
                 osc_add_flash_message( _m('There has been some errors sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
@@ -504,7 +508,7 @@ Class ItemActions
 
                 $words   = array();
                 $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
-                                 '{COMMENT_TEXT}', '{ITEM_NAME}', '{ITEM_ID}', '{ITEM_URL}');
+                                 '{COMMENT_TEXT}', '{ITEM_TITLE}', '{ITEM_ID}', '{ITEM_URL}');
                 $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
                 $title_email = osc_mailBeauty($content['s_title'], $words);
                 $body_email = osc_mailBeauty($content['s_text'], $words);
@@ -544,15 +548,49 @@ Class ItemActions
      */
     private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
     {
-        $success = true;
-        if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
-            !preg_match("/([a-z][^a-z]*){8}/i", $description ) ||
-            !preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)  ||
-            !preg_match("/^[0-9]+$/", $idCat )) {
-            osc_add_flash_message( _m('Some fields were too short. Try again!') );
+        $success      = true;
+        $flash_error  = array();
+		$contactEmail = strip_tags(trim($contactEmail));
+
+		// Validate input
+		$title_success = false;
+		foreach($title as $key=>$value) {
+            if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
+                $title_success = true;
+                break;
+            }
+        }
+        if(!$title_success) {
+            $flash_error[] = _m("Title too short");
+            $success = false;
+		}
+		$description_success = false;
+		foreach($description as $key=>$value) {
+            if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+                $description_success = true;
+                break;
+            }
+        }
+        if(!$description_success) {
+            $flash_error[] = _m("Description too short");
+            $success = false;
+		}
+
+        if(!preg_match("/^[0-9]+$/", $idCat)) {
+            $flash_error[] = _m("Invalid category");
             $success = false;
         }
-        
+
+        if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
+            $flash_error[] = _m("Invalid email address");
+            $success = false;
+        }
+
+		// Handle error
+        if (count($flash_error)>0) {
+            osc_add_flash_message( implode('<br />', $flash_error) );
+            $success = false;
+        }
         if ( !$this->checkAllowedExt($aPhotos) ) {
             $success = false;
         }
@@ -646,17 +684,11 @@ Class ItemActions
                 }
             }
             
-            $show_email = 0;
             $active = 'INACTIVE';
             if( !osc_item_validation_enabled() ){
                 $active = 'ACTIVE';
             }
-            if( Params::getParam('showEmail') != '' ){
-                $show_email = (int) Params::getParam('showEmail');
-            }
-            
             $aItem['active'] = $active;
-            $aItem['show_email'] = $show_email;
 
             if ($userId != null) {
                 if( $this->is_admin ) {
@@ -677,7 +709,7 @@ Class ItemActions
             $aItem['active']        = $active;
             $aItem['userId']        = $userId;
 
-        }else{          // EDIT
+        } else {          // EDIT
             $aItem['secret']    = Params::getParam('secret');
             $aItem['idItem']    = Params::getParam('id');
 
@@ -688,23 +720,24 @@ Class ItemActions
                 $aItem['contactEmail']  = $data['s_email'];
                 Params::setParam('contactName', $data['s_name']);
                 Params::setParam('contactEmail', $data['s_email']);
-            }else{
+            } else {
                 $aItem['contactName']   = Params::getParam('contactName');
                 $aItem['contactEmail']  = Params::getParam('contactEmail');
             }
         }
+
         // get params
-        $aItem['catId']         = Params::getParam('catId');            // OK
-        $aItem['region']        = Params::getParam('region');           // OK
-        $aItem['city']          = Params::getParam('city');             // OK
-        $aItem['regionId']      = Params::getParam('regionId');         // OK
-        $aItem['cityId']        = Params::getParam('cityId');           // OK
-        $aItem['price']         = Params::getParam('price');            // OK
-        $aItem['countryId']     = Params::getParam('countryId');        // OK
-        $aItem['cityArea']      = Params::getParam('cityArea');         // OK
-        $aItem['address']       = Params::getParam('address');          // OK
-        $aItem['currency']      = Params::getParam('currency');         // OK
-        $aItem['showEmail']     = Params::getParam('showEmail');        // OK
+        $aItem['catId']         = Params::getParam('catId');
+        $aItem['region']        = Params::getParam('region');
+        $aItem['city']          = Params::getParam('city');
+        $aItem['regionId']      = Params::getParam('regionId');
+        $aItem['cityId']        = Params::getParam('cityId');
+        $aItem['price']         = Params::getParam('price');
+        $aItem['countryId']     = Params::getParam('countryId');
+        $aItem['cityArea']      = Params::getParam('cityArea');
+        $aItem['address']       = Params::getParam('address');
+        $aItem['currency']      = Params::getParam('currency');
+        $aItem['showEmail']     = (Params::getParam('showEmail') != '') ? 1 : 0;
         $aItem['title']         = Params::getParam('title');
         $aItem['description']   = Params::getParam('description');
         $aItem['photos']        = Params::getFiles('photos');
@@ -816,27 +849,41 @@ Class ItemActions
     private function checkAllowedExt($aResources)
     {
         $success = true;
-
+        require LIB_PATH . 'osclass/classes/mimes.php';
         if($aResources != '') {
             // get allowedExt
+            $aMimesAllowed = array();
             $aExt = explode(',', osc_allowed_extension() );
+            foreach($aExt as $ext){
+                $mime = $mimes[$ext];
+                if( is_array($mime) ){
+                    foreach($mime as $aux){
+                        if( !in_array($aux, $aMimesAllowed) ) {
+                            array_push($aMimesAllowed, $aux );
+                        }
+                    }
+                } else {
+                    if( !in_array($mime, $aMimesAllowed) ) {
+                        array_push($aMimesAllowed, $mime );
+                    }
+                }
+            }
+
             foreach ($aResources['error'] as $key => $error) {
                 $bool_img = false;
                 if ($error == UPLOAD_ERR_OK) {
                     // check mime file
                     $fileMime = $aResources['type'][$key] ;
-                    preg_match_all('/.*\/(.*)/', $fileMime,$coincidencias);
-                    $fileExt = $coincidencias[1][0];
 
-                    if(in_array($fileExt, $aExt)) {
+                    if(in_array($fileMime,$aMimesAllowed)) {
                         $bool_img = true;
                     }
-
                     if(!$bool_img && $success) {$success = false;}
                 }
             }
+
             if(!$success){
-                osc_add_flash_message( _m("The file you tried to upload, haven't no valid extension")) ;
+                osc_add_flash_message( _m("The file you tried to upload does not have an allowed extension")) ;
             }
         }
         return $success;
@@ -858,17 +905,17 @@ Class ItemActions
                     $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
                     // Create thumbnail
-                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '_thumbnail.png' ;
+                    $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
                     $size = explode('x', osc_thumbnail_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     // Create normal size
-                    $path = osc_base_path() . 'oc-content/uploads/' . $resourceId . '.png' ;
+                    $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
                     $size = explode('x', osc_normal_dimensions()) ;
                     ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                     if( osc_keep_original_image() ) {
-                        $path = osc_base_path() . 'oc-content/uploads/' . $resourceId.'_original.png' ;
+                        $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
                         move_uploaded_file($tmpName, $path) ;
                     }
 
@@ -877,7 +924,7 @@ Class ItemActions
                     $itemResourceManager->update(
                                             array(
                                                 's_path'            => $s_path
-                                                ,'s_name'           => $resourceId
+                                                ,'s_name'           => osc_genRandomPassword()
                                                 ,'s_extension'      => 'png'
                                                 ,'s_content_type'   => $resourceType
                                             )
@@ -894,7 +941,7 @@ Class ItemActions
     
     public function recaptcha()
     {
-        require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+        require_once osc_lib_path() . 'recaptchalib.php';
         if ( Params::getParam("recaptcha_challenge_field") != '') {
             $resp = recaptcha_check_answer (
                 osc_recaptcha_private_key()
@@ -918,6 +965,9 @@ Class ItemActions
         $mPages = new Page();
         $locale = osc_current_user_locale();
         
+        /**
+         * Send email to user requesting item activation
+         */
         if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
             $aPage = $mPages->findByInternalName('email_item_validation') ;
 
@@ -950,18 +1000,18 @@ Class ItemActions
                 $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
             }
 
+            // Format activation URL
+            $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
+            
             $words   = array();
             $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}',
                              '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}',
-                             '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}', '{WEB_TITLE}',
-                             '{VALIDATION_LINK}');
+                             '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
+                             '{VALIDATION_LINK}', '{VALIDATION_URL}');
             $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
                              $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                              $item['s_contact_email'], osc_base_url(), $item['s_title'], $item_url,
-                             osc_page_title(), '<a href="' . osc_base_url(true) .
-                             '?page=item&action=activate&id=' . $item['pk_i_id'] . '&secret=' .
-                             $item['s_secret'] . '" >' . osc_base_url(true) . '?page=item&action=activate&id=' .
-                             $item['pk_i_id'] . '&secret=' . $item['s_secret'] . '</a>' );
+                             osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -975,6 +1025,9 @@ Class ItemActions
             osc_sendMail($emailParams) ;
         }
 
+        /**
+         * Send email to admin about the new item
+         */
         if (osc_notify_new_item()) {
             $aPage = $mPages->findByInternalName('email_admin_new_item') ;
 
@@ -1007,22 +1060,21 @@ Class ItemActions
                 $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
             }
 
-
+            // Format activation URL
+            $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
+            
+            // Format admin edit URL
+            $admin_edit_url =  osc_item_admin_edit_url( $item['pk_i_id'] );
+                             
             $words   = array();
-            $words[] = array('{EDIT_LINK}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}',
+            $words[] = array('{EDIT_LINK}', '{EDIT_URL}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}',
                              '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
-                             '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_NAME}', '{ITEM_URL}',
-                             '{WEB_TITLE}', '{VALIDATION_LINK}');
-            $words[] = array('<a href="' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
-                             $item['pk_i_id'] . '" >' . osc_admin_base_url(true) . '?page=items&action=item_edit&id=' .
-                             $item['pk_i_id'] . '</a>', $all, $item['s_description'], $item['s_country'],
+                             '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}',
+                             '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}');
+            $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                              $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
-                             $item_url, osc_page_title(), '<a href="' .
-                             osc_base_url() . '?page=item&action=activate&id=' . $item['pk_i_id'] .
-                             '&secret=' . $item['s_secret'] . '" >' . osc_base_url() .
-                             '?page=item&action=activate&id=' . $item['pk_i_id'] . '&secret=' .
-                             $item['s_secret'] . '</a>' );
+                             $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body  = osc_mailBeauty($content['s_text'], $words);
 

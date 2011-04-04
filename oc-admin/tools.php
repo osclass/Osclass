@@ -48,30 +48,30 @@
                 case 'images_post':
                                         $preferences = Preference::newInstance()->toArray() ;
 
-                                        $path = osc_base_path() . 'oc-content/uploads' ;
+                                        $path = osc_content_path() . 'uploads/' ;
                                         $dir = opendir($path) ;
                                         while($file = readdir($dir)) {
 
                                             if(preg_match('|([0-9]+)_thumbnail\.png|i', $file, $matches)) {
 
                                                 $orig_file = str_replace('_thumbnail.', '_original.', $file) ;
-                                                $tmpName = osc_base_path() . 'oc-content/uploads/' . $orig_file ;
+                                                $tmpName = osc_content_path() . 'uploads/' . $orig_file ;
                                                 if(!file_exists($orig_file)) {
                                                     copy(str_replace('_original.', '.', $tmpName), $tmpName) ;
                                                 }
 
                                                 // Create thumbnail
-                                                $thumbnailPath = osc_base_path() . 'oc-content/uploads/' . $file ;
+                                                $thumbnailPath = osc_content_path() . 'uploads/' . $file ;
                                                 $size = explode('x', osc_thumbnail_dimensions()) ;
                                                 ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
                                                 // Create preview
-                                                $thumbnailPath = osc_base_path() . 'oc-content/uploads/'.str_replace('_thumbnail.', '_preview.', $file) ;
+                                                $thumbnailPath = osc_content_path() . 'uploads/'.str_replace('_thumbnail.', '_preview.', $file) ;
                                                 $size = explode('x', osc_preview_dimensions()) ;
                                                 ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
                                                 // Create normal size
-                                                $thumbnailPath = osc_base_path() . 'oc-content/uploads/'.str_replace('_thumbnail.', '.', $file) ;
+                                                $thumbnailPath = osc_content_path() . 'uploads/'.str_replace('_thumbnail.', '.', $file) ;
                                                 $size = explode('x', osc_normal_dimensions()) ;
                                                 ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
 
@@ -132,7 +132,7 @@
                                         }
                                         $archive_folder = osc_base_path() ;
 
-                                        if ( osc_zipFolder($archive_folder, $archive_name) ) {
+                                        if ( osc_zip_folder($archive_folder, $archive_name) ) {
                                             $msg = _m('Archiving successful!') ;
                                         }else{
                                             $msg = _m('Error, the zip file was not created at the specified directory') ;

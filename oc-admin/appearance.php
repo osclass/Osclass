@@ -35,7 +35,7 @@
                     $filePackage = Params::getFiles('package');
                     $path = osc_themes_path() ;
 
-                    (int) $status = unzip_file($filePackage['tmp_name'], $path);
+                    (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
 
                     switch ($status) {
                         case(0):   $msg = _m('The theme folder is not writable');
@@ -84,6 +84,7 @@
                     Widget::newInstance()->delete(
                         array('pk_i_id' => Params::getParam('id') )
                     );
+                    osc_add_flash_message( _m('Widget removed correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
                 case 'add_widget_post':
@@ -95,6 +96,7 @@
                             ,'s_content' => Params::getParam('content')
                         )
                     );
+                    osc_add_flash_message( _m('Widget added correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
                 case 'activate':
@@ -102,6 +104,7 @@
                             array('s_value' => Params::getParam('theme') )
                             ,array('s_section' => 'osclass', 's_name' => 'theme')
                     );
+                    osc_add_flash_message( _m('Theme activated correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 default:

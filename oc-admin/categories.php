@@ -45,8 +45,8 @@
                     try {
                         // fields contain data of t_category
                         $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
-                        $fields['i_expiration_days'] = Params::getParam("i_expiration_days");
-                        $fields['i_position'] = Params::getParam("i_position");
+                        $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                        $fields['i_position'] = (Params::getParam("i_position") != '') ? Params::getParam("i_position") : 0;
                         $fields['b_enabled'] = (Params::getParam("b_enabled")!='' ) ? 1 : 0;
 
                         $postParams = Params::getParamsAsArray();
@@ -59,7 +59,7 @@
 
                         osc_add_flash_message( _m('The category has been added'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_message( _m('The category could\'t be added') . $e->getMessage(), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -73,8 +73,8 @@
                     $id = Params::getParam("id");
 
                     $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
-                    $fields['i_expiration_days'] = Params::getParam("i_expiration_days");
-                    $fields['i_position'] = Params::getParam("i_position");
+                    $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['i_position'] = (Params::getParam("i_position") != '') ? Params::getParam("i_position") : 0;
                     $fields['b_enabled'] = (Params::getParam("b_enabled")!='' ) ? 1 : 0;
 
                     $postParams = Params::getParamsAsArray();
@@ -114,11 +114,11 @@
 
                 case 'enable':
                     $id = Params::getParam("id");
-                    $enabled = Params::getParam("enabled");
+                    $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
                     try {
                         if ($id!='') {
                             $this->categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
-                            if ($enabled!='') {
+                            if ($enabled==1) {
                                 $msg = _m('The category has been enabled') ;
                             } else {
                                 $msg = _m('The category has been disabled') ;

@@ -31,12 +31,12 @@
                 break;
                 
                 case 'regions': //Return regions given a countryId
-                    $regions = Region::newInstance()->listWhere("fk_c_country_code = '%s'", Params::getParam("countryId"));
+                    $regions = Region::newInstance()->getByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
                     break;
                 
                 case 'cities': //Returns cities given a regionId
-                    $cities = City::newInstance()->listWhere("fk_i_region_id = %d", Params::getParam("regionId"));
+                    $cities = City::newInstance()->getByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
                     break;
                 
@@ -69,6 +69,12 @@
                             } else {
                                 osc_run_hook("item_form");
                             }
+                            break;
+                            
+                        case 'item_edit':
+                            $catId = Params::getParam("catId");
+                            $itemId = Params::getParam("itemId");
+                            osc_run_hook("item_edit", $catId, $itemId);
                             break;
                             
                         default:

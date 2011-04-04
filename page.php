@@ -36,12 +36,16 @@
             if(empty($page) || $page['b_indelible'] == 1 ) {
                 $this->do404() ;
             } else {
-                if(file_exists(osc_base_path() . 'oc-content/themes/' . osc_theme() . '/' . $page['s_internal_name'].".php")) {
+                if(file_exists(osc_themes_path() . osc_theme() . '/' . $page['s_internal_name'].".php")) {
                     $this->doView($page['s_internal_name'].".php");
-                } else if(file_exists(osc_base_path() . 'oc-content/themes/' . osc_theme() . '/pages/' . $page['s_internal_name'].".php")) {
+                } else if(file_exists(osc_themes_path() . osc_theme() . '/pages/' . $page['s_internal_name'].".php")) {
                     $this->doView("pages/".$page['s_internal_name'].".php");
                 } else {
                     //calling the view...
+                    if( Params::getParam('lang') != '' ) {
+                        Session::newInstance()->_set('userLocale', Params::getParam('lang'));
+                    };
+
                     $this->_exportVariableToView('page', $page) ;
                     $this->doView('page.php') ;
                 }

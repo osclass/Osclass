@@ -38,6 +38,12 @@ class Params
 
         return ($value);
     }
+    
+    static function existParam($param) {
+        if ($param == "") return false ;
+        if (!isset($_REQUEST[$param])) return false ;
+        return true;
+    }
 
     static function getFiles($param)
     {
@@ -66,6 +72,8 @@ class Params
     static function setParam($key, $value)
     {
         $_REQUEST[$key] = $value;
+        $_GET[$key] = $value;
+        $_POST[$key] = $value;
     }
 
     static function _view() {

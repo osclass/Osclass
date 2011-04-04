@@ -50,6 +50,7 @@
                         <input type="hidden" name="action" value="recover_post" />
                         <fieldset>
                             <label for="email"><?php _e('E-mail', 'modern') ; ?></label> <?php UserForm::email_text() ; ?><br />
+                            <?php osc_show_recaptcha('recover_password'); ?>
                             <button type="submit"><?php _e('Send me a new password', 'modern') ; ?></button>
                         </fieldset>
                     </form>

@@ -26,32 +26,40 @@ class ItemForm extends Form {
     
     static public function category_select($categories = null, $item = null, $default_item = null)
     {
+        // Did user select a specific category to post in?
+        $catId = Params::getParam('catId');
+        
         if($categories==null) { $categories = osc_get_categories(); };
         if($item==null) { $item = osc_item(); };
-        echo '<select name="catId" id="catId">' ;
-            if(isset($default_item)) {
-                echo '<option value="">' . $default_item . '</option>' ;
+        echo '<select name="catId" id="catId">' ;           
+        if(isset($default_item)) {
+            echo '<option value="">' . $default_item . '</option>' ;
+        }
+        foreach($categories as $c) {
+            $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
+            echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? : 'selected="selected"' ). '>' . $c['s_name'] . '</option>' ;
+            if(isset($c['categories']) && is_array($c['categories'])) {
+                ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
             }
-            foreach($categories as $c) {
-                echo '<option value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
-                if(isset($c['categories']) && is_array($c['categories'])) {
-                    ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
-                }
-            }
+        }
         echo '</select>' ;
         return true ;
     }
     
     static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
     {
-        $deep_string = "0";
-        if( $deep > 0 ){
-            $deep_string = (string) 15*$deep;
+        // Did user select a specific category to post in?
+        $catId = Params::getParam('catId');
+        
+        // How many indents to add?
+        $deep_string = 0;
+        if( $deep > 0 ) {
+            $deep_string = (string) (15 * $deep);
         }
 
-        $deep++;
         foreach($categories as $c) {
-            echo '<option style="padding-left: '.$deep_string.'px;" value="' . $c['pk_i_id'] . '"' . ( (isset($item["fk_i_category_id"]) && $item['fk_i_category_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' .$c['s_name'] . '</option>' ;
+            $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
+            echo '<option style="padding-left: ' . $deep_string . 'px;" value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $c['s_name'] . '</option>' ;
             if(isset($c['categories']) && is_array($c['categories'])) {
                 ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
             }
@@ -94,11 +102,11 @@ class ItemForm extends Form {
             if($num_locales>1) { echo '<div class="tabbertab">'; };
             if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
             echo '<div class="title">';
-            echo '<div><label for="title">' . __('Title') . '</label></div>';
+            echo '<div><label for="title">' . __('Title') . ' *</label></div>';
             self::title_input('title', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' );
             echo '</div>';
             echo '<div class="description">';
-            echo '<div><label for="description">' . __('Description') . '</label></div>';
+            echo '<div><label for="description">' . __('Description') . ' *</label></div>';
             self::description_textarea('description', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '');
             echo '</div>';
             if($num_locales>1) { echo '</div>'; };
@@ -332,41 +340,173 @@ class ItemForm extends Form {
                 $("#regionId").attr('disabled',true);
             }
         }
+
+        // Listener: automatically add new file field when the visible ones are full.
+        setInterval("add_file_field()", 250);
+    
+        /**
+         * Validate form
+         */
+         
+        // Validate description without HTML.
+        $.validator.addMethod(
+            "minstriptags", 
+            function(value, element) { 
+                altered_input = strip_tags(value);
+                if (altered_input.length < 10) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }, 
+            "<?php _e("Description: needs to be longer"); ?>."
+        );
         
+        // Validate fields in each locale.
+        $(".add_item form button").click(function() {          
+            // Title
+            $(".add_item .title input").each(function(){
+                str = $(this).attr('name').replace(/^title\[(.+)_(.+)\]$/,'$2');
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 9,
+                    maxlength: 80,
+                    messages: {
+                        required: "<?php _e("Title: this field is required"); ?>. (" +  str + ")",
+                        minlength: "<?php _e("Title: enter at least 9 characters"); ?>. (" +  str + ")",
+                        maxlength: "<?php _e("Title: no more than 80 characters"); ?>. (" +  str + ")"
+                    }
+                });                   
+            });
+            // Description
+            $(".add_item .description textarea").each(function(){
+                str = $(this).attr('name').replace(/^description\[(.+)_(.+)\]$/,'$2');
+                $(this).rules("add", {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 5000,
+                    'minstriptags': true,
+                    messages: {
+                        required: "<?php _e("Description: this field is required"); ?>. (" +  str + ")",
+                        minlength: "<?php _e("Description: needs to be longer"); ?>. (" +  str + ")",
+                        maxlength: "<?php _e("Description: no more than 5000 characters"); ?>. (" +  str + ")"
+                    }
+                });                   
+            });
+        });
+        
+        // Code for form validation
+        $(".add_item form").validate({
+            rules: {
+                catId: {
+                    required: true,
+                    digits: true
+                },
+                price: {
+                    number: true,
+                    maxlength: 15
+                },
+                currency: "required",
+                "photos[]": {
+                    accept: "<?php echo osc_allowed_extension(); ?>"
+                },
+                contactName: {
+                    minlength: 3,
+                    maxlength: 35
+                },
+                contactEmail: {
+                    required: true,
+                    email: true
+                },
+                regionId: {
+                    required: true,
+                    digits: true
+                },
+                cityId: {
+                    required: true,
+                    digits: true
+                },
+                cityArea: {
+                    minlength: 3,
+                    maxlength: 35
+                },
+                address: {
+                    minlength: 5,
+                    maxlength: 50
+                }
+            },
+            messages: {
+                catId: "<?php _e('Choose one category'); ?>.",
+                price: {
+                    number: "<?php _e('Price: enter a valid number'); ?>.",
+                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                },
+                currency: "<?php _e("Currency: make your selection"); ?>.",
+                "photos[]": {
+                    accept: "<?php printf(__("Photo: must be %s"), osc_allowed_extension()); ?>."
+                },
+                contactName: {
+                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Name: no more than 35 characters"); ?>."
+                },
+                contactEmail: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Email: enter a valid address"); ?>."
+                },
+                regionId: "<?php _e("Province: make your selection"); ?>.",
+                cityId: "<?php _e("City: make your selection"); ?>.",
+                cityArea: {
+                    minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("City area: no more than 35 characters"); ?>."
+                },
+                address: {
+                    minlength: "<?php _e("Address: enter at least 5 characters"); ?>.",
+                    maxlength: "<?php _e("Address: no more than 50 characters"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
     });
-
-    function checkForm() {
-        if(document.getElementById('regionId').value == "") {
-            alert("<?php  _e('You have to select a region');?>");
-            return false;
+    
+    
+    /**
+     * Timed: if there are no empty file fields, add new file field.
+     */
+    function add_file_field() {
+        var count = 0;
+        $(".add_item form input[type='file']").each(function(index) {
+            if ( $(this).val() == '' ) {
+                count++;
+            }
+        });
+        if (count == 0) {
+            addNewPhoto();
         }
-
-        if(document.getElementById('cityId').value == "") {
-            alert("<?php  _e('You have to select a city');?>");
-            return false;
-        }
-
-        if(document.getElementById('city').value == "") {
-            alert("<?php  _e('You have to enter a city');?>");
-            return false;
-        }
-
-        if(typeof(document.getElementById('contactName'))!='undefined') {
-            if(document.getElementById('contactName').value == "") {
-                alert("<?php  _e('You have to enter a name');?>");
-                return false;
+    }
+    
+    
+    /**
+     * Strip HTML tags to count number of visible characters.
+     */
+    function strip_tags(html) {
+        if (arguments.length < 3) {
+            html=html.replace(/<\/?(?!\!)[^>]*>/gi, '');
+        } else {
+            var allowed = arguments[1];
+            var specified = eval("["+arguments[2]+"]");
+            if (allowed){
+                var regex='</?(?!(' + specified.join('|') + '))\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
+            } else{
+                var regex='</?(' + specified.join('|') + ')\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
             }
         }
-        
-        if(typeof(document.getElementById('contactEmail'))!='undefined') {
-            if(document.getElementById('contactEmail').value == "") {
-                alert("<?php  _e('You have to enter an e-mail');?>");
-                return false;
-            }
-        }
-        
-
-        return true;
+        return html;
     }
 </script>
 <?php
@@ -377,7 +517,7 @@ class ItemForm extends Form {
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo $_r['s_path'];?><?php echo $_r['s_name'];?>_original.<?php echo $_r['s_extension']?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_base_url(true); ?>?page=user&action=deleteResource&id=<?php echo $_r['pk_i_id'];?>&fkid=<?php echo $_r['fk_i_item_id'];?>&name=<?php echo $_r['s_name'];?>" class="delete"><?php _e('Delete'); ?></a>
+                    <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete"><?php _e('Delete'); ?></a>
                 </div>						
             <?php }
         }
@@ -420,7 +560,7 @@ class ItemForm extends Form {
 <?php
     }
 
-    static public function plugin_post_item($categories) {
+    static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">
     $("#catId").change(function(){
@@ -432,7 +572,24 @@ class ItemForm extends Form {
             $.ajax({
                 type: "POST",
                 url: url,
-                data: 'page=ajax&action=runhook&hook=item_form&catId=' + cat_id,
+                data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
+                dataType: 'text/html',
+                success: function(data){
+                    $("#plugin-hook").html(data);
+                }
+            });
+        }
+    });
+    $(document).ready(function(){
+        var cat_id = $("#catId").val();
+        var url = '<?php echo osc_base_url(true); ?>';
+        var result = '';
+
+        if(cat_id != '') {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
                 dataType: 'text/html',
                 success: function(data){
                     $("#plugin-hook").html(data);
@@ -442,21 +599,14 @@ class ItemForm extends Form {
     });
 </script>
 <div id="plugin-hook">
-<?php
-    if (Params::getParam('catId')!='') {
-        osc_run_hook('item_form', Params::getParam('catId'));
-    } else {
-        $categories = osc_category();
-        if(is_array($categories)) {
-            osc_run_hook('item_form', $categories['pk_i_id']);
-        } else {
-            osc_run_hook('item_form', $categories);
-        }
-    }
-?>
 </div>
 <?php
     }
+    
+    static public function plugin_edit_item() {
+        ItemForm::plugin_post_item('edit&itemId='.osc_item_id());
+    }
+    
 }
 
 ?>
