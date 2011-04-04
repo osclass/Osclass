@@ -167,6 +167,7 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
+
     if (function_exists('fputs')) {
         // convert variables array to string:
         $data = array();
