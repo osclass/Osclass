@@ -548,15 +548,8 @@ Class ItemActions
      */
     private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
     {
-        $success = true;
-        /*if ( !preg_match("/([a-z][^a-z]*){3}/i", $title ) ||
-            !preg_match("/([a-z][^a-z]*){8}/i", $description ) ||
-            !preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)  ||
-            !preg_match("/^[0-9]+$/", $idCat )) {
-            osc_add_flash_message( _m('Some fields were too short. Try again!') );
-            $success = false;
-        }*/
-        $flash_error = array();
+        $success      = true;
+        $flash_error  = array();
 		$contactEmail = strip_tags(trim($contactEmail));
 
 		// Validate input
@@ -573,7 +566,7 @@ Class ItemActions
 		}
 		$description_success = false;
 		foreach($description as $key=>$value) {
-            if(preg_match("/([\p{L}][^\p{L}]*){25}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+            if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
                 $description_success = true;
                 break;
             }
@@ -584,12 +577,12 @@ Class ItemActions
 		}
 
         if(!preg_match("/^[0-9]+$/", $idCat)) {
-            $flash_error[] = _m("Category invalid");
+            $flash_error[] = _m("Invalid category");
             $success = false;
         }
 
         if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
-            $flash_error[] = _m("Email invalid");
+            $flash_error[] = _m("Invalid email address");
             $success = false;
         }
 
