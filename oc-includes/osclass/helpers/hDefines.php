@@ -476,7 +476,15 @@
             return osc_base_url(true) . '?page=user&action=change_password' ;
         }
     }
-
+    
+    function osc_recover_user_password_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/recover' ;
+        } else {
+            return osc_base_url(true) . '?page=login&action=recover' ;
+        }
+    }
+    
     function osc_forgot_user_password_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/forgot/' . $userId . '/' . $code ;

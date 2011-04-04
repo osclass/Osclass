@@ -44,16 +44,16 @@
                         <input type="hidden" name="action" value="change_password_post" />
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current password', 'modern') ; ?></label><br />
-                                <input type="password" name="password" value="" />
+                                <label for="password"><?php _e('Current password', 'modern') ; ?> *</label>
+                                <input type="password" name="password" id="password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password" value="" />
+                                <label for="new_password"><?php _e('New password', 'modern') ; ?> *</label>
+                                <input type="password" name="new_password" id="new_password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password2" value="" />
+                                <label for="new_password2"><?php _e('Repeat new password', 'modern') ; ?> *</label>
+                                <input type="password" name="new_password2" id="new_password2" value="" />
                             </p>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>
