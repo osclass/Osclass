@@ -448,6 +448,10 @@ class CWebItem extends BaseModel
                 if( Params::getParam('id') == ''){
                     $this->redirectTo(osc_base_url());
                 }
+                
+                if( Params::getParam('lang') != '' ) {
+                    Session::newInstance()->_set('userLocale', Params::getParam('lang'));
+                };
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 // if item doesn't exist redirect to base url

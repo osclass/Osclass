@@ -42,6 +42,10 @@
                     $this->doView("pages/".$page['s_internal_name'].".php");
                 } else {
                     //calling the view...
+                    if( Params::getParam('lang') != '' ) {
+                        Session::newInstance()->_set('userLocale', Params::getParam('lang'));
+                    };
+
                     $this->_exportVariableToView('page', $page) ;
                     $this->doView('page.php') ;
                 }
