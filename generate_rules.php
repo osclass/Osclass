@@ -63,6 +63,7 @@ $rewrite->addRule('^user/account$', 'index.php?page=user&action=account'); // ju
 $rewrite->addRule('^user/item/delete$', 'index.php?page=user&action=item_delete'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/item/edit$', 'index.php?page=user&action=item_edit'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/item/edit/done$', 'index.php?page=user&action=item_edit_post'); // juanramon: not used ## it doesn't exist
+$rewrite->addRule('^user/recover/?$', 'index.php?page=login&action=recover');
 $rewrite->addRule('^user/forgot/([0-9]+)/(.*)$', 'index.php?page=login&action=forgot&userId=$1&code=$2');
 $rewrite->addRule('^user/change/password$', 'index.php?page=user&action=forgot_change'); // juanramon: not used ## it doesn't exist
 $rewrite->addRule('^user/change/password/done$', 'index.php?page=user&action=forgot_change_post'); // juanramon: not used ## it doesn't exist

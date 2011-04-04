@@ -23,14 +23,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        
+        <!-- only item-post.php -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <?php ItemForm::location_javascript(); ?>
+        <?php ItemForm::photos_javascript(); ?>
+        <!-- end only item-post.php -->
     </head>
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <?php ItemForm::location_javascript(); ?>
             <div class="content add_item">
                 <h1><strong><?php _e('Publish an item', 'modern'); ?></strong></h1>
-                <form action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
+                <ul id="error_list"></ul>
+                <form action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                     <input type="hidden" name="action" value="item_add_post" />
                     <input type="hidden" name="page" value="item" />
@@ -39,7 +45,7 @@
                         <div class="box general_info">
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
-                                <label for="catId"><?php _e('Category', 'modern'); ?></label>
+                                <label for="catId"><?php _e('Category', 'modern'); ?> *</label>
                                 <?php ItemForm::category_select(); ?>
                             </div>
                             <div class="box">
@@ -52,11 +58,10 @@
                             </div>
                         </div>
                         <div class="box photos">
-                            <?php ItemForm::photos_javascript(); ?>
                             <h2><?php _e('Photos', 'modern'); ?></h2>
                             <div id="photos">
                                 <div class="row">
-                                    <input type="file" name="photos[]" /> (<?php _e('optional', 'modern'); ?>)
+                                    <input type="file" name="photos[]" />
                                 </div>
                             </div>
                             <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
@@ -67,15 +72,15 @@
                         <div class="box location">
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
-                                <label for="countryId"><?php _e('Country', 'modern'); ?></label>
+                                <label for="countryId"><?php _e('Country', 'modern'); ?> *</label>
                                 <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="regionId"><?php _e('Region', 'modern'); ?></label>
+                                <label for="regionId"><?php _e('Region', 'modern'); ?> *</label>
                                 <?php ItemForm::region_select(osc_get_regions(), osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="city"><?php _e('City', 'modern'); ?></label>
+                                <label for="city"><?php _e('City', 'modern'); ?> *</label>
                                 <?php ItemForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </div>
                             <div class="row">
@@ -96,7 +101,7 @@
                                 <?php ItemForm::contact_name_text() ; ?>
                             </div>
                             <div class="row">
-                                <label for="contactEmail"><?php _e('E-mail', 'modern'); ?></label>
+                                <label for="contactEmail"><?php _e('E-mail', 'modern'); ?> *</label>
                                 <?php ItemForm::contact_email_text() ; ?>
                             </div>
                             <div class="row">
