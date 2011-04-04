@@ -77,9 +77,9 @@ class TestOfItems extends WebTestCase {
      *
      * REQUIRE: user logged in
      */
-    function testItemInsertUserLogged()
+    function testItemInsert()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testItemInsertUserLogged</h2></div>";
+        echo "<div style='background-color: green; color: white;'><h2>testItemInsert</h2></div>";
 /*
  *         TEST WITH NO LOGGED USER
  */
@@ -214,7 +214,7 @@ class TestOfItems extends WebTestCase {
         flush();
 
         $this->selenium->open( osc_base_url(true) );
-
+        
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
 
@@ -336,17 +336,29 @@ class TestOfItems extends WebTestCase {
     private function deleteItem()
     {
         $this->selenium->open( osc_base_url(true) );
-        
         $this->selenium->click("link=My account");
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
         $this->selenium->waitForPageToLoad("30000");
 
-        // delete first item
-        $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Delete']");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
+        $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
+
+        while($numItems > 0) {
+            // delete first item
+            $this->selenium->click("xpath=//div[@class='item']/p/a[text()='Delete']");
+            $this->selenium->waitForPageToLoad("30000");
+            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
+            
+            $numItems = $this->selenium->getXpathCount("//div[@class='item']/p/a[text()='Delete']");
+            
+            $this->selenium->open( osc_base_url(true) );
+            $this->selenium->click("link=My account");
+            $this->selenium->waitForPageToLoad("30000");
+
+            $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
+            $this->selenium->waitForPageToLoad("30000");
+        }
     }
 
     private function deleteItemUrl($url)
