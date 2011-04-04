@@ -137,15 +137,19 @@ option.pad { margin-left:10px;}
 .ad_list table td.text h4 span { color:#CCC; margin:0 5px; }
 .ad_list table td.text p { line-height:16px; }
 .ad_list table td.price { padding-left:25px; }
-.ad_list .paginate { padding:25px 0 20px; text-align:center; }
-.ad_list .paginate a { border:1px solid #EEE; margin:0 1px; padding:5px 10px; text-decoration:none; }
-.ad_list .paginate a.previous { margin-right:15px; }
-.ad_list .paginate a.next { margin-left:15px; }
-.ad_list .paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }
-.ad_list .paginate span { color:#999; margin:0 1px; padding:5px; }
-.ad_list .paginate em { border:1px solid #EEE; color:#AAA; font-style:normal; margin:0 1px; padding:5px 10px; text-decoration:none; }
-.ad_list .paginate em.previous { margin-right:15px; }
-.ad_list .paginate em.next { margin-left:15px; }
+
+/* Pagination */
+.paginate { padding:25px 0 20px; text-align:center; }
+.paginate a { border:1px solid #CCC; margin:0 1px; padding:5px 10px; text-decoration:none; }
+.paginate a:hover { border:1px solid #069; background:#069; color:#FFF; font-weight:bold; }
+.paginate a.searchPaginationSelected { border:1px solid #069; background:#069; color:#FFF; font-weight:bold; }
+.paginate a.previous { margin-right:15px; }
+.paginate a.next { margin-left:15px; }
+.paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }
+.paginate span { color:#999; margin:0 1px; padding:5px; }
+.paginate em { border:1px solid #EEE; color:#AAA; font-style:normal; margin:0 1px; padding:5px 10px; text-decoration:none; }
+.paginate em.previous { margin-right:15px; }
+.paginate em.next { margin-left:15px; }
 
 /* Filters */
 .list .filters { background:#e9f5f9; border: 1px solid #bed7df; border-top:none; clear:both; margin-bottom:15px; padding:15px 10px; width:218px; -moz-border-radius-bottomleft: 15px; border-bottom-left-radius: 15px; }
