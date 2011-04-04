@@ -48,7 +48,10 @@ class ItemResource extends DAO {
 	public function getResource($itemId) {
         return $this->conn->osc_dbFetchResult('SELECT * FROM %st_item_resource WHERE fk_i_item_id = %d LIMIT 1', $this->getTableName(), $itemId);
 	}
-
-
+    
+    public function getResourceSecure($id, $code = '') {    
+        return $this->exists(array('pk_i_id' => $id, 's_name' => $code) ) ;
+    }
+    
 }
 

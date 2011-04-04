@@ -251,6 +251,33 @@ class CWebItem extends BaseModel
                     $this->redirectTo( osc_base_url() ) ;
                 }
             break;
+            case 'deleteResource':
+                $id   = Params::getParam('id') ;
+                $item = Params::getParam('item') ;
+                $code = Params::getParam('code') ;
+                $secret = Params::getParam('secret') ;
+                
+                // Check for required fields
+                if ( is_numeric($id) && is_numeric($item) && preg_match('/^([a-z0-9]+)$/i', $code) ) {
+                    // Does id & code combination exist?
+                    $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
+                    
+                    if ($result > 0) {
+                        // Delete: file, db table entry
+                        osc_deleteResource($id); 
+                        ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) ); 
+                                                
+                        osc_add_flash_message( _m('Selected photo was deleted') ) ;
+                    } else {
+                        osc_add_flash_message( _m("Couldn't delete selected photo") ) ;
+                    }
+                } else {
+                    osc_add_flash_message( _m("Required data missing in URL") ) ;
+                }
+
+                // Redirect to item_edit. If unregistered user, include $secret.
+                $this->redirectTo( osc_item_edit_url($secret, $item) );
+            break;
             case 'mark':
                 $mItem = new ItemActions(false) ;
 

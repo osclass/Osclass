@@ -330,15 +330,15 @@
     }
 
     function osc_resource_thumbnail_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_thumbnail.".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
     }
 
     function osc_resource_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name").".".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
     }
 
     function osc_resource_original_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_original.".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
     }
     ///////////////////////////////
     // END HELPERS FOR RESOURCES //
