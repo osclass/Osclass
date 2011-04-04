@@ -43,7 +43,7 @@
                 } else {
                     //calling the view...
                     if( Params::getParam('lang') != '' ) {
-                        Session::newInstance()->_get('userLocale') != Params::getParam('lang');
+                        Session::newInstance()->_set('userLocale') = Params::getParam('lang');
                     };
 
                     $this->_exportVariableToView('page', $page) ;

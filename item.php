@@ -450,7 +450,7 @@ class CWebItem extends BaseModel
                 }
                 
                 if( Params::getParam('lang') != '' ) {
-                    Session::newInstance()->_get('userLocale') != Params::getParam('lang');
+                    Session::newInstance()->_set('userLocale') = Params::getParam('lang');
                 };
 
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
