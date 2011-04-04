@@ -24,10 +24,11 @@
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
         
-        <!-- Javascript: only item-post.php -->
+        <!-- only item-post.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
         <?php ItemForm::photos_javascript(); ?>
+        <!-- end only item-post.php -->
     </head>
     <body>
         <div class="container">
@@ -35,7 +36,7 @@
             <div class="content add_item">
                 <h1><strong><?php _e('Publish an item', 'modern'); ?></strong></h1>
                 <ul id="error_list"></ul>
-                <form action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data" onSubmit="return checkForm()">
+                <form action="<?php echo osc_base_url(true);?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                     <input type="hidden" name="action" value="item_add_post" />
                     <input type="hidden" name="page" value="item" />

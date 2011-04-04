@@ -23,11 +23,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
-        
-        <!-- Javascript: only item-post.php -->
+
+        <!-- only item-post.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
         <?php ItemForm::photos_javascript(); ?>
+        <!-- end only item-post.php -->
     </head>
     <body>
         <div class="container">
@@ -111,7 +112,7 @@
                             </div>
                         </div>
                         <?php }; ?>
-                        <?php ItemForm::plugin_post_item(osc_category()); ?>
+                        <?php ItemForm::plugin_post_item(); ?>
                     </div>
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>

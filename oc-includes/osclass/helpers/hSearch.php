@@ -125,7 +125,7 @@
     }
     
     function osc_update_search_url($params, $delimiter = '&amp;') {
-        $request = Params::getParamsAsArray();
+        $request = Params::getParamsAsArray('get');
         unset($request['osclass']);
         if(isset($request['sCategory[0]'])) {
             unset($request['sCategory']);

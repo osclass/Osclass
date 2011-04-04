@@ -140,9 +140,7 @@ option.pad { margin-left:10px;}
 
 /* Pagination */
 .paginate { padding:25px 0 20px; text-align:center; }
-.paginate a { border:1px solid #CCC; margin:0 1px; padding:5px 10px; text-decoration:none; }
-.paginate a:hover { border:1px solid #069; background:#069; color:#FFF; font-weight:bold; }
-.paginate a.searchPaginationSelected { border:1px solid #069; background:#069; color:#FFF; font-weight:bold; }
+.paginate a { border:1px solid #EEE; margin:0 1px; padding:5px 10px; text-decoration:none; }
 .paginate a.previous { margin-right:15px; }
 .paginate a.next { margin-left:15px; }
 .paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }

@@ -36,7 +36,8 @@ class ItemForm extends Form {
             echo '<option value="">' . $default_item . '</option>' ;
         }
         foreach($categories as $c) {
-            echo '<option value="' . $c['pk_i_id'] . '"' . ( ((isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id'])) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+            $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
+            echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? : 'selected="selected"' ). '>' . $c['s_name'] . '</option>' ;
             if(isset($c['categories']) && is_array($c['categories'])) {
                 ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
             }
@@ -51,15 +52,14 @@ class ItemForm extends Form {
         $catId = Params::getParam('catId');
         
         // How many indents to add?
-        $deep_string = '';
+        $deep_string = 0;
         if( $deep > 0 ) {
-            for ($i = 0; $i < $deep; $i++) {
-                $deep_string .= '--';
-            }
+            $deep_string = (string) (15 * $deep);
         }
 
         foreach($categories as $c) {
-            echo '<option value="' . $c['pk_i_id'] . '"' . ( ((isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']))? 'selected="selected"' : '' ) . '>' . $deep_string . " " . $c['s_name'] . '</option>' ;
+            $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
+            echo '<option style="padding-left: ' . $deep_string . 'px;" value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $c['s_name'] . '</option>' ;
             if(isset($c['categories']) && is_array($c['categories'])) {
                 ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
             }
@@ -340,13 +340,9 @@ class ItemForm extends Form {
                 $("#regionId").attr('disabled',true);
             }
         }
-        
-        
-        /**
-         * Listener: automatically add new file field when the visible ones are full.
-         */
+
+        // Listener: automatically add new file field when the visible ones are full.
         setInterval("add_file_field()", 250);
-    
     
         /**
          * Validate form
@@ -357,13 +353,13 @@ class ItemForm extends Form {
             "minstriptags", 
             function(value, element) { 
                 altered_input = strip_tags(value);
-                if (altered_input.length < 30) {
+                if (altered_input.length < 10) {
                     return false;
                 } else {
                     return true;
                 }
             }, 
-            "<?php _e("Description: needs to be longer."); ?>"
+            "<?php _e("Description: needs to be longer"); ?>."
         );
         
         // Validate fields in each locale.
@@ -376,9 +372,9 @@ class ItemForm extends Form {
                     minlength: 9,
                     maxlength: 80,
                     messages: {
-                        required: "<?php _e("Title: this field is required."); ?> (" +  str + ")",
-                        minlength: "<?php _e("Title: enter at least 9 characters."); ?> (" +  str + ")",
-                        maxlength: "<?php _e("Title: no more than 80 characters."); ?> (" +  str + ")"
+                        required: "<?php _e("Title: this field is required"); ?>. (" +  str + ")",
+                        minlength: "<?php _e("Title: enter at least 9 characters"); ?>. (" +  str + ")",
+                        maxlength: "<?php _e("Title: no more than 80 characters"); ?>. (" +  str + ")"
                     }
                 });                   
             });
@@ -387,13 +383,13 @@ class ItemForm extends Form {
                 str = $(this).attr('name').replace(/^description\[(.+)_(.+)\]$/,'$2');
                 $(this).rules("add", {
                     required: true,
-                    minlength: 30,
+                    minlength: 10,
                     maxlength: 5000,
                     'minstriptags': true,
                     messages: {
-                        required: "<?php _e("Description: this field is required."); ?> (" +  str + ")",
-                        minlength: "<?php _e("Description: needs to be longer."); ?> (" +  str + ")",
-                        maxlength: "<?php _e("Description: no more than 5000 characters."); ?> (" +  str + ")"
+                        required: "<?php _e("Description: this field is required"); ?>. (" +  str + ")",
+                        minlength: "<?php _e("Description: needs to be longer"); ?>. (" +  str + ")",
+                        maxlength: "<?php _e("Description: no more than 5000 characters"); ?>. (" +  str + ")"
                     }
                 });                   
             });
@@ -408,11 +404,11 @@ class ItemForm extends Form {
                 },
                 price: {
                     number: true,
-                    maxlength: 9
+                    maxlength: 15
                 },
                 currency: "required",
                 "photos[]": {
-                    accept: "jpg,png,gif",
+                    accept: "<?php echo osc_allowed_extension(); ?>"
                 },
                 contactName: {
                     minlength: 3,
@@ -440,32 +436,32 @@ class ItemForm extends Form {
                 }
             },
             messages: {
-                catId: "<?php _e("Category: make your selection."); ?>",
+                catId: "<?php _e('Choose one category'); ?>.",
                 price: {
-                    number: "<?php _e("Price: enter a valid number."); ?>",
-                    maxlength: "<?php _e("Price: no more than 10 characters."); ?>"
+                    number: "<?php _e('Price: enter a valid number'); ?>.",
+                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
                 },
-                currency: "<?php _e("Currency: make your selection."); ?>",
+                currency: "<?php _e("Currency: make your selection"); ?>.",
                 "photos[]": {
-                    accept: "<?php _e("Photo: must be jpg, png, or gif."); ?>",
+                    accept: "<?php printf(__("Photo: must be %s"), osc_allowed_extension()); ?>."
                 },
                 contactName: {
-                    minlength: "<?php _e("Name: enter at least 3 characters."); ?>",
-                    maxlength: "<?php _e("Name: no more than 35 characters."); ?>"
+                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Name: no more than 35 characters"); ?>."
                 },
                 contactEmail: {
-                    required: "<?php _e("Email: this field is required."); ?>",
-                    email: "<?php _e("Email: enter a valid address."); ?>"
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Email: enter a valid address"); ?>."
                 },
-                regionId: "<?php _e("Province: make your selection."); ?>",
-                cityId: "<?php _e("City: make your selection."); ?>",
+                regionId: "<?php _e("Province: make your selection"); ?>.",
+                cityId: "<?php _e("City: make your selection"); ?>.",
                 cityArea: {
-                    minlength: "<?php _e("Municipality: enter at least 3 characters."); ?>",
-                    maxlength: "<?php _e("Municipality: no more than 35 characters."); ?>"
+                    minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("City area: no more than 35 characters"); ?>."
                 },
                 address: {
-                    minlength: "<?php _e("Address: enter at least 5 characters."); ?>",
-                    maxlength: "<?php _e("Address: no more than 50 characters."); ?>"
+                    minlength: "<?php _e("Address: enter at least 5 characters"); ?>.",
+                    maxlength: "<?php _e("Address: no more than 50 characters"); ?>."
                 }
             },
             errorLabelContainer: "#error_list",
