@@ -7,7 +7,7 @@ require_once('../../reporter.php');
 require_once '../../../../oc-load.php';
 require_once LIB_PATH . 'Selenium.php';
 
-class TestOfAdminEmailsAndalerts extends WebTestCase {
+class TestOfAdminAdministrators extends WebTestCase {
 
     private $selenium;
 
