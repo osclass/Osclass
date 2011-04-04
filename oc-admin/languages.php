@@ -232,6 +232,8 @@
                                                         $this->localeManager->deleteLocale($code) ;
                                                         if (!osc_deleteDir(osc_translations_path() . $code)) {
                                                             osc_add_flash_message(sprintf(_m('Directory "%s" couldn\'t be removed'), $code), 'admin');
+                                                        } else {
+                                                            osc_add_flash_message(sprintf(_m('Directory "%s" has been successfully removed'), $code), 'admin');
                                                         }
                                                     } else {
                                                         osc_add_flash_message(sprintf(_m('Directory "%s" couldn\'t be removed because it\'s the default language. Set another language as default first and try again'), $code), 'admin');
