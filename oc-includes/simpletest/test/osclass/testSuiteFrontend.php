@@ -9,13 +9,11 @@ class AllFrontEndTests extends TestSuite {
         $this->TestSuite('All tests frontend');
         
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_search.php');
-
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_user.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_items.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_page.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_contact.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_login.php');
-        
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_register.php');        
     }
 }

@@ -194,12 +194,15 @@ class TestOfSearch extends WebTestCase {
 
     public function testFinal()
     {
-       require 'itemData.php';
+        require 'itemData.php';
+        $iActions = new ItemActions(false);
         foreach($aData as $item){
             echo "<div style='background-color: green; color: white;padding-left:15px;'> - TestOfSearch - delete()</div>";
             flush();
-            Item::newInstance()->delete(array('s_contact_email' => 'mail@contact.com'));
+            $item_ = Item::newInstance()->findByConditions(array('s_contact_email' => 'mail@contact.com'));
+            $iActions->delete( $item_['s_secret'], $item_['pk_i_id']) ;
         }
+
         if( $this->bool_enabled_user_validation ){
             Preference::newInstance()->update(array('s_value' => 0)
                                          ,array('s_name'  => 'enabled_item_validation'));
@@ -214,9 +217,6 @@ class TestOfSearch extends WebTestCase {
             Preference::newInstance()->update(array('s_value' => 1)
                                          ,array('s_name'  => 'reg_user_post'));
         }
-
-
-
     }
 
     /*
@@ -306,7 +306,5 @@ class TestOfSearch extends WebTestCase {
             }
         }
     }
-
-
 }
 ?>
