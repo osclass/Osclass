@@ -23,7 +23,8 @@ error_reporting(0);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
-define( 'TRANSLATIONS_PATH', LIB_PATH . 'translations/' ) ;
+define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
+define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
 
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
