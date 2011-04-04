@@ -271,7 +271,7 @@ class ItemForm extends Form {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php _e("Select a region..."); ?></option>';
+                            result += '<option value=""><?php echo sprintf(__("Select a %s"), __("region")) . "..."; ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
@@ -311,7 +311,7 @@ class ItemForm extends Form {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php _e("Select a city..."); ?></option>';
+                            result += '<option value=""><?php echo sprintf(__("Select a %s"), __("city")) . "..."; ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
@@ -358,40 +358,47 @@ class ItemForm extends Form {
                 } else {
                     return true;
                 }
-            }, 
-            "<?php _e("Description: needs to be longer"); ?>."
+            }
         );
         
         // Validate fields in each locale.
-        $(".add_item form button").click(function() {          
-            // Title
-            $(".add_item .title input").each(function(){
-                str = $(this).attr('name').replace(/^title\[(.+)_(.+)\]$/,'$2');
+        $(".add_item form button").click(function() {
+            // How many locales?
+            lang_count = $(".add_item .title input").length;
+            // Loop for each locale
+            $(".add_item .title input").each(function()
+            {
+                // Grab current name and locale
+                lang_name = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
+                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
+                
+                // Append lang when there are multiple locales
+                str = (lang_count > 1) ? "[" + lang_name + "] " : '';
+
+                // Title
                 $(this).rules("add", {
                     required: true,
                     minlength: 9,
                     maxlength: 80,
                     messages: {
-                        required: "<?php _e("Title: this field is required"); ?>. (" +  str + ")",
-                        minlength: "<?php _e("Title: enter at least 9 characters"); ?>. (" +  str + ")",
-                        maxlength: "<?php _e("Title: no more than 80 characters"); ?>. (" +  str + ")"
+                        required: str + "<?php _e("Title"); ?>"  + ": " + "<?php _e("this field is required"); ?>.",
+                        minlength: str +  "<?php _e("Title"); ?>" + ": " + "<?php printf(__("enter at least %d characters"), 9); ?>.",
+                        maxlength: str + "<?php _e("Title"); ?>" + ": " +  "<?php printf(__("no more than %d characters"), 80); ?>."
                     }
-                });                   
-            });
-            // Description
-            $(".add_item .description textarea").each(function(){
-                str = $(this).attr('name').replace(/^description\[(.+)_(.+)\]$/,'$2');
-                $(this).rules("add", {
+                });
+                // Description
+                $(".add_item #description\\[" + lang_locale + "\\]").rules("add", {
                     required: true,
                     minlength: 10,
                     maxlength: 5000,
                     'minstriptags': true,
                     messages: {
-                        required: "<?php _e("Description: this field is required"); ?>. (" +  str + ")",
-                        minlength: "<?php _e("Description: needs to be longer"); ?>. (" +  str + ")",
-                        maxlength: "<?php _e("Description: no more than 5000 characters"); ?>. (" +  str + ")"
+                        required: str + "<?php _e("Description"); ?>" + ": " + "<?php _e("this field is required"); ?>.",
+                        minlength: str + "<?php _e("Description"); ?>" + ": " + "<?php _e("needs to be longer"); ?>.",
+                        maxlength: str + "<?php _e("Description"); ?>" + ": " + "<?php printf(__("no more than %d characters"), 5000); ?>.",
+                        "minstriptags": str + "<?php _e("Description"); ?>" + ": " + "<?php _e("needs to be longer"); ?>."
                     }
-                });                   
+                });
             });
         });
         
@@ -436,32 +443,32 @@ class ItemForm extends Form {
                 }
             },
             messages: {
-                catId: "<?php _e('Choose one category'); ?>.",
+                catId: "<?php printf(__("Select a %s"), __("category")); ?>.",
                 price: {
-                    number: "<?php _e('Price: enter a valid number'); ?>.",
-                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                    number: "<?php echo __("Price") . ": " . __("must be a number"); ?>.",
+                    maxlength: "<?php echo __("Price") . ": " . sprintf(__("no more than %d characters"), 15); ?>."
                 },
-                currency: "<?php _e("Currency: make your selection"); ?>.",
+                currency: "<?php printf(__("Select a %s"), __("currency")); ?>.",
                 "photos[]": {
-                    accept: "<?php printf(__("Photo: must be %s"), osc_allowed_extension()); ?>."
+                    accept: "<?php echo __("Photo") . ": " . sprintf( __("must be %s"), str_replace( array(" ", ","), array("", ", "), osc_allowed_extension() ) ); ?>."
                 },
                 contactName: {
-                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("Name: no more than 35 characters"); ?>."
+                    minlength: "<?php echo __("Name") . ": " . sprintf(__("enter at least %d characters"), 3); ?>.",
+                    maxlength: "<?php echo __("Name") . ": " . sprintf(__("no more than %d characters"), 35); ?>."
                 },
                 contactEmail: {
-                    required: "<?php _e("Email: this field is required"); ?>.",
-                    email: "<?php _e("Email: enter a valid address"); ?>."
+                    required: "<?php echo __("Email") . ": " . __("this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
                 },
-                regionId: "<?php _e("Province: make your selection"); ?>.",
-                cityId: "<?php _e("City: make your selection"); ?>.",
+                regionId: "<?php printf(__("Select a %s"), __("region")); ?>.",
+                cityId: "<?php printf(__("Select a %s"), __("city")); ?>.",
                 cityArea: {
-                    minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("City area: no more than 35 characters"); ?>."
+                    minlength: "<?php echo __("City Area") . ": " . sprintf(__("enter at least %d characters"), 3); ?>.",
+                    maxlength: "<?php echo __("City Area") . ": " . sprintf(__("no more than %d characters"), 35); ?>."
                 },
                 address: {
-                    minlength: "<?php _e("Address: enter at least 5 characters"); ?>.",
-                    maxlength: "<?php _e("Address: no more than 50 characters"); ?>."
+                    minlength: "<?php echo __("Address") . ": " . sprintf(__("enter at least %d characters"), 5); ?>.",
+                    maxlength: "<?php echo __("Address") . ": " . sprintf(__("no more than %d characters"), 50); ?>."
                 }
             },
             errorLabelContainer: "#error_list",
