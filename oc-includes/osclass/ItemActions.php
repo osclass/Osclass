@@ -931,7 +931,7 @@ Class ItemActions
                     $itemResourceManager->update(
                                             array(
                                                 's_path'            => $s_path
-                                                ,'s_name'           => $resourceId
+                                                ,'s_name'           => osc_genRandomPassword()
                                                 ,'s_extension'      => 'png'
                                                 ,'s_content_type'   => $resourceType
                                             )

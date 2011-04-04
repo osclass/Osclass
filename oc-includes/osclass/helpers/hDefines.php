@@ -531,6 +531,15 @@
             return osc_base_url(true) . '?page=item&action=activate&id=' . $id . ($secret != '' ? '&secret=' . $secret : '') ;
         }
     }
+    
+    // URL to delete a file/photo
+    function osc_item_resource_delete_url($id, $item, $code, $secret = '') {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'item/resource/delete/' . $id . '/' . $item . '/' . $code . ($secret != '' ? '/' . $secret : '');
+        } else {
+            return osc_base_url(true) . '?page=item&action=deleteResource&id=' . $id . '&item=' . $item . '&code=' . $code . ($secret != '' ? '&secret=' . $secret : '') ;
+        }
+    }
 
     function osc_item_send_friend_url() {
         if ( osc_rewrite_enabled() ) {
