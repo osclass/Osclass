@@ -68,18 +68,37 @@ class TestOfAdminLanguage extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
-        $this->enableWebsite("Spanish");
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
-        $this->disableWebsite("Spanish");
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
-        $this->disableOCAdmin("Spanish");
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
-        $this->enableOCAdmin("Spanish");
-        flush();
+        if( $this->isDisabledWebsite("Spanish") ){
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
+            $this->enableWebsite("Spanish");
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
+            $this->disableWebsite("Spanish");
+            flush();
+        } else {
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
+            $this->disableWebsite("Spanish");
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
+            $this->enableWebsite("Spanish");
+            flush();
+        }
+
+        if( $this->isDisabledOCAdmin("Spanish") ) {
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
+            $this->enableOCAdmin("Spanish");
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
+            $this->disableOCAdmin("Spanish");
+            flush();
+        } else {
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
+            $this->disableOCAdmin("Spanish");
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
+            $this->enableOCAdmin("Spanish");
+            flush();
+        }
     }
 
     public function testLanguageEdit()
@@ -108,6 +127,38 @@ class TestOfAdminLanguage extends WebTestCase {
     /*
      * PRIVATE FUNCTIONS
      */
+    private function isDisabledOCAdmin($lang)
+    {
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->click("link=Languages");
+        $this->selenium->click("link=» Manage languages");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'$lang')]");
+        $thereare = $this->selenium->getXpathCount("//table/tbody/tr[contains(.,'$lang')]/td/div/a[text()='Disable (oc-admin)']");
+        if($thereare == 1) {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+
+    private function isDisabledWebsite($lang)
+    {
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->click("link=Languages");
+        $this->selenium->click("link=» Manage languages");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'$lang')]");
+        $thereare = $this->selenium->getXpathCount("//table/tbody/tr[contains(.,'$lang')]/td/div/a[text()='Disable (website)']");
+        if($thereare == 1) {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+
     private function enableWebsite($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
