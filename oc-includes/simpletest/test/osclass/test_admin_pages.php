@@ -117,17 +117,17 @@ class TestOfAdminPages extends WebTestCase {
 
     }
 
-//    function testSearch()
-//    {
-//        echo "<div style='background-color: green; color: white;'>Admin - Table search -</div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table search - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table search - TESTING TABLE SEARCH</div>";
-//        $this->tableSearch();
-//        flush();
-//    }
+////    function testSearch()
+////    {
+////        echo "<div style='background-color: green; color: white;'>Admin - Table search -</div>";
+////        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table search - LOGIN </div>";
+////        $this->loginCorrect() ;
+////        flush();
+////
+////        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table search - TESTING TABLE SEARCH</div>";
+////        $this->tableSearch();
+////        flush();
+////    }
 
     public function testTableNavigation()
     {
@@ -262,6 +262,8 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 
+        sleep(1); // time to load FM
+
         if( $this->selenium->isTextPresent("The page has been updated") ){
             $this->assertTrue("text present");
         } else {
@@ -277,8 +279,9 @@ class TestOfAdminPages extends WebTestCase {
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'$internal_name')]");
         $this->selenium->click("//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Delete']");
-
         $this->selenium->waitForPageToLoad("30000");
+
+        sleep(1); // time to load FM
 
         if( $this->selenium->isTextPresent('One page has been deleted correctly') ){
             $this->assertTrue("text present");
