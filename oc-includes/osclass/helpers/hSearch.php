@@ -199,7 +199,10 @@
         if ( !View::newInstance()->_exists('list_cities') ) {
             View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region) ) ;
         }
-        return View::newInstance()->_next('list_cities') ;
+        $result = View::newInstance()->_next('list_cities');
+
+        if (!$result) View::newInstance()->_erase('list_cities') ;
+        return $result;
     }
 
     function osc_count_list_countries() {
@@ -222,7 +225,7 @@
         }
         return View::newInstance()->_count('list_cities') ;
     }
-    
+
     function osc_list_region_name() {
         return osc_field(osc_list_region(), 'region_name', '') ;
     }
@@ -231,6 +234,12 @@
         return osc_field(osc_list_region(), 'items', '') ;
     }
 
-    
+    function osc_list_city_name() {
+        return osc_field(osc_list_city(), 'city_name', '') ;
+    }
+
+    function osc_list_city_items() {
+        return osc_field(osc_list_city(), 'items', '') ;
+    }
 
 ?>
