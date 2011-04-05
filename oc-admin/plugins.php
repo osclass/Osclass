@@ -47,7 +47,7 @@
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
                         break;
-                        case(1):   $msg = _m('The plugin has been installed correctly');
+                        case(1):   $msg = _m('The plugin has been uploaded correctly');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
                         break;
