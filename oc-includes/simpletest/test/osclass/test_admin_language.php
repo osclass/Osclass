@@ -302,8 +302,9 @@ class TestOfAdminLanguage extends WebTestCase {
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Spanish')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Spanish')]/td/div/a[text()='Delete']");
-
-        // todo assertTrue on FM (issue 405)
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->assertTrue($this->selenium->isTextPresent("has been successfully removed"),"Can't delete language Spanish");
     }
 
 }
