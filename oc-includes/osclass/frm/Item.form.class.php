@@ -519,17 +519,71 @@ class ItemForm extends Form {
 <?php
     }
 
+    /**
+     * Edit photo loop: appears only on Item Edit.
+     */
     static public function photos($resources = null) {
         if($resources==null) { $resources = osc_get_item_resources(); };
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a onclick="javascript:return confirm('<?php _e('Confirm permanent delete?'); ?>')" href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete" title="<?php _e('Delete'); ?>">&nbsp;</a>
+                    <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete" title="<?php _e('Delete'); ?>">&nbsp;</a>
                 </div>						
             <?php }
         }
     }
+    
+    /**
+     * jQuery: appears only on Item Edit. Delete photo without reloading page.
+     */
+    static public function photos_delete_javascript() {
+?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        /**
+         * Delete picture without reloading page
+         */
+        $('.photos a.delete').click(function(e) {
+            e.preventDefault();
 
+            // Confirm delete?
+            var answer = confirm('<?php _e("Confirm permanent delete?"); ?>');
+            if (answer) {        
+                // Do we need to add flash message container?
+                if ( $('#FlashMessage').length < 1 ) {
+                    $("<div id='FlashMessage' class='overlay'><?php _e("Please Wait..."); ?></div>").hide().appendTo('body').slideDown('250');
+                } else {
+                    $('#FlashMessage').hide().addClass('overlay').text("<?php _e("Please Wait..."); ?>").slideDown('250');
+                }
+
+                // Open the URL
+                var parent = $(this).parent();
+                $.ajax({
+                    cache: false,
+                    dataType: 'json',
+                    type: 'get',
+                    url: $(this).attr('href'),
+                    data: 'ajax=1',            
+                    success: function(reply) {
+                        $('#FlashMessage').text(reply).slideDown('250').delay(2500).slideUp('500');
+                        parent.fadeOut(250,function() {
+                            parent.remove();
+                        });
+                    },
+                    error: function(reply, status, error) {
+                        $('#FlashMessage').text("<?php _e("The photo couldn't be deleted"); ?>").slideDown('250').delay(2500).slideUp('500');
+                    }
+                });
+            }
+        });
+    });
+</script>
+<?php
+    }
+    
+    /**
+     * Javascript: appears on Item Add and Item Edit
+     */
     static public function photos_javascript() {
 ?>
 <script type="text/javascript">
@@ -566,7 +620,7 @@ class ItemForm extends Form {
 </script>
 <?php
     }
-
+    
     static public function plugin_post_item($case = 'form') {
 ?>
 <script type="text/javascript">

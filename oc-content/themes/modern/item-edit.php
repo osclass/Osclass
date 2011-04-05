@@ -28,6 +28,7 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
         <?php ItemForm::photos_javascript(); ?>
+        <?php ItemForm::photos_delete_javascript(); ?>
         <!-- end only item-edit.php -->
     </head>
     <body>

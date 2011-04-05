@@ -254,52 +254,52 @@ class CWebItem extends BaseModel
                 $item   = Params::getParam('item') ;
                 $code   = Params::getParam('code') ;
                 $secret = Params::getParam('secret') ;
-
-                // Check for required fields
+                $ajax   = Params::getParam('ajax') ;
+                
+                // Required fields?
                 if ( !( is_numeric($id) && is_numeric($item) && preg_match('/^([a-z0-9]+)$/i', $code) ) ) {
-                    osc_add_flash_message( _m("The selected photo couldn't be deleted, the url doesn't exist") ) ;
-                    if($this->userId == null) {
-                        $this->redirectTo(osc_base_url());
+                    $message = _m("The selected photo couldn't be deleted, the url doesn't exist") ;
+                    $redirect = ($this->userId == null) ? osc_base_url() : osc_user_dashboard_url();
+                } else {
+                    // Get item data
+                    $aItem = $this->itemManager->findByPrimaryKey($item);
+
+                    // Validate
+                    if (count($aItem) == 0) {
+                        // Does the item exist?
+                        $message = _m('The item doesn\'t exist') ;
+                        $redirect = osc_base_url() ;
+                    } else if ( ($this->userId != null && $aItem['fk_i_user_id']) && $this->userId != $aItem['fk_i_user_id']) {
+                        // Registered user: Does item belong to user?
+                        $message = _m('The item doesn\'t belong to you') ;
+                        $redirect = osc_item_url_ns($item) ;
+                    } else if ($this->userId == null && $secret != $aItem['s_secret']) {
+                        // Unregistered user: Is the secret code right?
+                        $message = _m('The item doesn\'t belong to you') ;
+                        $redirect = osc_item_url_ns($item) ;
                     } else {
-                        $this->redirectTo(osc_user_dashboard_url());
+                        // Does id & code combination exist?
+                        $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
+
+                        if ($result > 0) {
+                            // Delete: file, db table entry
+                            osc_deleteResource($id);
+                            ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
+                            $message = _m('The selected photo was deleted') ;
+                        } else {
+                            $message = _m("The selected photo couldn't be deleted") ;
+                        }
                     }
                 }
-
-                $aItem = $this->itemManager->findByPrimaryKey($item);
-
-                // Check if the item exists
-                if(count($aItem) == 0) {
-                    osc_add_flash_message( _m('The item doesn\'t exist') );
-                    $this->redirectTo(osc_base_url());
-                }
-
-                // Check if the item belong to the user
-                if($this->userId != null && $this->userId != $aItem['fk_i_user_id']) {
-                    osc_add_flash_message( _m('The item doesn\'t belong to you') );
-                    $this->redirectTo(osc_item_url_ns($item));
-                }
-
-                // Check if the secret passphrase match with the item
-                if($this->userId == null && $secret != $aItem['s_secret']) {
-                    osc_add_flash_message( _m('The item doesn\'t belong to you') );
-                    $this->redirectTo(osc_item_url_ns($item));
-                }
-
-                // Does id & code combination exist?
-                $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
-
-                if ($result > 0) {
-                    // Delete: file, db table entry
-                    osc_deleteResource($id);
-                    ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
-
-                    osc_add_flash_message( _m('The selected photo has been successfully deleted') ) ;
+                
+                // Handle ajax
+                if ($ajax == 1) {
+                    exit( json_encode($message) );
                 } else {
-                    osc_add_flash_message( _m("The selected photo couldn't be deleted") ) ;
+                    // Redirect to item_edit. If unregistered user, include $secret.
+                    osc_add_flash_message($message);
+                    $this->redirectTo( ($redirect) ? $redirect : osc_item_edit_url( $secret, $item ) );
                 }
-
-                // Redirect to item_edit. If unregistered user, include $secret.
-                $this->redirectTo( osc_item_edit_url($secret, $item) );
             break;
             case 'mark':
                 $mItem = new ItemActions(false) ;
