@@ -45,12 +45,12 @@
                         <input type="hidden" name="action" value="change_email_post" />
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current e-mail', 'modern') ; ?></label><br />
-                                <input type="text" name="email" value="" />
+                                <label for="email"><?php _e('Current e-mail', 'modern') ; ?></label>
+                                <span><?php echo osc_logged_user_email(); ?></span>
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New e-mail', 'modern') ; ?></label><br />
-                                <input type="text" name="new_email" value="" />
+                                <label for="new_email"><?php _e('New e-mail', 'modern') ; ?> *</label>
+                                <input type="text" name="new_email" id="new_email" value="" />
                             </p>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>

@@ -363,7 +363,7 @@
      *
      * @return string
      */
-    function osc_item_url() {
+    function osc_item_url($locale = '') {
         if ( osc_rewrite_enabled() ) {
             $sanitized_title = osc_sanitizeString(osc_item_title()) ;
             $sanitized_category = '';
@@ -371,10 +371,14 @@
             for ($i = (count($cat)); $i > 0; $i--) {
                 $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
             }
-            $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_item_id()) ;
+            if($locale!='') {
+                $path = osc_base_url() . sprintf('%s_%s%s_%d', $locale, $sanitized_category, $sanitized_title, osc_item_id()) ;
+            } else {
+                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_item_id()) ;
+            }
         } else {
             //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
-            $path = osc_item_url_ns( osc_item_id() ) ;
+            $path = osc_item_url_ns( osc_item_id(), $locale ) ;
         }
         return $path ;
     }
@@ -386,8 +390,12 @@
      *
      * @return string
      */
-    function osc_item_url_ns($id) {
-        $path = osc_base_url(true) . '?page=item&id=' . $id ;
+    function osc_item_url_ns($id, $locale = '') {
+        if($locale!='') {
+            $path = osc_base_url(true) . '?page=item&id=' . $id . "&lang=" . $locale;
+        } else {
+            $path = osc_base_url(true) . '?page=item&id=' . $id ;
+        }
 
         return $path ;
     }
@@ -402,7 +410,8 @@
     }
      
     //osc_createPageURL
-    function osc_page_url() {
+    // DEPRECATED : NOT USED
+    /*function osc_page_url() {
         if ( osc_rewrite_enabled() ) {
             $sanitizedString = osc_sanitizeString( osc_pages_title() ) ;
             $path = sprintf( osc_base_url() . '%s-p%d', urlencode($sanitizedString), osc_pages_id() ) ;
@@ -410,7 +419,7 @@
             $path = sprintf( osc_base_url(true) . '?page=page&id=%d', osc_pages_id() ) ;
         }
         return $path ;
-    }
+    }*/
 
     //osc_createUserAlertsURL
     function osc_user_alerts_url() {
@@ -476,7 +485,15 @@
             return osc_base_url(true) . '?page=user&action=change_password' ;
         }
     }
-
+    
+    function osc_recover_user_password_url() {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/recover' ;
+        } else {
+            return osc_base_url(true) . '?page=login&action=recover' ;
+        }
+    }
+    
     function osc_forgot_user_password_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/forgot/' . $userId . '/' . $code ;

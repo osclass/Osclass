@@ -45,50 +45,50 @@
                         <input type="hidden" name="action" value="profile_post" />
                         <fieldset>
                             <p>
-                                <label for="name"><?php _e('Name', 'modern') ; ?></label><br />
+                                <label for="name"><?php _e('Name', 'modern') ; ?></label>
                                 <?php UserForm::name_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="email"><?php _e('E-mail', 'modern') ; ?></label><br />
+                                <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
                                 <span>
                                     <?php echo osc_user_email() ; ?><br />
                                     <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'modern') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'modern') ; ?></a>
                                 </span>
                             </p>
                             <p>
-                                <label for="user_type"><?php _e('User type', 'modern') ; ?></label><br />
+                                <label for="user_type"><?php _e('User type', 'modern') ; ?></label>
                                 <?php UserForm::is_company_select(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label><br />
+                                <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label>
                                 <?php UserForm::mobile_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="phoneLand"><?php _e('Phone', 'modern') ; ?></label><br />
+                                <label for="phoneLand"><?php _e('Phone', 'modern') ; ?></label>
                                 <?php UserForm::phone_land_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="country"><?php _e('Country', 'modern') ; ?></label><br />
+                                <label for="country"><?php _e('Country', 'modern') ; ?> *</label>
                                 <?php UserForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="region"><?php _e('Region', 'modern') ; ?></label><br />
+                                <label for="region"><?php _e('Region', 'modern') ; ?> *</label>
                                 <?php UserForm::region_select(osc_get_regions(), osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="city"><?php _e('City', 'modern') ; ?></label><br />
+                                <label for="city"><?php _e('City', 'modern') ; ?> *</label>
                                 <?php UserForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="city_area"><?php _e('City area', 'modern') ; ?></label><br />
+                                <label for="city_area"><?php _e('City area', 'modern') ; ?></label>
                                 <?php UserForm::city_area_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="address"><?php _e('Address', 'modern') ; ?></label><br />
+                                <label for="address"><?php _e('Address', 'modern') ; ?></label>
                                 <?php UserForm::address_text(osc_user()) ; ?>
                             </p>
                             <p>
-                                <label for="webSite"><?php _e('Website', 'modern') ; ?></label><br />
+                                <label for="webSite"><?php _e('Website', 'modern') ; ?></label>
                                 <?php UserForm::website_text(osc_user()) ; ?>
                             </p>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
