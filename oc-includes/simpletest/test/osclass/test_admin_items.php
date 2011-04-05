@@ -87,6 +87,17 @@ class TestOfAdminItems extends WebTestCase {
         $this->insertItemAndComments() ;
         flush();
     }
+
+    function testMedia()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
+        $this->insertItemAndMedia() ;
+        flush();
+    }
     
      /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -113,7 +124,7 @@ class TestOfAdminItems extends WebTestCase {
     }
 
     // todo test minim lenght title, description , contact email
-    private function insertItem()
+    private function insertItem($bPhotos = 'FALSE')
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Items");
@@ -132,6 +143,12 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->select("regionId", "label=A Coruña");
         $this->selenium->select("cityId", "label=A Capela");
         $this->selenium->type("address", "address item");
+
+        if( $bPhotos ){
+            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
+            $this->selenium->click("link=Add new photo");
+            $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
+        }
         
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -358,11 +375,68 @@ class TestOfAdminItems extends WebTestCase {
         
         $this->assertTrue($this->selenium->isTextPresent("The comment have been deleted"), "Can't delete a comment. ERROR") ;
 
+        // DELETE ITEM
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Items");
+        $this->selenium->click("link=» Manage items");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title_item')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title_item')]/td/span/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
+
         // restore prefereces values
         Preference::newInstance()->update(array('s_value' => $enabled_comments)
                                          ,array('s_name'  => 'enabled_comments'));
         Preference::newInstance()->update(array('s_value' => $moderate_comments)
                                          ,array('s_name'  => 'moderate_comments'));
+    }
+
+    private function insertItemAndMedia()
+    {
+        // insert item
+        $this->insertItem( TRUE ) ;
+
+        $mItem = new Item();
+        $item = $mItem->findByConditions( array('s_contact_email' => 'test@mail.com') );
+
+        // test oc-admin
+        $this->loginCorrect();
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Items");
+        $this->selenium->click("link=» Manage media");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Can't activate comment. ERROR" );
+        // only can delete resources
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - MEDIA DELETE</div>";
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'image/png')]/td/div/span/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
+
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - MEDIA DELETE</div>";
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'image/png')]/td/div/span/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Showing 0 to 0 of 0 entries"), "Can't delete media. ERROR" );
+
+        // DELETE ITEM
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Items");
+        $this->selenium->click("link=» Manage items");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
     }
 }
 
