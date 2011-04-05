@@ -8,16 +8,21 @@ $(document).ready(function(){
 	});
 	
 	// Flash messages effect
-	$("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+	$("#FlashMessage").slideDown(250).delay(3000).slideUp(250);
+    
+	// Hide flash message when clicked
+	$("#FlashMessage").click(function(){
+		$("#FlashMessage").hide();
+	});
     
 	// Open login box in situ
     $('#login_open').click(function(e) {
         e.preventDefault();
-        $('#login').slideToggle('slow', function(){});
+        $('#login').slideToggle(250, function(){});
     });
 
 	// Apply the UniForm plugin to pulldows and button
-	$(".search select, .search button, .filters select, .filters button,  #comments form button, #contact form button, .user_forms form button, .add_item form select,, .add_item form button").uniform();
+	$(".search select, .search button, .filters select, .filters button,  #comments form button, #contact form button, .user_forms form button, .add_item form select, .add_item form button").uniform();
 	
 	// Show advanced search in internal pages
 	$("#expand_advanced").click(function(e){
