@@ -85,10 +85,10 @@ option.pad { margin-left:10px;}
 .home #main .categories .category li { border-bottom:1px dotted #DDD; color:#CCC; font-size:11px; padding:5px 0; }
 .home #main .latest_ads { padding-left:10px; clear:both; }
 .home #main .latest_ads table { clear:both; width:100%; }
-.home #main .latest_ads table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; }
+.home #main .latest_ads table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; } 
 .home #main .latest_ads table tr.odd td { background:#f8f8f8; }
 .home #main .latest_ads table tr:hover td { background:#fefbea; }
-.home #main .latest_ads table td.photo { padding-left:2px; }
+.home #main .latest_ads table td.photo { padding-left:2px; } 
 .home #main .latest_ads table td.photo img { background:#FFF; border:1px solid #DDD; padding:1px; }
 .home #main .latest_ads table td.text h3 { font-size:14px; font-weight:normal; margin-bottom: 4px; }
 .home #main .latest_ads table td.text h4 { color:#000; font-size:11px; font-weight:bold; margin-bottom: 3px; }
@@ -127,10 +127,10 @@ option.pad { margin-left:10px;}
 .ad_list #list_head .see_by a { text-decoration: none; }
 .ad_list #list_head .see_by a.current { background:url(../images/order_by_current.gif) no-repeat right 45%; padding-right:12px; }
 .ad_list table { clear:both; width:100%; }
-.ad_list table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; }
+.ad_list table td { border-bottom:1px dotted #dddddd; padding:8px; vertical-align:top; } 
 .ad_list table tr.odd td { background:#f8f8f8; }
 .ad_list table tr:hover td { background:#fefbea; }
-.ad_list table td.photo { padding-left:2px; }
+.ad_list table td.photo { padding-left:2px; } 
 .ad_list table td.photo img { background:#FFF; border:1px solid #DDD; padding:1px; }
 .ad_list table td.text h3 { font-size:14px; font-weight:normal; margin-bottom: 4px; }
 .ad_list table td.text h4 { color:#000; font-size:11px; font-weight:bold; margin-bottom: 3px; }
@@ -346,9 +346,9 @@ http://pixelmatrixdesign.com/uniform/
 div.selector { border:1px solid #b4b4b4; line-height: 26px; height: 26px; margin-right:10px; }
 div.selector span {  background:url(../images/select_arrow.gif) no-repeat right 11px; height: 26px; line-height: 26px; }
 div.selector select { top: 0px; left: 0px; }
-div.selector.hover,
+div.selector.hover, 
 div.selector:hover {  }
-div.selector.hover span,
+div.selector.hover span, 
 div.selector:hover span { background-position: right -29px; }
 div.selector.focus:active,
 div.selector.focus.active,
@@ -390,15 +390,15 @@ div.selector.disabled span { color: #bbb; }
 
 
 /*
-CORE FUNCTIONALITY
+CORE FUNCTIONALITY 
 Not advised to edit stuff below this line
 -----------------------------------------------------
 */
 
-.selector,
-.checker,
-.button,
-.radio,
+.selector, 
+.checker, 
+.button, 
+.radio, 
 .uploader { display: -moz-inline-box; display: inline-block; vertical-align: middle; zoom: 1; *display: inline; }
 .selector select:focus, .radio input:focus, .checker input:focus, .uploader input:focus { outline: 0; }
 /* Button */

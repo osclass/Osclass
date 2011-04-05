@@ -354,6 +354,10 @@
         return View::newInstance()->_next('items') ;
     }
 
+    function osc_reset_items() {
+        return View::newInstance()->_reset('items') ;
+    }
+
     function osc_count_items() {
         return osc_priv_count_items() ;
     }
@@ -425,11 +429,6 @@
         //if ($price == 0) return __('Free') ;
         return sprintf('%.02f %s', $price, osc_item_currency() ) ;
     }
-
-
-
-
-
 
     //PRIVATE
     function osc_priv_count_items() {

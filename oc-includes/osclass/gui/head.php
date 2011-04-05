@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -19,12 +18,16 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
 ?>
 
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta name="generator" content="OSClass <?php echo OSCLASS_VERSION ; ?>" />
-<title><?php echo osc_page_title() ; ?></title>
+
+<title><?php echo meta_title() ; ?></title>
+<meta name="title" content="<?php echo meta_title() ; ?>" />
+<meta name="description" content="<?php echo meta_description() ; ?>" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="Fri, Jan 01 1970 00:00:00 GMT" />
 
 <link href="<?php echo osc_current_web_theme_styles_url('style.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo osc_current_web_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
