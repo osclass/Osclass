@@ -54,7 +54,7 @@
             <?php if ( osc_count_web_enabled_locales() > 1) { ?>
                 <?php osc_goto_first_locale() ; ?>
                 <li class="last with_sub">
-                    <strong><?php _e("Language", 'modern') ; ?></strong>
+                    <span><?php _e("Language", 'modern') ; ?></span>
                     <ul>
                         <?php $i = 0 ;  ?>
                         <?php while ( osc_has_web_enabled_locales() ) { ?>
