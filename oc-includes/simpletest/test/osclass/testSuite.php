@@ -19,6 +19,4 @@ class AllTests extends TestSuite {
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_plugins.php');
     }
 }
-
-
 ?>
