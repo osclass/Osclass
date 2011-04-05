@@ -76,6 +76,17 @@ class TestOfAdminItems extends WebTestCase {
         $this->deleteItem() ;
         flush();
     }
+
+    function testComments()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
+        $this->insertItemAndComments() ;
+        flush();
+    }
     
      /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -269,6 +280,84 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
+    }
+
+    private function insertItemAndComments()
+    {
+        // insert item
+        $this->insertItem() ;
+
+        $mItem = new Item();
+        $item = $mItem->findByConditions( array('s_contact_email' => 'test@mail.com') );
+        
+        // force moderation comments
+        $enabled_comments = Preference::newInstance()->findValueByName('enabled_comments');
+        if( $enabled_comments == 0 ) {
+            Preference::newInstance()->update(array('s_value' => 1)
+                                             ,array('s_name'  => 'enabled_comments'));
+        }
+
+        // insert comment from frontend
+        echo "<".osc_item_url_ns( $item['pk_i_id'] )."><br>";
+
+        $this->selenium->open(osc_item_url_ns( $item['pk_i_id'] ));
+
+        $this->selenium->type("authorName"      , "carlos");
+        $this->selenium->type("authorEmail"     , "carlos@osclass.org");
+        $this->selenium->type("title"           , "I like it");
+        $this->selenium->type("body"            , "Can you provide more info please :)");
+
+        $this->selenium->click("//div[@id='comments']/form/fieldset/div/span/button");
+        $this->selenium->waitForPageToLoad("30000");
+
+        // test oc-admin
+        $this->loginCorrect();
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Items");
+        $this->selenium->click("link=» Comments");
+        $this->selenium->waitForPageToLoad("10000");
+
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - ACTIVATE COMMENT</div>";
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Activate']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The comment has been approved"), "Can't activate comment. ERROR" );
+
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - DEACTIVATE COMMENT</div>";
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Deactivate']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The comment has been disapproved"), "Can't deactivate comment. ERROR" );
+
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - EDIT COMMENT</div>";
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Edit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // edit comment
+        $this->selenium->type("s_title", "I like it updated");
+        $this->selenium->type("s_author_name", "carlos osclass");
+        $this->selenium->type("s_body", "Can you provide more info please :) Regards");
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Great! We just updated your comment"), "Can't edit a comment. ERROR") ;
+
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - DELETE COMMENT</div>";
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // missed FM on deletion
+//        $this->assertTrue($this->selenium->isTextPresent("Great! We just updated your comment"), "Can't delete a comment. ERROR") ;
+        $this->assertTrue(TRUE);
+
+        // restore prefereces values
+        Preference::newInstance()->update(array('s_value' => $enabled_comments)
+                                         ,array('s_name'  => 'enabled_comments'));
     }
 }
 
