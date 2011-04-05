@@ -173,7 +173,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->click("xpath=//p[3]/button");
-        $this->selenium->waitForPageToLoad("3000000");
+        $this->selenium->waitForPageToLoad("3600000"); // 1h 
         
         $this->assertTrue($this->selenium->isTextPresent("Archiving successful!"), "Backup zip! ERROR");
     }
