@@ -673,6 +673,11 @@ function _unzip_file_ziparchive($file, $to) {
     if ($zipopen !== true) {
         return 2;
     }
+    
+    // The zip is empty
+    if($zip->numFiles==0) {
+        return 3;
+    }
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
