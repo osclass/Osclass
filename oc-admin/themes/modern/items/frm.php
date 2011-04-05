@@ -55,7 +55,8 @@
                 }
             });
         </script>
-        <?php ItemForm::location_javascript(); ?>
+        <?php ItemForm::location_javascript('admin'); ?>
+        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <div id="content">
             <div id="separator"></div>
 
@@ -63,22 +64,21 @@
 
             <div id="right_column">
                 <div id="home_header" style="margin-left: 40px;">
-                    <h2>
-                        <?php
-                            if($new_item=="TRUE") { _e('New item');} else { _e('Edit item');};
-                        ?>
-                    </h2>
+                    <h1>
+                        <?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?>
+                    </h1>
                 </div>
                 <div align="center">
                     <div id="add_item_form" class="item-form">
-                        <form action="<?php echo osc_admin_base_url(true);?>" method="post" enctype="multipart/form-data">
+                        <ul id="error_list"></ul>
+                        <form name="item" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="page" value="items" />
-                            <?php if(isset($new_item) && $new_item==TRUE) { ?>
+                            <?php if($new_item) { ?>
                                 <input type="hidden" name="action" value="post_item" />
                             <?php } else { ?>
                                 <input type="hidden" name="action" value="item_edit_post" />
-                                <input type="hidden" name="id" value="<?php echo $item['pk_i_id'];?>" />
-                                <input type="hidden" name="secret" value="<?php echo $item['s_secret'];?>" />
+                                <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
+                                <input type="hidden" name="secret" value="<?php echo $item['s_secret']; ?>" />
                             <?php }; ?>
                             <div class="user-post">
                                 <h2><?php _e('User'); ?></h2>
@@ -110,54 +110,6 @@
 
                             <?php if(osc_images_enabled_at_items()) { ?>
                                 <div>
-                                    <script type="text/javascript">
-                                        var photoIndex = 0;
-                                        function gebi(id) { return document.getElementById(id); }
-                                        function ce(name) { return document.createElement(name); }
-                                        function re(id) {
-                                            var e = gebi(id);
-                                            e.parentNode.removeChild(e);
-                                        }
-                                        function addNewPhoto() {
-                                            var id = 'p-' + photoIndex++;
-
-                                            var i = ce('input');
-                                            i.setAttribute('type', 'file');
-                                            i.setAttribute('name', 'photos[]');
-
-                                            var a = ce('a');
-                                            a.style.fontSize = 'x-small';
-                                            a.setAttribute('href', '#');
-                                            a.setAttribute('divid', id);
-                                            a.onclick = function() { re(this.getAttribute('divid')); return false; }
-                                            a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
-
-                                            var d = ce('div');
-                                            d.setAttribute('id', id);
-
-                                            d.appendChild(i);
-                                            d.appendChild(a);
-
-                                            gebi('photos').appendChild(d);
-                                        }
-                                        function deleteResource( divId ){
-                                            if( confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>') ){
-                                                var parent = $('#'+divId);
-                                                $.ajax({
-                                                        type: 'get',
-                                                        url: '<?php echo osc_admin_base_url(true);?>?page=items&action=deleteResource&id='+parent.attr('id')+'&fkid='+parent.attr('fkid')+'&name='+parent.attr('name'),
-                                                        success: function() {
-                                                            parent.slideUp(300,function() {
-                                                                parent.remove();
-                                                            });
-                                                        }
-                                                    });
-                                            }
-                                        }
-                                        $(document).ready(function() {
-                                        });
-                                    </script>
-
                                     <?php _e('Photos') ; ?><br />
                                     <div id="photos">
                                         <?php foreach($resources as $_r) {?>
@@ -190,7 +142,7 @@
                                 </dl>
                             </div>
 
-                            <?php if(isset($new_item) && $new_item==TRUE) {
+                            <?php if($new_item) {
                                     ItemForm::plugin_post_item();
                                 } else {
                                     ItemForm::plugin_edit_item();
@@ -199,7 +151,7 @@
                             <div class="clear"></div>
                             <div align="center" style="margin-top: 30px; padding: 20px; background-color: #eee;">
                                 <button type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=items';" ><?php _e('Cancel'); ?></button>
-                                <button type="submit"><?php if($new_item==TRUE) { _e('Add item');} else { _e('Update');}; ?></button>
+                                <button type="submit"><?php if($new_item) { _e('Add item'); } else { _e('Update'); } ?></button>
                             </div>
                         </div>
                     </form>

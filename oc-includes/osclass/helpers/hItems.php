@@ -159,6 +159,10 @@
         return osc_item_field("s_address");
     }
 
+    function osc_item_show_email() {
+        return osc_item_field("b_show_email");
+    }
+
     function osc_item_zip() {
         return osc_item_field("s_zip");
     }
