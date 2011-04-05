@@ -296,6 +296,11 @@ class TestOfAdminItems extends WebTestCase {
             Preference::newInstance()->update(array('s_value' => 1)
                                              ,array('s_name'  => 'enabled_comments'));
         }
+        $moderate_comments = Preference::newInstance()->findValueByName('moderate_comments');
+        if( $enabled_comments != 0 ) {
+            Preference::newInstance()->update(array('s_value' => 0)
+                                             ,array('s_name'  => 'moderate_comments'));
+        }
 
         // insert comment from frontend
         echo "<".osc_item_url_ns( $item['pk_i_id'] )."><br>";
@@ -350,14 +355,14 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
-
-        // missed FM on deletion
-//        $this->assertTrue($this->selenium->isTextPresent("Great! We just updated your comment"), "Can't delete a comment. ERROR") ;
-        $this->assertTrue(TRUE);
+        
+        $this->assertTrue($this->selenium->isTextPresent("The comment have been deleted"), "Can't delete a comment. ERROR") ;
 
         // restore prefereces values
         Preference::newInstance()->update(array('s_value' => $enabled_comments)
                                          ,array('s_name'  => 'enabled_comments'));
+        Preference::newInstance()->update(array('s_value' => $moderate_comments)
+                                         ,array('s_name'  => 'moderate_comments'));
     }
 }
 
