@@ -85,7 +85,7 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("The plugin has been installed correctly"),"Can't upload plugin plugins_breadcrumbs_1.0.zip");
+        $this->assertTrue($this->selenium->isTextPresent("The plugin has been uploaded correctly"),"Can't upload plugin plugins_breadcrumbs_1.0.zip");
 
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("link=Plugins");
@@ -111,6 +111,7 @@ class TestOfAdminPlugins extends WebTestCase {
         
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Bread crumbs')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Uninstall']");
+        $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("Plugin uninstalled"),"Can't uninstall plugin plugins_breadcrumbs_1.0.zip");
     }
