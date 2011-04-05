@@ -670,14 +670,15 @@ function _unzip_file_ziparchive($file, $to) {
     $zip = new ZipArchive();
     $zipopen = $zip->open($file, 4);
 
-    if ($zipopen !== true) {
-        return 2;
-    }
-    
     // The zip is empty
     if($zip->numFiles==0) {
         return 3;
     }
+
+    if ($zipopen !== true) {
+        return 2;
+    }
+    
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
