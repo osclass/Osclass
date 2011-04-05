@@ -73,6 +73,31 @@ class TestOfAdminAppearance extends WebTestCase {
         }
     }
 
+    function testAddThemeCorrupt()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testAddThemeCorrupt</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddThemeCorrupt - LOGIN </div>";
+        flush();
+        $this->loginCorrect();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddThemeCorrupt - ADD THEME</div>";
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add a new theme");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if($this->selenium->isTextPresent("chmod a+w ") ){
+            $this->assertTrue(FALSE, "You need give permissions to the folder");
+        } else {
+            $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/corrupt.zip");
+            $this->selenium->click("button_save");
+            $this->selenium->waitForPageToLoad("30000");
+
+            $this->assertTrue($this->selenium->isTextPresent("The zip file is not valid"), "Can upload corrupt theme");
+        }
+    }
+
     function testActivateTheme()
     {
         echo "<div style='background-color: green; color: white;'><h2>testActivateTheme</h2></div>";
@@ -191,12 +216,14 @@ class TestOfAdminAppearance extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->assertTrue($this->selenium->isTextPresent("header1"), "Can't add widget header. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget header. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("header1"), "Can't add widget header. header1 not present. ERROR");
 
         //remove widget
         $this->selenium->click("link=Delete");
         $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue( ! $this->selenium->isTextPresent("header1"), "Can't delete widget header. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget header. ERROR" );
+        $this->assertTrue( ! $this->selenium->isTextPresent("header1"), "Can't delete widget header. header1 still present. ERROR");
     }
 
     private function widgetsCategories()
@@ -219,11 +246,13 @@ class TestOfAdminAppearance extends WebTestCase {
         $this->selenium->click("//input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("30000");
 
+        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget categories. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("categories1"), "Can't add widget categories. ERROR");
 
         //remove widget
         $this->selenium->click("link=Delete");
         $this->selenium->waitForPageToLoad("30000");
+        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget categories. ERROR" );
         $this->assertTrue( ! $this->selenium->isTextPresent("categories1"), "Can't delete widget categories. ERROR");
     }
 
@@ -247,11 +276,13 @@ class TestOfAdminAppearance extends WebTestCase {
         $this->selenium->click("//input[@type='submit']") ;
         $this->selenium->waitForPageToLoad("30000");
 
+        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget footer. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("footer1"), "Can't add widget footer. ERROR");
 
         //remove widget
         $this->selenium->click("link=Delete");
         $this->selenium->waitForPageToLoad("30000");
+        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget footer. ERROR" );
         $this->assertTrue( ! $this->selenium->isTextPresent("footer1"), "Can't delete widget footer. ERROR");
     }
 }
