@@ -67,7 +67,7 @@
                                         <input type="file" name="photos[]" />
                                     </div>
                                 </div>
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
+                                <a href="#" onclick="addNewPhoto(); return false;" class="add_more"><?php _e('Add more photos', 'modern'); ?></a>
                             </div>
                         </div>
 

@@ -524,7 +524,7 @@ class ItemForm extends Form {
         if($resources!=null && is_array($resources) && count($resources)>0) {
             foreach($resources as $_r) { ?>
                 <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                    <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete"><?php _e('Delete'); ?></a>
+                    <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a onclick="javascript:return confirm('<?php _e('Confirm permanent delete?'); ?>')" href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete" title="<?php _e('Delete'); ?>">&nbsp;</a>
                 </div>						
             <?php }
         }
@@ -551,15 +551,15 @@ class ItemForm extends Form {
         a.style.fontSize = 'x-small';
         a.setAttribute('href', '#');
         a.setAttribute('divid', id);
-        a.onclick = function() { re(this.getAttribute('divid')); return false; }
-        a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
+        a.setAttribute('title', '<?php _e('Remove'); ?>');
+        a.onclick = function() { re(this.getAttribute('divid')); return false; }        
 
         var d = ce('div');
         d.setAttribute('id', id);
-        d.setAttribute('style','padding: 4px 0;')
 
-        d.appendChild(i);
         d.appendChild(a);
+        d.appendChild(i);
+
 
         gebi('photos').appendChild(d);
     }
