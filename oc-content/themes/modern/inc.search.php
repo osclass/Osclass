@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -19,7 +18,6 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
 ?>
 
 <script type="text/javascript">
@@ -57,7 +55,7 @@
     }
 </script>
 
-<form action="<?php echo osc_base_url(true) ; ?>" method="post" class="search" onsubmit="javascript:return doSearch();">
+<form action="<?php echo osc_base_url(true) ; ?>" method="get" class="search" onsubmit="javascript:return doSearch();">
     <input type="hidden" name="page" value="search" />
     <fieldset class="main">
         <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : __("ie. PHP Programmer", 'modern') ; ?>" />
