@@ -90,7 +90,7 @@ class TestOfAdminItems extends WebTestCase {
 
     function testMedia()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
@@ -124,7 +124,7 @@ class TestOfAdminItems extends WebTestCase {
     }
 
     // todo test minim lenght title, description , contact email
-    private function insertItem($bPhotos = 'FALSE')
+    private function insertItem($bPhotos = FALSE )
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Items");
@@ -318,7 +318,6 @@ class TestOfAdminItems extends WebTestCase {
             Preference::newInstance()->update(array('s_value' => 0)
                                              ,array('s_name'  => 'moderate_comments'));
         }
-
         // insert comment from frontend
         echo "<".osc_item_url_ns( $item['pk_i_id'] )."><br>";
 
@@ -381,8 +380,8 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->click("link=» Manage items");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title_item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title_item')]/td/span/a[text()='Delete']");
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
@@ -412,18 +411,20 @@ class TestOfAdminItems extends WebTestCase {
 
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Can't activate comment. ERROR" );
         // only can delete resources
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - MEDIA DELETE</div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'image/png')]/td/div/span/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
+        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - MEDIA DELETE</div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'image/png')]/td/div/span/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
+        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 0 to 0 of 0 entries"), "Can't delete media. ERROR" );
 
         // DELETE ITEM

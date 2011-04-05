@@ -88,7 +88,7 @@ class TestOfAdminPages extends WebTestCase {
         $this->editPage('test_page_example') ;
         flush();
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Page edit - DELETE A FIRST PAGE</div>";
-        $this->deletePage('test_page_example') ;
+        $this->deletePage('new foo new') ;
     }
 
     /**
@@ -116,18 +116,6 @@ class TestOfAdminPages extends WebTestCase {
         $this->selectAllAndDelete();
 
     }
-
-////    function testSearch()
-////    {
-////        echo "<div style='background-color: green; color: white;'>Admin - Table search -</div>";
-////        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table search - LOGIN </div>";
-////        $this->loginCorrect() ;
-////        flush();
-////
-////        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table search - TESTING TABLE SEARCH</div>";
-////        $this->tableSearch();
-////        flush();
-////    }
 
     public function testTableNavigation()
     {
@@ -252,17 +240,17 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'$internal_name')]");
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Edit']");
-
-        // editing page ...
-        $this->selenium->type("s_internal_name", "new foo");
-        $this->selenium->type("en_US#s_title", "new bar");
-        $this->selenium->type("en_US#s_text", "new foobar");
-        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$internal_name')]");
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("30000");
 
-        sleep(1); // time to load FM
+        // editing page ...
+        $this->selenium->type("s_internal_name", "new foo new");
+        $this->selenium->type("en_US#s_title", "new bar");
+        $this->selenium->click("xpath=//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        sleep(2); // time to load FM
 
         if( $this->selenium->isTextPresent("The page has been updated") ){
             $this->assertTrue("text present");
@@ -277,12 +265,12 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'$internal_name')]");
-        $this->selenium->click("//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Delete']");
+        $this->selenium->mouseOver("//table/tbody/tr/td[contains(.,'$internal_name')]");
+        $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("30000");
 
         sleep(1); // time to load FM
-
+        
         if( $this->selenium->isTextPresent('One page has been deleted correctly') ){
             $this->assertTrue("text present");
         } else {
