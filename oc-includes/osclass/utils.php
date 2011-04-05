@@ -673,6 +673,11 @@ function _unzip_file_ziparchive($file, $to) {
     if ($zipopen !== true) {
         return 2;
     }
+    // The zip is empty
+    if($zip->numFiles==0) {
+        return 2;
+    }
+    
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
@@ -727,7 +732,7 @@ function _unzip_file_pclzip($zip_file, $to) {
 
     // check if the zip is not empty
     if (count($files) == 0) {
-        return 3;
+        return 2;
     }
 
     // Extract the files from the zip
