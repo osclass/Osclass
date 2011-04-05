@@ -70,9 +70,9 @@ option.pad { margin-left:10px;}
 /**
  * Publish button
  */
-#form_publish .publish_button { background:#ec4901 url(../images/button_link_bg.gif) repeat-x top; border:1px solid #c54f00; float:right; margin:9px 10px 0 0; padding:6px 10px 7px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
-#form_publish .publish_button a { background:url(../images/button_link_icon.gif) no-repeat 0 2px; color:#FFF; float:left; padding-left:15px; text-decoration:none; }
-#form_publish .publish_button a:hover { text-decoration:underline;}
+#header .publish_button { background:#ec4901 url(../images/button_link_bg.gif) repeat-x top; border:1px solid #c54f00; float:right; margin:9px 10px 0 0; padding:6px 10px 7px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+#header .publish_button a { background:url(../images/button_link_icon.gif) no-repeat 0 3px; color:#FFF; float:left; padding-left:13px; text-decoration:none; font-weight:bold; }
+#header .publish_button a:hover { text-decoration:underline;}
 
 
 
@@ -105,6 +105,17 @@ option.pad { margin-left:10px;}
 .home #main { float:left; width:695px; }
 .home #sidebar { float:right; width:240px; }
 .home .search { border-bottom:1px solid #BBB; margin:0 0 15px; }
+
+/*
+ * Home Page: Search form
+ */
+#search_container .search { clear:both; }
+#search_container .search #expand_advanced { font-size:11px; margin-left:10px;}
+#search_container .search .extras { display:none; }
+#search_container .publish_button { background:#ec4901 url(../images/button_link_bg.gif) repeat-x top; border:1px solid #c54f00; float:right; margin:9px 10px 0 0; padding:6px 10px 7px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+#search_container .margin-bottom { margin-bottom:10px; margin-top:0; }
+#search_container .publish_button a { background:url(../images/button_link_icon.gif) no-repeat 0 2px; color:#FFF; float:left; padding-left:15px; text-decoration:none; }
+#search_container .publish_button a:hover { text-decoration:underline; }
 
 /**
  * Home Page: Categories

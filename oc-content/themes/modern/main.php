@@ -30,7 +30,7 @@
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div id="form_publish">
+            <div id="search_container">
                 <?php osc_current_web_theme_path('inc.search.php') ; ?>
             </div>
             <div class="content home">
