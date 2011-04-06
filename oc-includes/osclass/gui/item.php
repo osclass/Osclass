@@ -33,7 +33,7 @@
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
-                        <h1><span class="price"><?php echo osc_item_formated_price() ; ?></span> <strong><?php echo osc_item_title() ; ?></strong></h1>
+                        <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title(); ?></strong></h1>
                         <p id="report">
                             <strong><?php _e('Mark as', 'modern') ; ?></strong>
                             <span>
@@ -118,20 +118,25 @@
                     <?php } ?>
                 </div>
                 <div id="sidebar">
+                    <?php if( osc_images_enabled_at_items() ) { ?>
                     <div id="photos">
                         <?php while ( osc_has_item_resources() ) { ?>
-                            <img src="<?php echo osc_resource_url() ; ?>" width="320" />
+                            <img src="<?php echo osc_resource_url() ; ?>" width="320" alt="" title=""/>
                         <?php } ?>
                     </div>
+                    <?php } ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
+                        <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_item_contact_name(); ?></p>
+                        <?php if(osc_item_show_email()) { ?>
+                        <p class="email"><?php _e('E-mail', 'modern'); ?>: <?php echo osc_item_contact_email(); ?></p>
+                        <?php } ?>
+                        <?php if ( osc_user_phone() != '' ) { ?>
+                        <p class="phone"><?php _e("Tel", 'modern'); ?>.: <?php echo osc_user_phone() ; ?></p>
+                        <?php } ?>
                         <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="return validate_contact();">
                             <?php osc_prepare_user_info() ; ?>
                             <fieldset>
-                                <h3><?php echo osc_user_name() ; ?></h3>
-                                <?php if ( osc_user_phone() != '' ) { ?>
-                                    <p class="phone"><?php _e("Tel", 'modern'); ?>.: <?php echo osc_user_phone() ; ?></p>
-                                <?php } ?>
                                 <label for="yourName"><?php _e('Your name (optional)', 'modern') ; ?>:</label> <?php ContactForm::your_name(); ?>
                                 <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?>:</label> <?php ContactForm::your_email(); ?>
                                 <label for="phoneNumber"><?php _e('Phone number', 'modern') ; ?>:</label> <?php ContactForm::your_phone_number(); ?>
@@ -163,7 +168,7 @@
                         function validate_contact() {
                             email = $("#yourEmail");
                             message = $('#message');
-                            
+
                             var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
                             var num_error = 0;
 

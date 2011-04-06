@@ -26,11 +26,11 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-        
+
         <!-- only item-edit.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
-        <?php ItemForm::photos_javascript(); ?>
+        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <!-- end only item-edit.php -->
     </head>
     <body>
@@ -39,7 +39,7 @@
             <div class="content add_item">
                 <h1><strong><?php _e('Update your item', 'modern'); ?></strong></h1>
                 <ul id="error_list"></ul>
-                    <form action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
+                    <form name="item" action="<?php echo osc_base_url(true)?>" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <input type="hidden" name="action" value="item_edit_post" />
                         <input type="hidden" name="page" value="item" />
@@ -55,13 +55,15 @@
                                 <div class="row">
                                     <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
                                 </div>
+                                <?php if( osc_price_enabled_at_items() ) { ?>
                                 <div class="row price">
                                     <label><?php _e('Price', 'modern'); ?></label>
                                     <?php ItemForm::price_input_text(); ?>
                                     <?php ItemForm::currency_select(); ?>
                                 </div>
+                                <?php } ?>
                             </div>
-
+                            <?php if( osc_images_enabled_at_items() ) { ?>
                             <div class="box photos">
                                 <h2><?php _e('Photos', 'modern'); ?></h2>
                                 <?php ItemForm::photos(); ?>
@@ -72,6 +74,7 @@
                                 </div>
                                 <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                             </div>
+                            <?php } ?>
                         </div>
 
                         <div class="right_column">
