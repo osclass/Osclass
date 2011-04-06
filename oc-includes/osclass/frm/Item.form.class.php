@@ -340,9 +340,6 @@ class ItemForm extends Form {
                 $("#regionId").attr('disabled',true);
             }
         }
-
-        // Listener: automatically add new file field when the visible ones are full.
-        setInterval("add_file_field()", 250);
     
         /**
          * Validate form
@@ -363,53 +360,65 @@ class ItemForm extends Form {
         );
         
         // Validate fields in each locale.
-        $(".add_item form button").click(function() {          
+        $("form[name=item] button").click(function() {
+            lang_count = $(".title input").length;
             // Title
-            $(".add_item .title input").each(function(){
-                str = $(this).attr('name').replace(/^title\[(.+)_(.+)\]$/,'$2');
+            $(".title input").each(function(){
+                lang_name   = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
+                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
+
+                str = ((lang_count > 1) ? lang_name + ' ' : '');
                 $(this).rules("add", {
                     required: true,
                     minlength: 9,
                     maxlength: 80,
                     messages: {
-                        required: "<?php _e("Title: this field is required"); ?>. (" +  str + ")",
-                        minlength: "<?php _e("Title: enter at least 9 characters"); ?>. (" +  str + ")",
-                        maxlength: "<?php _e("Title: no more than 80 characters"); ?>. (" +  str + ")"
+                        required: str + "<?php _e("Title: this field is required"); ?>.",
+                        minlength: str + "<?php _e("Title: enter at least 9 characters"); ?>.",
+                        maxlength: str + "<?php _e("Title: no more than 80 characters"); ?>."
                     }
                 });                   
             });
             // Description
-            $(".add_item .description textarea").each(function(){
-                str = $(this).attr('name').replace(/^description\[(.+)_(.+)\]$/,'$2');
+            $(".description textarea").each(function(){
+                lang_name   = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
+                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
+
+                str = ((lang_count > 1) ? lang_name + ' ' : '');
                 $(this).rules("add", {
                     required: true,
                     minlength: 10,
                     maxlength: 5000,
                     'minstriptags': true,
                     messages: {
-                        required: "<?php _e("Description: this field is required"); ?>. (" +  str + ")",
-                        minlength: "<?php _e("Description: needs to be longer"); ?>. (" +  str + ")",
-                        maxlength: "<?php _e("Description: no more than 5000 characters"); ?>. (" +  str + ")"
+                        required: str + "<?php _e("Description: this field is required"); ?>.",
+                        minlength: str + "<?php _e("Description: needs to be longer"); ?>.",
+                        maxlength: str + "<?php _e("Description: no more than 5000 characters"); ?>."
                     }
                 });                   
             });
         });
         
         // Code for form validation
-        $(".add_item form").validate({
+        $("form[name=item]").validate({
             rules: {
                 catId: {
                     required: true,
                     digits: true
                 },
+                <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
                     number: true,
                     maxlength: 15
                 },
                 currency: "required",
+                <?php } ?>
+                <?php if(osc_images_enabled_at_items()) { ?>
                 "photos[]": {
                     accept: "<?php echo osc_allowed_extension(); ?>"
                 },
+                <?php } ?>
+                <?php if($path == 'front') { ?>
                 contactName: {
                     minlength: 3,
                     maxlength: 35
@@ -418,6 +427,7 @@ class ItemForm extends Form {
                     required: true,
                     email: true
                 },
+                <?php } ?>
                 regionId: {
                     required: true,
                     digits: true
@@ -437,24 +447,30 @@ class ItemForm extends Form {
             },
             messages: {
                 catId: "<?php _e('Choose one category'); ?>.",
+                <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
                     number: "<?php _e('Price: enter a valid number'); ?>.",
                     maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
                 },
                 currency: "<?php _e("Currency: make your selection"); ?>.",
+                <?php } ?>
+                <?php if(osc_images_enabled_at_items()) { ?>
                 "photos[]": {
                     accept: "<?php printf(__("Photo: must be %s"), osc_allowed_extension()); ?>."
                 },
+                <?php } ?>
+                <?php if($path == 'front') { ?>
                 contactName: {
                     minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
                     maxlength: "<?php _e("Name: no more than 35 characters"); ?>."
                 },
                 contactEmail: {
                     required: "<?php _e("Email: this field is required"); ?>.",
-                    email: "<?php _e("Email: enter a valid address"); ?>."
+                    email: "<?php _e("Invalid email address"); ?>."
                 },
-                regionId: "<?php _e("Province: make your selection"); ?>.",
-                cityId: "<?php _e("City: make your selection"); ?>.",
+                <?php } ?>
+                regionId: "<?php _e("Select a region"); ?>.",
+                cityId: "<?php _e("Select a city"); ?>.",
                 cityArea: {
                     minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
                     maxlength: "<?php _e("City area: no more than 35 characters"); ?>."
@@ -471,24 +487,7 @@ class ItemForm extends Form {
             }
         });
     });
-    
-    
-    /**
-     * Timed: if there are no empty file fields, add new file field.
-     */
-    function add_file_field() {
-        var count = 0;
-        $(".add_item form input[type='file']").each(function(index) {
-            if ( $(this).val() == '' ) {
-                count++;
-            }
-        });
-        if (count == 0) {
-            addNewPhoto();
-        }
-    }
-    
-    
+
     /**
      * Strip HTML tags to count number of visible characters.
      */
@@ -555,6 +554,22 @@ class ItemForm extends Form {
         d.appendChild(a);
 
         gebi('photos').appendChild(d);
+    }
+    // Listener: automatically add new file field when the visible ones are full.
+    setInterval("add_file_field()", 250);
+    /**
+     * Timed: if there are no empty file fields, add new file field.
+     */
+    function add_file_field() {
+        var count = 0;
+        $("input[name='photos[]']").each(function(index) {
+            if ( $(this).val() == '' ) {
+                count++;
+            }
+        });
+        if (count == 0) {
+            addNewPhoto();
+        }
     }
 </script>
 <?php

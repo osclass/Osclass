@@ -67,3 +67,21 @@
 	font-family: Tahoma,"Times New Roman","Bitstream Charter",Times,serif;;
 	font-size: 12px;
 }
+
+#error_list {
+    background: none repeat scroll 0 0 #FEFBEA;
+    border: 1px solid #F7F7F7;
+    display: none;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+#error_list li {
+    background: url("../images/icon-remove.png") no-repeat scroll left center transparent;
+    list-style: none outside none;
+    padding: 2px 0 2px 18px;
+}
+#error_list label {
+    float: none;
+    line-height: 1.35em;
+    width: auto;
+}
