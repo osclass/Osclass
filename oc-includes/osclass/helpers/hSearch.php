@@ -146,8 +146,16 @@
     function osc_search_alert() {
         return View::newInstance()->_get('search_alert');
     }
-    
-        function osc_search_url($params = null) {
+
+    function osc_search_show_all_url( ) {
+        if(osc_rewrite_enabled ()) {
+            return osc_base_url() . 'search/';
+        } else {
+            return osc_base_url(true) . '?page=search';
+        }
+    }
+
+    function osc_search_url($params = null) {
         $url = osc_base_url(true) . '?page=search';
         if($params!=null) {
             foreach($params as $k => $v) {
