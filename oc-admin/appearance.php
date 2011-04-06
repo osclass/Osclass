@@ -44,8 +44,6 @@
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
                         break;
-                        case(3):   $msg = _m('The zip file is empty');
-                        break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the theme');
                         break;

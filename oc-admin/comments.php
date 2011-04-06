@@ -110,6 +110,7 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
+                                            osc_add_flash_message( _m('The comment have been deleted'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 default:                    if( Params::getParam('id') != '' ){

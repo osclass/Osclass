@@ -116,7 +116,12 @@
     }
 
     function osc_item_mod_date() {
-        return osc_item_field("dt_mod_date");
+        $date = osc_item_field("dt_mod_date");
+        if($date!='') {
+            return $date;
+        } else {
+            return osc_item_pub_date();
+        }
     }
 
     function osc_item_price() {
@@ -157,6 +162,10 @@
 
     function osc_item_address() {
         return osc_item_field("s_address");
+    }
+
+    function osc_item_show_email() {
+        return osc_item_field("b_show_email");
     }
 
     function osc_item_zip() {
@@ -354,6 +363,10 @@
         return View::newInstance()->_next('items') ;
     }
 
+    function osc_reset_items() {
+        return View::newInstance()->_reset('items') ;
+    }
+
     function osc_count_items() {
         return osc_priv_count_items() ;
     }
@@ -425,11 +438,6 @@
         //if ($price == 0) return __('Free') ;
         return sprintf('%.02f %s', $price, osc_item_currency() ) ;
     }
-
-
-
-
-
 
     //PRIVATE
     function osc_priv_count_items() {

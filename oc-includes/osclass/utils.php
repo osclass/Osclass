@@ -31,8 +31,8 @@ function osc_deleteResource( $id ) {
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".".$resource['s_extension'];
-        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*".".".$resource['s_extension'];
+        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension'];
+        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
         array_map( "unlink" , glob($resource_thum));
         array_map( "unlink" , glob($resource_original));
     }
@@ -673,6 +673,11 @@ function _unzip_file_ziparchive($file, $to) {
     if ($zipopen !== true) {
         return 2;
     }
+    // The zip is empty
+    if($zip->numFiles==0) {
+        return 2;
+    }
+    
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
@@ -727,7 +732,7 @@ function _unzip_file_pclzip($zip_file, $to) {
 
     // check if the zip is not empty
     if (count($files) == 0) {
-        return 3;
+        return 2;
     }
 
     // Extract the files from the zip

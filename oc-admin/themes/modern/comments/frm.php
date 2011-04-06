@@ -134,7 +134,7 @@
                         <div class="FormElement">
                             <div class="FormElementName"></div>
                             <div class="FormElementInput">
-                                <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=pages';" ><?php _e('Cancel'); ?></button>
+                                <button class="formButton" type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=comments';" ><?php _e('Cancel'); ?></button>
                                 <button class="formButton" type="submit"><?php echo $btn_text; ?></button>
                             </div>
                         </div>

@@ -36,6 +36,12 @@
             //#dev.conquer this fix is needed for the preview of appearance in oc-admin
             if (Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '') $this->setCurrentTheme( Params::getParam('theme') ) ;
             else $this->setCurrentTheme( osc_theme() ) ;
+
+            //#juanramon: check if exists functions.php
+            $functions_path = $this->getCurrentThemePath() . 'functions.php';
+            if(file_exists($functions_path)) {
+                require_once $functions_path;
+            }
         }
 
         /* PRIVATE */

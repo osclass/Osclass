@@ -1,29 +1,31 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
     </head>
     <body>
         <div class="container">
@@ -31,7 +33,7 @@
             <div class="content item">
                 <div id="item_head">
                     <div class="inner">
-                        <h1><span class="price"><?php echo osc_item_formated_price() ; ?></span> <strong><?php echo osc_item_title() ; ?></strong></h1>
+                        <h1><?php if( osc_price_enabled_at_items() ) { ?><span class="price"><?php echo osc_item_formated_price() ; ?></span> <?php } ?><strong><?php echo osc_item_title(); ?></strong></h1>
                         <p id="report">
                             <strong><?php _e('Mark as', 'modern') ; ?></strong>
                             <span>
@@ -116,20 +118,25 @@
                     <?php } ?>
                 </div>
                 <div id="sidebar">
+                    <?php if( osc_images_enabled_at_items() ) { ?>
                     <div id="photos">
                         <?php while ( osc_has_item_resources() ) { ?>
-                            <img src="<?php echo osc_resource_url() ; ?>" width="320" />
+                            <img src="<?php echo osc_resource_url() ; ?>" width="320" alt="" title=""/>
                         <?php } ?>
                     </div>
+                    <?php } ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
+                        <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_item_contact_name(); ?></p>
+                        <?php if(osc_item_show_email()) { ?>
+                        <p class="email"><?php _e('E-mail', 'modern'); ?>: <?php echo osc_item_contact_email(); ?></p>
+                        <?php } ?>
+                        <?php if ( osc_user_phone() != '' ) { ?>
+                        <p class="phone"><?php _e("Tel", 'modern'); ?>.: <?php echo osc_user_phone() ; ?></p>
+                        <?php } ?>
                         <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="return validate_contact();">
                             <?php osc_prepare_user_info() ; ?>
                             <fieldset>
-                                <h3><?php echo osc_user_name() ; ?></h3>
-                                <?php if ( osc_user_phone() != '' ) { ?>
-                                    <p class="phone"><?php _e("Tel", 'modern'); ?>.: <?php echo osc_user_phone() ; ?></p>
-                                <?php } ?>
                                 <label for="yourName"><?php _e('Your name (optional)', 'modern') ; ?>:</label> <?php ContactForm::your_name(); ?>
                                 <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?>:</label> <?php ContactForm::your_email(); ?>
                                 <label for="phoneNumber"><?php _e('Phone number', 'modern') ; ?>:</label> <?php ContactForm::your_phone_number(); ?>
