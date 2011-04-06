@@ -116,7 +116,12 @@
     }
 
     function osc_item_mod_date() {
-        return osc_item_field("dt_mod_date");
+        $date = osc_item_field("dt_mod_date");
+        if($date!='') {
+            return $date;
+        } else {
+            return osc_item_pub_date();
+        }
     }
 
     function osc_item_price() {
@@ -159,6 +164,10 @@
         return osc_item_field("s_address");
     }
 
+    function osc_item_show_email() {
+        return osc_item_field("b_show_email");
+    }
+
     function osc_item_zip() {
         return osc_item_field("s_zip");
     }
@@ -175,7 +184,11 @@
         if ( osc_item_field("b_premium") ) return true ;
         else return false ;
     }
-    
+
+    function osc_item_views() {
+        return osc_item_field("i_num_views") ;
+    }
+
     function osc_item_status() {
         return osc_item_field("e_status");
     }
@@ -293,6 +306,11 @@
     function osc_comment_user_id() {
         return osc_comment_field("fk_i_user_id");
     }
+
+    function osc_delete_comment_url() {
+        return osc_base_url(true) . "?page=item&action=delete_comment&id=" . osc_item_id() . "&comment=" . osc_comment_id();
+    }
+
     //////////////////////////////
     // END HELPERS FOR COMMENTS //
     //////////////////////////////
@@ -321,15 +339,15 @@
     }
 
     function osc_resource_thumbnail_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_thumbnail.".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
     }
 
     function osc_resource_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name").".".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
     }
 
     function osc_resource_original_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_original.".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
     }
     ///////////////////////////////
     // END HELPERS FOR RESOURCES //
@@ -343,6 +361,10 @@
             View::newInstance()->_erase('resources') ;
         }
         return View::newInstance()->_next('items') ;
+    }
+
+    function osc_reset_items() {
+        return View::newInstance()->_reset('items') ;
     }
 
     function osc_count_items() {
@@ -411,15 +433,11 @@
      */
     //osc_formatPrice
     function osc_format_price($price) {
-        if ($price == null) return __('Check with seller') ;
-        if ($price == 0) return __('Free') ;
+        if ($price == 0) return __('Check with seller') ;
+        //if ($price == null) return __('Check with seller') ;
+        //if ($price == 0) return __('Free') ;
         return sprintf('%.02f %s', $price, osc_item_currency() ) ;
     }
-
-
-
-
-
 
     //PRIVATE
     function osc_priv_count_items() {

@@ -32,7 +32,7 @@
                                             if ( $admin["s_password"] == sha1( Params::getParam('password') ) ) {
                                                 if ( Params::getParam('remember') ) {
                                                     //this include contains de osc_genRandomPassword function
-                                                    require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php';
+                                                    require_once osc_lib_path() . 'osclass/helpers/hSecurity.php';
                                                     $secret = osc_genRandomPassword() ;
 
                                                     Admin::newInstance()->update(
@@ -72,33 +72,87 @@
                 case('recover_post'):   //post execution to recover the password
                                         $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
                                         if($admin) {
-                                            require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
-                                            $newPassword = osc_genRandomPassword() ;
-                                            $body = sprintf( __('Your new password is "%s"'), $newPassword) ;
+                                        
+                                            if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                                                if(!osc_check_recaptcha()) {
+                                                    osc_add_flash_message( _m('The Recaptcha code is wrong'), 'admin') ;
+                                                    $this->redirectTo( osc_admin_base_url(true).'?page=login&action=recover' );
+                                                    return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                                                }
+                                            }
+
+                                            require_once osc_lib_path() . 'osclass/helpers/hSecurity.php' ;
+                                            $newPassword = osc_genRandomPassword(40) ;
+                                            //$body = sprintf( __('Your new password is "%s"'), $newPassword) ;
 
                                             Admin::newInstance()->update(
-                                                array('s_password' => sha1($newPassword))
+                                                array('s_secret' => $newPassword)
                                                 ,array('pk_i_id' => $admin['pk_i_id'])
                                             );
+                                            
+                                            $password_link = osc_forgot_admin_password_confirm_url($admin['pk_i_id'], $newPassword);
+                                            $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
 
-                                            $params = array(
-                                                'from_name' => __('OSClass application')
-                                                ,'subject' => __('Recover your password')
-                                                ,'to' => $admin['s_email']
-                                                ,'to_name' => __('OSClass administrator')
-                                                ,'body' => $body
-                                                ,'alt_body' => $body
-                                            );
-                                            osc_sendMail($params) ;
+                                            $content = array();
+                                            $locale = osc_current_user_locale() ;
+                                            if(isset($aPage['locale'][$locale]['s_title'])) {
+                                                $content = $aPage['locale'][$locale];
+                                            } else {
+                                                $content = current($aPage['locale']);
+                                            }
 
-                                            osc_add_flash_message( _m('A new password has been sent to your e-mail'), 'admin') ;
-                                        } else {
-                                            osc_add_flash_message( _m('The email you have entered does not belong to a valid administrator'), 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url(true) . '?page=login&action=recover') ;
+                                            if (!is_null($content)) {
+                                                $words   = array();
+                                                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
+                                                                 '{PASSWORD_LINK}', '{DATE_TIME}');
+                                                $words[] = array($admin['s_name'], $admin['s_email'], osc_page_title(),
+                                                                 $_SERVER['REMOTE_ADDR'], $password_link, $date2);
+                                                $title = osc_mailBeauty($content['s_title'], $words);
+                                                $body = osc_mailBeauty($content['s_text'], $words);
+
+                                                $emailParams = array('subject'  => $title,
+                                                                     'to'       => $admin['s_email'],
+                                                                     'to_name'  => $admin['s_name'],
+                                                                     'body'     => $body,
+                                                                     'alt_body' => $body);
+                                                osc_sendMail($emailParams);
+                                            }
                                         }
-
+                                        
+                                        osc_add_flash_message( _m('A new password has been sent to your e-mail'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url() ) ;
                 break ;
+
+                case('forgot'):         //form to recover the password (in this case we have the form in /gui/)
+                                        $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
+                                        if($admin) {
+                                            $this->doView( 'gui/forgot_password.php' ) ;
+                                        } else {
+                                            osc_add_flash_message( _m('Sorry, the link is not valid'), 'admin') ;
+                                            $this->redirectTo( osc_admin_base_url() ) ;
+                                        }
+                break;
+                case('forgot_post'):
+                                        $admin = Admin::newInstance()->findByIdSecret(Params::getParam('adminId'), Params::getParam('code'));
+                                        if($admin) {
+                                            if(Params::getParam('new_password')==Params::getParam('new_password2')) {
+                                                Admin::newInstance()->update(
+                                                    array('s_secret' => osc_genRandomPassword()
+                                                        , 's_password' => sha1(Params::getParam('new_password'))
+                                                    ), array('pk_i_id' => $admin['pk_i_id'])
+                                                );
+                                                osc_add_flash_message( _m('The password has been changed'), 'admin');
+                                                $this->redirectTo(osc_admin_base_url());
+                                            } else {
+                                                osc_add_flash_message( _m('Error, the password don\'t match'), 'admin') ;
+                                                $this->redirectTo(osc_forgot_admin_password_confirm_url(Params::getParam('adminId'), Params::getParam('code')));
+                                            }
+                                        } else {
+                                            osc_add_flash_message( _m('Sorry, the link is not valid'), 'admin') ;
+                                        }
+                                        $this->redirectTo( osc_admin_base_url() ) ;
+                break;
+            
             }
         }
 

@@ -10,11 +10,11 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_analytics/update.
 */
 
 function google_analytics_call_after_install() {
-    $fields = array() ;
+    $fields              = array() ;
     $fields["s_section"] = 'plugin-google_analytics' ;
-    $fields["s_name"] = 'google_analytics_id' ;
-    $fields["s_value"] = '' ;
-    $fields["e_type"] = 'STRING' ;
+    $fields["s_name"]    = 'google_analytics_id' ;
+    $fields["s_value"]   = '' ;
+    $fields["e_type"]    = 'STRING' ;
     
     $dao_preference = new Preference() ;
     $dao_preference->insert($fields) ;

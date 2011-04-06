@@ -125,7 +125,13 @@
     }
     
     function osc_update_search_url($params, $delimiter = '&amp;') {
-        $merged = array_merge($_REQUEST, $params);
+        $request = Params::getParamsAsArray('get');
+        unset($request['osclass']);
+        if(isset($request['sCategory[0]'])) {
+            unset($request['sCategory']);
+        }
+        unset($request['sCategory[]']);
+        $merged = array_merge($request, $params);
         return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
     }
 
@@ -140,8 +146,16 @@
     function osc_search_alert() {
         return View::newInstance()->_get('search_alert');
     }
-    
-        function osc_search_url($params = null) {
+
+    function osc_search_show_all_url( ) {
+        if(osc_rewrite_enabled ()) {
+            return osc_base_url() . 'search/';
+        } else {
+            return osc_base_url(true) . '?page=search';
+        }
+    }
+
+    function osc_search_url($params = null) {
         $url = osc_base_url(true) . '?page=search';
         if($params!=null) {
             foreach($params as $k => $v) {
@@ -193,7 +207,10 @@
         if ( !View::newInstance()->_exists('list_cities') ) {
             View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region) ) ;
         }
-        return View::newInstance()->_next('list_cities') ;
+        $result = View::newInstance()->_next('list_cities');
+
+        if (!$result) View::newInstance()->_erase('list_cities') ;
+        return $result;
     }
 
     function osc_count_list_countries() {
@@ -216,7 +233,7 @@
         }
         return View::newInstance()->_count('list_cities') ;
     }
-    
+
     function osc_list_region_name() {
         return osc_field(osc_list_region(), 'region_name', '') ;
     }
@@ -225,6 +242,12 @@
         return osc_field(osc_list_region(), 'items', '') ;
     }
 
-    
+    function osc_list_city_name() {
+        return osc_field(osc_list_city(), 'city_name', '') ;
+    }
+
+    function osc_list_city_items() {
+        return osc_field(osc_list_city(), 'items', '') ;
+    }
 
 ?>

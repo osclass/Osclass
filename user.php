@@ -76,13 +76,16 @@ class CWebUser extends WebSecBaseModel
             break ;
             case('alerts'):         //alerts
                                     $aAlerts = Alerts::newInstance()->getAlertsFromUser( Session::newInstance()->_get('userId') ) ;
+                                    $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId'));
                                     foreach($aAlerts as $k => $a) {
                                         $search = osc_unserialize(base64_decode($a['s_search'])) ;
                                         $search->limit(0, 3) ;
                                         $aAlerts[$k]['items'] = $search->search() ;
                                     }
-                                    
+
                                     $this->_exportVariableToView('alerts', $aAlerts) ;
+                                    View::newInstance()->_reset('alerts') ;
+                                    $this->_exportVariableToView('user', $user) ;
                                     $this->doView('user-alerts.php') ;
             break;
             case('change_email'):           //change email
@@ -103,7 +106,7 @@ class CWebUser extends WebSecBaseModel
                                                         
                                                         UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
 
-                                                        $code = osc_genRandomPassword(50) ;
+                                                        $code = osc_genRandomPassword(30) ;
                                                         $date = date('Y-m-d H:i:s') ;
 
                                                         $userManager = new User() ;
@@ -121,11 +124,11 @@ class CWebUser extends WebSecBaseModel
                                                         }
 
                                                         if (!is_null($content)) {
-                                                            $validationLink = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+                                                            $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
 
                                                             $words = array() ;
-                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}') ;
-                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), osc_base_url(), osc_page_title(), $validationLink) ;
+                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
+                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), osc_base_url(), osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url) ;
                                                             $title = osc_mailBeauty($content['s_title'], $words) ;
                                                             $body = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -159,35 +162,7 @@ class CWebUser extends WebSecBaseModel
                                                 }
                                             }
             break;
-            // THIS HAVE BEEN MOVED TO user-non-secure.php
-            /*case 'change_email_confirm':    //change email confirm
-                                            if ( Params::getParam('userId') && Params::getParam('code') ) {
-
-                                                $userManager = new User() ;
-                                                $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
-
-                                                if( $user['s_pass_code'] == Params::getParam('code') ) {
-                                                    $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') ) ;
-                                                    $userManager->update(
-                                                        array('s_email' => $userEmailTmp['s_new_email'])
-                                                        ,array('pk_i_id' => $userEmailTmp['fk_i_user_id'])
-                                                    );
-
-                                                    osc_add_flash_message( _m('Your email has been changed successfully'));die;
-                                                    //$this->redirectTo( osc_user_profile_url() ) ;
-                                                } else {
-                                                    osc_add_flash_message( _m('Sorry, the link is not valid'));
-                                                    $this->redirectTo( osc_base_url() ) ;
-                                                }
-                                            } else {
-                                                osc_add_flash_message( _m('Sorry, the link is not valid'));
-                                                    $this->redirectTo( osc_base_url() ) ;
-                                            }*/
-            break;
             case('change_password'):        //change password
-                                            // No variables needed
-                                            //$user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
-                                            //$this->_exportVariableToView('user', $user) ;
                                             $this->doView('user-change_password.php') ;
             break;
             case 'change_password_post':    //change password post
@@ -227,8 +202,7 @@ class CWebUser extends WebSecBaseModel
 
                                             $this->doView('user-items.php');
 
-            break;
-            
+            break;            
             case 'unsub_alert':
                 $email = Params::getParam('email');
                 $alert = Params::getParam('alert');
@@ -238,21 +212,8 @@ class CWebUser extends WebSecBaseModel
                 } else {
                     osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
-                osc_redirectTo(osc_user_alerts_url());
-            break;
-            
-            
-            case 'deleteResource':
-                $id   = Params::getParam('id') ;
-                $name = Params::getParam('name') ;
-                $fkid = Params::getParam('fkid') ;
-
-                osc_deleteResource($id);
-
-                ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name) );
-
-                $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
-            break;
+                $this->redirectTo(osc_user_alerts_url());
+            break;            
         }
     }
 

@@ -1,3 +1,21 @@
+OSClass 2.0 2010-04-06
+---------------------------
+- Added several helpers to
+- Remember me is working in admin and user login.
+- Fixed RSS.
+- Fixed a lot of flash messages.
+- If ZipArchive is not compiled, now we use an external lib: pclzip.
+- Pre-fill comment form.
+- Improved photos validation through mime.
+- Auto-login after a user has validated an account.
+- Improved comment moderation.
+- Plugins/themes can be translated.
+- Permalinks: most links are user-friendly now.
+- New user dashboard.
+- Registered users can delete here own comments.
+- Recaptcha added to: comments, recover password, item contact.
+- Several small bugs fixed.
+
 OSClass 2.0 RC 2010-02-23
 ---------------------------
 - New structure based on Classes

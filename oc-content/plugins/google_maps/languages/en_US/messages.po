@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OSClass 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-06 12:55+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
+"Language-Team: OSClass <info@osclass.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SearchPath-0: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps\n"
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:13
+msgid "Congratulations. The plugin is now configured"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:25
+msgid "Please enter your Google Maps"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:25
+msgid "developer key"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:26
+msgid "Save"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_maps/admin.php:31
+msgid "You can freely obtain a developer key after signing up on this URL"
+msgstr ""
+

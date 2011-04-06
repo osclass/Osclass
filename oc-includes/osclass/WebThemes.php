@@ -36,16 +36,22 @@
             //#dev.conquer this fix is needed for the preview of appearance in oc-admin
             if (Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '') $this->setCurrentTheme( Params::getParam('theme') ) ;
             else $this->setCurrentTheme( osc_theme() ) ;
+
+            //#juanramon: check if exists functions.php
+            $functions_path = $this->getCurrentThemePath() . 'functions.php';
+            if(file_exists($functions_path)) {
+                require_once $functions_path;
+            }
         }
 
         /* PRIVATE */
         private function setCurrentThemePath() {
-            if ( file_exists( osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ) ) {
+            if ( file_exists( osc_themes_path() . $this->theme . '/' ) ) {
                 $this->theme_exists = true ;
-                $this->theme_path = osc_base_path() . 'oc-content/themes/' . $this->theme . '/' ;
+                $this->theme_path = osc_themes_path() . $this->theme . '/' ;
             } else {
                 $this->theme_exists = false ;
-                $this->theme_path = osc_base_path()  . 'oc-includes/osclass/gui/' ;
+                $this->theme_path = osc_lib_path() . 'osclass/gui/' ;
             }
         }
 
@@ -90,12 +96,11 @@
          */
         public function getListThemes() {
             $themes = array();
-            $dir = opendir( osc_base_path() .  'oc-content/themes');
+            $dir = opendir( osc_themes_path() );
             while ($file = readdir($dir)) {
-                //if(!preg_match('/\.php$/i', $file) && !preg_match('/^\./i', $file)){
-                    if (preg_match('/^[a-z0-9_]+$/i', $file))
-                        $themes[] = $file;
-                //}
+                if (preg_match('/^[a-z0-9_]+$/i', $file)) {
+                    $themes[] = $file;
+                }
             }
             closedir($dir);
             return $themes;
@@ -106,7 +111,7 @@
          * @return <type> 
          */
         function loadThemeInfo($theme) {
-            $path = osc_base_path() . 'oc-content/themes/' . $theme . '/index.php';
+            $path = osc_themes_path() . $theme . '/index.php';
             if (!file_exists($path))
                 return false;
             require_once $path;

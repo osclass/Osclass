@@ -46,7 +46,7 @@ $(document).ready(function(){
                 <?php AlertForm::email_text(); ?>
 
             <?php }; ?>
-            <button type="submit" class="sub_button" ><?php _e('Subscribe now!', 'modern');?></button>
+            <button type="submit" class="sub_button" ><?php _e('Subscribe now', 'modern'); ?>!</button>
         </fieldset>
     </form>
 </div>

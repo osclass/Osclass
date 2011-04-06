@@ -19,10 +19,18 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php if(osc_count_items() == 0) { ?>
+            <meta name="robots" content="noindex, nofollow" />
+            <meta name="googlebot" content="noindex, nofollow" />
+        <?php } else { ?>
+            <meta name="robots" content="index, follow" />
+            <meta name="googlebot" content="index, follow" />
+        <?php } ?>
     </head>
     <body>
         <div class="container">

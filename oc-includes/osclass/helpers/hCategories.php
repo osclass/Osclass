@@ -149,6 +149,16 @@
     }
 
     /**
+     * Gets the description of the current category
+     *
+     * @return <string>
+     */
+    function osc_category_description($locale = "") {
+        if ($locale == "") $locale = osc_current_user_locale() ;
+        return osc_category_field("s_description", $locale) ;
+    }
+
+    /**
      * Gets the id of the current category
      *
      * @return <string>

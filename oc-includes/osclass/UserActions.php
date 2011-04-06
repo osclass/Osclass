@@ -68,10 +68,10 @@
                     }
                     
                     if (!is_null($content)) {
-                        $validationLink = sprintf('%sindex.php?page=register&action=validate&id=%d&code=%s', osc_base_url(), $user['pk_i_id'], $input['s_secret']) ;
+                        $validation_url = osc_user_activate_url($user['pk_i_id'], $input['s_secret']);
                         $words   = array();
-                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}') ;
-                        $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), $validationLink) ;
+                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
+                        $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url) ;
                         $title = osc_mailBeauty($content['s_title'], $words) ;
                         $body = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -104,6 +104,12 @@
         {
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
+            Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+            ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+            
+            Session::newInstance()->_set('userName', $input['s_name']);
+            $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
+            Session::newInstance()->_set('userPhone', $phone);
 
             if ( is_array( Params::getParam('s_info') ) ) {
                 foreach (Params::getParam('s_info') as $key => $value) {
@@ -126,10 +132,61 @@
 
             return 0;
         }
+        
+        function recover_password() {
+            $user = User::newInstance()->findByEmail( Params::getParam('s_email') ) ;
+            Session::newInstance()->_set('recover_time', time());
+
+            if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                if(!$this->recaptcha()) {
+                    return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                }
+            }
+            
+            if($user) {
+                $code = osc_genRandomPassword(30);
+                $date = date('Y-m-d H:i:s');
+                $date2 = date('Y-m-d H:i:').'00';
+                User::newInstance()->update(
+                    array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
+                    array('pk_i_id' => $user['pk_i_id'])
+                );
+
+                $password_url = osc_forgot_user_password_confirm_url($user['pk_i_id'], $code);
+                                        
+                $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
+
+                $content = array();
+                $locale = osc_current_user_locale() ;
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
+                }
+
+                if (!is_null($content)) {
+                    $words   = array();
+                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
+                                     '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
+                    $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), osc_page_title(),
+                                     $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
+                    $title = osc_mailBeauty($content['s_title'], $words);
+                    $body = osc_mailBeauty($content['s_text'], $words);
+
+                    $emailParams = array('subject'  => $title,
+                                         'to'       => $user['s_email'],
+                                         'to_name'  => $user['s_name'],
+                                         'body'     => $body,
+                                         'alt_body' => $body);
+                    osc_sendMail($emailParams);
+                }
+            }
+        }
+        
 
         public function recaptcha()
         {
-            require_once osc_base_path() . 'oc-includes/recaptchalib.php';
+            require_once osc_lib_path() . 'recaptchalib.php';
             if ( Params::getParam("recaptcha_challenge_field") != '') {
                 $resp = recaptcha_check_answer (osc_recaptcha_private_key()
                                                ,$_SERVER["REMOTE_ADDR"]

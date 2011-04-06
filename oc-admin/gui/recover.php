@@ -21,7 +21,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><?php _e('OSClass admin panel login') ; ?></title>
-        <script type="text/javascript" src="<?php echo osc_base_url() ; ?>oc-admin/themes/modern/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo osc_admin_base_url() ; ?>themes/modern/js/jquery.js"></script>
         <link type="text/css" href="style/backoffice_login.css" media="screen" rel="stylesheet" />
     </head>
 
@@ -45,6 +45,7 @@
                     <label><?php _e('E-mail') ; ?><br />
                     <input type="text" name="email" id="user_email" class="input" value="" size="20" tabindex="10" /></label>
                 </p>
+                <?php osc_show_recaptcha(); ?>
                 <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Get new password') ; ?>" tabindex="100" /></p>
             </form>
 
