@@ -49,6 +49,19 @@
         return osc_static_page_field("pk_i_id") ;
     }
 
+    function osc_static_page_mod_date() {
+        $date = osc_static_page_field("pk_i_id") ;
+        if($date!='') {
+            return $date;
+        } else {
+            return osc_static_page_pub_date();
+        }
+    }
+
+    function osc_static_page_pub_date() {
+        return osc_static_page_field("dt_pub_date") ;
+    }
+
     function osc_static_page_url($locale = '') {
         if($locale!='') {
             if(osc_rewrite_enabled()) {
