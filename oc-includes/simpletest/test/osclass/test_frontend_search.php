@@ -194,13 +194,14 @@ class TestOfSearch extends WebTestCase {
 
     public function testFinal()
     {
-        require 'itemData.php';
-        $iActions = new ItemActions(false);
-        foreach($aData as $item){
-            echo "<div style='background-color: green; color: white;padding-left:15px;'> - TestOfSearch - delete()</div>";
+        $item = Item::newInstance()->findByConditions( array('s_contact_email' => 'mail@contact.com') ) ;
+        while( $item ) {
+            echo "deleting item ... <br>";
             flush();
-            $item_ = Item::newInstance()->findByConditions(array('s_contact_email' => 'mail@contact.com'));
-            $iActions->delete( $item_['s_secret'], $item_['pk_i_id']) ;
+            $this->deleteItemUrl( osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] ) );
+            flush();
+            $item =Item::newInstance()->findByConditions( array('s_contact_email' => 'mail@contact.com') ) ;
+            flush();
         }
 
         if( $this->bool_enabled_user_validation ){
@@ -223,6 +224,13 @@ class TestOfSearch extends WebTestCase {
      * PRIVATE FUNCTIONS
      */
 
+    private function deleteItemUrl($url)
+    {
+        echo "URL -> $url<br>";
+        $this->selenium->open( $url );
+        $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
+    }
+    
     private function newly()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
