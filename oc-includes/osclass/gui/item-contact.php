@@ -30,9 +30,9 @@
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div class="content item">
+            <div class="content user_forms">
                 <div id="contact" class="inner">
-                    <h2><?php _e('Contact seller', 'modern'); ?></h2>
+                    <h1><?php _e('Contact seller', 'modern'); ?></h1>
                     <?php ContactForm::js_validation(); ?>
                     <form action="<?php echo osc_base_url(true); ?>" method="post" >
                         <fieldset>
