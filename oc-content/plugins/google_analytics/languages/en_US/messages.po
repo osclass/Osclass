@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-28 16:22+0100\n"
+"POT-Creation-Date: 2011-04-06 12:55+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -26,5 +26,9 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_analytics/admin.php:26
 msgid "Web property ID"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-content/plugins/google_analytics/admin.php:26
+msgid "Save"
 msgstr ""
 
