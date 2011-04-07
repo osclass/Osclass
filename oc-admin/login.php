@@ -90,6 +90,7 @@
                                             );
                                             
                                             $password_link = osc_forgot_admin_password_confirm_url($admin['pk_i_id'], $newPassword);
+                                            $password_link = '<a href="' . $password_link . '" >' . $password_link . '</a>'
                                             $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
 
                                             $content = array();

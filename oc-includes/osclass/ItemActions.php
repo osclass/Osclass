@@ -275,6 +275,7 @@ Class ItemActions
         $s_title    = $aItem['s_title'];
         View::newInstance()->_exportVariableToView('item', $item);
         $item_url   = osc_item_url();
+        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
 
         $mPages = new Page();
         $aPage = $mPages->findByInternalName('email_send_friend');
@@ -304,7 +305,7 @@ Class ItemActions
                 ,$aItem['yourName']
                 ,$aItem['yourEmail']
                 ,$aItem['friendEmail']
-                ,osc_base_url()
+                ,'<a href="'.osc_base_url().'" >'.osc_base_url().'</a>'
                 ,$aItem['s_title']
                 ,$aItem['message']
                 ,$item_url
@@ -361,13 +362,16 @@ Class ItemActions
         } else {
             $content = current($aPage['locale']);
         }
+        
+        $item_url = osc_item_url();
+        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
 
         $words   = array();
         $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
                          '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
 
         $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
-                         $phoneNumber, osc_base_url(), $item['s_title'], osc_item_url(), $message );
+                         $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message );
 
         $title = osc_mailBeauty($content['s_title'], $words);
         $body = osc_mailBeauty($content['s_text'], $words);
@@ -439,6 +443,8 @@ Class ItemActions
         
         $item = $this->manager->findByPrimaryKey($itemId) ;
         $itemURL = osc_item_url() ;
+        $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
+
         Params::setParam('itemURL', $itemURL);
 
         if( $authorName == '' || !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
@@ -979,6 +985,8 @@ Class ItemActions
             }
 
             $item_url = osc_item_url();
+            $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+
 
             $all = '';
 
@@ -1010,8 +1018,8 @@ Class ItemActions
                              '{VALIDATION_LINK}', '{VALIDATION_URL}');
             $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
                              $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
-                             $item['s_contact_email'], osc_base_url(), $item['s_title'], $item_url,
-                             osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
+                             $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
+                             osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>'); //$validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -1039,6 +1047,7 @@ Class ItemActions
             }
 
             $item_url = osc_item_url() ;
+            $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
 
             $all = '' ;
 
@@ -1073,8 +1082,8 @@ Class ItemActions
                              '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}');
             $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
-                             $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
-                             $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
+                             $item['s_contact_name'], $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'],
+                             $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>'); //$validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body  = osc_mailBeauty($content['s_text'], $words);
 

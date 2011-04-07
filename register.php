@@ -76,7 +76,7 @@
                                                 if (!is_null($content)) {
                                                     $words   = array();
                                                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{WEB_URL}') ;
-                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), osc_base_url() ) ;
+                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>' ) ;
                                                     $title = osc_mailBeauty($content['s_title'], $words) ;
                                                     $body = osc_mailBeauty($content['s_text'], $words) ;
 
