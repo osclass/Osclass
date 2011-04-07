@@ -33,7 +33,7 @@
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message" style="text-align:center;">
+            <div class="message warning" style="text-align:center;">
                 <?php _e('Please enter your username or e-mail address') ; ?>.<br />
                 <?php _e('You will receive a new password via e-mail') ; ?>.
             </div>
