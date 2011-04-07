@@ -52,6 +52,7 @@ $rewrite->addRule('^(.+)_([0-9]+)$', 'index.php?page=item&id=$2');
 // User rules
 $rewrite->addRule('^user/login$', 'index.php?page=login');
 //$rewrite->addRule('^user/login/done$', 'index.php?page=user&action=login_post'); // juanramon: not used ## it doesn't exist
+$rewrite->addRule('^user/dashboard/?$', 'index.php?page=user&action=dashboard');
 $rewrite->addRule('^user/logout$', 'index.php?page=main&action=logout');
 $rewrite->addRule('^user/register$', 'index.php?page=register&action=register');
 //$rewrite->addRule('^user/register/done$', 'index.php?page=register&action=register_post'); // juanramon: not used
