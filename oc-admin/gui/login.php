@@ -37,13 +37,13 @@
                 <input type="hidden" name="action" value="login_post" />
                 <p>
                     <label>
-                        <?php _e('Username') ; ?><br />
+                        <?php _e('Username') ; ?>
                         <input type="text" name="user" id="user_login" class="input" value="" size="20" tabindex="10" />
                     </label>
                 </p>
                 <p>
                     <label>
-                        <?php _e('Password') ; ?><br />
+                        <?php _e('Password') ; ?>
                         <input type="password" name="password" id="user_pass" class="input" value="" size="20" tabindex="20" />
                     </label>
                 </p>
