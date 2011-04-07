@@ -43,6 +43,12 @@
                     $pattern  = Params::getParam('sPattern');
                     $category = osc_search_category_id();
                     $category = ((count($category) == 1) ? $category[0] : '');
+                    $s_page = '';
+                    $i_page = Params::getParam('iPage');
+
+                    if($i_page != '' && $i_page > 0) {
+                        $s_page = __('page', 'modern') . ' ' . ($i_page + 1) . ' - ';
+                    }
 
                     $b_show_all = ($region == '' && $city == '' & $pattern == '' && $category == '');
                     $b_category = ($category != '');
@@ -51,7 +57,7 @@
                     $b_region   = ($region != '');
 
                     if($b_show_all) {
-                        return __('Show all items', 'modern') . ' - ' . osc_page_title();
+                        return __('Show all items', 'modern') . ' - ' . $s_page . osc_page_title();
                     }
 
                     $result = '';
@@ -81,10 +87,10 @@
                     $result = preg_replace('|\s?&raquo;\s$|', '', $result);
 
                     if($result == '') {
-                        $result = __('Search');
+                        $result = __('Search', 'modern');
                     }
 
-                    return $result . ' - ' .osc_page_title();
+                    return $result . ' - ' . $s_page . osc_page_title();
                 break;
                 case('login'):
                     switch ($section) {

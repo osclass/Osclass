@@ -259,6 +259,8 @@ option.pad { margin-left:10px;}
 .item .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:5px 0; padding:13px 0; width:350px; -moz-border-radius:10px; border-radius:10px; }
 .item #contact { background:#e9f5f9; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px; margin: 20px auto; }
 .item #contact h2 { color:#000; font-size:14px; margin-bottom:8px; padding-left:12px; }
+.item #contact p.name, .item #contact p.email, .item #contact p.phone { margin-left: 16px; font-size:12px; padding:2px; }
+.item #contact form { margin-top: 10px; }
 .item #contact fieldset { background:#FFF; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px;  }
 .item #contact fieldset h3 { color:#000; font-size:12px; margin-bottom:3px; }
 .item #contact fieldset p { font-size:11px; margin-bottom:10px; }
@@ -411,3 +413,8 @@ div.button span { display: -moz-inline-box; display: inline-block; line-height: 
 div.selector { position: relative; padding-left: 10px; overflow: hidden; }
 div.selector span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 div.selector select { position: absolute; opacity: 0; filter: alpha(opacity:0); height: 25px; border: none; background: none; width:95%; }
+
+/*
+AUTOCOMPLETE
+*/
+.ui-autocomplete { width: 200px; }

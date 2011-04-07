@@ -30,9 +30,9 @@
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div class="content item">
+            <div class="content user_forms">
                 <div id="contact" class="inner">
-                    <h2><?php _e('Send to a friend', 'modern'); ?></h2>
+                    <h1><?php _e('Send to a friend', 'modern'); ?></h1>
                     <?php SendFriendForm::js_validation(); ?>
                     <form id="send-friend" name="send-friend" action="<?php echo osc_base_url(true); ?>" method="post">
                         <fieldset>
@@ -50,7 +50,7 @@
                             <label for="friendName"><?php _e("Your friend's name", 'modern'); ?></label> <?php SendFriendForm::friend_name(); ?> <br/>
                             <label for="friendEmail"><?php _e("Your friend's e-mail address", 'modern'); ?></label> <?php SendFriendForm::friend_email(); ?> <br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php SendFriendForm::your_message(); ?> <br/>
-                            <input onclick="return validate_form();" type="button" value="<?php _e('Send', 'modern'); ?>" />
+                            <button onclick="return validate_form();" type="button"><?php _e('Send', 'modern'); ?></button>
                         </fieldset>
                     </form>
                 </div>

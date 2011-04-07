@@ -31,8 +31,8 @@ function osc_deleteResource( $id ) {
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".".$resource['s_extension'];
-        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*".".".$resource['s_extension'];
+        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension'];
+        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
         array_map( "unlink" , glob($resource_thum));
         array_map( "unlink" , glob($resource_original));
     }
