@@ -114,9 +114,7 @@ class CWebItem extends BaseModel
                         $item_url = osc_item_url( ) ;
                         $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
                         $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
-                        $edit_url = '<a href="'.$edit_url.'" >'.$edit_url.'</a>';
                         $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
-                        $delete_url = '<a href="'.$delete_url.'" >'.$delete_url.'</a>';
 
                         $words   = array();
                         $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',

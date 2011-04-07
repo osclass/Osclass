@@ -1019,7 +1019,7 @@ Class ItemActions
             $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
                              $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                              $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
-                             osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>'); //$validation_url );
+                             osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body = osc_mailBeauty($content['s_text'], $words);
 
@@ -1083,7 +1083,7 @@ Class ItemActions
             $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
                              $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
                              $item['s_contact_name'], $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'],
-                             $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>'); //$validation_url );
+                             $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
             $title = osc_mailBeauty($content['s_title'], $words);
             $body  = osc_mailBeauty($content['s_text'], $words);
 

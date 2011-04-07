@@ -169,7 +169,7 @@
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
                                      '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
                     $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', osc_page_title(),
-                                     $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', '<a href="' . $password_url . '">' . $password_url . '</a>', $date2);
+                                     $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
 
