@@ -83,7 +83,6 @@
 
                                             require_once osc_lib_path() . 'osclass/helpers/hSecurity.php' ;
                                             $newPassword = osc_genRandomPassword(40) ;
-                                            //$body = sprintf( __('Your new password is "%s"'), $newPassword) ;
 
                                             Admin::newInstance()->update(
                                                 array('s_secret' => $newPassword)
@@ -106,7 +105,7 @@
                                                 $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
                                                                  '{PASSWORD_LINK}', '{DATE_TIME}');
                                                 $words[] = array($admin['s_name'], $admin['s_email'], osc_page_title(),
-                                                                 $_SERVER['REMOTE_ADDR'], $password_link, $date2);
+                                                                 $_SERVER['REMOTE_ADDR'], $password_link, date(osc_time_format() . '  ' . osc_date_format()));
                                                 $title = osc_mailBeauty($content['s_title'], $words);
                                                 $body = osc_mailBeauty($content['s_text'], $words);
 
