@@ -149,7 +149,7 @@
                             $( "#log" ).attr( "scrollTop", 0 );
                         }
 
-                        $( "#city" ).autocomplete({
+                        $( "#sCity" ).autocomplete({
                             source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
                             minLength: 2,
                             select: function( event, ui ) {
