@@ -418,7 +418,7 @@ class CWebItem extends BaseModel
                 View::newInstance()->_exportVariableToView('item', $item);
 
                 if($this->userId == null) {
-                    osc_add_flash_message(_m('You have to be logged to delete a comment'));
+                    osc_add_flash_message(_m('You must be logged in to delete a comment'));
                     $this->redirectTo( osc_item_url() );
                 }
 
@@ -436,12 +436,12 @@ class CWebItem extends BaseModel
                 }
 
                 if($aComment['fk_i_user_id'] != $this->userId) {
-                    osc_add_flash_message( _m('You cannot delete the comment') );
+                    osc_add_flash_message( _m('The comment wasn\'t added by you - you cannot delete it') );
                     $this->redirectTo( osc_item_url() );
                 }
 
                  $commentManager->deleteByPrimaryKey($commentId);
-                 osc_add_flash_message( _m('The comment has been deleted correctly' ) ) ;
+                 osc_add_flash_message( _m('The comment has been deleted' ) ) ;
                  $this->redirectTo( osc_item_url() );
             break;
             default:
