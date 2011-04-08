@@ -555,7 +555,7 @@ Class ItemActions
 		// Validate input
 		$title_success = false;
 		foreach($title as $key=>$value) {
-            if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
+            if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags($value))) {
                 $title_success = true;
                 break;
             }
@@ -566,7 +566,7 @@ Class ItemActions
 		}
 		$description_success = false;
 		foreach($description as $key=>$value) {
-            if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+            if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags($value))) {
                 $description_success = true;
                 break;
             }
