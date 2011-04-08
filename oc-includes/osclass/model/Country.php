@@ -42,7 +42,7 @@ class Country extends DAO {
 
 	public function listAll($language = "") {
 	    if($language=='') { $language = osc_current_user_locale(); } else { $language = "en_US"; };
-        return $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_c_locale_code = \'%s\' ORDER BY s_name ASC', $this->getTableName(), $language);
+        return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \''.osc_current_user_locale().'\', \''.$language.'\') as sorter FROM %s WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC', $this->getTableName());
 	}
 }
 
