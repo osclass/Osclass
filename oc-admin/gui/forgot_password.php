@@ -33,7 +33,7 @@
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message" style="text-align:center;">
+            <div class="message warning" style="text-align:center;">
                 <?php _e('Type your new password') ; ?>.
             </div>
 
@@ -43,14 +43,20 @@
                         <input type="hidden" name="adminId" value="<?php echo Params::getParam('adminId'); ?>" />
                         <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
                             <p>
-                                <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password" value="" />
+                                <label for="new_email">
+                                    <?php _e('New pasword', 'modern') ; ?>
+                                    <input id="user_pass" type="password" name="new_password" value="" />
+                                </label>
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password2" value="" />
+                                <label for="new_email">
+                                    <?php _e('Repeat new pasword', 'modern') ; ?>
+                                    <input id="user_pass" type="password" name="new_password2" value="" />
+                                </label>
                             </p>
-                            <button type="submit"><?php _e('Change password', 'modern') ; ?></button>
+                            <p class="submit">
+                                <input type="submit" name="submit" id="submit" value="<?php _e('Change password', 'modern') ; ?>" tabindex="100" />
+                            </p>
                     </form>
 
             <p id="nav">

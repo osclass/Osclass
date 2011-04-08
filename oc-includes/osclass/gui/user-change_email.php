@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -19,14 +18,14 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
 ?>
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
     </head>
     <body>
         <div class="container">
@@ -45,12 +44,12 @@
                         <input type="hidden" name="action" value="change_email_post" />
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current e-mail', 'modern') ; ?></label><br />
-                                <input type="text" name="email" value="" />
+                                <label for="email"><?php _e('Current e-mail', 'modern') ; ?></label>
+                                <span><?php echo osc_logged_user_email(); ?></span>
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New e-mail', 'modern') ; ?></label><br />
-                                <input type="text" name="new_email" value="" />
+                                <label for="new_email"><?php _e('New e-mail', 'modern') ; ?> *</label>
+                                <input type="text" name="new_email" id="new_email" value="" />
                             </p>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>

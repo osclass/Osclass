@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0 RC6') ;
+define('OSCLASS_VERSION', '2.0') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -29,7 +29,7 @@ define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
 define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
 define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
 define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
-define('TRANSLATIONS_PATH', LIB_PATH . 'translations/') ;
+define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;

@@ -104,6 +104,9 @@
         {
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
+            Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+            ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+            
             Session::newInstance()->_set('userName', $input['s_name']);
             $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
             Session::newInstance()->_set('userPhone', $phone);

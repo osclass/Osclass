@@ -31,8 +31,8 @@ function osc_deleteResource( $id ) {
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".".$resource['s_extension'];
-        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*".".".$resource['s_extension'];
+        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension'];
+        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
         array_map( "unlink" , glob($resource_thum));
         array_map( "unlink" , glob($resource_original));
     }
@@ -167,6 +167,7 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
+
     if (function_exists('fputs')) {
         // convert variables array to string:
         $data = array();
@@ -186,19 +187,23 @@ function osc_doRequest($url, $_data) {
         $path = $url['path'];
 
         // open a socket connection on port 80
-        $fp = fsockopen($host, 80);
+        $fp = @fsockopen($host, 80);
+        
+        if($fp!==false) {
+            // send the request headers:
+            fputs($fp, "POST $path HTTP/1.1\r\n");
+            fputs($fp, "Host: $host\r\n");
+            fputs($fp, "Referer: OSClass\r\n");
+            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
+            fputs($fp, "Connection: close\r\n\r\n");
+            fputs($fp, $data);
 
-        // send the request headers:
-        fputs($fp, "POST $path HTTP/1.1\r\n");
-        fputs($fp, "Host: $host\r\n");
-        fputs($fp, "Referer: OSClass\r\n");
-        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-        fputs($fp, "Content-length: " . strlen($data) . "\r\n");
-        fputs($fp, "Connection: close\r\n\r\n");
-        fputs($fp, $data);
-
-        // close the socket connection:
-        fclose($fp);
+            // close the socket connection:
+            fclose($fp);
+        } else {
+            osc_add_flash_message( _m('Error, auto-cron is not working propertly'), 'admin');
+        }
     }
 }
 
@@ -668,6 +673,11 @@ function _unzip_file_ziparchive($file, $to) {
     if ($zipopen !== true) {
         return 2;
     }
+    // The zip is empty
+    if($zip->numFiles==0) {
+        return 2;
+    }
+    
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
@@ -722,7 +732,7 @@ function _unzip_file_pclzip($zip_file, $to) {
 
     // check if the zip is not empty
     if (count($files) == 0) {
-        return 3;
+        return 2;
     }
 
     // Extract the files from the zip

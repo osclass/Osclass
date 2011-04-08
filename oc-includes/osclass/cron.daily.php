@@ -32,5 +32,6 @@ if(!defined('__OSC_LOADED__')) {
 	// THEY WILL RUN DAILY
 	osc_runAlert('DAILY');
 
+    osc_run_hook('cron_daily');
 
 ?>

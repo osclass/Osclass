@@ -47,11 +47,9 @@
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
                         break;
-                        case(1):   $msg = _m('The plugin has been installed correctly');
+                        case(1):   $msg = _m('The plugin has been uploaded correctly');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
-                        break;
-                        case(3):   $msg = _m('The zip file is empty');
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the plugin');
@@ -96,7 +94,7 @@
                     $file = Params::getParam("file");
                     if($file!="") {
                         // We pass the GET variables (in case we have somes)
-                        if(preg_match('|(.+?)\?(.*)|', $_REQUEST['file'], $match)) {
+                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
                             $file = $match[1];
                             if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
                                 for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {

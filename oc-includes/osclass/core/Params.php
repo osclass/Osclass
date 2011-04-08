@@ -72,6 +72,8 @@ class Params
     static function setParam($key, $value)
     {
         $_REQUEST[$key] = $value;
+        $_GET[$key] = $value;
+        $_POST[$key] = $value;
     }
 
     static function _view() {

@@ -87,4 +87,7 @@ function update_cat_stats() {
 update_cat_stats();
 osc_runAlert('HOURLY');
 
+osc_run_hook('cron_hourly');
+
+
 ?>

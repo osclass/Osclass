@@ -49,8 +49,6 @@
                                                 break;
                                                 case(2):   $msg = _m('The zip file is not valid');
                                                 break;
-                                                case(3):   $msg = _m('The zip file is empty');
-                                                break;
                                                 case(-1):
                                                 default:   $msg = _m('There was a problem adding the language');
                                                 break;
@@ -232,6 +230,8 @@
                                                         $this->localeManager->deleteLocale($code) ;
                                                         if (!osc_deleteDir(osc_translations_path() . $code)) {
                                                             osc_add_flash_message(sprintf(_m('Directory "%s" couldn\'t be removed'), $code), 'admin');
+                                                        } else {
+                                                            osc_add_flash_message(sprintf(_m('Directory "%s" has been successfully removed'), $code), 'admin');
                                                         }
                                                     } else {
                                                         osc_add_flash_message(sprintf(_m('Directory "%s" couldn\'t be removed because it\'s the default language. Set another language as default first and try again'), $code), 'admin');

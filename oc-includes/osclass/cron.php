@@ -110,5 +110,7 @@ if(!defined('__OSC_LOADED__')) {
 			//too early for crons
 		}
 	}
+	
+	osc_run_hook('cron');
 
 ?>

@@ -26,12 +26,13 @@ option.pad { margin-left:10px;}
 #header #logo { color:#000; font:30px Georgia, Times, 'Times New Roman', serif; text-decoration:none; }
 #header #logo strong { font-weight:normal; }
 #header #user_menu { display:inline; font-size:11px; position:absolute; right:10px; top:0; }
-#header #user_menu li { border-right:2px solid #e8e8e8; color:#999; display:inline; padding:1px 7px 3px; position:relative; }
+#header #user_menu li { border-right:2px solid #e8e8e8; color:#999; display:inline-block; padding:0 7px; position:relative; }
 #header #user_menu li.last { border:none; padding-right:0; }
-#header #user_menu li ul { background:#FFF; border:1px solid #333; display:none; left:7px; position:absolute; top:16px; -moz-border-radius:5px; border-radius:5px; }
-#header #user_menu li ul li { border-top:1px dotted #DDD; border-right:none; display:block; padding:7px 12px; width:100px; position:static; }
+#header #user_menu li ul { background:#FFF; border:1px solid #333; display:none; left:7px; position:absolute; top:14px; -moz-border-radius:5px; border-radius:5px; }
+#header #user_menu li ul li { border-top:1px dotted #DDD; border-right:none; display:block; width:100px; padding:0 0; position:static; }
+#header #user_menu li ul li a { display:block; padding:7px 12px 7px 12px; }
 #header #user_menu li ul li.first { border:none; }
-#header #user_menu li.with_sub strong { background:url(../images/language_arrow.gif) no-repeat right center; color:#069; font-weight:normal; padding-right:10px !important; text-decoration: underline; }
+#header #user_menu li.with_sub strong { background:url(../images/language_arrow.gif) no-repeat right center; color:#069; font-weight:normal; padding-right:10px !important; text-decoration: underline; cursor:pointer; }
 #header #user_menu li form { background:#FFF; border:1px solid #333; display:none; left:7px; padding:13px; position:absolute; top:16px; z-index:9999; -moz-border-radius:5px; border-radius:5px; }
 #header #user_menu li form label { color:#000; display:inline; font-weight:bold; margin-bottom:3px; }
 #header #user_menu li form input { border: 1px solid #BBB; display:inline; margin-bottom:10px; padding:3px; }
@@ -136,15 +137,17 @@ option.pad { margin-left:10px;}
 .ad_list table td.text h4 span { color:#CCC; margin:0 5px; }
 .ad_list table td.text p { line-height:16px; }
 .ad_list table td.price { padding-left:25px; }
-.ad_list .paginate { padding:25px 0 20px; text-align:center; }
-.ad_list .paginate a { border:1px solid #EEE; margin:0 1px; padding:5px 10px; text-decoration:none; }
-.ad_list .paginate a.previous { margin-right:15px; }
-.ad_list .paginate a.next { margin-left:15px; }
-.ad_list .paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }
-.ad_list .paginate span { color:#999; margin:0 1px; padding:5px; }
-.ad_list .paginate em { border:1px solid #EEE; color:#AAA; font-style:normal; margin:0 1px; padding:5px 10px; text-decoration:none; }
-.ad_list .paginate em.previous { margin-right:15px; }
-.ad_list .paginate em.next { margin-left:15px; }
+
+/* Pagination */
+.paginate { padding:25px 0 20px; text-align:center; }
+.paginate a { border:1px solid #EEE; margin:0 1px; padding:5px 10px; text-decoration:none; }
+.paginate a.previous { margin-right:15px; }
+.paginate a.next { margin-left:15px; }
+.paginate strong { border:1px solid #EEE; color:#F30; margin:0 1px; padding:5px 10px; }
+.paginate span { color:#999; margin:0 1px; padding:5px; }
+.paginate em { border:1px solid #EEE; color:#AAA; font-style:normal; margin:0 1px; padding:5px 10px; text-decoration:none; }
+.paginate em.previous { margin-right:15px; }
+.paginate em.next { margin-left:15px; }
 
 /* Filters */
 .list .filters { background:#e9f5f9; border: 1px solid #bed7df; border-top:none; clear:both; margin-bottom:15px; padding:15px 10px; width:218px; -moz-border-radius-bottomleft: 15px; border-bottom-left-radius: 15px; }
@@ -256,6 +259,8 @@ option.pad { margin-left:10px;}
 .item .inner { background:#f2f2f2; border:1px solid #DDD; clear:both; margin:5px 0; padding:13px 0; width:350px; -moz-border-radius:10px; border-radius:10px; }
 .item #contact { background:#e9f5f9; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px; margin: 20px auto; }
 .item #contact h2 { color:#000; font-size:14px; margin-bottom:8px; padding-left:12px; }
+.item #contact p.name, .item #contact p.email, .item #contact p.phone { margin-left: 16px; font-size:12px; padding:2px; }
+.item #contact form { margin-top: 10px; }
 .item #contact fieldset { background:#FFF; border: 1px solid #d7e3e7; padding:13px; -moz-border-radius:10px; border-radius:10px;  }
 .item #contact fieldset h3 { color:#000; font-size:12px; margin-bottom:3px; }
 .item #contact fieldset p { font-size:11px; margin-bottom:10px; }
@@ -325,7 +330,9 @@ option.pad { margin-left:10px;}
 .add_item .photos input { margin-right:10px; }
 .add_item .location label { float:left; margin-right:10px; width:90px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
-
+.add_item #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
+.add_item #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
+.add_item #error_list label { float:none; width:auto; line-height:1.35em; }
 
 /*
 Uniform Theme: Uniform Default
@@ -406,3 +413,8 @@ div.button span { display: -moz-inline-box; display: inline-block; line-height: 
 div.selector { position: relative; padding-left: 10px; overflow: hidden; }
 div.selector span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 div.selector select { position: absolute; opacity: 0; filter: alpha(opacity:0); height: 25px; border: none; background: none; width:95%; }
+
+/*
+AUTOCOMPLETE
+*/
+.ui-autocomplete { width: 200px; }
