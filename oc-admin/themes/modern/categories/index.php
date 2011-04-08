@@ -32,7 +32,7 @@
         <div class="Header"><?php _e('Categories'); ?></div>
         <style>
             .TableCategories ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-            .TableCategories li { margin: 5px; padding: 5px; width: 700px; }
+            .TableCategories li { margin: 5px; padding: 5px; }
         </style>
         <script type="text/javascript">
             $(function() {
@@ -91,11 +91,20 @@
 				<div id="content_separator"></div>
 				<?php osc_show_flash_message('admin') ; ?>
 				
-				<div id="jsMessage" class="flashMessage">
+				<div id="jsMessage" class="FlashMessage" style="display:none;">
 				</div>
 				
                 <div style="clear: both;"></div>
 				<div id="TableCategories" class="TableCategories">
+				    <ul><li>
+                        <div style="float:left;">
+                            <?php _e('Category name'); ?>
+                        </div>
+                        <div style="float:right;">
+                            <?php _e('Options'); ?>
+                        </div>
+                    </li></ul>
+                    <div style="clear: both;"></div>
 				    <ul id="sortable">
 				    <?php foreach($categories as $category) {?>
                     <?php $data = Category::newInstance()->isParentOf($category['pk_i_id']);
@@ -126,6 +135,14 @@
 				    <?php }; ?>
 				    </ul>
 				</div>
+                <div>
+                    <fieldset>
+                        <legend>
+                            <h1><?php _e('Help'); ?></h1>
+                        </legend>
+                        <?php _e('Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category.'); ?>
+                    </fieldset>
+                </div>
 				</div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
