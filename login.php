@@ -77,10 +77,14 @@ class CWebLogin extends BaseModel
             case('recover_post'):   //post execution to recover the password
                                     require_once LIB_PATH . 'osclass/UserActions.php' ;
                                     $userActions = new UserActions(false) ;
-                                    $userActions->recover_password() ;
-                                    // We ALWAYS show the same message, so we don't give clues about which emails are in our database and which don't!
-                                    osc_add_flash_message( _m('We have sent you an email with the instructions to reset your password')) ;
-                                    $this->redirectTo( osc_base_url() ) ;
+
+                                    // Handle true:false
+                                    if ( $userActions->recover_password() ) {
+                                        osc_add_flash_message( _m('We have sent you an email with the instructions to reset your password')) ;
+                                        $this->redirectTo( osc_base_url() ) ;
+                                    } else {
+                                        $this->redirectTo( osc_recover_user_password_url() ) ;
+                                    }
             break ;
             
             case('forgot'):         //form to recover the password (in this case we have the form in /gui/)

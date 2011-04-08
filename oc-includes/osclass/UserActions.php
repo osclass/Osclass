@@ -134,15 +134,24 @@
         }
         
         function recover_password() {
-            $user = User::newInstance()->findByEmail( Params::getParam('s_email') ) ;
-            Session::newInstance()->_set('recover_time', time());
-
+        
+            // Validate
             if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                 if(!$this->recaptcha()) {
-                    return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                    osc_add_flash_message( _m('The Recaptcha code is wrong') ) ;
+                    return false;
                 }
+            }            
+            if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",Params::getParam('s_email'))) {
+                osc_add_flash_message( _m('Invalid email address') ) ;
+                return false;
             }
             
+            // Find user
+            $user = User::newInstance()->findByEmail( Params::getParam('s_email') ) ;
+            Session::newInstance()->_set('recover_time', time());
+           
+            // Handle results
             if($user) {
                 $code = osc_genRandomPassword(30);
                 $date = date('Y-m-d H:i:s');
@@ -180,7 +189,12 @@
                                          'alt_body' => $body);
                     osc_sendMail($emailParams);
                 }
+            } else {
+                osc_add_flash_message( _m('Email address isn\'t registered to an account') ) ;
+                return false;
             }
+            
+            return true;
         }
         
 
