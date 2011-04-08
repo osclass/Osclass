@@ -42,10 +42,16 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
+
+if( !defined('MULTISITE') ) {
+    define('MULTISITE', 0);
+}
+
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hMessages.php';
@@ -98,6 +104,7 @@ require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
+require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
