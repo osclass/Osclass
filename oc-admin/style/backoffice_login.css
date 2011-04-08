@@ -82,6 +82,11 @@ form p { margin-bottom: 24px; }
 	border-radius: 3px;
 }
 
+.warning {
+    background-color: #FFFFE0;
+    border-color: #E6DB55;
+}
+
 .FlashMessage {
     background-color:#FFEBE8;
     border-color:#CC0000;
