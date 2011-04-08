@@ -71,7 +71,7 @@
                         $validation_url = osc_user_activate_url($user['pk_i_id'], $input['s_secret']);
                         $words   = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                        $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url) ;
+                        $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>') ;
                         $title = osc_mailBeauty($content['s_title'], $words) ;
                         $body = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -168,7 +168,7 @@
                     $words   = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
                                      '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
-                    $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), osc_page_title(),
+                    $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', osc_page_title(),
                                      $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);

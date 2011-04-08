@@ -112,9 +112,8 @@ class CWebItem extends BaseModel
                         $item =  $this->itemManager->findByPrimaryKey($itemId);
                         
                         $item_url = osc_item_url( ) ;
-                        // before page = user , action = item_edit
+                        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
                         $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
-                        // before page = user , action = item_delete
                         $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
 
                         $words   = array();
