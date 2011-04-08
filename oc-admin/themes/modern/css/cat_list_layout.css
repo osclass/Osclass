@@ -14,3 +14,9 @@
 #new_cat_input select {
 	width: 200px;
 }
+.category_li.enabled {
+    background-color: #CCFF99;
+}
+.category_li.disabled {
+    background-color: #FFCCCC;
+}

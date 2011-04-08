@@ -213,7 +213,24 @@ class CWebUser extends WebSecBaseModel
                     osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
                 $this->redirectTo(osc_user_alerts_url());
+<<<<<<< HEAD
             break;            
+=======
+            break;
+            
+            
+            case 'deleteResource':
+                $id   = Params::getParam('id') ;
+                $name = Params::getParam('name') ;
+                $fkid = Params::getParam('fkid') ;
+
+                osc_deleteResource($id);
+
+                ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name) );
+
+                $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
+            break;
+>>>>>>> categories
         }
     }
 

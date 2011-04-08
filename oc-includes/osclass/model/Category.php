@@ -352,5 +352,15 @@ class Category extends DAO
             $this->conn->osc_dbExec($sql);
         }
     }
+    
+    public function update_order($pk_i_id, $order) {
+        $sql = 'UPDATE ' . $this->getTableName() . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
+        return $this->conn->osc_dbExec($sql);
+    }
+
+    public function update_name($pk_i_id, $locale, $name) {
+        $sql = 'UPDATE ' . $this->getTableDescriptionName() . " SET `s_name` = '".$name."' WHERE `fk_i_category_id` = " . $pk_i_id . " AND `fk_c_locale_code` = '" . $locale . "'";
+        return $this->conn->osc_dbExec($sql);
+    }
 
 }

@@ -88,6 +88,24 @@
                     $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
                     break;
 
+                case 'categories_order': // Save the order of the categories
+                    $ids = explode(",", Params::getParam('order'));
+                    $var_l = count($ids)-1;
+                    $catManager = Category::newInstance();
+                    for($var_o=0;$var_o<$var_l;$var_o++) {
+                        echo $catManager->update_order($ids[$var_o], $var_o);
+                    }
+                    echo '1';
+                    break;
+
+                case 'categories_name': // Save the category's name in quick edit
+                    $id = explode("_", Params::getParam('div'));
+                    $name = Params::getParam('name');
+                    $locale = Params::getParam('locale');
+                    Category::newInstance()->update_name($id, $locale, $name);
+                    echo '1';
+                    break;
+
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
