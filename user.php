@@ -213,9 +213,6 @@ class CWebUser extends WebSecBaseModel
                     osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
                 $this->redirectTo(osc_user_alerts_url());
-<<<<<<< HEAD
-            break;            
-=======
             break;
             
             
@@ -230,7 +227,7 @@ class CWebUser extends WebSecBaseModel
 
                 $this->redirectTo( osc_base_url(true) . "?page=item&action=item_edit&id=" . $fkid );
             break;
->>>>>>> categories
+
         }
     }
 
