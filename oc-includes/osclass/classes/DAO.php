@@ -33,6 +33,7 @@ define('DB_CUSTOM_COND', 'DB_CUSTOM_COND');
  */
 abstract class DAO {
     protected $conn ;
+    protected $metadata_conn ;
     
     /**
      * Make a new instance of the DAO from its name.
@@ -47,12 +48,20 @@ abstract class DAO {
     }
 
     public function __construct() {
-       $this->conn = getConnection(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL);
+       $this->conn = getConnection(osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name(), DEBUG_LEVEL) ;
+    }
+
+    public function createMetadataConnection() {
+       $this->metadata_conn = getConnection(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL) ;
     }
     
     public function getConnection() {
-        return $this->conn;
-    } 
+        return $this->conn ;
+    }
+
+    public function getMetadataConnection() {
+        return $this->metadata_conn ;
+    }
 
     /*
      * @return Array returns 0 if 'asc' or 1 if 'desc'
@@ -119,6 +128,15 @@ abstract class DAO {
     public function findByPrimaryKey($pk) {
         return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE %s = '%s'",
             $this->getTableName(), $this->getPrimaryKey(), $pk
+        );
+    }
+
+    /**
+     * @return only for metadata.
+     */
+    public function findByPrimaryKeyInMetadataDB($pk) {
+        return $this->metadata_conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_site like '%%%s%%'",
+            $this->getTableName(), $pk
         );
     }
 
