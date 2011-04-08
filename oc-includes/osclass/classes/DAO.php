@@ -48,7 +48,6 @@ abstract class DAO {
     }
 
     public function __construct() {
-       //echo "#@". osc_db_host() . osc_db_user() . osc_db_password() . osc_db_name() . DEBUG_LEVEL . "@#" ;
        $this->conn = getConnection(osc_db_host(), osc_db_user(), osc_db_password(), osc_db_name(), DEBUG_LEVEL) ;
     }
 
