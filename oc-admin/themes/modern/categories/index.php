@@ -101,9 +101,28 @@
                     <?php $data = Category::newInstance()->isParentOf($category['pk_i_id']);
                         $has_subcategories = (count($data)>0)?true:false;
                     ?>
-				        <li><div class="category_div" category_id="<?php echo $category['pk_i_id'];?>" ><div class=".quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;"><?php echo $category['s_name'];?> <a onclick="js_edit(<?php echo "'".$category['s_name']."', '".$category['pk_i_id']."', '".$category['fk_c_locale_code']; ?>');" href='#'><img src="<?php echo osc_admin_base_url() ; ?>images/edit.png" alt="<?php _e('Quick edit'); ?>" title="<?php _e('Quick edit'); ?>" /></a></div><div style="float:right;"><a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $category['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $category['pk_i_id']; ?>&enabled=<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>'><?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?></a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $category['pk_i_id']; ?>'><?php _e('View subcategories'); ?></a><?php }; ?> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $category['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>
-                        <div style="clear: both;"></div>
-				        </div></li>
+				        <li class="category_li <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" >
+				            <div class="category_div <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" category_id="<?php echo $category['pk_i_id'];?>" >
+				                <div class=".quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;">
+				                    <?php echo $category['s_name'];?> 
+				                    <a onclick="js_edit(<?php echo "'".$category['s_name']."', '".$category['pk_i_id']."', '".$category['fk_c_locale_code']; ?>');" href='#'>
+				                        <img src="<?php echo osc_admin_base_url() ; ?>images/edit.png" alt="<?php _e('Quick edit'); ?>" title="<?php _e('Quick edit'); ?>" />
+				                    </a>
+				                </div>
+				                <div style="float:right;">
+				                    <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $category['pk_i_id']; ?>'>
+				                    <?php _e('Edit'); ?>
+				                    </a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $category['pk_i_id']; ?>&enabled=<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>'>
+				                    <?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?>
+				                    </a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $category['pk_i_id']; ?>'>
+				                    <?php _e('View subcategories'); ?>
+				                    </a><?php }; ?> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $category['pk_i_id']; ?>'>
+				                    <?php _e('Delete'); ?>
+				                    </a>
+				                </div>
+                                <div style="clear: both;"></div>
+				            </div>
+				        </li>
 				    <?php }; ?>
 				    </ul>
 				</div>
