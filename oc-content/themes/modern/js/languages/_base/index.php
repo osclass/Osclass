@@ -1,1 +1,0 @@
-<?php /* hide index from public */ ?>
