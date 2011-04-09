@@ -21,6 +21,13 @@ option.pad { margin-left:10px;}
 .content { clear:both; float:left; margin-bottom:20px; width:960px; }
 .content.home { border-top:1px solid #BBB; }
 
+
+/* Error List */
+#error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
+#error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
+#error_list label { float:none; width:auto; line-height:1.35em; }
+
+
 /* Header */
 #header { border-bottom: 1px solid #BBB; clear:both; float:left; margin:25px 0 0 0; padding:0 0 30px 0; position: relative; width:960px; }
 #header #logo { color:#000; font:30px Georgia, Times, 'Times New Roman', serif; text-decoration:none; }
@@ -330,9 +337,6 @@ option.pad { margin-left:10px;}
 .add_item .photos input { margin-right:10px; }
 .add_item .location label { float:left; margin-right:10px; width:90px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
-.add_item #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
-.add_item #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
-.add_item #error_list label { float:none; width:auto; line-height:1.35em; }
 
 /*
 Uniform Theme: Uniform Default

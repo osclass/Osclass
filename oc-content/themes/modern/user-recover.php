@@ -26,18 +26,11 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-        <script type="text/javascript">
-            function validateForm() {
-                var validator = new FormValidator();
-                try {
-                    validator.addValidation('email', FormValidator.TYPE_EMAIL) ;
-                    return validator.run();
-                } catch(e) {
-                    alert(e);
-                    return false;
-                }
-            }
-        </script>
+
+        <!-- only user area -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('user.js') ; ?>"></script>
+        <!-- end only user area -->
     </head>
     <body>
         <div class="container">
@@ -45,12 +38,15 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Recover your password', 'modern') ; ?></h1>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
+                    <form id="user-recover" action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="recover_post" />
+                        
+                        <ul id="error_list"></ul>
+                        
                         <fieldset>
-                            <label for="email"><?php _e('E-mail', 'modern') ; ?></label> <?php UserForm::email_text() ; ?><br />
-                            <?php osc_show_recaptcha('recover_password'); ?>
+                            <label for="s_email"><?php _e('E-mail', 'modern') ; ?></label> <?php UserForm::email_text() ; ?><br />
+                            <?php osc_show_recaptcha('recover_password'); ?><br />
                             <button type="submit"><?php _e('Send me a new password', 'modern') ; ?></button>
                         </fieldset>
                     </form>

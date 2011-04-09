@@ -50,16 +50,28 @@
                     break;
                     
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
-                    $alert = Params::getParam("alert");
-                    $email = Params::getParam("email");
-                    $userid = Params::getParam("userid");
-                    if($alert!='' && $email!='') {
-                            Alerts::newInstance()->createAlert($userid, $email, $alert);
-                        echo "1";
-                        return true;
+                    $alert = Params::getParam("alert") ;
+                    $email = Params::getParam("alert_email") ;
+                    $userid = (int) Params::getParam("alert_userId") ;
+                    
+                    if (!preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", $email)) 
+                    {
+                        $reply['message'] = _m('Invalid email address') ;
+                        $reply['error'] = true;
+                    } 
+                    else if ($alert != '') 
+                    {
+                        Alerts::newInstance()->createAlert($userid, $email, $alert) ;
+                        $reply['message'] = _m('Success! Subscription added') ;
+                        $reply['error'] = false;
                     }
-                    echo '0';
-                    return false;
+                    else 
+                    {
+                        $reply['message'] = _m('Problem! Refresh and try again') ;
+                        $reply['error'] = true;
+                    }
+                    
+                    echo json_encode($reply) ;
                     break;
                     
                 case 'runhook': //Run hooks

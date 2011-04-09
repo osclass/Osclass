@@ -31,6 +31,11 @@
             <meta name="robots" content="index, follow" />
             <meta name="googlebot" content="index, follow" />
         <?php } ?>
+        
+        <!-- only search.php -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('search.js') ; ?>"></script>
+        <!-- end only search.php -->
     </head>
     <body>
         <div class="container">
@@ -80,7 +85,7 @@
                 </div>
                 <div id="sidebar">
                     <div class="filters">
-                        <form action="<?php echo osc_base_url(true); ?>" method="get" onSubmit="return checkEmptyCategories()">
+                        <form id="search-filter" action="<?php echo osc_base_url(true); ?>" method="get">
                             <input type="hidden" name="page" value="search" />
                             <fieldset class="box location">
                                 <h3><strong><?php _e('Your search', 'modern'); ?></strong></h3>
@@ -142,33 +147,6 @@
                         <?php osc_alert_form() ; ?>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    $(function() {
-                        function log( message ) {
-                            $( "<div/>" ).text( message ).prependTo( "#log" );
-                            $( "#log" ).attr( "scrollTop", 0 );
-                        }
-
-                        $( "#city" ).autocomplete({
-                            source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
-                            minLength: 2,
-                            select: function( event, ui ) {
-                                log( ui.item ?
-                                    "<?php _e('Selected', 'modern'); ?>: " + ui.item.value + " aka " + ui.item.id :
-                                    "<?php _e('Nothing selected, input was', 'modern'); ?> " + this.value );
-                            }
-                        });
-                    });
-                    
-                    function checkEmptyCategories() {
-                        var n = $("#sCategory:checked").length;
-                        if(n>0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                </script>
             </div>
             <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>

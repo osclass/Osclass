@@ -26,6 +26,11 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
+        
+        <!-- only user area -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('user.js') ; ?>"></script>
+        <!-- end only user area -->
     </head>
     <body>
         <div class="container">
@@ -33,21 +38,24 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Recover your password', 'modern') ; ?></h1>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" >
+                    <form id="user-recover-change" action="<?php echo osc_base_url(true) ; ?>" method="post" >
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="forgot_post" />
                         <input type="hidden" name="userId" value="<?php echo Params::getParam('userId'); ?>" />
                         <input type="hidden" name="code" value="<?php echo Params::getParam('code'); ?>" />
+                        
+                        <ul id="error_list"></ul>
+                        
                         <fieldset>
                             <p>
-                                <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password" value="" />
+                                <label for="new_password"><?php _e('New password', 'modern') ; ?> *</label>
+                                <input type="password" name="new_password" id="new_password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password2" value="" />
+                                <label for="new_password2"><?php _e('Re-type new password', 'modern') ; ?> *</label>
+                                <input type="password" name="new_password2" id="new_password2" value="" />
                             </p>
-                            <button type="submit"><?php _e('Change password', 'modern') ; ?></button>
+                            <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>
                     </form>
                 </div>

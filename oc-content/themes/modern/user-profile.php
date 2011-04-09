@@ -26,6 +26,12 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
+        
+        <!-- only user area -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('user.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('location.js') ; ?>"></script>
+        <!-- end only user area -->
     </head>
     <body>
         <div class="container">
@@ -39,8 +45,10 @@
                 </div>
                 <div id="main" class="modify_profile">
                     <h2><?php _e('Update your profile', 'modern') ; ?></h2>
-                    <?php UserForm::location_javascript(); ?>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post">
+                    
+                    <ul id="error_list"></ul>
+                    
+                        <form id="user-profile" action="<?php echo osc_base_url(true) ; ?>" method="post">
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="profile_post" />
                         <fieldset>

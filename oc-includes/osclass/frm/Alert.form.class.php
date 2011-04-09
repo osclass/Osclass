@@ -32,7 +32,7 @@ class AlertForm extends Form {
     }
 
     static public function default_email_text() {
-        return __('Enter your e-mail', 'gui') ;
+        return __('Enter your e-mail') ;
     }
 
     static public function email_text() {
@@ -44,7 +44,12 @@ class AlertForm extends Form {
     }
 
     static public function page_hidden() {
-        parent::generic_input_hidden('page', 'search') ;
+        parent::generic_input_hidden('page', 'ajax') ;
+        return true;
+    }
+    
+    static public function action_hidden() {
+        parent::generic_input_hidden('action', 'alerts') ;
         return true;
     }
 

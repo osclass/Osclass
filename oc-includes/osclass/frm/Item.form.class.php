@@ -150,7 +150,7 @@ class ItemForm extends Form {
             return true ;
         } else if ( count($countries) == 1 ) {
             parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-            echo '</span>' .$countries[0]['s_name'] . '</span>';
+            echo '<span>' .$countries[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
@@ -172,7 +172,7 @@ class ItemForm extends Form {
             return true ;
         } else if ( count($regions) == 1 ) {
             parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-            echo '</span>' .$regions[0]['s_name'] . '</span>';
+            echo '<span>' .$regions[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
@@ -193,7 +193,7 @@ class ItemForm extends Form {
             return true ;
         } else if ( count($cities) == 1 ) {
             parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
-            echo '</span>' .$cities[0]['s_name'] . '</span>';
+            echo '<span>' .$cities[0]['s_name'] . '</span>';
             return false ;
         } else {
             parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;

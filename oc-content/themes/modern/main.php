@@ -26,6 +26,10 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
+        
+        <!-- only main.php -->
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('main_inc.search.js') ; ?>"></script>
+        <!-- end only main.php -->
     </head>
     <body>
         <div class="container">

@@ -128,4 +128,43 @@
         return $txt ;
     }
 
+    
+    /**
+     * Generate javascript (*.js) file for each locale
+     *
+     * @param: *.js file from /themes/{theme_name}/js/languages/
+     *
+     * @return: URL to *.js file in appropriate locale folder
+     */
+    function osc_current_web_theme_js_languages($file) {
+    
+        $locale = osc_current_user_locale();
+        $theme_js_path = WebThemes::newInstance()->getCurrentThemePath() . 'js/';
+        $base_file = 'languages/_base/' . $file;
+        $request_path = 'languages/' . $locale;
+        $request_url =  $request_path  . '/' . $file; // final file we want 
+        
+        // Does locale file exist?
+        if ( !file_exists($theme_js_path . $request_url) ) {
+        
+            // Does locale folder exist?
+            if ( !file_exists($theme_js_path . $request_path) ) {
+                mkdir($theme_js_path . $request_path);
+                file_put_contents(
+                    $theme_js_path . $request_path . '/index.php', 
+                    '<?php /* hide index from public */ ?>'
+                    );
+            }
+            
+            // Does _base file exist?
+            if ( file_exists($theme_js_path . $base_file) ) {    
+                ob_start();
+                include $theme_js_path . $base_file;
+                $locale_content = ob_get_clean();
+                file_put_contents($theme_js_path . $request_url, $locale_content);
+            }
+        }
+        
+        return osc_current_web_theme_js_url($request_url);
+    }
 ?>

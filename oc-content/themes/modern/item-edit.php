@@ -29,8 +29,12 @@
 
         <!-- only item-edit.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript(); ?>
-        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('item.js') ; ?>"></script>
+<?php if(osc_images_enabled_at_items()) { ?>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('item_photos.js') ; ?>"></script> 
+<?php } ?>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('item_plugin_edit.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_languages('location.js') ; ?>"></script>
         <!-- end only item-edit.php -->
     </head>
     <body>
@@ -72,7 +76,7 @@
                                         <input type="file" name="photos[]" />
                                     </div>
                                 </div>
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
+                                <a href="#" id="add-photo"><?php _e('Add more photos', 'modern'); ?>...</a>
                             </div>
                             <?php } ?>
                         </div>
@@ -101,7 +105,9 @@
                                     <?php ItemForm::address_text() ; ?>
                                 </div>
                             </div>
-                            <?php ItemForm::plugin_edit_item(); ?>
+                            <!-- plugin output -->
+                            <div id="plugin-hook"></div>
+                            <!-- / plugin output  -->
                         </div>
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>
