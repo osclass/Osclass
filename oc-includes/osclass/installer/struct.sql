@@ -173,7 +173,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     fk_i_category_id INT UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
     s_name VARCHAR(100) NOT NULL,
-    s_description VARCHAR(200) NULL,
+    s_description TEXT NULL,
     s_slug VARCHAR(100) NOT NULL,
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
