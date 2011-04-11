@@ -20,16 +20,17 @@
  */
 
 function locale_en_US_info() {
-	return array(
-		'name' => 'English (US)'
-		,'short_name' => 'English'
-		,'description' => 'American english translation'
-		,'version' => 1.0
-		,'author_name' => 'OSClass'
-		,'author_url' => 'http://osclass.org/'
-		,'currency_format' => 'USD %.02f'
-        ,'date_format' => 'm/d/Y'
-		,'stop_words' => 'i,a,about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,the'
-	);
+    return array(
+         'name'            => 'English (US)'
+        ,'short_name'      => 'English'
+        ,'description'     => 'American english translation'
+        ,'version'         => 2.0
+        ,'author_name'     => 'OSClass'
+        ,'author_url'      => 'http://osclass.org/'
+        ,'currency_format' => '%.02f %s'
+        ,'date_format'     => 'm/d/Y'
+        ,'stop_words'      => 'i,a,about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,the'
+    );
 }
 
+?>
