@@ -181,6 +181,7 @@
                     osc_sendMail($emailParams);
                 }
             }
+            return true;
         }
         
 
