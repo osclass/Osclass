@@ -34,6 +34,8 @@ class ItemForm extends Form {
         echo '<select name="catId" id="catId">' ;           
         if(isset($default_item)) {
             echo '<option value="">' . $default_item . '</option>' ;
+        } else {
+            echo '<option value="">' . __('Select a category') . '</option>' ;
         }
         foreach($categories as $c) {
             $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
