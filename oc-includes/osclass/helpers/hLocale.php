@@ -77,6 +77,10 @@
         return osc_locale_field("s_name") ;
     }
 
+    function osc_locale_currency_format() {
+        return osc_locale_field("s_currency_format") ;
+    }
+
     function osc_all_enabled_locales_for_admin($indexed_by_pk = false) {
         return ( Locale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
     }
