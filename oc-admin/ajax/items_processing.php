@@ -82,18 +82,19 @@
         /* START - format functions */
         private function toDatatablesFormat() {
             $this->sOutput = '{';
-            $this->sOutput .= '"sEcho": '.$this->sEcho.', ';
-            $this->sOutput .= '"iTotalRecords": '.$this->total.', ';
-            $this->sOutput .= '"iTotalDisplayRecords": '.$this->filtered_total.', ';
+            $this->sOutput .= '"sEcho": '.($this->sEcho).', ';
+            $this->sOutput .= '"iTotalRecords": '.($this->total).', ';
+            $this->sOutput .= '"iTotalDisplayRecords": '.($this->filtered_total).', ';
             $this->sOutput .= '"aaData": [ ';
 
             if(count($this->result)>0) {
                 foreach ($this->result as $aRow)
                 {
+                    
                     $this->sOutput .= "[";
                     $this->sOutput .= '"<input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' />",';
                     $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['s_title'])).' <br/>';
-                    $this->sOutput .= '<span id=\'datatables_quick_edit\'>';
+                    $this->sOutput .= '<div id=\'datatable_wrapper\'><div id=\'datatables_quick_edit\' style=\'position:absolute;\'>';
                     $this->sOutput .= '<a href=\''.osc_admin_base_url(true).'?page=comments&action=list&amp;id='.$aRow['pk_i_id'].'\'>'.  __('View comments') .'</a>';
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=media&action=list&amp;id='. $aRow['pk_i_id'] .'\'>'. __('View media') .'</a>';
                     if(isset($aRow['e_status']) && ($aRow['e_status'] == 'ACTIVE')) {
@@ -108,7 +109,13 @@
                     }
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=item_edit&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Edit') .'</a>';
                                             $var = 'onclick=\"javascript:return confirm(\''.__('This action can not be undone. Are you sure you want to continue?').'\')\"';
-                    $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=delete&amp;id[]='. $aRow['pk_i_id'] .'\'>'. __('Delete') .'</a></span>",';
+                    $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=delete&amp;id[]='. $aRow['pk_i_id'] .'\'>'. __('Delete') .'</a>';
+
+                    if($this->stat){
+                        $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=clear_stat&amp;stat='.$this->stat.'&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Clear') .' '.$this->stat.'</a></div>",';
+                    } else {
+                        $this->sOutput .= '</div></div>",';
+                    }
 
                     /* if $_GET['stat'] */
                     if(isset($aRow['num_total'])) {
@@ -121,8 +128,13 @@
 
                     $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
                     $this->sOutput .= '"'.addslashes($aRow['dt_pub_date']).'"';
-                    if(end($this->result) == $aRow) $this->sOutput .= "]";
-                    else $this->sOutput .= "],";
+
+                    if(end($this->result) == $aRow) {
+                        $this->sOutput .= "]";
+
+                    } else {
+                        $this->sOutput .= "],";
+                    }
                 }
             //$this->sOutput = substr_replace( $this->sOutput, "", -1 ); /* XXX: for some reason this line breaks everything... */
             }

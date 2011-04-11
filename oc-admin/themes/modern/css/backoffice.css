@@ -408,6 +408,12 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 	width: auto;
 }
 
+#datatable_wrapper {
+    	display: none;
+        padding-top: 10px;
+        height: 25px;
+}
+
 #datatables_quick_edit a {
 	color: #1B326F;
 }
