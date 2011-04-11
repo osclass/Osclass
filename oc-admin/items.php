@@ -216,6 +216,32 @@
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
+                case 'clear_stat':
+                                        $id     = Params::getParam('id') ;
+                                        $stat   = Params::getParam('stat') ;
+
+                                        if (!$id)
+                                            return false;
+
+                                        if (!$stat)
+                                            return false;
+
+                                        $id = (int) $id;
+
+                                        if (!is_numeric($id))
+                                            return false;
+                                       
+                                        $success = $this->itemManager->clearStat($id , $stat ) ;
+
+                                        if($success) {
+                                            osc_add_flash_message( _m('The item has been unmarked as')." $stat", 'admin') ;
+                                        } else {
+                                            osc_add_flash_message( _m('The item hasn\'t been unmarked as')." $stat", 'admin') ;
+                                        }
+
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
+
+                break;
                 case 'item_edit':
                                         //require_once LIB_PATH . 'osclass/itemActions.php';
                                         $id = Params::getParam('id') ;
