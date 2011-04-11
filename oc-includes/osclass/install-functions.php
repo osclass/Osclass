@@ -125,7 +125,7 @@ function oc_install( ) {
             if($error_num == 1006 || $error_num == 1044 || $error_num == 1045) {
                 return array('error' => 'Cannot create the database. Check if the admin username and password are correct.');
             }
-            return array('error' => 'Cannot create the database. Unknown error.');
+            return array('error' => 'Cannot create the database. Error number: ' . $error_num . '.');
         }
     }
 
@@ -137,7 +137,7 @@ function oc_install( ) {
         if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
         if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
 
-        return array('error' => 'Cannot connect to database. Unknown error.');
+        return array('error' => 'Cannot connect to database. Error number: ' . $error_num . '.');
     }
     
     if( file_exists(ABS_PATH . 'config.php') ) {
@@ -164,7 +164,7 @@ function oc_install( ) {
         if ( $error_num == 1050 ) {
             return array('error' => 'There are tables with the same name in the database. Change the table prefix or the database and try again.');
         }
-        return array('error' => 'Cannot create the database structure. Unknown error.');
+        return array('error' => 'Cannot create the database structure. Error number: ' . $error_num . '.');
     }
 
     require_once ABS_PATH . 'oc-includes/osclass/locales.php';
@@ -205,7 +205,7 @@ function oc_install( ) {
         if ( $error_num == 1471 ) {
             return array('error' => 'Cannot insert basic configuration. This user has no privileges to \'INSERT\' into the database.');
         }
-        return array('error' => 'Cannot insert basic configuration.');
+        return array('error' => 'Cannot insert basic configuration. Error number: ' . $error_num . '.');
     }
 
     return false;
