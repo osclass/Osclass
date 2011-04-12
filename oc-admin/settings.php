@@ -671,6 +671,22 @@
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
                 break;
+                case('latestsearches'):       //calling the comments settings view
+                                        $this->doView('settings/searches.php');
+                break;
+                case('latestsearches_post'):  // updating comment
+                                        if(Params::getParam('save_latest_searches')=='on') {
+                                            Preference::newInstance()->update(array('s_value' => 1)
+                                                                                ,array('s_name' => 'save_latest_searches'));
+                                        } else {
+                                            Preference::newInstance()->update(array('s_value' => 0)
+                                                                                ,array('s_name' => 'save_latest_searches'));
+                                        }
+                                        Preference::newInstance()->update(array('s_value' => Params::getParam('customPurge'))
+                                                                                ,array('s_name' => 'purge_latest_searches'));
+                                        osc_add_flash_message( _m('Settings have been updated'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches');
+                break;
                 default:                // calling the view
                                         $aLanguages = Locale::newInstance()->listAllEnabled() ;
                                         $aCurrencies = Currency::newInstance()->listAll() ;

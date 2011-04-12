@@ -73,6 +73,13 @@
             }
 
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
+            
+            // ADD TO THE LIST OF LAST SEARCHES
+            if(osc_save_latest_searches()) {
+                if(trim($p_sPattern)!='') {
+                    LatestSearches::newInstance()->insert(array( 's_search' => trim($p_sPattern), 'd_date' => date('Y-m-d H:i:s')));
+                }
+            }
 
             $p_bPic       = Params::getParam('bPic');
             ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0 ;

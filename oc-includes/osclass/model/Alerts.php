@@ -57,6 +57,7 @@ class Alerts extends DAO {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type =\'%s\' AND s_search LIKE \'%s\'', DB_TABLE_PREFIX, $type, addslashes($search));
     }
 
+
     public function getUsersBySearchAndType($search, $type, $active = FALSE) {
         if($active) {
             return $this->conn->osc_dbFetchResults('SELECT a.s_email, a.fk_i_user_id FROM %st_alerts as a WHERE a.e_type =\'%s\' AND b_active = 1 AND a.s_search LIKE \'%s\' ', DB_TABLE_PREFIX, $type, addslashes($search));

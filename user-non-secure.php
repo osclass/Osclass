@@ -42,6 +42,7 @@ class CWebUserNonSecure extends BaseModel
                                                     );
                                                     Item::newInstance()->update(array('s_contact_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                     ItemComment::newInstance()->update(array('s_author_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
+                                                    Alerts::newInstance()->update(array('s_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                     Session::newInstance()->_set('userEmail', $userEmailTmp['s_new_email']) ;
                                                     UserEmailTmp::newInstance()->delete(array('s_new_email' => $userEmailTmp['s_new_email']));
                                                     osc_add_flash_message( _m('Your email has been changed successfully'));

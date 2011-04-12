@@ -87,12 +87,10 @@ function osc_runAlert($type = null) {
                     } else {
                         $user['s_name'] = $user['s_email'];
                     }
-                    echo $user['s_email'];
                     
                     $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);//osc_create_url(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $user['s_email'], 'alert' => $s_search['s_search'])) ;
 
                     $unsub_link = "<a href='". $unsub_link ."'>unsubscribe alert</a>";
-
 
                     $words = array() ;
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}') ;

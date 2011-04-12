@@ -158,6 +158,9 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>
             </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=latestsearches">&raquo; <?php _e('Last Searches'); ?></a>
+            </li>
         </ul>
 
         <h3>
