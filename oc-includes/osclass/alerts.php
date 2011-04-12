@@ -83,6 +83,12 @@ function osc_runAlert($type = null) {
 
                 foreach ($users as $user)
                 {
+                
+                    if($user['fk_i_user_id']!=0) {
+                        $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
+                    } else {
+                        $user['s_name'] = $user['s_email'];
+                    }
                     $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_search']);//osc_create_url(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $user['s_email'], 'alert' => $s_search['s_search'])) ;
                     $unsub_link = '<a href="'.$unsub_link.'" >'.$unsub_link.'</a>';
 
