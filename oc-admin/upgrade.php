@@ -78,12 +78,6 @@ switch($action) {
 
 	case 'unzip-file':
 		if(Params::getParam('file')!='') {
-			/*$zip = new ZipArchive;
-			$res = $zip->open(osc_content_path() . 'downloads/' . Params::getParam('file'));
-			if ($res === TRUE) {
-				@mkdir(ABS_PATH.'oc-temp', 0777);
-				$zip->extractTo(ABS_PATH.'oc-temp/');
-				$zip->close();*/
             @mkdir(ABS_PATH.'oc-temp', 0777);
             $res = osc_unzip_file(osc_content_path() . 'downloads/' . Params::getParam('file'), ABS_PATH.'oc-temp/');
             if($res==1) {
