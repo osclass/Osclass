@@ -1,3 +1,14 @@
+OSClass 2.0.1 2010-04-12
+------------------------
+- Country displays correctly even if there are multiple languages installed.
+- City autocomplete works in search sidebar
+- Fixed forgot password in oc-admin
+- Recaptcha works fine in recover password
+- Fixed helper of format_price. Now it takes from s_currency_format in languages
+- Specify more the errors in installation process
+- If a user change the e-mail, it also changes now in the alert system
+- Prefill categories select with a default string instead of the first category
+
 OSClass 2.0 2010-04-06
 ---------------------------
 - Added several helpers to
