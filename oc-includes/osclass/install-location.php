@@ -83,7 +83,7 @@ function location_international() {
 
     foreach($countries as $c) {
 
-        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&term=all');
+        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . urlencode($c->name) . '&term=all');
         $cities = json_decode($cities_json);
 
         if(!isset($cities->error)) {
