@@ -55,12 +55,28 @@ class CWebUserNonSecure extends BaseModel
                                                 $this->redirectTo( osc_base_url() ) ;
                                             }
             break;
-            
+            case 'activate_alert':
+                $email  = Params::getParam('email');
+                $secret = Params::getParam('secret');
+
+                $result = 0;
+                if($email!='' && $secret!='') {
+                    $result = Alerts::newInstance()->activate($email, $secret );
+                }
+
+                if( $result == 1 ) {
+                    osc_add_flash_message(__('Alert activated.'));
+                }else{
+                    osc_add_flash_message(__('Ops! There was a problem trying to activate alert. Please contact the administrator.'));
+                }
+
+                $this->redirectTo( osc_base_url(true) );
+            break;
             case 'unsub_alert':
                 $email = Params::getParam('email');
-                $alert = Params::getParam('alert');
-                if($email!='' && $alert!='') {
-                    Alerts::newInstance()->delete(array('s_email' => $email, 's_search' => $alert));
+                $secret = Params::getParam('secret');
+                if($email!='' && $secret!='') {
+                    Alerts::newInstance()->delete(array('s_email' => $email, 'S_secret' => $secret));
                     osc_add_flash_message(__('Unsubscribed correctly.'));
                 } else {
                     osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
