@@ -34,7 +34,7 @@ class LatestSearches extends DAO {
     public function getTableName() { return DB_TABLE_PREFIX . 't_latest_searches'; }
 
     public function getSearches($limit = 20) {
-        return $this->conn->osc_dbFetchResults("SELECT d_date, s_search, COUNT(s_search) as i_total FROM %st_latest_searches GROUP BY s_search ORDER BY d_date DESC LIMIT $i", DB_TABLE_PREFIX, $limit);
+        return $this->conn->osc_dbFetchResults("SELECT d_date, s_search, COUNT(s_search) as i_total FROM %st_latest_searches GROUP BY s_search ORDER BY d_date DESC LIMIT %s", DB_TABLE_PREFIX, $limit);
     }
 
     public function getSearchesByDate($time = null) {

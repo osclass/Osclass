@@ -281,16 +281,16 @@
         return null;
     }
     
-    function osc_lastest_search_text() {
+    function osc_latest_search_text() {
         return osc_field(osc_latest_search(), 's_search', '');
     }
 
-    function osc_lastest_search_date() {
-        return osc_field(osc_latest_search(), 's_search', '');
+    function osc_latest_search_date() {
+        return osc_field(osc_latest_search(), 'd_date', '');
     }
 
-    function osc_lastest_search_total() {
-        return osc_field(osc_latest_search(), 's_search', '');
+    function osc_latest_search_total() {
+        return osc_field(osc_latest_search(), 'i_total', '');
     }
 
 ?>
