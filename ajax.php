@@ -53,10 +53,56 @@
                     $alert = Params::getParam("alert");
                     $email = Params::getParam("email");
                     $userid = Params::getParam("userid");
+                    
                     if($alert!='' && $email!='') {
-                            Alerts::newInstance()->createAlert($userid, $email, $alert);
-                        echo "1";
-                        return true;
+                        if( preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$email) ) {
+
+                            $secret = osc_genRandomPassword();
+                            
+                            if( Alerts::newInstance()->createAlert($userid, $email, $alert, $secret) ) {
+                                
+                                if( (int)$userid > 0 ) {
+                                    $user = User::newInstance()->findByPrimaryKey($userid);
+                                    Alerts::newInstance()->activate($email, $secret);
+                                } else {
+                                    $user['s_name'] = "";
+                                    
+                                    // send alert validation email
+                                    $prefLocale = osc_language() ;
+                                    $page = Page::newInstance()->findByInternalName('email_alert_validation') ;
+                                    $page_description = $page['locale'] ;
+
+                                    $_title = $page_description[$prefLocale]['s_title'] ;
+                                    $_body  = $page_description[$prefLocale]['s_text'] ;
+
+                                    $validation_link  = osc_user_activate_alert_url( $secret, $email );
+
+                                    $words = array() ;
+                                    $words[] = array('{USER_NAME}'    , '{USER_EMAIL}', '{VALIDATION_LINK}') ;
+                                    $words[] = array($user['s_name']  , $email        , $validation_link ) ;
+                                    $title = osc_mailBeauty($_title, $words) ;
+                                    $body  = osc_mailBeauty($_body , $words) ;
+
+                                    $params = array(
+                                        'subject' => $_title
+                                        ,'to' => $email
+                                        ,'to_name' => $user['s_name']
+                                        ,'body' => $body
+                                        ,'alt_body' => $body
+                                    ) ;
+
+                                    osc_sendMail($params) ;
+                                }
+
+                                echo "1";
+                            } else {
+                                echo "0";
+                            }
+                            return true;
+                        } else {
+                            echo '-1';
+                            return false;
+                        }
                     }
                     echo '0';
                     return false;
