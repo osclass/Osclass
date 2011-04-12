@@ -42,8 +42,8 @@ function osc_runAlert($type = null) {
         break;
     }
 
-
-    $searches = Alerts::newInstance()->getAlertsByTypeGroup($type) ;
+    $active = TRUE;
+    $searches = Alerts::newInstance()->getAlertsByTypeGroup($type,$active) ;
     foreach ($searches as $s_search) {
         $a_search = Search::newInstance();
 
@@ -61,42 +61,42 @@ function osc_runAlert($type = null) {
         $totalItems = $a_search->count();
         $items = $a_search->search();
 
-
         if (count($items) > 0) {
             //If we have new items from last check
             //Catch the user subscribed to this search
-            $users = Alerts::newInstance()->getUsersBySearchAndType($search['s_search'], $type) ;
+            $users = Alerts::newInstance()->getUsersBySearchAndType($s_search['s_search'], $type, $active) ;
 
             if (count($users > 0)) {
                 $prefLocale = osc_language() ;
-                $_page = Page::newInstance()->findByInternalName($internal_name) ;
-                $page = array();
-                $data = osc_unserialize($_page['s_data']) ;
-                $page = $data[$prefLocale] ;
-                unset($data);
-                unset($_page);
+                $page = Page::newInstance()->findByInternalName($internal_name) ;
+                $page_description = $page['locale'] ;
+
+                $_title = $page_description[$prefLocale]['s_title'] ;
+                $_body  = $page_description[$prefLocale]['s_text'] ;
 
                 $ads = "";
                 foreach ($items as $item) {
-                    $ads .= "<a>" . $item['s_title'] . "</a><br/>" ;
+
+                    $ads .= "<a href='".osc_item_url_ns($item['pk_i_id'])."'>" . $item['s_title'] . "</a><br/>" ;
                 }
 
                 foreach ($users as $user)
                 {
-                
                     if($user['fk_i_user_id']!=0) {
                         $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
                     } else {
                         $user['s_name'] = $user['s_email'];
                     }
-                    $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_search']);//osc_create_url(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $user['s_email'], 'alert' => $s_search['s_search'])) ;
-                    $unsub_link = '<a href="'.$unsub_link.'" >'.$unsub_link.'</a>';
+                    
+                    $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);//osc_create_url(array('file' => 'user', 'action' => 'unsub_alert', 'email' => $user['s_email'], 'alert' => $s_search['s_search'])) ;
+
+                    $unsub_link = "<a href='". $unsub_link ."'>unsubscribe alert</a>";
 
                     $words = array() ;
-                    $words = array('{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}') ;
-                    $words = array($user['s_name'], $user['s_email'], $ads, $unsub_link) ;
-                    $title = osc_mailBeauty($page['s_title'], $words) ;
-                    $body = osc_mailBeauty($page['s_body'], $words) ;
+                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}') ;
+                    $words[] = array($user['s_name'], $user['s_email'], $ads, $unsub_link) ;
+                    $title = osc_mailBeauty($_title, $words) ;
+                    $body = osc_mailBeauty($_body, $words) ;
 
                     $params = array(
                         'subject' => $title

@@ -441,10 +441,18 @@
         }
     }
 
-    function osc_user_unsubscribe_alert_url($email = '', $alert = '') {
-        if($alert=='') { $alert = osc_alert_search(); }
+    function osc_user_unsubscribe_alert_url($email = '', $secret = '') {
+        if($secret=='') { $secret = osc_alert_secret(); }
         if($email=='') { $email = osc_user_email(); }
-        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&alert='.$alert ;
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&secret='.$secret ;
+    }
+
+    function osc_user_activate_alert_url( $secret , $email ) {
+        if ( osc_rewrite_enabled() ) {
+            return osc_base_url() . 'user/activate_alert/' . $secret . '/' . urlencode($email) ;
+        } else {
+            return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret ;
+        }
     }
 
     //osc_createProfileURL

@@ -45,16 +45,25 @@ class Alerts extends DAO {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type =\'%s\'', DB_TABLE_PREFIX, $type);
     }
 
-    public function getAlertsByTypeGroup($type) {
-        return $this->conn->osc_dbFetchResults('SELECT s_search FROM %st_alerts WHERE e_type =\'%s\' GROUP BY s_search', DB_TABLE_PREFIX, $type);
+    public function getAlertsByTypeGroup($type, $active = FALSE) {
+        if($active) {
+            return $this->conn->osc_dbFetchResults('SELECT s_search,s_secret FROM %st_alerts WHERE e_type =\'%s\' AND b_active = 1 GROUP BY s_search', DB_TABLE_PREFIX, $type);
+        }else{
+            return $this->conn->osc_dbFetchResults('SELECT s_search,s_secret FROM %st_alerts WHERE e_type =\'%s\' GROUP BY s_search', DB_TABLE_PREFIX, $type);
+        }
     }
 
     public function getAlertsBySearchAndType($search, $type) {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type =\'%s\' AND s_search LIKE \'%s\'', DB_TABLE_PREFIX, $type, addslashes($search));
     }
 
-    public function getUsersBySearchAndType($search, $type) {
-        return $this->conn->osc_dbFetchResults('SELECT a.s_email, a.fk_i_user_id FROM %st_alerts as a WHERE a.e_type =\'%s\' AND a.s_search LIKE \'%s\' ', DB_TABLE_PREFIX, $type, addslashes($search));
+
+    public function getUsersBySearchAndType($search, $type, $active = FALSE) {
+        if($active) {
+            return $this->conn->osc_dbFetchResults('SELECT a.s_email, a.fk_i_user_id FROM %st_alerts as a WHERE a.e_type =\'%s\' AND b_active = 1 AND a.s_search LIKE \'%s\' ', DB_TABLE_PREFIX, $type, addslashes($search));
+        }else{
+            return $this->conn->osc_dbFetchResults('SELECT a.s_email, a.fk_i_user_id FROM %st_alerts as a WHERE a.e_type =\'%s\' AND a.s_search LIKE \'%s\' ', DB_TABLE_PREFIX, $type, addslashes($search));
+        }
     }
 
     public function getAlertsFromUserByType($user, $type) {
@@ -65,13 +74,22 @@ class Alerts extends DAO {
         return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $type, $email);
     }
     
-    public function createAlert($userid = null, $email, $alert, $type = 'DAILY') {
-        $results = $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_search LIKE \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $alert, $email);
-        if(count($results)==0) {
-            $this->insert(array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => $type));
+    public function createAlert($userid = null, $email, $alert, $secret, $type = 'DAILY') {
+        if($userid == null){
+            $results = $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_search LIKE \'%s\' AND fk_i_user_id = 0 AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $alert, $email);
+        } else {
+            $results = $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_search LIKE \'%s\' AND fk_i_user_id = %s', DB_TABLE_PREFIX, $alert, $userid);
         }
+        if(count($results)==0) {
+            $this->insert(array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => $type, 's_secret' => $secret));
+            return true;
+        }
+        return false;
     }
 
-
+    public function activate( $email, $secret) {
+        $this->conn->osc_dbExec('UPDATE %st_alerts SET b_active = 1 WHERE s_email = \'%s\' AND s_secret = \'%s\'', DB_TABLE_PREFIX, $email, $secret);
+        return $this->conn->get_affected_rows();
+    }
 }
 
