@@ -3,7 +3,7 @@
 Plugin Name: Google Maps
 Plugin URI: http://www.osclass.org/
 Description: This plugin shows a Google Map on the location space of every item.
-Version: 2.0
+Version: 2.1
 Author: OSClass & kingsult
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
@@ -33,7 +33,7 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
 
     function google_maps_location() {
         $item = osc_item();
-        if(osc_google_maps_key() != '' && $item['d_coord_lat'] != '' && $item['d_coord_long'] != '') {
+        if(osc_google_maps_key() != '') {
             osc_google_maps_header();
             require 'map.php';
         }
