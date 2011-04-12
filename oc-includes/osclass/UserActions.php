@@ -181,6 +181,7 @@
                     osc_sendMail($emailParams);
                 }
             }
+            return true;
         }
         
 
@@ -270,7 +271,7 @@
             $input['s_city'] = $cityName ;
             $input['s_city_area'] = Params::getParam('cityArea') ;
             $input['s_address'] = Params::getParam('address') ;
-            $input['b_company'] = Params::getParam('b_company') ;
+            $input['b_company'] = (Params::getParam('b_company') != '') ? 1 : 0;
             
             return($input) ;
         }

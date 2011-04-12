@@ -28,7 +28,12 @@
      * @return string
      */
     function osc_base_url($with_index = false) {
-        $path = WEB_PATH ;
+        $path = '';
+        if(MULTISITE) {
+            $path = osc_multisite_url();
+        } else {
+            $path = WEB_PATH ;
+        }
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
@@ -40,7 +45,13 @@
      * @return string
      */
     function osc_admin_base_url($with_index = false) {
-        $path = WEB_PATH . "oc-admin/" ;
+        $path = '';
+        if(MULTISITE) {
+            $path = osc_multisite_url();
+        } else {
+            $path = WEB_PATH ;
+        }
+        $path .= "oc-admin/" ;
         if ($with_index) $path .= "index.php" ;
         return($path) ;
     }
@@ -433,7 +444,7 @@
     function osc_user_unsubscribe_alert_url($email = '', $alert = '') {
         if($alert=='') { $alert = osc_alert_search(); }
         if($email=='') { $email = osc_user_email(); }
-        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&alert='.$alert ;
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&alert='.urlencode($alert) ;
     }
 
     //osc_createProfileURL

@@ -19,18 +19,37 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function locale_en_US_info() {
-    return array(
-         'name'            => 'English (US)'
-        ,'short_name'      => 'English'
-        ,'description'     => 'American english translation'
-        ,'version'         => 2.0
-        ,'author_name'     => 'OSClass'
-        ,'author_url'      => 'http://osclass.org/'
-        ,'currency_format' => '%.02f %s'
-        ,'date_format'     => 'm/d/Y'
-        ,'stop_words'      => 'i,a,about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,the'
-    );
+class SiteInfo extends DAO
+{
+    private static $instance ;
+    private $site_info ;
+
+	public static function newInstance() {
+        if(!self::$instance instanceof self) {
+            self::$instance = new self ;
+        }
+        return self::$instance ;
+    }
+
+    public function __construct() {
+        $this->createMetadataConnection() ;
+        $this->toArray() ;
+    }
+
+	public function getTableName() {
+        return 'tbl_sites' ;
+    }
+
+	public function toArray() {
+        $domain = $_SERVER['HTTP_HOST'] ;
+		$this->site_info = $this->findByPrimaryKeyInMetadataDB($domain) ;
+	}
+
+    public function get($key) {
+        if (!isset($this->site_info[$key])) {
+            return '' ;
+        }
+        return ($this->site_info[$key]) ;
+    }
 }
 
-?>
