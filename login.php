@@ -30,12 +30,12 @@ class CWebLogin extends BaseModel
             case('login_post'):     //post execution for the login
                                     $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
                                     if (!$user) {
-                                        osc_add_flash_message(_m('The username doesn\'t exist')) ;
+                                        osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
                                         $this->redirectTo(osc_user_login_url());
                                     }
 
                                     if(!$user['b_enabled']) {
-                                        osc_add_flash_message(_m('The user has not been validated yet'));
+                                        osc_add_flash_error_message(_m('The user has not been validated yet'));
                                         $this->redirectTo(osc_user_login_url());
                                     }
 
@@ -65,7 +65,7 @@ class CWebLogin extends BaseModel
                                         Session::newInstance()->_set('userPhone', $phone) ;
 
                                     } else {
-                                        osc_add_flash_message( _m('The password is incorrect')) ;
+                                        osc_add_flash_error_message( _m('The password is incorrect')) ;
                                     }
 
                                     //returning logged in to the main page...
@@ -80,10 +80,10 @@ class CWebLogin extends BaseModel
                                     $recaptcha_ok = $userActions->recover_password() ;
                                     if($recaptcha_ok) {
                                         // We ALWAYS show the same message, so we don't give clues about which emails are in our database and which don't!
-                                        osc_add_flash_message( _m('We have sent you an email with the instructions to reset your password')) ;
+                                        osc_add_flash_ok_message( _m('We have sent you an email with the instructions to reset your password')) ;
                                         $this->redirectTo( osc_base_url() ) ;
                                     } else {
-                                        osc_add_flash_message( _m('The recaptcha code is wrong')) ;
+                                        osc_add_flash_error_message( _m('The recaptcha code is wrong')) ;
                                         $this->redirectTo( osc_recover_user_password_url() ) ;
                                     }
             break ;
@@ -93,7 +93,7 @@ class CWebLogin extends BaseModel
                                     if($user) {
                                         $this->doView( 'user-forgot_password.php' ) ;
                                     } else {
-                                        osc_add_flash_message( _m('Sorry, the link is not valid')) ;
+                                        osc_add_flash_error_message( _m('Sorry, the link is not valid')) ;
                                         $this->redirectTo( osc_base_url() ) ;
                                     }
             break;
@@ -108,14 +108,14 @@ class CWebLogin extends BaseModel
                                                     , 's_password' => sha1(Params::getParam('new_password'))
                                                 ), array('pk_i_id' => $user['pk_i_id'])
                                             );
-                                            osc_add_flash_message( _m('The password has been changed'));
+                                            osc_add_flash_ok_message( _m('The password has been changed'));
                                             $this->redirectTo(osc_user_login_url());
                                         } else {
-                                            osc_add_flash_message( _m('Error, the password don\'t match')) ;
+                                            osc_add_flash_error_message( _m('Error, the password don\'t match')) ;
                                             $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
                                         }
                                     } else {
-                                        osc_add_flash_message( _m('Sorry, the link is not valid')) ;
+                                        osc_add_flash_error_message( _m('Sorry, the link is not valid')) ;
                                     }
                                     $this->redirectTo( osc_base_url() ) ;
             break;

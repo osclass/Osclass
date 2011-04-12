@@ -35,16 +35,16 @@
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
-                                            case 1: osc_add_flash_message( _m('The user has been created. An activation email has been sent')) ;
+                                            case 1: osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent')) ;
                                                     $this->redirectTo( osc_base_url() ) ;
                                             break;
-                                            case 2: osc_add_flash_message( _m('Your account has been created successfully')) ;
+                                            case 2: osc_add_flash_ok_message( _m('Your account has been created successfully')) ;
                                                     $this->doView('user-login.php') ;
                                             break;
-                                            case 3: osc_add_flash_message( _m('The specified e-mail is already in use')) ;
+                                            case 3: osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
-                                            case 4: osc_add_flash_message( _m('The reCAPTCHA was not introduced correctly')) ;
+                                            case 4: osc_add_flash_error_message( _m('The reCAPTCHA was not introduced correctly')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
                                         }
@@ -90,7 +90,7 @@
                                                     osc_sendMail($emailParams) ;
                                                 }
                                                 osc_run_hook('validate_user', $user) ;
-                                                osc_add_flash_message( _m('Your account has been validated')) ;
+                                                osc_add_flash_ok_message( _m('Your account has been validated')) ;
                                                 // Auto-login
                                                 Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                                                 Session::newInstance()->_set('userName', $user['s_name']) ;
@@ -98,10 +98,10 @@
                                                 $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
                                                 Session::newInstance()->_set('userPhone', $phone) ;
                                             } else {
-                                                osc_add_flash_message( _m('Your account has already been activated')) ;
+                                                osc_add_flash_error_message( _m('Your account has already been activated')) ;
                                             }
                                         } else {
-                                            osc_add_flash_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
+                                            osc_add_flash_error_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
                                         }
                                         $this->redirectTo( osc_base_url() ) ;
                 break;

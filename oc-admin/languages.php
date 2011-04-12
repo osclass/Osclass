@@ -43,31 +43,35 @@
 
                                             switch ($status) {
                                                 case(0):   $msg = _m('The translation folder is not writable');
+                                                        osc_add_flash_error_message($msg, 'admin');
                                                 break;
                                                 case(1):   $msg = _m('The language has been installed correctly');
                                                            osc_checkLocales();
+                                                        osc_add_flash_ok_message($msg, 'admin');
                                                 break;
                                                 case(2):   $msg = _m('The zip file is not valid');
+                                                        osc_add_flash_error_message($msg, 'admin');
                                                 break;
                                                 case(-1):
                                                 default:   $msg = _m('There was a problem adding the language');
+                                                        osc_add_flash_error_message($msg, 'admin');
                                                 break;
                                             }
 
-                                            osc_add_flash_message($msg, 'admin');
+                                            osc_add_flash_error_message($msg, 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
                 case 'edit':                // editing a language
                                             $sLocale = Params::getParam('id');
                                             if( !preg_match('/.{2}_.{2}/', $sLocale) ) {
-                                                osc_add_flash_message( _m('Language id isn\'t in the correct format'), 'admin');
+                                                osc_add_flash_error_message( _m('Language id isn\'t in the correct format'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                             }
 
                                             $aLocale = $this->localeManager->findByPrimaryKey($sLocale);
 
                                             if(count($aLocale) == 0) {
-                                                osc_add_flash_message( _m('Language id doesn\'t exist'), 'admin');
+                                                osc_add_flash_error_message( _m('Language id doesn\'t exist'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                             }
 
@@ -88,7 +92,7 @@
 
                                             // formatting variables
                                             if( !preg_match('/.{2}_.{2}/', $languageCode) ) {
-                                                osc_add_flash_message( _m('Language id isn\'t in the correct format'), 'admin');
+                                                osc_add_flash_error_message( _m('Language id isn\'t in the correct format'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                             }
                                             $enabledWebstie         = ($enabledWebstie != '' ? true : false);
@@ -96,19 +100,19 @@
                                             $languageName           = strip_tags($languageName);
                                             $languageName           = trim($languageName);
                                             if( $languageName == '' ) {
-                                                osc_add_flash_message( _m('Language name can\'t be empty'), 'admin');
+                                                osc_add_flash_error_message( _m('Language name can\'t be empty'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                             }
                                             $languageShortName      = strip_tags($languageShortName);
                                             $languageShortName      = trim($languageShortName);
                                             if ($languageShortName == '') {
-                                                osc_add_flash_message( _m('Language short name can\'t be empty'), 'admin');
+                                                osc_add_flash_error_message( _m('Language short name can\'t be empty'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                             }
                                             $languageDescription    = strip_tags($languageDescription);
                                             $languageDescription    = trim($languageDescription);
                                             if ($languageDescription == '') {
-                                                osc_add_flash_message( _m('Language description can\'t be empty'), 'admin');
+                                                osc_add_flash_error_message( _m('Language description can\'t be empty'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                                             }
                                             $languageCurrencyFormat = strip_tags($languageCurrencyFormat);
@@ -129,7 +133,7 @@
 
                                             $iUpdated = $this->localeManager->update($array, array('pk_c_code' => $languageCode));
                                             if($iUpdated > 0) {
-                                                osc_add_flash_message(sprintf(_m('%s has been updated'), $languageShortName), 'admin');
+                                                osc_add_flash_ok_message(sprintf(_m('%s has been updated'), $languageShortName), 'admin');
                                             }
                                             $this->redirectTo(osc_admin_base_url(true).'?page=languages') ;
                 break;
@@ -140,7 +144,7 @@
 
                                             if ($id) {
                                                 if($action == 'enable' && $default_lang == $id && $enabled == 0) {
-                                                    osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i), 'admin');
+                                                    osc_add_flash_error_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i), 'admin');
                                                 } else {
                                                     $msg = ($enabled == 1) ? _m('The language has been enabled for the public website') : _m('The language has been disabled for the public website') ;
                                                     $aValues = array('b_enabled' => $enabled) ;
@@ -152,9 +156,9 @@
                                                     $this->localeManager->update($aValues, array('pk_c_code' => $id)) ;
                                                 }
 
-                                                osc_add_flash_message( $msg , 'admin') ;
+                                                osc_add_flash_ok_message( $msg , 'admin') ;
                                             } else {
-                                                osc_add_flash_message( _m('There was a problem updating the language. The language id was lost'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was a problem updating the language. The language id was lost'), 'admin') ;
                                             }
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break;
@@ -165,9 +169,9 @@
                                                 foreach ($id as $i) {
                                                     $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                 }
-                                                osc_add_flash_message($msg, 'admin') ;
+                                                osc_add_flash_ok_message($msg, 'admin') ;
                                             } else {
-                                                osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                             }
 
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -180,14 +184,14 @@
                                                 $default_lang = osc_language() ;
                                                 foreach ($id as $i) {
                                                     if($default_lang == $i && $action == 'disable_selected') {
-                                                        osc_add_flash_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i), 'admin');
+                                                        osc_add_flash_error_message(sprintf(_m('%d can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it'), $i), 'admin');
                                                     } else {
                                                         $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                     }
                                                 }
-                                                osc_add_flash_message($msg, 'admin') ;
+                                                osc_add_flash_ok_message($msg, 'admin') ;
                                             } else {
-                                                osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                             }
 
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -200,9 +204,9 @@
                                                 foreach ($id as $i) {
                                                     $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                 }
-                                                osc_add_flash_message($msg, 'admin') ;
+                                                osc_add_flash_ok_message($msg, 'admin') ;
                                             } else {
-                                                osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                             }
 
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -215,9 +219,9 @@
                                                 foreach ($id as $i) {
                                                     $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                 }
-                                                osc_add_flash_message($msg, 'admin') ;
+                                                osc_add_flash_ok_message($msg, 'admin') ;
                                             } else {
-                                                osc_add_flash_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                             }
 
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
@@ -229,12 +233,12 @@
                                                     if( $default_lang != $code ) {
                                                         $this->localeManager->deleteLocale($code) ;
                                                         if (!osc_deleteDir(osc_translations_path() . $code)) {
-                                                            osc_add_flash_message(sprintf(_m('Directory "%s" couldn\'t be removed'), $code), 'admin');
+                                                            osc_add_flash_error_message(sprintf(_m('Directory "%s" couldn\'t be removed'), $code), 'admin');
                                                         } else {
-                                                            osc_add_flash_message(sprintf(_m('Directory "%s" has been successfully removed'), $code), 'admin');
+                                                            osc_add_flash_ok_message(sprintf(_m('Directory "%s" has been successfully removed'), $code), 'admin');
                                                         }
                                                     } else {
-                                                        osc_add_flash_message(sprintf(_m('Directory "%s" couldn\'t be removed because it\'s the default language. Set another language as default first and try again'), $code), 'admin');
+                                                        osc_add_flash_error_message(sprintf(_m('Directory "%s" couldn\'t be removed because it\'s the default language. Set another language as default first and try again'), $code), 'admin');
                                                     }
                                                 }
                                             }

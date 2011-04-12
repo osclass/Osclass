@@ -55,25 +55,25 @@
                                     
                                     // Checks for legit data
                                     if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
-                                        osc_add_flash_message( _m("Email invalid"), 'admin');
+                                        osc_add_flash_error_message( _m("Email invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
                                     if($sUserName=='') {
-                                        osc_add_flash_message( _m("Username invalid"), 'admin');
+                                        osc_add_flash_error_message( _m("Username invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
                                     if($sPassword=='') {
-                                        osc_add_flash_message( _m("Password invalid"), 'admin');
+                                        osc_add_flash_error_message( _m("Password invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
                                     $admin = $this->adminManager->findByEmail($sEmail);
                                     if($admin) {
-                                        osc_add_flash_message( _m("Email already in use"), 'admin');
+                                        osc_add_flash_error_message( _m("Email already in use"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
                                     $admin = $this->adminManager->findByUsername($sUserName);
                                     if($admin) {
-                                        osc_add_flash_message( _m("Username already in use"), 'admin');
+                                        osc_add_flash_error_message( _m("Username already in use"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
 
@@ -86,9 +86,9 @@
                                     $isInserted = $this->adminManager->insert($array);
 
                                     if($isInserted) {
-                                        osc_add_flash_message( _m('The admin has been added'), 'admin');
+                                        osc_add_flash_ok_message( _m('The admin has been added'), 'admin');
                                     } else {
-                                        osc_add_flash_message( _m('There have been an error adding a new admin'), 'admin') ;
+                                        osc_add_flash_error_message( _m('There have been an error adding a new admin'), 'admin') ;
                                     }
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                 break;
@@ -103,7 +103,7 @@
                                     }
 
                                     if(count($adminEdit) == 0) {
-                                        osc_add_flash_message( _m('There is no admin admin with this id'), 'admin');
+                                        osc_add_flash_error_message( _m('There is no admin admin with this id'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
@@ -136,31 +136,31 @@
 
                                     // Checks for legit data
                                     if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
-                                        osc_add_flash_message( _m("Email invalid"), 'admin');
+                                        osc_add_flash_error_message( _m("Email invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
                                     }
                                     if($sUserName=='') {
-                                        osc_add_flash_message( _m("Username invalid"), 'admin');
+                                        osc_add_flash_error_message( _m("Username invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
                                     }
 
                                     $aAdmin   = $this->adminManager->findByPrimaryKey($adminId);
 
                                     if(count($aAdmin) == 0) {
-                                        osc_add_flash_message( _m('This admin doesn\'t exist'), 'admin');
+                                        osc_add_flash_error_message( _m('This admin doesn\'t exist'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
                                     if( $aAdmin['s_email'] != $sEmail ){
                                         if($this->adminManager->findByEmail( $sEmail ) ) {
-                                            osc_add_flash_message( _m('Existing email'), 'admin');
+                                            osc_add_flash_error_message( _m('Existing email'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
                                         }
                                     }
 
                                     if( $aAdmin['s_username'] != $sUserName ){
                                         if($this->adminManager->findByUsername( $sUserName ) ) {
-                                            osc_add_flash_message( _m('Existing username'), 'admin');
+                                            osc_add_flash_error_message( _m('Existing username'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
                                         }
                                     }
@@ -170,7 +170,7 @@
 
                                     if($sOldPassword != '') {
                                         if($sPassword=='') {
-                                            osc_add_flash_message( _m("Password invalid"), 'admin');
+                                            osc_add_flash_error_message( _m("Password invalid"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
                                         } else {
                                             $firstCondition  = sha1($sOldPassword) == $aAdmin['s_password'];
@@ -178,7 +178,7 @@
                                             if( $firstCondition && $secondCondition ) {
                                                 $array['s_password'] = sha1($sPassword);
                                             } else {
-                                                osc_add_flash_message( _m('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
+                                                osc_add_flash_error_message( _m('The password couldn\'t be updated. Passwords don\'t match'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id=' . $adminId);
                                             }
                                         }
@@ -191,7 +191,7 @@
                                     $iUpdated = $this->adminManager->update($array, $conditions);
 
                                     if($iUpdated > 0) {
-                                        osc_add_flash_message( _m('The admin has been updated'), 'admin');
+                                        osc_add_flash_ok_message( _m('The admin has been updated'), 'admin');
                                     }
 
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
@@ -201,22 +201,22 @@
                                     $adminId   = Params::getParam('id');
 
                                     if(!is_array($adminId)) {
-                                        osc_add_flash_message( _m('The admin id isn\'t in the correct format'), 'admin');
+                                        osc_add_flash_error_message( _m('The admin id isn\'t in the correct format'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
                                     // Verification to avoid an administrator trying to remove to itself
                                     if(in_array(Session::newInstance()->_get('adminId'), $adminId)) {
-                                        osc_add_flash_message( _m('The operation hasn\'t been completed. You\'re trying to remove yourself!'), 'admin');
+                                        osc_add_flash_error_message( _m('The operation hasn\'t been completed. You\'re trying to remove yourself!'), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                                     }
 
                                     $isDeleted = $this->adminManager->delete(array('pk_i_id IN (' . implode(', ', $adminId) . ')')) ;
 
                                     if($isDeleted) {
-                                        osc_add_flash_message( _m('The admin has been deleted correctly'), 'admin');
+                                        osc_add_flash_ok_message( _m('The admin has been deleted correctly'), 'admin');
                                     } else {
-                                        osc_add_flash_message( _m('The admin couldn\'t be deleted'), 'admin');
+                                        osc_add_flash_error_message( _m('The admin couldn\'t be deleted'), 'admin');
                                     }
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins') ;
                 break;

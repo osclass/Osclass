@@ -116,12 +116,12 @@ Class ItemActions
             osc_run_hook('after_item_post') ;
 
             if($this->is_admin) {
-                osc_add_flash_message( _m('A new item has been added')) ;
+                osc_add_flash_ok_message( _m('A new item has been added')) ;
             } else {
                 if( !$has_to_validate || (osc_logged_user_item_validation() && osc_is_web_user_logged_in())) {
-                    osc_add_flash_message( _m('Great! We\'ve just published your item')) ;
+                    osc_add_flash_ok_message( _m('Great! We\'ve just published your item')) ;
                 } else {
-                    osc_add_flash_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
+                    osc_add_flash_ok_message( _m('Great! You\'ll receive an e-mail to activate your item')) ;
                 }
 
             }
@@ -332,9 +332,9 @@ Class ItemActions
         Params::setParam('item_url', $item_url );
 
         if(osc_sendMail($params)) {
-            osc_add_flash_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
+            osc_add_flash_ok_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
         } else {
-            osc_add_flash_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
+            osc_add_flash_error_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
         }
     }
 
@@ -406,7 +406,7 @@ Class ItemActions
             $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
             if(!is_writable(osc_content_path() . 'uploads/')) {
-                osc_add_flash_message( _m('There has been some errors sending the message')) ;
+                osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
                 $this->redirectTo( osc_base_url() );
             }
 
@@ -594,7 +594,7 @@ Class ItemActions
 
 		// Handle error
         if (count($flash_error)>0) {
-            osc_add_flash_message( implode('<br />', $flash_error) );
+            osc_add_flash_error_message( implode('<br />', $flash_error) );
             $success = false;
         }
         if ( !$this->checkAllowedExt($aPhotos) ) {
@@ -846,7 +846,7 @@ Class ItemActions
                 }
             }
             if(!$success){
-                osc_add_flash_message( _m("One of the files you tried to upload exceeds the maximum size")) ;
+                osc_add_flash_error_message( _m("One of the files you tried to upload exceeds the maximum size")) ;
             }
         }
         return $success;
@@ -889,7 +889,7 @@ Class ItemActions
             }
 
             if(!$success){
-                osc_add_flash_message( _m("The file you tried to upload does not have an allowed extension")) ;
+                osc_add_flash_error_message( _m("The file you tried to upload does not have an allowed extension")) ;
             }
         }
         return $success;

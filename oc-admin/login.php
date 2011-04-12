@@ -119,7 +119,7 @@
                                             }
                                         }
                                         
-                                        osc_add_flash_message( _m('A new password has been sent to your e-mail'), 'admin') ;
+                                        osc_add_flash_ok_message( _m('A new password has been sent to your e-mail'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url() ) ;
                 break ;
 
@@ -128,7 +128,7 @@
                                         if($admin) {
                                             $this->doView( 'gui/forgot_password.php' ) ;
                                         } else {
-                                            osc_add_flash_message( _m('Sorry, the link is not valid'), 'admin') ;
+                                            osc_add_flash_error_message( _m('Sorry, the link is not valid'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url() ) ;
                                         }
                 break;
@@ -141,14 +141,14 @@
                                                         , 's_password' => sha1(Params::getParam('new_password'))
                                                     ), array('pk_i_id' => $admin['pk_i_id'])
                                                 );
-                                                osc_add_flash_message( _m('The password has been changed'), 'admin');
+                                                osc_add_flash_ok_message( _m('The password has been changed'), 'admin');
                                                 $this->redirectTo(osc_admin_base_url());
                                             } else {
-                                                osc_add_flash_message( _m('Error, the password don\'t match'), 'admin') ;
+                                                osc_add_flash_error_message( _m('Error, the password don\'t match'), 'admin') ;
                                                 $this->redirectTo(osc_forgot_admin_password_confirm_url(Params::getParam('adminId'), Params::getParam('code')));
                                             }
                                         } else {
-                                            osc_add_flash_message( _m('Sorry, the link is not valid'), 'admin') ;
+                                            osc_add_flash_error_message( _m('Sorry, the link is not valid'), 'admin') ;
                                         }
                                         $this->redirectTo( osc_admin_base_url() ) ;
                 break;

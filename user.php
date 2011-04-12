@@ -67,9 +67,9 @@ class CWebUser extends WebSecBaseModel
 
                                     // This has been moved to special area (only password changes)
                                     /*if( $success == 1 ) {
-                                        osc_add_flash_message( _m('Passwords don\'t match') ) ;
+                                        osc_add_flash_error_message( _m('Passwords don\'t match') ) ;
                                     } else {*/
-                                        osc_add_flash_message( _m('Your profile has been updated successfully') ) ;
+                                        osc_add_flash_ok_message( _m('Your profile has been updated successfully') ) ;
                                     //}
 
                                     $this->redirectTo( osc_user_profile_url() ) ;
@@ -93,7 +93,7 @@ class CWebUser extends WebSecBaseModel
             break;
             case('change_email_post'):      //change email post
                                             if(!preg_match("/^[_a-z0-9-\+]+(\.[_a-z0-9-\+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/", Params::getParam('new_email'))) {
-                                                osc_add_flash_message( _m('The specified e-mail is not valid')) ;
+                                                osc_add_flash_error_message( _m('The specified e-mail is not valid')) ;
                                                 $this->redirectTo( osc_change_user_email_url() ) ;
                                             } else {
                                                 $user = User::newInstance()->findByEmail(Params::getParam('new_email'));
@@ -140,9 +140,9 @@ class CWebUser extends WebSecBaseModel
                                                                 ,'alt_body' => $body
                                                             ) ;
                                                             osc_sendMail($params) ;
-                                                            osc_add_flash_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
+                                                            osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
                                                         } else {
-                                                            osc_add_flash_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
+                                                            osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
                                                         }
                                                         $this->redirectTo( osc_user_profile_url() ) ;
 
@@ -152,12 +152,12 @@ class CWebUser extends WebSecBaseModel
                                                             array( 's_email' => Params::getParam('new_email') )
                                                             ,array( 'pk_i_id' => Params::getParam('userId') )
                                                         ) ;
-                                                        osc_add_flash_message( _m('Your email has been changed successfully')) ;
+                                                        osc_add_flash_ok_message( _m('Your email has been changed successfully')) ;
                                                         $this->redirectTo( osc_user_profile_url() ) ;
 
                                                     }
                                                 } else {
-                                                    osc_add_flash_message( _m('The specified e-mail is already in use')) ;
+                                                    osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
                                                     $this->redirectTo( osc_change_user_email_url() ) ;
                                                 }
                                             }
@@ -169,13 +169,13 @@ class CWebUser extends WebSecBaseModel
                                             $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
                                             if( $user['s_password'] != sha1( Params::getParam('password') ) ) {
-                                                osc_add_flash_message( _m('Current password doesn\'t match')) ;
+                                                osc_add_flash_error_message( _m('Current password doesn\'t match')) ;
                                                 $this->redirectTo( osc_change_user_password_url() ) ;
                                             } elseif( !Params::getParam('new_password') ) {
-                                                osc_add_flash_message( _m('Passwords can\'t be empty')) ;
+                                                osc_add_flash_error_message( _m('Passwords can\'t be empty')) ;
                                                 $this->redirectTo( osc_change_user_password_url() ) ;
                                             } elseif( Params::getParam('new_password') != Params::getParam('new_password2') ) {
-                                                osc_add_flash_message( _m('Passwords don\'t match'));
+                                                osc_add_flash_error_message( _m('Passwords don\'t match'));
                                                 $this->redirectTo( osc_change_user_password_url() ) ;
                                             }
 
@@ -184,7 +184,7 @@ class CWebUser extends WebSecBaseModel
                                                         ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
                                                 ) ;
                                             
-                                            osc_add_flash_message( _m('Password has been changed')) ;
+                                            osc_add_flash_ok_message( _m('Password has been changed')) ;
                                             $this->redirectTo( osc_user_profile_url() ) ;
             break;
             case 'items':                   // view items user
@@ -208,9 +208,9 @@ class CWebUser extends WebSecBaseModel
                 $alert = Params::getParam('alert');
                 if($email!='' && $alert!='') {
                     Alerts::newInstance()->delete(array('s_email' => $email, 's_search' => $alert));
-                    osc_add_flash_message(__('Unsubscribed correctly.'));
+                    osc_add_flash_ok_message(__('Unsubscribed correctly.'));
                 } else {
-                    osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                    osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
                 $this->redirectTo(osc_user_alerts_url());
             break;

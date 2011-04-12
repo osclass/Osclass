@@ -296,7 +296,7 @@
                                             ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                         }
 
-                                        osc_add_flash_message( _m('Changes saved correctly'), 'admin') ;
+                                        osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource
@@ -308,7 +308,7 @@
                                         osc_deleteResource($id);
 
                                         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
-                                        osc_add_flash_message( _m('Resource deleted'), 'admin') ;
+                                        osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'post':            //post
@@ -338,10 +338,10 @@
                                         $mItem = new ItemActions(true);
                                         $success = $mItem->add();
                                         if( $success ) {
-                                            osc_add_flash_message( _m('A new item has been added'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
-                                            osc_add_flash_message( _m('The item can\'t be added'), 'admin') ;
+                                            osc_add_flash_error_message( _m('The item can\'t be added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
                 break;

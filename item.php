@@ -81,11 +81,11 @@ class CWebItem extends BaseModel
                 
             case 'item_add_post': //post_item
                 if( !osc_users_enabled () ){
-                    osc_add_flash_message( _m('Users not allowed')) ;
+                    osc_add_flash_error_message( _m('Users not allowed')) ;
                     $this->redirectTo(osc_base_url(true));
                 }
                 if( osc_reg_user_post() && $this->user==null) {                
-                    osc_add_flash_message( _m('Only registered users are allowed to post items')) ;
+                    osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                     $this->redirectTo(osc_base_url(true));
                 }
                 // POST ITEM ( ADD ITEM ) 
@@ -175,7 +175,7 @@ class CWebItem extends BaseModel
                 }else{
                     // add a flash message [ITEM NO EXISTE]
                     //$this->redirectTo(osc_base_url(true));
-                    osc_add_flash_message( _m('Sorry, we don\'t have any items with that ID')) ;
+                    osc_add_flash_error_message( _m('Sorry, we don\'t have any items with that ID')) ;
                     if($this->user!=null) {
                         $this->redirectTo(osc_user_list_items_url());
                     } else {
@@ -198,7 +198,7 @@ class CWebItem extends BaseModel
                     $success = $mItems->edit();
 
                     if($success){
-                        osc_add_flash_message( _m('Great! We\'ve just updated your item')) ;
+                        osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
                         $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                     } else {
                         $this->redirectTo( osc_item_edit_url($secret) ) ;
@@ -216,12 +216,12 @@ class CWebItem extends BaseModel
                     $success = $mItems->activate( $item[0]['pk_i_id'], $item[0]['s_secret'] );
 
                     if( $success ){
-                        osc_add_flash_message( _m('The item has been validated') ) ;
+                        osc_add_flash_ok_message( _m('The item has been validated') ) ;
                     }else{
-                        osc_add_flash_message( _m('The item can\'t be validated') ) ;
+                        osc_add_flash_error_message( _m('The item can\'t be validated') ) ;
                     }
                 }else{
-                    osc_add_flash_message( _m('The item has already been validated') );
+                    osc_add_flash_error_message( _m('The item has already been validated') );
                 }
                 
                 $this->redirectTo( osc_item_url( ) );
@@ -234,9 +234,9 @@ class CWebItem extends BaseModel
                     $mItems = new ItemActions(false);
                     $success = $mItems->delete($item[0]['s_secret'], $item[0]['pk_i_id']);
                     if($success) {
-                        osc_add_flash_message( _m('Your item has been deleted') ) ;
+                        osc_add_flash_ok_message( _m('Your item has been deleted') ) ;
                     } else {
-                        osc_add_flash_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
+                        osc_add_flash_error_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
                     }
                     if($this->user!=null) {
                         $this->redirectTo(osc_user_list_items_url());
@@ -244,7 +244,7 @@ class CWebItem extends BaseModel
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 }else{
-                    osc_add_flash_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
+                    osc_add_flash_error_message( _m('The item you are trying to delete couldn\'t be deleted') ) ;
                     $this->redirectTo( osc_base_url() ) ;
                 }
             break;
@@ -256,7 +256,7 @@ class CWebItem extends BaseModel
 
                 // Check for required fields
                 if ( !( is_numeric($id) && is_numeric($item) && preg_match('/^([a-z0-9]+)$/i', $code) ) ) {
-                    osc_add_flash_message( _m("The selected photo couldn't be deleted, the url doesn't exist") ) ;
+                    osc_add_flash_error_message( _m("The selected photo couldn't be deleted, the url doesn't exist") ) ;
                     if($this->userId == null) {
                         $this->redirectTo(osc_base_url());
                     } else {
@@ -268,19 +268,19 @@ class CWebItem extends BaseModel
 
                 // Check if the item exists
                 if(count($aItem) == 0) {
-                    osc_add_flash_message( _m('The item doesn\'t exist') );
+                    osc_add_flash_error_message( _m('The item doesn\'t exist') );
                     $this->redirectTo(osc_base_url());
                 }
 
                 // Check if the item belong to the user
                 if($this->userId != null && $this->userId != $aItem['fk_i_user_id']) {
-                    osc_add_flash_message( _m('The item doesn\'t belong to you') );
+                    osc_add_flash_error_message( _m('The item doesn\'t belong to you') );
                     $this->redirectTo(osc_item_url_ns($item));
                 }
 
                 // Check if the secret passphrase match with the item
                 if($this->userId == null && $secret != $aItem['s_secret']) {
-                    osc_add_flash_message( _m('The item doesn\'t belong to you') );
+                    osc_add_flash_error_message( _m('The item doesn\'t belong to you') );
                     $this->redirectTo(osc_item_url_ns($item));
                 }
 
@@ -292,9 +292,9 @@ class CWebItem extends BaseModel
                     osc_deleteResource($id);
                     ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
 
-                    osc_add_flash_message( _m('The selected photo has been successfully deleted') ) ;
+                    osc_add_flash_ok_message( _m('The selected photo has been successfully deleted') ) ;
                 } else {
-                    osc_add_flash_message( _m("The selected photo couldn't be deleted") ) ;
+                    osc_add_flash_error_message( _m("The selected photo couldn't be deleted") ) ;
                 }
 
                 // Redirect to item_edit. If unregistered user, include $secret.
@@ -310,7 +310,7 @@ class CWebItem extends BaseModel
                 View::newInstance()->_exportVariableToView('item', $item);
                 $mItem->mark($id, $as) ;
 
-                osc_add_flash_message( _m('Thanks! That\'s very helpful') ) ;
+                osc_add_flash_ok_message( _m('Thanks! That\'s very helpful') ) ;
                 $this->redirectTo( osc_item_url( ) );
 
             break;
@@ -336,7 +336,7 @@ class CWebItem extends BaseModel
                     $date = time() ;
                     if($item_date < $date) {
                         // The item is expired, we can not contact the seller
-                        osc_add_flash_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
+                        osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
                         $this->redirectTo(osc_create_item_url($item));
                     }
                 }
@@ -352,7 +352,7 @@ class CWebItem extends BaseModel
 
                 if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                     if(!osc_check_recaptcha()) {
-                        osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                        osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
                         $this->redirectTo( osc_item_url( ) );
                         return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                     }
@@ -366,7 +366,7 @@ class CWebItem extends BaseModel
                     $date = time();
                     if($item_date < $date) {
                         // The item is expired, we can not contact the seller
-                        osc_add_flash_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
+                        osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
                         $this->redirectTo(osc_item_url( ));
                     }
                 }
@@ -374,7 +374,7 @@ class CWebItem extends BaseModel
                 $mItem = new ItemActions(false);
                 $mItem->contact();
 
-                osc_add_flash_message( _m('We\'ve just sent an e-mail to the seller')) ;
+                osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
                 $this->redirectTo( osc_item_url( ) );
                 
                 break;
@@ -384,20 +384,25 @@ class CWebItem extends BaseModel
 
                 switch ($status) {
                     case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
+                            osc_add_flash_error_message($msg);
                     break;
                     case 1:  $msg = _m('Your comment is awaiting moderation');
+                            osc_add_flash_error_message($msg);
                     break;
                     case 2:  $msg = _m('Your comment has been approved');
+                            osc_add_flash_ok_message($msg);
                     break;
                     case 3:  $msg = _m('Please fill the required fields (name, email)');
+                            osc_add_flash_error_message($msg);
                     break;
                     case 4:  $msg = _m('Please type a comment');
+                            osc_add_flash_error_message($msg);
                     break;
                     case 5:  $msg = _m('Your comment has been marked as spam');
+                            osc_add_flash_error_message($msg);
                     break;
                 }
 
-                osc_add_flash_message($msg);
                 $this->redirectTo( Params::getParam('itemURL') );
                 break;
             case 'delete_comment':
@@ -410,14 +415,14 @@ class CWebItem extends BaseModel
                 $item = Item::newInstance()->findByPrimaryKey($itemId);
 
                 if( count($item) == 0 ) {
-                    osc_add_flash_message( _m('This item doesn\'t exist') );
+                    osc_add_flash_error_message( _m('This item doesn\'t exist') );
                     $this->redirectTo( osc_base_url(true) );
                 }
 
                 View::newInstance()->_exportVariableToView('item', $item);
 
                 if($this->userId == null) {
-                    osc_add_flash_message(_m('You have to be logged to delete a comment'));
+                    osc_add_flash_error_message(_m('You have to be logged to delete a comment'));
                     $this->redirectTo( osc_item_url() );
                 }
 
@@ -425,22 +430,22 @@ class CWebItem extends BaseModel
                 $aComment = $commentManager->findByPrimaryKey($commentId);
 
                 if( count($aComment) == 0 ) {
-                    osc_add_flash_message( _m('The comment doesn\'t exist') );
+                    osc_add_flash_error_message( _m('The comment doesn\'t exist') );
                     $this->redirectTo( osc_item_url() );
                 }
 
                 if( $aComment['e_status'] != 'ACTIVE' ) {
-                    osc_add_flash_message( _m('The comment is not active, you cannot delete it') );
+                    osc_add_flash_error_message( _m('The comment is not active, you cannot delete it') );
                     $this->redirectTo( osc_item_url() );
                 }
 
                 if($aComment['fk_i_user_id'] != $this->userId) {
-                    osc_add_flash_message( _m('You cannot delete the comment') );
+                    osc_add_flash_error_message( _m('You cannot delete the comment') );
                     $this->redirectTo( osc_item_url() );
                 }
 
                  $commentManager->deleteByPrimaryKey($commentId);
-                 osc_add_flash_message( _m('The comment has been deleted correctly' ) ) ;
+                 osc_add_flash_ok_message( _m('The comment has been deleted correctly' ) ) ;
                  $this->redirectTo( osc_item_url() );
             break;
             default:
@@ -455,15 +460,15 @@ class CWebItem extends BaseModel
                 $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                 // if item doesn't exist redirect to base url
                 if( count($item) == 0 ){
-                    osc_add_flash_message( _m('This item doesn\'t exist') );
+                    osc_add_flash_error_message( _m('This item doesn\'t exist') );
                     $this->redirectTo( osc_base_url(true) );
                 }else{
                     
                     if ($item['e_status'] != 'ACTIVE') {
                         if( $this->userId == $item['fk_i_user_id'] ) {
-                            osc_add_flash_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
+                            osc_add_flash_error_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
                         } else {
-                            osc_add_flash_message( _m('This item hasn\'t been validated') );
+                            osc_add_flash_error_message( _m('This item hasn\'t been validated') );
                             $this->redirectTo( osc_base_url(true) );
                         }
                     }

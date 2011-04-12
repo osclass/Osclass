@@ -202,7 +202,7 @@ function osc_doRequest($url, $_data) {
             // close the socket connection:
             fclose($fp);
         } else {
-            osc_add_flash_message( _m('Error, auto-cron is not working propertly'), 'admin');
+            osc_add_flash_error_message( _m('Error, auto-cron is not working propertly'), 'admin');
         }
     }
 }

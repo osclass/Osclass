@@ -65,12 +65,12 @@
                             if(!$this->emailManager->isIndelible($id)) {
                                 $this->emailManager->updateInternalName($id, $s_internal_name);
                             }
-                            osc_add_flash_message( _m('The email/alert has been updated'), 'admin' );
+                            osc_add_flash_ok_message( _m('The email/alert has been updated'), 'admin' );
                             $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                         }
-                        osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
+                        osc_add_flash_error_message( _m('You can\'t repeat internal name'), 'admin');
                     } else {
-                        osc_add_flash_message( _m('The email couldn\'t be updated, at least one title should not be empty'), 'admin') ;
+                        osc_add_flash_error_message( _m('The email couldn\'t be updated, at least one title should not be empty'), 'admin') ;
                     }
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                     break;

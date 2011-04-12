@@ -57,9 +57,9 @@
                         }
                         $this->categoryManager->insert($fields, $aFieldsDescription);
 
-                        osc_add_flash_message( _m('The category has been added'), 'admin');
+                        osc_add_flash_ok_message( _m('The category has been added'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('The category could\'t be added') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( _m('The category could\'t be added') . $e->getMessage(), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -74,7 +74,7 @@
                     $name = Params::getParam('s_name');
                     $locale = Params::getParam('locale');
                     Category::newInstance()->update_name($id, $locale, $name);
-                    osc_add_flash_message( _m('The category has been updated.'), 'admin');
+                    osc_add_flash_ok_message( _m('The category has been updated.'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
                 case 'edit_post':
@@ -94,9 +94,9 @@
 
                     try {
                         $this->categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
-                        osc_add_flash_message( _m('The category has been updated.'), 'admin');
+                        osc_add_flash_ok_message( _m('The category has been updated.'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
                     }
                     if( !is_null( $fields['fk_i_parent_id'] ) ) {
                         $this->redirectTo(osc_admin_base_url(true).'?page=categories&parentId=' . $fields['fk_i_parent_id']);
@@ -113,9 +113,9 @@
                                 $this->categoryManager->deleteByPrimaryKey($i);
                             }
                         }
-                        osc_add_flash_message( _m('The categories have been deleted'), 'admin');
+                        osc_add_flash_ok_message( _m('The categories have been deleted'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -134,9 +134,9 @@
                         } else {
                             $msg = _m('There was a problem with this page. The ID for the category hasn\'t been set') ;
                         }
-                        osc_add_flash_message($msg, 'admin') ;
+                        osc_add_flash_ok_message($msg, 'admin') ;
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -150,9 +150,9 @@
                                 $this->categoryManager->update(array('b_enabled' => 1), array('pk_i_id' => $id));
                             }
                         }
-                        osc_add_flash_message( _m('The categories have been enabled'), 'admin');
+                        osc_add_flash_ok_message( _m('The categories have been enabled'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -166,9 +166,9 @@
                                 $this->categoryManager->update(array('b_enabled' => 0), array('pk_i_id' => $id));
                             }
                         }
-                        osc_add_flash_message( _m('The selected categories have been disabled'), 'admin');
+                        osc_add_flash_ok_message( _m('The selected categories have been disabled'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;

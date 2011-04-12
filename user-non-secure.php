@@ -45,14 +45,14 @@ class CWebUserNonSecure extends BaseModel
                                                     Alerts::newInstance()->update(array('s_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                     Session::newInstance()->_set('userEmail', $userEmailTmp['s_new_email']) ;
                                                     UserEmailTmp::newInstance()->delete(array('s_new_email' => $userEmailTmp['s_new_email']));
-                                                    osc_add_flash_message( _m('Your email has been changed successfully'));
+                                                    osc_add_flash_ok_message( _m('Your email has been changed successfully'));
                                                     $this->redirectTo( osc_user_profile_url() ) ;
                                                 } else {
-                                                    osc_add_flash_message( _m('Sorry, the link is not valid'));
+                                                    osc_add_flash_error_message( _m('Sorry, the link is not valid'));
                                                     $this->redirectTo( osc_base_url() ) ;
                                                 }
                                             } else {
-                                                osc_add_flash_message( _m('Sorry, the link is not valid'));
+                                                osc_add_flash_error_message( _m('Sorry, the link is not valid'));
                                                 $this->redirectTo( osc_base_url() ) ;
                                             }
             break;
@@ -62,9 +62,9 @@ class CWebUserNonSecure extends BaseModel
                 $alert = Params::getParam('alert');
                 if($email!='' && $alert!='') {
                     Alerts::newInstance()->delete(array('s_email' => $email, 's_search' => $alert));
-                    osc_add_flash_message(__('Unsubscribed correctly.'));
+                    osc_add_flash_ok_message(__('Unsubscribed correctly.'));
                 } else {
-                    osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                    osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
                 $this->redirectTo(osc_base_url());
 
