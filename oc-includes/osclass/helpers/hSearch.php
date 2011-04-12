@@ -250,4 +250,14 @@
         return osc_field(osc_list_city(), 'items', '') ;
     }
 
+    /**********************
+     ** LATEST SEARCHES **
+     **********************/
+    function osc_get_latest_searches($limit = 20) {
+        if ( !View::newInstance()->_exists('latest_searches') ) {
+            View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches($limit) ) ;
+        }
+        return View::newInstance()->_count('latest_searches') ;
+    }
+
 ?>

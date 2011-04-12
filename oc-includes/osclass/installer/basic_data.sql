@@ -58,7 +58,9 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'admin_theme', 'modern', 'STRING')
     ,('osclass', 'akismetKey', '', 'STRING')
     ,('osclass', 'recaptchaPrivKey', '', 'STRING')
-    ,('osclass', 'recaptchaPubKey', '', 'STRING');
+    ,('osclass', 'recaptchaPubKey', '', 'STRING')
+    ,('osclass', 'save_latest_searches', '1', 'BOOLEAN')
+    ,('osclass', 'purge_latest_searches', '1000', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
     ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

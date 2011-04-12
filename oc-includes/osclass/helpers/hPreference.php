@@ -260,6 +260,14 @@
         return(getPreference('maxLatestItems@home')) ;
     }
 
+    function osc_save_latest_searches() {
+        return(getBoolPreference('save_latest_searches')) ;
+    }
+
+    function osc_purge_latest_searches() {
+        return(getPreference('purge_latest_searches')) ;
+    }
+
     function osc_get_preference($key, $section = 'osclass') {
         return getPreference($key, $section);
     }
