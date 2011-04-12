@@ -26,4 +26,12 @@ require_once ABS_PATH . 'oc-load.php';
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
     // FOR 2.x ALL THIS HAS TO BE DELETED, NOT USE ANYMORE
 
+    $conn = getConnection();
+    try {
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ,('osclass', 'save_latest_searches', '1', 'BOOLEAN'),('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
+    } catch(Exception $e) {
+        echo "Error: ".$e->getMessage()."\n";
+    }
+
+
 ?>

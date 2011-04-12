@@ -84,7 +84,19 @@ function update_cat_stats() {
 	
 }
 
+
+function purge_latest_searches_hourly() {
+    $purge = osc_purge_latest_searches();
+    if($purge=='day') {
+        LatestSearches::newInstance()->purgeDate(date('Y-m-d H:i:s', (time()-3600)));
+    } else if($purge!='forever' && $purge!='day' && $purge!='week') {
+        LatestSearches::newInstance()->purgeNumber($purge);
+    }
+}
+
+
 update_cat_stats();
+purge_latest_searches_hourly();
 osc_runAlert('HOURLY');
 
 osc_run_hook('cron_hourly');
