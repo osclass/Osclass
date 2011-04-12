@@ -260,4 +260,37 @@
         return View::newInstance()->_count('latest_searches') ;
     }
 
+    function osc_count_latest_searches() {
+        if ( !View::newInstance()->_exists('latest_searches') ) {
+            View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches() ) ;
+        }
+        return View::newInstance()->_count('latest_searches') ;
+    }
+    
+    function osc_has_latest_searches() {
+        if ( !View::newInstance()->_exists('latest_searches') ) {
+            View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches() ) ;
+        }
+        return View::newInstance()->_next('latest_searches') ;
+    }
+
+    function osc_latest_search() {
+        if (View::newInstance()->_exists('latest_searches')) {
+            return View::newInstance()->_current('latest_searches') ;
+        }
+        return null;
+    }
+    
+    function osc_lastest_search_text() {
+        return osc_field(osc_latest_search(), 's_search', '');
+    }
+
+    function osc_lastest_search_date() {
+        return osc_field(osc_latest_search(), 's_search', '');
+    }
+
+    function osc_lastest_search_total() {
+        return osc_field(osc_latest_search(), 's_search', '');
+    }
+
 ?>
