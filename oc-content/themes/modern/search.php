@@ -113,6 +113,7 @@
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
+                                <?php  osc_get_non_empty_categories(); ?>
                                 <?php  if ( osc_count_categories() ) { ?>
                                     <div class="row checkboxes">
                                         <h6><?php _e('Category', 'modern') ; ?></h6>
