@@ -30,7 +30,7 @@
         //Business Layer...
         function doModel() {
             $mCategories = new Category() ;
-            $aCategories = $mCategories->findRootCategories() ;
+            //$aCategories = $mCategories->findRootCategories() ;
             $mCategoryStats = new CategoryStats() ;
 
             ////////////////////////////////
@@ -210,9 +210,9 @@
 
                 //Categories for select at view "search.php"
                 $mCategories = new Category();
-                $aCategories = $mCategories->findRootCategories();
+                //$aCategories = $mCategories->findRootCategories();
                 $mCategoryStats = new CategoryStats();
-                $aCategories = $mCategories->toTree();
+                /*$aCategories = $mCategories->toTree();
                 foreach($aCategories as $k => $v) {
                     $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);
                     if($iCategoryNumItems > 0) {
@@ -220,12 +220,12 @@
                     } else {
                         unset($aCategories[$k]);
                     }
-                }
+                }*/
 
                 osc_run_hook('search', $this->mSearch) ;
 
                 //preparing variables...
-                $this->_exportVariableToView('categories', $aCategories) ;
+                //$this->_exportVariableToView('non_empty_categories', $aCategories) ;
                 $this->_exportVariableToView('search_start', $iStart) ;
                 $this->_exportVariableToView('search_end', $iEnd) ;
                 $this->_exportVariableToView('search_category', $p_sCategory) ;
