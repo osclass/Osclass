@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-error_reporting(0);
+error_reporting(E_ALL);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
@@ -34,10 +34,17 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hDatabaseInfo.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hSearch.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
+require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
+require_once ABS_PATH . 'oc-includes/osclass/utils.php';
 
-( isset($_REQUEST['step']) ) ? $step = (int) $_REQUEST['step'] : $step = '1' ;
+
+$step = Params::getParam('step');
+if( !is_numeric($step) ) {
+    $step = '1';
+}
 
 if( is_osclass_installed( ) ) {
     $message = 'You appear to have already installed OSClass. To reinstall please clear your old database tables first.' ;
@@ -50,14 +57,23 @@ switch ($step) {
         $error = check_requirements($requirements) ;
         break;
     case 2:
-        if( isset($_REQUEST['save_stats']) ) {
+        if( Params::getParam('save_stats') == '1' ) {
             setcookie('osclass_save_stats', 1) ;
-            header('Location: '. get_absolute_url() . 'oc-includes/osclass/install.php?step=2') ;
+        } else {
+            setcookie('osclass_save_stats', 0) ;
         }
+
+        if( Params::getParam('ping_engines') == '1' ) {
+            setcookie('osclass_ping_engines', 1) ;
+        } else {
+            setcookie('osclass_ping_engines', 0) ;
+        }
+
         break;
     case 3:
-        if( isset($_POST['dbname']) )
+        if( Params::getParam('dbname') != '' ) {
             $error = oc_install();
+        }
         break;
     case 5:
         
@@ -112,10 +128,15 @@ switch ($step) {
                             <?php } ?>
                             </ul>
                             <div class="more-stats">
+                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
+                                <label for="ping_engines">
+                                    Allow my site to appear in search engines like Gooogle.
+                                </label>
+                                <br>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
-                                    <b>Optional:</b> Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.
+                                    Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.
                                 </label>
                             </div>
                         </div>
@@ -140,6 +161,8 @@ switch ($step) {
                     } elseif($step == 4) {
                         display_categories();
                     } elseif($step == 5) {
+                        // ping engines
+                        ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
                         display_finish();
                     }
                 ?>
