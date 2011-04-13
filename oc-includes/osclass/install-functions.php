@@ -619,6 +619,34 @@ function display_categories() {
 <?php
 }
 
+function ping_search_engines($bool){
+    $mPreference = Preference::newInstance() ;
+    if($bool == 1){
+        $mPreference->insert (
+            array(
+                's_section' => 'osclass'
+                ,'s_name'   => 'ping_search_engines'
+                ,'s_value'  => '1'
+                ,'e_type'   => 'BOOLEAN'
+            )
+        ) ;
+        // GOOGLE
+        osc_doRequest( 'http://www.google.com/webmasters/sitemaps/ping?sitemap='.urlencode(osc_search_url(array('sFeed' => 'rss') )), array());
+        // BING
+        osc_doRequest( 'http://www.bing.com/webmaster/ping.aspx?siteMap='.urlencode( osc_search_url(array('sFeed' => 'rss') ) ), array());
+        // YAHOO!
+        osc_doRequest( 'http://search.yahooapis.com/SiteExplorerService/V1/ping?sitemap='.urlencode( osc_search_url(array('sFeed' => 'rss') ) ), array());
+    } else {
+        $mPreference->insert (
+            array(
+                's_section' => 'osclass'
+                ,'s_name'   => 'ping_search_engines'
+                ,'s_value'  => '0'
+                ,'e_type'   => 'BOOLEAN'
+            )
+        ) ;
+    }
+}
 function display_finish() {
     $data = finish_installation( );
 ?>
