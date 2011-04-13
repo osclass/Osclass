@@ -261,7 +261,7 @@
                         while(osc_has_items()) {
                             $feed->addItem(array(
                                 'title' => osc_item_title(),
-                                'link' => osc_item_url(),
+                                'link' => htmlentities( osc_item_url() ),
                                 'description' => osc_item_description()
                             ));
                         }
