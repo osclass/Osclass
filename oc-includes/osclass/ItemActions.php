@@ -34,13 +34,14 @@ Class ItemActions
         $success = true;
         $aItem = $this->prepareData(true);
         $code = osc_genRandomPassword();
+        $flash_error = '';
 
 		// Initiate HTML Purifier
 		require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';			
 
 		$config = HTMLPurifier_Config::createDefault();
-		$config->set('HTML', 'Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
-		$config->set('CSS', 'AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+		$config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
+		$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
 		$purifier = new HTMLPurifier($config);
 	
 		// Requires email validation?
@@ -54,42 +55,42 @@ Class ItemActions
 		
 		// Sanitize
 		foreach(@$aItem['title'] as $key=>$value) {
-			$aItem['title'][$key] = sanitize_allcaps( strip_tags( trim ( $value ) ) );
+			$aItem['title'][$key] = osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
 		}
 		foreach(@$aItem['description'] as $key=>$value) {
 			$aItem['description'][$key] = $purifier->purify($value);
 		}		
 		$aItem['price'] = strip_tags( trim( $aItem['price'] ) );
-		$contactName = sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
+		$contactName = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
 		$contactEmail = strip_tags( trim( $aItem['contactEmail'] ) );
-		$aItem['cityArea'] = sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
-		$aItem['address'] = sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
+		$aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
+		$aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 
 		// Anonymous
-		$contactName = (validate_text($contactName,3))? $contactName : __("Anonymous");
+		$contactName = (osc_validate_text($contactName,3))? $contactName : __("Anonymous");
 			
 		// Validate
 		foreach(@$aItem['title'] as $key=>$value) {
 			$flash_error .=
-				((!validate_text($value,9))? _m("Title too short.\n") : '' ) .
-				((!validate_max($value,80))? _m("Title too long.\n") : '' );
+				((!osc_validate_text($value,9))? _m("Title too short.\n") : '' ) .
+				((!osc_validate_max($value,80))? _m("Title too long.\n") : '' );
 		}
 		foreach(@$aItem['description'] as $key=>$value) {
 			$flash_error .=
-				((!validate_text($value,25))? _m("Description too short.\n") : '' ) .
-				((!validate_max($value,5000))? _m("Description too long.\n") : '' );
+				((!osc_validate_text($value,25))? _m("Description too short.\n") : '' ) .
+				((!osc_validate_max($value,5000))? _m("Description too long.\n") : '' );
 		}
 		$flash_error .= 
-			((!validate_category($aItem['catId']))? _m("Category invalid.\n") : '' ) .
-			((!validate_number($aItem['price']))? _m("Price must be number.\n") : '' ) .
-			((!validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
-			((!validate_max($contactName,35))? _m("Name too long.\n") : '' ) .
-			((!validate_email($contactEmail))? _m("Email invalid.\n") : '' ) .
-			((!validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
-			((!validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
-			((!validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
-			((!validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
-			((!validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
+			((!osc_validate_category($aItem['catId']))? _m("Category invalid.\n") : '' ) .
+			((!osc_validate_number($aItem['price']))? _m("Price must be number.\n") : '' ) .
+			((!osc_validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
+			((!osc_validate_max($contactName,35))? _m("Name too long.\n") : '' ) .
+			((!osc_validate_email($contactEmail))? _m("Email invalid.\n") : '' ) .
+			((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
+			((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
+			((!osc_validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
+			((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
+			((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
 		
 		// Handle error
         if ($flash_error) {
@@ -175,46 +176,47 @@ Class ItemActions
     
     function edit() {
         $aItem = $this->prepareData(false);
+        $flash_error = '';
 		
 		// Initiate HTML Purifier
 		require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php';
 		
 		$config = HTMLPurifier_Config::createDefault();
-		$config->set('HTML', 'Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
-		$config->set('CSS', 'AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+		$config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
+		$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
 		$purifier = new HTMLPurifier($config);
 		
 		// Sanitize
 		foreach(@$aItem['title'] as $key=>$value) {
-			$aItem['title'][$key] = sanitize_allcaps( strip_tags( trim ( $value ) ) );
+			$aItem['title'][$key] = osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
 		}
 		foreach(@$aItem['description'] as $key=>$value) {
 			$aItem['description'][$key] = $purifier->purify($value);
-		}		
+		}
 		$aItem['price'] = strip_tags( trim( $aItem['price'] ) );
-		$aItem['cityArea'] = sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
-		$aItem['address'] = sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
+		$aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
+		$aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 		
 		// Validate
 		foreach(@$aItem['title'] as $key=>$value) {
 			$flash_error .=
-				((!validate_text($value,9))? _m("Title too short.\n") : '' ) .
-				((!validate_max($value,80))? _m("Title too long.\n") : '' );
+				((!osc_validate_text($value,9))? _m("Title too short.\n") : '' ) .
+				((!osc_validate_max($value,80))? _m("Title too long.\n") : '' );
 		}
 		foreach(@$aItem['description'] as $key=>$value) {
 			$flash_error .=
-				((!validate_text($value,25))? _m("Description too short.\n") : '' ) .
-				((!validate_max($value,5000))? _m("Description too long.\n") : '' );
+				((!osc_validate_text($value,25))? _m("Description too short.\n") : '' ) .
+				((!osc_validate_max($value,5000))? _m("Description too long.\n") : '' );
 		}
 		$flash_error .= 
-			((!validate_category($aItem['catId']))? _m("Category invalid.\n") : '' ) .
-			((!validate_number($aItem['price']))? _m("Price must be number.\n") : '' ) .
-			((!validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
-			((!validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
-			((!validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
-			((!validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
-			((!validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
-			((!validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
+			((!osc_validate_category($aItem['catId']))? _m("Category invalid.\n") : '' ) .
+			((!osc_validate_number($aItem['price']))? _m("Price must be number.\n") : '' ) .
+			((!osc_validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
+			((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
+			((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
+			((!osc_validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
+			((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
+			((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
 		
 		// Handle error
         if ($flash_error) {
