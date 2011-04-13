@@ -42,9 +42,15 @@
     function osc_show_flash_message($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
         $message = Session::newInstance()->_getMessage($section) ;
 
-        if ($message['msg'] != '') {
+        if (isset($message['msg']) && $message['msg'] != '') {
             echo '<div id="' . $id . '" class="' . $class . ' ' . $message['type'] . '">' ;
                 echo $message['msg'];
+            echo '</div>' ;
+
+            Session::newInstance()->_dropMessage($section) ;
+        } else if($message!='') {
+            echo '<div id="' . $id . '" class="' . $class . '">' ;
+                echo $message;
             echo '</div>' ;
 
             Session::newInstance()->_dropMessage($section) ;

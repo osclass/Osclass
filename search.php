@@ -45,6 +45,15 @@
                 }
             }
 
+            $p_sCityArea    = Params::getParam('sCityArea');
+            if(!is_array($p_sCityArea)) {
+                if($p_sCityArea == '') {
+                    $p_sCityArea = array() ;
+                } else {
+                    $p_sCityArea = explode(",", $p_sCityArea);
+                }
+            }
+
             $p_sCity      = Params::getParam('sCity');
             if(!is_array($p_sCity)) {
                 if($p_sCity == '') {
@@ -135,6 +144,12 @@
             } else {
                 $bAllCategoriesChecked = true ;
             }
+
+            //FILTERING CITY_AREA
+            foreach($p_sCityArea as $city_area) {
+                $this->mSearch->addCityArea($city_area);
+            }
+            $p_sCityArea = implode(", ", $p_sCityArea);
 
             //FILTERING CITY
             foreach($p_sCity as $city) {
