@@ -614,6 +614,7 @@ Class ItemActions
      */
     private function prepareDataForFunction( $action )
     {
+        require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php' ;
         $aItem = array();
 
         switch ( $action ){
@@ -670,6 +671,7 @@ Class ItemActions
      */
     private function prepareData( $is_add )
     {
+        require_once LIB_PATH . 'htmlpurifier/HTMLPurifier.auto.php' ;
         $aItem = array();
         
         if( $is_add ) {   // ADD
