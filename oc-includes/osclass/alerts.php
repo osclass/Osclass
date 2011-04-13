@@ -66,9 +66,11 @@ function osc_runAlert($type = null) {
             //Catch the user subscribed to this search
             $users = Alerts::newInstance()->getUsersBySearchAndType($s_search['s_search'], $type, $active) ;
 
-            if (count($users > 0)) {
+            if (count($users) > 0 ) {
+                
                 $prefLocale = osc_language() ;
                 $page = Page::newInstance()->findByInternalName($internal_name) ;
+
                 $page_description = $page['locale'] ;
 
                 $_title = $page_description[$prefLocale]['s_title'] ;
@@ -76,8 +78,7 @@ function osc_runAlert($type = null) {
 
                 $ads = "";
                 foreach ($items as $item) {
-
-                    $ads .= "<a href='".osc_item_url_ns($item['pk_i_id'])."'>" . $item['s_title'] . "</a><br/>" ;
+                    $ads .= '<a href="'. osc_item_url_ns($item['pk_i_id']).'">' . $item['s_title'] . '</a><br/>' ;
                 }
 
                 foreach ($users as $user)

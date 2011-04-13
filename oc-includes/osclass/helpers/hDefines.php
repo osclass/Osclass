@@ -453,6 +453,7 @@
         } else {
             return osc_base_url(true) . '?page=user&action=activate_alert&email=' . urlencode($email) . '&secret=' . $secret ;
         }
+
     }
 
     //osc_createProfileURL
