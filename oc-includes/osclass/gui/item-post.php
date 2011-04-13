@@ -26,9 +26,11 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-
+        
         <!-- only item-post.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('tinymce_textarea.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <!-- end only item-post.php -->
