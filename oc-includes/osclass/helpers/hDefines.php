@@ -444,7 +444,7 @@
     function osc_user_unsubscribe_alert_url($email = '', $alert = '') {
         if($alert=='') { $alert = osc_alert_search(); }
         if($email=='') { $email = osc_user_email(); }
-        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&alert='.$alert ;
+        return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&alert='.urlencode($alert) ;
     }
 
     //osc_createProfileURL
