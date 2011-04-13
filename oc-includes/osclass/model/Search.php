@@ -30,6 +30,7 @@ class Search extends DAO
     private $limit_init;
     private $results_per_page;
     private $cities;
+    private $city_areas;
     private $regions;
     private $countries;
     private $categories;
@@ -37,6 +38,7 @@ class Search extends DAO
 
 
     public function __construct() {
+        $this->city_areas = array();
         $this->cities = array();
         $this->regions = array();
         $this->countries = array();
@@ -121,6 +123,30 @@ class Search extends DAO
         if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
         $this->limit_init = $this->results_per_page*$p;
         $this->results_per_page = $this->results_per_page;
+    }
+
+    public function addCityArea($city_area = array()) {
+        if(is_array($city_area)) {
+            foreach($city_area as $c) {
+                $c = trim($c);
+                if($c!='') {
+                    if(is_int($c)) {
+                    	$this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
+                    } else {
+                    	$this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
+                    }
+                }
+            }
+        } else {
+            $city_area = trim($city_area);
+            if($city_area!="") {
+                if(is_int($city_area)) {
+                	$this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
+                } else {
+                	$this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
+                }
+            }
+        }
     }
 
     public function addCity($city = array()) {
@@ -253,6 +279,11 @@ class Search extends DAO
 
         //DEPRECATED. MARK FOR DELETE
         //$this->makeCompatible();
+
+        if(count($this->city_areas)>0) {
+            $this->addConditions("( ".implode(' || ', $this->city_areas)." )");
+	        $this->addConditions(sprintf(" %st_item.pk_i_id  = %st_item_location.fk_i_item_id ", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        }
 
         if(count($this->cities)>0) {
             $this->addConditions("( ".implode(' || ', $this->cities)." )");
