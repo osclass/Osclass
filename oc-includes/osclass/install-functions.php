@@ -434,7 +434,18 @@ function display_database_config() {
                 </tr>
             </tbody>
         </table>
-        <table id="more-options">
+        <div id="advanced_exp" onclick="$('#more-options').toggle(); $('#advanced_exp').hide(); $('#separator').css('width', '97%');$('#advanced').show();" style="cursor:pointer;float:left; width: 12%;font-size: 12px;color: #444444;">
+            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_noexpanded.png"/>
+            <span>Advanced</span>
+        </div>
+        <div id="advanced" onclick="$('#more-options').toggle();$('#separator').css('width', '88%');$('#advanced').hide();$('#advanced_exp').show();" style="cursor:pointer; display:none;float:left; width: 3%;font-size: 12px;color: #444444;">
+            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_expanded.png"/>
+        </div>
+        <div id="separator" style="float:right; width: 88%;">
+            <hr style="border: 1px solid gray;"/>
+        </div>
+        <div style="clear:both;"></div>
+        <table id="more-options" style="display:none;">
             <tbody>
                 <tr>
                     <th></th>
@@ -653,24 +664,141 @@ function display_finish() {
 <h2 class="target">Congratulations!</h2>
 <p class="space-left-10">OSClass has been installed. Were you expecting more steps? Sorry to disappoint.</p>
 <p class="space-left-10">An e-mail with the password for oc-admin has sent to: <?php echo $data['s_email']?></p>
+<input type="hidden" value="<?php echo $data['password']; ?>" name="original_passwd"/>
+<div style="margin:0 auto 0 auto;width:390px;height: 35px;">
+<span id="result" class="testresult" style="display:none;height: 20px;"><span></span></span>
+</div>
+<div style="clear:both;"></div>
 <div class="form-table finish">
     <table>
         <tbody>
             <tr>
                 <th><label>Username</label></th>
-                <td><?php echo $data['admin_user']; ?></td>
+                <td>
+                    <p class="s_name" style=" cursor: pointer;">
+                        <span><?php echo $data['admin_user']; ?></span><img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
+                        <span class="update_info_name" style="color: #444444;display:none;font-size: 12px;"> Modify </span>
+                    </p>
+                    <p class="s_name_input" style=" display:none;"> <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>"/> <button>Update</button> </p>
+                </td>
             </tr>
             <tr>
                 <th><label>Password</label></th>
-                <td><p><?php echo $data['password']; ?></p></td>
+                <td>
+                    <p class="s_passwd" style=" cursor: pointer;">
+                        <span><?php echo $data['password']; ?></span><img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
+                        <span class="update_info_passwd" style="color: #444444;display:none;font-size: 12px;"> Modify </span>
+                    </p>
+                    <p class="s_passwd_input" style=" display:none;"> <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left;"/><br><br> <button>Update</button> </p>
+
+                </td>
             </tr>
             <tr>
                 <th></th>
-                <td>Note that password carefully! It is a random password that was generated just for you.</td>
+                <td>
+                    Note that password carefully! It is a random password that was generated just for you.
+                    <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="You can modify username and password if you like, only need click them and update it!." alt=""/>
+                </td>
             </tr>
         </tbody>
     </table>
 </div>
+<script>
+
+$(".s_name").click(function () {
+    $(this).hide();
+    $('.s_name_input').show();
+});
+$(".s_passwd").click(function () {
+    $(this).hide();
+    $('.s_passwd_input').show();
+});
+
+$('.s_name').hover(
+     function callback(eventObject) {
+        $('.update_info_name').show()
+     },
+     function callback(eventObject) {
+        $('.update_info_name').hide()
+     });
+
+$('.s_passwd').hover(
+     function callback(eventObject) {
+        $('.update_info_passwd').show()
+     },
+     function callback(eventObject) {
+        $('.update_info_passwd').hide()
+     });
+
+$(".s_name_input button").click( function(){ update_username(); } );
+$("input[name='s_name']").keypress(function(e) {
+    if(e.keyCode == 13) {
+        update_username();
+    }
+});
+
+$(".s_passwd_input button").click( function(){ update_passwd(); } );
+$("input[name='s_passwd']").keypress(function(e) {
+    if(e.keyCode == 13) {
+        update_passwd();
+    }
+});
+
+function update_username(){
+    // ajax update user
+    $.ajax({
+        type: 'POST',
+        url: 'update_admin.php?old_password='+$('input[name="original_passwd"]').val()+"&id=1&new_username="+$('.s_name_input input').val(),
+        timeout: 600000,
+        success: function(data) {
+            if(data < 0){
+                $('#result span').html("There have been some error.");
+                $('#result').addClass('badPass');
+                $('#result').fadeIn();
+                setInterval(function(){ $('#result').fadeOut(); }, 2000);
+            } else if (data >= 0 ) {
+                $('.s_name span:first').html( $('.s_name_input input').val() );
+                $('#result span').html("Updated correctly.");
+                $('#result').addClass('strongPass');
+                $('#result').fadeIn();
+                setInterval(function(){ $('#result').fadeOut(); }, 2000);
+            }
+        }
+    });
+    $('.s_name_input').hide();
+    $('.s_name').show();
+}
+
+function update_passwd(){
+    // ajax update passwd
+    $.ajax({
+        type: 'POST',
+        url: 'update_admin.php?old_password='+$('input[name="original_passwd"]').val()+"&id=1&new_password="+$('.s_passwd_input input').val(),
+        timeout: 600000,
+        success: function(data) {
+           if(data < 0){
+                $('.s_passwd_input input').val( $('.s_passwd span:first').html() );
+
+                $('#result span').html("There have been some error.");
+                $('#result').addClass('badPass');
+                $('#result').fadeIn();
+                setInterval(function(){ $('#result').fadeOut(); }, 2000);
+
+            } else if (data >= 0 ) {
+                $('input[name="original_passwd"]').val( $('.s_passwd_input input').val() );
+                $('.s_passwd span:first').html( $('.s_passwd_input input').val() );
+
+                $('#result span').html("Updated correctly.");
+                $('#result').addClass('strongPass');
+                $('#result').fadeIn();
+                setInterval(function(){ $('#result').fadeOut(); }, 2000);
+            }
+        }
+    });
+    $('.s_passwd_input').hide();
+    $('.s_passwd').show();
+}
+</script>
 <p class="margin20">
     <a target="_blank" href="<?php echo get_absolute_url() ?>oc-admin/index.php" class="button">Finish and go to the administration panel</a>
 </p>

@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-error_reporting(E_ALL);
+error_reporting(0);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
@@ -93,8 +93,22 @@ switch ($step) {
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
+        <?php if($step == 5) { ?>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/password_strength_plugin.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/style.css" />
+        <?php } ?>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/css/vtip.css" />
+
+        <script>
+            $(document).ready( function() {
+                //BASIC
+                $(".password_test").passStrength({
+                    userid:	"#user_id",
+                    messageloc:		1
+                });
+            });
+        </script>
     </head>
     <body>
         <div id="wrapper">
