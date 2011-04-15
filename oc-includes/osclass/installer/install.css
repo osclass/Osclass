@@ -266,11 +266,16 @@ table.list-categories td {
 }
 
 .finish {
-    width: 500px;
+    width: 550px;
 }
 
 .finish th {
     width: 100px;
+}
+
+.finish p {
+    margin-bottom: 7px;
+    margin-top: 7px;
 }
 
 .space20 {
