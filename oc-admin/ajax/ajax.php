@@ -103,6 +103,7 @@
                  ******************************/
 	            case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
 	
+	                $message = "";
 	                $error = 0;
                     $remove_error_msg = "";
                     $sql_error_msg = "";
@@ -235,7 +236,7 @@
                     if($error==5) {
                         $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed', 'admin') . implode("<br />", $sql_error_msg);
 		            }
-		
+		            echo $message;
 		            break;
                     
                 default:

@@ -39,24 +39,25 @@
         ?>
             $(function() {
                 var steps_div = document.getElementById('steps_div');
-                steps_div.style.display = "";
+                steps_div.style.display = "none";
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';
                 steps.innerHTML += "<?php _e('Checking for updates (installed version: ', 'admin'); ?>" + version + "): " ;
 
-                //$.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
-                $.getJSON("http://localhost/~conejo/osclass/latest_version.php?callback=?", function(data) {
+                $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
                         steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: ', 'admin'); ?>" + data.version + ")" ;
                     } else {
                         steps.innerHTML += "<?php _e('current version: ', 'admin'); ?>" + data.version + "<br/>" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
-                            steps.innerHTML += "<?php _e('Upgrading your OSClass installation: ', 'admin') ; ?>" ;
+                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url() ; ?>images/loading.gif\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
                             $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade&file=' + data.url, function(data) {
+                                var loading_image = document.getElementById('loading_image');
+                                loading_image.style.display = "none";
                                 steps.innerHTML += data+"<br/>";
                             });
                         <?php } else { ?>
