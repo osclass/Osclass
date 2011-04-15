@@ -9,6 +9,7 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hDatabaseInfo.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 require_once ABS_PATH . 'oc-includes/osclass/formatting.php';
 require_once ABS_PATH . 'oc-includes/osclass/utils.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php' ;
 
 $_POST = add_slashes_extended($_POST) ;
 
@@ -59,7 +60,7 @@ function location_international() {
     $manager_region = Region::newInstance();
     $manager_city = City::newInstance();
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=all&install=true');
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=all&install=true&version='.osc_version());
     $countries = json_decode($countries_json);
 
     foreach($countries as $c) {
@@ -108,7 +109,7 @@ function location_by_country() {
 
     $country = $_POST['country'];
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='. urlencode(implode(',', $country)) . "&install=true");
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='. urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
 
     $manager_country = Country::newInstance();
@@ -167,7 +168,7 @@ function location_by_region() {
     $country = $_POST['country'];
     $region = $_POST['region'];
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=' . urlencode(implode(',', $country)) . "&install=true");
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=' . urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
     
     $manager_country = Country::newInstance();
@@ -220,7 +221,7 @@ function location_by_city() {
     $country = $_POST['country'];
     $city = $_POST['city'];
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  urlencode(implode(',', $country)) . "&install=true");
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
 
     $manager_country = Country::newInstance();
