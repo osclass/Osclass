@@ -85,6 +85,28 @@ function get_requirements( ) {
 }
 
 /*
+ * Get help of requirements to install OSClass
+ *
+ * @since 2.1
+ *
+ * @return array Help of requirements
+ */
+function get_solution_requirements( ) {
+    $array = array(
+        'PHP version >= 5.x' => '',
+        'MySQLi extension for PHP' => '<a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">MySQLi extension reference. Installing/Configuring</a>',
+        'GD extension for PHP' => '<a target="_blank" href="http://www.php.net/manual/en/image.setup.php">GD extension for PHP reference. Installing/Configuring</a>',
+        'Folder <code>oc-content/uploads</code> exists' => 'to create folder: <br>mkdir ' . ABS_PATH . 'oc-content/uploads/' ,
+        'Folder <code>oc-content/uploads</code> is writable' => 'to give permission to folder: <br>chmod a+x ' . ABS_PATH . 'oc-content/uploads/',
+        'Folder <code>oc-content/languages</code> exists' => 'to create folder: <br>mkdir ' . ABS_PATH . 'oc-content/languages/',
+        'Root directory is writable' => 'to create folder: <br>mkdir ' . ABS_PATH ,
+        'File <code>config.php</code> is writable' => '',
+        'File <code>config-sample.php</code> exists' => ''
+    );
+    return $array;
+}
+
+/*
  * Check if some of the requirements to install OSClass are correct or not
  *
  * @since 1.2
