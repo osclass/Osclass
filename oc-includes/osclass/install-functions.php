@@ -434,7 +434,18 @@ function display_database_config() {
                 </tr>
             </tbody>
         </table>
-        <table id="more-options">
+        <div id="advanced_exp" onclick="$('#more-options').toggle(); $('#advanced_exp').hide(); $('#separator').css('width', '97%');$('#advanced').show();" style="cursor:pointer;float:left; width: 12%;font-size: 12px;color: #444444;">
+            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_noexpanded.png"/>
+            <span>Advanced</span>
+        </div>
+        <div id="advanced" onclick="$('#more-options').toggle();$('#separator').css('width', '88%');$('#advanced').hide();$('#advanced_exp').show();" style="cursor:pointer; display:none;float:left; width: 3%;font-size: 12px;color: #444444;">
+            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_expanded.png"/>
+        </div>
+        <div id="separator" style="float:right; width: 88%;">
+            <hr style="border: 1px solid gray;"/>
+        </div>
+        <div style="clear:both;"></div>
+        <table id="more-options" style="display:none;">
             <tbody>
                 <tr>
                     <th></th>
