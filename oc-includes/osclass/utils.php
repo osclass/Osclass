@@ -516,18 +516,24 @@ function osc_dump_table_data($path, $table)
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
 
-	set_time_limit(0);
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+
+	@set_time_limit(0);
 	ini_set('display_errors',true);
 			
-	$fp = fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-	$ch = curl_init($sourceFile);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	curl_setopt($ch, CURLOPT_FILE, $fp);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	curl_exec($ch);
-	curl_close($ch);
-	fclose($fp);
-
+	$fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+	if($fp) {
+	    $ch = curl_init($sourceFile);
+	    @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+	    curl_setopt($ch, CURLOPT_FILE, $fp);
+	    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	    curl_exec($ch);
+	    curl_close($ch);
+	    fclose($fp);
+	    return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -865,4 +871,33 @@ function osc_check_recaptcha() {
     return false;
 }
 
+function osc_check_dir_writable( $dir = ABS_PATH ) {
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else {
+                        $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
+                } else {
+                    return is_writable( str_replace("//", "/", $dir . "/" . $file));
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return true;
+}
 ?>
