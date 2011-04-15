@@ -39,7 +39,7 @@
         ?>
             $(function() {
                 var steps_div = document.getElementById('steps_div');
-                steps_div.style.display = "none";
+                steps_div.style.display = "";
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';

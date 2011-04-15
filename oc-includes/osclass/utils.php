@@ -877,8 +877,20 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
         while (($file = readdir($dh)) !== false) {
             if($file!="." && $file!="..") {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
-                    $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
-                    if(!$res) { return false; };
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else {
+                        $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
                 } else {
                     return is_writable( str_replace("//", "/", $dir . "/" . $file));
                 }
