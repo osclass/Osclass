@@ -30,72 +30,42 @@
         <div id="update_version" style="display:none;"></div>
         <div class="Header"><?php _e("Upgrade");?></div>
         <script type="text/javascript">
-            $(document).ready(function(){
-                $.ajaxSetup({
-                    error: function(x,e){
-                        if(x.status==0){
-                            alert("<?php _e('You\'re offline! Please check your connection'); ?>");
-                        } else if(x.status==404){
-                            alert("<?php _e('Requested URL not found'); ?>");
-                        } else if(x.status==500){
-                            alert("<?php _e('Internal server error'); ?>");
-                        } else if(e=='parsererror'){
-                            alert("<?php _e('Error. Parsing JSON request failed'); ?>");
-                        } else if(e=='timeout'){
-                            alert("<?php _e('Request timeout'); ?>");
-                        } else {
-                            alert("<?php _e('Unknown error'); ?>" + x.responseText);
-                        }
-                    }
-                });
+            $(document).ready(function() {
+                $("#steps_div").hide();
             });
-
+        <?php
+        $ok = osc_check_dir_writable();
+        if($ok) {
+        ?>
             $(function() {
+                var steps_div = document.getElementById('steps_div');
+                steps_div.style.display = "";
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';
-                steps.innerHTML += "<?php _e('Checking for updates (installed version: '); ?>" + version + "): " ;
+                steps.innerHTML += "<?php _e('Checking for updates (installed version: ', 'admin'); ?>" + version + "): " ;
 
-                $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
+                //$.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
+                $.getJSON("http://localhost/~conejo/osclass/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
-                        steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: '); ?>" + data.version + ")" ;
+                        steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: ', 'admin'); ?>" + data.version + ")" ;
                     } else {
-                        steps.innerHTML += "<?php _e('current version: '); ?>" + data.version + "<br/>" ;
-                        steps.innerHTML += "<?php _e('Downloading update file: ') ; ?>" ;
+                        steps.innerHTML += "<?php _e('current version: ', 'admin'); ?>" + data.version + "<br/>" ;
+                        <?php if(Params::getParam('action')=='confirm') {?>
+                            steps.innerHTML += "<?php _e('Upgrading your OSClass installation: ', 'admin') ; ?>" ;
 
-                        var tempAr = data.url.split('/') ;
-                        fileToUnzip = tempAr.pop() ;
-                        $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=download-file&file=' + data.url, function(data) {
-                            steps.innerHTML += data+"<br/>";
-                            steps.innerHTML += "<?php _e('Unzipping file: '); ?>";
-                            $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=unzip-file&file=' + fileToUnzip, function(data) {
+                            var tempAr = data.url.split('/') ;
+                            fileToUnzip = tempAr.pop() ;
+                            $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=complete&file=' + data.url, function(data) {
                                 steps.innerHTML += data+"<br/>";
-                                steps.innerHTML += "<?php _e('Copying new files: '); ?>";
-                                $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=copy-files', function(data) {
-                                    steps.innerHTML += data+"<br/>";
-                                    steps.innerHTML += "<?php _e('Removing old files: '); ?>";
-                                    $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=remove-files', function(data) {
-                                        steps.innerHTML += data+"<br/>";
-                                        steps.innerHTML += "<?php _e('Executing SQL: '); ?>";
-                                        $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=execute-sql', function(data) {
-                                            steps.innerHTML += data+"<br/>";
-                                            steps.innerHTML += "<?php _e('Executing additional actions: '); ?>";
-                                            $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=execute-actions', function(data) {
-                                                steps.innerHTML += data+"<br/>";
-                                                steps.innerHTML += "<?php _e('Cleaning all the mess: '); ?>";
-                                                $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=empty-temp', function(data) {
-                                                    steps.innerHTML += data+"<br/>";
-                                                    steps.innerHTML += "<?php _e('Awesome and easy auto-upgrade: done!'); ?><br/><br/>" ;
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
                             });
-                        });
+                        <?php } else { ?>
+                            steps.innerHTML += "<a href=\"<?php echo osc_admin_base_url(); ?>upgrade.php?action=confirm\" ><button><?php _e('Upgrade', 'admin') ; ?></button></a>" ;
+                        <?php }; ?>
                     }
                 });
             });
+        <?php }; ?>
         </script>
         <div id="content">
             <div id="separator"></div>
@@ -105,19 +75,34 @@
                     <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/tools-icon.png" title="" alt="" />
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass', 'admin'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
-                <!-- add new item form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
+                    <div style="padding: 5px;">
+                        <div style="width: 100%;">
+                            <fieldset>
+                                <legend><?php _e('Upgrade', 'admin'); ?></legend>
+                                <?php if($ok) {?>
+                                    <label><?php _e('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
+                                <?php } else { ?>
+                                    <label><?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply 644 permissions via SSH with the command "chmod -R 666 *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
+                                <?php }; ?>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div style="clear: both;"></div>
+                <div id="steps_div" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                         <div id="steps">
                         </div>
                     </div>
                 </div>
-            </div> <!-- end of right column -->
+            </div>
         </div>
         <?php osc_current_admin_theme_url('footer.php') ; ?>
     </body>
