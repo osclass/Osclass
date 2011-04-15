@@ -879,6 +879,8 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
                     $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
                     if(!$res) { return false; };
+                } else {
+                    return is_writable( str_replace("//", "/", $dir . "/" . $file));
                 }
             }
         }

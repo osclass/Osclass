@@ -51,16 +51,16 @@
                         steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: ', 'admin'); ?>" + data.version + ")" ;
                     } else {
                         steps.innerHTML += "<?php _e('current version: ', 'admin'); ?>" + data.version + "<br/>" ;
-                        <?php if(Params::getParam('action')=='confirm') {?>
+                        <?php if(Params::getParam('confirm')=='true') {?>
                             steps.innerHTML += "<?php _e('Upgrading your OSClass installation: ', 'admin') ; ?>" ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
-                            $.get('<?php echo osc_admin_base_url() ; ?>upgrade.php?action=complete&file=' + data.url, function(data) {
+                            $.get('<?php echo osc_admin_base_url(true) ; ?>?page=ajax&action=upgrade&file=' + data.url, function(data) {
                                 steps.innerHTML += data+"<br/>";
                             });
                         <?php } else { ?>
-                            steps.innerHTML += "<a href=\"<?php echo osc_admin_base_url(); ?>upgrade.php?action=confirm\" ><button><?php _e('Upgrade', 'admin') ; ?></button></a>" ;
+                            steps.innerHTML += "<a href=\"<?php echo osc_admin_base_url(true); ?>?page=tools&action=upgrade&confirm=true\" ><button><?php _e('Upgrade', 'admin') ; ?></button></a>" ;
                         <?php }; ?>
                     }
                 });
