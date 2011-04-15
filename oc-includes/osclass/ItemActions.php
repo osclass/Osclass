@@ -42,6 +42,7 @@ Class ItemActions
 		$config = HTMLPurifier_Config::createDefault();
 		$config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
 		$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+        $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
 		$purifier = new HTMLPurifier($config);
 	
 		// Requires email validation?
@@ -59,7 +60,7 @@ Class ItemActions
 		}
 		foreach(@$aItem['description'] as $key=>$value) {
 			$aItem['description'][$key] = $purifier->purify($value);
-		}		
+		}
 		$aItem['price'] = strip_tags( trim( $aItem['price'] ) );
 		$contactName = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
 		$contactEmail = strip_tags( trim( $aItem['contactEmail'] ) );
@@ -184,6 +185,7 @@ Class ItemActions
 		$config = HTMLPurifier_Config::createDefault();
 		$config->set('HTML.Allowed', 'b,strong,i,em,u,a[href|title],ul,ol,li,p[style],br,span[style]');
 		$config->set('CSS.AllowedProperties', 'font,font-size,font-weight,font-style,font-family,text-decoration,padding-left,color,background-color,text-align');
+        $config->set('Cache.SerializerPath', ABS_PATH . 'oc-content/uploads');
 		$purifier = new HTMLPurifier($config);
 		
 		// Sanitize
