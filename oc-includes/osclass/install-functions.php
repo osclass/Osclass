@@ -84,6 +84,13 @@ function get_requirements( ) {
     return $array;
 }
 
+/*
+ * Get help of requirements to install OSClass
+ *
+ * @since 2.1
+ *
+ * @return array Help of requirements
+ */
 function get_solution_requirements( ) {
     $array = array(
         'PHP version >= 5.x' => '',

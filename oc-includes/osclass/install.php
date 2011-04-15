@@ -133,26 +133,17 @@ switch ($step) {
                         <div class="form-table">
                         <?php if($error) { ?>
                             <p>Check the next requirements:</p>
-
-
-
-
                             <div style="-moz-border-radius: 10px 10px 10px 10px;background: none repeat scroll 0 0 #FFFF99;font-size: 12px;padding: 20px;text-align: left;">
                                 <p><b>Info can help you...</b></p>
                                 <ul>
-                                <?php $solve_requirements = get_solution_requirements(); foreach($solve_requirements as $k => $v) { ?>
-                                    <?php if( $solve_requirements[$k] != ''){// if(!$v && $solve_requirements[$k] != ''){ ?>
+                                <?php $solve_requirements = get_solution_requirements(); foreach($requirements as $k => $v) { ?>
+                                    <?php  if(!$v && $solve_requirements[$k] != ''){ ?>
                                     <li><?php echo $solve_requirements[$k]; ?></li>
-                                    
                                     <?php } ?>
                                 <?php } ?>
                                     <li><a target="_blank" href="http://forums.osclass.org/">Forums can help you.</a></li>
                                 </ul>
                             </div>
-
-
-
-
                         <?php } else { ?>
                             <p>All right! All the requirements have met:</p>
                         <?php } ?>
@@ -166,7 +157,7 @@ switch ($step) {
                                 <label for="ping_engines">
                                     Allow my site to appear in search engines like Gooogle.
                                 </label>
-                                <br>
+                                <br/>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
