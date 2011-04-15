@@ -887,6 +887,13 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
                             $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
                             if(!$res) { return false; };
                         }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
+                        if($file=="en_US" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
                     } else {
                         $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
                         if(!$res) { return false; };
@@ -900,4 +907,69 @@ function osc_check_dir_writable( $dir = ABS_PATH ) {
     }
     return true;
 }
+
+
+
+function osc_change_permissions( $dir = ABS_PATH ) {
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    if(!$res) { return false; };
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
+                        if($file=="en_US" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
+                    } else {
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
+                } else {
+                    return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return true;
+}
+
+
+function osc_save_permissions( $dir = ABS_PATH ) {
+    $perms = array();
+    $perms[$dir] = fileperms($dir);
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    $res = osc_save_permissions( str_replace("//", "/", $dir . "/" . $file));
+                    foreach($res as $k => $v) {
+                        $perms[$k] = $v;
+                    }
+                } else {
+                    $perms[str_replace("//", "/", $dir . "/" . $file)] = fileperms( str_replace("//", "/", $dir . "/" . $file));
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return $perms;
+}
+
 ?>
