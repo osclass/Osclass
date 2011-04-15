@@ -126,6 +126,9 @@
                     $remove_error_msg = "";
                     $sql_error_msg = "";
                     $rm_errors = 0;
+                    $perms = osc_save_permissions();
+                    osc_change_permissions();
+
 
                     /***********************
                      **** DOWNLOAD FILE ****
@@ -255,6 +258,10 @@
                         $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed', 'admin') . implode("<br />", $sql_error_msg);
 		            }
 		            echo $message;
+
+                    foreach($perms as $k => $v) {
+                        chmod($k, $v);
+                    }
 		            break;
                     
                 default:
