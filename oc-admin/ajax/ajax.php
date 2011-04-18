@@ -170,7 +170,7 @@
 			                                $lines = file(ABS_PATH.'oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 			                                foreach ($lines as $line_num => $r_file) {
 				                                $unlink = @unlink(ABS_PATH.$r_file);
-				                                if(!$unlink) { $remove_error_msg .= __('Error removing file:') . " " . $r_file."<br/>"; }
+				                                if(!$unlink) { $remove_error_msg .= sprintf(__('Error removing file: %s'), $r_file) . "<br/>"; }
 			                                }
 		                                }
 		                                // Removing files is not important for the rest of the proccess
