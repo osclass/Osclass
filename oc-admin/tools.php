@@ -107,10 +107,10 @@
                                             case(-1):   $msg = _m('Path is empty') ;
                                                     osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            case(-2):   $msg = _m('Could not connect with the database') . '. Error: ' . mysql_error() ;
+                                            case(-2):   $msg = _m('Could not connect with the database') . '. ' . _m('Error:') . " " . mysql_error() ;
                                                     osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            case(-3):   $msg = _m('Could not select the database') . '. Error: ' . mysql_error() ;
+                                            case(-3):   $msg = _m('Could not select the database') . '. ' . _m('Error:') . " " . mysql_error() ;
                                                     osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-4):   $msg = _m('There are no tables to back up') ;
