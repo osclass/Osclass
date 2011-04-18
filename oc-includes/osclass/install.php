@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-error_reporting(0);
+error_reporting(E_ALL);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
@@ -39,6 +39,9 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
 require_once ABS_PATH . 'oc-includes/osclass/utils.php';
+
+require_once ABS_PATH . 'oc-includes/osclass/Logger/Logger.php' ;
+require_once ABS_PATH . 'oc-includes/osclass/Logger/LogOsclass.php' ;
 
 
 $step = Params::getParam('step');
@@ -99,7 +102,7 @@ switch ($step) {
         <?php } ?>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/css/vtip.css" />
-
+        <?php if( $step == 5 ) {?>
         <script>
             $(document).ready( function() {
                 //BASIC
@@ -109,6 +112,7 @@ switch ($step) {
                 });
             });
         </script>
+        <?php } ?>
     </head>
     <body>
         <div id="wrapper">
