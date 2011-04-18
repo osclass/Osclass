@@ -249,6 +249,18 @@
     function osc_list_city_items() {
         return osc_field(osc_list_city(), 'items', '') ;
     }
+    
+    function osc_list_country_url() {
+        return osc_search_url(array('sCountry' => osc_list_country_name()));
+    }
+
+    function osc_list_region_url() {
+        return osc_search_url(array('sRegion' => osc_list_region_name()));
+    }
+
+    function osc_list_city_url() {
+        return osc_search_url(array('sCity' => osc_list_city_name()));
+    }
 
     /**********************
      ** LATEST SEARCHES **
