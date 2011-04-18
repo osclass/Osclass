@@ -99,7 +99,7 @@ switch($action) {
 			$message = "";
 			foreach ($lines as $line_num => $r_file) {
 				$unlink = @unlink(ABS_PATH.$r_file);
-				if(!$unlink) { $message .= __('Error removing file: ').$r_file."<br/>"; }
+				if(!$unlink) { $message .= __('Error removing file:') . " " . $r_file."<br/>"; }
 			}
 			if($message=="") {
 				$message = __('Files removed');

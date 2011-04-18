@@ -65,7 +65,7 @@
 
                             <div id="flash_message">
                                 <p>
-                                    <?php _e('The theme folder ') ; ?> (<?php echo osc_themes_path() ; ?>) <?php _e(' is not writable on your server, '); ?> <span class="OSClass"><?php _e('OSClass'); ?></span> <?php _e(" can't upload themes from the administration panel. Please copy the theme package using FTP or SSH, or make the mentioned themes folder writable."); ?>
+                                    <?php echo __('The theme folder') . " " ; ?> (<?php echo osc_themes_path() ; ?>) <?php echo " " . __('is not writable on your server,') . " "; ?> <span class="OSClass"><?php _e('OSClass'); ?></span> <?php echo " " . __("can't upload themes from the administration panel. Please copy the theme package using FTP or SSH, or make the mentioned themes folder writable."); ?>
                                 </p>
                                 <p>
                                     <?php _e('To make a directory writable under UNIX execute this command from the shell'); ?>:

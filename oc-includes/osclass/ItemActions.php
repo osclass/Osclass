@@ -414,7 +414,7 @@ Class ItemActions
         Params::setParam('item_url', $item_url );
 
         if(osc_sendMail($params)) {
-            osc_add_flash_ok_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
+            osc_add_flash_ok_message( _m('We just send your message to') . " " . $aItem['friendName'] . ".") ;
         } else {
             osc_add_flash_error_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
         }
@@ -1038,7 +1038,7 @@ Class ItemActions
                 ,Params::getParam("recaptcha_response_field")
             );
             if (!$resp->is_valid) {
-                die(__("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: ") . $resp->error . ")") ;
+                die(__(sprintf("The reCAPTCHA wasn't entered correctly. Go back and try it again. (reCAPTCHA said: %s )", $resp->error))) ;
             }
         }
     }
