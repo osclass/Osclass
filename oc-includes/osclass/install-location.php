@@ -123,7 +123,7 @@ function location_by_country() {
 
     $country = $_POST['country'];
 
-    $countries_json = osc_file_get_contents('http://_geo.osclass.org/geo.download.php?action=country&term='. urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='. urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
 
     $manager_country = Country::newInstance();

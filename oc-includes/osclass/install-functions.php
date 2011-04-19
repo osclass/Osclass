@@ -84,7 +84,7 @@ function get_requirements( ) {
     return $array;
 }
 
-/*
+/**
  * Check if some of the requirements to install OSClass are correct or not
  *
  * @since 1.2
@@ -99,7 +99,8 @@ function check_requirements($array) {
 }
 
 /**
- * Check if allowed to send stats to Osclass 
+ * Check if allowed to send stats to Osclass
+ *
  * @return boolean Check if allowed to send stats to Osclass
  */
 function reportToOsclass()
@@ -186,7 +187,7 @@ function oc_install( ) {
         create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
-
+            
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('It doesn\'t exist config-sample.php. Check if you have everything well decompressed.' , __FILE__."::".__LINE__) ;
             }
@@ -275,6 +276,7 @@ function oc_install( ) {
         return array('error' => 'Cannot insert basic configuration. Error number: ' . $error_num . '.');
     }
 
+    // save in preferences allow_report_osclass
     if( reportToOsclass() ) {
         set_allow_report_osclass( true ) ;
     } else {

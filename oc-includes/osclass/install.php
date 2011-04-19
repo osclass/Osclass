@@ -61,15 +61,15 @@ switch ($step) {
         break;
     case 2:
         if( Params::getParam('save_stats') == '1' ) {
-            setcookie('osclass_save_stats', 1) ;
+            setcookie('osclass_save_stats', 1, time()+24*60*60) ;
         } else {
-            setcookie('osclass_save_stats', 0) ;
+            setcookie('osclass_save_stats', 0, time()+24*60*60) ;
         }
 
         if( Params::getParam('ping_engines') == '1' ) {
-            setcookie('osclass_ping_engines', 1) ;
+            setcookie('osclass_ping_engines', 1, time()+24*60*60) ;
         } else {
-            setcookie('osclass_ping_engines', 0) ;
+            setcookie('osclass_ping_engines', 0, time()+24*60*60) ;
         }
 
         break;
