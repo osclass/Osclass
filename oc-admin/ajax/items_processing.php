@@ -1,4 +1,5 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -158,4 +159,5 @@
         }
         /* END - dump results */
      }
+     
 ?>
