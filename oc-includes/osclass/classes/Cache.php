@@ -1,81 +1,83 @@
-<?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-define('CACHE_PATH', CONTENT_PATH . 'uploads/');
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-/**
- * This is the simplest cache service on earth.
- *
- * @author OSClass
- * @version 1.0
- */
-class Cache {
+    define('CACHE_PATH', CONTENT_PATH . 'uploads/');
 
-	private $objectKey;
-	private $expiration;
+    /**
+     * This is the simplest cache service on earth.
+     *
+     * @author OSClass
+     * @version 1.0
+     */
+    class Cache {
 
-	public function __construct($objectKey, $expiration = 900 /* 15 minutes */) {
-		$this->objectKey = $objectKey;
-		$this->expiration = $expiration;
-	}
+        private $objectKey;
+        private $expiration;
 
-	public function __destruct() {
-	}
+        public function __construct($objectKey, $expiration = 900 /* 15 minutes */) {
+            $this->objectKey = $objectKey;
+            $this->expiration = $expiration;
+        }
 
-	/**
-	 * @return true if the object is cached and has not expired, false otherwise.
-	 */
-	public function check() {
-		$path = $this->preparePath();
-		if(!file_exists($path)) return false;
+        public function __destruct() {
+        }
 
-		if(time() - filemtime($path) > $this->expiration) {
-			unlink($path);
-			return false;
-		}
+        /**
+         * @return true if the object is cached and has not expired, false otherwise.
+         */
+        public function check() {
+            $path = $this->preparePath();
+            if(!file_exists($path)) return false;
 
-		return true;
-	}
+            if(time() - filemtime($path) > $this->expiration) {
+                unlink($path);
+                return false;
+            }
 
-	/**
-	 * Stores the object passed as parameter in the cache backend (filesystem).
-	 */
-	public function store($object) {
-		$serialized = serialize($object);
-		file_put_contents($this->preparePath(), $serialized);
-	}
+            return true;
+        }
 
-	/**
-	 * Returns the data of the current cached object.
-	 */
-	public function retrieve() {
-		$content = file_get_contents($this->preparePath());
-		return unserialize($content);
-	}
+        /**
+         * Stores the object passed as parameter in the cache backend (filesystem).
+         */
+        public function store($object) {
+            $serialized = serialize($object);
+            file_put_contents($this->preparePath(), $serialized);
+        }
 
-	/**
-	 * Constructs the path to object in filesystem.
-	 */
-	private function preparePath() {
-		return CACHE_PATH . $this->objectKey . '.cache';
-	}
-}
+        /**
+         * Returns the data of the current cached object.
+         */
+        public function retrieve() {
+            $content = file_get_contents($this->preparePath());
+            return unserialize($content);
+        }
 
+        /**
+         * Constructs the path to object in filesystem.
+         */
+        private function preparePath() {
+            return CACHE_PATH . $this->objectKey . '.cache';
+        }
+    }
+
+?>
