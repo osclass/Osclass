@@ -54,7 +54,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been activated'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'deactivate_all':
@@ -73,7 +73,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been deactivated'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'premium_all':
@@ -90,7 +90,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been marked as premium'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'depremium_all':
@@ -107,7 +107,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The changes have been made'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'delete_all':
@@ -186,7 +186,7 @@
                                             }
 
                                         } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                                            osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
@@ -212,7 +212,7 @@
                                             );
                                             osc_add_flash_message( _m('Changes have been applied'), 'admin');
                                         } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                                            osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;

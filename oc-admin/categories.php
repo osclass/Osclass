@@ -59,7 +59,7 @@
 
                         osc_add_flash_ok_message( _m('The category has been added'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_error_message( _m('The category could\'t be added') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('The category could\'t be added. Reason: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -96,7 +96,7 @@
                         $this->categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
                         osc_add_flash_ok_message( _m('The category has been updated.'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     if( !is_null( $fields['fk_i_parent_id'] ) ) {
                         $this->redirectTo(osc_admin_base_url(true).'?page=categories&parentId=' . $fields['fk_i_parent_id']);
@@ -115,7 +115,7 @@
                         }
                         osc_add_flash_ok_message( _m('The categories have been deleted'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -136,7 +136,7 @@
                         }
                         osc_add_flash_ok_message($msg, 'admin') ;
                     } catch (Exception $e) {
-                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -152,7 +152,7 @@
                         }
                         osc_add_flash_ok_message( _m('The categories have been enabled'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -168,7 +168,7 @@
                         }
                         osc_add_flash_ok_message( _m('The selected categories have been disabled'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_error_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
