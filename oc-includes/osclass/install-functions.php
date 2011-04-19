@@ -106,7 +106,7 @@ function get_solution_requirements( ) {
     return $array;
 }
 
-/*
+/**
  * Check if some of the requirements to install OSClass are correct or not
  *
  * @since 1.2
@@ -118,6 +118,32 @@ function check_requirements($array) {
         if( !$v ) return true;
     }
     return false;
+}
+
+/**
+ * Check if allowed to send stats to Osclass
+ *
+ * @return boolean Check if allowed to send stats to Osclass
+ */
+function reportToOsclass()
+{
+    return $_COOKIE['osclass_save_stats'] ;
+}
+
+/**
+ * insert/update preference allow_report_osclass
+ * @param boolean $bool
+ */
+function set_allow_report_osclass($bool)
+{
+    require_once ABS_PATH . 'config.php' ;
+
+    $value = 0;
+    if($bool) {$value = 1;}
+
+    $conn = getConnection() ;
+    $sql = sprintf("INSERT INTO `osclass`.`%st_preference` (`s_section`,`s_name`,`s_value`,`e_type`) VALUES ('osclass','allow_report_osclass','$value','BOOLEAN')",DB_TABLE_PREFIX);
+    $conn->osc_dbExec($sql) ;
 }
 
 /*
@@ -143,10 +169,15 @@ function oc_install( ) {
         $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
         $master_conn->osc_dbExec(sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname)) ;
         $error_num = $master_conn->get_errno();
+
         if($error_num > 0) {
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('Cannot create the database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
+            }
             if($error_num == 1006 || $error_num == 1044 || $error_num == 1045) {
                 return array('error' => 'Cannot create the database. Check if the admin username and password are correct.');
             }
+
             return array('error' => 'Cannot create the database. Error number: ' . $error_num . '.');
         }
     }
@@ -155,6 +186,11 @@ function oc_install( ) {
     $error_num = $conn->get_errno();
 
     if($error_num > 0) {
+
+        if( reportToOsclass() ) {
+            LogOsclassInstaller::instance()->error('Cannot connect to database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
+        }
+
         if ( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
         if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
         if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
@@ -164,14 +200,28 @@ function oc_install( ) {
     
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
+
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('Cannot write in config.php file. Check if the file is writable.' , __FILE__."::".__LINE__) ;
+            }
             return array('error' => 'Cannot write in config.php file. Check if the file is writable.');
         }
         create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
+            
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('It doesn\'t exist config-sample.php. Check if you have everything well decompressed.' , __FILE__."::".__LINE__) ;
+            }
+
             return array('error' => 'It doesn\'t exist config-sample.php. Check if you have everything well decompressed.');
         }
         if( !is_writable(ABS_PATH) ) {
+
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('Can\'t copy config-sample.php. Check if the root directory is writable.' , __FILE__."::".__LINE__) ;
+            }
+
             return array('error' => 'Can\'t copy config-sample.php. Check if the root directory is writable.');
         }
         copy_config_file($dbname, $username, $password, $dbhost, $tableprefix);
@@ -183,6 +233,11 @@ function oc_install( ) {
     $conn->osc_dbImportSQL($sql);
     $error_num = $conn->get_errno();
     if($error_num > 0) {
+
+        if( reportToOsclass() ) {
+            LogOsclassInstaller::instance()->error('Cannot create the database structure. Error number: ' . $error_num  , __FILE__."::".__LINE__) ;
+        }
+
         if ( $error_num == 1050 ) {
             return array('error' => 'There are tables with the same name in the database. Change the table prefix or the database and try again.');
         }
@@ -217,17 +272,37 @@ function oc_install( ) {
 
     $sql = '';
     foreach($required_files as $file) {
-        if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) return array('error' => 'the file ' . $file . ' doesn\'t exist in data folder' );
-        else $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
+        if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) {
+
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('the file ' . $file . ' doesn\'t exist in data folder' , __FILE__."::".__LINE__) ;
+            }
+
+            return array('error' => 'the file ' . $file . ' doesn\'t exist in data folder' );
+        } else {
+            $sql .= file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/' . $file);
+        }
     }
 
     $conn->osc_dbImportSQL($sql, '');
     $error_num = $conn->get_errno();
     if($error_num > 0) {
+
+        if( reportToOsclass() ) {
+            LogOsclassInstaller::instance()->error('Cannot insert basic configuration. Error number: ' . $error_num  , __FILE__."::".__LINE__) ;
+        }
+
         if ( $error_num == 1471 ) {
             return array('error' => 'Cannot insert basic configuration. This user has no privileges to \'INSERT\' into the database.');
         }
         return array('error' => 'Cannot insert basic configuration. Error number: ' . $error_num . '.');
+    }
+
+    // save in preferences allow_report_osclass
+    if( reportToOsclass() ) {
+        set_allow_report_osclass( true ) ;
+    } else {
+        set_allow_report_osclass( false ) ;
     }
 
     return false;
@@ -414,8 +489,10 @@ function finish_installation( ) {
     $mail->AddAddress($admin['s_email'], 'OSClass administrator') ;
     $mail->Body = $body ;
     $mail->AltBody = $body ;
-    if (!$mail->Send())
+    if (!$mail->Send()) {
+        echo $admin['s_email']."<br>";
         echo $mail->ErrorInfo ;
+    }
 
     return $data ;
 }
