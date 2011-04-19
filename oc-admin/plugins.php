@@ -46,17 +46,20 @@
 
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
+                                osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(1):   $msg = _m('The plugin has been uploaded correctly');
+                                osc_add_flash_ok_message($msg, 'admin');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
+                                osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the plugin');
+                                osc_add_flash_error_message($msg, 'admin');
                         break;
                     }
 
-                    osc_add_flash_message($msg, 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'install':
@@ -67,7 +70,7 @@
                     Plugins::runHook('install_'.$pn) ;
 
 
-                    osc_add_flash_message( _m('Plugin installed'), 'admin');
+                    osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'uninstall':
@@ -76,7 +79,7 @@
                     Plugins::runHook($pn.'_uninstall') ;
                     Plugins::deactivate($pn);
 
-                    osc_add_flash_message( _m('Plugin uninstalled'), 'admin');
+                    osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'admin':
@@ -133,10 +136,10 @@
                             Plugins::addToCategoryPlugin($categories, $plugin_short_name);
                         }
                     } else {
-                        osc_add_flash_message( _m('No plugin selected'), 'admin');
+                        osc_add_flash_error_message( _m('No plugin selected'), 'admin');
                         $this->doView("plugins/index.php");
                     }
-                    osc_add_flash_message( _m('Configuration was saved'), 'admin');
+                    osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 default:

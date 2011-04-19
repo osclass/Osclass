@@ -41,7 +41,7 @@
                                                     case 'delete_all':      $this->itemCommentManager->delete(array(
                                                                                 DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $id) . ')'
                                                                             ));
-                                                                            osc_add_flash_message( _m('The comments have been deleted'), 'admin') ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been deleted'), 'admin') ;
                                                     break;
                                                     case 'activate_all':    $value = 'ACTIVE' ;
                                                                             foreach ($id as $_id) {
@@ -50,7 +50,7 @@
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
                                                                             }
-                                                                            osc_add_flash_message( _m('The comments have been approved'), 'admin') ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been approved'), 'admin') ;
                                                     break;
                                                     case 'deactivate_all':  $value = 'INACTIVE' ;
                                                                             foreach ($id as $_id) {
@@ -59,7 +59,7 @@
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
                                                                             }
-                                                                            osc_add_flash_message( _m('The comments have been disapproved'), 'admin') ;
+                                                                            osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
                                                     break;
                                                 }
                                             }
@@ -78,9 +78,9 @@
                                                     ,array('pk_i_id' => $id)
                                             );
                                             if( $value == 'ACTIVE' ) {
-                                                osc_add_flash_message( _m('The comment has been approved'), 'admin');
+                                                osc_add_flash_ok_message( _m('The comment has been approved'), 'admin');
                                             } else {
-                                                osc_add_flash_message( _m('The comment has been disapproved'), 'admin');
+                                                osc_add_flash_ok_message( _m('The comment has been disapproved'), 'admin');
                                             }
 
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
@@ -106,11 +106,11 @@
 
                                             osc_run_hook('item_edit_post') ;
 
-                                            osc_add_flash_message( _m('Great! We just updated your comment'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('Great! We just updated your comment'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
-                                            osc_add_flash_message( _m('The comment have been deleted'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('The comment have been deleted'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 default:                    if( Params::getParam('id') != '' ){

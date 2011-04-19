@@ -139,7 +139,7 @@ class Item extends DAO
 
     public function findByPrimaryKey($id)
     {
-        $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.*, s.* FROM %s i LEFT JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id LEFT JOIN %st_item_stats s ON i.pk_i_id = s.fk_i_item_id WHERE i.pk_i_id = %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id);
+        $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.*, SUM(s.i_num_views) AS i_num_views FROM %s i LEFT JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id LEFT JOIN %st_item_stats s ON i.pk_i_id = s.fk_i_item_id WHERE i.pk_i_id = %d GROUP BY s.fk_i_item_id', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id);
 
         if(count($item) > 0) {
             return $this->extendDataSingle($item);
@@ -434,6 +434,36 @@ class Item extends DAO
         $items = $this->extendData($aItems);
         $items = $this->extendCategoryName($items);
         return array('found' => $found, 'items' => $items);
+    }
+
+    public function clearStat($id, $stat)
+    {
+        switch($stat) {
+            case 'spam':
+                $sql = "UPDATE `oc_t_item_stats` SET i_num_spam = 0 WHERE fk_i_item_id = $id";
+                break;
+
+            case 'duplicated':
+                $sql = "UPDATE `oc_t_item_stats` SET i_num_repeated = 0 WHERE fk_i_item_id = $id";
+                break;
+
+            case 'bad':
+                $sql = "UPDATE `oc_t_item_stats` SET i_num_bad_classified = 0 WHERE fk_i_item_id = $id";
+                break;
+
+            case 'offensive':
+                $sql = "UPDATE `oc_t_item_stats` SET i_num_offensive = 0 WHERE fk_i_item_id = $id";
+                break;
+
+            case 'expired':
+                $sql = "UPDATE `oc_t_item_stats` SET i_num_expired = 0 WHERE fk_i_item_id = $id";
+                break;
+
+            default:
+                break;
+        }
+        
+        return $this->conn->osc_dbExec($sql);
     }
 
     public function updateLocaleForce($id, $locale, $title, $text)

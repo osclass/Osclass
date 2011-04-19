@@ -17,6 +17,9 @@ a:hover { color:#F80; }
 option.pad { margin-left:10px;}
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
 #FlashMessage { background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:absolute; text-align: center; top:0; width:100%; }
+.FlashMessage.ok { background:#9CDA9B; }
+.FlashMessage.info { background:#FFF78D; }
+.FlashMessage.error { background:#F90; }
 .container { margin:0 auto; width:970px; }
 .content { clear:both; float:left; margin-bottom:20px; width:960px; }
 .content.home { border-top:1px solid #BBB; }

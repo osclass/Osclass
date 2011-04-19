@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0') ;
+define('OSCLASS_VERSION', '2.0.1') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -42,10 +42,16 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
+
+if( !defined('MULTISITE') ) {
+    define('MULTISITE', 0);
+}
+
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hMessages.php';
@@ -57,6 +63,9 @@ require_once LIB_PATH . 'osclass/helpers/hCategories.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
 require_once LIB_PATH . 'osclass/helpers/hPage.php';
+require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
+require_once LIB_PATH . 'osclass/helpers/hValidate.php';
+require_once LIB_PATH . 'osclass/helpers/hLocation.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
@@ -98,6 +107,8 @@ require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
+require_once LIB_PATH . 'osclass/model/LatestSearches.php';
+require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
@@ -112,9 +123,10 @@ require_once LIB_PATH . 'osclass/frm/Item.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Contact.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Comment.form.class.php';
 require_once LIB_PATH . 'osclass/frm/User.form.class.php';
-require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
+require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; 
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
+
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {

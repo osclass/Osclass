@@ -30,7 +30,7 @@
         //Business Layer...
         function doModel() {
             $mCategories = new Category() ;
-            $aCategories = $mCategories->findRootCategories() ;
+            //$aCategories = $mCategories->findRootCategories() ;
             $mCategoryStats = new CategoryStats() ;
 
             ////////////////////////////////
@@ -42,6 +42,15 @@
                     $p_sCategory = array() ;
                 } else {
                     $p_sCategory = explode(",",$p_sCategory);
+                }
+            }
+
+            $p_sCityArea    = Params::getParam('sCityArea');
+            if(!is_array($p_sCityArea)) {
+                if($p_sCityArea == '') {
+                    $p_sCityArea = array() ;
+                } else {
+                    $p_sCityArea = explode(",", $p_sCityArea);
                 }
             }
 
@@ -73,6 +82,13 @@
             }
 
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
+            
+            // ADD TO THE LIST OF LAST SEARCHES
+            if(osc_save_latest_searches()) {
+                if(trim($p_sPattern)!='') {
+                    LatestSearches::newInstance()->insert(array( 's_search' => trim($p_sPattern), 'd_date' => date('Y-m-d H:i:s')));
+                }
+            }
 
             $p_bPic       = Params::getParam('bPic');
             ($p_bPic == 1) ? $p_bPic = 1 : $p_bPic = 0 ;
@@ -128,6 +144,12 @@
             } else {
                 $bAllCategoriesChecked = true ;
             }
+
+            //FILTERING CITY_AREA
+            foreach($p_sCityArea as $city_area) {
+                $this->mSearch->addCityArea($city_area);
+            }
+            $p_sCityArea = implode(", ", $p_sCityArea);
 
             //FILTERING CITY
             foreach($p_sCity as $city) {
@@ -188,9 +210,9 @@
 
                 //Categories for select at view "search.php"
                 $mCategories = new Category();
-                $aCategories = $mCategories->findRootCategories();
+                //$aCategories = $mCategories->findRootCategories();
                 $mCategoryStats = new CategoryStats();
-                $aCategories = $mCategories->toTree();
+                /*$aCategories = $mCategories->toTree();
                 foreach($aCategories as $k => $v) {
                     $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);
                     if($iCategoryNumItems > 0) {
@@ -198,12 +220,12 @@
                     } else {
                         unset($aCategories[$k]);
                     }
-                }
+                }*/
 
                 osc_run_hook('search', $this->mSearch) ;
 
                 //preparing variables...
-                $this->_exportVariableToView('categories', $aCategories) ;
+                //$this->_exportVariableToView('non_empty_categories', $aCategories) ;
                 $this->_exportVariableToView('search_start', $iStart) ;
                 $this->_exportVariableToView('search_end', $iEnd) ;
                 $this->_exportVariableToView('search_category', $p_sCategory) ;
@@ -239,7 +261,7 @@
                         while(osc_has_items()) {
                             $feed->addItem(array(
                                 'title' => osc_item_title(),
-                                'link' => osc_item_url(),
+                                'link' => htmlentities( osc_item_url() ),
                                 'description' => osc_item_description()
                             ));
                         }

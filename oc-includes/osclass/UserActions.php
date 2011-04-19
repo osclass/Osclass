@@ -104,9 +104,15 @@
         {
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
-            Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
-            ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
-            
+            if(isset($input['s_email'])) { // WE HAVE THE EMAIL, WE PROBABLY ARE AN ADMIN
+                Item::newInstance()->update(array('s_contact_name' => $input['s_name'], 's_contact_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+                ItemComment::newInstance()->update(array('s_author_name' => $input['s_name'], 's_author_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+                Alerts::newInstance()->update(array('s_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+            } else { // WE DONT HAVE THE EMAIL, WE ARE A PLAIN USER
+                Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+                ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+            }
+
             Session::newInstance()->_set('userName', $input['s_name']);
             $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
             Session::newInstance()->_set('userPhone', $phone);
@@ -181,6 +187,7 @@
                     osc_sendMail($emailParams);
                 }
             }
+            return true;
         }
         
 
@@ -270,7 +277,7 @@
             $input['s_city'] = $cityName ;
             $input['s_city_area'] = Params::getParam('cityArea') ;
             $input['s_address'] = Params::getParam('address') ;
-            $input['b_company'] = Params::getParam('b_company') ;
+            $input['b_company'] = (Params::getParam('b_company') != '' && Params::getParam('b_company') != 0) ? 1 : 0;
             
             return($input) ;
         }

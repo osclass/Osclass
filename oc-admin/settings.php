@@ -70,7 +70,7 @@
                                                                                       ,array('s_name'  => 'enableField#images@items'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Items\' settings have been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('Items\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=items');
                 break;
@@ -100,7 +100,7 @@
                                                                                       ,array('s_name' => 'notify_new_comment'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Comments\' settings have been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('Comments\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                 break;
@@ -124,7 +124,7 @@
                                                                                       ,array('s_name'  => 'enabled_users'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Users\' settings have been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
                 break;
@@ -148,10 +148,10 @@
                                                                                           's_name'           => $countryName);
                                                                             $mCountries->insert($data);
 
-                                                                            osc_add_flash_message(sprintf(__('%s has been added as a new country'),
+                                                                            osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'),
                                                                                                           $countryName), 'admin');
                                                                         } else {
-                                                                            osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                            osc_add_flash_error_message(sprintf(__('%s already was in the database'),
                                                                                                           $countryName), 'admin');
                                                                         }
                                                                     }
@@ -167,10 +167,10 @@
                                                                     if(!isset($exists['pk_c_code']) || $exists['pk_c_code']==$old_exists['pk_c_code']) {
                                                                         $mCountries->update(array('s_name' => $newCountry)
                                                                                            ,array('s_name' => $oldCountry));
-                                                                        osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                        osc_add_flash_ok_message(sprintf(__('%s has been edited'),
                                                                                                           $newCountry), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
                                                                                                            $newCountry),'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -191,9 +191,9 @@
                                                                         }
                                                                         $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
 
-                                                                        osc_add_flash_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_ok_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_message(sprintf(__('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_error_message(sprintf(__('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -210,10 +210,10 @@
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
                                                                             $mRegions->insert($data);
-                                                                            osc_add_flash_message(sprintf(__('%s has been added as a new region'),
+                                                                            osc_add_flash_ok_message(sprintf(__('%s has been added as a new region'),
                                                                                                              $regionName), 'admin');
                                                                         } else {
-                                                                            osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                            osc_add_flash_error_message(sprintf(__('%s already was in the database'),
                                                                                                              $regionName), 'admin');
                                                                         }
                                                                     }
@@ -228,11 +228,11 @@
                                                                         if($regionId != '') {
                                                                             $mRegions->update(array('s_name' => $newRegion)
                                                                                              ,array('pk_i_id' => $regionId));
-                                                                            osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                            osc_add_flash_ok_message(sprintf(__('%s has been edited'),
                                                                                                               $newRegion), 'admin');
                                                                         }
                                                                     } else {
-                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
                                                                                                             $newRegion), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -249,7 +249,7 @@
                                                                         $mCities->delete(array('fk_i_region_id' => $regionId));
                                                                         $mRegion->delete(array('pk_i_id' => $regionId));
 
-                                                                        osc_add_flash_message(sprintf(__('%s has been deleted'),
+                                                                        osc_add_flash_ok_message(sprintf(__('%s has been deleted'),
                                                                                 $aRegion['s_name']), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -266,10 +266,10 @@
                                                                                               ,'s_name'            => $newCity
                                                                                               ,'fk_c_country_code' => $countryCode));
 
-                                                                        osc_add_flash_message(sprintf(__('%s has been added as a new city'),
+                                                                        osc_add_flash_ok_message(sprintf(__('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -284,10 +284,10 @@
                                                                         $mCities->update(array('s_name' => $newCity)
                                                                                         ,array('pk_i_id' => $cityId));
 
-                                                                        osc_add_flash_message(sprintf(__('%s has been edited'),
+                                                                        osc_add_flash_ok_message(sprintf(__('%s has been edited'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -299,7 +299,7 @@
                                                                     $aCity   = $mCities->findByPrimaryKey($cityId);
                                                                     $mCities->delete(array('pk_i_id' => $cityId));
 
-                                                                    osc_add_flash_message(sprintf(__('%s has been deleted'),
+                                                                    osc_add_flash_ok_message(sprintf(__('%s has been deleted'),
                                                                                                      $aCity['s_name']), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -389,7 +389,7 @@
                                                                                       ,array('s_name'  => 'recaptchaPubKey'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Akismet and reCAPTCHA have been updated') ,'admin');
+                                            osc_add_flash_ok_message( _m('Akismet and reCAPTCHA have been updated') ,'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=spamNbots');
                 break;
@@ -412,7 +412,7 @@
                                                                 $currencyCode        = trim($currencyCode);
 
                                                                 if(!preg_match('/^.{1,3}$/', $currencyCode)) {
-                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
+                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
@@ -423,9 +423,9 @@
                                                                 $isInserted = Currency::newInstance()->insert($fields);
 
                                                                 if($isInserted) {
-                                                                    osc_add_flash_message( _m('New currency has been added'), 'admin');
+                                                                    osc_add_flash_ok_message( _m('New currency has been added'), 'admin');
                                                                 } else {
-                                                                    osc_add_flash_message( _m('Error: currency couldn\'t be added'), 'admin');
+                                                                    osc_add_flash_error_message( _m('Error: currency couldn\'t be added'), 'admin');
                                                                 }
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                             break;
@@ -435,14 +435,14 @@
                                                                 $currencyCode = trim($currencyCode);
 
                                                                 if($currencyCode == '') {
-                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
+                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
                                                                 $aCurrency = Currency::newInstance()->findByCode($currencyCode);
 
                                                                 if(count($aCurrency) == 0) {
-                                                                    osc_add_flash_message( _m('Error: the currency doesn\'t exist'), 'admin');
+                                                                    osc_add_flash_error_message( _m('Error: the currency doesn\'t exist'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
@@ -461,7 +461,7 @@
                                                                 $currencyCode        = trim($currencyCode);
 
                                                                 if(!preg_match('/.{1,3}/', $currencyCode)) {
-                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
+                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
@@ -470,7 +470,7 @@
                                                                                                             ,array('pk_c_code'     => $currencyCode));
 
                                                                 if($iUpdated == 1) {
-                                                                    osc_add_flash_message( _m('Currency has been updated'), 'admin');
+                                                                    osc_add_flash_ok_message( _m('Currency has been updated'), 'admin');
                                                                 }
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                             break;
@@ -479,7 +479,7 @@
                                                                 $aCurrencyCode = Params::getParam('code');
 
                                                                 if(!is_array($aCurrencyCode)) {
-                                                                    osc_add_flash_message( _m('Error: the currency code is not in the correct format'), 'admin');
+                                                                    osc_add_flash_error_message( _m('Error: the currency code is not in the correct format'), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
@@ -492,14 +492,16 @@
                                                                 $msg = '';
                                                                 switch ($rowChanged) {
                                                                     case ('0'): $msg = __('No currencies have been deleted');
+                                                                            osc_add_flash_error_message($msg, 'admin');
                                                                     break;
                                                                     case ('1'): $msg = __('One currency has been deleted');
+                                                                            osc_add_flash_error_message($msg, 'admin');
                                                                     break;
                                                                     default:    $msg = sprintf(__('%s currencies have been deleted'), $rowChanged);
+                                                                            osc_add_flash_ok_message($msg, 'admin');
                                                                     break;
                                                                 }
 
-                                                                osc_add_flash_message($msg, 'admin');
                                                                 $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                             break;
                                             default:            // calling the currencies view
@@ -525,7 +527,7 @@
                                         $mailserverSsl      = Params::getParam('mailserver_ssl');
 
                                         if( !in_array($mailserverType, array('custom', 'gmail')) ) {
-                                            osc_add_flash_message( _m('Mail server type is incorrect'), 'admin');
+                                            osc_add_flash_error_message( _m('Mail server type is incorrect'), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
                                         }
 
@@ -545,7 +547,7 @@
                                                                                        ,array('s_name' => 'mailserver_ssl'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Mail server configuration has changed'), 'admin');
+                                            osc_add_flash_ok_message( _m('Mail server configuration has changed'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
                 break;
@@ -583,7 +585,7 @@
                                                                                       ,array('s_name'  => 'keep_original_image'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Media config has been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=media');
@@ -601,7 +603,7 @@
                                                                                       ,array('s_name'  => 'contact_attachment'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Contact configuration has been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('Contact configuration has been updated'), 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=contact');
@@ -618,7 +620,7 @@
                                                                                        ,array('s_name' => 'auto_cron'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('Cron config has been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('Cron config has been updated'), 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=cron');
@@ -666,10 +668,26 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_message( _m('General settings have been updated'), 'admin');
+                                            osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
+                break;
+                case('latestsearches'):       //calling the comments settings view
+                                        $this->doView('settings/searches.php');
+                break;
+                case('latestsearches_post'):  // updating comment
+                                        if(Params::getParam('save_latest_searches')=='on') {
+                                            Preference::newInstance()->update(array('s_value' => 1)
+                                                                                ,array('s_name' => 'save_latest_searches'));
+                                        } else {
+                                            Preference::newInstance()->update(array('s_value' => 0)
+                                                                                ,array('s_name' => 'save_latest_searches'));
+                                        }
+                                        Preference::newInstance()->update(array('s_value' => Params::getParam('customPurge'))
+                                                                                ,array('s_name' => 'purge_latest_searches'));
+                                        osc_add_flash_ok_message( _m('Settings have been updated'), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches');
                 break;
                 default:                // calling the view
                                         $aLanguages = Locale::newInstance()->listAllEnabled() ;
@@ -698,14 +716,14 @@
 
             $countries = json_decode($countries_json);
             if(isset($countries->error)) {
-                osc_add_flash_message(sprintf(__('%s cannot be added'), $country), 'admin');
+                osc_add_flash_error_message(sprintf(__('%s cannot be added'), $country), 'admin');
                 return false;
             }
 
             foreach($countries as $c) {
                 $exists = $manager_country->findByCode($c->id);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_message(sprintf(__('%s already was in the database'), $exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(__('%s already was in the database'), $exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_country->insert(array(
@@ -749,7 +767,7 @@
                 }
             }
 
-            osc_add_flash_message(sprintf(__('%s has been added as a new country'), $country), 'admin');
+            osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'), $country), 'admin');
         }
 
         function install_location_by_region() {
@@ -777,14 +795,14 @@
                                                   urlencode(implode(',', $aCountry)) . '&term=' . urlencode(implode(',', $aRegion)));
             $regions = json_decode($regions_json);
             if(isset($regions->error)) {
-                osc_add_flash_message(sprintf(__('%s cannot be added'), $region), 'admin');
+                osc_add_flash_error_message(sprintf(__('%s cannot be added'), $region), 'admin');
                 return false;
             }
 
             foreach($regions as $r) {
                 $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_message(sprintf(__('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(__('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_region->insert(array(
@@ -815,7 +833,7 @@
                 unset($cities_json);
             }
 
-            osc_add_flash_message(sprintf(__('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
+            osc_add_flash_ok_message(sprintf(__('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
         }
     }
 

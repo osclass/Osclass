@@ -186,6 +186,10 @@
     function osc_alert_search() {
         return osc_alert_field('s_search');
     }
+
+    function osc_alert_secret() {
+        return osc_alert_field('s_secret');
+    }
     
     function osc_alert_search_object() {
         return osc_unserialize(base64_decode(osc_alert_field('s_search')));

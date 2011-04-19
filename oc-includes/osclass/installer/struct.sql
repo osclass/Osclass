@@ -173,7 +173,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     fk_i_category_id INT UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
     s_name VARCHAR(100) NOT NULL,
-    s_description VARCHAR(200) NULL,
+    s_description TEXT NULL,
     s_slug VARCHAR(100) NOT NULL,
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
@@ -345,6 +345,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_alerts (
   s_email VARCHAR(100) DEFAULT NULL,
   fk_i_user_id INT UNSIGNED DEFAULT NULL,
   s_search LONGTEXT,
+  s_secret VARCHAR(40) NULL,
+  b_active BOOLEAN NOT NULL DEFAULT FALSE,
   e_type enum('INSTANT','DAILY','WEEKLY','CUSTOM') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
@@ -364,3 +366,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_keywords (
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_latest_searches (
+  d_date DATETIME NOT NULL,
+  s_search VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+

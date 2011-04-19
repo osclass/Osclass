@@ -42,30 +42,48 @@ class CWebUserNonSecure extends BaseModel
                                                     );
                                                     Item::newInstance()->update(array('s_contact_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                     ItemComment::newInstance()->update(array('s_author_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
+                                                    Alerts::newInstance()->update(array('s_email' => $userEmailTmp['s_new_email']), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
                                                     Session::newInstance()->_set('userEmail', $userEmailTmp['s_new_email']) ;
                                                     UserEmailTmp::newInstance()->delete(array('s_new_email' => $userEmailTmp['s_new_email']));
-                                                    osc_add_flash_message( _m('Your email has been changed successfully'));
+                                                    osc_add_flash_ok_message( _m('Your email has been changed successfully'));
                                                     $this->redirectTo( osc_user_profile_url() ) ;
                                                 } else {
-                                                    osc_add_flash_message( _m('Sorry, the link is not valid'));
+                                                    osc_add_flash_error_message( _m('Sorry, the link is not valid'));
                                                     $this->redirectTo( osc_base_url() ) ;
                                                 }
                                             } else {
-                                                osc_add_flash_message( _m('Sorry, the link is not valid'));
+                                                osc_add_flash_error_message( _m('Sorry, the link is not valid'));
                                                 $this->redirectTo( osc_base_url() ) ;
                                             }
             break;
-            
+            case 'activate_alert':
+                $email  = Params::getParam('email');
+                $secret = Params::getParam('secret');
+
+                $result = 0;
+                if($email!='' && $secret!='') {
+                    $result = Alerts::newInstance()->activate($email, $secret );
+                }
+
+                if( $result == 1 ) {
+                    osc_add_flash_message(__('Alert activated.'));
+                }else{
+                    osc_add_flash_message(__('Ops! There was a problem trying to activate alert. Please contact the administrator.'));
+                }
+
+                $this->redirectTo( osc_base_url(true) );
+            break;
             case 'unsub_alert':
                 $email = Params::getParam('email');
-                $alert = Params::getParam('alert');
-                if($email!='' && $alert!='') {
-                    Alerts::newInstance()->delete(array('s_email' => $email, 's_search' => $alert));
-                    osc_add_flash_message(__('Unsubscribed correctly.'));
+                $secret = Params::getParam('secret');
+                if($email!='' && $secret!='') {
+                    Alerts::newInstance()->delete(array('s_email' => $email, 'S_secret' => $secret));
+                    osc_add_flash_ok_message(__('Unsubscribed correctly.'));
                 } else {
-                    osc_add_flash_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                    osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
                 }
                 $this->redirectTo(osc_base_url());
+
             break;
             
             default:

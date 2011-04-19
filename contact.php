@@ -35,14 +35,14 @@
 
                                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                                             if(!osc_check_recaptcha()) {
-                                                osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
                                                 $this->redirectTo(osc_contact_url());
                                                 return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                             }
                                         }
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
-                                            osc_add_flash_message( _m('You have to introduce a correct e-mail') ) ;
+                                            osc_add_flash_error_message( _m('You have to introduce a correct e-mail') ) ;
                                             $this->redirectTo(osc_contact_url());
                                         }
 
@@ -57,7 +57,7 @@
                                         );
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
+                                        osc_add_flash_ok_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
 
                                         $this->redirectTo( osc_base_url() ) ;
                 break;

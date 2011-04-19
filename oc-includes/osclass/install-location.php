@@ -1,14 +1,18 @@
 <?php
-
+//error_reporting(E_ALL);
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 
-//require_once ABS_PATH . 'common.php';
 require_once ABS_PATH . 'config.php';
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hDatabaseInfo.php';
 require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
 require_once ABS_PATH . 'oc-includes/osclass/formatting.php';
 require_once ABS_PATH . 'oc-includes/osclass/utils.php';
+require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php' ;
+
+require_once ABS_PATH . 'oc-includes/osclass/Logger/Logger.php' ;
+require_once ABS_PATH . 'oc-includes/osclass/Logger/LogOsclass.php' ;
 
 $_POST = add_slashes_extended($_POST) ;
 
@@ -59,8 +63,12 @@ function location_international() {
     $manager_region = Region::newInstance();
     $manager_city = City::newInstance();
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=all&install=true');
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=all&install=true&version='.osc_version());
     $countries = json_decode($countries_json);
+
+    if( count($countries) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get countries' , __FILE__."::".__LINE__) ;
+    }
 
     foreach($countries as $c) {
         $manager_country->insert(array(
@@ -73,6 +81,9 @@ function location_international() {
     $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=all&term=all');
     $regions = json_decode($regions_json);
 
+    if( count($regions) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get regions' , __FILE__."::".__LINE__) ;
+    }
     foreach($regions as $r) {
         $manager_region->insert(array(
             "pk_i_id" => $r->id,
@@ -83,7 +94,7 @@ function location_international() {
 
     foreach($countries as $c) {
 
-        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&term=all');
+        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . urlencode($c->name) . '&term=all');
         $cities = json_decode($cities_json);
 
         if(!isset($cities->error)) {
@@ -94,6 +105,10 @@ function location_international() {
                     "s_name" => $ci->name,
                     "fk_c_country_code" => $ci->country_code
                 ));
+            }
+        } else {
+            if( reportToOsclass() ){
+                LogOsclassInstaller::instance()->error('Cannot get cities by country ' . $c->name , __FILE__."::".__LINE__) ;
             }
         }
 
@@ -108,10 +123,14 @@ function location_by_country() {
 
     $country = $_POST['country'];
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) . "&install=true");
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='. urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
 
     $manager_country = Country::newInstance();
+
+    if( count($countries) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+    }
 
     foreach($countries as $c) {
         $manager_country->insert(array(
@@ -123,8 +142,12 @@ function location_by_country() {
 
     $manager_region = Region::newInstance();
 
-    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=all');
+    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . urlencode(implode(',', $country)) . '&term=all');
     $regions = json_decode($regions_json);
+
+    if( count($regions) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get regions by - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+    }
 
     foreach($regions as $r) {
         $manager_region->insert(array(
@@ -137,7 +160,7 @@ function location_by_country() {
     $manager_city = City::newInstance();
 
     foreach($countries as $c) {
-        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&term=all');
+        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . urlencode($c->name) . '&term=all');
         $cities = json_decode($cities_json);
 
         if(!isset($cities->error)) {
@@ -148,6 +171,10 @@ function location_by_country() {
                     "s_name" => $ci->name,
                     "fk_c_country_code" => $ci->country_code
                 ));
+            }
+        } else {
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('Cannot get cities by country - ' . $c->name , __FILE__."::".__LINE__) ;
             }
         }
 
@@ -167,10 +194,15 @@ function location_by_region() {
     $country = $_POST['country'];
     $region = $_POST['region'];
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) . "&install=true");
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=' . urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
-    
+
     $manager_country = Country::newInstance();
+
+    if( count($countries) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+    }
+    
     foreach($countries as $c) {
         $manager_country->insert(array(
             "pk_c_code" => $c->id,
@@ -179,10 +211,15 @@ function location_by_region() {
         ));
     }
 
-    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . implode(',', $country) . '&term=' . implode(',', $region));
+    $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=' . urlencode(implode(',', $country)) . '&term=' . urlencode(implode(',', $region)));
     $regions = json_decode($regions_json);
 
     $manager_region = Region::newInstance();
+
+    if( count($regions) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get regions - ' . implode(',', $country) .'- term' . implode(',', $region) , __FILE__."::".__LINE__) ;
+    }
+
     foreach($regions as $r) {
         $manager_region->insert(array(
             "pk_i_id" => $r->id,
@@ -193,7 +230,7 @@ function location_by_region() {
 
     $manager_city = City::newInstance();
     foreach($countries as $c) {
-        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&region=' . implode(',', $region) . '&term=');
+        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . urlencode($c->name) . '&region=' . urlencode(implode(',', $region)) . '&term=');
         $cities = json_decode($cities_json);
         if(!isset($cities->error)) {
             foreach($cities as $ci) {
@@ -203,6 +240,10 @@ function location_by_region() {
                     "s_name" => $ci->name,
                     "fk_c_country_code" => $ci->country_code
                 ));
+            }
+        } else {
+            if( reportToOsclass() ){
+                LogOsclassInstaller::instance()->error('Cannot get regions by country - ' . $c->name .'- by region ' . implode(',', $region) , __FILE__."::".__LINE__) ;
             }
         }
         unset($cities);
@@ -220,10 +261,15 @@ function location_by_city() {
     $country = $_POST['country'];
     $city = $_POST['city'];
 
-    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  implode(',', $country) . "&install=true");
+    $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term='.  urlencode(implode(',', $country)) . '&install=true&version='.osc_version() );
     $countries = json_decode($countries_json);
 
     $manager_country = Country::newInstance();
+
+    if( count($countries) ==  0 && reportToOsclass()){
+        LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+    }
+
     foreach($countries as $c) {
         $manager_country->insert(array(
             "pk_c_code" => $c->id,
@@ -235,12 +281,16 @@ function location_by_city() {
     $manager_city = City::newInstance();
     $manager_region = Region::newInstance();
     foreach($countries as $c) {
-        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . $c->name . '&term=' . implode(',', $city) );
+        $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' . urlencode($c->name) . '&term=' . urlencode(implode(',', $city)));
         $cities = json_decode($cities_json);
         if(!isset($cities->error)) {
             foreach($cities as $ci) {
                 $regions_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=region&country=&id=' . $ci->region_id);
                 $regions = json_decode($regions_json);
+
+                if( count($regions) == 0 && reportToOsclass() ){
+                    LogOsclassInstaller::instance()->error('Cannot get regions by - ' .$ci->region_id  , __FILE__."::".__LINE__) ;
+                }
 
                 foreach($regions as $r) {
                     $manager_region->insert(array(
@@ -256,6 +306,10 @@ function location_by_city() {
                     "s_name" => $ci->name,
                     "fk_c_country_code" => $ci->country_code
                 ));
+            }
+        } else {
+            if( reportToOsclass() ){
+                LogOsclassInstaller::instance()->error('Cannot get cities by - ' . $c->name . ' - term ' . implode(',', $city) , __FILE__."::".__LINE__) ;
             }
         }
         unset($cities);

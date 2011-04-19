@@ -73,9 +73,10 @@ class Session {
         print_r($_SESSION) ;
     }
 
-    function _setMessage($key, $value) {
+    function _setMessage($key, $value, $type) {
         $messages = $this->_get('messages') ;
-        $messages[$key] = $value ;
+        $messages[$key]['msg'] = $value ;
+        $messages[$key]['type'] = $type ;
         $this->_set('messages', $messages) ;
     }
 

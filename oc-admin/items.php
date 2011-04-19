@@ -54,7 +54,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been activated'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'deactivate_all':
@@ -73,7 +73,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been deactivated'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'premium_all':
@@ -90,7 +90,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been marked as premium'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'depremium_all':
@@ -107,7 +107,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The changes have been made'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'delete_all':
@@ -186,7 +186,7 @@
                                             }
 
                                         } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                                            osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
@@ -212,9 +212,35 @@
                                             );
                                             osc_add_flash_message( _m('Changes have been applied'), 'admin');
                                         } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                                            osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                break;
+                case 'clear_stat':
+                                        $id     = Params::getParam('id') ;
+                                        $stat   = Params::getParam('stat') ;
+
+                                        if (!$id)
+                                            return false;
+
+                                        if (!$stat)
+                                            return false;
+
+                                        $id = (int) $id;
+
+                                        if (!is_numeric($id))
+                                            return false;
+                                       
+                                        $success = $this->itemManager->clearStat($id , $stat ) ;
+
+                                        if($success) {
+                                            osc_add_flash_message( _m('The item has been unmarked as')." $stat", 'admin') ;
+                                        } else {
+                                            osc_add_flash_message( _m('The item hasn\'t been unmarked as')." $stat", 'admin') ;
+                                        }
+
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
+
                 break;
                 case 'item_edit':
                                         //require_once LIB_PATH . 'osclass/itemActions.php';
@@ -270,7 +296,7 @@
                                             ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                         }
 
-                                        osc_add_flash_message( _m('Changes saved correctly'), 'admin') ;
+                                        osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource
@@ -282,7 +308,7 @@
                                         osc_deleteResource($id);
 
                                         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
-                                        osc_add_flash_message( _m('Resource deleted'), 'admin') ;
+                                        osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'post':            //post
@@ -312,10 +338,10 @@
                                         $mItem = new ItemActions(true);
                                         $success = $mItem->add();
                                         if( $success ) {
-                                            osc_add_flash_message( _m('A new item has been added'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
-                                            osc_add_flash_message( _m('The item can\'t be added'), 'admin') ;
+                                            osc_add_flash_error_message( _m('The item can\'t be added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
                 break;
