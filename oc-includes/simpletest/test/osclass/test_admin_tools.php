@@ -258,7 +258,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");

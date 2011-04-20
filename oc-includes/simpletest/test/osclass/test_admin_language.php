@@ -10,123 +10,164 @@ require_once LIB_PATH . 'Selenium.php';
 class TestOfAdminLanguage extends WebTestCase {
 
     private $selenium;
+    private $canUpload = TRUE;
+    private $canUpload_;
 
     function setUp()
     {
-        $conn = getConnection();
-        $conn->osc_dbExec(sprintf("INSERT INTO `%st_admin` (`s_name` ,`s_username` ,`s_password` ,`s_secret` ,`s_email`) VALUES ('Test Admin','testadmin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','mvqdnrpt','testadmin@test.net')", DB_TABLE_PREFIX));
+        if($this->canUpload){
+            $conn = getConnection();
+            $conn->osc_dbExec(sprintf("INSERT INTO `%st_admin` (`s_name` ,`s_username` ,`s_password` ,`s_secret` ,`s_email`) VALUES ('Test Admin','testadmin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','mvqdnrpt','testadmin@test.net')", DB_TABLE_PREFIX));
 
-        echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
+            echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
 
-        $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
-        $this->selenium->start();
-        $this->selenium->setSpeed("150");
+            $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
+            $this->selenium->start();
+            $this->selenium->setSpeed("150");
+        }
     }
 
     function tearDown()
     {
-        $this->selenium->stop();
-        $admin = Admin::newInstance()->findByEmail('testadmin@test.net');
-        Admin::newInstance()->delete(array('pk_i_id' =>$admin['pk_i_id']));
-        echo "<div style='background-color: Wheat; color: black;'>end test</div>";
-        flush();
+        if($this->canUpload){
+            $this->selenium->stop();
+            $admin = Admin::newInstance()->findByEmail('testadmin@test.net');
+            Admin::newInstance()->delete(array('pk_i_id' =>$admin['pk_i_id']));
+            echo "<div style='background-color: Wheat; color: black;'>end test</div>";
+            flush();
+        }
+        $this->canUpload = $this->canUpload_;
     }
     /*           TESTS          */
 
+    function testPreUpload()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminLanguage</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPreUpload - LOGIN </div>";
+        $this->loginCorrect() ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - UPLOAD NEW LANGUAGE</div>";
+        $this->preUpload() ;
+        flush();
+    }
     /**
      * upload new language
      * REQUIRE: user logged in
      */
     function testLanguageInsert()
     {
-        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminLanguage</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - UPLOAD NEW LANGUAGE</div>";
-        $this->insertLanguage() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - DELETE LANGUAGE</div>";
-        $this->deleteLanguage();
-        flush();
+        if($this->canUpload){
+            echo "<div style='background-color: green; color: white;'><h2>TestOfAdminLanguage</h2></div>";
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - LOGIN </div>";
+            $this->loginCorrect() ;
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - UPLOAD NEW LANGUAGE</div>";
+            $this->insertLanguage() ;
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsert - DELETE LANGUAGE</div>";
+            $this->deleteLanguage();
+            flush();
+        }
     }
 
     function testLanguageInsertbyLink()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testLanguageInsertbyLink</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsertbyLink - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsertbyLink - UPLOAD NEW LANGUAGE</div>";
-        $this->insertLanguageByLink() ;
-        flush();
+        if($this->canUpload){
+            echo "<div style='background-color: green; color: white;'><h2>testLanguageInsertbyLink</h2></div>";
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsertbyLink - LOGIN </div>";
+            $this->loginCorrect() ;
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageInsertbyLink - UPLOAD NEW LANGUAGE</div>";
+            $this->insertLanguageByLink() ;
+            flush();
+        }
     }
 
     public function testEnableDisable()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testEnableDisable</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        if( $this->isDisabledWebsite("Spanish") ){
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
-            $this->enableWebsite("Spanish");
+        if($this->canUpload){
+            echo "<div style='background-color: green; color: white;'><h2>testEnableDisable</h2></div>";
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - LOGIN </div>";
+            $this->loginCorrect() ;
             flush();
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
-            $this->disableWebsite("Spanish");
-            flush();
-        } else {
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
-            $this->disableWebsite("Spanish");
-            flush();
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
-            $this->enableWebsite("Spanish");
-            flush();
-        }
+            if( $this->isDisabledWebsite("Spanish") ){
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
+                $this->enableWebsite("Spanish");
+                flush();
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
+                $this->disableWebsite("Spanish");
+                flush();
+            } else {
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
+                $this->disableWebsite("Spanish");
+                flush();
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
+                $this->enableWebsite("Spanish");
+                flush();
+            }
 
-        if( $this->isDisabledOCAdmin("Spanish") ) {
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
-            $this->enableOCAdmin("Spanish");
-            flush();
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
-            $this->disableOCAdmin("Spanish");
-            flush();
-        } else {
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
-            $this->disableOCAdmin("Spanish");
-            flush();
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
-            $this->enableOCAdmin("Spanish");
-            flush();
+            if( $this->isDisabledOCAdmin("Spanish") ) {
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
+                $this->enableOCAdmin("Spanish");
+                flush();
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
+                $this->disableOCAdmin("Spanish");
+                flush();
+            } else {
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
+                $this->disableOCAdmin("Spanish");
+                flush();
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
+                $this->enableOCAdmin("Spanish");
+                flush();
+            }
         }
     }
 
     public function testLanguageEdit()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testLanguageEdit</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageEdit - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageEdit - EDIT LANGUAGE</div>";
-        $this->editAndEnable();
-        flush();
+        if($this->canUpload){
+            echo "<div style='background-color: green; color: white;'><h2>testLanguageEdit</h2></div>";
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageEdit - LOGIN </div>";
+            $this->loginCorrect() ;
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testLanguageEdit - EDIT LANGUAGE</div>";
+            $this->editAndEnable();
+            flush();
+        }
     }
 
     public function testDeleteLanguage()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testDeleteLanguage</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteLanguage - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteLanguage - DELETE LANGUAGE</div>";
-        $this->deleteLanguage();
-        flush();
+        if($this->canUpload){
+            echo "<div style='background-color: green; color: white;'><h2>testDeleteLanguage</h2></div>";
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteLanguage - LOGIN </div>";
+            $this->loginCorrect() ;
+            flush();
+            echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteLanguage - DELETE LANGUAGE</div>";
+            $this->deleteLanguage();
+            flush();
+        }
     }
 
     
     /*
      * PRIVATE FUNCTIONS
      */
+    private function preUpload()
+    {
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->click("link=Languages");
+        $this->selenium->click("link=» Add a language");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if( $this->selenium->isTextPresent('To make the directory writable') ) {
+            $this->assertFalse(TRUE,"DIRECTORY TO UPLOAD LANGUAGES ISN'T WRITABLE") ;
+            $this->canUpload_ = FALSE;
+        }else{
+            $this->canUpload_ = TRUE;
+        }
+    
+    }
     private function isDisabledOCAdmin($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;

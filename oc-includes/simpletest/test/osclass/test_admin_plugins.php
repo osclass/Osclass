@@ -81,11 +81,13 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("link=» Add new plugin");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_1.0.zip");
+        $plugin = "plugins_breadcrumbs_1.5.1.zip" ;
+
+        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_1.5.1.zip");
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("The plugin has been uploaded correctly"),"Can't upload plugin plugins_breadcrumbs_1.0.zip");
+        $this->assertTrue($this->selenium->isTextPresent("The plugin has been uploaded correctly"),"Can't upload plugin $plugin");
 
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("link=Plugins");
@@ -96,13 +98,13 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Install']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->assertTrue($this->selenium->isTextPresent("Plugin installed"),"Can't install plugin plugins_breadcrumbs_1.0.zip");
+        $this->assertTrue($this->selenium->isTextPresent("Plugin installed"),"Can't install plugin $plugin");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Bread crumbs')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Configure']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Breadcrumbs Help"),"Can't configure plugin plugins_breadcrumbs_1.0.zip");
+        $this->assertTrue($this->selenium->isTextPresent("Breadcrumbs Help"),"Can't configure plugin $plugin");
 
         $this->selenium->open( osc_admin_base_url(true) ) ;
         $this->selenium->click("link=Plugins");
@@ -113,7 +115,7 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Uninstall']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->assertTrue($this->selenium->isTextPresent("Plugin uninstalled"),"Can't uninstall plugin plugins_breadcrumbs_1.0.zip");
+        $this->assertTrue($this->selenium->isTextPresent("Plugin uninstalled"),"Can't uninstall plugin $plugin");
     }
 }
 ?>

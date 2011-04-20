@@ -558,35 +558,43 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('notify_new_comment')  ,  $pref['notify_new_comment'] ) ;
     }
 
-    private function items()
+    private function getPreferencesItems()
     {
         $pref = array();
-        $pref['enabled_recaptcha_items']   = Preference::newInstance()->findValueByName('enabled_recaptcha_items') ;
-        if($pref['enabled_recaptcha_items'] == 1){ $pref['enabled_recaptcha_items'] = 'on';} else { $pref['enabled_recaptcha_items'] = 'off'; }
+        $pref['enabled_recaptcha_items']        = Preference::newInstance()->findValueByName('enabled_recaptcha_items') ;
+        $pref['enabled_item_validation']        = Preference::newInstance()->findValueByName('enabled_item_validation') ;
+        $pref['logged_user_item_validation']    = Preference::newInstance()->findValueByName('logged_user_item_validation') ;
+        $pref['reg_user_post']                  = Preference::newInstance()->findValueByName('reg_user_post') ;
+        $pref['notify_new_item']                = Preference::newInstance()->findValueByName('notify_new_item') ;
+        $pref['notify_contact_item']            = Preference::newInstance()->findValueByName('notify_contact_item') ;
+        $pref['notify_contact_friends']         = Preference::newInstance()->findValueByName('notify_contact_friends') ;
+        $pref['enableField#f_price@items']      = Preference::newInstance()->findValueByName('enableField#f_price@items') ;
+        $pref['enableField#images@items']       = Preference::newInstance()->findValueByName('enableField#images@items') ;
 
-        $pref['enabled_item_validation']  = Preference::newInstance()->findValueByName('enabled_item_validation') ;
-        if($pref['enabled_item_validation'] == 1){ $pref['enabled_item_validation'] = 'on';} else { $pref['enabled_item_validation'] = 'off'; }
+        if($pref['enabled_recaptcha_items'] == 1){  $pref['enabled_recaptcha_items'] = 'on'; }
+        else {                                      $pref['enabled_recaptcha_items'] = 'off'; }
+        if($pref['enabled_item_validation'] == 1){  $pref['enabled_item_validation'] = 'on'; }
+        else {                                      $pref['enabled_item_validation'] = 'off'; }
+        if($pref['reg_user_post'] == 1){            $pref['reg_user_post']          = 'on'; }
+        else {                                      $pref['reg_user_post']          = 'off'; }
+        if($pref['notify_new_item'] == 1){          $pref['notify_new_item']        = 'on';}
+        else {                                      $pref['notify_new_item']        = 'off'; }
+        if($pref['notify_contact_item'] == 1){      $pref['notify_contact_item']    = 'on';}
+        else {                                      $pref['notify_contact_item']    = 'off'; }
+        if($pref['notify_contact_friends'] == 1){   $pref['notify_contact_friends'] = 'on';}
+        else {                                      $pref['notify_contact_friends'] = 'off'; }
+        if($pref['enableField#f_price@items'] == 1){$pref['enableField#f_price@items'] = 'on';}
+        else {                                      $pref['enableField#f_price@items'] = 'off'; }
+        if($pref['enableField#images@items'] == 1){ $pref['enableField#images@items'] = 'on';}
+        else {                                      $pref['enableField#images@items'] = 'off'; }
+        if($pref['logged_user_item_validation'] == 1){  $pref['logged_user_item_validation'] = 'on';}
+        else {                                          $pref['logged_user_item_validation'] = 'off'; }
 
-        $pref['logged_user_item_validation'] = Preference::newInstance()->findValueByName('logged_user_item_validation') ;
-        if($pref['logged_user_item_validation'] == 1){ $pref['logged_user_item_validation'] = 'on';} else { $pref['logged_user_item_validation'] = 'off'; }
-
-        $pref['reg_user_post'] = Preference::newInstance()->findValueByName('reg_user_post') ;
-        if($pref['reg_user_post'] == 1){ $pref['reg_user_post'] = 'on';} else { $pref['reg_user_post'] = 'off'; }
-
-        $pref['notify_new_item'] = Preference::newInstance()->findValueByName('notify_new_item') ;
-        if($pref['notify_new_item'] == 1){ $pref['notify_new_item'] = 'on';} else { $pref['notify_new_item'] = 'off'; }
-
-        $pref['notify_contact_item'] = Preference::newInstance()->findValueByName('notify_contact_item') ;
-        if($pref['notify_contact_item'] == 1){ $pref['notify_contact_item'] = 'on';} else { $pref['notify_contact_item'] = 'off'; }
-
-        $pref['notify_contact_friends'] = Preference::newInstance()->findValueByName('notify_contact_friends') ;
-        if($pref['notify_contact_friends'] == 1){ $pref['notify_contact_friends'] = 'on';} else { $pref['notify_contact_friends'] = 'off'; }
-
-        $pref['enableField#f_price@items'] = Preference::newInstance()->findValueByName('enableField#f_price@items') ;
-        if($pref['enableField#f_price@items'] == 1){ $pref['enableField#f_price@items'] = 'on';} else { $pref['enableField#f_price@items'] = 'off'; }
-
-        $pref['enableField#images@items'] = Preference::newInstance()->findValueByName('enableField#images@items') ;
-        if($pref['enableField#images@items'] == 1){ $pref['enableField#images@items'] = 'on';} else { $pref['enableField#images@items'] = 'off'; }
+        return $pref;
+    }
+    private function items()
+    {
+        $pref = $this->getPreferencesItems();
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
@@ -609,23 +617,23 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("Items' settings have been updated") , "Can't update items settings. ERROR");
 
         if( $pref['enabled_recaptcha_items'] == 'on' ){     $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'on' ) ;}
         if( $pref['enabled_item_validation'] == 'on' ){     $this->assertEqual( $this->selenium->getValue('enabled_item_validation'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('enabled_item_validation'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('enabled_item_validation'), 'on' ) ;}
         if( $pref['logged_user_item_validation'] == 'on' ){ $this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'on' ) ;}
         if( $pref['reg_user_post'] == 'on' ){               $this->assertEqual( $this->selenium->getValue('reg_user_post'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('reg_user_post'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('reg_user_post'), 'on' ) ;}
         if( $pref['notify_new_item'] == 'on' ){             $this->assertEqual( $this->selenium->getValue('notify_new_item'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('notify_new_item'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('notify_new_item'), 'on' ) ;}
         if( $pref['notify_contact_item'] == 'on' ){         $this->assertEqual( $this->selenium->getValue('notify_contact_item'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('notify_contact_item'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('notify_contact_item'), 'on' ) ;}
         if( $pref['notify_contact_friends'] == 'on' ){      $this->assertEqual( $this->selenium->getValue('notify_contact_friends'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('notify_contact_friends'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('notify_contact_friends'), 'on' ) ;}
         if( $pref['enableField#f_price@items'] == 'on' ){   $this->assertEqual( $this->selenium->getValue('enableField#f_price@items'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('enableField#f_price@items'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('enableField#f_price@items'), 'on' ) ;}
         if( $pref['enableField#images@items'] == 'on' ){    $this->assertEqual( $this->selenium->getValue('enableField#images@items'), 'off' ) ;
-        } else {$this->assertEqual( $this->selenium->getValue('enableField#images@items'), 'on' ) ;}
+        } else {                                            $this->assertEqual( $this->selenium->getValue('enableField#images@items'), 'on' ) ;}
 
         $this->selenium->click("enabled_recaptcha_items");
         $this->selenium->click("enabled_item_validation");
@@ -655,19 +663,25 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         unset($pref);
     }
 
-    private function generalSettings()
+    private function getPreferencesGeneralSettings()
     {
         $pref = array();
-        $pref['pageTitle']   = Preference::newInstance()->findValueByName('pageTitle') ;
-        $pref['contactEmail']  = Preference::newInstance()->findValueByName('contactEmail') ;
-        $pref['df'] = Preference::newInstance()->findValueByName('dateFormat') ;
-        $pref['pageDesc'] = Preference::newInstance()->findValueByName('pageDesc') ;
-        $pref['language'] = Preference::newInstance()->findValueByName('language') ;
-        $pref['currency'] = Preference::newInstance()->findValueByName('currency') ;
-        $pref['weekStart'] = Preference::newInstance()->findValueByName('weekStart') ;
-        $pref['num_rss_items'] = Preference::newInstance()->findValueByName('num_rss_items') ;
-        $pref['tf'] = Preference::newInstance()->findValueByName('timeFormat') ;
+        $pref['pageTitle']      = Preference::newInstance()->findValueByName('pageTitle') ;
+        $pref['contactEmail']   = Preference::newInstance()->findValueByName('contactEmail') ;
+        $pref['df']             = Preference::newInstance()->findValueByName('dateFormat') ;
+        $pref['pageDesc']       = Preference::newInstance()->findValueByName('pageDesc') ;
+        $pref['language']       = Preference::newInstance()->findValueByName('language') ;
+        $pref['currency']       = Preference::newInstance()->findValueByName('currency') ;
+        $pref['weekStart']      = Preference::newInstance()->findValueByName('weekStart') ;
+        $pref['num_rss_items']  = Preference::newInstance()->findValueByName('num_rss_items') ;
+        $pref['tf']             = Preference::newInstance()->findValueByName('timeFormat') ;
 
+        return $pref;
+    }
+    private function generalSettings()
+    {
+        $pref = $this->getPreferencesGeneralSettings();
+        
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» General settings");
@@ -689,7 +703,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->assertEqual( $this->selenium->getValue('pageTitle')     , "New title web") ;
         $this->assertEqual( $this->selenium->getValue('contactEmail')  , "foo@bar.com" ) ;
-        $this->assertEqual( $this->selenium->getValue('dateFormat')      , "m/d/Y" ) ;
+        $this->assertEqual( $this->selenium->getValue('dateFormat')    , "m/d/Y" ) ;
         $this->assertEqual( $this->selenium->getValue('pageDesc')      , "Description web" ) ;
 //        $this->assertEqual( $this->selenium->getValue('language')      , 'en_US' ) ;
         $this->assertEqual( $this->selenium->getValue('currency')      , 'EUR' ) ;

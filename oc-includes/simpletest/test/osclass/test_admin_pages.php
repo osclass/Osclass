@@ -50,7 +50,7 @@ class TestOfAdminPages extends WebTestCase {
         $this->deletePage('test_page_example') ;
         flush();
     }
-    
+
     /**
      * insert new page twice
      * REQUIRE: user logged in
@@ -114,7 +114,6 @@ class TestOfAdminPages extends WebTestCase {
         flush();
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Page insert multiples pages - DELETE ALL PAGES VIA CHECKBOX (SELECT ALL)</div>";
         $this->selectAllAndDelete();
-
     }
 
     public function testTableNavigation()
@@ -135,21 +134,23 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
-        $this->selenium->waitForPageToLoad(500);
+        $this->selenium->waitForPageToLoad("10000");
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table Navigation - check row count</div>";
         $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
         $this->assertEqual(10, $res,"10 rows does not appear [$res]");
 
         $this->selenium->click("//span[@class='next paginate_button']");
-        $this->selenium->waitForPageToLoad(500);
+        $this->selenium->waitForPageToLoad("10000");
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - Table Navigation - check row count (when previously go to next page)</div>";
         $res = $this->selenium->getXpathCount("//table[@id='datatables_list']/tbody/tr");
         $this->assertEqual(5, $res,"5 rows does not appear [$res]");
 
         // two pages
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - select All and delete -</div>";
         $this->selectAllAndDelete();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Admin - select All and delete -</div>";
         $this->selectAllAndDelete();
     }
 
@@ -212,14 +213,26 @@ class TestOfAdminPages extends WebTestCase {
 
     private function createPage($internal_name)
     {
-        $this->newPage($internal_name);
-        $message = "<span style='color-background:blue;'>".$this->selenium->getText('//*[@id="FlashMessage"]')."</span>";
+//        $this->newPage($internal_name);
+        $this->selenium->open( osc_admin_base_url(true) ) ;
+        $this->selenium->click("link=Pages");
+        $this->selenium->click("link=» Create page");
+        $this->selenium->waitForPageToLoad("10000");
 
-        if( $this->selenium->isTextPresent('The page has been added') ) {
-            $this->assertTrue("text present");
-        } else {
-            $this->assertFalse("TEXT NOT PRESENT - The page has been added - " . $message);
-        }
+        $this->selenium->type("s_internal_name", $internal_name );
+        $this->selenium->type("en_US#s_title", "title US");
+        $this->selenium->type("en_US#s_text", "text for US");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $message = "<span style='color-background:blue;'>".$this->selenium->getText('//*[@id="FlashMessage"]')."</span>";
+        $this->assertTrue($this->selenium->isTextPresent('The page has been added'), "text present");
+//        if( $this->selenium->isTextPresent('The page has been added') ) {
+//            $this->assertTrue("text present");
+//        } else {
+//            $this->assertFalse("TEXT NOT PRESENT - The page has been added - " . $message);
+//        }
     }
 
     private function createPageAgain($internal_name)
@@ -239,6 +252,7 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
+        $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->mouseOver("xpath=//table/tbody/tr[contains(.,'$internal_name')]");
         $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Edit']");
@@ -249,8 +263,6 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->type("en_US#s_title", "new bar");
         $this->selenium->click("xpath=//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
-
-        sleep(2); // time to load FM
 
         if( $this->selenium->isTextPresent("The page has been updated") ){
             $this->assertTrue("text present");
@@ -264,12 +276,11 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
+        $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(.,'$internal_name')]");
         $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("30000");
-
-        sleep(1); // time to load FM
         
         if( $this->selenium->isTextPresent('One page has been deleted correctly') ){
             $this->assertTrue("text present");
@@ -321,15 +332,18 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
+        $this->selenium->waitForPageToLoad("30000");
 
         $beg_ = $beg;
-        for($beg_; $beg_ <= $fin; $beg_++){
-            $this->selenium->click("//table/tbody/tr[contains(.,'$internal_name".$beg_."')]/td/input");
+        for($beg_; $beg_ <= $fin-1; $beg_++){
+            $this->selenium->click("xpath=//table/tbody/tr[contains(.,'$internal_name".$beg_."')]/td/input");
         }
 
         $this->selenium->select("bulk_actions", "label=Delete");
-        $this->selenium->click("//button[@id='bulk_apply']");
+        $this->selenium->click("xpath=//button[@id='bulk_apply']");
         $this->selenium->waitForPageToLoad("30000");
+
+        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
 
         if( $this->selenium->isTextPresent( ($fin-$beg) . " pages have been deleted correctly") ){
             $this->assertTrue("Deleted ok");
@@ -343,7 +357,7 @@ class TestOfAdminPages extends WebTestCase {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Pages");
         $this->selenium->click("link=» Manage pages");
-        $this->selenium->waitForPageToLoad("100");
+        $this->selenium->waitForPageToLoad("30000");
 
 
         $this->selenium->click("check_all");

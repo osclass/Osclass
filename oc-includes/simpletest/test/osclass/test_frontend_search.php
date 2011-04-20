@@ -238,7 +238,7 @@ class TestOfSearch extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
         // last item added -> TITLE : SPANISH LESSONS
         $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
-        $this->assertTrue(preg_match('/SPANISH LESSONS/', $text), "Can't match last title in item. ERROR");
+        $this->assertTrue(preg_match('/SPANISH LESSONS/i', $text), "Can't match last title in item. ERROR<br>=>$text");
     }
 
     private function lowerPrice()
@@ -266,7 +266,9 @@ class TestOfSearch extends WebTestCase {
         $reg_user_post = Preference::newInstance()->findValueByName('reg_user_post');
         $enabled_item_validation = Preference::newInstance()->findValueByName('enabled_item_validation');
         $logged_user_item_validation = Preference::newInstance()->findValueByName('logged_user_item_validation');
-
+//        echo "reg_user_post ".$reg_user_post."<br>";
+//        echo "enabled_item_validation ".$enabled_item_validation."<br>";
+//        echo "logged_user_item_validation ".$logged_user_item_validation."<br>";
         flush();
 
         $this->selenium->open( osc_base_url(true) );
@@ -302,15 +304,15 @@ class TestOfSearch extends WebTestCase {
 
         if( $this->logged == 0 ){
             if($enabled_item_validation){
-                $this->assertTrue($this->selenium->isTextPresent("Great! You'll receive an e-mail to activate your item","Need validation but message don't appear") );
+                $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
             } else {
-                $this->assertTrue($this->selenium->isTextPresent("Great! We've just published your item","no logged in error inserting ad.") );
+                $this->assertTrue($this->selenium->isTextPresent("Your post has been published","no logged in error inserting ad.") );
             }
         } else {
             if($logged_user_item_validation){
-                $this->assertTrue($this->selenium->isTextPresent("Great! We've just published your item","insert ad error ") );
+                $this->assertTrue($this->selenium->isTextPresent("Your post has been published","insert ad error ") );
             } else {
-                $this->assertTrue($this->selenium->isTextPresent("Great! You'll receive an e-mail to activate your item","Need validation but message don't appear") );
+                $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
             }
         }
     }

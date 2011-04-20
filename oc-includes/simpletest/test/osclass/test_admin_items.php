@@ -166,7 +166,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='View media']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='View media']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("No matching records found"), "Show media when there aren't. ERROR");
@@ -182,7 +182,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='View comments']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='View comments']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("No matching records found"), "Show media when there aren't. ERROR");
@@ -198,7 +198,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Deactivate']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("The item has been deactivated"), "Can't deactivate item. ERROR");
@@ -214,7 +214,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Activate']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been activated"), "Can't activate item. ERROR");
@@ -230,7 +230,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Mark as premium']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Mark as premium']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Changes have been applied"), "Can't mark as premium item. ERROR");
@@ -246,7 +246,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Unmark as premium']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Unmark as premium']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Changes have been applied"), "Can't mark as premium item. ERROR");
@@ -263,7 +263,7 @@ class TestOfAdminItems extends WebTestCase {
         sleep(2); // time enough to load table data
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Edit']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
 
         // insert non registered user
@@ -293,7 +293,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title_item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title_item')]/td/span/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title_item')]/td/div/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
@@ -381,7 +381,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
@@ -434,7 +434,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/span/a[text()='Delete']");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");

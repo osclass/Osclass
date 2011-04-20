@@ -68,19 +68,19 @@ class TestOfUser extends WebTestCase {
     /*           TESTS          */
     function testChangePassword()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testChangePassword</h2></div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_user - testChangePassword</h2></div>";
         $this->changePassword();
     }
 
     function testChangeEmail()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testChangeEmail</h2></div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_user - testChangeEmail</h2></div>";
         $this->changeEmail();
     }
 
     function testUpdateProfile()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testUpdateProfile</h2></div>";
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_user - testUpdateProfile</h2></div>";
         $this->profile();
     }
 
