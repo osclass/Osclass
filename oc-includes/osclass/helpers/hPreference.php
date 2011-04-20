@@ -284,6 +284,13 @@
         return Preference::newInstance()->replace($key, $value, $section, $type);
     }
 
+    function osc_delete_preference($value = '', $section = 'osclass') {
+        return Preference::newInstance()->delete(array('s_name' => $value, 's_section' => $section));
+    }
+
+    function osc_reset_preferences() {
+        return Preference::newInstance()->toArray();
+    }
     
 
     //PRIVATE FUNCTION (if there was a class :P)
