@@ -20,21 +20,16 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    if( !defined('ABS_PATH') ) {
-        define( 'ABS_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/' );
-    }
-    if( !defined('LIB_PATH') ) {
-        define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
-    }
-
-    class LogOsclassInstaller extends Log{
+    class LogOsclassInstaller extends Log
+    {
 
         private static $_instance;
 
         private $os;
         private $component = 'INSTALLER';
 
-        static function instance() {
+        static function instance()
+        {
             if (!isset(self::$_instance)) {
                 $c = __CLASS__;
                 self::$_instance = new $c;
@@ -42,7 +37,8 @@
             return self::$_instance;
         }
 
-        private function __construct() {
+        private function __construct()
+        {
             $this->os = PHP_OS ;
         }
 
