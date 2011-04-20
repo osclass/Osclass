@@ -515,6 +515,8 @@ function osc_dump_table_data($path, $table)
 
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
@@ -530,24 +532,32 @@ function osc_downloadFile($sourceFile, $downloadedFile) {
 	    curl_exec($ch);
 	    curl_close($ch);
 	    fclose($fp);
+        error_reporting($iErrorReporting);
 	    return true;
     } else {
+        error_reporting($iErrorReporting);
         return false;
     }
 }
 
 
 function osc_file_get_contents($url){
-    /*
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+    
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;*/
 
-    return file_get_contents($url) ;
+    error_reporting($iErrorReporting);
+
+    return $data;
 }
 
 
