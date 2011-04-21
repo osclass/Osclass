@@ -314,6 +314,20 @@
 
                                         $this->doView('settings/locations.php');
                 break;
+                case('categories'):     // calling the categories view
+                                        $this->doView('settings/categories.php');
+                break;
+                case('categories_post'):// updating categories option
+                                        $selectableParent = Params::getParam('selectable_parent_categories');
+                                        
+                                        $updated = Preference::newInstance()->update(array('s_value' => $selectableParent)
+                                                                                    ,array('s_name'  => 'selectable_parent_categories'));
+                                        if($updated > 0) {
+                                            osc_add_flash_ok_message( _m('Categories\' settings have been updated'), 'admin');
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=categories');
+                                        
+                break;
                 case('permalinks'):     // calling the permalinks view
                                         $htaccess = Params::getParam('htaccess_status');
                                         $file     = Params::getParam('file_status');
