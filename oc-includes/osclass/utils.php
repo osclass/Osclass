@@ -515,33 +515,49 @@ function osc_dump_table_data($path, $table)
 
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
-	set_time_limit(0);
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+
+	@set_time_limit(0);
 	ini_set('display_errors',true);
 			
-	$fp = fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-	$ch = curl_init($sourceFile);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	curl_setopt($ch, CURLOPT_FILE, $fp);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	curl_exec($ch);
-	curl_close($ch);
-	fclose($fp);
-
+	$fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+	if($fp) {
+	    $ch = curl_init($sourceFile);
+	    @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+	    curl_setopt($ch, CURLOPT_FILE, $fp);
+	    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	    curl_exec($ch);
+	    curl_close($ch);
+	    fclose($fp);
+        error_reporting($iErrorReporting);
+	    return true;
+    } else {
+        error_reporting($iErrorReporting);
+        return false;
+    }
 }
 
 
 function osc_file_get_contents($url){
-    /*
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+    
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;*/
 
-    return file_get_contents($url) ;
+    error_reporting($iErrorReporting);
+
+    return $data;
 }
 
 
@@ -863,6 +879,107 @@ function osc_check_recaptcha() {
     }
 
     return false;
+}
+
+function osc_check_dir_writable( $dir = ABS_PATH ) {
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
+                        if($file=="en_US" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
+                    } else {
+                        $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
+                } else {
+                    return is_writable( str_replace("//", "/", $dir . "/" . $file));
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return true;
+}
+
+
+
+function osc_change_permissions( $dir = ABS_PATH ) {
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    if(!$res) { return false; };
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
+                        if($file=="en_US" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
+                    } else {
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
+                } else {
+                    return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return true;
+}
+
+
+function osc_save_permissions( $dir = ABS_PATH ) {
+    $perms = array();
+    $perms[$dir] = fileperms($dir);
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    $res = osc_save_permissions( str_replace("//", "/", $dir . "/" . $file));
+                    foreach($res as $k => $v) {
+                        $perms[$k] = $v;
+                    }
+                } else {
+                    $perms[str_replace("//", "/", $dir . "/" . $file)] = fileperms( str_replace("//", "/", $dir . "/" . $file));
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return $perms;
 }
 
 ?>

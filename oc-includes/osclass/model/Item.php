@@ -139,7 +139,7 @@ class Item extends DAO
 
     public function findByPrimaryKey($id)
     {
-        $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.*, s.* FROM %s i LEFT JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id LEFT JOIN %st_item_stats s ON i.pk_i_id = s.fk_i_item_id WHERE i.pk_i_id = %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id);
+        $item = $this->conn->osc_dbFetchResult('SELECT l.*, i.*, SUM(s.i_num_views) AS i_num_views FROM %s i LEFT JOIN %st_item_location l ON l.fk_i_item_id = i.pk_i_id LEFT JOIN %st_item_stats s ON i.pk_i_id = s.fk_i_item_id WHERE i.pk_i_id = %d GROUP BY s.fk_i_item_id', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id);
 
         if(count($item) > 0) {
             return $this->extendDataSingle($item);
