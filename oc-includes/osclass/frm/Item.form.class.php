@@ -42,7 +42,7 @@
                 echo '<option value="">' . __('Select a category') . '</option>' ;
             }
             foreach($categories as $c) {
-                if(osc_selectable_parent_categories()){
+                if(!osc_selectable_parent_categories()){
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
