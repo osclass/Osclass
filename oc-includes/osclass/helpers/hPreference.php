@@ -275,6 +275,10 @@
     function osc_comment_spam_delay() {
         return 60; // need to be changed
     }
+    
+    function osc_selectable_parent_categories() {
+        return(getPreference('selectable_parent_categories')) ;
+    }
 
     function osc_get_preference($key, $section = 'osclass') {
         return getPreference($key, $section);
