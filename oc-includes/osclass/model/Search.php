@@ -305,7 +305,7 @@ class Search extends DAO
         }
     }
 
-    public function search($extended = true) {
+    public function doSearch($extended = true) {
         $items = $this->conn->osc_dbFetchResults($this->makeSQL(false));
         if($extended) {
             return Item::newInstance()->extendData($items);
