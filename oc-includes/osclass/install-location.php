@@ -1,8 +1,16 @@
 <?php
+<<<<<<< HEAD
 //error_reporting(E_ALL);
+=======
+
+error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
+>>>>>>> 527
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
+define( 'LIB_PATH', ABS_PATH . 'oc-includes/');
 
 require_once ABS_PATH . 'config.php';
+<<<<<<< HEAD
 require_once ABS_PATH . 'oc-includes/osclass/db.php';
 require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
 require_once ABS_PATH . 'oc-includes/osclass/helpers/hDatabaseInfo.php';
@@ -13,6 +21,14 @@ require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php' ;
 
 require_once ABS_PATH . 'oc-includes/osclass/Logger/Logger.php' ;
 require_once ABS_PATH . 'oc-includes/osclass/Logger/LogOsclass.php' ;
+=======
+require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
+require_once LIB_PATH . 'osclass/install-functions.php';
+require_once LIB_PATH . 'osclass/formatting.php';
+require_once LIB_PATH . 'osclass/utils.php';
+>>>>>>> 527
 
 $_POST = add_slashes_extended($_POST) ;
 

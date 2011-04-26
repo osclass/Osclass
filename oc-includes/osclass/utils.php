@@ -37,6 +37,7 @@ function osc_deleteResource( $id ) {
         array_map( "unlink" , glob($resource_original));
     }
 }
+
 /**
  * Tries to delete the directory recursivaly.
  * @return true on success.
@@ -89,6 +90,20 @@ function osc_packageExtract($zipPath, $path) {
     } else {
         return false;
     }
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_path($file) {
+    // Sanitize windows paths and duplicated slashes
+    $file = preg_replace('|/+|','/', str_replace('\\','/',$file));
+    $plugin_path = preg_replace('|/+|','/', str_replace('\\','/', PLUGINS_PATH));
+    $file = $plugin_path . preg_replace('#^oc-content\/plugins\s/#','',$file);
+    return $file;
 }
 
 /**
@@ -515,6 +530,8 @@ function osc_dump_table_data($path, $table)
 
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
@@ -530,24 +547,32 @@ function osc_downloadFile($sourceFile, $downloadedFile) {
 	    curl_exec($ch);
 	    curl_close($ch);
 	    fclose($fp);
+        error_reporting($iErrorReporting);
 	    return true;
     } else {
+        error_reporting($iErrorReporting);
         return false;
     }
 }
 
 
 function osc_file_get_contents($url){
-    /*
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+    
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;*/
 
-    return file_get_contents($url) ;
+    error_reporting($iErrorReporting);
+
+    return $data;
 }
 
 
