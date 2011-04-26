@@ -44,29 +44,29 @@
                         <input type="hidden" name="page" value="user" />
                         <input type="hidden" name="action" value="profile_post" />
                         <fieldset>
-                            <p>
+                            <div class="row">
                                 <label for="name"><?php _e('Name', 'modern') ; ?></label>
                                 <?php UserForm::name_text(osc_user()) ; ?>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="row">
                                 <label for="email"><?php _e('E-mail', 'modern') ; ?></label>
-                                <span>
+                                <span class="update">
                                     <?php echo osc_user_email() ; ?><br />
                                     <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'modern') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'modern') ; ?></a>
                                 </span>
-                            </p>
+                            </div>
                             <div class="row">
                                 <label for="user_type"><?php _e('User type', 'modern') ; ?></label>
                                 <?php UserForm::is_company_select(osc_user()) ; ?>
                             </div>
-                            <p>
+                            <div class="row">
                                 <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label>
                                 <?php UserForm::mobile_text(osc_user()) ; ?>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="row">
                                 <label for="phoneLand"><?php _e('Phone', 'modern') ; ?></label>
                                 <?php UserForm::phone_land_text(osc_user()) ; ?>
-                            </p>
+                            </div>
                             <div class="row">
                                 <label for="country"><?php _e('Country', 'modern') ; ?> *</label>
                                 <?php UserForm::country_select(osc_get_countries(), osc_user()) ; ?>
@@ -79,19 +79,21 @@
                                 <label for="city"><?php _e('City', 'modern') ; ?> *</label>
                                 <?php UserForm::city_select(osc_get_cities(), osc_user()) ; ?>
                             </div>
-                            <p>
+                            <div class="row">
                                 <label for="city_area"><?php _e('City area', 'modern') ; ?></label>
                                 <?php UserForm::city_area_text(osc_user()) ; ?>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="row">
                                 <label for="address"><?php _e('Address', 'modern') ; ?></label>
                                 <?php UserForm::address_text(osc_user()) ; ?>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="row">
                                 <label for="webSite"><?php _e('Website', 'modern') ; ?></label>
                                 <?php UserForm::website_text(osc_user()) ; ?>
-                            </p>
-                            <button type="submit"><?php _e('Update', 'modern') ; ?></button>
+                            </div>
+                            <div class="row">
+                                <button type="submit"><?php _e('Update', 'modern') ; ?></button>
+                            </div>
                             <?php osc_run_hook('user_form') ; ?>
                         </fieldset>
                     </form>
