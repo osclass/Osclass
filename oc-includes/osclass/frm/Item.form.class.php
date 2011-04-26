@@ -56,7 +56,7 @@ class ItemForm extends Form {
         // How many indents to add?
         $deep_string = "";
         if( $deep > 0 ) {
-            $deep_string .= '&nbsp;&nbsp;';
+            $deep_string .= '&nbsp;&nbsp;&nbsp;&nbsp;';
         }
 
         foreach($categories as $c) {
