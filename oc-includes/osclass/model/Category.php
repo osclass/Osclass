@@ -306,7 +306,7 @@ class Category extends DAO
         }
     }
 
-    public function insert($fields, $aFieldsDescription) 
+    public function insert($fields, $aFieldsDescription = null ) 
     {
         $columns = implode(', ', array_keys($fields));
 
