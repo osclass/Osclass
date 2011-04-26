@@ -543,6 +543,7 @@ class ItemForm extends Form {
 
         var a = ce('a');
         a.style.fontSize = 'x-small';
+        a.style.paddingLeft = '10px';
         a.setAttribute('href', '#');
         a.setAttribute('divid', id);
         a.onclick = function() { re(this.getAttribute('divid')); return false; }
@@ -556,6 +557,8 @@ class ItemForm extends Form {
         d.appendChild(a);
 
         gebi('photos').appendChild(d);
+        
+        $("#"+id+" input:file").uniform();
     }
     // Listener: automatically add new file field when the visible ones are full.
     setInterval("add_file_field()", 250);
