@@ -89,13 +89,20 @@
             $this->sOutput .= '"aaData": [ ';
 
             if(count($this->result)>0) {
+                $count = 0;
                 foreach ($this->result as $aRow)
                 {
                     
                     $this->sOutput .= "[";
                     $this->sOutput .= '"<input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' />",';
                     $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['s_title'])).' <br/>';
-                    $this->sOutput .= '<div id=\'datatable_wrapper\'><div id=\'datatables_quick_edit\' style=\'position:absolute;\'>';
+                    $this->sOutput .= '<div id=\'datatable_wrapper\'><div id=\'datatables_quick_edit\' ';
+                    if($count % 2) {
+                        $this->sOutput .= ' class=\'even\' ';
+                    }else{
+                        $this->sOutput .= ' class=\'odd\' ';
+                    }
+                    $this->sOutput .= ' style=\'position:absolute;padding:4px;\'>';
                     $this->sOutput .= '<a href=\''.osc_admin_base_url(true).'?page=comments&action=list&amp;id='.$aRow['pk_i_id'].'\'>'.  __('View comments') .'</a>';
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=media&action=list&amp;id='. $aRow['pk_i_id'] .'\'>'. __('View media') .'</a>';
                     if(isset($aRow['e_status']) && ($aRow['e_status'] == 'ACTIVE')) {
@@ -136,6 +143,7 @@
                     } else {
                         $this->sOutput .= "],";
                     }
+                    $count++;
                 }
             //$this->sOutput = substr_replace( $this->sOutput, "", -1 ); /* XXX: for some reason this line breaks everything... */
             }

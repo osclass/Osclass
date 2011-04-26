@@ -226,6 +226,14 @@ tr.even {
 	background-color: white;
 }
 
+div.odd {
+    background-color: #efefef;
+}
+
+div.even {
+    background-color: white;
+}
+
 
 
 

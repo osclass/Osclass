@@ -295,6 +295,7 @@
 
                 $sql = 'UPDATE ' . $this->getTableDescriptionName() . ' SET ' . $set . " WHERE fk_i_category_id = " . $pk . " AND fk_c_locale_code = '" . $fieldsDescription["fk_c_locale_code"] . "'";
 
+
                 $this->conn->osc_dbExec($sql);
 
                 if($this->conn->get_affected_rows() == 0) {
@@ -306,7 +307,7 @@
             }
         }
 
-        public function insert($fields, $aFieldsDescription)
+        public function insert($fields, $aFieldsDescription = null )
         {
             $columns = implode(', ', array_keys($fields));
 

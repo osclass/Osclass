@@ -25,11 +25,15 @@
     $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 <<<<<<< HEAD
-
-    osc_changeVersionTo(201) ;
+<<<<<<< HEAD
 =======
+>>>>>>> 93be9b161f415d8a3007a3af859ed56c8f623121
+
     osc_changeVersionTo(202) ;
+<<<<<<< HEAD
 >>>>>>> 527
+=======
+>>>>>>> 93be9b161f415d8a3007a3af859ed56c8f623121
 
     $conn = getConnection();
     $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ,('osclass', 'save_latest_searches', '1', 'BOOLEAN'),('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
