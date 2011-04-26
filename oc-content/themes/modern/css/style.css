@@ -298,10 +298,10 @@ option.pad { margin-left:10px;}
 .user_account .modify_profile form h3 { color:#000; margin-bottom:10px; }
 .user_account .modify_profile form label { clear:left; float:left; margin-right:10px; padding-top:7px; width:140px; }
 .user_account .modify_profile form input { border:1px solid #BBB; float:left; margin-bottom:5px; padding:5px; width:250px; }
-.user_account .modify_profile form select { border:1px solid #BBB; float:left; margin-bottom:5px; padding:5px; width:250px; }
-.user_account .modify_profile form span { float:left; margin-bottom:5px; padding: 5px; width:250px; }
+.user_account .modify_profile .update { float:left; margin-bottom:5px; padding: 5px; width:250px; }
 .user_account .modify_profile form textarea { border:1px solid #BBB; float:left; padding:5px; width:300px; }
 .user_account .modify_profile form button { clear:both; float:left; margin:10px 0 0 150px; }
+.user_account .modify_profile .row { clear:both; float:left; margin-bottom:5px; width:100%; }
 .user_account .your_items h2 a { border-left:1px solid #DDD; font-weight:normal; margin-left:5px; padding-left:10px;}
 .user_account .your_items .item { border-bottom:1px dotted #DDD; margin-bottom:15px; padding-bottom: 15px;}
 .user_account .your_items .item h3 { font-size:14px; margin-bottom:5px; }
@@ -421,3 +421,177 @@ div.selector select { position: absolute; opacity: 0; filter: alpha(opacity:0); 
 AUTOCOMPLETE
 */
 .ui-autocomplete { width: 200px; }
+
+/* Uploader */
+
+div.uploader {
+  border: 1px solid #BBBBBB;
+  background-position: 0px -297px;
+  height: 28px;
+}
+
+div.uploader span.action {
+  background-position: right -409px;
+  height: 24px;
+  line-height: 24px;
+}
+
+div.uploader span.filename {
+  height: 24px;
+  /* change this line to adjust positioning of filename area */
+  margin: 2px 0px 2px 2px;
+  line-height: 24px;
+}
+
+div.uploader.focus,
+div.uploader.hover,
+div.uploader:hover {
+  background-position: 0px -353px;
+}
+
+div.uploader.focus span.action,
+div.uploader.hover span.action,
+div.uploader:hover span.action {
+  background-position: right -437px;
+}
+
+div.uploader.active span.action,
+div.uploader:active span.action {
+  background-position: right -465px;
+}
+
+div.uploader.focus.active span.action,
+div.uploader:focus.active span.action,
+div.uploader.focus:active span.action,
+div.uploader:focus:active span.action {
+  background-position: right -493px;
+}
+
+div.uploader.disabled {
+  background-position: 0px -325px;
+}
+
+div.uploader.disabled span.action {
+  background-position: right -381px;
+}
+
+div.button {
+  background-position: 0px -523px;
+}
+
+div.button span {
+  background-position: right -643px;
+}
+
+div.button.focus,
+div.button:focus,
+div.button:hover,
+div.button.hover {
+  background-position: 0px -553px;
+}
+
+div.button.focus span,
+div.button:focus span,
+div.button:hover span,
+div.button.hover span {
+  background-position: right -673px; 
+}
+
+div.button.active,
+div.button:active {
+  background-position: 0px -583px;
+}
+
+div.button.active span,
+div.button:active span {
+  background-position: right -703px;
+  color: #555;
+}
+
+div.button.disabled,
+div.button:disabled {
+  background-position: 0px -613px;
+}
+
+div.button.disabled span,
+div.button:disabled span {
+  background-position: right -733px;
+  color: #bbb;
+  cursor: default;
+}
+
+
+
+/* Uploader */
+div.uploader {
+  width: 190px;
+  cursor: pointer;
+}
+
+div.uploader span.action {
+  width: 85px;
+  text-align: center;
+  text-shadow: #fff 0px 1px 0px;
+  background-color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+div.uploader span.filename {
+  color: #777;
+  width: 82px;
+  border-right: solid 1px #bbb;
+  font-size: 11px;
+}
+
+div.uploader input {
+  width: 190px;
+}
+
+div.uploader.disabled span.action {
+  color: #aaa;
+}
+
+div.uploader.disabled span.filename {
+  border-color: #ddd;
+  color: #aaa;
+}
+
+/* Uploader */
+
+div.uploader {
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+div.uploader span.action {
+  float: left;
+  display: inline;
+  padding: 2px 0px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+div.uploader span.filename {
+  padding: 0px 10px;
+  float: left;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+}
+
+div.uploader input {
+  opacity: 0;
+  filter: alpha(opacity:0);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  float: right;
+  height: 25px;
+  border: none;
+  cursor: default;
+}
