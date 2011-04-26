@@ -244,8 +244,8 @@ function oc_install( ) {
         return array('error' => 'Cannot create the database structure. Error number: ' . $error_num . '.');
     }
 
-    require_once ABS_PATH . 'oc-includes/osclass/locales.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Locale.php';
+    require_once LIB_PATH . 'osclass/locales.php';
+    require_once LIB_PATH . 'osclass/model/Locale.php';
     $localeManager = Locale::newInstance();
 
     $locales = osc_listLocales();
@@ -416,13 +416,14 @@ function is_osclass_installed( ) {
 }
 
 function finish_installation( ) {
-    require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
-    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
-    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
-    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Item.php';
-    require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
-    require_once ABS_PATH . 'oc-includes/osclass/utils.php';
+    require_once LIB_PATH . 'osclass/helpers/hSecurity.php' ;
+    require_once LIB_PATH . 'osclass/model/Admin.php' ;
+    require_once LIB_PATH . 'osclass/model/Preference.php' ;
+    require_once LIB_PATH . 'osclass/model/Category.php';
+    require_once LIB_PATH . 'osclass/model/Item.php';
+    require_once LIB_PATH . 'osclass/core/Params.php';
+    require_once LIB_PATH . 'osclass/compatibility.php';
+    require_once LIB_PATH . 'osclass/utils.php';
     
     $data = array();
     $password = osc_genRandomPassword() ;
@@ -479,7 +480,7 @@ function finish_installation( ) {
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
         $sitename = substr( $sitename, 4 ) ;
     }
-    require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php' ;
+    require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
     $mail = new PHPMailer ;
     $mail->CharSet="utf-8" ;
     $mail->Host = "localhost" ;
@@ -671,7 +672,7 @@ function display_database_error($error ,$step) {
 
 function display_categories() {
     require_once ABS_PATH . 'config.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
+    require_once LIB_PATH . 'osclass/model/Category.php';
 
     $categories = Category::newInstance()->toTreeAll();
     $numCols = 3;

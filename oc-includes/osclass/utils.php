@@ -575,46 +575,6 @@ function osc_file_get_contents($url){
     return $data;
 }
 
-
-
-// If JSON ext is not present
-if ( !function_exists('json_encode') ) {
-    function json_encode( $string ) {
-        global $osc_json;
-
-        if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once LIB_PATH . 'json/JSON.php';
-            $osc_json = new Services_JSON();
-        }
-
-        return $osc_json->encode( $string );
-    }
-}
-
-if ( !function_exists('json_decode') ) {
-    function json_decode( $string, $assoc_array = false ) {
-        global $osc_json;
-
-        if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once LIB_PATH . '/json/JSON.php';
-            $osc_json = new Services_JSON();
-        }
-
-        $res = $osc_json->decode( $string );
-        if ( $assoc_array ) $res = _json_decode_object_helper( $res );
-
-        return $res;
-    }
-
-    function _json_decode_object_helper($data) {
-        if ( is_object($data) )
-            $data = get_object_vars($data);
-
-        return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
-    }
-}
-
-
 /**
  * Check if we loaded some specific module of apache
  *

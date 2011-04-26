@@ -12,6 +12,7 @@ require_once LIB_PATH . 'osclass/classes/DAO.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/formatting.php';
+require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php' ;
 
