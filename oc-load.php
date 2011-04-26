@@ -1,5 +1,6 @@
 <?php
 
+
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -40,6 +41,7 @@
         $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
 
         osc_die($title, $message) ;
+
     }
 
     require_once ABS_PATH . 'config.php';
