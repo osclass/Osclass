@@ -19,15 +19,8 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-error_reporting(E_ALL);
-=======
+
 error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
->>>>>>> 527
-=======
-error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
->>>>>>> 93be9b161f415d8a3007a3af859ed56c8f623121
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
