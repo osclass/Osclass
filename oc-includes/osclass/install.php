@@ -26,16 +26,16 @@ define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
 define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
 define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
 
-require_once ABS_PATH . 'oc-includes/osclass/db.php';
-require_once ABS_PATH . 'oc-includes/osclass/classes/DAO.php';
-require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hPreference.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hDatabaseInfo.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hErrors.php';
-require_once ABS_PATH . 'oc-includes/osclass/core/Session.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hDefines.php';
-require_once ABS_PATH . 'oc-includes/osclass/helpers/hLocale.php';
-require_once ABS_PATH . 'oc-includes/osclass/install-functions.php';
+require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/model/Preference.php';
+require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
+require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+require_once LIB_PATH . 'osclass/core/Session.php';
+require_once LIB_PATH . 'osclass/helpers/hDefines.php';
+require_once LIB_PATH . 'osclass/helpers/hLocale.php';
+require_once LIB_PATH . 'osclass/install-functions.php';
 
 ( isset($_REQUEST['step']) ) ? $step = (int) $_REQUEST['step'] : $step = '1' ;
 
