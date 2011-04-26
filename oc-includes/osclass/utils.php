@@ -941,7 +941,9 @@ function osc_change_permissions( $dir = ABS_PATH ) {
         while (($file = readdir($dh)) !== false) {
             if($file!="." && $file!="..") {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
-                    $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
+                        $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    }
                     if(!$res) { return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
@@ -965,7 +967,11 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                         if(!$res) { return false; };
                     }
                 } else {
-                    return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
+                        return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    } else {
+                        return true;
+                    }
                 }
             }
         }

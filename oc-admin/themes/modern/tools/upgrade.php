@@ -37,7 +37,7 @@
         $perms = osc_save_permissions();
         $ok = osc_change_permissions();
         foreach($perms as $k => $v) {
-            chmod($k, $v);
+            @chmod($k, $v);
         }
         if($ok) {
         ?>
