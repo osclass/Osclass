@@ -173,7 +173,7 @@
 
             // RETRIEVE ITEMS AND TOTAL
             $iTotalItems = $this->mSearch->count();
-            $aItems = $this->mSearch->search();
+            $aItems = $this->mSearch->doSearch();
 
             if(!Params::existParam('sFeed')) {
                 $iStart    = $p_iPage * $p_iPageSize ;
