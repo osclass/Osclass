@@ -55,10 +55,10 @@
                                     <a href="<?php echo osc_change_user_email_url() ; ?>"><?php _e('Modify e-mail', 'modern') ; ?></a> <a href="<?php echo osc_change_user_password_url() ; ?>" ><?php _e('Modify password', 'modern') ; ?></a>
                                 </span>
                             </p>
-                            <p>
+                            <div class="row">
                                 <label for="user_type"><?php _e('User type', 'modern') ; ?></label>
                                 <?php UserForm::is_company_select(osc_user()) ; ?>
-                            </p>
+                            </div>
                             <p>
                                 <label for="phoneMobile"><?php _e('Cell phone', 'modern') ; ?></label>
                                 <?php UserForm::mobile_text(osc_user()) ; ?>
@@ -67,18 +67,18 @@
                                 <label for="phoneLand"><?php _e('Phone', 'modern') ; ?></label>
                                 <?php UserForm::phone_land_text(osc_user()) ; ?>
                             </p>
-                            <p>
+                            <div class="row">
                                 <label for="country"><?php _e('Country', 'modern') ; ?> *</label>
                                 <?php UserForm::country_select(osc_get_countries(), osc_user()) ; ?>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="row">
                                 <label for="region"><?php _e('Region', 'modern') ; ?> *</label>
                                 <?php UserForm::region_select(osc_get_regions(), osc_user()) ; ?>
-                            </p>
-                            <p>
+                            </div>
+                            <div class="row">
                                 <label for="city"><?php _e('City', 'modern') ; ?> *</label>
                                 <?php UserForm::city_select(osc_get_cities(), osc_user()) ; ?>
-                            </p>
+                            </div>
                             <p>
                                 <label for="city_area"><?php _e('City area', 'modern') ; ?></label>
                                 <?php UserForm::city_area_text(osc_user()) ; ?>
