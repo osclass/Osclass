@@ -20,7 +20,7 @@
  */
 
 /**
- * Check if json_encode function is not loaded. In case it is not loaded, we implement it.
+ * Check if json_encode function is loaded. In case it is not loaded, we implement it.
  */
 if ( !function_exists('json_encode') ) {
     function json_encode( $string ) {
@@ -36,7 +36,7 @@ if ( !function_exists('json_encode') ) {
 }
 
 /**
- * Check if json_decode function is not loaded. In case it is not loaded, we implement it.
+ * Check if json_decode function is loaded. In case it is not loaded, we implement it.
  */
 if ( !function_exists('json_decode') ) {
     function json_decode( $string, $assoc_array = false ) {
@@ -61,6 +61,15 @@ if ( !function_exists('json_decode') ) {
     }
 }
 
-
+/**
+ * Check if mb_substr function is loaded. In case it is not loaded, we implement it.
+ */
+if ( !function_exists('mb_substr') ) {
+	function mb_substr( $str, $start, $length = null, $encoding = null ) {
+        preg_match_all( '/./us', $str, $match );
+        $chars = is_null( $length ) ? array_slice( $match[0], $start ) : array_slice( $match[0], $start, $length );
+        return implode('', $chars );
+    }
+}
 
 ?>
