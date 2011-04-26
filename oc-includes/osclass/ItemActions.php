@@ -51,9 +51,18 @@
 
             // Check status
             $active = $aItem['active'];
-            if($this->is_admin || !$has_to_validate || osc_is_web_user_logged_in()) {
+            /*if($this->is_admin || !$has_to_validate || osc_is_web_user_logged_in()) {
                 $active = 'ACTIVE';
-            }
+            }*/
+            if($this->is_admin) {
+                $active = 'ACTIVE';
+            } else {
+                if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
+                    $active = 'INACTIVE';
+                } else {
+                    $active = 'ACTIVE';
+                }
+            }            
 
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
@@ -143,9 +152,9 @@
                 $locationManager->insert($location);
 
                 // OJO
-                if ($this->is_admin || !$has_to_validate || osc_is_web_user_logged_in()) {
+                /*if ($this->is_admin || !$has_to_validate || osc_is_web_user_logged_in()) {
                     CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                }
+                }*/
 
                 //uploading resources from the input form
                 $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
@@ -156,18 +165,22 @@
                 $aItem['item'] = $item;
 
                 // Email user with post activation link.
-                if(!$this->is_admin && !osc_is_web_user_logged_in()) {
+                /*if(!$this->is_admin && !osc_is_web_user_logged_in()) {
                     $this->sendEmails($aItem);
-                }
+                }*/
 
                 osc_run_hook('after_item_post') ;
 
                 if($this->is_admin) {
+                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
                     osc_add_flash_message( _m('The post has been published')) ;
                 } else {
-                    if($has_to_validate && !osc_is_web_user_logged_in()) {
+                    if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
+                        Session::newInstance()->_set('last_publish_time', time());
+                        $this->sendEmails($aItem);
                         osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
                     } else {
+                        CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
                         osc_add_flash_message( _m('Your post has been published')) ;
                     }
                 }
