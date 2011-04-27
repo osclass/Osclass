@@ -68,13 +68,7 @@
                             <?php require(osc_search_show_as() == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
                         <?php } ?>
                         <div class="paginate" >
-                        <?php for($i = 0 ; $i < osc_search_total_pages() ; $i++) {
-                            if($i == osc_search_page()) {
-                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
-                            } else {
-                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
-                            }
-                        } ?>
+                        <?php echo osc_search_pagination(); ?>
                         </div>
                     </div>
                 </div>
