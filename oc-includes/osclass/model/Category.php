@@ -24,6 +24,9 @@
     {
         private static $instance ;
         private $language ;
+        private $tree;
+        private $categories;
+        private $relation;
 
         public function __construct($l = "") {
             if($l == "") {
@@ -31,6 +34,9 @@
             }
 
             $this->language = $l ;
+            $this->tree = null;
+            $this->relation = null;
+            $this->categories = null;
             parent::__construct() ;
         }
 
@@ -89,7 +95,7 @@
             }
         }
 
-        public function toTree() {
+        public function toTree_old() {
             $roots = $this->findRootCategoriesEnabled() ;
             foreach ($roots as &$r) {
                 $r['categories'] = $this->toSubTree($r['pk_i_id']) ;
@@ -97,6 +103,39 @@
             unset($r) ;
             return $roots ;
         }
+
+        public function toTree() {
+            if($this->tree!=null) {
+                return $this->tree;
+            }
+            $categories = $this->listAll();
+            $this->categories = array();
+            $this->relation = array();
+            foreach($categories as $c) {
+                $this->categories[$c['pk_i_id']] = $c;
+                if($c['fk_i_parent_id']==null) {
+                    $this->tree[] = $c;
+                    $this->relation[0][] = $c['pk_i_id'];
+                } else {
+                    $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                }
+            }
+            $this->tree = $this->sideTree($this->relation[0]);
+            return $this->tree;
+        }
+
+        private function sideTree($branch) {
+            $tree = array();
+            foreach($branch as $b) {
+                $aux = $this->categories[$b];
+                if(isset($this->relation[$b]) && is_array($this->relation[$b])) {
+                    $aux['categories'] = $this->sideTree($this->relation[$b]);
+                }
+                $tree[] = $aux;
+            }
+            return $tree;
+        }
+
 
         public function toTreeAll() {
             $roots = $this->findRootCategories();
