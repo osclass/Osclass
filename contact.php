@@ -55,6 +55,29 @@
                                             ,'body' => $message
                                             ,'alt_body' => $message
                                         );
+
+                                        if(osc_contact_attachment()) {
+                                            $attachment = Params::getFiles('attachment');
+                                            $resourceName = $attachment['name'] ;
+                                            $tmpName = $attachment['tmp_name'] ;
+                                            $resourceType = $attachment['type'] ;
+
+                                            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
+
+                                            if(!is_writable(osc_content_path() . 'uploads/')) {
+                                                osc_add_flash_message( _m('There has been some errors sending the message')) ;
+                                                $this->redirectTo( osc_base_url() );
+                                            }
+
+                                            if(!move_uploaded_file($tmpName, $path)){
+                                                unset($path) ;
+                                            }
+                                        }
+
+                                        if(isset($path)) {
+                                            $params['attachment'] = $path ;
+                                        }
+
                                         osc_sendMail($params) ;
 
                                         osc_add_flash_ok_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
