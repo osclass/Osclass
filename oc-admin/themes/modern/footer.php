@@ -23,7 +23,7 @@
     <div id="footer_left">
         <?php _e('Thank you for using'); ?> <a href="http://osclass.org/" target="_blank"><?php _e('OSClass'); ?></a> |
         <a title="<?php _e('Documentation'); ?>" href="http://wiki.osclass.org/" target="_blank"><?php _e('Documentation'); ?></a> |
-        <a title="<?php _e('Feedback'); ?>" href="http://forums.osclass.org" target="_blank"><?php _e('Feedback'); ?></a>
+        <a title="<?php _e('Forums'); ?>" href="http://forums.osclass.org" target="_blank"><?php _e('Feedback'); ?></a>
     </div>
     <div id="footer_right">
         <?php _e('OSClass'); ?> <?php echo OSCLASS_VERSION; ?>
