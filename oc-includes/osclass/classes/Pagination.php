@@ -30,8 +30,8 @@ class Pagination {
         $this->text_last = (isset($params['text_last']))?$params['text_last']:'&raquo';
         $this->text_prev = (isset($params['text_prev']))?$params['text_prev']:'&lt;';
         $this->text_next = (isset($params['text_next']))?$params['text_next']:'&gt;';
-        $this->class_selected = (isset($params['']))?$params['class_selected']:'searchPaginationSelected';
-        $this->class_non_selected = (isset($params['']))?$params['class_non_selected']:'searchPaginationNonSelected';
+        $this->class_selected = (isset($params['class_selected']))?$params['class_selected']:'searchPaginationSelected';
+        $this->class_non_selected = (isset($params['class_non_selected']))?$params['class_non_selected']:'searchPaginationNonSelected';
         $this->delimiter = (isset($params['delimiter']))?$params['delimiter']:" ";
         $this->force_limits = (isset($params['force_limits']))?(bool)$params['delimiter']:false;
         $this->sides = (isset($params['sides']))?$params['sides']:2;
