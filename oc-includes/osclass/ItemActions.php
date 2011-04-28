@@ -113,7 +113,9 @@
                 ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
                 ((!osc_validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
                 ((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
+                ((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' ) . 
+                (((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time())? _m("Too fast. You should wait a little to publish your ad.\n") : '' );
+
 
             // Handle error
             if ($flash_error) {
@@ -818,9 +820,9 @@
                 }
 
                 $active = 'INACTIVE';
-                if( !osc_item_validation_enabled() ){
+                /*if( !osc_item_validation_enabled() ){
                     $active = 'ACTIVE';
-                }
+                }*/
                 $aItem['active'] = $active;
 
                 if ($userId != null) {
@@ -1097,7 +1099,7 @@
             /**
              * Send email to user requesting item activation
              */
-            if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
+            if ( $aItem['e_status']=='INACTIVE' ) {
                 $aPage = $mPages->findByInternalName('email_item_validation') ;
 
                 $content = array();

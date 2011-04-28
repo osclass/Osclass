@@ -78,6 +78,9 @@
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" value="1" />
                                     <label for="reg_user_post"><?php _e('Only allow registered users to post items'); ?></label>
+                                    <br/>
+                                    <label><?php _e('Number of seconds an user should wait before publishing another item (0 for no wait)'); ?></label>
+                                    <input type="text" name="items_wait_time" id="items_wait_time" value="<?php echo osc_items_wait_time(); ?>" />
                                 </fieldset>
                             </div>
 
