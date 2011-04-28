@@ -69,7 +69,7 @@
             return $roots ;
         }
 
-        public function toSubTree($category = null) {
+        /*public function toSubTree($category = null) {
             if($category==null) {
                 return null ;
             } else {
@@ -95,7 +95,7 @@
             }
         }
 
-        public function toTree_old() {
+        public function toTree() {
             $roots = $this->findRootCategoriesEnabled() ;
             foreach ($roots as &$r) {
                 $r['categories'] = $this->toSubTree($r['pk_i_id']) ;
@@ -104,11 +104,38 @@
             return $roots ;
         }
 
+        public function toTreeAll() {
+            $roots = $this->findRootCategories();
+            foreach ($roots as &$r) {
+                $r['categories'] = $this->toSubTreeAll($r['pk_i_id']);
+            }
+            unset($r);
+            return $roots;
+        }*/
+
+        public function toTreeAll() {
+            $categories = $this->listAll();
+            $all_categories = array();
+            $all_relation = array();
+            $tree = array();
+            foreach($categories as $c) {
+                $all_categories[$c['pk_i_id']] = $c;
+                if($c['fk_i_parent_id']==null) {
+                    $tree[] = $c;
+                    $all_relation[0][] = $c['pk_i_id'];
+                } else {
+                    $all_relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                }
+            }
+            $tree = $this->sideTree($all_relation[0], $all_categories, $all_relation);
+            return $tree;
+        }
+
         public function toTree() {
             if($this->tree!=null) {
                 return $this->tree;
             }
-            $categories = $this->listAll();
+            $categories = $this->listEnabled();
             $this->categories = array();
             $this->relation = array();
             foreach($categories as $c) {
@@ -120,31 +147,22 @@
                     $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
                 }
             }
-            $this->tree = $this->sideTree($this->relation[0]);
+            $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
             return $this->tree;
         }
 
-        private function sideTree($branch) {
+        private function sideTree($branch, $categories, $relation) {
             $tree = array();
             foreach($branch as $b) {
-                $aux = $this->categories[$b];
-                if(isset($this->relation[$b]) && is_array($this->relation[$b])) {
-                    $aux['categories'] = $this->sideTree($this->relation[$b]);
+                $aux = $categories[$b];
+                if(isset($relation[$b]) && is_array($relation[$b])) {
+                    $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
                 }
                 $tree[] = $aux;
             }
             return $tree;
         }
 
-
-        public function toTreeAll() {
-            $roots = $this->findRootCategories();
-            foreach ($roots as &$r) {
-                $r['categories'] = $this->toSubTreeAll($r['pk_i_id']);
-            }
-            unset($r);
-            return $roots;
-        }
 
         public function toRootTree($cat = null) {
             $tree = null;
@@ -234,8 +252,10 @@
         //overwritten
         public function listAll() {
             return $this->listWhere('1 = 1');
-            //OLD
-            //return $this->conn->osc_dbFetchResults("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.fk_c_locale_code = '%s' ORDER BY a.i_position DESC", $this->getTableName(), $this->getTableDescriptionName(), $this->language);
+        }
+
+        public function listEnabled() {
+            return $this->listWhere('a.b_enabled = 1');
         }
 
         public function findByPrimaryKey($pk, $lang = true) {
@@ -252,21 +272,6 @@
             } else {
                 return null;
             }
-            // OLD
-            /*if( $lang ) {
-                return $this->conn->osc_dbFetchResult("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s' ORDER BY i_position DESC", $this->getTableName(), $this->getTableDescriptionName(), $pk, $this->language);
-            }
-
-            $data = $this->conn->osc_dbFetchResult('SELECT * FROM %s WHERE pk_i_id = %s ORDER BY pk_i_id', $this->getTableName(), $pk);
-
-            $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
-            $row = array();
-            foreach ($sub_rows as $sub_row) {
-                $row[$sub_row['fk_c_locale_code']] = $sub_row;
-            }
-            $data['locale'] = $row;
-
-            return $data;*/
         }
 
         public function listWhere() {
