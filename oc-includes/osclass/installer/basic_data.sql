@@ -32,6 +32,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'notify_new_comment', '1', 'BOOLEAN')
     ,('osclass', 'enabled_recaptcha_items', '0', 'BOOLEAN')
     ,('osclass', 'logged_user_item_validation', '1', 'BOOLEAN')
+    ,('osclass', 'items_wait_time', '90', 'INTEGER')
     ,('osclass', 'enabled_user_validation', '1', 'BOOLEAN')
     ,('osclass', 'enabled_user_registration', '1', 'BOOLEAN')
     ,('osclass', 'enabled_users','1', 'BOOLEAN')

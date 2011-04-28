@@ -73,10 +73,8 @@
         return (getBoolPreference('enabled_recaptcha_items')) ;
     }
 
-    //osc_enabled_item_validation
-    // DEPRECATED
-    function osc_item_validation_enabled() {
-        return false;//(getBoolPreference('enabled_item_validation')) ;
+    function osc_items_wait_time() {
+        return (getPreference('items_wait_time'));
     }
     
     function osc_moderate_items() {

@@ -39,9 +39,10 @@
                                         $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
                                         //$enabledItemValidation      = Params::getParam('enabled_item_validation');
                                         //$enabledItemValidation      = (($enabledItemValidation != '') ? true : false);
-                                        $moderateItems = Params::getParam('moderate_items');
-                                        $moderateItems = (($moderateItems != '') ? true : false);
-                                        $numModerateItems = Params::getParam('num_moderate_items');
+                                        $moderateItems              = Params::getParam('moderate_items');
+                                        $moderateItems              = (($moderateItems != '') ? true : false);
+                                        $numModerateItems           = Params::getParam('num_moderate_items');
+                                        $itemsWaitTime              = Params::getParam('items_wait_time');
                                         $loggedUserItemValidation   = Params::getParam('logged_user_item_validation');
                                         $loggedUserItemValidation   = (($loggedUserItemValidation != '') ? true : false);
                                         $regUserPost                = Params::getParam('reg_user_post');
@@ -82,6 +83,8 @@
                                                                                       ,array('s_name'  => 'enableField#f_price@items'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldImagesItems)
                                                                                       ,array('s_name'  => 'enableField#images@items'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $itemsWaitTime)
+                                                                                      ,array('s_name'  => 'items_wait_time'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Items\' settings have been updated'), 'admin');
