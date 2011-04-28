@@ -252,7 +252,9 @@
                 foreach($branches as $branch) {
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
                         $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
-                        $list = $this->pruneBranches($branch['categories']);
+                        if(isset($branch['categories'])) {
+                            $list = $this->pruneBranches($branch['categories']);
+                        }
                     }
                 }
             }

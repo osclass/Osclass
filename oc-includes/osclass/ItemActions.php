@@ -183,11 +183,19 @@
 
                 osc_run_hook('after_item_post') ;
 
-                if($active='INACTIVE') {
-                    Session::newInstance()->_set('last_publish_time', time());
+                Session::newInstance()->_set('last_publish_time', time());
+                if($active=='INACTIVE') {
                     $this->sendEmails($aItem);
                     osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
                 } else {
+                    if($aItem['userId']!=null) {    
+                        $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
+                        if($user) {
+                            User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                ) ;
+                        }
+                    }
                     CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
                     osc_add_flash_message( _m('Your post has been published')) ;
                 }
@@ -569,7 +577,8 @@
             if($userId==null) {
                 $num_comments = 0;
             } else {
-                $num_comments = count(ItemComment::newInstance()->findByAuthorID($userId));
+                $user = User::newInstenace()->findByPrimaryKey($userId);
+                $num_comments = $user['i_comments'];//count(ItemComment::newInstance()->findByAuthorID($userId));
             }
 
             if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {
@@ -605,6 +614,14 @@
                               ,'fk_i_user_id'   => $userId);
 
             if( $mComments->insert($aComment) ){
+                if($status_num==2 && $userId!=null) { // COMMENT IS ACTIVE
+                    $user = User::newInstance()->findByPrimaryKey($userId);
+                    if($user) {
+                        User::newInstance()->update(array( 'i_comments' => $user['i_comments']+1)
+                                            ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                            ) ;
+                    }
+                }
                 $notify = osc_notify_new_comment() ;
                 $admin_email = osc_contact_email() ;
                 $prefLocale = osc_language() ;
@@ -807,11 +824,7 @@
                 $aItem['active'] = $active;
 
                 if ($userId != null) {
-                    if( $this->is_admin ) {
-                        $data = User::newInstance()->findByPrimaryKey($userId);
-                    } else {
-                        $data = User::newInstance()->findByPrimaryKey($userId);
-                    }
+                    $data = User::newInstance()->findByPrimaryKey($userId);
                     $aItem['contactName']   = $data['s_name'];
                     $aItem['contactEmail']  = $data['s_email'];
                     Params::setParam('contactName', $data['s_name']);
