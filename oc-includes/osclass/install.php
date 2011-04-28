@@ -19,7 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
@@ -60,13 +59,13 @@ switch ($step) {
         $error = check_requirements($requirements) ;
         break;
     case 2:
-        if( Params::getParam('save_stats') == '1' ) {
-            setcookie('osclass_save_stats', 1, time()+24*60*60) ;
+        if( Params::getParam('save_stats') == '1'  || isset($_COOKIE['osclass_save_stats'])) {
+            setcookie('osclass_save_stats', 1, time() + (24*60*60) );
         } else {
-            setcookie('osclass_save_stats', 0, time()+24*60*60) ;
+            setcookie('osclass_save_stats', 0, time() + (24*60*60) );
         }
 
-        if( Params::getParam('ping_engines') == '1' ) {
+        if( Params::getParam('ping_engines') == '1' || isset($_COOKIE['osclass_ping_engines']) ) {
             setcookie('osclass_ping_engines', 1, time()+24*60*60) ;
         } else {
             setcookie('osclass_ping_engines', 0, time()+24*60*60) ;
@@ -192,6 +191,8 @@ switch ($step) {
                     } elseif($step == 5) {
                         // ping engines
                         ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
+                        setcookie('osclass_save_stats', '', time() - 3600);
+                        setcookie('osclass_ping_engines', '', time() - 3600);
                         display_finish();
                     }
                 ?>
