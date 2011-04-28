@@ -126,6 +126,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     d_coord_long DECIMAL(10, 6),
     i_permissions VARCHAR(2) DEFAULT 0,
     b_company BOOLEAN NOT NULL DEFAULT FALSE,
+    i_items INT UNSIGNED NULL DEFAULT 0,
+    i_comments INT UNSIGNED NULL DEFAULT 0,
 
 
         PRIMARY KEY (pk_i_id),

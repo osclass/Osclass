@@ -47,17 +47,29 @@
             $purifier = new HTMLPurifier($config);
 
             // Requires email validation?
-            $has_to_validate = (osc_item_validation_enabled())? true : false ;
+            $has_to_validate = (osc_moderate_items()!=-1)? true : false ;
 
             // Check status
-            $active = $aItem['active'];
-            /*if($this->is_admin || !$has_to_validate || osc_is_web_user_logged_in()) {
-                $active = 'ACTIVE';
-            }*/
+            $active = $aItem['active']; //???
             if($this->is_admin) {
                 $active = 'ACTIVE';
             } else {
-                if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
+                if(osc_moderate_items()>0) { // HAS TO VALIDATE
+                    if(!osc_is_web_user_logged_in()) { // NO USER IS LOGGED, VALIDATE
+                        $active = 'INACTIVE';
+                    } else { // USER IS LOGGED
+                        if(osc_logged_user_item_validation()) { //USER IS LOGGED, BUT NO NEED TO VALIDATE
+                            $active = 'ACTIVE';
+                        } else { // USER IS LOGGED, NEED TO VALIDATE, CHECK NUMBER OF PREVIOUS ITEMS
+                            $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
+                            if($user['i_items']<osc_moderate_items()) {
+                                $active = 'INACTIVE';
+                            } else {
+                                $active = 'ACTIVE';
+                            }
+                        }
+                    }
+                } else if(osc_moderate_items()==0){
                     $active = 'INACTIVE';
                 } else {
                     $active = 'ACTIVE';
@@ -171,18 +183,13 @@
 
                 osc_run_hook('after_item_post') ;
 
-                if($this->is_admin) {
-                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                    osc_add_flash_message( _m('The post has been published')) ;
+                if($active='INACTIVE') {
+                    Session::newInstance()->_set('last_publish_time', time());
+                    $this->sendEmails($aItem);
+                    osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
                 } else {
-                    if ( osc_item_validation_enabled() && (!osc_logged_user_item_validation() || !osc_is_web_user_logged_in()) ) {
-                        Session::newInstance()->_set('last_publish_time', time());
-                        $this->sendEmails($aItem);
-                        osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
-                    } else {
-                        CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                        osc_add_flash_message( _m('Your post has been published')) ;
-                    }
+                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
+                    osc_add_flash_message( _m('Your post has been published')) ;
                 }
             }
             return $success;
@@ -299,10 +306,17 @@
                 array('e_status' => 'ACTIVE'),
                 array('s_secret' => $secret, 'pk_i_id' => $id)
             );
+            if($item[0]['fk_i_user_id']!=null) {
+                $user = User::newInstance()->findByPrimaryKey($item[0]['fk_i_user_id']);
+                if($user) {
+                    User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                        ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                        ) ;
+                }
+            }
 
             osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
             CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
-
             return $result;
         }
 

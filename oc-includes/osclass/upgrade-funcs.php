@@ -25,10 +25,39 @@
     $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
-    osc_changeVersionTo(202) ;
-
     $conn = getConnection();
-    $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ,('osclass', 'save_latest_searches', '1', 'BOOLEAN'),('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
+
+    if($version<202) {
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '1', 'BOOLEAN'),('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
+        osc_changeVersionTo(202) ;
+    }
+    
+
+    // UNCOMMENT THEESE LINES IF YOU'RE A DEVELOPER
+    //if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+    //    $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
+    //    $conn = getConnection();
+    //    $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+    //}
+    //print_r($error_queries[0]);
+
+    if($version<203) {
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER')", DB_TABLE_PREFIX));
+        $users = User::newInstance()->listAll();
+        foreach($users as $user) {
+            $comments = count(ItemComment::newInstance()->findByAuthorID($user['pk_i_id']));
+            $items = count(Item::newInstance()->findByUserIDEnabled($user['pk_i_id']));
+            User::newInstance()->update(array( 'i_items' => $items, 'i_comments' => $comments )
+                                        ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                        ) ;
+        }
+        osc_changeVersionTo(203) ;
+    }
+
+
+    // UNCOMMENT THEESE LINES IF YOU'RE A DEVELOPER
+    //osc_changeVersionTo(202) ;
+
     
     if(Params::getParam('action') == '') {
         require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
