@@ -182,10 +182,26 @@
                                                 case 'ACTIVE':
                                                     osc_add_flash_message( _m('The item has been activated'), 'admin');
                                                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                                                    if($item['fk_i_user_id']!=null) {
+                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                        if($user) {
+                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                ) ;
+                                                        }
+                                                    }
                                                     break;
                                                 case 'INACTIVE':
                                                     osc_add_flash_message( _m('The item has been deactivated'), 'admin');
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                                                    if($item['fk_i_user_id']!=null) {
+                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                        if($user) {
+                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']-1)
+                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                ) ;
+                                                        }
+                                                    }
                                                     break;
                                             }
 

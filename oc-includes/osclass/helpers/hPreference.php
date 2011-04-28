@@ -74,8 +74,13 @@
     }
 
     //osc_enabled_item_validation
+    // DEPRECATED
     function osc_item_validation_enabled() {
-        return (getBoolPreference('enabled_item_validation')) ;
+        return false;//(getBoolPreference('enabled_item_validation')) ;
+    }
+    
+    function osc_moderate_items() {
+        return (getPreference('moderate_items')) ;
     }
     
     function osc_reg_user_post() {

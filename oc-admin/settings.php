@@ -37,8 +37,11 @@
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
                                         $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
-                                        $enabledItemValidation      = Params::getParam('enabled_item_validation');
-                                        $enabledItemValidation      = (($enabledItemValidation != '') ? true : false);
+                                        //$enabledItemValidation      = Params::getParam('enabled_item_validation');
+                                        //$enabledItemValidation      = (($enabledItemValidation != '') ? true : false);
+                                        $moderateItems = Params::getParam('moderate_items');
+                                        $moderateItems = (($moderateItems != '') ? true : false);
+                                        $numModerateItems = Params::getParam('num_moderate_items');
                                         $loggedUserItemValidation   = Params::getParam('logged_user_item_validation');
                                         $loggedUserItemValidation   = (($loggedUserItemValidation != '') ? true : false);
                                         $regUserPost                = Params::getParam('reg_user_post');
@@ -56,8 +59,15 @@
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
-                                                                                      ,array('s_name'  => 'enabled_item_validation'));
+                                        //$iUpdated += Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
+                                        //                                              ,array('s_name'  => 'enabled_item_validation'));
+                                        if($moderateItems) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateItems)
+                                                                                          ,array('s_name' => 'moderate_items'));
+                                        } else {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value' => '-1')
+                                                                                          ,array('s_name' => 'moderate_items'));
+                                        }
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $loggedUserItemValidation)
                                                                                       ,array('s_name'  => 'logged_user_item_validation'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPost)

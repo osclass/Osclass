@@ -78,11 +78,12 @@
                     $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
                 }
                 unset($branch) ;
+                print_r($branches);
                 return $branches ;
             }
-        }
+        }*/
 
-        public function toSubTreeAll($category = null) {
+        /*public function toSubTreeAll($category = null) {
             if($category==null) {
                 return null ;
             } else {
@@ -112,6 +113,20 @@
             unset($r);
             return $roots;
         }*/
+        
+        public function toSubTree($category = null) {
+            $this->toTree();
+            if($category==null) {
+                return array();
+            } else {
+                if(isset($this->relation[$category])) {
+                    $tree = $this->sideTree($this->relation[$category], $this->categories, $this->relation);
+                    return $tree;
+                } else {
+                    array();
+                }
+            };
+        }
 
         public function toTreeAll() {
             $categories = $this->listAll();
@@ -157,6 +172,8 @@
                 $aux = $categories[$b];
                 if(isset($relation[$b]) && is_array($relation[$b])) {
                     $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
+                } else {
+                    $aux['categories'] = array();
                 }
                 $tree[] = $aux;
             }
