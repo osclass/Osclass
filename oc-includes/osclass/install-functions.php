@@ -154,8 +154,8 @@ function set_allow_report_osclass($bool)
  * @return mixed Error messages of the installation
  */
 function oc_install( ) {
-    $dbhost = trim($_POST['dbhost']);
-    $dbname = trim($_POST['dbname']);
+    $dbhost   = trim($_POST['dbhost']);
+    $dbname   = trim($_POST['dbname']);
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     if ( empty($_POST['tableprefix']) ) { $tableprefix = 'oc_'; } else { $tableprefix = trim($_POST['tableprefix']); }
@@ -165,8 +165,21 @@ function oc_install( ) {
         $adminuser = trim($_POST['admin_username']);
         $adminpwd = trim($_POST['admin_password']);
 
-    	
         $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
+
+        if($error_num > 0) {
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('Cannot connect to database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
+            }
+
+            if ( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
+            if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
+            if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
+            if ( $error_num == 2005 ) return array('error' => 'Cannot resolve MySQL host. Check if the host is correct.');
+
+            return array('error' => 'Cannot connect to database. Error number: ' . $error_num . '.');
+        }
+
         $master_conn->osc_dbExec(sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname)) ;
         $error_num = $master_conn->get_errno();
 
@@ -186,7 +199,6 @@ function oc_install( ) {
     $error_num = $conn->get_errno();
 
     if($error_num > 0) {
-
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot connect to database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
         }
@@ -194,13 +206,13 @@ function oc_install( ) {
         if ( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
         if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
         if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
+        if ( $error_num == 2005 ) return array('error' => 'Cannot resolve MySQL host. Check if the host is correct.');
 
         return array('error' => 'Cannot connect to database. Error number: ' . $error_num . '.');
     }
     
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
-
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('Cannot write in config.php file. Check if the file is writable.' , __FILE__."::".__LINE__) ;
             }
@@ -209,7 +221,6 @@ function oc_install( ) {
         create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
-            
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('It doesn\'t exist config-sample.php. Check if you have everything well decompressed.' , __FILE__."::".__LINE__) ;
             }
@@ -217,7 +228,6 @@ function oc_install( ) {
             return array('error' => 'It doesn\'t exist config-sample.php. Check if you have everything well decompressed.');
         }
         if( !is_writable(ABS_PATH) ) {
-
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('Can\'t copy config-sample.php. Check if the root directory is writable.' , __FILE__."::".__LINE__) ;
             }
@@ -232,8 +242,8 @@ function oc_install( ) {
     $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
     $conn->osc_dbImportSQL($sql);
     $error_num = $conn->get_errno();
-    if($error_num > 0) {
 
+    if($error_num > 0) {
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot create the database structure. Error number: ' . $error_num  , __FILE__."::".__LINE__) ;
         }
@@ -273,7 +283,6 @@ function oc_install( ) {
     $sql = '';
     foreach($required_files as $file) {
         if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) {
-
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('the file ' . $file . ' doesn\'t exist in data folder' , __FILE__."::".__LINE__) ;
             }
@@ -287,7 +296,6 @@ function oc_install( ) {
     $conn->osc_dbImportSQL($sql, '');
     $error_num = $conn->get_errno();
     if($error_num > 0) {
-
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot insert basic configuration. Error number: ' . $error_num  , __FILE__."::".__LINE__) ;
         }
