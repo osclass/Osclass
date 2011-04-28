@@ -41,16 +41,25 @@
             } else {
                 echo '<option value="">' . __('Select a category') . '</option>' ;
             }
+
             foreach($categories as $c) {
-                $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>' ;
-                if(isset($c['categories']) && is_array($c['categories'])) {
-                    ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
+                if(!osc_selectable_parent_categories()){
+                    echo '<optgroup label="' . $c['s_name'] . '">' ;
+                    if(isset($c['categories']) && is_array($c['categories'])) {
+                        ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
+                    }
+                } else {
+                    $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
+                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>' ;
+                    if(isset($c['categories']) && is_array($c['categories'])) {
+                        ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
+                    }
                 }
             }
             echo '</select>' ;
             return true ;
         }
+    
 
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
@@ -58,16 +67,17 @@
             $catId = Params::getParam('catId');
 
             // How many indents to add?
-            $deep_string = 0;
-            if( $deep > 0 ) {
-                $deep_string = (string) (15 * $deep);
+            $deep_string = "";
+            for($var = 0;$var<$deep;$var++) {
+                $deep_string .= '&nbsp;&nbsp;';
             }
+            $deep++;
 
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option style="padding-left: ' . $deep_string . 'px;" value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $c['s_name'] . '</option>' ;
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
-                    ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
+                    ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
             }
         }
@@ -547,6 +557,7 @@
 
         var a = ce('a');
         a.style.fontSize = 'x-small';
+        a.style.paddingLeft = '10px';
         a.setAttribute('href', '#');
         a.setAttribute('divid', id);
         a.onclick = function() { re(this.getAttribute('divid')); return false; }
@@ -560,6 +571,8 @@
         d.appendChild(a);
 
         gebi('photos').appendChild(d);
+        
+        $("#"+id+" input:file").uniform();
     }
     // Listener: automatically add new file field when the visible ones are full.
     setInterval("add_file_field()", 250);

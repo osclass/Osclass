@@ -198,6 +198,7 @@ function _curlopt_name($curlopt) {
 
 // Initialize a CURL emulation session
 function curl_init($url=false) {
+    if(!isset($GLOBALS["_CURLEXT_OPT"])) $GLOBALS["_CURLEXT_OPT"]["index"] = 0;
 	$i = $GLOBALS["_CURLEXT_OPT"]["index"]++;
 	$GLOBALS["_CURLEXT_OPT"][$i] = array("url"=>$url);
 	
@@ -208,9 +209,9 @@ function curl_init($url=false) {
 function curl_setopt($ch,$option,$value) {
 	
 	$opt = &$GLOBALS["_CURLEXT_OPT"][$ch];
-	if (!$opt["args"]) $opt["args"] = array();
+	if (!isset($opt["args"])) $opt["args"] = array();
 	$args = &$opt["args"];
-	if (!$opt["settings"]) $opt["settings"] = array();
+	if (!isset($opt["settings"])) $opt["settings"] = array();
 	$settings = &$opt["settings"];
 	
 	switch($option) {
@@ -434,7 +435,7 @@ function curl_setopt($ch,$option,$value) {
 function curl_exec($ch) {
 	$opt = &$GLOBALS["_CURLEXT_OPT"][$ch];
 	$url = $opt["url"];
-	$verbose = $opt["verbose"];
+	$verbose = (isset($opt["verbose"]) && $opt["verbose"]) ? true : false;
 	
 	// ask commandline CURL to return its statistics at the end of its output
 	$opt["settings"]["write-out"] = "%{http_code}|%{time_total}|%{time_namelookup}|%{time_connect}|%{time_pretransfer}|%{time_starttransfer}|%{size_download}|%{size_upload}|%{size_header}|%{size_request}|%{speed_download}|%{speed_upload}|||||||%{content_type}|%{url_effective}";
@@ -467,13 +468,15 @@ function curl_exec($ch) {
 	// if the CURLOPT_NOBODY option was specified (to remove the body from the output),
 	// but an output file handle was set, we need to tell CURL to return the body so
 	// that we can write it to the output handle and strip it from the output
-	if ($opt["settings"]["head"] && $opt["output_handle"]) {
+    $strip_body = false;
+	if (isset($opt["settings"]["head"]) && $opt["settings"]["head"] && $opt["output_handle"]) {
 		unset($opt["settings"]["head"]);
 		$strip_body = true;
 	}
 	// if the CURLOPT_HEADER option was NOT specified, but a header file handle was
 	// specified, we again need to tell CURL to return the headers so we can write
 	// them, then strip them from the output
+    $strip_headers = false;
 	if (!isset($opt["settings"]["include"]) && isset($opt["header_handle"])) {
 		$opt["settings"]["include"] = true;
 		$strip_headers = true;
@@ -512,7 +515,7 @@ function curl_exec($ch) {
 	if ($ret) $opt["error"] = "CURL error #$ret";
 	
 	// die if CURLOPT_FAILONERROR is set and the HTTP result code is greater than 300
-	if ($opt["fail_on_error"]) {
+	if (isset($opt["fail_on_error"]) && isset($opt["fail_on_error"])) {
 		if (preg_match("/^HTTP\/1.[0-9]+ ([0-9]{3}) /",$output[0],$matches)) {
 			$resultcode = (int) $matches[1];
 			if ($resultcode>300) die;
@@ -520,7 +523,15 @@ function curl_exec($ch) {
 			die; // couldn't get result code!
 		}
 	}
-	
+
+    if(count($output) == 1) {
+        $tmpOutput = $output[0];
+        $output    = '';
+        $output[]  = preg_replace('@\]200\|.*@', ']', $tmpOutput);
+        $output[]  = preg_replace('@.*?\]200\|@', '200|', $tmpOutput);
+        unset($tmpOutput);
+    }
+
 	// pull the statistics out from the output
 	$stats = explode('|',array_pop($output));
 	foreach ($writeout_order as $k=>$item) {
@@ -581,7 +592,7 @@ function curl_close($ch) {
 		$settings = &$opt["settings"];
 		// if the user used CURLOPT_INFILE to specify a file to upload, remove the
 		// temporary file created for the CURL binary
-		if ($settings["upload-file"]["value"] && file_exists($settings["upload-file"]["value"])) unlink($settings["upload-file"]["value"]);
+		if (isset($settings["upload-file"]["value"]) && $settings["upload-file"]["value"] && file_exists($settings["upload-file"]["value"])) unlink($settings["upload-file"]["value"]);
 	}
 
 	unset($GLOBALS["_CURLEXT_OPT"][$ch]);

@@ -4,7 +4,7 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 201, 'INTEGER')
+    ('osclass', 'version', 202, 'INTEGER')
     ,('osclass', 'theme', 'modern', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
@@ -19,6 +19,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'timeFormat', 'g:i a', 'STRING')
     ,('osclass', 'weekStart', '0', 'STRING')
     ,('osclass', 'moderate_comments', '0', 'INTEGER')
+    ,('osclass', 'moderate_items', '0', 'INTEGER')
     ,('osclass', 'reg_user_post', '1', 'BOOLEAN')
     ,('osclass', 'num_rss_items', '50', 'INTEGER')
     ,('osclass', 'active_plugins', '', 'STRING')
@@ -30,8 +31,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'notify_contact_friends', '1', 'BOOLEAN')
     ,('osclass', 'notify_new_comment', '1', 'BOOLEAN')
     ,('osclass', 'enabled_recaptcha_items', '0', 'BOOLEAN')
-    ,('osclass', 'enabled_item_validation', '1', 'BOOLEAN')
     ,('osclass', 'logged_user_item_validation', '1', 'BOOLEAN')
+    ,('osclass', 'items_wait_time', '90', 'INTEGER')
     ,('osclass', 'enabled_user_validation', '1', 'BOOLEAN')
     ,('osclass', 'enabled_user_registration', '1', 'BOOLEAN')
     ,('osclass', 'enabled_users','1', 'BOOLEAN')
@@ -60,7 +61,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'recaptchaPrivKey', '', 'STRING')
     ,('osclass', 'recaptchaPubKey', '', 'STRING')
     ,('osclass', 'save_latest_searches', '1', 'BOOLEAN')
-    ,('osclass', 'purge_latest_searches', '1000', 'STRING');
+    ,('osclass', 'purge_latest_searches', '1000', 'STRING')
+    ,('osclass', 'selectable_parent_categories', '0', 'BOOLEAN');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
     ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

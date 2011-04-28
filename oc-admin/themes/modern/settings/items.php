@@ -24,11 +24,14 @@
     </head>
     <script type="text/javascript">
         function checkbox_change() {
-            var on = $("#enabled_item_validation").is(':checked');
+            var on = $("#moderate_items").is(':checked');
             if(on==1) {
                 $("#logged_user_item_validation").attr('disabled', false);
+                $("#num_moderate_items_div").show();
+                $("#num_moderate_items").val(0);
             } else {
                 $("#logged_user_item_validation").attr('disabled', true);
+                $("#num_moderate_items_div").hide();
             }
         };
     </script>
@@ -63,14 +66,21 @@
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_recaptcha_items_enabled() ? 'checked="true"' : ''); ?> name="enabled_recaptcha_items" id="enabled_recaptcha_items" value="1" />
                                     <label for="enabled_recaptcha_items"><?php _e('Enable reCAPTCHA'); ?></label>
                                     <br/>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_item_validation_enabled() ? 'checked="true"' : ''); ?> name="enabled_item_validation" onclick="checkbox_change();" id="enabled_item_validation" value="1" />
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo ((osc_moderate_items()==-1) ? '' : 'checked="true"'); ?> name="moderate_items" onclick="checkbox_change();" id="moderate_items" value="1" />
                                     <label for="enabled_item_validation"><?php _e('Enable item validation by users'); ?></label>
-                                    <br/>
-                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_logged_user_item_validation() ? 'checked="true"' : ''); ?> name="logged_user_item_validation" id="logged_user_item_validation" value="1" <?php echo (osc_item_validation_enabled() ? '' : 'disabled'); ?>/>
+                                    <br />
+                                    <div name="num_moderate_items_div" id="num_moderate_items_div" <?php echo ((osc_moderate_items()==-1) ? 'style="display:none"' : ''); ?>>
+                                        &nbsp;<label><?php _e('Number of items from same author that should be validated before skipping validation (0 for always moderation)'); ?></label>
+                                        <input type="text" name="num_moderate_items" id="num_moderate_items" value="<?php echo ((osc_moderate_items()==-1) ? '' : osc_moderate_items()); ?>" />
+                                    </div>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_logged_user_item_validation() ? 'checked="true"' : ''); ?> name="logged_user_item_validation" id="logged_user_item_validation" value="1" <?php echo ((osc_moderate_items()!=-1 )? '' : 'disabled'); ?>/>
                                     <label for="logged_user_item_validation"><?php _e('Logged users don\'t need to validate items'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_reg_user_post() ? 'checked="true"' : ''); ?> name="reg_user_post" id="reg_user_post" value="1" />
                                     <label for="reg_user_post"><?php _e('Only allow registered users to post items'); ?></label>
+                                    <br/>
+                                    <label><?php _e('Number of seconds an user should wait before publishing another item (0 for no wait)'); ?></label>
+                                    <input type="text" name="items_wait_time" id="items_wait_time" value="<?php echo osc_items_wait_time(); ?>" />
                                 </fieldset>
                             </div>
 

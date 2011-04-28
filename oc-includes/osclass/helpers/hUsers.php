@@ -161,6 +161,14 @@
         return osc_user_field("d_coord_long");
     }
     
+    function osc_user_items_validated() {
+        return osc_user_field("i_items");
+    }
+    
+    function osc_user_comments_validated() {
+        return osc_user_field("i_comments");
+    }
+    
     /////////////
     // ALERTS  //
     /////////////

@@ -37,6 +37,7 @@ function osc_deleteResource( $id ) {
         array_map( "unlink" , glob($resource_original));
     }
 }
+
 /**
  * Tries to delete the directory recursivaly.
  * @return true on success.
@@ -89,6 +90,20 @@ function osc_packageExtract($zipPath, $path) {
     } else {
         return false;
     }
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_path($file) {
+    // Sanitize windows paths and duplicated slashes
+    $file = preg_replace('|/+|','/', str_replace('\\','/',$file));
+    $plugin_path = preg_replace('|/+|','/', str_replace('\\','/', PLUGINS_PATH));
+    $file = $plugin_path . preg_replace('#^oc-content\/plugins\s/#','',$file);
+    return $file;
 }
 
 /**
@@ -515,6 +530,8 @@ function osc_dump_table_data($path, $table)
 
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
     require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
 
@@ -530,65 +547,33 @@ function osc_downloadFile($sourceFile, $downloadedFile) {
 	    curl_exec($ch);
 	    curl_close($ch);
 	    fclose($fp);
+        error_reporting($iErrorReporting);
 	    return true;
     } else {
+        error_reporting($iErrorReporting);
         return false;
     }
 }
 
 
 function osc_file_get_contents($url){
-    /*
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+    
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;*/
 
-    return file_get_contents($url) ;
+    error_reporting($iErrorReporting);
+
+    return $data;
 }
-
-
-
-// If JSON ext is not present
-if ( !function_exists('json_encode') ) {
-    function json_encode( $string ) {
-        global $osc_json;
-
-        if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once LIB_PATH . 'json/JSON.php';
-            $osc_json = new Services_JSON();
-        }
-
-        return $osc_json->encode( $string );
-    }
-}
-
-if ( !function_exists('json_decode') ) {
-    function json_decode( $string, $assoc_array = false ) {
-        global $osc_json;
-
-        if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once LIB_PATH . '/json/JSON.php';
-            $osc_json = new Services_JSON();
-        }
-
-        $res = $osc_json->decode( $string );
-        if ( $assoc_array ) $res = _json_decode_object_helper( $res );
-
-        return $res;
-    }
-
-    function _json_decode_object_helper($data) {
-        if ( is_object($data) )
-            $data = get_object_vars($data);
-
-        return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
-    }
-}
-
 
 /**
  * Check if we loaded some specific module of apache
@@ -916,7 +901,9 @@ function osc_change_permissions( $dir = ABS_PATH ) {
         while (($file = readdir($dh)) !== false) {
             if($file!="." && $file!="..") {
                 if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
-                    $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
+                        $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    }
                     if(!$res) { return false; };
                     if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
                         if($file=="modern" || $file=="index.php") {
@@ -940,7 +927,11 @@ function osc_change_permissions( $dir = ABS_PATH ) {
                         if(!$res) { return false; };
                     }
                 } else {
-                    return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
+                        return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    } else {
+                        return true;
+                    }
                 }
             }
         }

@@ -26,8 +26,8 @@
             parent::generic_input_hidden("id", $category["pk_i_id"]) ;
         }
 
-        static public function category_select($categories, $category, $default_item = null) {
-            echo '<select name="fk_i_parent_id" id="parentId">' ;
+        static public function category_select($categories, $category, $default_item = null, $name = "sCategory") {
+            echo '<select name="' . $name . '" id="' . $name . '">' ;
                 if(isset($default_item)) {
                     echo '<option value="">' . $default_item . '</option>' ;
                 }
@@ -50,53 +50,11 @@
                 foreach($categories as $c) {
                     echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $deep_string.$c['s_name'] . '</option>' ;
                     if(isset($c['categories']) && is_array($c['categories'])) {
-                        CategoryForm::subcategory_select($c['categories'], $category, $default_item, $deep+1);
+                        CategoryForm::subcategory_select($c['categories'], $category, $default_item, $deep);
                     }
                 }
         }
 
-        static public function parent_category_select($categories, $category, $default_item = null) {
-            echo '<select name="fk_i_parent_id" id="parentId">' ;
-                if(isset($default_item)) {
-                    echo '<option value="">' . $default_item . '</option>' ;
-                }
-                foreach($categories as $c) {
-                    if($category['fk_i_parent_id']==$c['pk_i_id']) {
-                        $extra = ' selected="selected" ';
-                    } else if($category['pk_i_id']==$c['pk_i_id']) {
-                        $extra = ' disabled="disabled" ';
-                    } else {
-                        $extra = '';
-                    }
-                    echo '<option value="' . $c['pk_i_id'] . '"' . $extra . '>' . $c['s_name'] . '</option>' ;
-                    if(isset($c['categories']) && is_array($c['categories'])) {
-                        CategoryForm::parent_subcategory_select($c['categories'], $category, $default_item, 1);
-                    }
-                }
-            echo '</select>' ;
-            return true ;
-        }
-
-        static public function parent_subcategory_select($categories, $category, $default_item = null, $deep = 0) {
-                $deep_string = "";
-                for($var = 0;$var<$deep;$var++) {
-                    $deep_string .= '&nbsp;&nbsp;';
-                }
-                $deep++;
-                foreach($categories as $c) {
-                    if($category['fk_i_parent_id']==$c['pk_i_id']) {
-                        $extra = ' selected="selected" ';
-                    } else if($category['pk_i_id']==$c['pk_i_id']) {
-                        $extra = ' disabled="disabled" ';
-                    } else {
-                        $extra = '';
-                    }
-                    echo '<option value="' . $c['pk_i_id'] . '"' . $extra . '>' . $deep_string.$c['s_name'] . '</option>' ;
-                    if(isset($c['categories']) && is_array($c['categories'])) {
-                        CategoryForm::subcategory_select($c['categories'], $category, $default_item, $deep+1);
-                    }
-                }
-        }
 
         static public function plugin_categories($categories = null, $selected = null, $depth = 0) {
 

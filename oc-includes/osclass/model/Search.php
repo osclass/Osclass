@@ -252,7 +252,9 @@
                 foreach($branches as $branch) {
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
                         $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
-                        $list = $this->pruneBranches($branch['categories']);
+                        if(isset($branch['categories'])) {
+                            $list = $this->pruneBranches($branch['categories']);
+                        }
                     }
                 }
             }
@@ -310,8 +312,9 @@
             return $this->sql;
         }
 
-        public function makeSQLLocation($location = 's_city') {
 
+        public function makeSQLLocation($location = 's_city') {
+            
             $this->addTable(sprintf("%st_item_location", DB_TABLE_PREFIX));
             $condition_sql = implode(' AND ', $this->conditions);
             if($condition_sql!='') {
@@ -337,7 +340,7 @@
             }
         }
 
-        public function search($extended = true) {
+        public function doSearch($extended = true) {
             $items = $this->conn->osc_dbFetchResults($this->makeSQL(false));
             if($extended) {
                 return Item::newInstance()->extendData($items);

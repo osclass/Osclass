@@ -24,6 +24,9 @@
     {
         private static $instance ;
         private $language ;
+        private $tree;
+        private $categories;
+        private $relation;
 
         public function __construct($l = "") {
             if($l == "") {
@@ -31,6 +34,9 @@
             }
 
             $this->language = $l ;
+            $this->tree = null;
+            $this->relation = null;
+            $this->categories = null;
             parent::__construct() ;
         }
 
@@ -63,7 +69,7 @@
             return $roots ;
         }
 
-        public function toSubTree($category = null) {
+        /*public function toSubTree($category = null) {
             if($category==null) {
                 return null ;
             } else {
@@ -72,11 +78,12 @@
                     $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
                 }
                 unset($branch) ;
+                print_r($branches);
                 return $branches ;
             }
-        }
+        }*/
 
-        public function toSubTreeAll($category = null) {
+        /*public function toSubTreeAll($category = null) {
             if($category==null) {
                 return null ;
             } else {
@@ -105,7 +112,74 @@
             }
             unset($r);
             return $roots;
+        }*/
+        
+        public function toSubTree($category = null) {
+            $this->toTree();
+            if($category==null) {
+                return array();
+            } else {
+                if(isset($this->relation[$category])) {
+                    $tree = $this->sideTree($this->relation[$category], $this->categories, $this->relation);
+                    return $tree;
+                } else {
+                    array();
+                }
+            };
         }
+
+        public function toTreeAll() {
+            $categories = $this->listAll();
+            $all_categories = array();
+            $all_relation = array();
+            $tree = array();
+            foreach($categories as $c) {
+                $all_categories[$c['pk_i_id']] = $c;
+                if($c['fk_i_parent_id']==null) {
+                    $tree[] = $c;
+                    $all_relation[0][] = $c['pk_i_id'];
+                } else {
+                    $all_relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                }
+            }
+            $tree = $this->sideTree($all_relation[0], $all_categories, $all_relation);
+            return $tree;
+        }
+
+        public function toTree() {
+            if($this->tree!=null) {
+                return $this->tree;
+            }
+            $categories = $this->listEnabled();
+            $this->categories = array();
+            $this->relation = array();
+            foreach($categories as $c) {
+                $this->categories[$c['pk_i_id']] = $c;
+                if($c['fk_i_parent_id']==null) {
+                    $this->tree[] = $c;
+                    $this->relation[0][] = $c['pk_i_id'];
+                } else {
+                    $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                }
+            }
+            $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
+            return $this->tree;
+        }
+
+        private function sideTree($branch, $categories, $relation) {
+            $tree = array();
+            foreach($branch as $b) {
+                $aux = $categories[$b];
+                if(isset($relation[$b]) && is_array($relation[$b])) {
+                    $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
+                } else {
+                    $aux['categories'] = array();
+                }
+                $tree[] = $aux;
+            }
+            return $tree;
+        }
+
 
         public function toRootTree($cat = null) {
             $tree = null;
@@ -195,8 +269,10 @@
         //overwritten
         public function listAll() {
             return $this->listWhere('1 = 1');
-            //OLD
-            //return $this->conn->osc_dbFetchResults("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.fk_c_locale_code = '%s' ORDER BY a.i_position DESC", $this->getTableName(), $this->getTableDescriptionName(), $this->language);
+        }
+
+        public function listEnabled() {
+            return $this->listWhere('a.b_enabled = 1');
         }
 
         public function findByPrimaryKey($pk, $lang = true) {
@@ -213,21 +289,6 @@
             } else {
                 return null;
             }
-            // OLD
-            /*if( $lang ) {
-                return $this->conn->osc_dbFetchResult("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s' ORDER BY i_position DESC", $this->getTableName(), $this->getTableDescriptionName(), $pk, $this->language);
-            }
-
-            $data = $this->conn->osc_dbFetchResult('SELECT * FROM %s WHERE pk_i_id = %s ORDER BY pk_i_id', $this->getTableName(), $pk);
-
-            $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
-            $row = array();
-            foreach ($sub_rows as $sub_row) {
-                $row[$sub_row['fk_c_locale_code']] = $sub_row;
-            }
-            $data['locale'] = $row;
-
-            return $data;*/
         }
 
         public function listWhere() {
@@ -295,6 +356,7 @@
 
                 $sql = 'UPDATE ' . $this->getTableDescriptionName() . ' SET ' . $set . " WHERE fk_i_category_id = " . $pk . " AND fk_c_locale_code = '" . $fieldsDescription["fk_c_locale_code"] . "'";
 
+
                 $this->conn->osc_dbExec($sql);
 
                 if($this->conn->get_affected_rows() == 0) {
@@ -306,7 +368,7 @@
             }
         }
 
-        public function insert($fields, $aFieldsDescription)
+        public function insert($fields, $aFieldsDescription = null )
         {
             $columns = implode(', ', array_keys($fields));
 
