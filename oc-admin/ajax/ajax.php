@@ -191,6 +191,7 @@
                                              **********************************/
 		                                    if(file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
 			                                    // There should be no errors here
+			                                    define('AUTO_UPGRADE', true);
 			                                    require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
 		                                    }
                     		                // Additional actions is not important for the rest of the proccess
