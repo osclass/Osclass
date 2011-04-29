@@ -27,7 +27,7 @@
      */
     function osc_search_pagination() {
         $pagination = new Pagination();
-        return $pagination->pagination();
+        return $pagination->doPagination();
     }
 
     /**
@@ -55,7 +55,7 @@
      */
     function osc_pagination($params = null) {
         $pagination = new Pagination($params);
-        return $pagination->pagination();
+        return $pagination->doPagination();
     }
 
 ?>
