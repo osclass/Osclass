@@ -25,11 +25,17 @@ if( is_osclass_installed() ) {
     die() ;
 }
 
+$json_message = array();
+$json_message['status'] = '200';
+
 basic_info();
 
 if( $_POST['skip-location-h'] == 0 ) {
-    install_locations() ;
+    $msg = install_locations() ;
+    $json_message['status'] = $msg;
 }
+
+echo json_encode($json_message);
 
 function basic_info() {
     require_once LIB_PATH . 'osclass/model/Admin.php' ;
@@ -71,8 +77,11 @@ function location_international() {
     $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country&term=all&install=true&version='.osc_version());
     $countries = json_decode($countries_json);
 
-    if( count($countries) ==  0 && reportToOsclass()){
-        LogOsclassInstaller::instance()->error('Cannot get countries' , __FILE__."::".__LINE__) ;
+    if( count($countries) ==  0 ) {
+        if (reportToOsclass()){
+            LogOsclassInstaller::instance()->error('Cannot get countries' , __FILE__."::".__LINE__) ;
+        }
+        return '300';
     }
 
     foreach($countries as $c) {
@@ -120,6 +129,8 @@ function location_international() {
         unset($cities);
         unset($cities_json);
     }
+    
+    return '200';
 }
 
 function location_by_country() {
@@ -133,8 +144,11 @@ function location_by_country() {
 
     $manager_country = Country::newInstance();
 
-    if( count($countries) ==  0 && reportToOsclass()){
-        LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+    if( count($countries) ==  0 ) {
+        if( reportToOsclass() ){
+            LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+        }
+        return '300';
     }
 
     foreach($countries as $c) {
@@ -186,7 +200,8 @@ function location_by_country() {
         unset($cities);
         unset($cities_json);
     }
-
+    
+    return '200';
 }
 
 function location_by_region() {
@@ -204,8 +219,11 @@ function location_by_region() {
 
     $manager_country = Country::newInstance();
 
-    if( count($countries) ==  0 && reportToOsclass()){
-        LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+    if( count($countries) == 0 ) {
+        if( reportToOsclass() ){
+            LogOsclassInstaller::instance()->error('Cannot get countries - ' . implode(',', $country) , __FILE__."::".__LINE__) ;
+        }
+        return '300';
     }
     
     foreach($countries as $c) {
@@ -221,8 +239,11 @@ function location_by_region() {
 
     $manager_region = Region::newInstance();
 
-    if( count($regions) ==  0 && reportToOsclass()){
-        LogOsclassInstaller::instance()->error('Cannot get regions - ' . implode(',', $country) .'- term' . implode(',', $region) , __FILE__."::".__LINE__) ;
+    if( count($regions) ==  0 ) {
+        if( reportToOsclass() ){
+            LogOsclassInstaller::instance()->error('Cannot get regions - ' . implode(',', $country) .'- term' . implode(',', $region) , __FILE__."::".__LINE__) ;
+        }
+        return '300';
     }
 
     foreach($regions as $r) {
@@ -254,6 +275,8 @@ function location_by_region() {
         unset($cities);
         unset($cities_json);
     }
+    
+    return '200';
 }
 
 function location_by_city() {
@@ -316,10 +339,14 @@ function location_by_city() {
             if( reportToOsclass() ){
                 LogOsclassInstaller::instance()->error('Cannot get cities by - ' . $c->name . ' - term ' . implode(',', $city) , __FILE__."::".__LINE__) ;
             }
+            return '300';
         }
+        
         unset($cities);
         unset($cities_json);
     }
+    
+    return '200';
 }
 
 function install_locations ( ) {
@@ -332,13 +359,13 @@ function install_locations ( ) {
     require_once ABS_PATH . 'oc-includes/osclass/model/City.php';
 
     if( isset($_POST['city']) )
-        location_by_city(); 
+        return location_by_city(); 
     else if( isset($_POST['region']) )
-        location_by_region();
+        return location_by_region();
     else if( isset($_POST['country']) )
-        location_by_country();
+        return location_by_country();
     else
-        location_international ();
+        return location_international ();
 }
 
 ?>

@@ -689,6 +689,29 @@ function display_categories() {
 <form id="category_form" action="install.php?step=5" method="POST">
     <h2 class="target">Categories</h2>
     <div class="form-table">
+        <?php if(Params::getParam('error_location') == 1) { ?>
+        <script type="text/javascript">
+            setTimeout (function(){
+                $('.error-location').fadeOut('slow');
+            }, 2500);
+        </script>
+        <style>
+            .error-location {
+                border-radius: 10px 10px 10px 10px;
+                -moz-border-radius: 10px 10px 10px 10px;
+                -webkit-border-radius: 10px 10px 10px 10px;
+                -khtml-border-radius: 10px 10px 10px 10px;
+                margin: auto auto 20px;
+                padding: 10px;
+                width: 250px;
+                text-align: center;
+                background-color: red;
+            }
+        </style>
+        <div class="error-location">
+            errooooooor
+        </div>
+        <?php } ?>
         <div class="select-categories">
             &nbsp;
             <div class="right">
