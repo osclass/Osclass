@@ -134,11 +134,11 @@ class Pagination {
     }
     
     
-    public function pagination() {
+    public function doPagination() {
         $links = $this->get_links();
         return implode($this->delimiter, $links);
     }
 
 }
   
-?> 
+?>
