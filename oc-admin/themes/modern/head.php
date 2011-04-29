@@ -59,7 +59,7 @@
 
         if($('.Header')) $('.Header').hide(); //XXX: remove it.
         if($('.FlashMessage')) $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
-        $("#static").hover(function(){ $(this).css('margin-right', '4px') }, function(){ $(this).css('margin-right','2px') } );
+        $("#static").hover(function(){ $(this).css('margin-right', '2px') }, function(){ $(this).css('margin-right','-2px') } );
     });
 </script>
 
