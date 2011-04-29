@@ -110,23 +110,23 @@ class Pagination {
         $pages = $this->get_pages();
         $links = array();
         if(isset($pages['first'])) {
-            $links[] = '<a class="' . $this->class_first . '" href="' . str_replace(urlencode('{PAGE}'), $pages['first'], $this->url) . '">' . $this->text_first . '</a>';
+            $links[] = '<a class="' . $this->class_first . '" href="' . str_replace('{PAGE}', $pages['first'], str_replace(urlencode('{PAGE}'), $pages['first'], $this->url)) . '">' . $this->text_first . '</a>';
         }
         if(isset($pages['prev'])) {
-            $links[] = '<a class="' . $this->class_prev . '" href="' . str_replace(urlencode('{PAGE}'), $pages['prev'], $this->url) . '">' . $this->text_prev . '</a>';
+            $links[] = '<a class="' . $this->class_prev . '" href="' . str_replace('{PAGE}', $pages['prev'], str_replace(urlencode('{PAGE}'), $pages['prev'], $this->url)) . '">' . $this->text_prev . '</a>';
         }
         foreach($pages['pages'] as $p) {
             if($p==$this->selected) {
-                $links[] = '<a class="' . $this->class_selected . '" href="' . str_replace(urlencode('{PAGE}'), $p, $this->url) . '">' . ($p + 1) . '</a>';
+                $links[] = '<a class="' . $this->class_selected . '" href="' . str_replace('{PAGE}', $p, str_replace(urlencode('{PAGE}'), $p, $this->url)) . '">' . ($p + 1) . '</a>';
             } else {
-                $links[] = '<a class="' . $this->class_non_selected . '" href="' . str_replace(urlencode('{PAGE}'), $p, $this->url) . '">' . ($p + 1) . '</a>';
+                $links[] = '<a class="' . $this->class_non_selected . '" href="' . str_replace('{PAGE}', $p, str_replace(urlencode('{PAGE}'), $p, $this->url)) . '">' . ($p + 1) . '</a>';
             }
         }
         if(isset($pages['next'])) {
-            $links[] = '<a class="' . $this->class_next . '" href="' . str_replace(urlencode('{PAGE}'), $pages['next'], $this->url) . '">' . $this->text_next . '</a>';
+            $links[] = '<a class="' . $this->class_next . '" href="' . str_replace('{PAGE}', $pages['next'], str_replace(urlencode('{PAGE}'), $pages['next'], $this->url)) . '">' . $this->text_next . '</a>';
         }
         if(isset($pages['last'])) {
-            $links[] = '<a class="' . $this->class_last . '" href="' . str_replace(urlencode('{PAGE}'), $pages['last'], $this->url) . '">' . $this->text_last . '</a>';
+            $links[] = '<a class="' . $this->class_last . '" href="' . str_replace('{PAGE}', $pages['last'], str_replace(urlencode('{PAGE}'), $pages['last'], $this->url)) . '">' . $this->text_last . '</a>';
         }
         
         return $links;
@@ -134,7 +134,7 @@ class Pagination {
     }
     
     
-    public function pagination() {
+    public function doPagination() {
         $links = $this->get_links();
         return implode($this->delimiter, $links);
     }

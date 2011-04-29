@@ -370,6 +370,25 @@
     }
 
     /**
+     * Create automatically the url of the item's comments page
+     *
+     * @return string
+     */
+    function osc_item_comments_url($page = 'all', $locale = '') {
+        return osc_item_url($locale) . "?comments-page=" . $page;
+    }
+
+    /**
+     * Create automatically the url of the item's comments page
+     *
+     * @return string
+     */
+    function osc_comment_url($locale = '') {
+        return osc_item_url($locale) . "?comment=" . osc_comment_id();
+    }
+
+    
+    /**
      * Create automatically the url of the item details page
      *
      * @return string
@@ -402,10 +421,9 @@
      * @return string
      */
     function osc_item_url_ns($id, $locale = '') {
+        $path = osc_base_url(true) . '?page=item&id=' . $id ;
         if($locale!='') {
-            $path = osc_base_url(true) . '?page=item&id=' . $id . "&lang=" . $locale;
-        } else {
-            $path = osc_base_url(true) . '?page=item&id=' . $id ;
+            $path .= "&lang=" . $locale;
         }
 
         return $path ;

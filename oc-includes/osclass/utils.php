@@ -102,7 +102,7 @@ function osc_plugin_path($file) {
     // Sanitize windows paths and duplicated slashes
     $file = preg_replace('|/+|','/', str_replace('\\','/',$file));
     $plugin_path = preg_replace('|/+|','/', str_replace('\\','/', PLUGINS_PATH));
-    $file = $plugin_path . preg_replace('#^oc-content\/plugins\s/#','',$file);
+    $file = $plugin_path . preg_replace('#^oc-content\/plugins\/#','',$file);
     return $file;
 }
 

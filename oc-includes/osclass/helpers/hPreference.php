@@ -28,6 +28,10 @@
         return (getBoolPreference('enabled_comments')) ;
     }
 
+    function osc_comments_per_page() {
+        return (getPreference('comments_per_page')) ;
+    }
+
     function osc_users_enabled() {
         return (getBoolPreference('enabled_users')) ;
     }

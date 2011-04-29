@@ -271,6 +271,18 @@
         return View::newInstance()->_get('items_per_page');
     }    
     
+    function osc_item_total_comments() {
+        return ItemComment::newInstance()->total_comments(osc_item_id());
+    }
+    
+    function osc_item_comments_page() {
+        $page = Params::getParam('comments-page');
+        if($page=='') {
+            $page = 0;
+        }
+        return $page;
+    }
+    
     ///////////////////////
     // HELPERS FOR ITEMS //
     ///////////////////////
@@ -394,14 +406,14 @@
 
     function osc_count_item_comments() {
         if ( !View::newInstance()->_exists('comments') ) {
-            View::newInstance()->_exportVariableToView('comments', ItemComment::newInstance()->findByItemID( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('comments', ItemComment::newInstance()->findByItemID( osc_item_id(), osc_item_comments_page(), osc_comments_per_page() ) ) ;
         }
         return View::newInstance()->_count('comments') ;
     }
 
     function osc_has_item_comments() {
         if ( !View::newInstance()->_exists('comments') ) {
-            View::newInstance()->_exportVariableToView('comments', Item::newInstance()->listLatest( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('comments', ItemComment::newInstance()->findByItemID( osc_item_id(), osc_item_comments_page(), osc_comments_per_page() ) ) ;
         }
         return View::newInstance()->_next('comments') ;
     }

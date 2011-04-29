@@ -579,7 +579,7 @@
             if($userId==null) {
                 $num_comments = 0;
             } else {
-                $user = User::newInstenace()->findByPrimaryKey($userId);
+                $user = User::newInstance()->findByPrimaryKey($userId);
                 $num_comments = $user['i_comments'];//count(ItemComment::newInstance()->findByAuthorID($userId));
             }
 
