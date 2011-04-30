@@ -20,7 +20,7 @@
  */
 
 
-class Locale extends DAO {
+class OSCLocale extends DAO {
 
 	private static $instance ;
 

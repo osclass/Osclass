@@ -37,7 +37,7 @@
 
     function osc_get_locales() {
         if (!View::newInstance()->_exists('locales')) {
-            $locale = Locale::newInstance()->listAllEnabled() ;
+            $locale = OSCLocale::newInstance()->listAllEnabled() ;
             View::newInstance()->_exportVariableToView("locales", $locale);
         } else {
             $locale = View::newInstance()->_get('locales');
@@ -56,14 +56,14 @@
     //SELECT OF LOCALES AT ALL THE PAGES
     function osc_count_web_enabled_locales() {
         if ( !View::newInstance()->_exists('locales') ) {
-            View::newInstance()->_exportVariableToView('locales', Locale::newInstance()->listAllEnabled() ) ;
+            View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
         }
         return osc_priv_count_locales() ;
     }
 
     function osc_has_web_enabled_locales() {
         if ( !View::newInstance()->_exists('locales') ) {
-            View::newInstance()->_exportVariableToView('locales', Locale::newInstance()->listAllEnabled() ) ;
+            View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
         }
         
         return View::newInstance()->_next('locales') ;
@@ -82,11 +82,11 @@
     }
 
     function osc_all_enabled_locales_for_admin($indexed_by_pk = false) {
-        return ( Locale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
+        return ( OSCLocale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
     }
 
     function osc_get_current_user_locale() {
-        View::newInstance()->_exportVariableToView('locale', Locale::newInstance()->findByPrimaryKey(osc_current_user_locale()) ) ;
+        View::newInstance()->_exportVariableToView('locale', OSCLocale::newInstance()->findByPrimaryKey(osc_current_user_locale()) ) ;
     }
 
     /**
@@ -111,7 +111,7 @@
      * You get the right locale code. If an admin is using the website in another language different of the default one, or
      * the admin uses the default one, you'll get it.
      *
-     * @return string Locale Code
+     * @return string OSCLocale Code
      */
     function osc_current_admin_locale( ) {
         if(Session::newInstance()->_get('adminLocale') != '') {
