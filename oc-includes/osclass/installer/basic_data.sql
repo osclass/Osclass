@@ -60,6 +60,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'akismetKey', '', 'STRING')
     ,('osclass', 'recaptchaPrivKey', '', 'STRING')
     ,('osclass', 'recaptchaPubKey', '', 'STRING')
+    ,('osclass', 'comments_per_page', '10', 'INTEGER')
     ,('osclass', 'save_latest_searches', '1', 'BOOLEAN')
     ,('osclass', 'purge_latest_searches', '1000', 'STRING')
     ,('osclass', 'selectable_parent_categories', '0', 'BOOLEAN');

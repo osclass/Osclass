@@ -579,7 +579,7 @@
             if($userId==null) {
                 $num_comments = 0;
             } else {
-                $user = User::newInstenace()->findByPrimaryKey($userId);
+                $user = User::newInstance()->findByPrimaryKey($userId);
                 $num_comments = $user['i_comments'];//count(ItemComment::newInstance()->findByAuthorID($userId));
             }
 
@@ -1117,7 +1117,7 @@
 
                 if (isset($item['locale'])) {
                     foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
                         $all .= '<br/>';
                         if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                             $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -1178,7 +1178,7 @@
 
                 if (isset($item['locale'])) {
                     foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
+                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
                         $all .= '<br/>';
                         if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                             $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
