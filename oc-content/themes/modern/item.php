@@ -95,8 +95,8 @@
                                         </div>
                                     <?php } ?>
                                 </div>
-                            <?php } ?>
                             <?php echo osc_comments_pagination(); ?>
+                            <?php } ?>
                             <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                                 <fieldset>
                                     <h3><?php _e('Leave your comment (spam and offensive messages will be removed)', 'modern') ; ?></h3>
