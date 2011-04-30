@@ -70,6 +70,9 @@
                                         &nbsp;<label><?php _e('Number of comments from same author that should be validated before skipping validation (0 for always moderation)'); ?></label>
                                         <input type="text" name="num_moderate_comments" id="num_moderate_comments" value="<?php echo ((osc_moderate_comments()==-1) ? '' : osc_moderate_comments()); ?>" />
                                     </div>
+                                    <br/>
+                                    <label><?php _e('Number of comments per page. You could limit the number of comments shown at a time at the item\'s detail page. Other comments will be available through a pagination system. (0 for show all comments at the same time)'); ?></label>
+                                        <input type="text" name="comments_per_page" id="comments_per_page" value="<?php echo osc_comments_per_page(); ?>" />
                                 </fieldset>
                             </div>
                             

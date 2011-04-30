@@ -135,8 +135,12 @@ class Pagination {
     
     
     public function doPagination() {
-        $links = $this->get_links();
-        return implode($this->delimiter, $links);
+        if($this->total>1) {
+            $links = $this->get_links();
+            return implode($this->delimiter, $links);            
+        } else {
+            return '';
+        }
     }
 
 }

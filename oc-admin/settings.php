@@ -101,6 +101,7 @@
                                         $moderateComments = Params::getParam('moderate_comments');
                                         $moderateComments = (($moderateComments != '') ? true : false);
                                         $numModerateComments = Params::getParam('num_moderate_comments');
+                                        $commentsPerPage  = Params::getParam('comments_per_page');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
 
@@ -115,6 +116,8 @@
                                         }
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
                                                                                       ,array('s_name' => 'notify_new_comment'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
+                                                                                      ,array('s_name' => 'comments_per_page'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Comments\' settings have been updated'), 'admin');
