@@ -289,7 +289,7 @@
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
                                         $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
@@ -348,7 +348,7 @@
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
                                         $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", array());
                                         $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);

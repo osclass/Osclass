@@ -721,7 +721,7 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=latestsearches');
                 break;
                 default:                // calling the view
-                                        $aLanguages = Locale::newInstance()->listAllEnabled() ;
+                                        $aLanguages = OSCLocale::newInstance()->listAllEnabled() ;
                                         $aCurrencies = Currency::newInstance()->listAll() ;
 
                                         $this->_exportVariableToView('aLanguages', $aLanguages);

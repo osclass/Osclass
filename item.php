@@ -41,7 +41,7 @@
         function doModel() {
             //calling the view...
 
-            $locales = Locale::newInstance()->listAllEnabled() ;
+            $locales = OSCLocale::newInstance()->listAllEnabled() ;
             $this->_exportVariableToView('locales', $locales) ;
 
             switch( $this->action ){
