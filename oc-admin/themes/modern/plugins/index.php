@@ -19,7 +19,6 @@
     $plugins = __get("plugins");
     $last = end($plugins); $last_id = $last['int_name'];
     $active_plugins = osc_get_plugins();
-    print_r($active_plugins);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
