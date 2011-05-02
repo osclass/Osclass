@@ -50,31 +50,7 @@
             $has_to_validate = (osc_moderate_items()!=-1)? true : false ;
 
             // Check status
-            $active = $aItem['active']; //???
-            if($this->is_admin) {
-                $active = 'ACTIVE';
-            } else {
-                if(osc_moderate_items()>0) { // HAS TO VALIDATE
-                    if(!osc_is_web_user_logged_in()) { // NO USER IS LOGGED, VALIDATE
-                        $active = 'INACTIVE';
-                    } else { // USER IS LOGGED
-                        if(osc_logged_user_item_validation()) { //USER IS LOGGED, BUT NO NEED TO VALIDATE
-                            $active = 'ACTIVE';
-                        } else { // USER IS LOGGED, NEED TO VALIDATE, CHECK NUMBER OF PREVIOUS ITEMS
-                            $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
-                            if($user['i_items']<osc_moderate_items()) {
-                                $active = 'INACTIVE';
-                            } else {
-                                $active = 'ACTIVE';
-                            }
-                        }
-                    }
-                } else if(osc_moderate_items()==0){
-                    $active = 'INACTIVE';
-                } else {
-                    $active = 'ACTIVE';
-                }
-            }            
+            $active = $aItem['active'];
 
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
@@ -819,11 +795,31 @@
                     }
                 }
 
-                $active = 'INACTIVE';
-                /*if( !osc_item_validation_enabled() ){
+                if($this->is_admin) {
                     $active = 'ACTIVE';
-                }*/
-                $aItem['active'] = $active;
+                } else {
+                    if(osc_moderate_items()>0) { // HAS TO VALIDATE
+                        if(!osc_is_web_user_logged_in()) { // NO USER IS LOGGED, VALIDATE
+                            $active = 'INACTIVE';
+                        } else { // USER IS LOGGED
+                            if(osc_logged_user_item_validation()) { //USER IS LOGGED, BUT NO NEED TO VALIDATE
+                                $active = 'ACTIVE';
+                            } else { // USER IS LOGGED, NEED TO VALIDATE, CHECK NUMBER OF PREVIOUS ITEMS
+                                $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
+                                if($user['i_items']<osc_moderate_items()) {
+                                    $active = 'INACTIVE';
+                                } else {
+                                    $active = 'ACTIVE';
+                                }
+                            }
+                        }
+                    } else if(osc_moderate_items()==0){
+                        $active = 'INACTIVE';
+                    } else {
+                        $active = 'ACTIVE';
+                    }
+                }
+
 
                 if ($userId != null) {
                     $data = User::newInstance()->findByPrimaryKey($userId);
@@ -1099,7 +1095,7 @@
             /**
              * Send email to user requesting item activation
              */
-            if ( $aItem['e_status']=='INACTIVE' ) {
+            if ( $aItem['active']=='INACTIVE' ) {
                 $aPage = $mPages->findByInternalName('email_item_validation') ;
 
                 $content = array();
