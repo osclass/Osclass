@@ -168,8 +168,8 @@ function oc_install( ) {
     }
 
     require_once LIB_PATH . 'osclass/locales.php';
-    require_once LIB_PATH . 'osclass/model/Locale.php';
-    $localeManager = Locale::newInstance();
+    require_once LIB_PATH . 'osclass/model/OSCLocale.php';
+    $localeManager = OSCLocale::newInstance();
 
     $locales = osc_listLocales();
     foreach($locales as $locale) {

@@ -37,7 +37,7 @@
             {
                 case 'add':
                     $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
-                    $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
                     $this->_exportVariableToView("category", array());
                     $this->doView("categories/frm.php");
                 break;
@@ -66,7 +66,7 @@
                 case 'edit':
                     $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey(Params::getParam("id")));
                     $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
-                    $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
                     $this->doView("categories/frm.php");
                 break;
                 case 'edit_post':

@@ -25,7 +25,7 @@
             parent::__construct() ;
 
             //specific things for this class
-            $this->localeManager = Locale::newInstance() ;
+            $this->localeManager = OSCLocale::newInstance() ;
         }
 
         //Business Layer...
@@ -241,7 +241,7 @@
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages') ;
                 break;
                 default:
-                                            $locales = Locale::newInstance()->listAll() ;
+                                            $locales = OSCLocale::newInstance()->listAll() ;
 
                                             $this->_exportVariableToView("locales", $locales);
                                             $this->doView('languages/index.php') ;
