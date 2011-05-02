@@ -45,64 +45,61 @@
                         <input type="hidden" name="page" value="item" />
                         <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
                         <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
-                        <div class="left_column">
-                            <div class="box general_info">
-                                <h2><?php _e('General Information', 'modern'); ?></h2>
-                                <div class="row">
-                                    <label><?php _e('Category', 'modern'); ?> *</label>
-                                    <?php ItemForm::category_select(); ?>
-                                </div>
-                                <div class="row">
-                                    <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
-                                </div>
-                                <?php if( osc_price_enabled_at_items() ) { ?>
-                                <div class="row price">
-                                    <label><?php _e('Price', 'modern'); ?></label>
-                                    <?php ItemForm::price_input_text(); ?>
-                                    <?php ItemForm::currency_select(); ?>
-                                </div>
-                                <?php } ?>
+                        <div class="box general_info">
+                            <h2><?php _e('General Information', 'modern'); ?></h2>
+                            <div class="row">
+                                <label><?php _e('Category', 'modern'); ?> *</label>
+                                <?php ItemForm::category_select(); ?>
                             </div>
-                            <?php if( osc_images_enabled_at_items() ) { ?>
-                            <div class="box photos">
-                                <h2><?php _e('Photos', 'modern'); ?></h2>
-                                <?php ItemForm::photos(); ?>
-                                <div id="photos">
-                                    <div class="row">
-                                        <input type="file" name="photos[]" />
-                                    </div>
-                                </div>
-                                <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
+                            <div class="row">
+                                <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
+                            </div>
+                            <?php if( osc_price_enabled_at_items() ) { ?>
+                            <div class="row price">
+                                <label><?php _e('Price', 'modern'); ?></label>
+                                <?php ItemForm::price_input_text(); ?>
+                                <?php ItemForm::currency_select(); ?>
                             </div>
                             <?php } ?>
                         </div>
-
-                        <div class="right_column">
-                            <div class="box location">
-                                <h2><?php _e('Location', 'modern'); ?></h2>
+                        <?php if( osc_images_enabled_at_items() ) { ?>
+                        <div class="box photos">
+                            <h2><?php _e('Photos', 'modern'); ?></h2>
+                            <?php ItemForm::photos(); ?>
+                            <div id="photos">
                                 <div class="row">
-                                    <label><?php _e('Country', 'modern'); ?> *</label>
-                                    <?php ItemForm::country_select() ; ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('Region', 'modern'); ?> *</label>
-                                    <?php ItemForm::region_select() ; ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('City', 'modern'); ?> *</label>
-                                    <?php ItemForm::city_select() ; ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('City area', 'modern'); ?></label>
-                                    <?php ItemForm::city_area_text() ; ?>
-                                </div>
-                                <div class="row">
-                                    <label><?php _e('Address', 'modern'); ?></label>
-                                    <?php ItemForm::address_text() ; ?>
+                                    <input type="file" name="photos[]" />
                                 </div>
                             </div>
-                            <?php ItemForm::plugin_edit_item(); ?>
+                            <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                         </div>
+                        <?php } ?>
+
+                        <div class="box location">
+                            <h2><?php _e('Location', 'modern'); ?></h2>
+                            <div class="row">
+                                <label><?php _e('Country', 'modern'); ?> *</label>
+                                <?php ItemForm::country_select() ; ?>
+                            </div>
+                            <div class="row">
+                                <label><?php _e('Region', 'modern'); ?> *</label>
+                                <?php ItemForm::region_select() ; ?>
+                            </div>
+                            <div class="row">
+                                <label><?php _e('City', 'modern'); ?> *</label>
+                                <?php ItemForm::city_select() ; ?>
+                            </div>
+                            <div class="row">
+                                <label><?php _e('City area', 'modern'); ?></label>
+                                <?php ItemForm::city_area_text() ; ?>
+                            </div>
+                            <div class="row">
+                                <label><?php _e('Address', 'modern'); ?></label>
+                                <?php ItemForm::address_text() ; ?>
+                            </div>
+                        </div>
+                        <?php ItemForm::plugin_edit_item(); ?>
+                        
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>
                     </fieldset>

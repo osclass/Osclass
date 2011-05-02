@@ -16,7 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $last_item = end( __get("items") ) ;
+    $items = __get("items") ;
+    $last_item = end( $items ) ;
     $last_id = $last_item['pk_i_id'] ;
     $stat = __get("stat");
 ?>
