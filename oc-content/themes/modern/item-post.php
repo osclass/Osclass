@@ -43,8 +43,6 @@
                     <fieldset>
                     <input type="hidden" name="action" value="item_add_post" />
                     <input type="hidden" name="page" value="item" />
-                    <!-- left -->
-<!--                    <div class="left_column">-->
                         <div class="box general_info">
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
@@ -73,9 +71,7 @@
                             <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                         </div>
                         <?php } ?>
-<!--                    </div>-->
-                    <!-- right -->
-<!--                    <div class="right_column">-->
+                    
                         <div class="box location">
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
@@ -120,7 +116,6 @@
                         </div>
                         <?php }; ?>
                         <?php ItemForm::plugin_post_item(); ?>
-<!--                    </div>-->
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>
                     </fieldset>
