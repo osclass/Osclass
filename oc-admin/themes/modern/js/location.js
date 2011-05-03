@@ -25,7 +25,7 @@
         var locales = element.attr('data').split("|");
         $.each(locales, function(index, value) { 
             var tmp = value.split("@");
-            $("input[name="+tmp[0]+"@e_country]").val(tmp[1]);
+            $("input[name='e_country["+tmp[0]+"]']").val(tmp[1]);
         });
 
         return false;

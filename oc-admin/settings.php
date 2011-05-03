@@ -155,12 +155,10 @@
                                         switch ($location_action) {
                                             case('add_country'):    // add country
                                                                     $countryCode = strtoupper(Params::getParam('c_country'));
-                                                                    $request = Params::getParamsAsArray();
+                                                                    $request = Params::getParam('country');
                                                                     foreach($request as $k => $v) {
-                                                                        if(preg_match('|([a-zA-Z_]{5})#country|', $k, $match)) {
-                                                                            $countryName = $v;
-                                                                            break;
-                                                                        }
+                                                                        $countryName = $v;
+                                                                        break;
                                                                     }
                                                                     $exists = $mCountries->findByCode($countryCode);
                                                                     if(isset($exists['s_name'])) {
@@ -171,12 +169,10 @@
                                                                                                                  urlencode($countryCode) );
                                                                         $countries = json_decode($countries_json);
                                                                         foreach($request as $k => $v) {
-                                                                            if(preg_match('|([a-zA-Z_]{5})#country|', $k, $match)) {
-                                                                                $data = array('pk_c_code'        => $countryCode,
-                                                                                            'fk_c_locale_code' => $match[1],
-                                                                                            's_name'           => $v);
-                                                                                $mCountries->insert($data);
-                                                                            }
+                                                                            $data = array('pk_c_code'        => $countryCode,
+                                                                                        'fk_c_locale_code' => $k,
+                                                                                        's_name'           => $v);
+                                                                            $mCountries->insert($data);
                                                                         }
                                                                         if(isset($countries->error)) { // Country is not in our GEO database
                                                                             // We have no region for user-typed countries
@@ -228,14 +224,12 @@
                                             break;
                                             case('edit_country'):   // edit country
                                                                     $countryCode = Params::getParam('country_code');
-                                                                    $request = Params::getParamsAsArray();
+                                                                    $request = Params::getParam('e_country');
                                                                     $ok = true;
                                                                     foreach($request as $k => $v) {
-                                                                        if(preg_match('|([a-zA-Z_]{5})@e_country|', $k, $match)) {
-                                                                            $result = $mCountries->updateLocale($countryCode, $match[1], $v);
-                                                                            if(!$result) {
-                                                                                $ok = false;
-                                                                            }
+                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v);
+                                                                        if(!$result) {
+                                                                            $ok = false;
                                                                         }
                                                                     }                                                                    /*if(!isset($exists['pk_c_code']) || $exists['pk_c_code']==$old_exists['pk_c_code']) {
                                                                         $mCountries->update(array('s_name' => $newCountry)

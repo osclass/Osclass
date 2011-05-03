@@ -150,7 +150,7 @@
                             <h2><?php echo $locale['s_name'];?></h2>
                                 <p>
                                     <label><?php _e('Country'); ?>: </label><br/>
-                                    <input type="text" id="country" name="<?php echo $locale['pk_c_code'];?>#country" value="" />
+                                    <input type="text" id="country" name="country[<?php echo $locale['pk_c_code'];?>]" value="" />
                                 </p>
                         </div>
                     <?php }; ?>
@@ -181,7 +181,7 @@
                                 <h2><?php echo $locale['s_name'];?></h2>
                                     <p>
                                         <label><?php _e('Country'); ?>: </label><br/>
-                                        <input type="text" id="e_country" name="<?php echo $locale['pk_c_code'];?>@e_country" value="" />
+                                        <input type="text" id="e_country" name="e_country[<?php echo $locale['pk_c_code'];?>]" value="" />
                                     </p>
                             </div>
                         <?php }; ?>
