@@ -21,8 +21,12 @@
         d_country.css('display','block');
         $('#fade').css('display','block');
 
-        $("input[name=country_old]").val(element.html());
-        $("input[name=e_country]").val(element.html());
+        $("input[name=country_code]").val(element.attr('code'));
+        var locales = element.attr('data').split("|");
+        $.each(locales, function(index, value) { 
+            var tmp = value.split("@");
+            $("input[name="+tmp[0]+"@e_country]").val(tmp[1]);
+        });
 
         return false;
     }
