@@ -270,9 +270,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_stats (
 CREATE TABLE /*TABLE_PREFIX*/t_item_resource (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_item_id INT UNSIGNED NOT NULL,
-    s_name VARCHAR(60) NOT NULL,
+    s_name VARCHAR(60) NULL,
     s_extension VARCHAR(10) NULL,
-    s_content_type VARCHAR(40) NOT NULL,
+    s_content_type VARCHAR(40) NULL,
     s_path VARCHAR(250) NULL,
 
         PRIMARY KEY (pk_i_id),
