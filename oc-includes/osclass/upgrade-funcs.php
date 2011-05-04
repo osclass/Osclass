@@ -24,7 +24,7 @@
 
     $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
-    osc_changeVersionTo(202) ;
+    osc_changeVersionTo(203) ;
 
     if(Params::getParam('action') == '') {
         require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
