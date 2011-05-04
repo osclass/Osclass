@@ -78,7 +78,17 @@
     }
 
     function osc_locale_currency_format() {
-        return osc_locale_field("s_currency_format") ;
+        $aLocales = osc_get_locales();
+        $cLocale  = $aLocales[0];
+
+        foreach($aLocales as $locale) {
+            if($locale['pk_c_code'] == osc_current_user_locale()) {
+                $cLocale = $locale;
+                break;
+            }
+        }
+
+        return $cLocale['s_currency_format'] ;
     }
 
     function osc_all_enabled_locales_for_admin($indexed_by_pk = false) {
