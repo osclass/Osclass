@@ -24,7 +24,7 @@
         function __construct() {
             parent::__construct() ;
 
-            $this->mSearch = new Search() ;
+            $this->mSearch = Search::newInstance();
         }
 
         //Business Layer...
