@@ -1,3 +1,17 @@
+OSClass 2.0.3 2011-05-05
+------------------------
+- Price is showed fine when there're more than one language enabled
+- Locale Class renamed
+- STRICT Standars error in Category Class fixed
+- STRICT Standars error in Search Class fixed
+- Configure in Manage plugins appears even if the folder is a soft-link
+- [Modern theme] Input select in user dashboard has jquery.uniform style
+- Create mb_substr function if not exists
+- NOTICE error when users send an item to a friend
+- Upload images in IIS Servers
+- [Modern theme] Sidebar in main page shows now only regions fo the active items
+- [Modern theme] CSS category drop down improvements so the hierarchy of subcategories are visible.
+
 OSClass 2.0.2 2011-04-20
 ------------------------
 - RSS fixed, now works fine if you write sFeed=rss or sFedD= in the search url.
