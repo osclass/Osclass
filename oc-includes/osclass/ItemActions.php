@@ -313,6 +313,7 @@ Class ItemActions
         $title = osc_mailBeauty($content['s_title'], $words) ;
         $body  = osc_mailBeauty($content['s_text'], $words) ;
 
+        $add_bbc = '';
         if (osc_notify_contact_friends()) {
             $add_bbc = osc_contact_email() ;
         }
@@ -331,7 +332,7 @@ Class ItemActions
         Params::setParam('item_url', $item_url );
 
         if(osc_sendMail($params)) {
-            osc_add_flash_message( _m('We just send your message to ') . $aItem['friendName'] . ".") ;
+            osc_add_flash_message( sprintf(_m('We just send your message to %s'), $aItem['friendName'])) ;
         } else {
             osc_add_flash_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
         }
@@ -984,7 +985,7 @@ Class ItemActions
 
             if (isset($item['locale'])) {
                 foreach ($item['locale'] as $locale => $data) {
-                    $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                    $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
                     $all .= '<br/>';
                     if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                         $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -1044,7 +1045,7 @@ Class ItemActions
 
             if (isset($item['locale'])) {
                 foreach ($item['locale'] as $locale => $data) {
-                    $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
+                    $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
                     $all .= '<br/>';
                     if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                         $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';

@@ -52,7 +52,7 @@
                                         $this->_exportVariableToView("countries", $aCountries);
                                         $this->_exportVariableToView("regions", $aRegions);
                                         $this->_exportVariableToView("cities", $aCities);
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
 
                                         $this->doView("users/frm.php");
                 break;
@@ -96,7 +96,7 @@
                                         $this->_exportVariableToView("countries", $aCountries);
                                         $this->_exportVariableToView("regions", $aRegions);
                                         $this->_exportVariableToView("cities", $aCities);
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->doView("users/frm.php");
                 break;
                 case 'edit_post':       // edit post

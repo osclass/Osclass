@@ -99,7 +99,7 @@
 				        <div class="clear20"></div>
 				
 				        <?php 
-				            $locales = Locale::newInstance()->listAllEnabled();
+				            $locales = OSCLocale::newInstance()->listAllEnabled();
                             CategoryForm::multilanguage_name_description($locales, $category) ; 
                         ?>
                         

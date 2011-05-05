@@ -274,7 +274,7 @@ class Page extends DAO
      * Insert the content (title and description) of a page.
      *
      * @param int $id Id of the page, it would be the foreign key
-     * @param string $locale Locale code of the language
+     * @param string $locale OSCLocale code of the language
      * @param string $title Text to be inserted in s_title
      * @param string $text Text to be inserted in s_text
      * @return bool True if the insert has been done well and false if not.

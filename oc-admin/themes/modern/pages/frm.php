@@ -87,7 +87,7 @@
                         </div>
                         <div class="clear50"></div>
                         <?php
-                            $locales = Locale::newInstance()->listAllEnabled();
+                            $locales = OSCLocale::newInstance()->listAllEnabled();
                             PageForm::multilanguage_name_description($locales, $page);
                         ?>
                         <div class="FormElement">

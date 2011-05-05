@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0.2') ;
+define('OSCLASS_VERSION', '2.0.3') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -75,6 +75,7 @@ require_once LIB_PATH . 'osclass/core/Translation.php';
 
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
+require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
@@ -90,7 +91,7 @@ require_once LIB_PATH . 'osclass/model/CategoryStats.php';
 require_once LIB_PATH . 'osclass/model/City.php';
 require_once LIB_PATH . 'osclass/model/Country.php';
 require_once LIB_PATH . 'osclass/model/Currency.php';
-require_once LIB_PATH . 'osclass/model/Locale.php';
+require_once LIB_PATH . 'osclass/model/OSCLocale.php';
 require_once LIB_PATH . 'osclass/model/Item.php';
 require_once LIB_PATH . 'osclass/model/ItemComment.php';
 require_once LIB_PATH . 'osclass/model/ItemResource.php';
@@ -106,7 +107,6 @@ require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
-require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';

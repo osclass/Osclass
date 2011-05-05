@@ -20,6 +20,7 @@
  */
 
 define('ABS_PATH', dirname(dirname(__FILE__)) . '/');
+define('AUTO_UPGRADE', true);
 
 require_once ABS_PATH . 'oc-load.php';
 
