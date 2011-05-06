@@ -148,6 +148,10 @@
         return osc_item_field("s_country");
     }
 
+    function osc_item_country_code() {
+        return osc_item_field("fk_c_country_code");
+    }
+
     function osc_item_region() {
         return osc_item_field("s_region");
     }
