@@ -180,7 +180,7 @@
                 default:
 
                     $parentId = Params::getParam("parentId");
-                    if($parentId!='') {
+                    if($parentId != '') {
                         $this->_exportVariableToView("categories", $this->categoryManager->listWhere("a.fk_i_parent_id = %d ", $parentId));
                         $this->_exportVariableToView("parent", $this->categoryManager->findByPrimaryKey($parentId));
                     } else {
