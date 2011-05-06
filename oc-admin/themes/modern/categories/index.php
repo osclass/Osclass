@@ -25,6 +25,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script src="<?php echo osc_current_admin_theme_url(); ?>js/vtip/vtip.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_current_admin_theme_url(); ?>js/vtip/css/vtip.css" />
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -99,6 +101,9 @@
                         <div style="float:left;">
                             <?php _e('Category name'); ?>
                         </div>
+                        <div class="left" style="padding-left:10px;">
+                            <img class="vtip" src="<?php echo osc_current_admin_theme_url(); ?>/images/question.png" title="Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category." alt=""/>
+                        </div>
                         <div style="float:right;">
                             <?php _e('Options'); ?>
                         </div>
@@ -134,14 +139,7 @@
 				    <?php }; ?>
 				    </ul>
 				</div>
-                <div>
-                    <fieldset>
-                        <legend>
-                            <h1><?php _e('Help'); ?></h1>
-                        </legend>
-                        <?php _e('Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category.'); ?>
-                    </fieldset>
-                </div>
+               
 				</div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
