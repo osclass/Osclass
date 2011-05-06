@@ -17,6 +17,7 @@
      */
 
     $categories = __get("categories");
+    $parent     = __get("parent");
     $last = end($categories);
     $last_id = $last['pk_i_id'];
 ?>
@@ -78,69 +79,95 @@
                 return false;
             }
         </script>
-		<div id="content">
-			<div id="separator"></div>	
-			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-			<div id="right_column">
-			    <div id="content_header" class="content_header">
-					<div style="float: left;">
+        <div id="content">
+            <div id="separator"></div>	
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/cat-icon.png" title="" alt="" />
                     </div>
-					<div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
-					<div style="clear: both;"></div>
-				</div>
-				<div id="content_separator"></div>
-				<?php osc_show_flash_message('admin') ; ?>
-				
-				<div id="jsMessage" class="FlashMessage" style="display:none;">
-				</div>
-				
-                <div style="clear: both;"></div>
-				<div id="TableCategories" class="TableCategories">
-				    <ul><li>
-                        <div style="float:left;">
-                            <?php _e('Category name'); ?>
-                        </div>
-                        <div class="left" style="padding-left:10px;">
-                            <img class="vtip" src="<?php echo osc_current_admin_theme_url(); ?>/images/question.png" title="Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category." alt=""/>
-                        </div>
-                        <div style="float:right;">
-                            <?php _e('Options'); ?>
-                        </div>
-                    </li></ul>
+                    <div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
                     <div style="clear: both;"></div>
-				    <ul id="sortable">
-				    <?php foreach($categories as $category) {?>
+                </div>
+                <div id="content_separator"></div>
+                <?php osc_show_flash_message('admin') ; ?>
+
+                <div id="jsMessage" class="FlashMessage" style="display:none;"></div>
+
+                <div style="clear: both;"></div>
+                <div id="TableCategories" class="TableCategories">
+                    <ul>
+                        <li>
+                            <div style="float:left;">
+                                <?php _e('Category name'); ?>
+                            </div>
+                            <div class="left" style="padding-left:10px;">
+                                <img class="vtip" src="<?php echo osc_current_admin_theme_url(); ?>/images/question.png" title="Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category." alt=""/>
+                            </div>
+                            <div style="float:right;">
+                                <?php _e('Options'); ?>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul>
+                    <div style="clear: both;"></div>
+                    <?php $show_parent = 0; ?>
+                    <?php if($parent != "" && $show_parent == 0) { $show_parent = 1; ?>
+                        <li class="category_li <?php echo $parent['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" >
+                            <div class="category_div <?php echo $parent['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" category_id="<?php echo $parent['pk_i_id'];?>" >
+                                <div class=".quick_edit" id="<?php echo "quick_edit_".$parent['pk_i_id']; ?>" style="float:left;">
+                                    <?php echo $parent['s_name'];?> 
+                                    <a onclick="js_edit(<?php echo "'".$parent['s_name']."', '".$parent['pk_i_id']."', '".$parent['fk_c_locale_code']; ?>');" href='#'>
+                                        <img src="<?php echo osc_admin_base_url() ; ?>images/edit.png" alt="<?php _e('Quick edit'); ?>" title="<?php _e('Quick edit'); ?>" />
+                                    </a>
+                                </div>
+                                <div style="float:right;">
+                                    <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $parent['pk_i_id']; ?>'>
+                                    <?php _e('Edit'); ?>
+                                    </a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $parent['pk_i_id']; ?>&enabled=<?php echo $parent['b_enabled'] == 1 ? '0' : '1'; ?>'>
+                                    <?php _e($parent['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?>
+                                    </a> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $parent['pk_i_id']; ?>'>
+                                    <?php _e('Delete'); ?>
+                                    </a>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </li>
+                    <?php }?>
+                    </ul>
+                    <ul id="sortable">
+                    <?php foreach($categories as $category) {?>
                     <?php $data = Category::newInstance()->isParentOf($category['pk_i_id']);
                         $has_subcategories = (count($data)>0)?true:false;
                     ?>
-				        <li class="category_li <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" >
-				            <div class="category_div <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" category_id="<?php echo $category['pk_i_id'];?>" >
-				                <div class=".quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;">
-				                    <?php echo $category['s_name'];?> 
-				                    <a onclick="js_edit(<?php echo "'".$category['s_name']."', '".$category['pk_i_id']."', '".$category['fk_c_locale_code']; ?>');" href='#'>
-				                        <img src="<?php echo osc_admin_base_url() ; ?>images/edit.png" alt="<?php _e('Quick edit'); ?>" title="<?php _e('Quick edit'); ?>" />
-				                    </a>
-				                </div>
-				                <div style="float:right;">
-				                    <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $category['pk_i_id']; ?>'>
-				                    <?php _e('Edit'); ?>
-				                    </a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $category['pk_i_id']; ?>&enabled=<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>'>
-				                    <?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?>
-				                    </a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $category['pk_i_id']; ?>'>
-				                    <?php _e('View subcategories'); ?>
-				                    </a><?php }; ?> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $category['pk_i_id']; ?>'>
-				                    <?php _e('Delete'); ?>
-				                    </a>
-				                </div>
+                        <li style="<?php if($show_parent) { echo "margin-left:40px;";} ?>" class="category_li <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" >
+                            <div class="category_div <?php echo $category['b_enabled'] == 1 ? 'enabled' : 'disabled'; ?>" category_id="<?php echo $category['pk_i_id'];?>" >
+                                <div class=".quick_edit" id="<?php echo "quick_edit_".$category['pk_i_id']; ?>" style="float:left;">
+                                    <?php echo $category['s_name'];?> 
+                                    <a onclick="js_edit(<?php echo "'".$category['s_name']."', '".$category['pk_i_id']."', '".$category['fk_c_locale_code']; ?>');" href='#'>
+                                        <img src="<?php echo osc_admin_base_url() ; ?>images/edit.png" alt="<?php _e('Quick edit'); ?>" title="<?php _e('Quick edit'); ?>" />
+                                    </a>
+                                </div>
+                                <div style="float:right;">
+                                    <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit&amp;id=<?php echo $category['pk_i_id']; ?>'>
+                                    <?php _e('Edit'); ?>
+                                    </a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=enable&amp;id=<?php echo $category['pk_i_id']; ?>&enabled=<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>'>
+                                    <?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?>
+                                    </a> <?php if($has_subcategories) { ?>| <a href='<?php echo osc_admin_base_url(true); ?>?page=categories&parentId=<?php echo $category['pk_i_id']; ?>'>
+                                    <?php _e('View subcategories'); ?>
+                                    </a><?php }; ?> | <a onclick="javascript:return confirm('<?php _e('WARNING: This will also delete the items under that category. This action cann not be undone. Are you sure you want to continue?'); ?>')" href='<?php echo osc_admin_base_url(true); ?>?page=categories&action=delete&amp;id[]=<?php echo $category['pk_i_id']; ?>'>
+                                    <?php _e('Delete'); ?>
+                                    </a>
+                                </div>
                                 <div style="clear: both;"></div>
-				            </div>
-				        </li>
-				    <?php }; ?>
-				    </ul>
-				</div>
+                            </div>
+                        </li>
+                        <?php }; ?>
+                    </ul>
+                </div>
                
-				</div> <!-- end of right column -->
+            </div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
         <!-- Form edit country -->
