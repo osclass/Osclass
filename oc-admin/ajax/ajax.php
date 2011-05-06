@@ -91,12 +91,20 @@
 
                 case 'categories_order': // Save the order of the categories
                     $ids = explode(",", Params::getParam('order'));
+                    $result = "{";
+                    $error = 0;
                     $var_l = count($ids)-1;
                     $catManager = Category::newInstance();
                     for($var_o=0;$var_o<$var_l;$var_o++) {
-                        echo $catManager->update_order($ids[$var_o], $var_o);
+                        if(! $catManager->update_order($ids[$var_o], $var_o) ){
+                            $error = 1;
+                        }
                     }
-                    echo '1';
+                    if($error) { $result .= '"error" : "Some error ocurred."}'; }
+                    else {       $result .= '"ok" : "Order saved."'; }
+                    $result .= "}";
+                    
+                    echo $result;
                     break;
 
                 case 'categories_name': // Save the category's name in quick edit
