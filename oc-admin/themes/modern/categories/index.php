@@ -39,6 +39,10 @@
         </style>
         <script type="text/javascript">
             $(function() {
+                var list_original = '';
+                $('#sortable .category_div').each(function() {
+                    list_original += $(this).attr('category_id') + ',';
+                });
                 $( "#sortable" ).sortable({
                     revert: true,
                     stop: function(event, ui) { 
@@ -46,19 +50,43 @@
                         $('#sortable .category_div').each(function() {
                             list += $(this).attr('category_id') + ',';
                         });
-                        $.ajax({
-                            url: "<?php echo osc_admin_base_url(true)."?page=ajax&action=categories_order&order=";?>"+list,
-                            context: document.body,
-                            success: function(){
-                                $("#jsMessage").fadeIn("fast");
-                                $("#jsMessage").html("<?php _e('Order saved');?>");
-                                setTimeout(function(){
-                                    $("#jsMessage").fadeOut("slow", function () {
-                                        $("#jsMessage").html("");
-                                    });
-                                }, 3000);
-                            }
-                        });
+                        if(list_original != list) {
+                            $.ajax({
+                                url: "<?php echo osc_admin_base_url(true)."?page=ajax&action=categories_order&order=";?>"+list,
+                                context: document.body,
+                                success: function(res){
+                                    var ret = eval( "(" + res + ")");
+                                    var message = "";
+                                    if(ret.error) { 
+                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                                        message += ret.error; 
+                                        
+                                    }
+                                    if(ret.ok){ 
+                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                                        message += ret.ok; 
+                                    }
+                                    
+                                    $("#jsMessage").fadeIn("fast");
+                                    $("#jsMessage").html(message);
+                                    setTimeout(function(){
+                                        $("#jsMessage").fadeOut("slow", function () {
+                                            $("#jsMessage").html("");
+                                        });
+                                    }, 3000);
+                                },
+                                error: function(){
+                                    $("#jsMessage").fadeIn("fast");
+                                    $("#jsMessage").html("<?php _e('Ajax error, try again.');?>");
+                                    setTimeout(function(){
+                                        $("#jsMessage").fadeOut("slow", function () {
+                                            $("#jsMessage").html("");
+                                        });
+                                    }, 3000);
+                                }
+                            });
+                            list_original = list;
+                        }
                     }
                 });
                 $( "ul, li" ).disableSelection();
@@ -88,6 +116,7 @@
                         <img src="<?php echo osc_current_admin_theme_url() ; ?>images/cat-icon.png" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
+                    <div id="jsMessage" class="" style="float:right;display:none;"></div>
                     <div style="clear: both;"></div>
                 </div>
                 <div id="content_separator"></div>
