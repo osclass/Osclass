@@ -90,7 +90,10 @@ class User extends DAO {
             return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
 	}
 	
-	public function deleteUser($id = null)
+
+    
+    
+    public function deleteUser($id = null)
         {
 	    if($id!=null) {
 	        osc_run_hook('delete_user', $id);
