@@ -1,115 +1,116 @@
-<?php
-/**
- * OSClass – software for creating and publishing online classified advertising platforms
- *
- * Copyright (C) 2010 OSCLASS
- *
- * This program is free software: you can redistribute it and/or modify it under the terms
- * of the GNU Affero General Public License as published by the Free Software Foundation,
- * either version 3 of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public
- * License along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-class User extends DAO {
+    class User extends DAO {
 
-	private static $instance ;
+        private static $instance ;
 
-    public static function newInstance() {
-        if(!self::$instance instanceof self) {
-            self::$instance = new self ;
-        }
-        return self::$instance ;
-    }
-    
-	public function getTableName()
-    {
-        return DB_TABLE_PREFIX . 't_user';
-    }
-
-    public function getDescriptionTableName()
-    {
-        return DB_TABLE_PREFIX . 't_user_description';
-    }
-
-    public function findByPrimaryKey($id, $locale = null)
-    {
-        $sql = 'SELECT * FROM ' . $this->getTableName();
-        $sql .= ' WHERE ' . $this->getPrimaryKey() . ' = ' . $id;
-        $row = $this->conn->osc_dbFetchResult($sql);
-
-        if(is_null($row)) {
-            return array();
-        }
-
-        $sql_desc = 'SELECT * FROM ';
-        $sql_desc .= $this->getDescriptionTableName() . ' WHERE fk_i_user_id = ' . $id;
-        if(!is_null($locale)) {
-            $sql_desc .= ' AND fk_c_locale_code  = \'' . $locale . '\' ';
-        }
-        $sub_rows = $this->conn->osc_dbFetchResults($sql_desc);
-
-        $row['locale'] = array();
-        foreach($sub_rows as $sub_row) {
-            $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
-        }
-
-        return $row;
-    }
-
-	public function findByEmail($email)
-        {
-            $results = $this->listWhere("s_email = '%s'", $email);
-            return count($results) == 1 ? $results[0] : null;
-	}
-
-	public function findByCredentials($key, $password)
-        {
-            $results = $this->listWhere("s_email = '%s' AND s_password = '%s'", $key, sha1($password));
-            if( count($results) == 1 ) {
-                return $results[0] ;
+        public static function newInstance() {
+            if(!self::$instance instanceof self) {
+                self::$instance = new self ;
             }
-            return null ;
-	}
+            return self::$instance ;
+        }
 
-	public function findByIdSecret($id, $secret)
+        public function getTableName()
         {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_secret = '%s'", $this->getTableName(), $id, $secret);
-	}
+            return DB_TABLE_PREFIX . 't_user';
+        }
 
-	public function findByIdPasswordSecret($id, $secret)
+        public function getDescriptionTableName()
         {
-            if($secret=='') { return null; }
-            $date = date("Y-m-d H:i:s", (time()-(24*3600)));
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
-	}
-	
+            return DB_TABLE_PREFIX . 't_user_description';
+        }
 
-    
-    
-    public function deleteUser($id = null)
+        public function findByPrimaryKey($id, $locale = null)
         {
-	    if($id!=null) {
-	        osc_run_hook('delete_user', $id);
-	        $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
-	        $itemManager = Item::newInstance();
-	        foreach($items as $item) {
+            $sql = 'SELECT * FROM ' . $this->getTableName();
+            $sql .= ' WHERE ' . $this->getPrimaryKey() . ' = ' . $id;
+            $row = $this->conn->osc_dbFetchResult($sql);
+
+            if(is_null($row)) {
+                return array();
+            }
+
+            $sql_desc = 'SELECT * FROM ';
+            $sql_desc .= $this->getDescriptionTableName() . ' WHERE fk_i_user_id = ' . $id;
+            if(!is_null($locale)) {
+                $sql_desc .= ' AND fk_c_locale_code  = \'' . $locale . '\' ';
+            }
+            $sub_rows = $this->conn->osc_dbFetchResults($sql_desc);
+
+            $row['locale'] = array();
+            foreach($sub_rows as $sub_row) {
+                $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
+            }
+
+            return $row;
+        }
+
+        public function findByEmail($email)
+            {
+                $results = $this->listWhere("s_email = '%s'", $email);
+                return count($results) == 1 ? $results[0] : null;
+        }
+
+        public function findByCredentials($key, $password)
+            {
+                $results = $this->listWhere("s_email = '%s' AND s_password = '%s'", $key, sha1($password));
+                if( count($results) == 1 ) {
+                    return $results[0] ;
+                }
+                return null ;
+        }
+
+        public function findByIdSecret($id, $secret)
+            {
+                return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_secret = '%s'", $this->getTableName(), $id, $secret);
+        }
+
+        public function findByIdPasswordSecret($id, $secret)
+            {
+                if($secret=='') { return null; }
+                $date = date("Y-m-d H:i:s", (time()-(24*3600)));
+                return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_i_id = %d AND s_pass_code = '%s' AND s_pass_date >= '%s'", $this->getTableName(), $id, $secret, $date);
+        }
+
+        public function deleteUser($id = null)
+            {
+            if($id!=null) {
+                osc_run_hook('delete_user', $id);
+                $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id, fk_i_category_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
+                $itemManager = Item::newInstance();
+                foreach($items as $item) {
                     $itemManager->deleteByPrimaryKey($item['pk_i_id']);
+                    CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
                 $this->conn->osc_dbExec('DELETE FROM %st_user_email_tmp WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
                 $this->conn->osc_dbExec('DELETE FROM %st_user WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
                 return true;
-	    }
-	    return false;
-	}
+            }
+            return false;
+        }
 
         private function insertDescription($id, $locale, $info)
         {
@@ -162,4 +163,6 @@ class User extends DAO {
 
             return (bool) $result;
         }
-}
+    }
+
+?>
