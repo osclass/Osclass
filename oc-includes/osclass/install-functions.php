@@ -695,21 +695,8 @@ function display_categories() {
                 $('.error-location').fadeOut('slow');
             }, 2500);
         </script>
-        <style>
-            .error-location {
-                border-radius: 10px 10px 10px 10px;
-                -moz-border-radius: 10px 10px 10px 10px;
-                -webkit-border-radius: 10px 10px 10px 10px;
-                -khtml-border-radius: 10px 10px 10px 10px;
-                margin: auto auto 20px;
-                padding: 10px;
-                width: 250px;
-                text-align: center;
-                background-color: red;
-            }
-        </style>
         <div class="error-location">
-            errooooooor
+            The location selected could not been installed
         </div>
         <?php } ?>
         <div class="select-categories">

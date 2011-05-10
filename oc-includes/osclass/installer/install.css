@@ -166,6 +166,18 @@ ul#nav {
     text-align: left;
 }
 
+.error-location {
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -khtml-border-radius: 10px 10px 10px 10px;
+    margin: auto auto 20px;
+    padding: 10px;
+    width: 350px;
+    text-align: center;
+    background-color: #FF9696;
+}
+
 .button {
     padding: 8px 14px;
     background-color: #F7F7F7;
