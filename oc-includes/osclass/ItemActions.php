@@ -314,12 +314,15 @@
         public function delete( $secret, $itemId )
         {
             $item = $this->manager->findByPrimaryKey($itemId);
-            $this->deleteResourcesFromHD($itemId);
-            $result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
+            if($item['s_secret']==$secret) {
+                $this->deleteResourcesFromHD($itemId);
+                return $this->manager->deleteByPrimaryKey($itemId);
+            }
+            /*$result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
             if($item['e_status']=='ACTIVE') {
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-            }
-            return $result;
+            }*/
+            return false;
         }
 
         /**
