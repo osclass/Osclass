@@ -24,7 +24,7 @@
         function __construct() {
             parent::__construct() ;
 
-            $this->mSearch = new Search() ;
+            $this->mSearch = Search::newInstance();
         }
 
         //Business Layer...
@@ -209,9 +209,9 @@
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
 
                 //Categories for select at view "search.php"
-                $mCategories = new Category();
+                //$mCategories = new Category();
                 //$aCategories = $mCategories->findRootCategories();
-                $mCategoryStats = new CategoryStats();
+                //$mCategoryStats = new CategoryStats();
                 /*$aCategories = $mCategories->toTree();
                 foreach($aCategories as $k => $v) {
                     $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);

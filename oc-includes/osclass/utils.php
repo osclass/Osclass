@@ -102,8 +102,34 @@ function osc_plugin_path($file) {
     // Sanitize windows paths and duplicated slashes
     $file = preg_replace('|/+|','/', str_replace('\\','/',$file));
     $plugin_path = preg_replace('|/+|','/', str_replace('\\','/', PLUGINS_PATH));
-    $file = $plugin_path . preg_replace('#^oc-content\/plugins\s/#','',$file);
+    $file = $plugin_path . preg_replace('#^.*oc-content\/plugins\/#','',$file);
     return $file;
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_url($file) {
+    // Sanitize windows paths and duplicated slashes
+    $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
+    $dir = WEB_PATH . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    return $dir;
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_folder($file) {
+    // Sanitize windows paths and duplicated slashes
+    $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
+    $dir = preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    return $dir;
 }
 
 /**

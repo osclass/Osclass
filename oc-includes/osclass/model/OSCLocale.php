@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class Locale extends DAO {
+    class OSCLocale extends DAO {
 
         private static $instance ;
 

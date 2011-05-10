@@ -50,35 +50,11 @@
             $has_to_validate = (osc_moderate_items()!=-1)? true : false ;
 
             // Check status
-            $active = $aItem['active']; //???
-            if($this->is_admin) {
-                $active = 'ACTIVE';
-            } else {
-                if(osc_moderate_items()>0) { // HAS TO VALIDATE
-                    if(!osc_is_web_user_logged_in()) { // NO USER IS LOGGED, VALIDATE
-                        $active = 'INACTIVE';
-                    } else { // USER IS LOGGED
-                        if(osc_logged_user_item_validation()) { //USER IS LOGGED, BUT NO NEED TO VALIDATE
-                            $active = 'ACTIVE';
-                        } else { // USER IS LOGGED, NEED TO VALIDATE, CHECK NUMBER OF PREVIOUS ITEMS
-                            $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
-                            if($user['i_items']<osc_moderate_items()) {
-                                $active = 'INACTIVE';
-                            } else {
-                                $active = 'ACTIVE';
-                            }
-                        }
-                    }
-                } else if(osc_moderate_items()==0){
-                    $active = 'INACTIVE';
-                } else {
-                    $active = 'ACTIVE';
-                }
-            }            
+            $active = $aItem['active'];
 
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
-                $aItem['title'][$key] = osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
+                $aItem['title'][$key] = strip_tags( trim ( $value ) );//osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
             }
             foreach(@$aItem['description'] as $key=>$value) {
                 $aItem['description'][$key] = $purifier->purify($value);
@@ -221,7 +197,7 @@
 
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
-                $aItem['title'][$key] = osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
+                $aItem['title'][$key] = strip_tags( trim ( $value ) );//osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
             }
             foreach(@$aItem['description'] as $key=>$value) {
                 $aItem['description'][$key] = $purifier->purify($value);
@@ -338,12 +314,15 @@
         public function delete( $secret, $itemId )
         {
             $item = $this->manager->findByPrimaryKey($itemId);
-            $this->deleteResourcesFromHD($itemId);
-            $result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
+            if($item['s_secret']==$secret) {
+                $this->deleteResourcesFromHD($itemId);
+                return $this->manager->deleteByPrimaryKey($itemId);
+            }
+            /*$result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
             if($item['e_status']=='ACTIVE') {
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-            }
-            return $result;
+            }*/
+            return false;
         }
 
         /**
@@ -579,7 +558,7 @@
             if($userId==null) {
                 $num_comments = 0;
             } else {
-                $user = User::newInstenace()->findByPrimaryKey($userId);
+                $user = User::newInstance()->findByPrimaryKey($userId);
                 $num_comments = $user['i_comments'];//count(ItemComment::newInstance()->findByAuthorID($userId));
             }
 
@@ -819,11 +798,31 @@
                     }
                 }
 
-                $active = 'INACTIVE';
-                /*if( !osc_item_validation_enabled() ){
+                if($this->is_admin) {
                     $active = 'ACTIVE';
-                }*/
-                $aItem['active'] = $active;
+                } else {
+                    if(osc_moderate_items()>0) { // HAS TO VALIDATE
+                        if(!osc_is_web_user_logged_in()) { // NO USER IS LOGGED, VALIDATE
+                            $active = 'INACTIVE';
+                        } else { // USER IS LOGGED
+                            if(osc_logged_user_item_validation()) { //USER IS LOGGED, BUT NO NEED TO VALIDATE
+                                $active = 'ACTIVE';
+                            } else { // USER IS LOGGED, NEED TO VALIDATE, CHECK NUMBER OF PREVIOUS ITEMS
+                                $user = User::newInstance()->findByPrimaryKey(osc_logged_user_id());
+                                if($user['i_items']<osc_moderate_items()) {
+                                    $active = 'INACTIVE';
+                                } else {
+                                    $active = 'ACTIVE';
+                                }
+                            }
+                        }
+                    } else if(osc_moderate_items()==0){
+                        $active = 'INACTIVE';
+                    } else {
+                        $active = 'ACTIVE';
+                    }
+                }
+
 
                 if ($userId != null) {
                     $data = User::newInstance()->findByPrimaryKey($userId);
@@ -1099,7 +1098,7 @@
             /**
              * Send email to user requesting item activation
              */
-            if ( $aItem['e_status']=='INACTIVE' ) {
+            if ( $aItem['active']=='INACTIVE' ) {
                 $aPage = $mPages->findByInternalName('email_item_validation') ;
 
                 $content = array();
@@ -1117,7 +1116,7 @@
 
                 if (isset($item['locale'])) {
                     foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
                         $all .= '<br/>';
                         if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                             $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -1178,7 +1177,7 @@
 
                 if (isset($item['locale'])) {
                     foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = Locale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
+                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
                         $all .= '<br/>';
                         if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                             $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';

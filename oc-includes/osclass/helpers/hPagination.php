@@ -27,7 +27,21 @@
      */
     function osc_search_pagination() {
         $pagination = new Pagination();
-        return $pagination->pagination();
+        return $pagination->doPagination();
+    }
+
+    function osc_comments_pagination() {
+        if(osc_comments_per_page()==0 || osc_item_comments_page()=='all') {
+            return '';
+        } else {
+            $params = array(
+                            'total' => ceil(osc_item_total_comments()/osc_comments_per_page()),
+                            'selected' => osc_item_comments_page(),
+                            'url' => osc_item_comments_url('{PAGE}'),
+                            );
+            $pagination = new Pagination($params);
+            return $pagination->doPagination();
+        }
     }
 
     /**
@@ -55,7 +69,7 @@
      */
     function osc_pagination($params = null) {
         $pagination = new Pagination($params);
-        return $pagination->pagination();
+        return $pagination->doPagination();
     }
 
 ?>

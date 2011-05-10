@@ -163,7 +163,9 @@ option.pad { margin-left:10px;}
 .list .filters .row label { cursor:pointer; }
 .list .filters .row input { font-family:Arial, Verdana, sans-serif; }
 .list .filters .row .selector { background:#FFF; font-size:11px; height:21px; line-height:21px; padding-left:5px; width:170px; }
+.list .filters .row .auto .selector { width: auto; }
 .list .filters .row .selector span { background-position:right 8px; height:21px; line-height:21px; width:140px; }
+.list .filters .row .auto .selector span {width:auto; }
 .list .filters .row .selector.hover span,
 .list .filters .row .selector.hover span,
 .list .filters .row .selector:hover:active span,
@@ -317,9 +319,11 @@ option.pad { margin-left:10px;}
 .add_item h1 strong { border-bottom:1px solid #DDD; display:block; font-weight:normal; padding-bottom:7px; }
 .add_item h2 { font-size:16px; margin-bottom:10px; }
 .add_item label { float:left; line-height:24px; margin-right:10px; width:120px; }
-.add_item input { border:1px solid #BBB; padding:7px 7px 6px; width:250px; }
+
+.add_item input { border:1px solid #BBB; padding:7px 7px 6px; width:350px; }
 .add_item input#showEmail { border:1px solid #BBB; padding:7px 7px 6px; width:20px; }
-.add_item textarea { border:1px solid #BBB; height:100px; padding:7px 7px 6px; width:300px; }
+
+.add_item textarea { border:1px solid #BBB; height:200px; padding:7px 7px 6px; width:490px; }
 .add_item textarea#description { height:175px; width:340px; }
 .add_item .button,
 .add_item button { clear:both; float:left; margin-top:15px;}
@@ -331,7 +335,7 @@ option.pad { margin-left:10px;}
 .add_item .price .selector { width:80px; }
 .add_item .price .selector span { width:48px; }
 .add_item .photos input { margin-right:10px; }
-.add_item .location label { float:left; margin-right:10px; width:90px; }
+.add_item .location label { float:left; margin-right:10px; width:120px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
 .add_item #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
 .add_item #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
@@ -387,11 +391,27 @@ div.button:disabled span { background-position: right -733px; color: #bbb; curso
 div.button { height: 26px; }
 div.button span { margin-left: 13px; height: 18px; padding-top: 8px; font-weight: bold; font-family: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif; font-size: 12px; text-transform: uppercase; padding-left: 2px; padding-right: 15px; }
 /* Select */
-div.selector { width: 190px; font-size: 12px; }
-div.selector select { min-width: 190px; font-family: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif; font-size: 12px; border: solid 1px #fff; }
+div.selector { width: 338px; font-size: 12px; }
+div.selector select { min-width: 338px; font-family: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif; font-size: 12px; border: solid 1px #fff; }
 div.selector span { padding: 0px 25px 0px 2px; cursor: pointer; }
-div.selector span { color: #000; width: 158px; }
+div.selector span { color: #000; width: 306px; }
 div.selector.disabled span { color: #bbb; }
+
+/* ._200 */
+div._200 div.selector{ width: 200px; font-size: 12px; }
+div._200 div.selector select{ min-width:200px; font-family: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif; font-size: 12px; border: solid 1px #fff; }
+div._200 div.selector span { color: #000; width: 164px; }
+
+div._200 input { width:200px; }
+div._100 input { width:100px; }
+div._50 input { width:50px; }
+div._20 input { width:20px; }
+
+/* .auto */
+div.auto div.selector{ width: auto; font-size: 12px; background-color: white;}
+div.auto div.selector select{ min-width:0; font-family: Arial, "Helvetica Neue", Helvetica, Verdana, sans-serif; font-size: 12px; border: solid 1px #fff; }
+div.auto div.selector span { color: #000; width: auto; }
+
 
 
 /*
@@ -404,7 +424,7 @@ Not advised to edit stuff below this line
 .checker, 
 .button, 
 .radio, 
-.uploader { display: -moz-inline-box; display: inline-block; vertical-align: middle; zoom: 1; *display: inline; }
+.uploader {  background-color: white; display: -moz-inline-box; display: inline-block; vertical-align: middle; zoom: 1; *display: inline; }
 .selector select:focus, .radio input:focus, .checker input:focus, .uploader input:focus { outline: 0; }
 /* Button */
 div.button a,
