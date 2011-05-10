@@ -155,6 +155,17 @@ ul#nav {
     padding: 2px;
 }
 
+.requirements_help {
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -khtml-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: none repeat scroll 0 0 #FFFFCC;
+    font-size: 12px;
+    padding: 10px 20px;
+    text-align: left;
+}
+
 .button {
     padding: 8px 14px;
     background-color: #F7F7F7;
