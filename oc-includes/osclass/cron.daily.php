@@ -28,9 +28,22 @@ if(!defined('__OSC_LOADED__')) {
 	require_once '../../oc-load.php';
 }
 
+
+function purge_latest_searches_daily() {
+    $purge = osc_purge_latest_searches();
+    if($purge=='day') {
+        LatestSearches::newInstance()->purgeDate(date('Y-m-d H:i:s', (time()-(24*3600))));
+    } else if($purge=='week') {
+        LatestSearches::newInstance()->purgeDate(date('Y-m-d H:i:s', (time()-(7*24*3600))));
+    }
+}
+
+purge_latest_searches_daily();
+
 	// INSERT HERE YOUR FUNCTIONS, DO NOT FORGET TO CALL THEM AT THE END
 	// THEY WILL RUN DAILY
 	osc_runAlert('DAILY');
 
+    osc_run_hook('cron_daily');
 
 ?>

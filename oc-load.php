@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0 RC6') ;
+define('OSCLASS_VERSION', '2.0.2') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -29,7 +29,7 @@ define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
 define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
 define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
 define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
-define('TRANSLATIONS_PATH', LIB_PATH . 'translations/') ;
+define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
 
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
@@ -41,11 +41,14 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
     osc_die($title, $message) ;
 }
 
+if( !defined('MULTISITE') ) {
+    define('MULTISITE', 0);
+}
 
 require_once ABS_PATH . 'config.php' ;
 require_once ABS_PATH . 'oc-dbload.php' ;
-
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/helpers/hMessages.php';
@@ -56,7 +59,10 @@ require_once LIB_PATH . 'osclass/helpers/hUtils.php';
 require_once LIB_PATH . 'osclass/helpers/hCategories.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
+require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
+require_once LIB_PATH . 'osclass/helpers/hValidate.php';
 require_once LIB_PATH . 'osclass/helpers/hPage.php';
+require_once LIB_PATH . 'osclass/helpers/hPagination.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
@@ -69,6 +75,7 @@ require_once LIB_PATH . 'osclass/core/Translation.php';
 
 require_once LIB_PATH . 'osclass/AdminThemes.php';
 require_once LIB_PATH . 'osclass/WebThemes.php';
+require_once LIB_PATH . 'osclass/compatibility.php';
 require_once LIB_PATH . 'osclass/utils.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/feeds.php';
@@ -77,10 +84,10 @@ require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
-require_once LIB_PATH . 'osclass/classes/HTML.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
+require_once LIB_PATH . 'osclass/classes/Pagination.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -105,6 +112,7 @@ define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
     if(osc_auto_cron()) {
         osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
+
     }
 }
 
@@ -113,6 +121,5 @@ Plugins::init() ;
 Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
-
 
 ?>

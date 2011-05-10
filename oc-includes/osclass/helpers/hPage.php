@@ -49,11 +49,32 @@
         return osc_static_page_field("pk_i_id") ;
     }
 
-    function osc_static_page_url() {
-        if(osc_rewrite_enabled()) {
-            return osc_base_url().osc_static_page_field("s_internal_name")."-p".osc_static_page_field("pk_i_id");
+    function osc_static_page_mod_date() {
+        $date = osc_static_page_field("pk_i_id") ;
+        if($date!='') {
+            return $date;
         } else {
-            return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id");
+            return osc_static_page_pub_date();
+        }
+    }
+
+    function osc_static_page_pub_date() {
+        return osc_static_page_field("dt_pub_date") ;
+    }
+
+    function osc_static_page_url($locale = '') {
+        if($locale!='') {
+            if(osc_rewrite_enabled()) {
+                return osc_base_url().osc_static_page_field("s_internal_name")."-p".osc_static_page_field("pk_i_id")."-".$locale;
+            } else {
+                return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id")."&lang=".$locale;
+            }
+        } else {
+            if(osc_rewrite_enabled()) {
+                return osc_base_url().osc_static_page_field("s_internal_name")."-p".osc_static_page_field("pk_i_id");
+            } else {
+                return osc_base_url(true)."?page=page&id=".osc_static_page_field("pk_i_id");
+            }
         }
     }
     

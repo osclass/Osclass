@@ -117,15 +117,19 @@
                 $where[] = "b.s_slug = '" . $slug_cat[count($slug_cat)-1] . "'";
             }
         }
-        $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
-        foreach($categories as $cat) {
-            $category[] = $cat['pk_i_id'];
+        if(empty($where)) {
+            return null;
+        } else {
+            $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
+            foreach($categories as $cat) {
+                $category[] = $cat['pk_i_id'];
+            }
+            return $category;    
         }
-        return $category;    
     }
     
     function osc_update_search_url($params, $delimiter = '&amp;') {
-        $request = Params::getParamsAsArray();
+        $request = Params::getParamsAsArray('get');
         unset($request['osclass']);
         if(isset($request['sCategory[0]'])) {
             unset($request['sCategory']);
@@ -146,8 +150,16 @@
     function osc_search_alert() {
         return View::newInstance()->_get('search_alert');
     }
-    
-        function osc_search_url($params = null) {
+
+    function osc_search_show_all_url( ) {
+        if(osc_rewrite_enabled ()) {
+            return osc_base_url() . 'search/';
+        } else {
+            return osc_base_url(true) . '?page=search';
+        }
+    }
+
+    function osc_search_url($params = null) {
         $url = osc_base_url(true) . '?page=search';
         if($params!=null) {
             foreach($params as $k => $v) {
@@ -199,7 +211,10 @@
         if ( !View::newInstance()->_exists('list_cities') ) {
             View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region) ) ;
         }
-        return View::newInstance()->_next('list_cities') ;
+        $result = View::newInstance()->_next('list_cities');
+
+        if (!$result) View::newInstance()->_erase('list_cities') ;
+        return $result;
     }
 
     function osc_count_list_countries() {
@@ -222,7 +237,7 @@
         }
         return View::newInstance()->_count('list_cities') ;
     }
-    
+
     function osc_list_region_name() {
         return osc_field(osc_list_region(), 'region_name', '') ;
     }
@@ -231,6 +246,67 @@
         return osc_field(osc_list_region(), 'items', '') ;
     }
 
+    function osc_list_city_name() {
+        return osc_field(osc_list_city(), 'city_name', '') ;
+    }
+
+    function osc_list_city_items() {
+        return osc_field(osc_list_city(), 'items', '') ;
+    }
     
+    function osc_list_country_url() {
+        return osc_search_url(array('sCountry' => osc_list_country_name()));
+    }
+
+    function osc_list_region_url() {
+        return osc_search_url(array('sRegion' => osc_list_region_name()));
+    }
+
+    function osc_list_city_url() {
+        return osc_search_url(array('sCity' => osc_list_city_name()));
+    }
+
+    /**********************
+     ** LATEST SEARCHES **
+     **********************/
+    function osc_get_latest_searches($limit = 20) {
+        if ( !View::newInstance()->_exists('latest_searches') ) {
+            View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches($limit) ) ;
+        }
+        return View::newInstance()->_count('latest_searches') ;
+    }
+
+    function osc_count_latest_searches() {
+        if ( !View::newInstance()->_exists('latest_searches') ) {
+            View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches() ) ;
+        }
+        return View::newInstance()->_count('latest_searches') ;
+    }
+    
+    function osc_has_latest_searches() {
+        if ( !View::newInstance()->_exists('latest_searches') ) {
+            View::newInstance()->_exportVariableToView('latest_searches', LatestSearches::newInstance()->getSearches() ) ;
+        }
+        return View::newInstance()->_next('latest_searches') ;
+    }
+
+    function osc_latest_search() {
+        if (View::newInstance()->_exists('latest_searches')) {
+            return View::newInstance()->_current('latest_searches') ;
+        }
+        return null;
+    }
+    
+    function osc_latest_search_text() {
+        return osc_field(osc_latest_search(), 's_search', '');
+    }
+
+    function osc_latest_search_date() {
+        return osc_field(osc_latest_search(), 'd_date', '');
+    }
+
+    function osc_latest_search_total() {
+        return osc_field(osc_latest_search(), 'i_total', '');
+    }
 
 ?>

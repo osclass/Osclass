@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -38,7 +38,8 @@
         function __construct()
 		{
 			$this->val = array() ;
-			$this->name = substr( md5(WEB_PATH), 0, 5 ) ;
+            $web_pat = (MULTISITE) ? osc_multisite_url() : WEB_PATH;
+			$this->name = substr( md5($web_pat), 0, 5 ) ;
 			$this->expires = time() + 3600 ; // 1 hour by default
 			if ( isset( $_COOKIE[$this->name] ) )
             {
@@ -107,4 +108,5 @@
         	$this->expires = time() + $tm ;
 		}
 	}
+    
 ?>

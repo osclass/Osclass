@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
@@ -71,7 +71,7 @@
                         $validation_url = osc_user_activate_url($user['pk_i_id'], $input['s_secret']);
                         $words   = array();
                         $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                        $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url) ;
+                        $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>') ;
                         $title = osc_mailBeauty($content['s_title'], $words) ;
                         $body = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -104,6 +104,15 @@
         {
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
+            if($this->is_admin) {
+                Item::newInstance()->update(array('s_contact_name' => $input['s_name'], 's_contact_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+                ItemComment::newInstance()->update(array('s_author_name' => $input['s_name'], 's_author_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+                Alerts::newInstance()->update(array('s_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+            } else { 
+                Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+                ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
+            }
+
             Session::newInstance()->_set('userName', $input['s_name']);
             $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
             Session::newInstance()->_set('userPhone', $phone);
@@ -165,7 +174,7 @@
                     $words   = array();
                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
                                      '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
-                    $words[] = array($user['s_name'], $user['s_email'], osc_base_url(), osc_page_title(),
+                    $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', osc_page_title(),
                                      $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
                     $title = osc_mailBeauty($content['s_title'], $words);
                     $body = osc_mailBeauty($content['s_text'], $words);
@@ -178,6 +187,7 @@
                     osc_sendMail($emailParams);
                 }
             }
+            return true;
         }
         
 
@@ -267,7 +277,7 @@
             $input['s_city'] = $cityName ;
             $input['s_city_area'] = Params::getParam('cityArea') ;
             $input['s_address'] = Params::getParam('address') ;
-            $input['b_company'] = Params::getParam('b_company') ;
+            $input['b_company'] = (Params::getParam('b_company') != '' && Params::getParam('b_company') != 0) ? 1 : 0;
             
             return($input) ;
         }

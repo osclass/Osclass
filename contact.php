@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
@@ -35,14 +35,14 @@
 
                                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                                             if(!osc_check_recaptcha()) {
-                                                osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
                                                 $this->redirectTo(osc_contact_url());
                                                 return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                             }
                                         }
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
-                                            osc_add_flash_message( _m('You have to introduce a correct e-mail') ) ;
+                                            osc_add_flash_error_message( _m('You have to introduce a correct e-mail') ) ;
                                             $this->redirectTo(osc_contact_url());
                                         }
 
@@ -55,9 +55,32 @@
                                             ,'body' => $message
                                             ,'alt_body' => $message
                                         );
+
+                                        if(osc_contact_attachment()) {
+                                            $attachment = Params::getFiles('attachment');
+                                            $resourceName = $attachment['name'] ;
+                                            $tmpName = $attachment['tmp_name'] ;
+                                            $resourceType = $attachment['type'] ;
+
+                                            $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
+
+                                            if(!is_writable(osc_content_path() . 'uploads/')) {
+                                                osc_add_flash_message( _m('There has been some errors sending the message')) ;
+                                                $this->redirectTo( osc_base_url() );
+                                            }
+
+                                            if(!move_uploaded_file($tmpName, $path)){
+                                                unset($path) ;
+                                            }
+                                        }
+
+                                        if(isset($path)) {
+                                            $params['attachment'] = $path ;
+                                        }
+
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
+                                        osc_add_flash_ok_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
 
                                         $this->redirectTo( osc_base_url() ) ;
                 break;

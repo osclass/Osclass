@@ -1,4 +1,5 @@
 <?php
+
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -18,13 +19,16 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-            
-    require_once 'oc-load.php' ;
+
+    define('ABS_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . '/');
+
+    require_once ABS_PATH . 'oc-load.php' ;
     
     switch( Params::getParam('page') )
     {
         case ('user'):      // user pages (with security)
-                            if(Params::getParam('action')=='change_email_confirm'
+
+                            if(Params::getParam('action')=='change_email_confirm' || Params::getParam('action')=='activate_alert'
                             || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())) {
                                 require_once(osc_base_path() . 'user-non-secure.php') ;
                                 $do = new CWebUserNonSecure() ;

@@ -1,4 +1,41 @@
-OSClass 2.0 RC 2010-02-23
+OSClass 2.0.2 2011-04-20
+------------------------
+- RSS fixed, now works fine if you write sFeed=rss or sFedD= in the search url.
+- In the item detail page, now the num views is the sum of all the days.
+- file_get_contents replaced for curl. Added a library that emulates curl if it's not installed.
+- Fixed NOTICE error when a user updates the profile.
+- Update process improved for future versions.
+
+OSClass 2.0.1 2011-04-12
+------------------------
+- Country displays correctly even if there are multiple languages installed.
+- City autocomplete works in search sidebar
+- Fixed forgot password in oc-admin
+- Recaptcha works fine in recover password
+- Fixed helper of format_price. Now it takes from s_currency_format in languages
+- Specify more the errors in installation process
+- If a user change the e-mail, it also changes now in the alert system
+- Prefill categories select with a default string instead of the first category
+
+OSClass 2.0 2011-04-06
+---------------------------
+- Added several helpers to
+- Remember me is working in admin and user login.
+- Fixed RSS.
+- Fixed a lot of flash messages.
+- If ZipArchive is not compiled, now we use an external lib: pclzip.
+- Pre-fill comment form.
+- Improved photos validation through mime.
+- Auto-login after a user has validated an account.
+- Improved comment moderation.
+- Plugins/themes can be translated.
+- Permalinks: most links are user-friendly now.
+- New user dashboard.
+- Registered users can delete here own comments.
+- Recaptcha added to: comments, recover password, item contact.
+- Several small bugs fixed.
+
+OSClass 2.0 RC 2011-02-23
 ---------------------------
 - New structure based on Classes
 - Helpers: now there are a lot of functions that help the developer to modify the themes easily
@@ -8,7 +45,7 @@ OSClass 2.0 RC 2010-02-23
 - Translation uses a singleton
 - There are three files in languages: core.po, messages.po (for flash_messages), theme.po
 
-OSClass 1.2 delta 2010-01-12
+OSClass 1.2 delta 2011-01-12
 ----------------------------
 - New whole system of permalinks
 - Improved user profiles

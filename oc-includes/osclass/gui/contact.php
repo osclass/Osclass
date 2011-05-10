@@ -24,6 +24,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
     </head>
     <body>
         <div class="container">
@@ -40,7 +42,8 @@
                             <label for="message"><?php _e('Message', 'modern') ; ?></label> <?php ContactForm::your_message() ; ?><br />
                             <label for="yourName"><?php _e('Your name', 'modern') ; ?> <?php _e('(optional)'); ?></label> <?php ContactForm::your_name() ; ?><br />
                             <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?></label> <?php ContactForm::your_email(); ?><br />
-
+                            
+                            <?php osc_show_recaptcha(); ?>
                             <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                             <?php osc_run_hook('user_register_form') ; ?>
                         </fieldset>

@@ -1,19 +1,23 @@
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2010 OSCLASS
      *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
      *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
      *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
     class CAdminPlugins extends AdminSecBaseModel
@@ -46,19 +50,20 @@
 
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
+                                osc_add_flash_error_message($msg, 'admin');
                         break;
-                        case(1):   $msg = _m('The plugin has been installed correctly');
+                        case(1):   $msg = _m('The plugin has been uploaded correctly');
+                                osc_add_flash_ok_message($msg, 'admin');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
-                        break;
-                        case(3):   $msg = _m('The zip file is empty');
+                                osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the plugin');
+                                osc_add_flash_error_message($msg, 'admin');
                         break;
                     }
 
-                    osc_add_flash_message($msg, 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'install':
@@ -69,7 +74,7 @@
                     Plugins::runHook('install_'.$pn) ;
 
 
-                    osc_add_flash_message( _m('Plugin installed'), 'admin');
+                    osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'uninstall':
@@ -78,7 +83,7 @@
                     Plugins::runHook($pn.'_uninstall') ;
                     Plugins::deactivate($pn);
 
-                    osc_add_flash_message( _m('Plugin uninstalled'), 'admin');
+                    osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'admin':
@@ -96,7 +101,7 @@
                     $file = Params::getParam("file");
                     if($file!="") {
                         // We pass the GET variables (in case we have somes)
-                        if(preg_match('|(.+?)\?(.*)|', $_REQUEST['file'], $match)) {
+                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
                             $file = $match[1];
                             if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
                                 for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
@@ -135,10 +140,10 @@
                             Plugins::addToCategoryPlugin($categories, $plugin_short_name);
                         }
                     } else {
-                        osc_add_flash_message( _m('No plugin selected'), 'admin');
+                        osc_add_flash_error_message( _m('No plugin selected'), 'admin');
                         $this->doView("plugins/index.php");
                     }
-                    osc_add_flash_message( _m('Configuration was saved'), 'admin');
+                    osc_add_flash_ok_message( _m('Configuration was saved'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 default:

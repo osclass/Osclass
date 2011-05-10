@@ -16,7 +16,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $last_item = end( __get("items") ) ;
+    $items = __get("items") ;
+    $last_item = end( $items ) ;
     $last_id = $last_item['pk_i_id'] ;
     $stat = __get("stat");
 ?>
@@ -149,13 +150,14 @@
                                 &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
                             </div>
                             <div id="TableToolsLinks">
-                                <strong><?php _e('Filter by') ?>:</strong> <a href="<?php echo osc_admin_base_url(true); ?>?page=items"><?php _e('All') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=pending"><?php _e('Pending') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=spam"><?php _e('Spam') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=duplicated"><?php _e('Duplicated') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad"><?php _e('Misclassified') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=offensive"><?php _e('Offensive') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired"><?php _e('Expired') ?></a>
+                                <strong><?php _e('Filter by') ?>:</strong> 
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items" <?php if($stat == '') {echo "style='font-weight:bold;'";} ?> ><?php _e('All') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=pending" <?php if($stat == 'pending') {echo "style='font-weight:bold;'";} ?> ><?php _e('Pending') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=spam" <?php if($stat == 'spam') {echo "style='font-weight:bold;'";} ?> ><?php _e('Spam') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=duplicated" <?php if($stat == 'duplicated') {echo "style='font-weight:bold;'";} ?> ><?php _e('Duplicated') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad" <?php if($stat == 'bad') {echo "style='font-weight:bold;'";} ?> ><?php _e('Misclassified') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=offensive" <?php if($stat == 'offensive') {echo "style='font-weight:bold;'";} ?> ><?php _e('Offensive') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired" <?php if($stat == 'expired') {echo "style='font-weight:bold;'";} ?> ><?php _e('Expired') ?></a>
                             </div>
                 <input type="hidden" name="action" value="bulk_actions" />
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
@@ -167,10 +169,12 @@
             <script type="text/javascript">
                 $(document).ready(function() {
                     $('#datatables_list tr').live('mouseover', function(event) {
+                        $('#datatable_wrapper', this).show();
                         $('#datatables_quick_edit', this).show();
                     });
 
                     $('#datatables_list tr').live('mouseleave', function(event) {
+                        $('#datatable_wrapper', this).hide();
                         $('#datatables_quick_edit', this).hide();
                     });
                 });

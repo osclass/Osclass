@@ -1,19 +1,23 @@
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2010 OSCLASS
      *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
      *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
      *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
     class CAdminItems extends AdminSecBaseModel
@@ -54,7 +58,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been activated'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'deactivate_all':
@@ -73,7 +77,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been deactivated'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'premium_all':
@@ -90,7 +94,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The items have been marked as premium'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'depremium_all':
@@ -107,7 +111,7 @@
                                                     }
                                                     osc_add_flash_message( _m('The changes have been made'), 'admin') ;
                                                 } catch (Exception $e) {
-                                                    osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin') ;
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
                                             case 'delete_all':
@@ -176,16 +180,33 @@
                                             $item = $this->itemManager->findByPrimaryKey($id);
                                             switch ($value) {
                                                 case 'ACTIVE':
+                                                    osc_add_flash_message( _m('The item has been activated'), 'admin');
                                                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                                                    if($item['fk_i_user_id']!=null) {
+                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                        if($user) {
+                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                ) ;
+                                                        }
+                                                    }
                                                     break;
                                                 case 'INACTIVE':
+                                                    osc_add_flash_message( _m('The item has been deactivated'), 'admin');
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                                                    if($item['fk_i_user_id']!=null) {
+                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                        if($user) {
+                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']-1)
+                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                ) ;
+                                                        }
+                                                    }
                                                     break;
                                             }
 
-                                            osc_add_flash_message( _m('The item has been activated'), 'admin');
                                         } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                                            osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
@@ -211,9 +232,35 @@
                                             );
                                             osc_add_flash_message( _m('Changes have been applied'), 'admin');
                                         } catch (Exception $e) {
-                                            osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                                            osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                break;
+                case 'clear_stat':
+                                        $id     = Params::getParam('id') ;
+                                        $stat   = Params::getParam('stat') ;
+
+                                        if (!$id)
+                                            return false;
+
+                                        if (!$stat)
+                                            return false;
+
+                                        $id = (int) $id;
+
+                                        if (!is_numeric($id))
+                                            return false;
+                                       
+                                        $success = $this->itemManager->clearStat($id , $stat ) ;
+
+                                        if($success) {
+                                            osc_add_flash_message( _m('The item has been unmarked as')." $stat", 'admin') ;
+                                        } else {
+                                            osc_add_flash_message( _m('The item hasn\'t been unmarked as')." $stat", 'admin') ;
+                                        }
+
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
+
                 break;
                 case 'item_edit':
                                         //require_once LIB_PATH . 'osclass/itemActions.php';
@@ -242,7 +289,7 @@
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
                                         $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
@@ -269,6 +316,7 @@
                                             ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                         }
 
+                                        osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource
@@ -280,6 +328,7 @@
                                         osc_deleteResource($id);
 
                                         ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $fkid, 's_name' => $name)) ;
+                                        osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'post':            //post
@@ -299,7 +348,7 @@
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
                                         $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", array());
                                         $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
@@ -309,10 +358,10 @@
                                         $mItem = new ItemActions(true);
                                         $success = $mItem->add();
                                         if( $success ) {
-                                            osc_add_flash_message( _m('A new item has been added'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
-                                            osc_add_flash_message( _m('The item can\'t be added'), 'admin') ;
+                                            osc_add_flash_error_message( _m('The item can\'t be added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
                 break;

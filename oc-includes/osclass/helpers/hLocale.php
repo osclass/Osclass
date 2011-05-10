@@ -37,7 +37,7 @@
 
     function osc_get_locales() {
         if (!View::newInstance()->_exists('locales')) {
-            $locale = Locale::newInstance()->listAllEnabled() ;
+            $locale = OSCLocale::newInstance()->listAllEnabled() ;
             View::newInstance()->_exportVariableToView("locales", $locale);
         } else {
             $locale = View::newInstance()->_get('locales');
@@ -56,14 +56,14 @@
     //SELECT OF LOCALES AT ALL THE PAGES
     function osc_count_web_enabled_locales() {
         if ( !View::newInstance()->_exists('locales') ) {
-            View::newInstance()->_exportVariableToView('locales', Locale::newInstance()->listAllEnabled() ) ;
+            View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
         }
         return osc_priv_count_locales() ;
     }
 
     function osc_has_web_enabled_locales() {
         if ( !View::newInstance()->_exists('locales') ) {
-            View::newInstance()->_exportVariableToView('locales', Locale::newInstance()->listAllEnabled() ) ;
+            View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
         }
         
         return View::newInstance()->_next('locales') ;
@@ -77,12 +77,26 @@
         return osc_locale_field("s_name") ;
     }
 
+    function osc_locale_currency_format() {
+        $aLocales = osc_get_locales();
+        $cLocale  = $aLocales[0];
+
+        foreach($aLocales as $locale) {
+            if($locale['pk_c_code'] == osc_current_user_locale()) {
+                $cLocale = $locale;
+                break;
+            }
+        }
+
+        return $cLocale['s_currency_format'] ;
+    }
+
     function osc_all_enabled_locales_for_admin($indexed_by_pk = false) {
-        return ( Locale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
+        return ( OSCLocale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
     }
 
     function osc_get_current_user_locale() {
-        View::newInstance()->_exportVariableToView('locale', Locale::newInstance()->findByPrimaryKey(osc_current_user_locale()) ) ;
+        View::newInstance()->_exportVariableToView('locale', OSCLocale::newInstance()->findByPrimaryKey(osc_current_user_locale()) ) ;
     }
 
     /**

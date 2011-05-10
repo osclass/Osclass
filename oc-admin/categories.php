@@ -1,19 +1,23 @@
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2010 OSCLASS
      *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
      *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
      *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
     class CAdminCategories extends AdminSecBaseModel
@@ -37,7 +41,7 @@
             {
                 case 'add':
                     $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
-                    $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
                     $this->_exportVariableToView("category", array());
                     $this->doView("categories/frm.php");
                 break;
@@ -57,17 +61,30 @@
                         }
                         $this->categoryManager->insert($fields, $aFieldsDescription);
 
-                        osc_add_flash_message( _m('The category has been added'), 'admin');
+                        osc_add_flash_ok_message( _m('The category has been added'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('The category could\'t be added') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('The category could\'t be added. Reason: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
                 case 'edit':
                     $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey(Params::getParam("id")));
                     $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll());
-                    $this->_exportVariableToView("languages", Locale::newInstance()->listAllEnabled());
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
                     $this->doView("categories/frm.php");
+                break;
+                case 'edit_iframe':
+                    $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey(Params::getParam("id")));
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
+                    $this->doView("categories/iframe.php");
+                break;
+                case 'quick_edit':
+                    $id = Params::getParam('catId');
+                    $name = Params::getParam('s_name');
+                    $locale = Params::getParam('locale');
+                    Category::newInstance()->update_name($id, $locale, $name);
+                    osc_add_flash_ok_message( _m('The category has been updated.'), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
                 case 'edit_post':
                     $id = Params::getParam("id");
@@ -86,9 +103,9 @@
 
                     try {
                         $this->categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
-                        osc_add_flash_message( _m('The category has been updated.'), 'admin');
+                        osc_add_flash_ok_message( _m('The category has been updated.'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     if( !is_null( $fields['fk_i_parent_id'] ) ) {
                         $this->redirectTo(osc_admin_base_url(true).'?page=categories&parentId=' . $fields['fk_i_parent_id']);
@@ -105,9 +122,9 @@
                                 $this->categoryManager->deleteByPrimaryKey($i);
                             }
                         }
-                        osc_add_flash_message( _m('The categories have been deleted'), 'admin');
+                        osc_add_flash_ok_message( _m('The categories have been deleted'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -126,9 +143,9 @@
                         } else {
                             $msg = _m('There was a problem with this page. The ID for the category hasn\'t been set') ;
                         }
-                        osc_add_flash_message($msg, 'admin') ;
+                        osc_add_flash_ok_message($msg, 'admin') ;
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -142,9 +159,9 @@
                                 $this->categoryManager->update(array('b_enabled' => 1), array('pk_i_id' => $id));
                             }
                         }
-                        osc_add_flash_message( _m('The categories have been enabled'), 'admin');
+                        osc_add_flash_ok_message( _m('The categories have been enabled'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
@@ -158,23 +175,15 @@
                                 $this->categoryManager->update(array('b_enabled' => 0), array('pk_i_id' => $id));
                             }
                         }
-                        osc_add_flash_message( _m('The selected categories have been disabled'), 'admin');
+                        osc_add_flash_ok_message( _m('The selected categories have been disabled'), 'admin');
                     } catch (Exception $e) {
-                        osc_add_flash_message( _m('Error: ') . $e->getMessage(), 'admin');
+                        osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
 
                 default:
-
-                    $parentId = Params::getParam("parentId");
-                    if($parentId!='') {
-                        $this->_exportVariableToView("categories", $this->categoryManager->listWhere("a.fk_i_parent_id = %d ", $parentId));
-                        $this->_exportVariableToView("parent", $this->categoryManager->findByPrimaryKey($parentId));
-                    } else {
-                        $this->_exportVariableToView("categories", $this->categoryManager->listWhere("a.fk_i_parent_id IS NULL"));
-                    }
-
+                    $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll() );
                     $this->doView("categories/index.php");
 
             }

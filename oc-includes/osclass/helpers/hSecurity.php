@@ -27,7 +27,7 @@
      * @return string
      */
     function osc_genRandomPassword($length = 8) {
-        $dict = array_merge(range('a', 'z'), range('0', '9'));
+        $dict = array_merge(range('a', 'z'), range('0', '9'), range('A', 'Z'));
         shuffle($dict);
 
         $pass = '';

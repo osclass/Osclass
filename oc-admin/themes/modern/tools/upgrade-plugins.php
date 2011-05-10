@@ -50,46 +50,46 @@ die('is not implemented yet');
 		var steps = document.getElementById('steps');
 		var version = <?php echo $info['version']; ?>;
 		var fileToUnzip = '';
-		steps.innerHTML += "<?php _e('Checking for update (installed version: '); ?>"+version+"): ";
+        steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" + version + "): " ;
 
 		$.getJSON("<?php echo $info['plugin_update_uri']; ?>", function(data) {
 			if(data.version <= version) {
-				steps.innerHTML += "<?php _e('HOORAY! Your plugin installation is up to date! (current version: '); ?>"+data.version+")";
+				steps.innerHTML += "<?php _e('HOORAY! Your plugin installation is up to date!', 'admin'); ?>";
 			} else {
-				steps.innerHTML += "<?php _e('current version: '); ?>"+data.version+"<br/>";
-				steps.innerHTML += "<?php _e('Downloading update file: '); ?>";
+				steps.innerHTML += "<?php _e('current version:'); ?> "+data.version+"<br/>";
+				steps.innerHTML += "<?php _e('Downloading update file:'); ?>";
 
 				var tempAr = data.url.split('/');
 				fileToUnzip = tempAr.pop();
 				$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=download-file&file='+data.url, function(data) {
 				
 					steps.innerHTML += data+"<br/>";
-					steps.innerHTML += "<?php _e('Unzipping file: '); ?>";
+					steps.innerHTML += "<?php _e('Unzipping file:'); ?> ";
 
 					$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=unzip-file&file='+fileToUnzip, function(data) {
 					
 						steps.innerHTML += data+"<br/>";
-						steps.innerHTML += "<?php _e('Copying old files: '); ?>";
+						steps.innerHTML += "<?php _e('Copying old files:'); ?> ";
 
 						$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=copy-files', function(data) {
 						
 							steps.innerHTML += data+"<br/>";
-							steps.innerHTML += "<?php _e('Removing new files: '); ?>";
+							steps.innerHTML += "<?php _e('Removing new files:'); ?> ";
 
 							$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=remove-files', function(data) {
 							
 								steps.innerHTML += data+"<br/>";
-								steps.innerHTML += "<?php _e('Executing SQL: '); ?>";
+								steps.innerHTML += "<?php _e('Executing SQL:'); ?> ";
 
 								$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=execute-sql', function(data) {
 								
 									steps.innerHTML += data+"<br/>";
-									steps.innerHTML += "<?php _e('Executing additional actions: '); ?>";
+									steps.innerHTML += "<?php _e('Executing additional actions:'); ?> ";
 
 									$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=execute-actions', function(data) {
 									
 										steps.innerHTML += data+"<br/>";
-										steps.innerHTML += "<?php _e('Cleaning all the mess: '); ?>";
+										steps.innerHTML += "<?php _e('Cleaning all the mess:'); ?> ";
 
 										$.get('<?php echo osc_admin_base_url() ; ?>upgrade-plugin.php?action=empty-temp', function(data) {
 										

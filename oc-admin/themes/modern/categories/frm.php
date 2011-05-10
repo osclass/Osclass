@@ -73,7 +73,7 @@
 				        <div class="FormElement">
 				            <div class="FormElementName"><?php _e('Parent category'); ?></div>
 					        <div class="FormElementInput">
-					           <?php CategoryForm::parent_category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
+					           <?php CategoryForm::category_select($categories, $category, __("- No parent -"), "fk_i_parent_id") ; ?>
 					        </div>
 				        </div>
 				        <div class="FormElement">
@@ -99,7 +99,7 @@
 				        <div class="clear20"></div>
 				
 				        <?php 
-				            $locales = Locale::newInstance()->listAllEnabled();
+				            $locales = OSCLocale::newInstance()->listAllEnabled();
                             CategoryForm::multilanguage_name_description($locales, $category) ; 
                         ?>
                         

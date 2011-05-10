@@ -31,15 +31,18 @@
 <link href="<?php echo osc_current_admin_theme_styles_url('languages_layout.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo osc_current_admin_theme_styles_url('settings_layout.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo osc_current_admin_theme_styles_url('location_layout.css') ; ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo osc_current_admin_theme_styles_url('cat_list_layout.css') ; ?>" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery-ui.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.cookie.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.json.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.uniform.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tabber-minimized.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
 
 <script type="text/javascript">
     $(function() {
@@ -57,6 +60,7 @@
 
         if($('.Header')) $('.Header').hide(); //XXX: remove it.
         if($('.FlashMessage')) $('.FlashMessage').animate({opacity: 1.0}, 5000).fadeOut();
+        $("#static").hover(function(){ $(this).css('margin-right', '2px') }, function(){ $(this).css('margin-right','-2px') } );
     });
 </script>
 

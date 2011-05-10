@@ -19,10 +19,18 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <?php if(osc_count_items() == 0) { ?>
+            <meta name="robots" content="noindex, nofollow" />
+            <meta name="googlebot" content="noindex, nofollow" />
+        <?php } else { ?>
+            <meta name="robots" content="index, follow" />
+            <meta name="googlebot" content="index, follow" />
+        <?php } ?>
     </head>
     <body>
         <div class="container">
@@ -60,13 +68,7 @@
                             <?php require(osc_search_show_as() == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
                         <?php } ?>
                         <div class="paginate" >
-                        <?php for($i = 0 ; $i < osc_search_total_pages() ; $i++) {
-                            if($i == osc_search_page()) {
-                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
-                            } else {
-                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
-                            }
-                        } ?>
+                        <?php echo osc_search_pagination(); ?>
                         </div>
                     </div>
                 </div>
@@ -105,6 +107,7 @@
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
+                                <?php  osc_get_non_empty_categories(); ?>
                                 <?php  if ( osc_count_categories() ) { ?>
                                     <div class="row checkboxes">
                                         <h6><?php _e('Category', 'modern') ; ?></h6>
@@ -122,7 +125,7 @@
                             </fieldset>
 
                             <?php
-                                if(osc_search_category() != '') {
+                                if(osc_search_category_id()) {
                                     osc_run_hook('search_form', osc_search_category_id()) ;
                                 } else {
                                     osc_run_hook('search_form') ;
@@ -141,7 +144,7 @@
                             $( "#log" ).attr( "scrollTop", 0 );
                         }
 
-                        $( "#city" ).autocomplete({
+                        $( "#sCity" ).autocomplete({
                             source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location",
                             minLength: 2,
                             select: function( event, ui ) {

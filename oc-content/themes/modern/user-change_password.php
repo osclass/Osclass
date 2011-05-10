@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -19,13 +18,14 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
     </head>
     <body>
         <div class="container">
@@ -44,16 +44,16 @@
                         <input type="hidden" name="action" value="change_password_post" />
                         <fieldset>
                             <p>
-                                <label for="email"><?php _e('Current password', 'modern') ; ?></label><br />
-                                <input type="password" name="password" value="" />
+                                <label for="password"><?php _e('Current password', 'modern') ; ?> *</label>
+                                <input type="password" name="password" id="password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('New pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password" value="" />
+                                <label for="new_password"><?php _e('New password', 'modern') ; ?> *</label>
+                                <input type="password" name="new_password" id="new_password" value="" />
                             </p>
                             <p>
-                                <label for="new_email"><?php _e('Repeat new pasword', 'modern') ; ?></label><br />
-                                <input type="password" name="new_password2" value="" />
+                                <label for="new_password2"><?php _e('Repeat new password', 'modern') ; ?> *</label>
+                                <input type="password" name="new_password2" id="new_password2" value="" />
                             </p>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>

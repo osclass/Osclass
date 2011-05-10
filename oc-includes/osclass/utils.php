@@ -31,12 +31,13 @@ function osc_deleteResource( $id ) {
     }
     $resource = ItemResource::newInstance()->findByPrimaryKey($id) ;
     if( !is_null($resource) ){
-        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['s_name'].".".$resource['s_extension'];
-        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['s_name']."_*".".".$resource['s_extension'];
+        $resource_original  = osc_base_path() . $resource['s_path'] .$resource['pk_i_id'].".".$resource['s_extension'];
+        $resource_thum      = osc_base_path() . $resource['s_path'] .$resource['pk_i_id']."_*".".".$resource['s_extension'];
         array_map( "unlink" , glob($resource_thum));
         array_map( "unlink" , glob($resource_original));
     }
 }
+
 /**
  * Tries to delete the directory recursivaly.
  * @return true on success.
@@ -89,6 +90,46 @@ function osc_packageExtract($zipPath, $path) {
     } else {
         return false;
     }
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_path($file) {
+    // Sanitize windows paths and duplicated slashes
+    $file = preg_replace('|/+|','/', str_replace('\\','/',$file));
+    $plugin_path = preg_replace('|/+|','/', str_replace('\\','/', PLUGINS_PATH));
+    $file = $plugin_path . preg_replace('#^.*oc-content\/plugins\/#','',$file);
+    return $file;
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_url($file) {
+    // Sanitize windows paths and duplicated slashes
+    $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
+    $dir = WEB_PATH . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    return $dir;
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_folder($file) {
+    // Sanitize windows paths and duplicated slashes
+    $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
+    $dir = preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    return $dir;
 }
 
 /**
@@ -167,6 +208,7 @@ function is_serialized($data) {
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
 function osc_doRequest($url, $_data) {
+
     if (function_exists('fputs')) {
         // convert variables array to string:
         $data = array();
@@ -186,19 +228,23 @@ function osc_doRequest($url, $_data) {
         $path = $url['path'];
 
         // open a socket connection on port 80
-        $fp = fsockopen($host, 80);
+        $fp = @fsockopen($host, 80);
+        
+        if($fp!==false) {
+            // send the request headers:
+            fputs($fp, "POST $path HTTP/1.1\r\n");
+            fputs($fp, "Host: $host\r\n");
+            fputs($fp, "Referer: OSClass\r\n");
+            fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+            fputs($fp, "Content-length: " . strlen($data) . "\r\n");
+            fputs($fp, "Connection: close\r\n\r\n");
+            fputs($fp, $data);
 
-        // send the request headers:
-        fputs($fp, "POST $path HTTP/1.1\r\n");
-        fputs($fp, "Host: $host\r\n");
-        fputs($fp, "Referer: OSClass\r\n");
-        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-        fputs($fp, "Content-length: " . strlen($data) . "\r\n");
-        fputs($fp, "Connection: close\r\n\r\n");
-        fputs($fp, $data);
-
-        // close the socket connection:
-        fclose($fp);
+            // close the socket connection:
+            fclose($fp);
+        } else {
+            osc_add_flash_error_message( _m('Error, auto-cron is not working propertly'), 'admin');
+        }
     }
 }
 
@@ -510,74 +556,50 @@ function osc_dump_table_data($path, $table)
 
 
 function osc_downloadFile($sourceFile, $downloadedFile) {
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
-	set_time_limit(0);
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+
+	@set_time_limit(0);
 	ini_set('display_errors',true);
 			
-	$fp = fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
-	$ch = curl_init($sourceFile);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-	curl_setopt($ch, CURLOPT_FILE, $fp);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	curl_exec($ch);
-	curl_close($ch);
-	fclose($fp);
-
+	$fp = @fopen (osc_content_path() . 'downloads/' . $downloadedFile, 'w+');
+	if($fp) {
+	    $ch = curl_init($sourceFile);
+	    @curl_setopt($ch, CURLOPT_TIMEOUT, 50);
+	    curl_setopt($ch, CURLOPT_FILE, $fp);
+	    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	    curl_exec($ch);
+	    curl_close($ch);
+	    fclose($fp);
+        error_reporting($iErrorReporting);
+	    return true;
+    } else {
+        error_reporting($iErrorReporting);
+        return false;
+    }
 }
 
 
 function osc_file_get_contents($url){
-    /*
+    $iErrorReporting = error_reporting();
+    error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
+
+    require_once LIB_PATH . 'libcurlemu/libcurlemu.inc.php';
+    
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
+    if( !defined('CURLOPT_RETURNTRANSFER') ) define('CURLOPT_RETURNTRANSFER', 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;*/
 
-    return file_get_contents($url) ;
+    error_reporting($iErrorReporting);
+
+    return $data;
 }
-
-
-
-// If JSON ext is not present
-if ( !function_exists('json_encode') ) {
-    function json_encode( $string ) {
-        global $osc_json;
-
-        if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once LIB_PATH . 'json/JSON.php';
-            $osc_json = new Services_JSON();
-        }
-
-        return $osc_json->encode( $string );
-    }
-}
-
-if ( !function_exists('json_decode') ) {
-    function json_decode( $string, $assoc_array = false ) {
-        global $osc_json;
-
-        if ( !is_a($osc_json, 'Services_JSON') ) {
-            require_once LIB_PATH . '/json/JSON.php';
-            $osc_json = new Services_JSON();
-        }
-
-        $res = $osc_json->decode( $string );
-        if ( $assoc_array ) $res = _json_decode_object_helper( $res );
-
-        return $res;
-    }
-
-    function _json_decode_object_helper($data) {
-        if ( is_object($data) )
-            $data = get_object_vars($data);
-
-        return is_array($data) ? array_map(__FUNCTION__, $data) : $data;
-    }
-}
-
 
 /**
  * Check if we loaded some specific module of apache
@@ -668,6 +690,11 @@ function _unzip_file_ziparchive($file, $to) {
     if ($zipopen !== true) {
         return 2;
     }
+    // The zip is empty
+    if($zip->numFiles==0) {
+        return 2;
+    }
+    
 
     for ($i = 0; $i < $zip->numFiles; $i++) {
         $file = $zip->statIndex($i);
@@ -722,7 +749,7 @@ function _unzip_file_pclzip($zip_file, $to) {
 
     // check if the zip is not empty
     if (count($files) == 0) {
-        return 3;
+        return 2;
     }
 
     // Extract the files from the zip
@@ -853,6 +880,113 @@ function osc_check_recaptcha() {
     }
 
     return false;
+}
+
+function osc_check_dir_writable( $dir = ABS_PATH ) {
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
+                        if($file=="en_US" || $file=="index.php") {
+                            $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
+                    } else {
+                        $res = osc_check_dir_writable( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
+                } else {
+                    return is_writable( str_replace("//", "/", $dir . "/" . $file));
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return true;
+}
+
+
+
+function osc_change_permissions( $dir = ABS_PATH ) {
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
+                        $res = @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    }
+                    if(!$res) { return false; };
+                    if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/themes")) {
+                        if($file=="modern" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/plugins")) {
+                        if($file=="google_maps" || $file=="google_analytics" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/languages")) {
+                        if($file=="en_US" || $file=="index.php") {
+                            $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                            if(!$res) { return false; };
+                        }
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/downloads")) {
+                    } else if(str_replace("//", "/", $dir)==(ABS_PATH . "oc-content/uploads")) {
+                    } else {
+                        $res = osc_change_permissions( str_replace("//", "/", $dir . "/" . $file));
+                        if(!$res) { return false; };
+                    }
+                } else {
+                    if(!is_writable(str_replace("//", "/", $dir . "/" . $file))) {
+                        return @chmod( str_replace("//", "/", $dir . "/" . $file), 0777);
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return true;
+}
+
+
+function osc_save_permissions( $dir = ABS_PATH ) {
+    $perms = array();
+    $perms[$dir] = fileperms($dir);
+    clearstatcache();
+    if ($dh = opendir($dir)) {
+        while (($file = readdir($dh)) !== false) {
+            if($file!="." && $file!="..") {
+                if(is_dir(str_replace("//", "/", $dir . "/" . $file))) {
+                    $res = osc_save_permissions( str_replace("//", "/", $dir . "/" . $file));
+                    foreach($res as $k => $v) {
+                        $perms[$k] = $v;
+                    }
+                } else {
+                    $perms[str_replace("//", "/", $dir . "/" . $file)] = fileperms( str_replace("//", "/", $dir . "/" . $file));
+                }
+            }
+        }
+        closedir($dh);
+    }
+    return $perms;
 }
 
 ?>

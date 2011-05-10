@@ -33,6 +33,6 @@ if(!defined('__OSC_LOADED__')) {
 	osc_runAlert('WEEKLY');
 
 
-
+    osc_run_hook('cron_weekly');
 
 ?>

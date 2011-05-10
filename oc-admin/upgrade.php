@@ -78,12 +78,6 @@ switch($action) {
 
 	case 'unzip-file':
 		if(Params::getParam('file')!='') {
-			/*$zip = new ZipArchive;
-			$res = $zip->open(osc_content_path() . 'downloads/' . Params::getParam('file'));
-			if ($res === TRUE) {
-				@mkdir(ABS_PATH.'oc-temp', 0777);
-				$zip->extractTo(ABS_PATH.'oc-temp/');
-				$zip->close();*/
             @mkdir(ABS_PATH.'oc-temp', 0777);
             $res = osc_unzip_file(osc_content_path() . 'downloads/' . Params::getParam('file'), ABS_PATH.'oc-temp/');
             if($res==1) {
@@ -104,7 +98,7 @@ switch($action) {
 			$message = "";
 			foreach ($lines as $line_num => $r_file) {
 				$unlink = @unlink(ABS_PATH.$r_file);
-				if(!$unlink) { $message .= __('Error removing file: ').$r_file."<br/>"; }
+				if(!$unlink) { $message .= sprintf(__('Error removing file: %s'), $r_file) . "<br/>"; }
 			}
 			if($message=="") {
 				$message = __('Files removed');

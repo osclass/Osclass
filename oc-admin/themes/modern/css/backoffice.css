@@ -88,6 +88,15 @@ a:hover {
 	float: left;
 	position: relative;
 }
+#static  {
+    height: 89px;
+    position: fixed;
+    right: 0;
+    top: 350px;
+    width: 35px;
+    z-index: 1;
+}
+
 /* header related styles */
 #header {
 	width: 100%;
@@ -408,6 +417,12 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 	width: auto;
 }
 
+#datatable_wrapper {
+    	display: none;
+        padding-top: 10px;
+        height: 25px;
+}
+
 #datatables_quick_edit a {
 	color: #1B326F;
 }
@@ -486,6 +501,10 @@ tr.even td{
 	margin-bottom: 10px;
     margin-top: 10px;
 }
+.FlashMessage.ok { background-color:#9CDA9B; border: 0px;}
+.FlashMessage.info { background-color:#FFF78D; border: 0px;}
+.FlashMessage.error { background-color:#FFD2CF; border: 0px;}
+
 
 .dataTables_empty {
 	min-height: 300px;

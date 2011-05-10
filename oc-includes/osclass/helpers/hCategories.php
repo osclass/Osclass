@@ -45,9 +45,9 @@
      * @return <array>
      */
     function osc_get_categories() {
-       if ( !View::newInstance()->_exists('categories') ) {
+       //if ( !View::newInstance()->_exists('categories') ) {
             View::newInstance()->_exportVariableToView('categories', Category::newInstance()->toTree() ) ;
-        }
+        //}
         return  View::newInstance()->_get('categories') ;
     }
     
@@ -189,5 +189,24 @@
     function osc_goto_first_category() {
         View::newInstance()->_reset('categories') ;
     }
+    
+    function osc_get_non_empty_categories() {
+        $aCategories = Category::newInstance()->toTree();
+        foreach($aCategories as $k => $v) {
+            $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);
+            if($iCategoryNumItems > 0) {
+                $aCategories[$k]['total'] = $iCategoryNumItems;
+            } else {
+                unset($aCategories[$k]);
+            }
+        }
+        View::newInstance()->_exportVariableToView('categories', $aCategories );
+        return  View::newInstance()->_get('categories') ;
+    }
+    
+    function osc_categories_select($name = 'sCategory', $category = null) {
+        CategoryForm::category_select(Category::newInstance()->toTree(), $category, __("- Select a category -"), $name) ;
+    }
+
 
 ?>

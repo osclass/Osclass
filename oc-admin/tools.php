@@ -1,19 +1,23 @@
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2010 OSCLASS
      *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
      *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
      *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
     class CAdminTools extends AdminSecBaseModel
@@ -36,9 +40,9 @@
 
                                         $conn = getConnection() ;
                                         if ( $conn->osc_dbImportSQL($content_file) ) {
-                                            osc_add_flash_message( _m('Import complete'), 'admin') ;
+                                            osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
                                         } else {
-                                            osc_add_flash_message( _m('There was a problem importing data to the database'), 'admin') ;
+                                            osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                 break;
@@ -83,7 +87,7 @@
 
                                         }
                                         closedir($dir) ;
-                                        osc_add_flash_message( _m('Re-generation complete'), 'admin') ;
+                                        osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images') ;
                 break;
                 case 'upgrade':
@@ -105,19 +109,24 @@
 
                                         switch ( osc_dbdump($path, $filename) ) {
                                             case(-1):   $msg = _m('Path is empty') ;
+                                                    osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            case(-2):   $msg = _m('Could not connect with the database') . '. Error: ' . mysql_error() ;
+                                            case(-2):   $msg = sprintf(_m('Could not connect with the database. Error: %s'), mysql_error()) ;
+                                                    osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
-                                            case(-3):   $msg = _m('Could not select the database') . '. Error: ' . mysql_error() ;
+                                            case(-3):   $msg = sprintf(_m('Could not select the database. Error: %s'), mysql_error()) ;
+                                                    osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-4):   $msg = _m('There are no tables to back up') ;
+                                                    osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-5):   $msg = _m('The folder is not writable') ;
+                                                    osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             default:    $msg = _m('Backup has been done properly') ;
+                                                    osc_add_flash_ok_message( $msg, 'admin') ;
                                             break;
                                         }
-                                        osc_add_flash_message( $msg, 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 break;
                 case 'backup-zip':      //zip of the code just to back it up
@@ -134,10 +143,11 @@
 
                                         if ( osc_zip_folder($archive_folder, $archive_name) ) {
                                             $msg = _m('Archiving successful!') ;
+                                            osc_add_flash_ok_message( $msg, 'admin') ;
                                         }else{
                                             $msg = _m('Error, the zip file was not created at the specified directory') ;
+                                            osc_add_flash_error_message( $msg, 'admin') ;
                                         }
-                                        osc_add_flash_message( $msg, 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 break;
                 case 'backup_post':

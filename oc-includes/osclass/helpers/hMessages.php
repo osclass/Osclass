@@ -23,16 +23,34 @@
 
     // Adds an ephemeral message to the session.
     function osc_add_flash_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg) ;
+        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+    }
+
+    function osc_add_flash_ok_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'ok') ;
+    }
+
+    function osc_add_flash_error_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+    }
+
+    function osc_add_flash_info_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'info') ;
     }
 
     //Shows all the pending flash messages in session and cleans up the array.
     function osc_show_flash_message($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
         $message = Session::newInstance()->_getMessage($section) ;
 
-        if ($message != '') {
+        if (isset($message['msg']) && $message['msg'] != '') {
+            echo '<div id="' . $id . '" class="' . $class . ' ' . $message['type'] . '">' ;
+                echo $message['msg'];
+            echo '</div>' ;
+
+            Session::newInstance()->_dropMessage($section) ;
+        } else if($message!='') {
             echo '<div id="' . $id . '" class="' . $class . '">' ;
-                echo Session::newInstance()->_getMessage($section) ;
+                echo $message;
             echo '</div>' ;
 
             Session::newInstance()->_dropMessage($section) ;

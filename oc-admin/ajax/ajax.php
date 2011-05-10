@@ -1,4 +1,5 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -87,7 +88,191 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
                     break;
+            
+                case 'categories_order': // Save the order of the categories
 
+                    $aIds = Params::getParam('list') ;
+                    $orderParent = 0 ;
+                    $orderSub    = 0 ;
+                    $catParent   = 0 ;
+                    
+                    $catManager = Category::newInstance();
+                    
+                    foreach($aIds as $id => $parent ) {
+                        if($parent == 'root'){
+                            if(! $catManager->update_order($id, $orderParent) ) {
+                                $error = 1;
+                            }
+                            // set parent category 
+                            $conditions = array('pk_i_id' => $id);
+                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            if(! $catManager->update($array, $conditions) > 0) {
+                                $error = 1;
+                            }
+                            $orderParent++;
+                        } else {
+                            if( $parent != $catParent ) {
+                                $catParent = $parent;
+                                $orderSub = 0;
+                            }
+                            if(! $catManager->update_order($id, $orderSub) ) {
+                                $error = 1;
+                            }
+                            
+                            // set parent category 
+                            $conditions = array('pk_i_id' => $id);
+                            $array['fk_i_parent_id'] = $catParent;
+                            if(! $catManager->update($array, $conditions) > 0) {
+                                $error = 1;
+                            }
+                            $orderSub++;
+                        }
+                    }
+                    
+                    $result = "{";
+                    $error = 0;
+
+                    if($error) { $result .= '"error" : "'.__("Some error ocurred").'"'; }
+                    else {       $result .= '"ok" : "'.__("Order saved").'"'; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    break;
+
+                case 'categories_name': // Save the category's name in quick edit
+                    $id = explode("_", Params::getParam('div'));
+                    $name = Params::getParam('name');
+                    $locale = Params::getParam('locale');
+                    Category::newInstance()->update_name($id, $locale, $name);
+                    echo '1';
+                    break;
+                
+                case 'enable_category':
+                    $id = Params::getParam("id");
+                    $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
+                    $error = 0;
+                    $aUpdated = "";
+                    try {
+                        if ($id!='') {
+                            $categoryManager = Category::newInstance() ;
+                            $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
+                            if ($enabled==1) {
+                                $msg = __('The category has been enabled') ;
+                            } else {
+                                $msg = __('The category has been disabled') ;
+                            }
+                            
+                            $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
+                            $aUpdated = $categoryManager->listWhere( "fk_i_parent_id = $id" );
+                            if ($enabled==1) {
+                                $msg .= "<br>" . __('The subcategories has been enabled') ;
+                            } else {
+                                $msg .= "<br>" . __('The subcategories has been disabled') ;
+                            }
+                            
+                        } else {
+                            $error = 1;
+                            $msg = __('There was a problem with this page. The ID for the category hasn\'t been set') ;
+                        }
+                        $message = $msg;
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error: %s') ." ".$e->getMessage();
+                    }
+                    
+                    $result = "{";
+                    $error = 0;
+
+                    if($error) { $result .= '"error" : "'.$message.'"'; }
+                    else {       
+                        $result .= '"ok" : "'.$message.'"'; 
+                        if( count($aUpdated) > 0 ){
+                            $result .= ', "afectedIds": [';
+                            foreach($aUpdated as $category){
+                                $result .= '{ "id" : "'.$category['pk_i_id'].'" },';
+                            }
+                            $result = substr($result,0,-1); 
+                            $result .= ']';
+                        } else {
+                            $result .= ', "afectedIds": []';
+                        }
+                    }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
+                case 'delete_category':
+                    $id = Params::getParam("id");
+                    $error = 0;
+                    $json_subcategories = ', "afectedIds": [';
+                    try {
+                        $categoryManager = Category::newInstance() ;
+                        $subcats = $categoryManager->findSubcategories($id);
+                        if (count($subcats) > 0) {
+                            foreach ($subcats as $s) {
+                                $json_subcategories .= '{ "id" : "'.$s["pk_i_id"].'"},';
+                            }
+                            $json_subcategories = substr($json_subcategories,0,-1); 
+                        }
+                        $categoryManager->deleteByPrimaryKey($id) ;
+                      
+                        $message = __('The categories have been deleted');
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error while deleting');
+                    }
+                    $json_subcategories .= ']';
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "Saved." '.$json_subcategories; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
+                case 'edit_category_post':
+                    $id = Params::getParam("id");
+
+                    $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
+                    $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['i_position'] = (Params::getParam("i_position") != '') ? Params::getParam("i_position") : 0;
+                    $fields['b_enabled'] = (Params::getParam("b_enabled")!='' ) ? 1 : 0;
+
+                    $error = 0;
+                    $postParams = Params::getParamsAsArray();
+                    foreach ($postParams as $k => $v) {
+                        if (preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2] == 's_name') {
+                                if($v != ""){
+                                    $aFieldsDescription[$m[1]][$m[2]] = $v;
+                                }else{
+                                    $error = 1;
+                                    $message = __("All titles are required");
+                                }
+                            }
+                            
+                        }
+                    }
+                    try {
+                        $categoryManager = Category::newInstance() ;
+                        $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __("Error while updating.");
+                    }
+                    
+                    $l = osc_current_user_locale();
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "'.__("Saved").'", "text" : "'.$aFieldsDescription[$l]['s_name'].'"'; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    break;
+                    
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
@@ -96,6 +281,156 @@
                         echo json_encode(array('error' => __('no action defined')));
                     }
                     break;
+                    
+                    
+                /******************************
+                 ** COMPLETE UPGRADE PROCESS **
+                 ******************************/
+	            case 'upgrade': // AT THIS POINT WE KNOW IF THERE'S AN UPDATE OR NOT
+	
+	                $message = "";
+	                $error = 0;
+                    $remove_error_msg = "";
+                    $sql_error_msg = "";
+                    $rm_errors = 0;
+                    $perms = osc_save_permissions();
+                    osc_change_permissions();
+
+
+                    /***********************
+                     **** DOWNLOAD FILE ****
+                     ***********************/
+		            if(Params::getParam('file')!='') {
+
+			            $tmp = explode("/", Params::getParam('file'));
+			            $filename = end($tmp);
+			            $result = osc_downloadFile(Params::getParam('file'), $filename);
+
+                        if($result) { // Everything is OK, continue
+                            /**********************
+                             ***** UNZIP FILE *****
+                             **********************/
+                            @mkdir(ABS_PATH.'oc-temp', 0777);
+                            $res = osc_unzip_file(osc_content_path() . 'downloads/' . $filename, ABS_PATH.'oc-temp/');
+                            if($res==1) { // Everything is OK, continue
+                                /**********************
+                                 ***** COPY FILES *****
+                                 **********************/
+		                        $fail = -1;
+		                        if ($handle = opendir(ABS_PATH.'oc-temp')) {
+			                        $fail = 0;
+			                        while (false !== ($_file = readdir($handle))) {
+				                        if($_file!='.' && $_file!='..' && $_file!='remove.list' && $_file!='upgrade.sql' && $_file!='customs.actions') {
+					                        $data = osc_copy(ABS_PATH."oc-temp/".$_file, ABS_PATH.$_file);
+					                        if($data==false) {
+					                            $fail = 1;
+					                        };
+				                        }
+			                        }
+			                        closedir($handle);
+			                        
+                                    if($fail==0) { // Everything is OK, continue
+                                        /**********************
+                                         **** REMOVE FILES ****
+                                         **********************/
+                                        if(file_exists(ABS_PATH.'oc-temp/remove.list')) {
+			                                $lines = file(ABS_PATH.'oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+			                                foreach ($lines as $line_num => $r_file) {
+				                                $unlink = @unlink(ABS_PATH.$r_file);
+				                                if(!$unlink) { $remove_error_msg .= sprintf(__('Error removing file: %s'), $r_file) . "<br/>"; }
+			                                }
+		                                }
+		                                // Removing files is not important for the rest of the proccess
+		                                // We will inform the user of the problems but the upgrade could continue
+                                        /************************
+                                         *** UPGRADE DATABASE ***
+                                         ************************/
+		                                $error_queries = array();
+                                        if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+                                            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
+                                    		$conn = getConnection();
+                                            $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+		                                }
+		                                if($error_queries[0]) { // Everything is OK, continue
+                                            /**********************************
+                                             ** EXECUTING ADDITIONAL ACTIONS **
+                                             **********************************/
+		                                    if(file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
+			                                    // There should be no errors here
+			                                    define('AUTO_UPGRADE', true);
+			                                    require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
+		                                    }
+                    		                // Additional actions is not important for the rest of the proccess
+                    		                // We will inform the user of the problems but the upgrade could continue
+                                            /****************************
+                                             ** REMOVE TEMPORARY FILES **
+                                             ****************************/
+		                                    $path = ABS_PATH . 'oc-temp';
+		                                    $rm_errors = 0;
+		                                    $dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::CHILD_FIRST);
+		                                    for ($dir->rewind(); $dir->valid(); $dir->next()) {
+			                                    if ($dir->isDir()) {
+                                                    if($dir->getFilename()!='.' && $dir->getFilename()!='..') {
+                                        				if(!rmdir($dir->getPathname())) {
+                                        				    $rm_errors++;
+                                        				}
+                                                    }
+			                                    } else {
+				                                    if(!unlink($dir->getPathname())) {
+				                                        $rm_errors++;
+				                                    }
+			                                    }
+		                                    }
+		                                    if(!rmdir($path)) {
+		                                        $rm_errors++;
+		                                    }
+		                                    if($rm_errors==0) {
+		                                        $message = __('Everything was OK! Your OSClass installation is updated');
+		                                    } else {
+                                                $message = __('Almost everything was OK! Your OSClass installation is updated, but there were some errors removing temporary files. Please, remove manually the "oc-temp" folder', 'admin');
+		                                        $error = 6; // Some errors removing files
+		                                    }
+		                                } else {
+                                            $sql_error_msg = $error_queries[2];
+                                            $message = __('Problems upgrading the database', 'admin');
+                                            $error = 5; // Problems upgrading the database		                
+		                                }
+			                        } else {
+                                        $message = __('Problems copying files. Maybe permissions are not correct', 'admin');
+				                        $error = 4; // Problems copying files. Maybe permissions are not correct
+			                        }
+		                        } else {
+                                    $message = __('Nothing to copy', 'admin');
+                                    $error = 99; // Nothing to copy. THIS SHOULD NEVER HAPPENS, means we dont update any file!
+		                        }
+			                } else {
+                    		    $message = __('Unzip failed', 'admin');
+				                $error = 3; // Unzip failed
+			                }
+                        } else {
+                		    $message = __('Download failed', 'admin');
+                            $error = 2; // Download failed
+                        }
+		            } else {
+		                $message = __('Missing download URL', 'admin');
+			            $error = 1; // Missing download URL
+		            }
+		
+		            if($remove_error_msg!='') {
+		                if($error==0) {
+                		    $message .= "<br /><br />" . __('We had some errors removing files, those are not super-sensitive errors, so we continued upgrading your installation. Please remove the following files (you already have OSClass upgraded, but to ensure maximun performance)', 'admin');
+                        }
+		            }
+		
+                    if($error==5) {
+                        $message .= "<br /><br />" . __('We had some errors upgrading your database. The follwing queries failed', 'admin') . implode("<br />", $sql_error_msg);
+		            }
+		            echo $message;
+
+                    foreach($perms as $k => $v) {
+                        chmod($k, $v);
+                    }
+		            break;
                     
                 default:
                     echo json_encode(array('error' => __('no action defined')));

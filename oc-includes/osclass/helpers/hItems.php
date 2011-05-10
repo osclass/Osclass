@@ -116,7 +116,12 @@
     }
 
     function osc_item_mod_date() {
-        return osc_item_field("dt_mod_date");
+        $date = osc_item_field("dt_mod_date");
+        if($date!='') {
+            return $date;
+        } else {
+            return osc_item_pub_date();
+        }
     }
 
     function osc_item_price() {
@@ -143,6 +148,10 @@
         return osc_item_field("s_country");
     }
 
+    function osc_item_country_code() {
+        return osc_item_field("fk_c_country_code");
+    }
+
     function osc_item_region() {
         return osc_item_field("s_region");
     }
@@ -157,6 +166,10 @@
 
     function osc_item_address() {
         return osc_item_field("s_address");
+    }
+
+    function osc_item_show_email() {
+        return osc_item_field("b_show_email");
     }
 
     function osc_item_zip() {
@@ -262,6 +275,18 @@
         return View::newInstance()->_get('items_per_page');
     }    
     
+    function osc_item_total_comments() {
+        return ItemComment::newInstance()->total_comments(osc_item_id());
+    }
+    
+    function osc_item_comments_page() {
+        $page = Params::getParam('comments-page');
+        if($page=='') {
+            $page = 0;
+        }
+        return $page;
+    }
+    
     ///////////////////////
     // HELPERS FOR ITEMS //
     ///////////////////////
@@ -330,15 +355,15 @@
     }
 
     function osc_resource_thumbnail_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_thumbnail.".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id()."_thumbnail.".osc_resource_field("s_extension");
     }
 
     function osc_resource_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name").".".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id().".".osc_resource_field("s_extension");
     }
 
     function osc_resource_original_url() {
-        return osc_base_url().osc_resource_field("s_path").osc_resource_field("s_name")."_original.".osc_resource_field("s_extension");
+        return osc_resource_path().osc_resource_id()."_original.".osc_resource_field("s_extension");
     }
     ///////////////////////////////
     // END HELPERS FOR RESOURCES //
@@ -352,6 +377,10 @@
             View::newInstance()->_erase('resources') ;
         }
         return View::newInstance()->_next('items') ;
+    }
+
+    function osc_reset_items() {
+        return View::newInstance()->_reset('items') ;
     }
 
     function osc_count_items() {
@@ -381,14 +410,14 @@
 
     function osc_count_item_comments() {
         if ( !View::newInstance()->_exists('comments') ) {
-            View::newInstance()->_exportVariableToView('comments', ItemComment::newInstance()->findByItemID( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('comments', ItemComment::newInstance()->findByItemID( osc_item_id(), osc_item_comments_page(), osc_comments_per_page() ) ) ;
         }
         return View::newInstance()->_count('comments') ;
     }
 
     function osc_has_item_comments() {
         if ( !View::newInstance()->_exists('comments') ) {
-            View::newInstance()->_exportVariableToView('comments', Item::newInstance()->listLatest( osc_item_id() ) ) ;
+            View::newInstance()->_exportVariableToView('comments', ItemComment::newInstance()->findByItemID( osc_item_id(), osc_item_comments_page(), osc_comments_per_page() ) ) ;
         }
         return View::newInstance()->_next('comments') ;
     }
@@ -423,13 +452,13 @@
         if ($price == 0) return __('Check with seller') ;
         //if ($price == null) return __('Check with seller') ;
         //if ($price == 0) return __('Free') ;
-        return sprintf('%.02f %s', $price, osc_item_currency() ) ;
+        $currencyFormat =  osc_locale_currency_format();
+
+        $currencyFormat = preg_replace('/%s/', 'CURRENCY', $currencyFormat) ;
+        $currencyFormat = sprintf($currencyFormat, $price);
+        $currencyFormat = preg_replace('/CURRENCY/', '%s', $currencyFormat) ;
+        return sprintf($currencyFormat , osc_item_currency() ) ;
     }
-
-
-
-
-
 
     //PRIVATE
     function osc_priv_count_items() {
@@ -439,6 +468,4 @@
     function osc_priv_count_item_resources() {
         return View::newInstance()->_count('resources') ;
     }
-
-
 ?>

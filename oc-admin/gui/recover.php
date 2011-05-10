@@ -33,7 +33,7 @@
                 </a>
             </h1>
             <?php osc_show_flash_message('admin') ; ?>
-            <div class="message" style="text-align:center;">
+            <div class="message warning" style="text-align:center;">
                 <?php _e('Please enter your username or e-mail address') ; ?>.<br />
                 <?php _e('You will receive a new password via e-mail') ; ?>.
             </div>
@@ -45,6 +45,7 @@
                     <label><?php _e('E-mail') ; ?><br />
                     <input type="text" name="email" id="user_email" class="input" value="" size="20" tabindex="10" /></label>
                 </p>
+                <?php osc_show_recaptcha(); ?>
                 <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Get new password') ; ?>" tabindex="100" /></p>
             </form>
 
