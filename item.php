@@ -88,8 +88,23 @@
                         osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                         $this->redirectTo(osc_base_url(true));
                     }
-                    // POST ITEM ( ADD ITEM )
+                    
                     $mItems = new ItemActions(false);
+                    // prepare data for ADD ITEM
+                    $mItems->prepareData(true);
+                    // set all parameters into session
+                    foreach( $mItems->data as $key => $value ) {
+                        Session::newInstance()->_set($key,$value);
+                    }
+                    
+                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                        if(!osc_check_recaptcha()) {
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            $this->redirectTo( osc_item_post_url() );
+                            return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                        }
+                    }
+                    // POST ITEM ( ADD ITEM )
                     $success = $mItems->add();
 
                     if($success) {
@@ -193,8 +208,23 @@
                     if (count($item) == 1) {
 
                         $this->_exportVariableToView('item', $item[0]) ;
-
+                        
                         $mItems = new ItemActions(false);
+                        // prepare data for ADD ITEM
+                        $mItems->prepareData(false);
+                        // set all parameters into session
+                        foreach( $mItems->data as $key => $value ) {
+                            Session::newInstance()->_set($key,$value);
+                        }
+
+                        if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                            if(!osc_check_recaptcha()) {
+                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                                $this->redirectTo( osc_item_post_url() );
+                                return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                            }
+                        }
+                        
                         $success = $mItems->edit();
 
                         if($success){
