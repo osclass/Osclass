@@ -451,6 +451,10 @@ class Item extends DAO
     public function deleteByPrimaryKey($id)
     {
         osc_run_hook('delete_item', $id);
+        $item = $this->findByPrimaryKey($id);
+        if($item['e_status']=='ACTIVE') {
+            CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+        }
         $this->conn->osc_dbExec('DELETE FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_comment WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
         $this->conn->osc_dbExec('DELETE FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
