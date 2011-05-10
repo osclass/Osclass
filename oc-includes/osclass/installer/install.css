@@ -150,6 +150,10 @@ ul#nav {
     width: 160px;
 }
 
+.form-table td.small {
+    font-size: 12px;
+}
+
 .form-table input {
     font-size: 14px;
     padding: 2px;
@@ -176,6 +180,29 @@ ul#nav {
     width: 350px;
     text-align: center;
     background-color: #FF9696;
+}
+
+#advanced_install {
+    padding-left: 20px;
+    width: 100%;
+    float: left;
+    cursor: pointer;
+    color: #444444;
+    font-size: 12px;
+}
+
+#advanced_install.shrink {
+    background: url('../../images/arrow_noexpanded.png') no-repeat;
+}
+
+#advanced_install.expanded {
+    background: url('../../images/arrow_expanded.png') no-repeat;
+}
+
+#advanced_install .text {
+    border-bottom: 1px solid #CCCCCC;
+    padding-bottom: 2px;
+    width: 95%;
 }
 
 .button {
@@ -548,8 +575,7 @@ label.error,
     color: white;
 }
 
-.strengthy-error,
-.error {
+.strengthy-error .error {
     background: rgba(200, 0, 0, 0.7);
 }
 
@@ -568,4 +594,20 @@ label.error,
 .strengthy-show-toggle {
     padding: 0;
     margin: 0;
+}
+
+.s_passwd_input button, .s_name_input button {
+    border: 1px solid gray;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -khtml-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    float: left;
+    margin-left: 8px;
+    padding: 3px 8px;
+    background-color: #F7F7F7;
+    color: #444444;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
 }

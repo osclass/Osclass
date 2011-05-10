@@ -518,47 +518,56 @@ function display_database_config() {
                 <tr>
                     <th><label for="dbhost">Host</label></th>
                     <td><input type="text" id="dbhost" name="dbhost" value="localhost" size="25" /></td>
-                    <td>Server name or IP where the database engine resides</td>
+                    <td class="small">Server name or IP where the database engine resides</td>
                 </tr>
                 <tr>
                     <th><label for="dbname">Database name</label></th>
                     <td><input type="text" id="dbname" name="dbname" value="osclass" size="25" /></td>
-                    <td>The name of the database you want to run OSClass in</td>
+                    <td class="small">The name of the database you want to run OSClass in</td>
                 </tr>
                 <tr>
                     <th><label for="username">User Name</label></th>
                     <td><input type="text" id="username" name="username" size="25" /></td>
-                    <td>Your MySQL username</td>
+                    <td class="small">Your MySQL username</td>
                 </tr>
                 <tr>
                     <th><label for="password">Password</label></th>
                     <td><input type="password" id="password" name="password" value="" size="25" /></td>
-                    <td>Your MySQL password</td>
+                    <td class="small">Your MySQL password</td>
                 </tr>
                 <tr>
                     <th><label for="tableprefix">Table prefix</label></th>
                     <td><input type="text" id="tableprefix" name="tableprefix" value="oc_" size="25" /></td>
-                    <td>If you want to run multiple OSClass installations in a single database, change this</td>
+                    <td class="small">If you want to run multiple OSClass installations in a single database, change this</td>
                 </tr>
             </tbody>
         </table>
-        <div id="advanced_exp" onclick="$('#more-options').toggle(); $('#advanced_exp').hide(); $('#separator').css('width', '97%');$('#advanced').show();" style="cursor:pointer;float:left; width: 12%;font-size: 12px;color: #444444;">
-            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_noexpanded.png"/>
-            <span>Advanced</span>
+        <div id="advanced_install" class="shrink">
+            <div class="text">
+                <span>Advanced</span>
+            </div>
         </div>
-        <div id="advanced" onclick="$('#more-options').toggle();$('#separator').css('width', '88%');$('#advanced').hide();$('#advanced_exp').show();" style="cursor:pointer; display:none;float:left; width: 3%;font-size: 12px;color: #444444;">
-            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_expanded.png"/>
-        </div>
-        <div id="separator" style="float:right; width: 88%;">
-            <hr style="border: 1px solid gray;"/>
-        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#advanced_install').click(function() {
+                    $('#more-options').toggle();
+                    if( $('#advanced_install').attr('class') == 'shrink' ) {
+                        $('#advanced_install').removeClass('shrink');
+                        $('#advanced_install').addClass('expanded');
+                    } else {
+                        $('#advanced_install').addClass('shrink');
+                        $('#advanced_install').removeClass('expanded');
+                    }
+                });
+            });
+        </script>
         <div style="clear:both;"></div>
         <table id="more-options" style="display:none;">
             <tbody>
                 <tr>
                     <th></th>
                     <td><input type="checkbox" id="createdb" name="createdb" onclick="db_admin();"/><label for="createdb">Create DB</label></td>
-                    <td>Check here if the database is not created and you want to create it now</td>
+                    <td class="small">Check here if the database is not created and you want to create it now</td>
                 </tr>
                 <tr id="admin_username_row">
                     <th><label for="admin_username">DB admin username</label></th>
@@ -793,22 +802,35 @@ function display_finish() {
             <tr>
                 <th><label>Username</label></th>
                 <td>
-                    <p class="s_name" style=" cursor: pointer;">
-                        <span><?php echo $data['admin_user']; ?></span><img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
-                        <span class="update_info_name" style="color: #444444;display:none;font-size: 12px;"> Modify </span>
-                    </p>
-                    <p class="s_name_input" style=" display:none;"> <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>"/> <button>Update</button> </p>
+                    <div class="s_name">
+                        <span style="float:left;" ><?php echo $data['admin_user']; ?></span>
+                        <div style="cursor: pointer; height: 20px; float: left;" >
+                            <img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
+                            &nbsp;
+                            <span class="update_info_name" style="color:#444444; display:none; font-size: 12px;"> Modify </span>
+                        </div>
+                    </div>
+                    <div class="s_name_input" style=" display:none;">
+                        <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>" style="float:left;" /> 
+                        <button>Update</button>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <th><label>Password</label></th>
                 <td>
-                    <p class="s_passwd" style=" cursor: pointer;">
-                        <span><?php echo $data['password']; ?></span><img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
-                        <span class="update_info_passwd" style="color: #444444;display:none;font-size: 12px;"> Modify </span>
-                    </p>
-                    <p class="s_passwd_input" style=" display:none;"> <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left;"/><br><br> <button>Update</button> </p>
-
+                    <div class="s_passwd">
+                        <span style="float: left;"><?php echo $data['password']; ?></span>
+                        <div style="cursor: pointer; height: 20px; float: left;" >
+                            <img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
+                            &nbsp;
+                            <span class="update_info_passwd" style="color:#444444; display:none; font-size: 12px;"> Modify </span>
+                        </div>
+                    </div>
+                    <div class="s_passwd_input" style=" display:none;">
+                        <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left;"/>
+                        <button>Update</button>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -821,101 +843,102 @@ function display_finish() {
         </tbody>
     </table>
 </div>
-<script>
+<script type="text/javascript">
+    $(".s_name div").click(function () {
+        $(this).parent().hide();
+        $('.s_name_input').show();
+    });
+    $(".s_passwd div").click(function () {
+        $(this).parent().hide();
+        $('.s_passwd_input').show();
+    });
 
-$(".s_name").click(function () {
-    $(this).hide();
-    $('.s_name_input').show();
-});
-$(".s_passwd").click(function () {
-    $(this).hide();
-    $('.s_passwd_input').show();
-});
+    $('.s_name div').hover(
+        function () {
+            $('.update_info_name').show()
+        },
+        function () {
+            $('.update_info_name').hide()
+        }
+    );
 
-$('.s_name').hover(
-     function callback(eventObject) {
-        $('.update_info_name').show()
-     },
-     function callback(eventObject) {
-        $('.update_info_name').hide()
-     });
+    $('.s_passwd div').hover(
+        function () {
+            $('.update_info_passwd').show()
+        },
+        function () {
+            $('.update_info_passwd').hide()
+        }
+    );
 
-$('.s_passwd').hover(
-     function callback(eventObject) {
-        $('.update_info_passwd').show()
-     },
-     function callback(eventObject) {
-        $('.update_info_passwd').hide()
-     });
+    $(".s_name_input button").click( function(){ update_username(); } );
 
-$(".s_name_input button").click( function(){ update_username(); } );
-$("input[name='s_name']").keypress(function(e) {
-    if(e.keyCode == 13) {
-        update_username();
-    }
-});
-
-$(".s_passwd_input button").click( function(){ update_passwd(); } );
-$("input[name='s_passwd']").keypress(function(e) {
-    if(e.keyCode == 13) {
-        update_passwd();
-    }
-});
-
-function update_username(){
-    // ajax update user
-    $.ajax({
-        type: 'POST',
-        url: 'update_admin.php?old_password='+$('input[name="original_passwd"]').val()+"&id=1&new_username="+$('.s_name_input input').val(),
-        timeout: 600000,
-        success: function(data) {
-            if(data < 0){
-                $('#result span').html("There have been some error.");
-                $('#result').addClass('badPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-            } else if (data >= 0 ) {
-                $('.s_name span:first').html( $('.s_name_input input').val() );
-                $('#result span').html("Updated correctly.");
-                $('#result').addClass('strongPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-            }
+    $("input[name='s_name']").keypress(function(e) {
+        if(e.keyCode == 13) {
+            update_username();
         }
     });
-    $('.s_name_input').hide();
-    $('.s_name').show();
-}
 
-function update_passwd(){
-    // ajax update passwd
-    $.ajax({
-        type: 'POST',
-        url: 'update_admin.php?old_password='+$('input[name="original_passwd"]').val()+"&id=1&new_password="+$('.s_passwd_input input').val(),
-        timeout: 600000,
-        success: function(data) {
-           if(data < 0){
-                $('.s_passwd_input input').val( $('.s_passwd span:first').html() );
-
-                $('#result span').html("There have been some error.");
-                $('#result').addClass('badPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-
-            } else if (data >= 0 ) {
-                $('input[name="original_passwd"]').val( $('.s_passwd_input input').val() );
-                $('.s_passwd span:first').html( $('.s_passwd_input input').val() );
-
-                $('#result span').html("Updated correctly.");
-                $('#result').addClass('strongPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-            }
+    $(".s_passwd_input button").click( function(){ update_passwd(); } );
+    $("input[name='s_passwd']").keypress(function(e) {
+        if(e.keyCode == 13) {
+            update_passwd();
         }
     });
-    $('.s_passwd_input').hide();
-    $('.s_passwd').show();
-}
+
+    function update_username(){
+        // ajax update user
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo get_absolute_url(); ?>oc-includes/osclass/update_admin.php?old_password=' + $('input[name="original_passwd"]').val() + '&new_username=' + $('.s_name_input input').val(),
+            timeout: 2000,
+            dataType: 'json',
+            success: function(data) {
+                if(data.error){
+                    $('#result span').html("There have been some error.");
+                    $('#result').addClass('badPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                } else {
+                    $('.s_name span:first').html( $('.s_name_input input').val() );
+                    $('#result span').html("Updated correctly.");
+                    $('#result').addClass('strongPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                }
+            }
+        });
+        $('.s_name_input').hide();
+        $('.s_name').show();
+    }
+
+    function update_passwd(){
+        // ajax update passwd
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo get_absolute_url(); ?>oc-includes/osclass/update_admin.php?old_password=' + $('input[name="original_passwd"]').val() + '&new_password=' + $('.s_passwd_input input').val(),
+            timeout: 2000,
+            dataType: 'json',
+            success: function(data) {
+               if(data.error){
+                    $('.s_passwd_input input').val( $('.s_passwd span:first').html() );
+                    $('#result span').html("There have been some error.");
+                    $('#result').addClass('badPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                } else {
+                    $('input[name="original_passwd"]').val( $('.s_passwd_input input').val() );
+                    $('.s_passwd span:first').html( $('.s_passwd_input input').val() );
+                    $('#result span').html("Updated correctly.");
+                    $('#result').addClass('strongPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                }
+            }
+        });
+        $('.s_passwd_input').hide();
+        $('.s_passwd').show();
+    }
 </script>
 <p class="margin20">
     <a target="_blank" href="<?php echo get_absolute_url() ?>oc-admin/index.php" class="button">Finish and go to the administration panel</a>
