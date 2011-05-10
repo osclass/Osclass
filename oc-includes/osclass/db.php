@@ -466,11 +466,17 @@
             }
 
             $queries = array_merge($struct_queries, $data_queries);
+            $ok = true;
+            $error_queries = array();
             foreach($queries as $query) {
-                $this->osc_dbExec($query);
+                $res = $this->osc_dbExec($query);
+                if(!$res) {
+                    $ok = false;
+                    $error_queries[] = $query;
+                }
             }
 
-            return $queries;
+            return array($ok, $queries, $error_queries);
         }
 
     }

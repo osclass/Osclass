@@ -126,6 +126,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     d_coord_long DECIMAL(10, 6),
     i_permissions VARCHAR(2) DEFAULT 0,
     b_company BOOLEAN NOT NULL DEFAULT FALSE,
+    i_items INT UNSIGNED NULL DEFAULT 0,
+    i_comments INT UNSIGNED NULL DEFAULT 0,
 
 
         PRIMARY KEY (pk_i_id),
@@ -270,9 +272,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_stats (
 CREATE TABLE /*TABLE_PREFIX*/t_item_resource (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fk_i_item_id INT UNSIGNED NOT NULL,
-    s_name VARCHAR(60) NOT NULL,
+    s_name VARCHAR(60) NULL,
     s_extension VARCHAR(10) NULL,
-    s_content_type VARCHAR(40) NOT NULL,
+    s_content_type VARCHAR(40) NULL,
     s_path VARCHAR(250) NULL,
 
         PRIMARY KEY (pk_i_id),

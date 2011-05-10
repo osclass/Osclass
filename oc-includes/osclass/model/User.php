@@ -97,16 +97,17 @@
             {
             if($id!=null) {
                 osc_run_hook('delete_user', $id);
-                $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
+                $items = $this->conn->osc_dbFetchResults("SELECT pk_i_id, fk_i_category_id FROM %st_item WHERE fk_i_user_id = %d", DB_TABLE_PREFIX, $id);
                 $itemManager = Item::newInstance();
                 foreach($items as $item) {
-                        $itemManager->deleteByPrimaryKey($item['pk_i_id']);
-                    }
-                    $this->conn->osc_dbExec('DELETE FROM %st_user_email_tmp WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                    $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                    $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
-                    $this->conn->osc_dbExec('DELETE FROM %st_user WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
-                    return true;
+                    $itemManager->deleteByPrimaryKey($item['pk_i_id']);
+                    //CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                }
+                $this->conn->osc_dbExec('DELETE FROM %st_user_email_tmp WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
+                $this->conn->osc_dbExec('DELETE FROM %st_user_description WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
+                $this->conn->osc_dbExec('DELETE FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $id);
+                $this->conn->osc_dbExec('DELETE FROM %st_user WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
+                return true;
             }
             return false;
         }

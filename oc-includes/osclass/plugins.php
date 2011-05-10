@@ -295,22 +295,24 @@
         static function addToCategoryPlugin($categories, $plugin) {
             $dao_pluginCategory = new PluginCategory() ;
             $dao_category = new Category() ;
-            foreach($categories as $catId)
-            {
-                $result = $dao_pluginCategory->listWhere('s_plugin_name LIKE \'' . $plugin . '\' AND fk_i_category_id = ' . $catId) ;
-                if(count($result)==0) {
-                    $fields = array() ;
-                    $fields['s_plugin_name'] = $plugin ;
-                    $fields['fk_i_category_id'] = $catId ;
-                    $dao_pluginCategory->insert($fields) ;
+            if(!empty($categories)) {
+                foreach($categories as $catId)
+                {
+                    $result = $dao_pluginCategory->listWhere('s_plugin_name LIKE \'' . $plugin . '\' AND fk_i_category_id = ' . $catId) ;
+                    if(count($result)==0) {
+                        $fields = array() ;
+                        $fields['s_plugin_name'] = $plugin ;
+                        $fields['fk_i_category_id'] = $catId ;
+                        $dao_pluginCategory->insert($fields) ;
 
-                    $subs = $dao_category->findSubcategories($catId);
-                    if(is_array($subs) && count($subs)>0) {
-                        $cats = array();
-                        foreach( $subs as $sub) {
-                            $cats[] = $sub['pk_i_id'];
+                        $subs = $dao_category->findSubcategories($catId);
+                        if(is_array($subs) && count($subs)>0) {
+                            $cats = array();
+                            foreach( $subs as $sub) {
+                                $cats[] = $sub['pk_i_id'];
+                            }
+                            Plugins::addToCategoryPlugin($cats, $plugin) ;
                         }
-                        Plugins::addToCategoryPlugin($cats, $plugin) ;
                     }
                 }
             }

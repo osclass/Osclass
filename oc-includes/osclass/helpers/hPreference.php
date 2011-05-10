@@ -28,6 +28,10 @@
         return (getBoolPreference('enabled_comments')) ;
     }
 
+    function osc_comments_per_page() {
+        return (getPreference('comments_per_page')) ;
+    }
+
     function osc_users_enabled() {
         return (getBoolPreference('enabled_users')) ;
     }
@@ -73,9 +77,12 @@
         return (getBoolPreference('enabled_recaptcha_items')) ;
     }
 
-    //osc_enabled_item_validation
-    function osc_item_validation_enabled() {
-        return (getBoolPreference('enabled_item_validation')) ;
+    function osc_items_wait_time() {
+        return (getPreference('items_wait_time'));
+    }
+    
+    function osc_moderate_items() {
+        return (getPreference('moderate_items')) ;
     }
     
     function osc_reg_user_post() {
@@ -275,6 +282,10 @@
     function osc_comment_spam_delay() {
         return 60; // need to be changed
     }
+    
+    function osc_selectable_parent_categories() {
+        return(getPreference('selectable_parent_categories')) ;
+    }
 
     function osc_get_preference($key, $section = 'osclass') {
         return getPreference($key, $section);
@@ -284,6 +295,13 @@
         return Preference::newInstance()->replace($key, $value, $section, $type);
     }
 
+    function osc_delete_preference($value = '', $section = 'osclass') {
+        return Preference::newInstance()->delete(array('s_name' => $value, 's_section' => $section));
+    }
+
+    function osc_reset_preferences() {
+        return Preference::newInstance()->toArray();
+    }
     
 
     //PRIVATE FUNCTION (if there was a class :P)

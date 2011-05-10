@@ -50,7 +50,7 @@ die('is not implemented yet');
 		var steps = document.getElementById('steps');
 		var version = <?php echo $info['version']; ?>;
 		var fileToUnzip = '';
-        steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" version + "): " ;
+        steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" + version + "): " ;
 
 		$.getJSON("<?php echo $info['plugin_update_uri']; ?>", function(data) {
 			if(data.version <= version) {

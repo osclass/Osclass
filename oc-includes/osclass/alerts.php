@@ -59,7 +59,7 @@ function osc_runAlert($type = null) {
         $a_search->addConditions(sprintf(" %st_item.dt_pub_date > '%s' ", DB_TABLE_PREFIX, $last_exec)) ;
 
         $totalItems = $a_search->count();
-        $items = $a_search->search();
+        $items = $a_search->doSearch();
 
         if (count($items) > 0) {
             //If we have new items from last check

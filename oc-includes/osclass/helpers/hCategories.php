@@ -203,6 +203,10 @@
         View::newInstance()->_exportVariableToView('categories', $aCategories );
         return  View::newInstance()->_get('categories') ;
     }
+    
+    function osc_categories_select($name = 'sCategory', $category = null) {
+        CategoryForm::category_select(Category::newInstance()->toTree(), $category, __("- Select a category -"), $name) ;
+    }
 
 
 ?>

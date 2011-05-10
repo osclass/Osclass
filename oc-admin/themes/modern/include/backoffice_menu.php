@@ -135,6 +135,9 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=users">&raquo; <?php _e('Users'); ?></a>
             </li>
             <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=categories">&raquo; <?php _e('Categories'); ?></a>
+            </li>
+            <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=contact">&raquo; <?php _e('Contact'); ?></a>
             </li>
             <li>

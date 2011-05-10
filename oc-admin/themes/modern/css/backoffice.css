@@ -88,6 +88,15 @@ a:hover {
 	float: left;
 	position: relative;
 }
+#static  {
+    height: 89px;
+    position: fixed;
+    right: 0;
+    top: 350px;
+    width: 35px;
+    z-index: 1;
+}
+
 /* header related styles */
 #header {
 	width: 100%;

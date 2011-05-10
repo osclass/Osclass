@@ -41,7 +41,7 @@
         function doModel() {
             //calling the view...
 
-            $locales = Locale::newInstance()->listAllEnabled() ;
+            $locales = OSCLocale::newInstance()->listAllEnabled() ;
             $this->_exportVariableToView('locales', $locales) ;
 
             switch( $this->action ){
@@ -403,7 +403,7 @@
                         break;
                     }
 
-                    $this->redirectTo( Params::getParam('itemURL') );
+                    $this->redirectTo( osc_item_url() );
                     break;
                 case 'delete_comment':
                     $mItem = new ItemActions(false);

@@ -191,27 +191,29 @@
 							<h3 class="ui-state-default"><?php _e('Latest news from OSClass') ; ?></h3>
 							<div id="last_news_body">
 							<?php
-								$xml = osc_file_get_contents('http://osclass.org/feed') ;
-                                if($xml) {
-	 								$xml = simplexml_load_string($xml) ;
-                                    echo '<ul>' ;
+                                if(is_array($newsList)) {
+                            ?>
+                                    <ul>
+                            <?php
                                     $total = 7 ;
-                                    for ($i = 0 ; $i < $total ; $i++) {
-                                        $t = strtotime($xml->channel->item[$i]->pubDate) ;
-                                        if ($t > strtotime('-1 week') ) $new = true ;
-                                        else $new = false ; ?>
+                                    foreach ($newsList as $list) {
+                                        $new = (strtotime($list['pubDate']) > strtotime('-1 week') ? true : false);
+                            ?>
                                         <li>
-                                            <a href="<?php echo $xml->channel->item[$i]->link ; ?>" target="_blank">
-                                                <?php echo $xml->channel->item[$i]->title ; ?>
+                                            <a href="<?php echo $list['link'] ; ?>" target="_blank">
+                                                <?php echo $list['title'] ; ?>
                                             </a>
-                                            <?php if ($new) { ?><span style="color:red;font-family: arial; font-size:10px;font-weight:bold;"><?php _e('new') ; ?></span><?php } ?>
+                                            <?php if ($new) { ?>
+                                            <span style="color:red;font-family: arial; font-size:10px;font-weight:bold;">
+                                                <?php _e('new') ; ?>
+                                            </span>
+                                            <?php } ?>
                                         </li>
-                                    <?php }
-									echo '</ul>' ;
-								} else {
+                                    <?php } ?>
+                                </ul>
+                                <?php } else {
                                     _e('Unable to fetch news from OSClass. Please try again later') ;
-								}
-							?>								
+                                } ?>
 							</div>
 						</div>
 					</div>

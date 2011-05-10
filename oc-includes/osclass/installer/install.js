@@ -82,15 +82,15 @@ function validate_form() {
 
     $.ajax({
         type: 'POST',
+        dataType: 'json',
         url: 'install-location.php',
         data: input,
         timeout: 600000,
         success: function(data) {
-            if(!data.match(/file_get_contents/)) {
+            if(data.status == 200) {
                 window.location = 'install.php?step=4';
             } else {
-                alert('There have been some error');
-                $("#lightbox").css('display','none');
+                window.location = 'install.php?step=4&error_location=1';
             }
         },
         error: function(data) {
