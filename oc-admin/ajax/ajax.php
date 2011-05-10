@@ -88,20 +88,52 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
                     break;
-
+            
                 case 'categories_order': // Save the order of the categories
-                    $ids = explode(",", Params::getParam('order'));
-                    $result = "{";
-                    $error = 0;
-                    $var_l = count($ids)-1;
+
+                    $aIds = Params::getParam('list') ;
+                    $orderParent = 0 ;
+                    $orderSub    = 0 ;
+                    $catParent   = 0 ;
+                    
                     $catManager = Category::newInstance();
-                    for($var_o=0;$var_o<$var_l;$var_o++) {
-                        if(! $catManager->update_order($ids[$var_o], $var_o) ){
-                            $error = 1;
+                    
+                    foreach($aIds as $id => $parent ) {
+                        if($parent == 'root'){
+                            if(! $catManager->update_order($id, $orderParent) ) {
+                                $error = 1;
+                            }
+                            // set parent category 
+                            $conditions = array('pk_i_id' => $id);
+                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            if(! $catManager->update($array, $conditions) > 0) {
+                                $error = 1;
+                            }
+                            $orderParent++;
+                        } else {
+                            if( $parent != $catParent ) {
+                                $catParent = $parent;
+                                $orderSub = 0;
+                            }
+                            if(! $catManager->update_order($id, $orderSub) ) {
+                                $error = 1;
+                            }
+                            
+                            // set parent category 
+                            $conditions = array('pk_i_id' => $id);
+                            $array['fk_i_parent_id'] = $catParent;
+                            if(! $catManager->update($array, $conditions) > 0) {
+                                $error = 1;
+                            }
+                            $orderSub++;
                         }
                     }
-                    if($error) { $result .= '"error" : "Some error ocurred."}'; }
-                    else {       $result .= '"ok" : "Order saved."'; }
+                    
+                    $result = "{";
+                    $error = 0;
+
+                    if($error) { $result .= '"error" : "'.__("Some error ocurred").'"'; }
+                    else {       $result .= '"ok" : "'.__("Order saved").'"'; }
                     $result .= "}";
                     
                     echo $result;
@@ -114,7 +146,133 @@
                     Category::newInstance()->update_name($id, $locale, $name);
                     echo '1';
                     break;
+                
+                case 'enable_category':
+                    $id = Params::getParam("id");
+                    $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
+                    $error = 0;
+                    $aUpdated = "";
+                    try {
+                        if ($id!='') {
+                            $categoryManager = Category::newInstance() ;
+                            $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
+                            if ($enabled==1) {
+                                $msg = __('The category has been enabled') ;
+                            } else {
+                                $msg = __('The category has been disabled') ;
+                            }
+                            
+                            $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
+                            $aUpdated = $categoryManager->listWhere( "fk_i_parent_id = $id" );
+                            if ($enabled==1) {
+                                $msg .= "<br>" . __('The subcategories has been enabled') ;
+                            } else {
+                                $msg .= "<br>" . __('The subcategories has been disabled') ;
+                            }
+                            
+                        } else {
+                            $error = 1;
+                            $msg = __('There was a problem with this page. The ID for the category hasn\'t been set') ;
+                        }
+                        $message = $msg;
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error: %s') ." ".$e->getMessage();
+                    }
+                    
+                    $result = "{";
+                    $error = 0;
 
+                    if($error) { $result .= '"error" : "'.$message.'"'; }
+                    else {       
+                        $result .= '"ok" : "'.$message.'"'; 
+                        if( count($aUpdated) > 0 ){
+                            $result .= ', "afectedIds": [';
+                            foreach($aUpdated as $category){
+                                $result .= '{ "id" : "'.$category['pk_i_id'].'" },';
+                            }
+                            $result = substr($result,0,-1); 
+                            $result .= ']';
+                        } else {
+                            $result .= ', "afectedIds": []';
+                        }
+                    }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
+                case 'delete_category':
+                    $id = Params::getParam("id");
+                    $error = 0;
+                    $json_subcategories = ', "afectedIds": [';
+                    try {
+                        $categoryManager = Category::newInstance() ;
+                        $subcats = $categoryManager->findSubcategories($id);
+                        if (count($subcats) > 0) {
+                            foreach ($subcats as $s) {
+                                $json_subcategories .= '{ "id" : "'.$s["pk_i_id"].'"},';
+                            }
+                            $json_subcategories = substr($json_subcategories,0,-1); 
+                        }
+                        $categoryManager->deleteByPrimaryKey($id) ;
+                      
+                        $message = __('The categories have been deleted');
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error while deleting');
+                    }
+                    $json_subcategories .= ']';
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "Saved." '.$json_subcategories; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
+                case 'edit_category_post':
+                    $id = Params::getParam("id");
+
+                    $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
+                    $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+                    $fields['i_position'] = (Params::getParam("i_position") != '') ? Params::getParam("i_position") : 0;
+                    $fields['b_enabled'] = (Params::getParam("b_enabled")!='' ) ? 1 : 0;
+
+                    $error = 0;
+                    $postParams = Params::getParamsAsArray();
+                    foreach ($postParams as $k => $v) {
+                        if (preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2] == 's_name') {
+                                if($v != ""){
+                                    $aFieldsDescription[$m[1]][$m[2]] = $v;
+                                }else{
+                                    $error = 1;
+                                    $message = __("All titles are required");
+                                }
+                            }
+                            
+                        }
+                    }
+                    try {
+                        $categoryManager = Category::newInstance() ;
+                        $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __("Error while updating.");
+                    }
+                    
+                    $l = osc_current_user_locale();
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "'.__("Saved").'", "text" : "'.$aFieldsDescription[$l]['s_name'].'"'; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    break;
+                    
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {

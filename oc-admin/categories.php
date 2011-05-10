@@ -73,6 +73,11 @@
                     $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
                     $this->doView("categories/frm.php");
                 break;
+                case 'edit_iframe':
+                    $this->_exportVariableToView("category", $this->categoryManager->findByPrimaryKey(Params::getParam("id")));
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
+                    $this->doView("categories/iframe.php");
+                break;
                 case 'quick_edit':
                     $id = Params::getParam('catId');
                     $name = Params::getParam('s_name');
@@ -178,15 +183,7 @@
                 break;
 
                 default:
-
-                    $parentId = Params::getParam("parentId");
-                    if($parentId != '') {
-                        $this->_exportVariableToView("categories", $this->categoryManager->listWhere("a.fk_i_parent_id = %d ", $parentId));
-                        $this->_exportVariableToView("parent", $this->categoryManager->findByPrimaryKey($parentId));
-                    } else {
-                        $this->_exportVariableToView("categories", $this->categoryManager->listWhere("a.fk_i_parent_id IS NULL"));
-                    }
-
+                    $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll() );
                     $this->doView("categories/index.php");
 
             }
