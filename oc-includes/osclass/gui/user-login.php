@@ -26,19 +26,6 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-        <script type="text/javascript">
-            function validateForm() {
-                var validator = new FormValidator();
-                try {
-                    validator.addValidation('email', FormValidator.TYPE_EMAIL) ;
-                    validator.addValidation('password', FormValidator.TYPE_COMPLETED) ;
-                    return validator.run();
-                } catch(e) {
-                    alert(e);
-                    return false;
-                }
-            }
-        </script>
     </head>
     <body>
         <div class="container">
