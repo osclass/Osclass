@@ -94,8 +94,10 @@
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
+                                    <div class="pagination">
+                                        <?php echo osc_comments_pagination(); ?>
+                                    </div>
                                 </div>
-                            <?php echo osc_comments_pagination(); ?>
                             <?php } ?>
                             <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                                 <fieldset>
