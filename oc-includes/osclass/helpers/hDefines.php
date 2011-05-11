@@ -375,7 +375,11 @@
      * @return string
      */
     function osc_item_comments_url($page = 'all', $locale = '') {
-        return osc_item_url($locale) . "?comments-page=" . $page;
+        if ( osc_rewrite_enabled() ) {
+            return osc_item_url($locale) . "?comments-page=" . $page;
+        } else {
+            return osc_item_url($locale) . "&comments-page=" . $page;
+        }
     }
 
     /**
