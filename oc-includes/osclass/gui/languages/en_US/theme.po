@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-23 23:37+0100\n"
+"POT-Creation-Date: 2011-04-06 12:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -32,405 +32,472 @@ msgid "Subscribe to this search"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/alert-form.php:49
-msgid "Subscribe now!"
+msgid "Subscribe now"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:35
 msgid "Contact with us"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:42
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:41
 msgid "Subject"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:43
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:45
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:44
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:126
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:42
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:52
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:52
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:143
 msgid "Message"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:44
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:42
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:40
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:98
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:43
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:48
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:109
 msgid "Your name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:44
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:43
 msgid "(optional)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:45
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:43
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:41
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:124
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:44
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:49
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:48
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:141
 msgid "Your e-mail address"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/contact.php:47
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:45
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:102
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:130
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:53
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:114
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:163
 msgid "Send"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/footer.php:29
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/footer.php:26
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:117
 msgid "Contact"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/footer.php:29
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/footer.php:31
 msgid "This website is proudly using the <a title=\"OSClass web\" href=\"http://osclass.org/\">open source classifieds</a> software <strong>OSClass</strong>"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:31
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:30
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:40
+msgid "Publish an item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:31
+msgid "Edit your item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:32
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:35
+msgid "Send to a friend"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:33
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:35
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:66
+msgid "Contact seller"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:50
+msgid "page"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:60
+msgid "Show all items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:90
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:78
+msgid "Search"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:97
+msgid "Recover your password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:98
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:35
+msgid "Login"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:102
+msgid "Create a new account"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:106
+msgid "Dashboard"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:107
+msgid "Manage my items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:108
+msgid "Manage my alerts"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:109
+msgid "Update my profile"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:110
+msgid "Change my email"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:111
+msgid "Change my password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/functions.php:112
+msgid "Recover my password"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:29
 #, php-format
 msgid "Hi %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:32
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:30
 msgid "My account"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:33
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:31
 msgid "Logout"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:37
-msgid "Login"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:38
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:36
 msgid "Register for a free account"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:43
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:99
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:111
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:132
 msgid "E-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:45
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:43
 msgid "Password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:47
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:45
+msgid "Remember me"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:46
 msgid "Log in"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:48
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:47
 msgid "Forgot password?"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:56
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:55
 msgid "Language"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:68
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/header.php:67
 msgid "Publish your ad for free"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:26
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:63
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:24
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:61
 msgid "ie. PHP Programmer"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:68
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:66
 msgid "Select a category"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/inc.search.php:82
-msgid "Search"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:33
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:63
-msgid "Contact seller"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:40
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:42
 msgid "To (seller)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:41
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:39
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:43
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:42
 msgid "Item"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:44
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:125
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:51
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:142
 msgid "Phone number"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:46
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-contact.php:54
 msgid "Send message"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:32
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:40
 msgid "Update your item"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:41
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:40
-msgid "General Information"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:43
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:42
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:110
-msgid "Category"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:50
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:49
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:101
+msgid "General Information"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:52
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:51
+msgid "Category"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:60
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:60
 msgid "Price"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:58
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:56
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:68
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:67
 msgid "Photos"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:62
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:59
-msgid "optional"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:65
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:62
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:75
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:73
 msgid "Add new photo"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:71
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:121
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:82
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:82
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:120
 msgid "Location"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:73
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:70
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:54
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:84
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:82
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:56
 msgid "Country"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:77
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:74
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:55
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:88
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:86
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:57
 msgid "Region"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:81
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:78
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:56
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:84
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:92
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:90
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:58
 msgid "City"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:85
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:57
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:96
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:59
 msgid "City area"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:89
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:86
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:58
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:100
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:98
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:60
 msgid "Address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:95
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:106
 msgid "Update"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:96
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-edit.php:107
 msgid "Cancel"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:32
-msgid "Publish an item"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:68
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:80
 msgid "Item Location"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:82
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:94
 msgid "City Area"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:93
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:105
 msgid "Seller's information"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:95
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:107
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:130
 msgid "Name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:106
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:118
 msgid "Show e-mail on the item page"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:113
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-post.php:125
 msgid "Publish"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:32
-msgid "Send to a friend"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:42
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:50
 msgid "Your friend's name"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:43
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item-send-friend.php:51
 msgid "Your friend's e-mail address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:38
 msgid "Mark as"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:38
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:40
 msgid "spam"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:39
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:41
 msgid "misclassified"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:40
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:42
 msgid "duplicated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:43
 msgid "expired"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:42
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:44
 msgid "offensive"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:64
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:67
 msgid "Share"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:71
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:73
 msgid "Useful information"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:73
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:75
 msgid "Avoid scams by acting locally or paying with PayPal"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:74
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:76
 msgid "Never pay with Western Union, Moneygram or other anonymous payment services"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:75
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:77
 msgid "Don't buy or sell outside of your country. Don't accept cashier cheques from outside your country"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:76
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:78
 msgid "This site is never involved in any transaction, and does not handle payments, shipping, guarantee transactions, provide escrow services, or offer \"buyer protection\" or \"seller certification\""
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:81
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:83
 msgid "Comments"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:86
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:88
 msgid "by"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:94
-msgid "Leave your comment (spam and offensive messages will be removed)"
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:92
+msgid "Delete your comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:99
-msgid "Your e-mail"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:100
-msgid "Title"
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:92
+msgid "Delete"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:101
+msgid "Leave your comment (spam and offensive messages will be removed)"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:110
+msgid "Your e-mail"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:112
+msgid "Title"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:113
 msgid "Comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:115
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:129
 msgid "Contact publisher"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:121
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:135
 msgid "Tel"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:123
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:140
 msgid "Your name (optional)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:80
-msgid "Latest Items"
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:157
+msgid "Enter the words above"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/item.php:159
+msgid "Help"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:82
+msgid "Latest Items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:84
 msgid "No Latest Items"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:112
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/main.php:111
 msgid "See all offers"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:44
 msgid "Search results"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:39
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:47
 msgid "Sort by"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:58
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:66
 #, php-format
 msgid "There are no results matching \"%s\""
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:78
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:86
 msgid "Your search"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:90
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:98
 msgid "Show only"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:95
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:103
 msgid "Show only items with pictures"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:102
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:110
 msgid "Min"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:104
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:112
 msgid "Max"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:132
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:140
 msgid "Apply"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:149
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:157
 msgid "Selected"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:150
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/search.php:158
 msgid "Nothing selected, input was"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-alerts.php:34
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:35
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_password.php:35
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:33
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:33
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:35
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:35
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:35
 msgid "User account manager"
 msgstr ""
@@ -448,7 +515,6 @@ msgid "Alert"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-alerts.php:45
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:55
 msgid "This action can't be undone. Are you sure you want to continue?"
 msgstr ""
 
@@ -457,20 +523,20 @@ msgid "Delete this alert"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-alerts.php:51
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:49
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:49
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:51
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:51
 msgid "Publication date"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:42
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:41
 msgid "Change your e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:48
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:47
 msgid "Current e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:52
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_email.php:51
 msgid "New e-mail"
 msgstr ""
 
@@ -483,43 +549,55 @@ msgid "Current password"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_password.php:51
-msgid "New pasword"
+msgid "New password"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-change_password.php:55
-msgid "Repeat new pasword"
+msgid "Repeat new password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:39
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:41
 #, php-format
 msgid "Items from %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:41
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-dashboard.php:43
 msgid "No items have been added yet"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:39
-msgid "Your items"
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-forgot_password.php:43
+msgid "New pasword"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:39
-msgid "Post a new item"
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-forgot_password.php:47
+msgid "Repeat new pasword"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-forgot_password.php:50
+msgid "Change password"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:41
+msgid "Your items"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:41
+msgid "Post a new item"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:43
 msgid "You don't have any items yet"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:53
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:55
 msgid "Edit"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:55
-msgid "Delete"
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:57
+msgid "This action can not be undone. Are you sure you want to continue?"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:58
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-items.php:60
 msgid "Activate"
 msgstr ""
 
@@ -527,55 +605,51 @@ msgstr ""
 msgid "Access to your account"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-login.php:55
-msgid "Remember me"
-msgstr ""
-
 #: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:41
 msgid "Update your profile"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:54
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:55
 msgid "Modify e-mail"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:54
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:55
 msgid "Modify password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:58
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:59
+msgid "User type"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:63
 msgid "Cell phone"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:62
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:67
 msgid "Phone"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:86
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-profile.php:91
 msgid "Website"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-recover.php:47
-msgid "Recover your password"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-recover.php:53
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-recover.php:54
 msgid "Send me a new password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:36
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:35
 msgid "Register an account for free"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:44
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:43
 msgid "Re-type password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:46
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:45
 msgid "Passwords don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:55
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/gui/user-register.php:49
 msgid "Create"
 msgstr ""
 
