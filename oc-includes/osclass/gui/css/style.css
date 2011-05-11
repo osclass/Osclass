@@ -231,11 +231,17 @@ option.pad { margin-left:10px;}
 
 /* Comments */
 .item #comments { clear:both; float:left; margin-bottom:35px; width:100%; }
-.item #comments .comments_list { border-top:1px dotted #DDD; padding-bottom:20px;  }
+.item #comments .comments_list { border-bottom: 1px dotted #DDD; margin-bottom:20px;  }
 .item #comments .comment { background:url(../images/comments_quotes.gif) no-repeat 10px 0; margin-bottom:15px; padding:7px 0 0 60px; }
 .item #comments .comment h3 { color:#666; margin-bottom: 5px; }
 .item #comments .comment h3 em { color:#888; font-size:12px; font-weight:normal; }
 .item #comments .comment p { color:#878787; font-style:italic; line-height:18px; }
+.item #comments .pagination { text-align: right; margin-right: 10px; margin-bottom: 15px; }
+.item #comments a { border: 1px dotted #AAA; padding: 5px 8px; }
+.item #comments a.searchPaginationSelected { background-color: #f7f7f7; }
+.item #comments a.searchPaginationNext, .item #comments a.searchPaginationPrev { border: 0px; text-decoration: none; }
+.item #comments a.searchPaginationNext:hover, .item #comments a.searchPaginationPrev:hover { background-color: #ffffff; }
+.item #comments a:hover { background-color: #f7f7f7; }
 .item #comments form { clear:both; display:inline; float:left; margin-left:60px; width:540px; }
 .item #comments form h3 { color:#000; margin-bottom:10px; }
 .item #comments form label { clear:left; float:left; margin-right:10px; padding-top:4px; width:140px; }
