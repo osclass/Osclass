@@ -38,10 +38,10 @@
         }
 
         public function findByItemID($id, $page = null, $comments_per_page = null) {
-            if($page==null) { $page = osc_item_comments_page();};
-            if($page=='') { $page = 0; };
-            if($comments_per_page==null) { $comments_per_page = osc_comments_per_page(); };
-            if($comments_per_page=='all' || $comments_per_page==0) {
+            if( $page == null ) { $page = osc_item_comments_page(); }
+            if( $page == '' ) { $page = 0; }
+            if( $comments_per_page == null ) { $comments_per_page = osc_comments_per_page(); }
+            if( ($page === 'all') || ($comments_per_page == 0) ) {
                 return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND e_status = 'ACTIVE'", DB_TABLE_PREFIX, $id);
             } else {
                 return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND e_status = 'ACTIVE' LIMIT %d, %d", DB_TABLE_PREFIX, $id, ($page*$comments_per_page), $comments_per_page);
