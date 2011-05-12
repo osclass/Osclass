@@ -256,7 +256,7 @@
 
                 $result = $this->manager->update (
                                         array(
-                                            'dt_pub_date'           => DB_FUNC_NOW
+                                            'dt_mod_date'           => DB_FUNC_NOW
                                             ,'fk_i_category_id'     => $aItem['catId']
                                             ,'f_price'              => $aItem['price']
                                             ,'fk_c_currency_code'   => $aItem['currency']
