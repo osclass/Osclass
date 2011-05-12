@@ -53,7 +53,6 @@
                                                                                      array('e_status' => $value)
                                                                                     ,array('pk_i_id'  => $_id)
                                                                                 );
-                                                                                var_dump($iUpdated);die();
                                                                                 if($iUpdated) {
                                                                                     $this->sendCommentActivated($_id);
                                                                                 }
