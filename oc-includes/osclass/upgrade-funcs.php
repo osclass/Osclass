@@ -60,7 +60,7 @@
     //print_r($error_queries[0]);
 
     if($version<203) {
-        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER'),('osclass', 'items_wait_time', '90', 'INTEGER'),('osclass', 'comments_per_page', '10', 'INTEGER')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER'),('osclass', 'items_wait_time', '90', 'INTEGER'),('osclass', 'comments_per_page', '10', 'INTEGER'),('osclass', 'numImages@items', '0', 'INTEGER')", DB_TABLE_PREFIX));
         $users = User::newInstance()->listAll();
         foreach($users as $user) {
             $comments = count(ItemComment::newInstance()->findByAuthorID($user['pk_i_id']));
