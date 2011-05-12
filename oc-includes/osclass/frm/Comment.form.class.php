@@ -31,6 +31,7 @@
             }
             if(Session::newInstance()->_get('commentId') != '') {
                 $commentId = Session::newInstance()->_get('commentId');
+                Session::newInstance()->_drop('commentId');
             }
             if( !is_null($commentId) ) {
                 parent::generic_input_hidden("id", $commentId) ;
@@ -45,6 +46,7 @@
             }
             if(Session::newInstance()->_get('commentTitle') != '') {
                 $commentTitle = Session::newInstance()->_get('commentTitle');
+                Session::newInstance()->_drop('commentTitle');
             }
             parent::generic_input_text("title", $commentTitle, null, false) ;
         }
@@ -57,6 +59,7 @@
             }
             if(Session::newInstance()->_get('commentAuthorName') != '') {
                 $commentAuthorName = Session::newInstance()->_get('commentAuthorName');
+                Session::newInstance()->_drop('commentAuthorName');
             }
             parent::generic_input_text("authorName", $commentAuthorName, null, false) ;
         }
@@ -69,6 +72,7 @@
             }
             if(Session::newInstance()->_get('commentAuthorEmail') != '') {
                 $commentAuthorEmail = Session::newInstance()->_get('commentAuthorEmail');
+                Session::newInstance()->_drop('commentAuthorEmail');
             }
             parent::generic_input_text("authorEmail", $commentAuthorEmail, null, false) ;
         }
@@ -81,6 +85,7 @@
             }
             if(Session::newInstance()->_get('commentBody') != '') {
                 $commentBody = Session::newInstance()->_get('commentBody');
+                Session::newInstance()->_drop('commentBody');
             }
             parent::generic_textarea("body", $commentBody);
         }

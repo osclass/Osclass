@@ -109,11 +109,11 @@
                                         <input type="hidden" name="authorName" value="<?php echo osc_logged_user_name(); ?>" />
                                         <input type="hidden" name="authorEmail" value="<?php echo osc_logged_user_email();?>" />
                                     <?php } else { ?>
-                                        <label for="authorName"><?php _e('Your name', 'modern') ; ?>:</label> <input type="text" name="authorName" id="authorName" /><br />
-                                        <label for="authorEmail"><?php _e('Your e-mail', 'modern') ; ?>:</label> <input type="text" name="authorEmail" id="authorEmail" /><br />
+                                        <label for="authorName"><?php _e('Your name', 'modern') ; ?>:</label> <?php CommentForm::author_input_text(); ?><br />
+                                        <label for="authorEmail"><?php _e('Your e-mail', 'modern') ; ?>:</label> <?php CommentForm::email_input_text(); ?><br />
                                     <?php }; ?>
-                                    <label for="title"><?php _e('Title', 'modern') ; ?>:</label><br /><input type="text" name="title" id="title" /><br />
-                                    <label for="body"><?php _e('Comment', 'modern') ; ?>:</label><br /><textarea name="body" id="body" rows="5" cols="40"></textarea><br />
+                                    <label for="title"><?php _e('Title', 'modern') ; ?>:</label><?php CommentForm::title_input_text(); ?><br />
+                                    <label for="body"><?php _e('Comment', 'modern') ; ?>:</label><?php CommentForm::body_input_textarea(); ?><br />
                                     <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                                 </fieldset>
                             </form>
