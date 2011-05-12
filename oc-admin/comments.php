@@ -49,10 +49,14 @@
                                                     break;
                                                     case 'activate_all':    $value = 'ACTIVE' ;
                                                                             foreach ($id as $_id) {
-                                                                                $this->itemCommentManager->update(
-                                                                                    array('e_status' => $value),
-                                                                                    array('pk_i_id' => $_id)
+                                                                                $iUpdated = $this->itemCommentManager->update(
+                                                                                     array('e_status' => $value)
+                                                                                    ,array('pk_i_id'  => $_id)
                                                                                 );
+                                                                                var_dump($iUpdated);die();
+                                                                                if($iUpdated) {
+                                                                                    $this->sendCommentActivated($_id);
+                                                                                }
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been approved'), 'admin') ;
                                                     break;
@@ -77,11 +81,14 @@
                                             if (!is_numeric($id)) return false;
                                             if (!in_array($value, array('ACTIVE', 'INACTIVE'))) return false ;
 
-                                            $this->itemCommentManager->update(
+                                            $iUpdated = $this->itemCommentManager->update(
                                                     array('e_status' => $value)
                                                     ,array('pk_i_id' => $id)
                                             );
                                             if( $value == 'ACTIVE' ) {
+                                                if($iUpdated) {
+                                                    $this->sendCommentActivated($id);
+                                                }
                                                 osc_add_flash_ok_message( _m('The comment has been approved'), 'admin');
                                             } else {
                                                 osc_add_flash_ok_message( _m('The comment has been disapproved'), 'admin');
@@ -131,6 +138,47 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+        }
+
+        function sendCommentActivated ($commentId)
+        {
+            $aComment = $this->itemCommentManager->findByPrimaryKey($commentId);
+            $aItem    = Item::newInstance()->findByPrimaryKey($aComment['fk_i_item_id']);
+            View::newInstance()->_exportVariableToView('item', $aItem);
+
+            $mPages = new Page() ;
+            $locale = osc_current_user_locale() ;
+
+            $aPage = $mPages->findByInternalName('email_comment_validated') ;
+
+            $content = array() ;
+            if(isset($aPage['locale'][$locale]['s_title'])) {
+                $content = $aPage['locale'][$locale] ;
+            } else {
+                $content = current($aPage['locale']) ;
+            }
+
+            if (!is_null($content)) {
+                $words   = array();
+                $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}',
+                                 '{COMMENT_TITLE}', '{COMMENT_BODY}',
+                                 '{WEB_URL}', '{ITEM_URL}',
+                                 '{ITEM_LINK}') ;
+                $words[] = array($aComment['s_author_name'], $aComment['s_author_email'],
+                                 $aComment['s_title'], $aComment['s_body'],
+                                 osc_base_url(), osc_item_url(),
+                                 '<a href="' . osc_item_url() . '">' . osc_item_url() . '</a>') ;
+                $title = osc_mailBeauty($content['s_title'], $words) ;
+                $body = osc_mailBeauty($content['s_text'], $words) ;
+
+                $emailParams = array('subject'  => $title
+                                     ,'to'       => $aComment['s_author_email']
+                                     ,'to_name'  => $aComment['s_author_name']
+                                     ,'body'     => $body
+                                     ,'alt_body' => $body
+                ) ;
+                osc_sendMail($emailParams) ;
+            }
         }
     }
 
