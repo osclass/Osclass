@@ -260,7 +260,7 @@ option.pad { margin-left:10px;}
 /* Photos */
 .item #photos { margin-bottom:30px; }
 .item #photos a { text-decoration:none; }
-.item #photos img { background:#FFF; border:1px solid #DDD; padding:1px; }
+.item #photos img { background:#FFF; border:1px solid #DDD; /*padding:1px;*/ }
 .item #photos .main_photo { margin-bottom:4px; }
 .item #photos .main_photo a { color:#FFF; display:block; font-size:11px; position:relative; }
 .item #photos .main_photo a:hover { color:#FC0; }
