@@ -547,10 +547,16 @@
             Params::setParam('itemURL', $itemURL);
 
             if( $authorName == '' || !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
+                Session::newInstance()->_set('commentAuthorName', $authorName);
+                Session::newInstance()->_set('commentTitle', $title);
+                Session::newInstance()->_set('commentBody', $body);
                 return 3;
             }
 
             if( ($body == '') ) {
+                Session::newInstance()->_set('commentAuthorName', $authorName);
+                Session::newInstance()->_set('commentAuthorEmail', $authorEmail);
+                Session::newInstance()->_set('commentTitle', $title);
                 return 4;
             }
 
@@ -559,7 +565,7 @@
                 $num_comments = 0;
             } else {
                 $user = User::newInstance()->findByPrimaryKey($userId);
-                $num_comments = $user['i_comments'];//count(ItemComment::newInstance()->findByAuthorID($userId));
+                $num_comments = $user['i_comments'];
             }
 
             if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {

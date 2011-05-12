@@ -97,16 +97,13 @@
                                             $this->doView('comments/frm.php') ;
                 break;
                 case 'comment_edit_post':   $this->itemCommentManager->update(
-                                                array(
-                                                    's_title' => Params::getParam('s_title')
-                                                    ,'s_body' => Params::getParam('s_body')
-                                                    ,'s_author_name' => Params::getParam('s_author_name')
-                                                    ,'s_author_email' => Params::getParam('s_author_email')
-                                                )
+                                                 array('s_title' => Params::getParam('title')
+                                                     ,'s_body' => Params::getParam('body')
+                                                     ,'s_author_name' => Params::getParam('authorName')
+                                                     ,'s_author_email' => Params::getParam('authorEmail'))
                                                 ,array(
                                                     'pk_i_id' => Params::getParam('id')
-                                                )
-                                            );
+                                                ));
 
                                             osc_run_hook('item_edit_post') ;
 
