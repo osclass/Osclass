@@ -106,6 +106,9 @@
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_images_enabled_at_items() ? 'checked="true"' : ''); ?> name="enableField#images@items" id="enableField#images@items" value="1" />
                                     <label for="enableField#images@items"><?php _e('Enable images'); ?></label>
+                                    <br/>
+                                    <label for="numImages@items"><?php _e('Maximum number of images per item (0 for unlimited)'); ?></label>
+                                    <input type="text" name="numImages@items" id="numImages@items" value="<?php echo osc_max_images_per_item(); ?>" />
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>

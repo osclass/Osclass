@@ -97,6 +97,10 @@
         return (getBoolPreference('enableField#images@items')) ;
     }
 
+    function osc_max_images_per_item() {
+        return (getPreference('numImages@items')) ;
+    }
+
     function osc_notify_contact_friends() {
         return(getBoolPreference('notify_contact_friends')) ;
     }
