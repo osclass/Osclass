@@ -19,7 +19,6 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 error_reporting(E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_PARSE);
 
 define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
@@ -60,16 +59,16 @@ switch ($step) {
         $error = check_requirements($requirements) ;
         break;
     case 2:
-        if( Params::getParam('save_stats') == '1' ) {
-            setcookie('osclass_save_stats', 1, time()+24*60*60) ;
+        if( Params::getParam('save_stats') == '1'  || isset($_COOKIE['osclass_save_stats'])) {
+            setcookie('osclass_save_stats', 1, time() + (24*60*60) );
         } else {
-            setcookie('osclass_save_stats', 0, time()+24*60*60) ;
+            setcookie('osclass_save_stats', 0, time() + (24*60*60) );
         }
 
-        if( Params::getParam('ping_engines') == '1' ) {
-            setcookie('osclass_ping_engines', 1, time()+24*60*60) ;
+        if( Params::getParam('ping_engines') == '1' || isset($_COOKIE['osclass_ping_engines']) ) {
+            setcookie('osclass_ping_engines', 1, time() + (24*60*60) );
         } else {
-            setcookie('osclass_ping_engines', 0, time()+24*60*60) ;
+            setcookie('osclass_ping_engines', 0, time()+ (24*60*60) );
         }
 
         break;
@@ -135,22 +134,22 @@ switch ($step) {
                     <h2 class="target">Welcome</h2>
                     <form action="install.php" method="POST">
                         <div class="form-table">
-                        <?php if($error) { ?>
+                            <?php if($error) { ?>
                             <p>Check the next requirements:</p>
-                            <div style="-moz-border-radius: 10px 10px 10px 10px;background: none repeat scroll 0 0 #FFFF99;font-size: 12px;padding: 20px;text-align: left;">
-                                <p><b>Info can help you...</b></p>
+                            <div class="requirements_help">
+                                <p><b>Requirements help:</b></p>
                                 <ul>
                                 <?php $solve_requirements = get_solution_requirements(); foreach($requirements as $k => $v) { ?>
                                     <?php  if(!$v && $solve_requirements[$k] != ''){ ?>
                                     <li><?php echo $solve_requirements[$k]; ?></li>
                                     <?php } ?>
                                 <?php } ?>
-                                    <li><a target="_blank" href="http://forums.osclass.org/">Forums can help you.</a></li>
+                                    <li><a href="http://forums.osclass.org/">Need more help?</a></li>
                                 </ul>
                             </div>
-                        <?php } else { ?>
+                            <?php } else { ?>
                             <p>All right! All the requirements have met:</p>
-                        <?php } ?>
+                            <?php } ?>
                             <ul>
                             <?php foreach($requirements as $k => $v) { ?>
                                 <li><?php echo $k; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
@@ -192,6 +191,8 @@ switch ($step) {
                     } elseif($step == 5) {
                         // ping engines
                         ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
+                        setcookie('osclass_save_stats', '', time() - 3600);
+                        setcookie('osclass_ping_engines', '', time() - 3600);
                         display_finish();
                     }
                 ?>

@@ -49,8 +49,8 @@
                 <div id="main">
                     <div id="type_dates">
                         <strong><?php echo osc_item_category() ; ?></strong>
-                        <em class="publish"><?php if ( osc_item_pub_date() != '' ) echo osc_format_date( osc_item_pub_date() ) ; ?></em>
-                        <em class="update"><?php if ( osc_item_mod_date() != '' ) echo osc_format_date( osc_item_mod_date() ) ; ?></em>
+                        <em class="publish"><?php if ( osc_item_pub_date() != '' ) echo __('Published date', 'modern') . ': ' . osc_format_date( osc_item_pub_date() ) ; ?></em>
+                        <em class="update"><?php if ( osc_item_mod_date() != '' ) echo __('Modified date', 'modern') . ': ' . osc_format_date( osc_item_mod_date() ) ; ?></em>
                     </div>
                     <ul id="item_location">
                         <?php if ( osc_item_country() != "" ) { ?><li><?php _e("Country", 'modern'); ?>: <strong><?php echo osc_item_country() ; ?></strong></li><?php } ?>
@@ -94,8 +94,10 @@
                                             <?php } ?>
                                         </div>
                                     <?php } ?>
+                                    <div class="pagination">
+                                        <?php echo osc_comments_pagination(); ?>
+                                    </div>
                                 </div>
-                            <?php echo osc_comments_pagination(); ?>
                             <?php } ?>
                             <form action="<?php echo osc_base_url(true) ; ?>" method="post">
                                 <fieldset>
@@ -120,11 +122,13 @@
                 </div>
                 <div id="sidebar">
                     <?php if( osc_images_enabled_at_items() ) { ?>
-                    <div id="photos">
-                        <?php while ( osc_has_item_resources() ) { ?>
-                            <img src="<?php echo osc_resource_url() ; ?>" width="320" alt="" title=""/>
+                        <?php if( osc_count_item_resources() > 0 ) { ?>
+                        <div id="photos">
+                            <?php while ( osc_has_item_resources() ) { ?>
+                                <img src="<?php echo osc_resource_url() ; ?>" width="320" alt="" title=""/>
+                            <?php } ?>
+                        </div>
                         <?php } ?>
-                    </div>
                     <?php } ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
