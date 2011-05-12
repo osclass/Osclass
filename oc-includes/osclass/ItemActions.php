@@ -1025,44 +1025,50 @@
 
                 $itemResourceManager = ItemResource::newInstance() ;
 
+                $numImagesItems = osc_max_images_per_item();
+                $numImages = $itemResourceManager->countResources($itemId);
                 foreach ($aResources['error'] as $key => $error) {
-                    if ($error == UPLOAD_ERR_OK) {
+                    if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
+                        if ($error == UPLOAD_ERR_OK) {
 
-                        $tmpName = $aResources['tmp_name'][$key] ;
-                        $itemResourceManager->insert(array(
-                            'fk_i_item_id' => $itemId
-                        )) ;
-                        $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
+                            $numImages++;
+                            
+                            $tmpName = $aResources['tmp_name'][$key] ;
+                            $itemResourceManager->insert(array(
+                                'fk_i_item_id' => $itemId
+                            )) ;
+                            $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
-                        // Create thumbnail
-                        $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
-                        $size = explode('x', osc_thumbnail_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                            // Create thumbnail
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
+                            $size = explode('x', osc_thumbnail_dimensions()) ;
+                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                        // Create normal size
-                        $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
-                        $size = explode('x', osc_normal_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                            // Create normal size
+                            $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
+                            $size = explode('x', osc_normal_dimensions()) ;
+                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                        if( osc_keep_original_image() ) {
-                            $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
-                            move_uploaded_file($tmpName, $path) ;
+                            if( osc_keep_original_image() ) {
+                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
+                                move_uploaded_file($tmpName, $path) ;
+                            }
+
+                            $s_path = 'oc-content/uploads/' ;
+                            $resourceType = 'image/png' ;
+                            $itemResourceManager->update(
+                                                    array(
+                                                        's_path'            => $s_path
+                                                        ,'s_name'           => osc_genRandomPassword()
+                                                        ,'s_extension'      => 'png'
+                                                        ,'s_content_type'   => $resourceType
+                                                    )
+                                                    ,array(
+                                                        'pk_i_id'       => $resourceId
+                                                        ,'fk_i_item_id' => $itemId
+                                                    )
+                            ) ;
                         }
-
-                        $s_path = 'oc-content/uploads/' ;
-                        $resourceType = 'image/png' ;
-                        $itemResourceManager->update(
-                                                array(
-                                                    's_path'            => $s_path
-                                                    ,'s_name'           => osc_genRandomPassword()
-                                                    ,'s_extension'      => 'png'
-                                                    ,'s_content_type'   => $resourceType
-                                                )
-                                                ,array(
-                                                    'pk_i_id'       => $resourceId
-                                                    ,'fk_i_item_id' => $itemId
-                                                )
-                        ) ;
                     }
                 }
                 unset($itemResourceManager);

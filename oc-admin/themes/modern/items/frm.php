@@ -123,9 +123,11 @@
                                             <img src="<?php echo osc_base_url().$_r['s_path'].$_r['pk_i_id']."_thumbnail.".$_r['s_extension']; ?>" /><a onclick="deleteResource(<?php echo $_r['pk_i_id'];?>)" style="cursor:pointer;" class="delete"><?php _e('Delete'); ?></a>
                                         </div>
                                     <?php } ?>
+                                    <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && count($resources)<  osc_max_images_per_item())) { ?>
                                     <div>
                                         <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
                                     </div>
+                                    <?php }; ?>
                                 </div>
                                 <p><a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a></p>
                             </div>
