@@ -17,7 +17,9 @@
      */
 
 
-    $last = end(__get('comments')) ;
+    $comments = __get('comments');
+    if(!is_array($comments)) { $comments = array(); };
+    $last = end($comments);//__get('comments')) ;
     $last_id = $last['pk_i_id'] ;
 ?>
 
