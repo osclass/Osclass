@@ -24,6 +24,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.js') ; ?>"></script>
+        <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("a[rel=image_group]").fancybox({
+                    'transitionIn'		: 'none',
+                    'transitionOut'		: 'none',
+                    'titlePosition' 	: 'over',
+                    'titleFormat'       : function(title, currentArray, currentIndex) {
+                        return '<span id="fancybox-title-over"><?php _e('Image', 'modern'); ?>  ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
+                    }
+                });
+            });
+        </script>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
     </head>
@@ -124,8 +138,14 @@
                     <?php if( osc_images_enabled_at_items() ) { ?>
                         <?php if( osc_count_item_resources() > 0 ) { ?>
                         <div id="photos">
-                            <?php while ( osc_has_item_resources() ) { ?>
-                                <img src="<?php echo osc_resource_url() ; ?>" width="320" alt="" title=""/>
+                            <?php for ( $i = 0; osc_has_item_resources() ; $i++ ) { ?>
+                            <a href="<?php echo osc_resource_url(); ?>" rel="image_group">
+                                <?php if( $i == 0 ) { ?>
+                                    <img src="<?php echo osc_resource_url(); ?>" width="315" alt="" title=""/>
+                                <?php } else { ?>
+                                    <img src="<?php echo osc_resource_thumbnail_url(); ?>" width="75" alt="" title=""/>
+                                <?php } ?>
+                            </a>
                             <?php } ?>
                         </div>
                         <?php } ?>
