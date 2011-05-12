@@ -88,9 +88,9 @@
 
         public function getAllComments($itemId = null) {
             if(is_null($itemId)) {
-                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE c.fk_i_item_id = i.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE c.fk_i_item_id = i.pk_i_id ORDER BY dt_pub_date DESC', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             } else {
-                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE i.pk_i_id = '.$itemId.' AND fk_i_item_id = ' . $itemId .'', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE i.pk_i_id = '.$itemId.' AND fk_i_item_id = ' . $itemId .' ORDER BY dt_pub_date DESC', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             }
             return $this->extendData($comments);
         }
