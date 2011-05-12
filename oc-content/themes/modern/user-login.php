@@ -41,7 +41,9 @@
                             <label for="password"><?php _e('Password', 'modern'); ?></label> <?php UserForm::password_login_text() ; ?><br />
                             <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
                             <button type="submit"><?php _e("Log in", 'modern');?></button>
-                            &nbsp;&nbsp;<a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern') ; ?></a>
+                            <div class="more-login">
+                                <a href="<?php echo osc_register_account_url() ; ?>"><?php _e("Register for a free account", 'modern') ; ?></a> · <a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern') ; ?></a>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
