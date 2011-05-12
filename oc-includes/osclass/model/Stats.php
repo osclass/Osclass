@@ -71,7 +71,12 @@
         public function latest_comments() {
             return $this->conn->osc_dbFetchResults("SELECT i.*, c.* FROM %st_item i, %st_item_comment c WHERE c.fk_i_item_id = i.pk_i_id ORDER BY dt_pub_date DESC LIMIT 5", DB_TABLE_PREFIX, DB_TABLE_PREFIX);
         }
+
+        public function new_reports_count($from_date) {
+            return $this->conn->osc_dbFetchResults("SELECT dt_date as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired FROM %st_item_stats WHERE dt_date > '%s' GROUP BY DAY(dt_date) ORDER BY dt_date ASC", DB_TABLE_PREFIX, $from_date);
+        }
         
+
     }
 
 ?>

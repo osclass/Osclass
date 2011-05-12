@@ -37,16 +37,73 @@
             //specific things for this class
             switch ($this->action)
             {
+                case 'reports':        // manage stats view
+                                        if(Params::getParam('type_stat')=='week') {
+                                            $stats_reports = Stats::newInstance()->new_reports_count(date('Y-m-d',  mktime (0,0,0, date("m"), date("d") -70, date("Y"))));
+                                            $first = mktime (0,0,0, date("m"), date("d") -70 +1 , date("Y"));
+                                        } else if(Params::getParam('type_stat')=='month') {
+                                            $stats_reports = Stats::newInstance()->new_reports_count(date('Y-m-d',  mktime (0,0,0, date("m")-10, date("d"), date("Y"))));
+                                            $first = mktime (0,0,0, date("m")-10, date("d") +1, date("Y"));
+                                        } else {
+                                            $stats_reports = Stats::newInstance()->new_reports_count(date('Y-m-d',  mktime (0,0,0, date("m"), date("d") -10, date("Y"))));
+                                            $first = mktime (0,0,0, date("m"), date("d") -10 +1, date("Y"));
+                                        }
+                                        $reports = array();
+                                        $last = mktime (0,0,0, date("m"), date("d")+1, date("Y"));
+                                        $days = round(($last - $first) / (60 * 60 * 24));
+                                        for($k = $first;$k<=$last;$k+=(24*3600)) {
+                                            $reports[date('Y-m-d', $k)]['views'] = 0;
+                                            $reports[date('Y-m-d', $k)]['spam'] = 0;
+                                            $reports[date('Y-m-d', $k)]['repeated'] = 0;
+                                            $reports[date('Y-m-d', $k)]['bad_classified'] = 0;
+                                            $reports[date('Y-m-d', $k)]['offensive'] = 0;
+                                            $reports[date('Y-m-d', $k)]['expired'] = 0;
+                                        }
+                                        $max = array();
+                                        $max['views'] = 0;
+                                        $max['other'] = 0;
+                                        foreach($stats_reports as $report) {
+                                            $reports[$report['d_date']]['views'] = $report['views'];
+                                            $reports[$report['d_date']]['spam'] = $report['spam'];
+                                            $reports[$report['d_date']]['repeated'] = $report['repeated'];
+                                            $reports[$report['d_date']]['bad_classified'] = $report['bad_classified'];
+                                            $reports[$report['d_date']]['offensive'] = $report['offensive'];
+                                            $reports[$report['d_date']]['expired'] = $report['expired'];
+                                            if($report['views']>$max['views']) {
+                                                $max['views'] = $report['views'];
+                                            }
+                                            if($report['spam']>$max['other']) {
+                                                $max['other'] = $report['spam'];
+                                            }
+                                            if($report['repeated']>$max['other']) {
+                                                $max['other'] = $report['repeated'];
+                                            }
+                                            if($report['bad_classified']>$max['other']) {
+                                                $max['other'] = $report['bad_classified'];
+                                            }
+                                            if($report['offensive']>$max['other']) {
+                                                $max['other'] = $report['offensive'];
+                                            }
+                                            if($report['expired']>$max['other']) {
+                                                $max['other'] = $report['expired'];
+                                            }
+                                        }
+                                        $this->_exportVariableToView("reports", $reports);
+                                        $this->_exportVariableToView("max", $max);
+                                        $this->doView("stats/reports.php");
+                break;
+                
+                
                 case 'comments':        // manage stats view
                                         if(Params::getParam('type_stat')=='week') {
                                             $stats_comments = Stats::newInstance()->new_comments_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -70, date("Y"))));
-                                            $first = mktime (0,0,0, date("m"), date("d") -70, date("Y"));
+                                            $first = mktime (0,0,0, date("m"), date("d") -70 +1, date("Y"));
                                         } else if(Params::getParam('type_stat')=='month') {
                                             $stats_comments = Stats::newInstance()->new_comments_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m")-10, date("d"), date("Y"))));
-                                            $first = mktime (0,0,0, date("m")-10, date("d"), date("Y"));
+                                            $first = mktime (0,0,0, date("m")-10, date("d") +1, date("Y"));
                                         } else {
                                             $stats_comments = Stats::newInstance()->new_comments_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -10, date("Y"))));
-                                            $first = mktime (0,0,0, date("m"), date("d") -10, date("Y"));
+                                            $first = mktime (0,0,0, date("m"), date("d") -10 +1, date("Y"));
                                         }
                                         $comments = array();
                                         $last = mktime (0,0,0, date("m"), date("d")+1, date("Y"));
@@ -66,16 +123,18 @@
                                         $this->_exportVariableToView("max", $max);
                                         $this->doView("stats/comments.php");
                 break;
+                
+                
                 case 'items':           // manage stats view
                                         if(Params::getParam('type_stat')=='week') {
                                             $stats_items = Stats::newInstance()->new_items_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -70, date("Y"))));
-                                            $first = mktime (0,0,0, date("m"), date("d") -70, date("Y"));
+                                            $first = mktime (0,0,0, date("m"), date("d") -70 +1, date("Y"));
                                         } else if(Params::getParam('type_stat')=='month') {
                                             $stats_items = Stats::newInstance()->new_items_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m")-10, date("d"), date("Y"))));
-                                            $first = mktime (0,0,0, date("m")-10, date("d"), date("Y"));
+                                            $first = mktime (0,0,0, date("m")-10, date("d") +1, date("Y"));
                                         } else {
                                             $stats_items = Stats::newInstance()->new_items_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -10, date("Y"))));
-                                            $first = mktime (0,0,0, date("m"), date("d") -10, date("Y"));
+                                            $first = mktime (0,0,0, date("m"), date("d") -10 +1, date("Y"));
                                         }
                                         $items = array();
                                         $last = mktime (0,0,0, date("m"), date("d")+1, date("Y"));
@@ -96,16 +155,18 @@
                                         $this->_exportVariableToView("max", $max);
                                         $this->doView("stats/items.php");
                 break;
+                
+                
                 case 'users':           // manage stats view
                                         if(Params::getParam('type_stat')=='week') {
                                             $stats_users = Stats::newInstance()->new_users_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -70, date("Y"))));
-                                            $first = mktime (0,0,0, date("m"), date("d") -70, date("Y"));
+                                            $first = mktime (0,0,0, date("m"), date("d") -70 +1, date("Y"));
                                         } else if(Params::getParam('type_stat')=='month') {
                                             $stats_users = Stats::newInstance()->new_users_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m")-10, date("d"), date("Y"))));
-                                            $first = mktime (0,0,0, date("m")-10, date("d"), date("Y"));
+                                            $first = mktime (0,0,0, date("m")-10, date("d") +1, date("Y"));
                                         } else {
                                             $stats_users = Stats::newInstance()->new_users_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -10, date("Y"))));
-                                            $first = mktime (0,0,0, date("m"), date("d") -10, date("Y"));
+                                            $first = mktime (0,0,0, date("m"), date("d") -10 +1, date("Y"));
                                         }
                                         $users = array();
                                         $last = mktime (0,0,0, date("m"), date("d")+1, date("Y"));
@@ -129,6 +190,8 @@
                                         $this->_exportVariableToView("max", $max);
                                         $this->doView("stats/users.php");
                 break;
+                
+                
                 default:                // manage stats view
                                         $users = array();
                                         $this->_exportVariableToView("users", $users);

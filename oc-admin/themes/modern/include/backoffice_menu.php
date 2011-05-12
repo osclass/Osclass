@@ -230,6 +230,9 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports">&raquo; <?php _e('Reports'); ?></a>
+            </li>
         </ul>
 
     </div>
