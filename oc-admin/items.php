@@ -305,13 +305,13 @@
                                             Session::newInstance()->_set($key,$value);
                                         }
                                         
+                                        $success = $mItems->edit();
+                                        
                                         if($success){
                                             foreach( $mItems->data as $key => $value ) {
                                                 Session::newInstance()->_drop($key);
                                             }    
                                         }
-                                        
-                                        $success = $mItems->edit();
 
                                         $id = Params::getParam('userId') ;
                                         if($id !='') {
