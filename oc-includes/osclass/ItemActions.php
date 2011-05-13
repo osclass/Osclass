@@ -21,10 +21,12 @@
     {
         private $manager = null;
         var $is_admin ;
+        var $data;
 
         function __construct($is_admin) {
             $this->is_admin = $is_admin ;
             $this->manager = Item::newInstance() ;
+            
         }
 
         /**
@@ -33,7 +35,8 @@
         public function add()
         {
             $success = true;
-            $aItem = $this->prepareData(true);
+//            $aItem = $this->prepareData(true);
+            $aItem = $this->data;
             $code = osc_genRandomPassword();
             $flash_error = '';
 
@@ -183,7 +186,8 @@
 
 
         function edit() {
-            $aItem = $this->prepareData(false);
+//            $aItem = $this->prepareData(false);
+            $aItem = $this->data;
             $flash_error = '';
 
             // Initiate HTML Purifier
@@ -776,7 +780,7 @@
          * @param <type> $is_add
          * @return array
          */
-        private function prepareData( $is_add )
+        public function prepareData( $is_add )
         {
             $aItem = array();
 
@@ -791,10 +795,6 @@
                     $userId = Session::newInstance()->_get('userId');
                     if($userId == ''){
                         $userId = NULL;
-                    }
-                    // to be tested
-                    if (osc_recaptcha_private_key()) {
-                        $this->recaptcha();
                     }
                 }
 
@@ -936,7 +936,8 @@
                 $aItem['currency'] = null;
             }
 
-            return $aItem;
+            $this->data = $aItem;
+//            return $aItem;
         }
 
         function insertItemLocales($type, $title, $description, $itemId )
@@ -1069,21 +1070,7 @@
             }
         }
 
-        public function recaptcha()
-        {
-            require_once osc_lib_path() . 'recaptchalib.php';
-            if ( Params::getParam("recaptcha_challenge_field") != '') {
-                $resp = recaptcha_check_answer (
-                    osc_recaptcha_private_key()
-                    ,$_SERVER["REMOTE_ADDR"]
-                    ,Params::getParam("recaptcha_challenge_field")
-                    ,Params::getParam("recaptcha_response_field")
-                );
-                if (!$resp->is_valid) {
-                    die(sprintf(__('The reCAPTCHA wasn\'t entered correctly. Go back and try it again. (reCAPTCHA said: %s )'), $resp->error)) ;
-                }
-            }
-        }
+
 
         public function sendEmails($aItem){
 

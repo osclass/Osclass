@@ -341,6 +341,9 @@ option.pad { margin-left:10px;}
 .add_item #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
 .add_item #error_list label { float:none; width:auto; line-height:1.35em; }
 
+label.recaptcha_input_area_text {
+    float:none;
+}
 /*
 Uniform Theme: Uniform Default
 Version: 1.6

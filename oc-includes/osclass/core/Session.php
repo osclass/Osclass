@@ -69,8 +69,7 @@
 
         function _view() {
             print_r($this->session) ;
-            echo "\n" ;
-            print_r($_SESSION) ;
+//            echo "\n" ;
         }
 
         function _setMessage($key, $value, $type) {
@@ -97,8 +96,7 @@
 
         function _viewMessage() {
             print_r($this->session['messages']) ;
-            echo "\n" ;
-            print_r($_SESSION['messages']) ;
+//            echo "\n" ;
         }
     }
 
