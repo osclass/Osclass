@@ -298,6 +298,19 @@
                 break;
                 case 'item_edit_post':
                                         $mItems = new ItemActions(true);
+                    
+                                        $mItems->prepareData(false);
+                                        // set all parameters into session
+                                        foreach( $mItems->data as $key => $value ) {
+                                            Session::newInstance()->_set($key,$value);
+                                        }
+                                        
+                                        if($success){
+                                            foreach( $mItems->data as $key => $value ) {
+                                                Session::newInstance()->_drop($key);
+                                            }    
+                                        }
+                                        
                                         $success = $mItems->edit();
 
                                         $id = Params::getParam('userId') ;
@@ -356,8 +369,19 @@
                 break;
                 case 'post_item':       //post item
                                         $mItem = new ItemActions(true);
+                    
+                                        $mItem->prepareData(true);
+                                        // set all parameters into session
+                                        foreach( $mItem->data as $key => $value ) {
+                                            Session::newInstance()->_set($key,$value);
+                                        }
+                                        
                                         $success = $mItem->add();
+                                        
                                         if( $success ) {
+                                            foreach( $mItem->data as $key => $value ) {
+                                                Session::newInstance()->_drop($key);
+                                            }
                                             osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {

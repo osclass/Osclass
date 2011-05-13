@@ -247,6 +247,10 @@
                         $success = $mItems->edit();
 
                         if($success){
+                            // drop all $mItems->data parameters from session
+                            foreach( $mItems->data as $key => $value ) {
+                                Session::newInstance()->_drop($key);
+                            }
                             osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
                             $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                         } else {
