@@ -405,12 +405,15 @@
 
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            Session::newInstance()->_set("yourEmail",   Params::getParam('yourEmail'));
+                            Session::newInstance()->_set("yourName",    Params::getParam('yourName'));
+                            Session::newInstance()->_set("phoneNumber", Params::getParam('phoneNumber'));
+                            Session::newInstance()->_set("message_body",Params::getParam('message'));
                             $this->redirectTo( osc_item_url( ) );
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
-
 
                     $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
 

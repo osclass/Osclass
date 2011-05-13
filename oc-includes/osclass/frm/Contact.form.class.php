@@ -60,7 +60,13 @@
         }
 
         static public function your_phone_number() {
-            parent::generic_input_text("phoneNumber", osc_logged_user_phone(), null, false);
+            if( Session::newInstance()->_get("phoneNumber") != "" ) {
+                $phoneNumber = Session::newInstance()->_get("phoneNumber") ;
+                Session::newInstance()->_drop("phoneNumber") ;
+                parent::generic_input_text("phoneNumber", $phoneNumber, null, false);
+            } else {
+                parent::generic_input_text("phoneNumber", osc_logged_user_phone(), null, false);
+            }
             return true ;
         }
 
