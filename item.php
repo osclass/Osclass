@@ -297,7 +297,7 @@
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 break;
-                case 'deleteResource':
+                /*case 'deleteResource':
                     $id     = Params::getParam('id') ;
                     $item   = Params::getParam('item') ;
                     $code   = Params::getParam('code') ;
@@ -348,7 +348,7 @@
 
                     // Redirect to item_edit. If unregistered user, include $secret.
                     $this->redirectTo( osc_item_edit_url($secret, $item) );
-                break;
+                break;*/
                 case 'mark':
                     $mItem = new ItemActions(false) ;
 

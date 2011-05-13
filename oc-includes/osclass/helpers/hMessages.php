@@ -42,6 +42,8 @@
     function osc_show_flash_message($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
         $message = Session::newInstance()->_getMessage($section) ;
 
+        echo '<div id="flash_js"></div>';
+        
         if (isset($message['msg']) && $message['msg'] != '') {
             echo '<div id="' . $id . '" class="' . $class . ' ' . $message['type'] . '">' ;
                 echo $message['msg'];
