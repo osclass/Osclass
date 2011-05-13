@@ -50,6 +50,8 @@
                             <label for="friendName"><?php _e("Your friend's name", 'modern'); ?></label> <?php SendFriendForm::friend_name(); ?> <br/>
                             <label for="friendEmail"><?php _e("Your friend's e-mail address", 'modern'); ?></label> <?php SendFriendForm::friend_email(); ?> <br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php SendFriendForm::your_message(); ?> <br/>
+                            <?php osc_show_recaptcha(); ?>
+                            <br/>
                             <button onclick="return validate_form();" type="button"><?php _e('Send', 'modern'); ?></button>
                         </fieldset>
                     </form>
