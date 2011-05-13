@@ -115,12 +115,12 @@
                 </div>
                 <div id="sidebar">
                     <div class="navigation">
-                        <?php if(osc_count_list_regions()>0) {?>
+                        <?php if(osc_count_list_cities()>0) {?>
                         <div class="box location">
                             <h3><strong><?php _e("Location", 'modern'); ?></strong></h3>
                             <ul>
-                            <?php while(osc_has_list_regions()) { ?>
-                                <li><a href="<?php echo osc_search_url(array('sRegion' => osc_list_region_name()));?>"><?php echo osc_list_region_name();?></a> <em>(<?php echo osc_list_region_items();?>)</em></li>
+                            <?php while(osc_has_list_cities()) { ?>
+                                <li><a href="<?php echo osc_search_url(array('sCity' => osc_list_city_name()));?>"><?php echo osc_list_city_name();?></a> <em>(<?php echo osc_list_city_items();?>)</em></li>
                             <?php } ?>
                             </ul>
                         </div>

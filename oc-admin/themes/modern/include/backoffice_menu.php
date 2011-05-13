@@ -217,5 +217,23 @@
             </li>
         </ul>
 
+        <h3>
+            <a href="#"><?php _e('Statistics'); ?></a>
+        </h3>
+        <ul>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users">&raquo; <?php _e('Users'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items">&raquo; <?php _e('Items'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments">&raquo; <?php _e('Comments'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports">&raquo; <?php _e('Reports'); ?></a>
+            </li>
+        </ul>
+
     </div>
 </div>

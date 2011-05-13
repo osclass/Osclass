@@ -76,15 +76,29 @@
                 break ;
                 case('recover_post'):   //post execution to recover the password
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
+
+                                        // e-mail is incorrect
+                                        if( !preg_match('|^[a-z0-9\.\_\+\-]+@[a-z0-9\.\-]+\.[a-z]{2,3}$|i', Params::getParam('s_email')) ) {
+                                            osc_add_flash_message( _m('Invalid email address') ) ;
+                                            $this->redirectTo( osc_recover_user_password_url() );
+                                        }
+
                                         $userActions = new UserActions(false) ;
-                                        $recaptcha_ok = $userActions->recover_password() ;
-                                        if($recaptcha_ok) {
-                                            // We ALWAYS show the same message, so we don't give clues about which emails are in our database and which don't!
-                                            osc_add_flash_ok_message( _m('We have sent you an email with the instructions to reset your password')) ;
-                                            $this->redirectTo( osc_base_url() ) ;
-                                        } else {
-                                            osc_add_flash_error_message( _m('The recaptcha code is wrong')) ;
-                                            $this->redirectTo( osc_recover_user_password_url() ) ;
+                                        $success = $userActions->recover_password() ;
+
+                                        switch ($success) {
+                                            case(0): // recover ok
+                                                     osc_add_flash_ok_message( _m('We have sent you an email with the instructions to reset your password')) ;
+                                                     $this->redirectTo( osc_base_url() ) ;
+                                                     break;
+                                            case(1): // e-mail does not exist
+                                                     osc_add_flash_error_message( _m('We were not able to identify you given the information provided')) ;
+                                                     $this->redirectTo( osc_recover_user_password_url() ) ;
+                                                     break;
+                                            case(2): // recaptcha wrong
+                                                     osc_add_flash_error_message( _m('The recaptcha code is wrong')) ;
+                                                     $this->redirectTo( osc_recover_user_password_url() ) ;
+                                                     break;
                                         }
                 break ;
 

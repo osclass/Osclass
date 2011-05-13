@@ -116,12 +116,7 @@
     }
 
     function osc_item_mod_date() {
-        $date = osc_item_field("dt_mod_date");
-        if($date!='') {
-            return $date;
-        } else {
-            return osc_item_pub_date();
-        }
+        return osc_item_field("dt_mod_date");
     }
 
     function osc_item_price() {

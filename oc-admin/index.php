@@ -86,6 +86,10 @@
                             $do = new CAdminTools() ;
                             $do->doModel() ;
         break;
+        case('stats'):      require_once(osc_admin_base_path() . 'stats.php') ;
+                            $do = new CAdminStats() ;
+                            $do->doModel() ;
+        break;
         default:            //login of oc-admin
                             require_once(osc_admin_base_path() . 'main.php') ;
                             $do = new CAdminMain() ;

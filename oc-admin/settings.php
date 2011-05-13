@@ -57,6 +57,8 @@
                                         $enabledFieldPriceItems     = (($enabledFieldPriceItems != '') ? true : false);
                                         $enabledFieldImagesItems    = Params::getParam('enableField#images@items');
                                         $enabledFieldImagesItems    = (($enabledFieldImagesItems != '') ? true : false);
+                                        $numImagesItems             = Params::getParam('numImages@items');
+                                        if($numImagesItems=='') { $numImagesItems = 0; }
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
@@ -85,6 +87,8 @@
                                                                                       ,array('s_name'  => 'enableField#images@items'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $itemsWaitTime)
                                                                                       ,array('s_name'  => 'items_wait_time'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $numImagesItems)
+                                                                                      ,array('s_name'  => 'numImages@items'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Items\' settings have been updated'), 'admin');

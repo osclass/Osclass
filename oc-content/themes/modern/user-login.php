@@ -26,19 +26,6 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-        <script type="text/javascript">
-            function validateForm() {
-                var validator = new FormValidator();
-                try {
-                    validator.addValidation('email', FormValidator.TYPE_EMAIL) ;
-                    validator.addValidation('password', FormValidator.TYPE_COMPLETED) ;
-                    return validator.run();
-                } catch(e) {
-                    alert(e);
-                    return false;
-                }
-            }
-        </script>
     </head>
     <body>
         <div class="container">
@@ -54,7 +41,9 @@
                             <label for="password"><?php _e('Password', 'modern'); ?></label> <?php UserForm::password_login_text() ; ?><br />
                             <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
                             <button type="submit"><?php _e("Log in", 'modern');?></button>
-                            &nbsp;&nbsp;<a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern') ; ?></a>
+                            <div class="more-login">
+                                <a href="<?php echo osc_register_account_url() ; ?>"><?php _e("Register for a free account", 'modern') ; ?></a> · <a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern') ; ?></a>
+                            </div>
                         </fieldset>
                     </form>
                 </div>

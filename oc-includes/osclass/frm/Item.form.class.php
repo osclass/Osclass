@@ -652,30 +652,36 @@
         e.parentNode.removeChild(e);
     }
     function addNewPhoto() {
-        var id = 'p-' + photoIndex++;
+        var max = <?php echo osc_max_images_per_item(); ?>;
+        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        if((max!=0 && num_img<max) || max==0) {
+            var id = 'p-' + photoIndex++;
 
-        var i = ce('input');
-        i.setAttribute('type', 'file');
-        i.setAttribute('name', 'photos[]');
+            var i = ce('input');
+            i.setAttribute('type', 'file');
+            i.setAttribute('name', 'photos[]');
 
-        var a = ce('a');
-        a.style.fontSize = 'x-small';
-        a.style.paddingLeft = '10px';
-        a.setAttribute('href', '#');
-        a.setAttribute('divid', id);
-        a.onclick = function() { re(this.getAttribute('divid')); return false; }
-        a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
+            var a = ce('a');
+            a.style.fontSize = 'x-small';
+            a.style.paddingLeft = '10px';
+            a.setAttribute('href', '#');
+            a.setAttribute('divid', id);
+            a.onclick = function() { re(this.getAttribute('divid')); return false; }
+            a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
 
-        var d = ce('div');
-        d.setAttribute('id', id);
-        d.setAttribute('style','padding: 4px 0;')
+            var d = ce('div');
+            d.setAttribute('id', id);
+            d.setAttribute('style','padding: 4px 0;')
 
-        d.appendChild(i);
-        d.appendChild(a);
+            d.appendChild(i);
+            d.appendChild(a);
 
-        gebi('photos').appendChild(d);
-        
-        $("#"+id+" input:file").uniform();
+            gebi('photos').appendChild(d);
+
+            $("#"+id+" input:file").uniform();
+        } else {
+            alert('<?php _e('Sorry, you have reached the maximum number of images per ad');?>');
+        }
     }
     // Listener: automatically add new file field when the visible ones are full.
     setInterval("add_file_field()", 250);
@@ -689,7 +695,9 @@
                 count++;
             }
         });
-        if (count == 0) {
+        var max = <?php echo osc_max_images_per_item(); ?>;
+        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        if (count == 0 && (max==0 || (max!=0 && num_img<max))) {
             addNewPhoto();
         }
     }

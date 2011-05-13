@@ -50,6 +50,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'rewrite_rules', '', 'STRING')
     ,('osclass', 'enableField#f_price@items', '1', 'BOOLEAN')
     ,('osclass', 'enableField#images@items', '1', 'BOOLEAN')
+    ,('osclass', 'numImages@items', '0', 'INTEGER')
     ,('osclass', 'maxLatestItems@home', '10', 'INTEGER')
     ,('osclass', 'defaultResultsPerPage@search', '10', 'INTEGER')
     ,('osclass', 'maxResultsPerPage@search', '50', 'INTEGER')

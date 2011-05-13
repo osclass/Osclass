@@ -260,7 +260,7 @@
 
                 $result = $this->manager->update (
                                         array(
-                                            'dt_pub_date'           => DB_FUNC_NOW
+                                            'dt_mod_date'           => DB_FUNC_NOW
                                             ,'fk_i_category_id'     => $aItem['catId']
                                             ,'f_price'              => $aItem['price']
                                             ,'fk_c_currency_code'   => $aItem['currency']
@@ -551,10 +551,16 @@
             Params::setParam('itemURL', $itemURL);
 
             if( $authorName == '' || !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
+                Session::newInstance()->_set('commentAuthorName', $authorName);
+                Session::newInstance()->_set('commentTitle', $title);
+                Session::newInstance()->_set('commentBody', $body);
                 return 3;
             }
 
             if( ($body == '') ) {
+                Session::newInstance()->_set('commentAuthorName', $authorName);
+                Session::newInstance()->_set('commentAuthorEmail', $authorEmail);
+                Session::newInstance()->_set('commentTitle', $title);
                 return 4;
             }
 
@@ -563,7 +569,7 @@
                 $num_comments = 0;
             } else {
                 $user = User::newInstance()->findByPrimaryKey($userId);
-                $num_comments = $user['i_comments'];//count(ItemComment::newInstance()->findByAuthorID($userId));
+                $num_comments = $user['i_comments'];
             }
 
             if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {
@@ -1026,44 +1032,50 @@
 
                 $itemResourceManager = ItemResource::newInstance() ;
 
+                $numImagesItems = osc_max_images_per_item();
+                $numImages = $itemResourceManager->countResources($itemId);
                 foreach ($aResources['error'] as $key => $error) {
-                    if ($error == UPLOAD_ERR_OK) {
+                    if($numImagesItems==0 || ($numImagesItems>0 && $numImages<$numImagesItems)) {
+                        if ($error == UPLOAD_ERR_OK) {
 
-                        $tmpName = $aResources['tmp_name'][$key] ;
-                        $itemResourceManager->insert(array(
-                            'fk_i_item_id' => $itemId
-                        )) ;
-                        $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
+                            $numImages++;
+                            
+                            $tmpName = $aResources['tmp_name'][$key] ;
+                            $itemResourceManager->insert(array(
+                                'fk_i_item_id' => $itemId
+                            )) ;
+                            $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
-                        // Create thumbnail
-                        $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
-                        $size = explode('x', osc_thumbnail_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                            // Create thumbnail
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
+                            $size = explode('x', osc_thumbnail_dimensions()) ;
+                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                        // Create normal size
-                        $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
-                        $size = explode('x', osc_normal_dimensions()) ;
-                        ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+                            // Create normal size
+                            $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
+                            $size = explode('x', osc_normal_dimensions()) ;
+                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                        if( osc_keep_original_image() ) {
-                            $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
-                            move_uploaded_file($tmpName, $path) ;
+                            if( osc_keep_original_image() ) {
+                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
+                                move_uploaded_file($tmpName, $path) ;
+                            }
+
+                            $s_path = 'oc-content/uploads/' ;
+                            $resourceType = 'image/png' ;
+                            $itemResourceManager->update(
+                                                    array(
+                                                        's_path'            => $s_path
+                                                        ,'s_name'           => osc_genRandomPassword()
+                                                        ,'s_extension'      => 'png'
+                                                        ,'s_content_type'   => $resourceType
+                                                    )
+                                                    ,array(
+                                                        'pk_i_id'       => $resourceId
+                                                        ,'fk_i_item_id' => $itemId
+                                                    )
+                            ) ;
                         }
-
-                        $s_path = 'oc-content/uploads/' ;
-                        $resourceType = 'image/png' ;
-                        $itemResourceManager->update(
-                                                array(
-                                                    's_path'            => $s_path
-                                                    ,'s_name'           => osc_genRandomPassword()
-                                                    ,'s_extension'      => 'png'
-                                                    ,'s_content_type'   => $resourceType
-                                                )
-                                                ,array(
-                                                    'pk_i_id'       => $resourceId
-                                                    ,'fk_i_item_id' => $itemId
-                                                )
-                        ) ;
                     }
                 }
                 unset($itemResourceManager);
