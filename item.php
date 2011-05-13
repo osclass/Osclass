@@ -121,6 +121,12 @@
                     $success = $mItems->add();
 
                     if($success) {
+                        
+                        // drop all $mItems->data parameters from session
+                        foreach( $mItems->data as $key => $value ) {
+                            Session::newInstance()->_drop($key);
+                        }
+                        
                         $PcontactName   = Params::getParam('contactName');
                         $PcontactEmail  = Params::getParam('contactEmail');
                         $itemId         = Params::getParam('itemId');
