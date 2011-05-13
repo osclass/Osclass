@@ -375,11 +375,27 @@
                     $this->doView('item-send-friend.php');
                 break;
                 case 'send_friend_post':
+                    $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+                    $this->_exportVariableToView('item', $item) ;
+                    
+                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                        if(!osc_check_recaptcha()) {
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            Session::newInstance()->_set("yourEmail",   Params::getParam('yourEmail'));
+                            Session::newInstance()->_set("yourName",    Params::getParam('yourName'));
+                            Session::newInstance()->_set("friendName", Params::getParam('friendName'));
+                            Session::newInstance()->_set("friendEmail", Params::getParam('friendEmail'));
+                            Session::newInstance()->_set("message_body",Params::getParam('message'));
+                            
+                            $this->redirectTo(osc_item_send_friend_url() );
+                            return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                        }
+                    }
+                    
                     $mItem = new ItemActions(false);
                     $mItem->send_friend();
 
-                    $item_url = Params::getParam('item_url');
-                    $this->redirectTo($item_url);
+                    $this->redirectTo( osc_item_url() );
                 break;
                 case 'contact':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
