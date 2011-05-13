@@ -523,6 +523,31 @@
         }
         return html;
     }
+    
+    function delete_image(id, item_id,name, secret) {
+        //alert(id + " - "+ item_id + " - "+name+" - "+secret);
+        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        if(result) {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo osc_base_url(true); ?>?page=ajax&action=delete_image&id='+id+'&item='+item_id+'&code='+name+'&secret='+secret,
+                dataType: 'json',
+                success: function(data){
+                    var class_type = "error";
+                    if(data.success) {
+                        $("div[name="+name+"]").remove();
+                        class_type = "ok";
+                    }
+                    var flash = $("#flash_js");
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    flash.html(message);
+                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                }
+            });
+        }
+    }
+    
+    
 </script>
 <?php
         }
@@ -532,7 +557,7 @@
             if($resources!=null && is_array($resources) && count($resources)>0) {
                 foreach($resources as $_r) { ?>
                     <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                        <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete"><?php _e('Delete'); ?></a>
+                        <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'" ;?>);"  class="delete"><?php _e('Delete'); ?></a>
                     </div>
                 <?php }
             }
