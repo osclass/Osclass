@@ -116,6 +116,13 @@
                         </div>
                         <?php }; ?>
                         <?php ItemForm::plugin_post_item(); ?>
+                        
+                        <div class="box">
+                            <div class="row">
+                                <?php osc_show_recaptcha(); ?>
+                            </div>
+                        </div>
+                        
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>
                     </fieldset>
