@@ -38,12 +38,24 @@
         }
 
         static public function your_name() {
-            parent::generic_input_text("yourName", osc_logged_user_name(), null, false);
+            if( Session::newInstance()->_get("yourName") != "" ) {
+                $name = Session::newInstance()->_get("yourName") ;
+                Session::newInstance()->_drop("yourName") ;
+                parent::generic_input_text("yourName", $name, null, false);
+            } else {
+                parent::generic_input_text("yourName", osc_logged_user_name(), null, false);
+            }
             return true ;
         }
 
         static public function your_email() {
-            parent::generic_input_text("yourEmail", osc_logged_user_email(), null, false);
+             if( Session::newInstance()->_get("yourEmail") != "" ) {
+                $email = Session::newInstance()->_get("yourEmail") ;
+                Session::newInstance()->_drop("yourEmail") ;
+                parent::generic_input_text("yourEmail", $email, null, false);
+            } else {
+                parent::generic_input_text("yourEmail", osc_logged_user_email(), null, false);
+            }
             return true ;
         }
 
@@ -53,12 +65,24 @@
         }
 
         static public function the_subject() {
-            parent::generic_input_text("subject", "", null, false);
+            if( Session::newInstance()->_get("subject") != "" ) {
+                $subject = Session::newInstance()->_get("subject") ;
+                Session::newInstance()->_drop("subject") ;
+                parent::generic_input_text("subject", $subject, null, false);
+            } else {
+                parent::generic_input_text("subject", "", null, false);
+            }
             return true ;
         }
 
         static public function your_message() {
-            parent::generic_textarea("message", "");
+            if( Session::newInstance()->_get("message_body") != "" ) {
+                $message = Session::newInstance()->_get("message_body") ;
+                Session::newInstance()->_drop("message_body") ;
+                parent::generic_textarea("message", $message);
+            } else {
+                parent::generic_textarea("message", "");
+            }
             return true ;
         }
 
