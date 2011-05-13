@@ -70,9 +70,22 @@
                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                     }
 
+                                        
                     $this->_exportVariableToView('countries',$countries ) ;
                     $this->_exportVariableToView('regions', $regions) ;
                     $this->_exportVariableToView('cities', $cities) ;
+
+                    if( Session::newInstance()->_get('countryId') != "" ) {
+                        $countryId  = Session::newInstance()->_get('countryId') ;
+                        $regions    = Region::newInstance()->getByCountry($countryId) ; 
+                        $this->_exportVariableToView('regions', $regions) ;
+                        if(Session::newInstance()->_get('countryId') != "" ) {
+                            $regionId  = Session::newInstance()->_get('regionId') ;
+                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regionId ) ;
+                            $this->_exportVariableToView('cities', $cities ) ;
+                        }
+                    }
+                    
                     $this->_exportVariableToView('user', $this->user) ;
 
                     osc_run_hook('post_item');

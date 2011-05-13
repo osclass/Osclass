@@ -60,6 +60,7 @@
                 }
             }
             echo '</select>' ;
+            Session::newInstance()->_drop('catId');
             return true ;
         }
     
@@ -70,7 +71,6 @@
             $catId = Params::getParam('catId');
             if(Session::newInstance()->_get('catId') != ""){
                 $catId = Session::newInstance()->_get('catId');
-                Session::newInstance()->_drop('catId');
             }
             
             // How many indents to add?
@@ -160,6 +160,7 @@
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_get('price') != "" ) {
                 $item['f_price'] = Session::newInstance()->_get('price');
+                Session::newInstance()->_drop('price');
             }
             parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
         }
@@ -169,6 +170,7 @@
             if($item==null) { $item = osc_item(); }
             if( Session::newInstance()->_get('currency') != "" ) {
                 $item['fk_c_currency_code'] = Session::newInstance()->_get('currency');
+                Session::newInstance()->_drop('currency');
             }
             if(count($currencies) > 1 ) {
                 $default_key = null;
@@ -194,12 +196,14 @@
             if( count($countries) > 1 ) {
                 if( Session::newInstance()->_get('countryId') != "" ) {
                     $item['fk_c_country_code'] = Session::newInstance()->_get('countryId');
+                    Session::newInstance()->_drop('countryId');
                 }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
             } else if ( count($countries) == 1 ) {
                 if( Session::newInstance()->_get('countryId') != "" ) {
                     $item['fk_c_country_code'] = Session::newInstance()->_get('countryId');
+                    Session::newInstance()->_drop('countryId');
                 }
                 parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
                 echo '</span>' .$countries[0]['s_name'] . '</span>';
@@ -207,6 +211,7 @@
             } else {
                 if( Session::newInstance()->_get('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_get('country');
+                    Session::newInstance()->_drop('countryId');
                 }
                 parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
                 return true ;
@@ -217,6 +222,7 @@
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_get('country') != "" ) {
                 $item['s_country'] = Session::newInstance()->_get('country');
+                Session::newInstance()->_drop('country');
             }
             parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
             return true ;
@@ -229,12 +235,14 @@
             if( count($regions) > 1 ) {
                 if( Session::newInstance()->_get('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_get('regionId');
+                    Session::newInstance()->_drop('regionId');
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
             } else if ( count($regions) == 1 ) {
                 if( Session::newInstance()->_get('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_get('regionId');
+                    Session::newInstance()->_drop('regionId');
                 }
                 parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
                 echo '</span>' .$regions[0]['s_name'] . '</span>';
@@ -242,6 +250,7 @@
             } else {
                 if( Session::newInstance()->_get('region') != "" ) {
                     $item['s_region'] = Session::newInstance()->_get('region');
+                    Session::newInstance()->_drop('region');
                 }
                 parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
                 return true ;
@@ -263,12 +272,14 @@
             if( count($cities) > 1 ) {
                 if( Session::newInstance()->_get('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_get('cityId');
+                    Session::newInstance()->_drop('cityId');
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
             } else if ( count($cities) == 1 ) {
                 if( Session::newInstance()->_get('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_get('cityId');
+                    Session::newInstance()->_drop('cityId');
                 }
                 parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
                 echo '</span>' .$cities[0]['s_name'] . '</span>';
@@ -276,6 +287,7 @@
             } else {
                 if( Session::newInstance()->_get('city') != "" ) {
                     $item['s_city'] = Session::newInstance()->_get('city');
+                    Session::newInstance()->_drop('city');
                 }
                 parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
                 return true ;
@@ -345,8 +357,10 @@
         // OK
         static public function show_email_checkbox($item = null) {
             if($item==null) { $item = osc_item(); };
-            if( Session::newInstance()->_get('showEmail') != "" ) {
+            if( Session::newInstance()->_get('showEmail') != 0) {
                 $item['b_show_email'] = Session::newInstance()->_get('showEmail');
+                Session::newInstance()->_drop('showEmail');
+            } else {
                 Session::newInstance()->_drop('showEmail');
             }
             parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );

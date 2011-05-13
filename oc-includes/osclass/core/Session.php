@@ -50,7 +50,7 @@
 
         function _set($key, $value) {
             $_SESSION[$key] = $value ;
-//            $this->session[$key] = $value ;
+            $this->session[$key] = $value ;
         }
 
         function _get($key) {
@@ -63,14 +63,13 @@
 
         function _drop($key) {
             unset($_SESSION[$key]) ;
-//            unset($this->session[$key]) ;
+            unset($this->session[$key]) ;
 
         }
 
         function _view() {
             print_r($this->session) ;
 //            echo "\n" ;
-//            print_r($_SESSION) ;
         }
 
         function _setMessage($key, $value, $type) {
@@ -98,7 +97,6 @@
         function _viewMessage() {
             print_r($this->session['messages']) ;
 //            echo "\n" ;
-//            print_r($_SESSION['messages']) ;
         }
     }
 
