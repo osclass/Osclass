@@ -418,7 +418,7 @@
 
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                     $this->_exportVariableToView('item', $item) ;
-
+print_r($_REQUEST);
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
@@ -453,7 +453,7 @@
                 case 'add_comment':
                     $mItem = new ItemActions(false);
                     $status = $mItem->add_comment();
-
+print_r($_REQUEST);
                     switch ($status) {
                         case -1: $msg = _m('Sorry, we could not save your comment. Try again later');
                                 osc_add_flash_error_message($msg);
