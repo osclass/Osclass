@@ -64,17 +64,7 @@
                 break;
                 
                 default:
-                   //echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
-                    $i = rand(0,10000);
-                    echo '<input type="button" id="recaptcha_required_'.$i.'"
-onclick="showRecaptcha(\'recaptcha_div_'.$i.'\', 
-\'submit_'.$i.'\',
-\'recaptcha_required_'.$i.'\',
-\'custom\');" 
-value="Click to Submit" 
-class="recaptcha_required" />
-<div id="recaptcha_div_'.$i.'"></div>
-<input type="submit" id="submit_'.$i.'" class="contact_submit" value="Submit" />';
+                   echo recaptcha_get_html( osc_recaptcha_public_key() ) ;
                 break;
             }
         }
