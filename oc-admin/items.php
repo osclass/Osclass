@@ -44,12 +44,12 @@
                                         {
                                             case 'activate_all':
                                                 $id = Params::getParam('id') ;
-                                                $value = 'ACTIVE' ;
+                                                $value = 1 ;
                                                 try {
                                                     if ($id) {
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
-                                                                    array('e_status' => $value)
+                                                                    array('b_active' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
@@ -63,12 +63,12 @@
                                             break;
                                             case 'deactivate_all':
                                                 $id = Params::getParam('id') ;
-                                                $value = 'INACTIVE';
+                                                $value = 0;
                                                 try {
                                                     if ($id) {
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
-                                                                    array('e_status' => $value)
+                                                                    array('b_active' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
@@ -173,7 +173,7 @@
 
                                         try {
                                             $this->itemManager->update(
-                                                    array('e_status' => $value),
+                                                    array('b_active' => ($value=='ACTIVE'?1:0)),
                                                     array('pk_i_id' => $id)
                                             );
 

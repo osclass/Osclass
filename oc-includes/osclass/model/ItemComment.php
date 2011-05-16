@@ -42,19 +42,19 @@
             if( $page == '' ) { $page = 0; }
             if( $comments_per_page == null ) { $comments_per_page = osc_comments_per_page(); }
             if( ($page === 'all') || ($comments_per_page == 0) ) {
-                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND e_status = 'ACTIVE'", DB_TABLE_PREFIX, $id);
+                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND b_active = 1 AND b_enabled = 1", DB_TABLE_PREFIX, $id);
             } else {
-                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND e_status = 'ACTIVE' LIMIT %d, %d", DB_TABLE_PREFIX, $id, ($page*$comments_per_page), $comments_per_page);
+                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND b_active = 1 AND b_enabled = 1 LIMIT %d, %d", DB_TABLE_PREFIX, $id, ($page*$comments_per_page), $comments_per_page);
             }
         }
         
         public function total_comments($id) {
-            $total = $this->conn->osc_dbFetchResult("SELECT count(pk_i_id) as total FROM %st_item_comment WHERE fk_i_item_id = %d AND e_status = 'ACTIVE' GROUP BY fk_i_item_id", DB_TABLE_PREFIX, $id);
+            $total = $this->conn->osc_dbFetchResult("SELECT count(pk_i_id) as total FROM %st_item_comment WHERE fk_i_item_id = %d AND b_active = 1 AND b_enabled = 1 GROUP BY fk_i_item_id", DB_TABLE_PREFIX, $id);
             return $total['total'];
         }
 
         public function findByAuthorID($id) {
-            return $this->listWhere('fk_i_user_id = ' . $id . " AND e_status = 'ACTIVE'");
+            return $this->listWhere('fk_i_user_id = ' . $id . " AND b_active = 1 AND b_enabled = 1");
         }
 
 

@@ -110,7 +110,8 @@
                     's_contact_name'        => $contactName,
                     's_contact_email'       => $contactEmail,
                     's_secret'              => $code,
-                    'e_status'              => $active,
+                    'b_active'              => ($active=='ACTIVE'?1:0),
+                    'b_enabled'             => 1,
                     'b_show_email'          => $aItem['showEmail']
                 ));
 
@@ -293,7 +294,7 @@
             $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
 
             $result = $this->manager->update(
-                array('e_status' => 'ACTIVE'),
+                array('b_active' => 1),
                 array('s_secret' => $secret, 'pk_i_id' => $id)
             );
             if($item[0]['fk_i_user_id']!=null) {
@@ -322,10 +323,6 @@
                 $this->deleteResourcesFromHD($itemId);
                 return $this->manager->deleteByPrimaryKey($itemId);
             }
-            /*$result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
-            if($item['e_status']=='ACTIVE') {
-                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-            }*/
             return false;
         }
 
@@ -601,7 +598,8 @@
                               ,'s_author_email' => $authorEmail
                               ,'s_title'        => $title
                               ,'s_body'         => $body
-                              ,'e_status'       => $status
+                              ,'b_active'       => ($status=='ACTIVE'?1:0)
+                              ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
 
             if( $mComments->insert($aComment) ){

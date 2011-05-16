@@ -50,7 +50,7 @@
                                                     case 'activate_all':    $value = 'ACTIVE' ;
                                                                             foreach ($id as $_id) {
                                                                                 $iUpdated = $this->itemCommentManager->update(
-                                                                                     array('e_status' => $value)
+                                                                                     array('b_active' => 1)
                                                                                     ,array('pk_i_id'  => $_id)
                                                                                 );
                                                                                 if($iUpdated) {
@@ -62,7 +62,7 @@
                                                     case 'deactivate_all':  $value = 'INACTIVE' ;
                                                                             foreach ($id as $_id) {
                                                                                 $this->itemCommentManager->update(
-                                                                                    array('e_status' => $value),
+                                                                                    array('b_active' => 0),
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
                                                                             }
@@ -81,7 +81,7 @@
                                             if (!in_array($value, array('ACTIVE', 'INACTIVE'))) return false ;
 
                                             $iUpdated = $this->itemCommentManager->update(
-                                                    array('e_status' => $value)
+                                                    array('b_active' => ($value=='ACTIVE'?1:0))
                                                     ,array('pk_i_id' => $id)
                                             );
                                             if( $value == 'ACTIVE' ) {

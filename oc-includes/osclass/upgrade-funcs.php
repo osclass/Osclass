@@ -60,7 +60,7 @@
     //print_r($error_queries[0]);
 
     if($version<203) {
-        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER'),('osclass', 'items_wait_time', '90', 'INTEGER'),('osclass', 'comments_per_page', '10', 'INTEGER'),('osclass', 'numImages@items', '0', 'INTEGER')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER'),('osclass', 'items_wait_time', '90', 'INTEGER'),('osclass', 'comments_per_page', '10', 'INTEGER'),('osclass', 'numImages@items', '0', 'INTEGER')", DB_TABLE_PREFIX);
         $users = User::newInstance()->listAll();
         foreach($users as $user) {
             $comments = count(ItemComment::newInstance()->findByAuthorID($user['pk_i_id']));
@@ -68,7 +68,28 @@
             User::newInstance()->update(array( 'i_items' => $items, 'i_comments' => $comments )
                                         ,array( 'pk_i_id' => $user['pk_i_id'] )
                                         ) ;
+            // CHANGE FROM b_enabled to b_active
+            User::newInstance()->update(array( 'b_active' => $user['b_enabled'], 'b_enabled' => 1 )
+                                        ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                        ) ;
         }
+        unset($users);
+        $items = $conn->osc_dbFetchResults("SELECT * FROM %st_item", DB_TABLE_PREFIX);
+        foreach($items as $item) {
+            Item::newInstance()->update(array("b_active" => ($item['e_status']=='ACTIVE'?1:0),
+                    'b_enabled' => 1),
+                    array('pk_i_id' => $item['pk_i_id']));
+        }
+        unset($items);
+        $comments = $conn->osc_dbFetchResults("SELECT * FROM %st_item_comment", DB_TABLE_PREFIX);
+        foreach($comments as $comment) {
+            ItemComment::newInstance()->update(array("b_active" => ($comment['e_status']=='ACTIVE'?1:0),
+                    'b_enabled' => 1),
+                    array('pk_i_id' => $comment['pk_i_id']));
+        }
+        unset($comments);
+        $conn->osc_dbExec("ALTER TABLE %st_item DROP `e_status`", DB_TABLE_PREFIX);
+        $conn->osc_dbExec("ALTER TABLE %st_item_comment DROP `e_status`", DB_TABLE_PREFIX);
         osc_changeVersionTo(203) ;
     }
 

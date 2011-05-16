@@ -105,9 +105,9 @@
                     $this->sOutput .= ' style=\'position:absolute;padding:4px;\'>';
                     $this->sOutput .= '<a href=\''.osc_admin_base_url(true).'?page=comments&action=list&amp;id='.$aRow['pk_i_id'].'\'>'.  __('View comments') .'</a>';
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=media&action=list&amp;id='. $aRow['pk_i_id'] .'\'>'. __('View media') .'</a>';
-                    if(isset($aRow['e_status']) && ($aRow['e_status'] == 'ACTIVE')) {
+                    if(isset($aRow['b_active']) && ($aRow['b_active'] == 'ACTIVE')) {
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=INACTIVE\'>'. __('Deactivate') .'</a>';
-                    } else if (isset($aRow['e_status']) && ($aRow['e_status'] == 'INACTIVE')) {
+                    } else if (isset($aRow['b_active']) && ($aRow['b_active'] == 'INACTIVE')) {
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
                     }
                     if(isset($aRow['b_premium']) && $aRow['b_premium']) {
