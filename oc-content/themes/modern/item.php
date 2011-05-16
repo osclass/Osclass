@@ -128,7 +128,6 @@
                                     <?php }; ?>
                                     <label for="title"><?php _e('Title', 'modern') ; ?>:</label><?php CommentForm::title_input_text(); ?><br />
                                     <label for="body"><?php _e('Comment', 'modern') ; ?>:</label><?php CommentForm::body_input_textarea(); ?><br />
-                                    <?php osc_show_recaptcha(); ?>
                                     <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                                 </fieldset>
                             </form>
@@ -179,7 +178,7 @@
                                 </script>
                                 <style type="text/css"> div#recaptcha_widget, div#recaptcha_image > img { width:280px; } </style>
                                 <div id="recaptcha_widget">
-                                    <div id="recaptcha_image_"><img /></div>
+                                    <div id="recaptcha_image"><img /></div>
                                     <span class="recaptcha_only_if_image"><?php _e('Enter the words above','modern'); ?>:</span>
                                     <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
                                     <div><a href="javascript:Recaptcha.showhelp()"><?php _e('Help', 'modern'); ?></a></div>
@@ -215,11 +214,6 @@
                             return true;
                         }
                         
-                        
-                        $(document).ready(function() {
-                            $('#recaptcha_image_').html( $('#recaptcha_widget_div').html() )
-                            //$('#recaptcha_image_ img').attr('src' , $('#recaptcha_image img').attr('src') )
-                        });
                     </script>
                 </div>
             </div>
