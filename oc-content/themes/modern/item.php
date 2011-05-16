@@ -26,6 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.js') ; ?>"></script>
         <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="http://api.recaptcha.net/js/recaptcha_ajax.js"></script> 
         <script type="text/javascript">
             $(document).ready(function(){
                 $("a[rel=image_group]").fancybox({
@@ -128,6 +129,7 @@
                                     <?php }; ?>
                                     <label for="title"><?php _e('Title', 'modern') ; ?>:</label><?php CommentForm::title_input_text(); ?><br />
                                     <label for="body"><?php _e('Comment', 'modern') ; ?>:</label><?php CommentForm::body_input_textarea(); ?><br />
+                                <?php osc_show_recaptcha(); ?>
                                     <button type="submit"><?php _e('Send', 'modern') ; ?></button>
                                 </fieldset>
                             </form>
@@ -213,7 +215,22 @@
 
                             return true;
                         }
-                        
+                        $(function() {
+$(".contact_submit").hide();
+});
+function showRecaptcha(element, submitButton, recaptchaButton, themeName) {
+  Recaptcha.destroy();
+  Recaptcha.create("<?php echo osc_recaptcha_public_key();?>", element, {
+        theme: themeName,
+        tabindex: 0,
+        callback: Recaptcha.focus_response_field
+  });
+  $(".contact_submit").hide();
+  $(".recaptcha_required").show();
+  $("#"+recaptchaButton).hide();
+  $("#"+submitButton).show();
+  
+}
                     </script>
                 </div>
             </div>
