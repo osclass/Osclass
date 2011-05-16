@@ -276,7 +276,7 @@ class TestOfSearch extends WebTestCase {
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->select("catId", "label=$cat");
+        $this->selenium->select("catId", "label=regexp:\\s+$cat");
 
         $this->selenium->type("title[en_US]", $title);
         $this->selenium->type("description[en_US]", $description);
