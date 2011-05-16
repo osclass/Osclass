@@ -33,7 +33,7 @@
         }
 
         static public function default_email_text() {
-            return __('Enter your e-mail', 'gui') ;
+            return __('Enter your e-mail') ;
         }
 
         static public function email_text() {

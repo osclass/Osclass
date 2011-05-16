@@ -252,7 +252,9 @@
                 foreach($branches as $branch) {
                     if(!in_array($branch['pk_i_id'], $this->categories)) {
                         $this->categories[] = sprintf("%st_item.fk_i_category_id = %d ", DB_TABLE_PREFIX, $branch['pk_i_id']);
-                        $list = $this->pruneBranches($branch['categories']);
+                        if(isset($branch['categories'])) {
+                            $list = $this->pruneBranches($branch['categories']);
+                        }
                     }
                 }
             }
@@ -310,8 +312,9 @@
             return $this->sql;
         }
 
-        public function makeSQLLocation($location = 's_city') {
 
+        public function makeSQLLocation($location = 's_city') {
+            
             $this->addTable(sprintf("%st_item_location", DB_TABLE_PREFIX));
             $condition_sql = implode(' AND ', $this->conditions);
             if($condition_sql!='') {
@@ -337,7 +340,7 @@
             }
         }
 
-        public function search($extended = true) {
+        public function doSearch($extended = true) {
             $items = $this->conn->osc_dbFetchResults($this->makeSQL(false));
             if($extended) {
                 return Item::newInstance()->extendData($items);
@@ -348,6 +351,7 @@
 
         public function listCountries($zero = ">", $order = "items DESC") {
 
+            $this->addConditions(sprintf('%st_item.e_status = \'ACTIVE\'', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_location.fk_c_country_code = cc.pk_c_code', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $sql = sprintf("SELECT cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_country as cc GROUP BY cc.pk_c_code HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, $zero, $order);
@@ -356,6 +360,7 @@
 
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") {
 
+            $this->addConditions(sprintf('%st_item.e_status = \'ACTIVE\'', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_location.fk_i_region_id = rr.pk_i_id', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $sql = sprintf("SELECT rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc WHERE rr.fk_c_country_code LIKE '%s' GROUP BY rr.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, strtolower($country), $zero, $order);
@@ -363,6 +368,7 @@
         }
 
         public function listCities($region = null, $zero = ">", $order = "items DESC") {
+            $this->addConditions(sprintf('%st_item.e_status = \'ACTIVE\'', DB_TABLE_PREFIX));
             $region_int = (int)$region;
             if(is_int($region_int) && $region_int!=0) {
 
@@ -380,6 +386,7 @@
         }
 
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC") {
+            $this->addConditions(sprintf('%st_item.e_status = \'ACTIVE\'', DB_TABLE_PREFIX));
             $city_int = (int)$city;
             if(is_int($city_int) && $city_int!=0) {
 

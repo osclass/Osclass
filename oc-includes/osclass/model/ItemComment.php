@@ -37,8 +37,20 @@
             return $this->listWhere('fk_i_item_id = ' . $id);
         }
 
-        public function findByItemID($id) {
-            return $this->listWhere('fk_i_item_id = ' . $id . " AND e_status = 'ACTIVE'");
+        public function findByItemID($id, $page = null, $comments_per_page = null) {
+            if( $page == null ) { $page = osc_item_comments_page(); }
+            if( $page == '' ) { $page = 0; }
+            if( $comments_per_page == null ) { $comments_per_page = osc_comments_per_page(); }
+            if( ($page === 'all') || ($comments_per_page == 0) ) {
+                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND e_status = 'ACTIVE'", DB_TABLE_PREFIX, $id);
+            } else {
+                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND e_status = 'ACTIVE' LIMIT %d, %d", DB_TABLE_PREFIX, $id, ($page*$comments_per_page), $comments_per_page);
+            }
+        }
+        
+        public function total_comments($id) {
+            $total = $this->conn->osc_dbFetchResult("SELECT count(pk_i_id) as total FROM %st_item_comment WHERE fk_i_item_id = %d AND e_status = 'ACTIVE' GROUP BY fk_i_item_id", DB_TABLE_PREFIX, $id);
+            return $total['total'];
         }
 
         public function findByAuthorID($id) {
@@ -76,9 +88,9 @@
 
         public function getAllComments($itemId = null) {
             if(is_null($itemId)) {
-                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE c.fk_i_item_id = i.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE c.fk_i_item_id = i.pk_i_id ORDER BY dt_pub_date DESC', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             } else {
-                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE i.pk_i_id = '.$itemId.' AND fk_i_item_id = ' . $itemId .'', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE i.pk_i_id = '.$itemId.' AND fk_i_item_id = ' . $itemId .' ORDER BY dt_pub_date DESC', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             }
             return $this->extendData($comments);
         }

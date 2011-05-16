@@ -37,7 +37,7 @@
         $perms = osc_save_permissions();
         $ok = osc_change_permissions();
         foreach($perms as $k => $v) {
-            chmod($k, $v);
+            @chmod($k, $v);
         }
         if($ok) {
         ?>
@@ -47,13 +47,13 @@
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';
-                steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" version + "): " ;
+                steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" + version + "): " ;
 
                 $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
                         steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date!', 'admin'); ?>";
                     } else {
-                        steps.innerHTML += "<?php _e('current version: ', 'admin'); ?>" + data.version + "<br/>" ;
+                        steps.innerHTML += "<?php _e('current version:', 'admin'); ?> " + data.version + "<br/>" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
                             steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url() ; ?>images/loading.gif\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
 
@@ -109,6 +109,6 @@
                 </div>
             </div>
         </div>
-        <?php osc_current_admin_theme_url('footer.php') ; ?>
+        <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>

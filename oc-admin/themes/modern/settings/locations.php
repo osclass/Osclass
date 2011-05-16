@@ -32,7 +32,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
@@ -47,7 +46,7 @@
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings form -->
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
+                <div id="settings_form" class="locations" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
                     <!-- Country -->
                     <div style="float:left; width: 33%; ">
                         <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
@@ -63,13 +62,19 @@
                         </div>
                         <div id="l_countries" style="padding: 10px 0;">
                             <?php foreach( $aCountries as $country ) { ?>
+                            <?php $data_array = array();
+                                foreach($country['locales'] as $k => $v) {
+                                    $data_array[] = $k."@".$v;
+                                }
+                                $data = implode("|", $data_array);
+                            ?>
                             <div style="padding: 4px; width: 90%;">
                                 <div style="float:left;">
                                     <div>
                                         <a class="close" href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=locations&type=delete_country&id=<?php echo $country['pk_c_code'] ; ?>">
                                             <img src="<?php echo osc_admin_base_url() ; ?>images/close.png" alt="<?php _e('Close'); ?>" title="<?php _e('Close'); ?>" />
                                         </a>
-                                        <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));"><?php echo $country['s_name'] ; ?></a>
+                                        <a class="edit" href="javascript:void(0);" style="padding-right: 15px;" onclick="edit_countries($(this));" data="<?php echo $data;?>" code="<?php echo $country['pk_c_code'];?>"><?php echo $country['s_name'] ; ?></a>
                                     </div>
                                 </div>
                                 <div style="float:right">
@@ -124,7 +129,7 @@
             </div>
         </div>
         <!-- Form add country -->
-        <div id="d_add_country" class="lightbox_country location">
+        <div id="d_add_country" class="lightbox_country location" style="height: 300px;">
             <div>
                 <h4><?php _e('Add new country') ; ?></h4>
             </div>
@@ -134,20 +139,21 @@
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="add_country" />
                     <input type="hidden" name="c_manual" value="1" />
-                    <table>
-                        <tr>
-                            <td><?php _e('Country'); ?>: </td>
-                            <td><input type="text" id="country" name="country" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td><?php _e('Country code'); ?>: </td>
-                            <td><input type="text" id="c_country" name="c_country" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><small id="c_code_error" style="color: red; display: none;"><?php _e('Country code should have two characters'); ?></small></td>
-                        </tr>
-                    </table>
+                    <label><?php _e('Country code'); ?>: </label><br/>
+                    <input type="text" id="c_country" name="c_country" value="" /><br/>
+                    <div><small id="c_code_error" style="color: red; display: none;"><?php _e('Country code should have two characters'); ?></small></div>
+                    <div class="tabber">
+                    <?php $locales = OSCLocale::newInstance()->listAllEnabled(); ?>
+                    <?php foreach($locales as $locale) { ?>
+                        <div class="tabbertab">
+                            <h2><?php echo $locale['s_name'];?></h2>
+                                <p>
+                                    <label><?php _e('Country'); ?>: </label><br/>
+                                    <input type="text" id="country" name="country[<?php echo $locale['pk_c_code'];?>]" value="" />
+                                </p>
+                        </div>
+                    <?php }; ?>
+                    </div>
                     <div style="margin-top: 8px; text-align: right; ">
                         <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_add_country').css('display','none');$('#fade').css('display','none');"/>
                         <input type="submit" name="submit" value="<?php _e('Add'); ?>" />
@@ -157,7 +163,7 @@
         </div>
         <!-- End form add country -->
         <!-- Form edit country -->
-        <div id="d_edit_country" class="lightbox_country location" style="height: 140px;">
+        <div id="d_edit_country" class="lightbox_country location" style="height: 240px;">
             <div>
                 <h4><?php _e('Edit country') ; ?></h4>
             </div>
@@ -166,14 +172,19 @@
                     <input type="hidden" name="page" value="settings" />
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="edit_country" />
-                    <input type="hidden" name="country_old" value="" />
-                    <table>
-                        <tr>
-                            <td><?php _e('Country'); ?>: </td>
-                            <td><input type="text" id="country" name="e_country" value="" /></td>
-                        </tr>
-                    </table>
-                    <div style="margin-top: 8px; text-align: right; ">
+                    <input type="hidden" name="country_code" value="" />
+                    <div class="tabber">
+                        <?php $locales = OSCLocale::newInstance()->listAllEnabled(); ?>
+                        <?php foreach($locales as $locale) { ?>
+                            <div class="tabbertab">
+                                <h2><?php echo $locale['s_name'];?></h2>
+                                    <p>
+                                        <label><?php _e('Country'); ?>: </label><br/>
+                                        <input type="text" id="e_country" name="e_country[<?php echo $locale['pk_c_code'];?>]" value="" />
+                                    </p>
+                            </div>
+                        <?php }; ?>
+                        </div>                    <div style="margin-top: 8px; text-align: right; ">
                         <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_country').css('display','none');$('#fade').css('display','none');"/>
                         <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
                     </div>

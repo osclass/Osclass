@@ -27,27 +27,59 @@
         }*/
 
         static public function your_name() {
-            parent::generic_input_text("yourName", "", null, false);
+            
+            if( Session::newInstance()->_get("yourName") != "" ){
+                $yourName = Session::newInstance()->_get("yourName");
+                parent::generic_input_text("yourName", $yourName, null, false);
+                Session::newInstance()->_drop("yourName");
+            } else {
+                parent::generic_input_text("yourName", "", null, false);
+            }
             return true ;
         }
 
         static public function your_email() {
-            parent::generic_input_text("yourEmail", "", null, false);
+            
+            if( Session::newInstance()->_get("yourEmail") != "" ){
+                $yourEmail = Session::newInstance()->_get("yourEmail");
+                parent::generic_input_text("yourEmail", $yourEmail, null, false);
+                Session::newInstance()->_drop("yourEmail");
+            } else {
+                parent::generic_input_text("yourEmail", "", null, false);
+            }
             return true ;
         }
 
         static public function friend_name() {
-            parent::generic_input_text("friendName", "", null, false);
+            if( Session::newInstance()->_get("friendName") != "" ){
+                $friendName = Session::newInstance()->_get("friendName");
+                parent::generic_input_text("friendName", $friendName, null, false);
+                Session::newInstance()->_drop("friendName");
+            } else {
+                parent::generic_input_text("friendName", "", null, false);
+            }
             return true ;
         }
 
         static public function friend_email() {
-            parent::generic_input_text("friendEmail", "", null, false);
+            if( Session::newInstance()->_get("friendEmail") != "" ){
+                $friendEmail = Session::newInstance()->_get("friendEmail");
+                parent::generic_input_text("friendEmail", $friendEmail, null, false);
+                Session::newInstance()->_drop("friendEmail");
+            } else {
+                parent::generic_input_text("friendEmail", "", null, false);
+            }
             return true ;
         }
 
         static public function your_message() {
-            parent::generic_textarea("message", "");
+            if( Session::newInstance()->_get("message_body") != "" ){
+                $message_body = Session::newInstance()->_get("message_body");
+                parent::generic_textarea("message", $message_body, null, false);
+                Session::newInstance()->_drop("message_body");
+            } else {
+                parent::generic_textarea("message", "");
+            }
             return true ;
         }
 

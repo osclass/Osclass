@@ -182,10 +182,26 @@
                                                 case 'ACTIVE':
                                                     osc_add_flash_message( _m('The item has been activated'), 'admin');
                                                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                                                    if($item['fk_i_user_id']!=null) {
+                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                        if($user) {
+                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                ) ;
+                                                        }
+                                                    }
                                                     break;
                                                 case 'INACTIVE':
                                                     osc_add_flash_message( _m('The item has been deactivated'), 'admin');
                                                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                                                    if($item['fk_i_user_id']!=null) {
+                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                        if($user) {
+                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']-1)
+                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                ) ;
+                                                        }
+                                                    }
                                                     break;
                                             }
 
@@ -273,7 +289,7 @@
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
                                         $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", $item);
                                         $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
@@ -282,7 +298,20 @@
                 break;
                 case 'item_edit_post':
                                         $mItems = new ItemActions(true);
+                    
+                                        $mItems->prepareData(false);
+                                        // set all parameters into session
+                                        foreach( $mItems->data as $key => $value ) {
+                                            Session::newInstance()->_set($key,$value);
+                                        }
+                                        
                                         $success = $mItems->edit();
+                                        
+                                        if($success){
+                                            foreach( $mItems->data as $key => $value ) {
+                                                Session::newInstance()->_drop($key);
+                                            }    
+                                        }
 
                                         $id = Params::getParam('userId') ;
                                         if($id !='') {
@@ -332,7 +361,7 @@
                                         $this->_exportVariableToView("regions", $regions);
                                         $this->_exportVariableToView("cities", $cities);
                                         $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", Locale::newInstance()->listAllEnabled());
+                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", array());
                                         $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
@@ -340,8 +369,19 @@
                 break;
                 case 'post_item':       //post item
                                         $mItem = new ItemActions(true);
+                    
+                                        $mItem->prepareData(true);
+                                        // set all parameters into session
+                                        foreach( $mItem->data as $key => $value ) {
+                                            Session::newInstance()->_set($key,$value);
+                                        }
+                                        
                                         $success = $mItem->add();
+                                        
                                         if( $success ) {
+                                            foreach( $mItem->data as $key => $value ) {
+                                                Session::newInstance()->_drop($key);
+                                            }
                                             osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {

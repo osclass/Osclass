@@ -49,6 +49,74 @@
                     echo json_encode($cities);
                     break;
                     
+                case 'delete_image': // Delete images via AJAX
+                    $id     = Params::getParam('id') ;
+                    $item   = Params::getParam('item') ;
+                    $code   = Params::getParam('code') ;
+                    $secret = Params::getParam('secret') ;
+                    $json = array();
+
+                    if( Session::newInstance()->_get('userId') != '' ){
+                        $userId = Session::newInstance()->_get('userId');
+                        $user = User::newInstance()->findByPrimaryKey($userId);
+                    }else{
+                        $userId = null;
+                        $user = null;
+                    }
+
+                    // Check for required fields
+                    if ( !( is_numeric($id) && is_numeric($item) && preg_match('/^([a-z0-9]+)$/i', $code) ) ) {
+                        $json['success'] = false;
+                        $json['msg'] = _m("The selected photo couldn't be deleted, the url doesn't exist");
+                        echo json_encode($json);
+                        return false;
+                    }
+
+                    $aItem = Item::newInstance()->findByPrimaryKey($item);
+
+                    // Check if the item exists
+                    if(count($aItem) == 0) {
+                        $json['success'] = false;
+                        $json['msg'] = _m('The item doesn\'t exist');
+                        echo json_encode($json);
+                        return false;
+                    }
+
+                    // Check if the item belong to the user
+                    if($userId != null && $userId != $aItem['fk_i_user_id']) {
+                        $json['success'] = false;
+                        $json['msg'] = _m('The item doesn\'t belong to you');
+                        echo json_encode($json);
+                        return false;
+                    }
+
+                    // Check if the secret passphrase match with the item
+                    if($userId == null && $secret != $aItem['s_secret']) {
+                        $json['success'] = false;
+                        $json['msg'] = _m('The item doesn\'t belong to you');
+                        echo json_encode($json);
+                        return false;
+                    }
+
+                    // Does id & code combination exist?
+                    $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
+
+                    if ($result > 0) {
+                        // Delete: file, db table entry
+                        osc_deleteResource($id);
+                        ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
+
+                        $json['msg'] =  _m('The selected photo has been successfully deleted') ;
+                        $json['success'] = 'true';
+                    } else {
+                        $json['msg'] = _m("The selected photo couldn't be deleted") ;
+                        $json['success'] = 'false';
+                    }
+
+                    echo json_encode($json);
+                    return true;
+                    break;
+                    
                 case 'alerts': // Allow to register to an alert given (not sure it's used on admin)
                     $alert = Params::getParam("alert");
                     $email = Params::getParam("email");

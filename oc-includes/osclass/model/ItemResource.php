@@ -53,6 +53,12 @@
             return $this->exists(array('pk_i_id' => $id, 's_name' => $code) ) ;
         }
 
+        public function countResources($itemId) {
+            $total = $this->conn->osc_dbFetchResult('SELECT COUNT(pk_i_id) as total FROM %s WHERE fk_i_item_id = %d GROUP BY fk_i_item_id', $this->getTableName(), $itemId);
+            return $total['total'];
+        }
+        
+        
     }
 
 ?>

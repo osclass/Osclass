@@ -61,18 +61,7 @@
         <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : __("ie. PHP Programmer", 'modern') ; ?>" />
 
         <?php  if ( osc_count_categories() ) { ?>
-            <?php osc_goto_first_category() ; ?>
-            <select name="sCategory" id="sCategory">
-                    <option value=""><?php _e("Select a category", 'modern') ; ?></option>
-                    <?php while ( osc_has_categories() ) { ?>
-                        <option value="<?php echo osc_category_id() ; ?>"><?php echo osc_category_name() ; ?></option>
-                        <?php if ( osc_count_subcategories() > 0 ) { ?>
-                            <?php while ( osc_has_subcategories() ) { ?>
-                                <option class="pad" value="<?php echo osc_category_id() ; ?>"><?php echo osc_category_name() ; ?></option>
-                            <?php } ?>
-                        <?php } ?>
-                    <?php } ?>
-            </select>
+            <?php osc_categories_select() ; ?>
         <?php  } ?>
 
         <button type="submit"><?php _e('Search', 'modern') ; ?></button>

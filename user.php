@@ -1,5 +1,6 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
+
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -80,7 +81,7 @@
                                         foreach($aAlerts as $k => $a) {
                                             $search = osc_unserialize(base64_decode($a['s_search'])) ;
                                             $search->limit(0, 3) ;
-                                            $aAlerts[$k]['items'] = $search->search() ;
+                                            $aAlerts[$k]['items'] = $search->doSearch() ;
                                         }
 
                                         $this->_exportVariableToView('alerts', $aAlerts) ;

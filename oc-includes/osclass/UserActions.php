@@ -104,11 +104,11 @@
         {
             $input = $this->prepareData(false) ;
             $this->manager->update($input, array('pk_i_id' => $userId)) ;
-            if(isset($input['s_email'])) { // WE HAVE THE EMAIL, WE PROBABLY ARE AN ADMIN
+            if($this->is_admin) {
                 Item::newInstance()->update(array('s_contact_name' => $input['s_name'], 's_contact_email' => $input['s_email']), array('fk_i_user_id' => $userId));
                 ItemComment::newInstance()->update(array('s_author_name' => $input['s_name'], 's_author_email' => $input['s_email']), array('fk_i_user_id' => $userId));
                 Alerts::newInstance()->update(array('s_email' => $input['s_email']), array('fk_i_user_id' => $userId));
-            } else { // WE DONT HAVE THE EMAIL, WE ARE A PLAIN USER
+            } else { 
                 Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
                 ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
             }
@@ -145,49 +145,52 @@
 
             if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                 if(!$this->recaptcha()) {
-                    return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                    return 2; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                 }
             }
             
-            if($user) {
-                $code = osc_genRandomPassword(30);
-                $date = date('Y-m-d H:i:s');
-                $date2 = date('Y-m-d H:i:').'00';
-                User::newInstance()->update(
-                    array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
-                    array('pk_i_id' => $user['pk_i_id'])
-                );
-
-                $password_url = osc_forgot_user_password_confirm_url($user['pk_i_id'], $code);
-                                        
-                $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
-
-                $content = array();
-                $locale = osc_current_user_locale() ;
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale];
-                } else {
-                    $content = current($aPage['locale']);
-                }
-
-                if (!is_null($content)) {
-                    $words   = array();
-                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
-                                     '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
-                    $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', osc_page_title(),
-                                     $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
-                    $title = osc_mailBeauty($content['s_title'], $words);
-                    $body = osc_mailBeauty($content['s_text'], $words);
-
-                    $emailParams = array('subject'  => $title,
-                                         'to'       => $user['s_email'],
-                                         'to_name'  => $user['s_name'],
-                                         'body'     => $body,
-                                         'alt_body' => $body);
-                    osc_sendMail($emailParams);
-                }
+            if( !$user ) {
+                return 1;
             }
-            return true;
+
+            $code = osc_genRandomPassword(30);
+            $date = date('Y-m-d H:i:s');
+            $date2 = date('Y-m-d H:i:').'00';
+            User::newInstance()->update(
+                array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
+                array('pk_i_id' => $user['pk_i_id'])
+            );
+
+            $password_url = osc_forgot_user_password_confirm_url($user['pk_i_id'], $code);
+
+            $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
+
+            $content = array();
+            $locale = osc_current_user_locale() ;
+            if(isset($aPage['locale'][$locale]['s_title'])) {
+                $content = $aPage['locale'][$locale];
+            } else {
+                $content = current($aPage['locale']);
+            }
+
+            if (!is_null($content)) {
+                $words   = array();
+                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
+                                 '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
+                $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', osc_page_title(),
+                                 $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
+                $title = osc_mailBeauty($content['s_title'], $words);
+                $body = osc_mailBeauty($content['s_text'], $words);
+
+                $emailParams = array('subject'  => $title,
+                                     'to'       => $user['s_email'],
+                                     'to_name'  => $user['s_name'],
+                                     'body'     => $body,
+                                     'alt_body' => $body);
+                osc_sendMail($emailParams);
+            }
+
+            return 0;
         }
         
 

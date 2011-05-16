@@ -29,6 +29,22 @@
 	    function isLogged() {
             return osc_is_web_user_logged_in() ;
 	    }
+        
+        function logout() {
+        //destroying current session
+        function logout() {
+            //destroying session
+            Session::newInstance()->session_destroy() ;
+            Session::newInstance()->_drop('userId') ;
+            Session::newInstance()->_drop('userName') ;
+            Session::newInstance()->_drop('userEmail') ;
+            Session::newInstance()->_drop('userPhone') ;
+
+            Cookie::newInstance()->pop('oc_userId') ;
+            Cookie::newInstance()->pop('oc_userSecret') ;
+            Cookie::newInstance()->set() ;
+        }
+        }
 
 	    function showAuthFailPage() {
             $this->redirectTo( osc_user_login_url() ) ;

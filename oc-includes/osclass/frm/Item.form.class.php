@@ -27,11 +27,14 @@
             if($item==null) { $item = osc_item(); };
             parent::generic_input_hidden("id", $item["pk_i_id"]) ;
         }
-
+        // OK
         static public function category_select($categories = null, $item = null, $default_item = null)
         {
             // Did user select a specific category to post in?
             $catId = Params::getParam('catId');
+            if(Session::newInstance()->_get('catId') != ""){
+                $catId = Session::newInstance()->_get('catId');
+            }
 
             if($categories==null) { $categories = osc_get_categories(); };
             if($item==null) { $item = osc_item(); };
@@ -41,37 +44,51 @@
             } else {
                 echo '<option value="">' . __('Select a category') . '</option>' ;
             }
+
             foreach($categories as $c) {
-                $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>' ;
-                if(isset($c['categories']) && is_array($c['categories'])) {
-                    ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
+                if(!osc_selectable_parent_categories()){
+                    echo '<optgroup label="' . $c['s_name'] . '">' ;
+                    if(isset($c['categories']) && is_array($c['categories'])) {
+                        ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
+                    }
+                } else {
+                    $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
+                    echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '' ). '>' . $c['s_name'] . '</option>' ;
+                    if(isset($c['categories']) && is_array($c['categories'])) {
+                        ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
+                    }
                 }
             }
             echo '</select>' ;
+            Session::newInstance()->_drop('catId');
             return true ;
         }
-
+    
+        // OK
         static public function subcategory_select($categories, $item, $default_item = null, $deep = 0)
         {
             // Did user select a specific category to post in?
             $catId = Params::getParam('catId');
-
-            // How many indents to add?
-            $deep_string = 0;
-            if( $deep > 0 ) {
-                $deep_string = (string) (15 * $deep);
+            if(Session::newInstance()->_get('catId') != ""){
+                $catId = Session::newInstance()->_get('catId');
             }
+            
+            // How many indents to add?
+            $deep_string = "";
+            for($var = 0;$var<$deep;$var++) {
+                $deep_string .= '&nbsp;&nbsp;';
+            }
+            $deep++;
 
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option style="padding-left: ' . $deep_string . 'px;" value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $c['s_name'] . '</option>' ;
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
-                    ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep+1);
+                    ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
             }
         }
-
+        // TODO OC-ADMIN TEST
         static public function user_select($users = null, $item = null, $default_item = null)
         {
             if($users==null) { $users = User::newInstance()->listAll(); };
@@ -86,49 +103,75 @@
             echo '</select>' ;
             return true ;
         }
-
+        // OK
         static public function title_input($name, $locale = 'en_US', $value = '')
         {
+            
             parent::generic_input_text($name . '[' . $locale . ']', $value) ;
             return true ;
         }
-
+        // OK
         static public function description_textarea($name, $locale = 'en_US', $value = '')
         {
             parent::generic_textarea($name . '[' . $locale . ']', $value) ;
             return true ;
         }
-
+        // OK
         static public function multilanguage_title_description($locales = null, $item = null) {
             if($locales==null) { $locales = osc_get_locales(); }
             if($item==null) { $item = osc_item(); }
             $num_locales = count($locales);
+            
             if($num_locales>1) { echo '<div class="tabber">'; };
             foreach($locales as $locale) {
                 if($num_locales>1) { echo '<div class="tabbertab">'; };
                 if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
                 echo '<div class="title">';
                 echo '<div><label for="title">' . __('Title') . ' *</label></div>';
-                self::title_input('title', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' );
+                $title = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_title'])) ? $item['locale'][$locale['pk_c_code']]['s_title'] : '' ;
+                if( Session::newInstance()->_get('title') != "" ) {
+                    $title_ = Session::newInstance()->_get('title');
+                    if( $title_[$locale['pk_c_code']] != "" ){
+                        $title = $title_[$locale['pk_c_code']];
+                    }
+                    Session::newInstance()->_drop('title');
+                }
+                self::title_input('title', $locale['pk_c_code'], $title);
                 echo '</div>';
                 echo '<div class="description">';
                 echo '<div><label for="description">' . __('Description') . ' *</label></div>';
-                self::description_textarea('description', $locale['pk_c_code'], (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '');
+                $description = (isset($item) && isset($item['locale'][$locale['pk_c_code']]) && isset($item['locale'][$locale['pk_c_code']]['s_description'])) ? $item['locale'][$locale['pk_c_code']]['s_description'] : '';
+                if( Session::newInstance()->_get('description') != "" ) {
+                    $description_ = Session::newInstance()->_get('description');
+                    if( $description_[$locale['pk_c_code']] != "" ){
+                        $description = $description_[$locale['pk_c_code']];
+                    }
+                    Session::newInstance()->_drop('description');
+                }
+                self::description_textarea('description', $locale['pk_c_code'], $description);
                 echo '</div>';
                 if($num_locales>1) { echo '</div>'; };
              }
              if($num_locales>1) { echo '</div>'; };
         }
-
+        // OK
         static public function price_input_text($item = null)
         {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('price') != "" ) {
+                $item['f_price'] = Session::newInstance()->_get('price');
+                Session::newInstance()->_drop('price');
+            }
             parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
         }
-
+        // OK
         static public function currency_select($currencies = null, $item = null) {
             if($currencies==null) { $currencies = osc_get_currencies(); };
             if($item==null) { $item = osc_item(); }
+            if( Session::newInstance()->_get('currency') != "" ) {
+                $item['fk_c_currency_code'] = Session::newInstance()->_get('currency');
+                Session::newInstance()->_drop('currency');
+            }
             if(count($currencies) > 1 ) {
                 $default_key = null;
                 $currency = Preference::newInstance()->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency')) ;
@@ -146,97 +189,161 @@
                 echo $currencies[0]['s_description'];
             }
         }
-
-
+        // OK
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
             if( count($countries) > 1 ) {
+                if( Session::newInstance()->_get('countryId') != "" ) {
+                    $item['fk_c_country_code'] = Session::newInstance()->_get('countryId');
+                    Session::newInstance()->_drop('countryId');
+                }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
             } else if ( count($countries) == 1 ) {
+                if( Session::newInstance()->_get('countryId') != "" ) {
+                    $item['fk_c_country_code'] = Session::newInstance()->_get('countryId');
+                    Session::newInstance()->_drop('countryId');
+                }
                 parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
                 echo '</span>' .$countries[0]['s_name'] . '</span>';
                 return false ;
             } else {
+                if( Session::newInstance()->_get('country') != "" ) {
+                    $item['s_country'] = Session::newInstance()->_get('country');
+                    Session::newInstance()->_drop('countryId');
+                }
                 parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
                 return true ;
             }
         }
-
+        // OK 
         static public function country_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('country') != "" ) {
+                $item['s_country'] = Session::newInstance()->_get('country');
+                Session::newInstance()->_drop('country');
+            }
             parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
             return true ;
         }
-
+        // OK
         static public function region_select($regions = null, $item = null) {
             if($regions==null) { $regions = osc_get_regions(); };
             if($item==null) { $item = osc_item(); };
+            
             if( count($regions) > 1 ) {
+                if( Session::newInstance()->_get('regionId') != "" ) {
+                    $item['fk_i_region_id'] = Session::newInstance()->_get('regionId');
+                    Session::newInstance()->_drop('regionId');
+                }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
             } else if ( count($regions) == 1 ) {
+                if( Session::newInstance()->_get('regionId') != "" ) {
+                    $item['fk_i_region_id'] = Session::newInstance()->_get('regionId');
+                    Session::newInstance()->_drop('regionId');
+                }
                 parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
                 echo '</span>' .$regions[0]['s_name'] . '</span>';
                 return false ;
             } else {
+                if( Session::newInstance()->_get('region') != "" ) {
+                    $item['s_region'] = Session::newInstance()->_get('region');
+                    Session::newInstance()->_drop('region');
+                }
                 parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
                 return true ;
             }
         }
-
+        // OK
         static public function region_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('region') != "" ) {
+                $item['s_region'] = Session::newInstance()->_get('region');
+                Session::newInstance()->_drop('region');
+            }
             parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
         }
-
+        // OK
         static public function city_select($cities = null, $item = null) {
             if($cities==null) { $cities = osc_get_cities(); };
             if($item==null) { $item = osc_item(); };
             if( count($cities) > 1 ) {
+                if( Session::newInstance()->_get('cityId') != "" ) {
+                    $item['fk_i_city_id'] = Session::newInstance()->_get('cityId');
+                    Session::newInstance()->_drop('cityId');
+                }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
             } else if ( count($cities) == 1 ) {
+                if( Session::newInstance()->_get('cityId') != "" ) {
+                    $item['fk_i_city_id'] = Session::newInstance()->_get('cityId');
+                    Session::newInstance()->_drop('cityId');
+                }
                 parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
                 echo '</span>' .$cities[0]['s_name'] . '</span>';
                 return false ;
             } else {
+                if( Session::newInstance()->_get('city') != "" ) {
+                    $item['s_city'] = Session::newInstance()->_get('city');
+                    Session::newInstance()->_drop('city');
+                }
                 parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
                 return true ;
             }
         }
-
+        // OK 
         static public function city_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('city') != "" ) {
+                $item['s_city'] = Session::newInstance()->_get('city');
+                Session::newInstance()->_drop('city');
+            }
             parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
             return true ;
         }
-
+        // OK
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('cityArea') != "" ) {
+                $item['s_city_area'] = Session::newInstance()->_get('cityArea');
+                Session::newInstance()->_drop('cityArea');
+            }
             parent::generic_input_text('cityArea', (isset($item['s_city_area'])) ? $item['s_city_area'] : null) ;
             return true ;
         }
-
+        // OK 
         static public function address_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('address') != "" ) {
+                $item['s_address'] = Session::newInstance()->_get('address');
+                Session::newInstance()->_drop('address');
+            }
             parent::generic_input_text('address', (isset($item['s_address'])) ? $item['s_address'] : null) ;
             return true ;
         }
-
+        // OK
         static public function contact_name_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('contactName') != "" ) {
+                $item['s_contact_name'] = Session::newInstance()->_get('contactName');
+                Session::newInstance()->_drop('contactName');
+            }
             parent::generic_input_text('contactName', (isset($item['s_contact_name'])) ? $item['s_contact_name'] : null) ;
             return true ;
         }
 
         static public function contact_email_text($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('contactEmail') != "" ) {
+                $item['s_contact_email'] = Session::newInstance()->_get('contactEmail');
+                Session::newInstance()->_drop('contactEmail');
+            }
             parent::generic_input_text('contactEmail', (isset($item['s_contact_email'])) ? $item['s_contact_email'] : null) ;
             return true ;
         }
-
+        // NOTHING TO DO
         static public function user_data_hidden() {
             if(isset($_SESSION['userId']) && $_SESSION['userId']!=null) {
                 $user = User::newInstance()->findByPrimaryKey($_SESSION['userId']);
@@ -247,9 +354,15 @@
                 return false;
             }
         }
-
+        // OK
         static public function show_email_checkbox($item = null) {
             if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_get('showEmail') != 0) {
+                $item['b_show_email'] = Session::newInstance()->_get('showEmail');
+                Session::newInstance()->_drop('showEmail');
+            } else {
+                Session::newInstance()->_drop('showEmail');
+            }
             parent::generic_input_checkbox('showEmail', '1', (isset($item['b_show_email']) ) ? $item['b_show_email'] : false );
             return true ;
         }
@@ -513,6 +626,31 @@
         }
         return html;
     }
+    
+    function delete_image(id, item_id,name, secret) {
+        //alert(id + " - "+ item_id + " - "+name+" - "+secret);
+        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        if(result) {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo osc_base_url(true); ?>?page=ajax&action=delete_image&id='+id+'&item='+item_id+'&code='+name+'&secret='+secret,
+                dataType: 'json',
+                success: function(data){
+                    var class_type = "error";
+                    if(data.success) {
+                        $("div[name="+name+"]").remove();
+                        class_type = "ok";
+                    }
+                    var flash = $("#flash_js");
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    flash.html(message);
+                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                }
+            });
+        }
+    }
+    
+    
 </script>
 <?php
         }
@@ -522,7 +660,7 @@
             if($resources!=null && is_array($resources) && count($resources)>0) {
                 foreach($resources as $_r) { ?>
                     <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                        <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a onclick="javascript:return confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>')" href="<?php echo osc_item_resource_delete_url($_r['pk_i_id'], $_r['fk_i_item_id'], $_r['s_name'], Params::getParam('secret') );?>" class="delete"><?php _e('Delete'); ?></a>
+                        <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'" ;?>);"  class="delete"><?php _e('Delete'); ?></a>
                     </div>
                 <?php }
             }
@@ -539,27 +677,36 @@
         e.parentNode.removeChild(e);
     }
     function addNewPhoto() {
-        var id = 'p-' + photoIndex++;
+        var max = <?php echo osc_max_images_per_item(); ?>;
+        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        if((max!=0 && num_img<max) || max==0) {
+            var id = 'p-' + photoIndex++;
 
-        var i = ce('input');
-        i.setAttribute('type', 'file');
-        i.setAttribute('name', 'photos[]');
+            var i = ce('input');
+            i.setAttribute('type', 'file');
+            i.setAttribute('name', 'photos[]');
 
-        var a = ce('a');
-        a.style.fontSize = 'x-small';
-        a.setAttribute('href', '#');
-        a.setAttribute('divid', id);
-        a.onclick = function() { re(this.getAttribute('divid')); return false; }
-        a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
+            var a = ce('a');
+            a.style.fontSize = 'x-small';
+            a.style.paddingLeft = '10px';
+            a.setAttribute('href', '#');
+            a.setAttribute('divid', id);
+            a.onclick = function() { re(this.getAttribute('divid')); return false; }
+            a.appendChild(document.createTextNode('<?php _e('Remove'); ?>'));
 
-        var d = ce('div');
-        d.setAttribute('id', id);
-        d.setAttribute('style','padding: 4px 0;')
+            var d = ce('div');
+            d.setAttribute('id', id);
+            d.setAttribute('style','padding: 4px 0;')
 
-        d.appendChild(i);
-        d.appendChild(a);
+            d.appendChild(i);
+            d.appendChild(a);
 
-        gebi('photos').appendChild(d);
+            gebi('photos').appendChild(d);
+
+            $("#"+id+" input:file").uniform();
+        } else {
+            alert('<?php _e('Sorry, you have reached the maximum number of images per ad');?>');
+        }
     }
     // Listener: automatically add new file field when the visible ones are full.
     setInterval("add_file_field()", 250);
@@ -573,7 +720,9 @@
                 count++;
             }
         });
-        if (count == 0) {
+        var max = <?php echo osc_max_images_per_item(); ?>;
+        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        if (count == 0 && (max==0 || (max!=0 && num_img<max))) {
             addNewPhoto();
         }
     }

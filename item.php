@@ -41,7 +41,7 @@
         function doModel() {
             //calling the view...
 
-            $locales = Locale::newInstance()->listAllEnabled() ;
+            $locales = OSCLocale::newInstance()->listAllEnabled() ;
             $this->_exportVariableToView('locales', $locales) ;
 
             switch( $this->action ){
@@ -70,9 +70,22 @@
                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                     }
 
+                                        
                     $this->_exportVariableToView('countries',$countries ) ;
                     $this->_exportVariableToView('regions', $regions) ;
                     $this->_exportVariableToView('cities', $cities) ;
+
+                    if( Session::newInstance()->_get('countryId') != "" ) {
+                        $countryId  = Session::newInstance()->_get('countryId') ;
+                        $regions    = Region::newInstance()->getByCountry($countryId) ; 
+                        $this->_exportVariableToView('regions', $regions) ;
+                        if(Session::newInstance()->_get('countryId') != "" ) {
+                            $regionId  = Session::newInstance()->_get('regionId') ;
+                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regionId ) ;
+                            $this->_exportVariableToView('cities', $cities ) ;
+                        }
+                    }
+                    
                     $this->_exportVariableToView('user', $this->user) ;
 
                     osc_run_hook('post_item');
@@ -88,11 +101,32 @@
                         osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                         $this->redirectTo(osc_base_url(true));
                     }
-                    // POST ITEM ( ADD ITEM )
+                    
                     $mItems = new ItemActions(false);
+                    // prepare data for ADD ITEM
+                    $mItems->prepareData(true);
+                    // set all parameters into session
+                    foreach( $mItems->data as $key => $value ) {
+                        Session::newInstance()->_set($key,$value);
+                    }
+                    
+                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                        if(!osc_check_recaptcha()) {
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            $this->redirectTo( osc_item_post_url() );
+                            return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                        }
+                    }
+                    // POST ITEM ( ADD ITEM )
                     $success = $mItems->add();
 
                     if($success) {
+                        
+                        // drop all $mItems->data parameters from session
+                        foreach( $mItems->data as $key => $value ) {
+                            Session::newInstance()->_drop($key);
+                        }
+                        
                         $PcontactName   = Params::getParam('contactName');
                         $PcontactEmail  = Params::getParam('contactEmail');
                         $itemId         = Params::getParam('itemId');
@@ -193,11 +227,30 @@
                     if (count($item) == 1) {
 
                         $this->_exportVariableToView('item', $item[0]) ;
-
+                        
                         $mItems = new ItemActions(false);
+                        // prepare data for ADD ITEM
+                        $mItems->prepareData(false);
+                        // set all parameters into session
+                        foreach( $mItems->data as $key => $value ) {
+                            Session::newInstance()->_set($key,$value);
+                        }
+
+                        if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                            if(!osc_check_recaptcha()) {
+                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                                $this->redirectTo( osc_item_post_url() );
+                                return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                            }
+                        }
+                        
                         $success = $mItems->edit();
 
                         if($success){
+                            // drop all $mItems->data parameters from session
+                            foreach( $mItems->data as $key => $value ) {
+                                Session::newInstance()->_drop($key);
+                            }
                             osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
                             $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                         } else {
@@ -248,7 +301,7 @@
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 break;
-                case 'deleteResource':
+                /*case 'deleteResource':
                     $id     = Params::getParam('id') ;
                     $item   = Params::getParam('item') ;
                     $code   = Params::getParam('code') ;
@@ -299,7 +352,7 @@
 
                     // Redirect to item_edit. If unregistered user, include $secret.
                     $this->redirectTo( osc_item_edit_url($secret, $item) );
-                break;
+                break;*/
                 case 'mark':
                     $mItem = new ItemActions(false) ;
 
@@ -322,11 +375,27 @@
                     $this->doView('item-send-friend.php');
                 break;
                 case 'send_friend_post':
+                    $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
+                    $this->_exportVariableToView('item', $item) ;
+                    
+                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                        if(!osc_check_recaptcha()) {
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            Session::newInstance()->_set("yourEmail",   Params::getParam('yourEmail'));
+                            Session::newInstance()->_set("yourName",    Params::getParam('yourName'));
+                            Session::newInstance()->_set("friendName", Params::getParam('friendName'));
+                            Session::newInstance()->_set("friendEmail", Params::getParam('friendEmail'));
+                            Session::newInstance()->_set("message_body",Params::getParam('message'));
+                            
+                            $this->redirectTo(osc_item_send_friend_url() );
+                            return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                        }
+                    }
+                    
                     $mItem = new ItemActions(false);
                     $mItem->send_friend();
 
-                    $item_url = Params::getParam('item_url');
-                    $this->redirectTo($item_url);
+                    $this->redirectTo( osc_item_url() );
                 break;
                 case 'contact':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
@@ -352,12 +421,15 @@
 
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            Session::newInstance()->_set("yourEmail",   Params::getParam('yourEmail'));
+                            Session::newInstance()->_set("yourName",    Params::getParam('yourName'));
+                            Session::newInstance()->_set("phoneNumber", Params::getParam('phoneNumber'));
+                            Session::newInstance()->_set("message_body",Params::getParam('message'));
                             $this->redirectTo( osc_item_url( ) );
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
-
 
                     $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
 
@@ -403,7 +475,7 @@
                         break;
                     }
 
-                    $this->redirectTo( Params::getParam('itemURL') );
+                    $this->redirectTo( osc_item_url() );
                     break;
                 case 'delete_comment':
                     $mItem = new ItemActions(false);
@@ -422,7 +494,7 @@
                     View::newInstance()->_exportVariableToView('item', $item);
 
                     if($this->userId == null) {
-                        osc_add_flash_error_message(_m('You have to be logged to delete a comment'));
+                        osc_add_flash_error_message(_m('You must be logged in to delete a comment'));
                         $this->redirectTo( osc_item_url() );
                     }
 
@@ -440,12 +512,12 @@
                     }
 
                     if($aComment['fk_i_user_id'] != $this->userId) {
-                        osc_add_flash_error_message( _m('You cannot delete the comment') );
+                        osc_add_flash_error_message( _m('The comment was not added by you, you cannot delete it') );
                         $this->redirectTo( osc_item_url() );
                     }
 
                      $commentManager->deleteByPrimaryKey($commentId);
-                     osc_add_flash_ok_message( _m('The comment has been deleted correctly' ) ) ;
+                     osc_add_flash_ok_message( _m('The comment has been deleted' ) ) ;
                      $this->redirectTo( osc_item_url() );
                 break;
                 default:

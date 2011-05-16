@@ -93,15 +93,15 @@ function get_requirements( ) {
  */
 function get_solution_requirements( ) {
     $array = array(
-        'PHP version >= 5.x' => '',
-        'MySQLi extension for PHP' => '<a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">MySQLi extension reference. Installing/Configuring</a>',
-        'GD extension for PHP' => '<a target="_blank" href="http://www.php.net/manual/en/image.setup.php">GD extension for PHP reference. Installing/Configuring</a>',
-        'Folder <code>oc-content/uploads</code> exists' => 'to create folder: <br>mkdir ' . ABS_PATH . 'oc-content/uploads/' ,
-        'Folder <code>oc-content/uploads</code> is writable' => 'to give permission to folder: <br>chmod a+x ' . ABS_PATH . 'oc-content/uploads/',
-        'Folder <code>oc-content/languages</code> exists' => 'to create folder: <br>mkdir ' . ABS_PATH . 'oc-content/languages/',
-        'Root directory is writable' => 'to create folder: <br>mkdir ' . ABS_PATH ,
-        'File <code>config.php</code> is writable' => '',
-        'File <code>config-sample.php</code> exists' => ''
+        'PHP version >= 5.x' => 'PHP5 is required to run OSClass. You may talk with your hosting to upgrade your PHP version.',
+        'MySQLi extension for PHP' => 'MySQLi extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">install/configure</a>.',
+        'GD extension for PHP' => 'GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.',
+        'Folder <code>oc-content/uploads</code> exists' => 'You have to create <code>uploads</code> folder, i.e.: <code>mkdir ' . ABS_PATH . 'oc-content/uploads/</code>' ,
+        'Folder <code>oc-content/uploads</code> is writable' => 'Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+x ' . ABS_PATH . 'oc-content/uploads/</code>',
+        'Folder <code>oc-content/languages</code> exists' => 'You have to create <code>languages</code> folder, i.e.: <code>mkdir ' . ABS_PATH . 'oc-content/languages/</code>',
+        'Root directory is writable' => 'Root folder has to be writable, i.e.: <code>chmod a+x ' . ABS_PATH . '</code>',
+        'File <code>config.php</code> is writable' => 'File <code>config.php</code> has to be writable, i.e.: <code>chmod a+x ' . ABS_PATH . 'config.php</code>',
+        'File <code>config-sample.php</code> exists' => 'File <code>config-sample.php</code> is required, you should download OSClass again.'
     );
     return $array;
 }
@@ -154,8 +154,8 @@ function set_allow_report_osclass($bool)
  * @return mixed Error messages of the installation
  */
 function oc_install( ) {
-    $dbhost = trim($_POST['dbhost']);
-    $dbname = trim($_POST['dbname']);
+    $dbhost   = trim($_POST['dbhost']);
+    $dbname   = trim($_POST['dbname']);
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     if ( empty($_POST['tableprefix']) ) { $tableprefix = 'oc_'; } else { $tableprefix = trim($_POST['tableprefix']); }
@@ -165,8 +165,21 @@ function oc_install( ) {
         $adminuser = trim($_POST['admin_username']);
         $adminpwd = trim($_POST['admin_password']);
 
-    	
         $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
+
+        if($error_num > 0) {
+            if( reportToOsclass() ) {
+                LogOsclassInstaller::instance()->error('Cannot connect to database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
+            }
+
+            if ( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
+            if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
+            if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
+            if ( $error_num == 2005 ) return array('error' => 'Cannot resolve MySQL host. Check if the host is correct.');
+
+            return array('error' => 'Cannot connect to database. Error number: ' . $error_num . '.');
+        }
+
         $master_conn->osc_dbExec(sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname)) ;
         $error_num = $master_conn->get_errno();
 
@@ -186,7 +199,6 @@ function oc_install( ) {
     $error_num = $conn->get_errno();
 
     if($error_num > 0) {
-
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot connect to database. Error number: ' . $error_num , __FILE__."::".__LINE__) ;
         }
@@ -194,13 +206,13 @@ function oc_install( ) {
         if ( $error_num == 1049 ) return array('error' => 'The database doesn\'t exist. You should check the "Create DB" checkbox and fill username and password with the right privileges');
         if ( $error_num == 1045 ) return array('error' => 'Cannot connect to the database. Check if the user has privileges.');
         if ( $error_num == 1044 ) return array('error' => 'Cannot connect to the database. Check if the username and password are correct.');
+        if ( $error_num == 2005 ) return array('error' => 'Cannot resolve MySQL host. Check if the host is correct.');
 
         return array('error' => 'Cannot connect to database. Error number: ' . $error_num . '.');
     }
     
     if( file_exists(ABS_PATH . 'config.php') ) {
         if( !is_writable(ABS_PATH . 'config.php') ) {
-
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('Cannot write in config.php file. Check if the file is writable.' , __FILE__."::".__LINE__) ;
             }
@@ -209,7 +221,6 @@ function oc_install( ) {
         create_config_file($dbname, $username, $password, $dbhost, $tableprefix);
     } else {
         if( !file_exists(ABS_PATH . 'config-sample.php') ) {
-            
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('It doesn\'t exist config-sample.php. Check if you have everything well decompressed.' , __FILE__."::".__LINE__) ;
             }
@@ -217,7 +228,6 @@ function oc_install( ) {
             return array('error' => 'It doesn\'t exist config-sample.php. Check if you have everything well decompressed.');
         }
         if( !is_writable(ABS_PATH) ) {
-
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('Can\'t copy config-sample.php. Check if the root directory is writable.' , __FILE__."::".__LINE__) ;
             }
@@ -232,8 +242,8 @@ function oc_install( ) {
     $sql = file_get_contents(ABS_PATH . 'oc-includes/osclass/installer/struct.sql');
     $conn->osc_dbImportSQL($sql);
     $error_num = $conn->get_errno();
-    if($error_num > 0) {
 
+    if($error_num > 0) {
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot create the database structure. Error number: ' . $error_num  , __FILE__."::".__LINE__) ;
         }
@@ -244,9 +254,9 @@ function oc_install( ) {
         return array('error' => 'Cannot create the database structure. Error number: ' . $error_num . '.');
     }
 
-    require_once ABS_PATH . 'oc-includes/osclass/locales.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Locale.php';
-    $localeManager = Locale::newInstance();
+    require_once LIB_PATH . 'osclass/locales.php';
+    require_once LIB_PATH . 'osclass/model/OSCLocale.php';
+    $localeManager = OSCLocale::newInstance();
 
     $locales = osc_listLocales();
     foreach($locales as $locale) {
@@ -273,7 +283,6 @@ function oc_install( ) {
     $sql = '';
     foreach($required_files as $file) {
         if ( !file_exists(ABS_PATH . 'oc-includes/osclass/installer/' . $file) ) {
-
             if( reportToOsclass() ) {
                 LogOsclassInstaller::instance()->error('the file ' . $file . ' doesn\'t exist in data folder' , __FILE__."::".__LINE__) ;
             }
@@ -287,7 +296,6 @@ function oc_install( ) {
     $conn->osc_dbImportSQL($sql, '');
     $error_num = $conn->get_errno();
     if($error_num > 0) {
-
         if( reportToOsclass() ) {
             LogOsclassInstaller::instance()->error('Cannot insert basic configuration. Error number: ' . $error_num  , __FILE__."::".__LINE__) ;
         }
@@ -416,13 +424,14 @@ function is_osclass_installed( ) {
 }
 
 function finish_installation( ) {
-    require_once ABS_PATH . 'oc-includes/osclass/helpers/hSecurity.php' ;
-    require_once ABS_PATH . 'oc-includes/osclass/model/Admin.php' ;
-    require_once ABS_PATH . 'oc-includes/osclass/model/Preference.php' ;
-    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Item.php';
-    require_once ABS_PATH . 'oc-includes/osclass/core/Params.php';
-    require_once ABS_PATH . 'oc-includes/osclass/utils.php';
+    require_once LIB_PATH . 'osclass/helpers/hSecurity.php' ;
+    require_once LIB_PATH . 'osclass/model/Admin.php' ;
+    require_once LIB_PATH . 'osclass/model/Preference.php' ;
+    require_once LIB_PATH . 'osclass/model/Category.php';
+    require_once LIB_PATH . 'osclass/model/Item.php';
+    require_once LIB_PATH . 'osclass/core/Params.php';
+    require_once LIB_PATH . 'osclass/compatibility.php';
+    require_once LIB_PATH . 'osclass/utils.php';
     
     $data = array();
     $password = osc_genRandomPassword() ;
@@ -479,7 +488,7 @@ function finish_installation( ) {
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
         $sitename = substr( $sitename, 4 ) ;
     }
-    require_once ABS_PATH . 'oc-includes/phpmailer/class.phpmailer.php' ;
+    require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
     $mail = new PHPMailer ;
     $mail->CharSet="utf-8" ;
     $mail->Host = "localhost" ;
@@ -509,47 +518,56 @@ function display_database_config() {
                 <tr>
                     <th><label for="dbhost">Host</label></th>
                     <td><input type="text" id="dbhost" name="dbhost" value="localhost" size="25" /></td>
-                    <td>Server name or IP where the database engine resides</td>
+                    <td class="small">Server name or IP where the database engine resides</td>
                 </tr>
                 <tr>
                     <th><label for="dbname">Database name</label></th>
                     <td><input type="text" id="dbname" name="dbname" value="osclass" size="25" /></td>
-                    <td>The name of the database you want to run OSClass in</td>
+                    <td class="small">The name of the database you want to run OSClass in</td>
                 </tr>
                 <tr>
                     <th><label for="username">User Name</label></th>
                     <td><input type="text" id="username" name="username" size="25" /></td>
-                    <td>Your MySQL username</td>
+                    <td class="small">Your MySQL username</td>
                 </tr>
                 <tr>
                     <th><label for="password">Password</label></th>
                     <td><input type="password" id="password" name="password" value="" size="25" /></td>
-                    <td>Your MySQL password</td>
+                    <td class="small">Your MySQL password</td>
                 </tr>
                 <tr>
                     <th><label for="tableprefix">Table prefix</label></th>
                     <td><input type="text" id="tableprefix" name="tableprefix" value="oc_" size="25" /></td>
-                    <td>If you want to run multiple OSClass installations in a single database, change this</td>
+                    <td class="small">If you want to run multiple OSClass installations in a single database, change this</td>
                 </tr>
             </tbody>
         </table>
-        <div id="advanced_exp" onclick="$('#more-options').toggle(); $('#advanced_exp').hide(); $('#separator').css('width', '97%');$('#advanced').show();" style="cursor:pointer;float:left; width: 12%;font-size: 12px;color: #444444;">
-            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_noexpanded.png"/>
-            <span>Advanced</span>
+        <div id="advanced_install" class="shrink">
+            <div class="text">
+                <span>Advanced</span>
+            </div>
         </div>
-        <div id="advanced" onclick="$('#more-options').toggle();$('#separator').css('width', '88%');$('#advanced').hide();$('#advanced_exp').show();" style="cursor:pointer; display:none;float:left; width: 3%;font-size: 12px;color: #444444;">
-            <img style="float:left;" src="<?php echo get_absolute_url(); ?>oc-includes/images/arrow_expanded.png"/>
-        </div>
-        <div id="separator" style="float:right; width: 88%;">
-            <hr style="border: 1px solid gray;"/>
-        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#advanced_install').click(function() {
+                    $('#more-options').toggle();
+                    if( $('#advanced_install').attr('class') == 'shrink' ) {
+                        $('#advanced_install').removeClass('shrink');
+                        $('#advanced_install').addClass('expanded');
+                    } else {
+                        $('#advanced_install').addClass('shrink');
+                        $('#advanced_install').removeClass('expanded');
+                    }
+                });
+            });
+        </script>
         <div style="clear:both;"></div>
         <table id="more-options" style="display:none;">
             <tbody>
                 <tr>
                     <th></th>
                     <td><input type="checkbox" id="createdb" name="createdb" onclick="db_admin();"/><label for="createdb">Create DB</label></td>
-                    <td>Check here if the database is not created and you want to create it now</td>
+                    <td class="small">Check here if the database is not created and you want to create it now</td>
                 </tr>
                 <tr id="admin_username_row">
                     <th><label for="admin_username">DB admin username</label></th>
@@ -671,7 +689,7 @@ function display_database_error($error ,$step) {
 
 function display_categories() {
     require_once ABS_PATH . 'config.php';
-    require_once ABS_PATH . 'oc-includes/osclass/model/Category.php';
+    require_once LIB_PATH . 'osclass/model/Category.php';
 
     $categories = Category::newInstance()->toTreeAll();
     $numCols = 3;
@@ -680,6 +698,16 @@ function display_categories() {
 <form id="category_form" action="install.php?step=5" method="POST">
     <h2 class="target">Categories</h2>
     <div class="form-table">
+        <?php if(Params::getParam('error_location') == 1) { ?>
+        <script type="text/javascript">
+            setTimeout (function(){
+                $('.error-location').fadeOut('slow');
+            }, 2500);
+        </script>
+        <div class="error-location">
+            The location selected could not been installed
+        </div>
+        <?php } ?>
         <div class="select-categories">
             &nbsp;
             <div class="right">
@@ -774,22 +802,35 @@ function display_finish() {
             <tr>
                 <th><label>Username</label></th>
                 <td>
-                    <p class="s_name" style=" cursor: pointer;">
-                        <span><?php echo $data['admin_user']; ?></span><img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
-                        <span class="update_info_name" style="color: #444444;display:none;font-size: 12px;"> Modify </span>
-                    </p>
-                    <p class="s_name_input" style=" display:none;"> <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>"/> <button>Update</button> </p>
+                    <div class="s_name">
+                        <span style="float:left;" ><?php echo $data['admin_user']; ?></span>
+                        <div style="cursor: pointer; height: 20px; float: left;" >
+                            <img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
+                            &nbsp;
+                            <span class="update_info_name" style="color:#444444; display:none; font-size: 12px;"> Modify </span>
+                        </div>
+                    </div>
+                    <div class="s_name_input" style=" display:none;">
+                        <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>" style="float:left;" /> 
+                        <button>Update</button>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <th><label>Password</label></th>
                 <td>
-                    <p class="s_passwd" style=" cursor: pointer;">
-                        <span><?php echo $data['password']; ?></span><img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
-                        <span class="update_info_passwd" style="color: #444444;display:none;font-size: 12px;"> Modify </span>
-                    </p>
-                    <p class="s_passwd_input" style=" display:none;"> <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left;"/><br><br> <button>Update</button> </p>
-
+                    <div class="s_passwd">
+                        <span style="float: left;"><?php echo $data['password']; ?></span>
+                        <div style="cursor: pointer; height: 20px; float: left;" >
+                            <img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
+                            &nbsp;
+                            <span class="update_info_passwd" style="color:#444444; display:none; font-size: 12px;"> Modify </span>
+                        </div>
+                    </div>
+                    <div class="s_passwd_input" style=" display:none;">
+                        <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left;"/>
+                        <button>Update</button>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -802,101 +843,102 @@ function display_finish() {
         </tbody>
     </table>
 </div>
-<script>
+<script type="text/javascript">
+    $(".s_name div").click(function () {
+        $(this).parent().hide();
+        $('.s_name_input').show();
+    });
+    $(".s_passwd div").click(function () {
+        $(this).parent().hide();
+        $('.s_passwd_input').show();
+    });
 
-$(".s_name").click(function () {
-    $(this).hide();
-    $('.s_name_input').show();
-});
-$(".s_passwd").click(function () {
-    $(this).hide();
-    $('.s_passwd_input').show();
-});
+    $('.s_name div').hover(
+        function () {
+            $('.update_info_name').show()
+        },
+        function () {
+            $('.update_info_name').hide()
+        }
+    );
 
-$('.s_name').hover(
-     function callback(eventObject) {
-        $('.update_info_name').show()
-     },
-     function callback(eventObject) {
-        $('.update_info_name').hide()
-     });
+    $('.s_passwd div').hover(
+        function () {
+            $('.update_info_passwd').show()
+        },
+        function () {
+            $('.update_info_passwd').hide()
+        }
+    );
 
-$('.s_passwd').hover(
-     function callback(eventObject) {
-        $('.update_info_passwd').show()
-     },
-     function callback(eventObject) {
-        $('.update_info_passwd').hide()
-     });
+    $(".s_name_input button").click( function(){ update_username(); } );
 
-$(".s_name_input button").click( function(){ update_username(); } );
-$("input[name='s_name']").keypress(function(e) {
-    if(e.keyCode == 13) {
-        update_username();
-    }
-});
-
-$(".s_passwd_input button").click( function(){ update_passwd(); } );
-$("input[name='s_passwd']").keypress(function(e) {
-    if(e.keyCode == 13) {
-        update_passwd();
-    }
-});
-
-function update_username(){
-    // ajax update user
-    $.ajax({
-        type: 'POST',
-        url: 'update_admin.php?old_password='+$('input[name="original_passwd"]').val()+"&id=1&new_username="+$('.s_name_input input').val(),
-        timeout: 600000,
-        success: function(data) {
-            if(data < 0){
-                $('#result span').html("There have been some error.");
-                $('#result').addClass('badPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-            } else if (data >= 0 ) {
-                $('.s_name span:first').html( $('.s_name_input input').val() );
-                $('#result span').html("Updated correctly.");
-                $('#result').addClass('strongPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-            }
+    $("input[name='s_name']").keypress(function(e) {
+        if(e.keyCode == 13) {
+            update_username();
         }
     });
-    $('.s_name_input').hide();
-    $('.s_name').show();
-}
 
-function update_passwd(){
-    // ajax update passwd
-    $.ajax({
-        type: 'POST',
-        url: 'update_admin.php?old_password='+$('input[name="original_passwd"]').val()+"&id=1&new_password="+$('.s_passwd_input input').val(),
-        timeout: 600000,
-        success: function(data) {
-           if(data < 0){
-                $('.s_passwd_input input').val( $('.s_passwd span:first').html() );
-
-                $('#result span').html("There have been some error.");
-                $('#result').addClass('badPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-
-            } else if (data >= 0 ) {
-                $('input[name="original_passwd"]').val( $('.s_passwd_input input').val() );
-                $('.s_passwd span:first').html( $('.s_passwd_input input').val() );
-
-                $('#result span').html("Updated correctly.");
-                $('#result').addClass('strongPass');
-                $('#result').fadeIn();
-                setInterval(function(){ $('#result').fadeOut(); }, 2000);
-            }
+    $(".s_passwd_input button").click( function(){ update_passwd(); } );
+    $("input[name='s_passwd']").keypress(function(e) {
+        if(e.keyCode == 13) {
+            update_passwd();
         }
     });
-    $('.s_passwd_input').hide();
-    $('.s_passwd').show();
-}
+
+    function update_username(){
+        // ajax update user
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo get_absolute_url(); ?>oc-includes/osclass/update_admin.php?old_password=' + $('input[name="original_passwd"]').val() + '&new_username=' + $('.s_name_input input').val(),
+            timeout: 2000,
+            dataType: 'json',
+            success: function(data) {
+                if(data.error){
+                    $('#result span').html("There have been some error.");
+                    $('#result').addClass('badPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                } else {
+                    $('.s_name span:first').html( $('.s_name_input input').val() );
+                    $('#result span').html("Updated correctly.");
+                    $('#result').addClass('strongPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                }
+            }
+        });
+        $('.s_name_input').hide();
+        $('.s_name').show();
+    }
+
+    function update_passwd(){
+        // ajax update passwd
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo get_absolute_url(); ?>oc-includes/osclass/update_admin.php?old_password=' + $('input[name="original_passwd"]').val() + '&new_password=' + $('.s_passwd_input input').val(),
+            timeout: 2000,
+            dataType: 'json',
+            success: function(data) {
+               if(data.error){
+                    $('.s_passwd_input input').val( $('.s_passwd span:first').html() );
+                    $('#result span').html("There have been some error.");
+                    $('#result').addClass('badPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                } else {
+                    $('input[name="original_passwd"]').val( $('.s_passwd_input input').val() );
+                    $('.s_passwd span:first').html( $('.s_passwd_input input').val() );
+                    $('#result span').html("Updated correctly.");
+                    $('#result').addClass('strongPass');
+                    $('#result').fadeIn();
+                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
+                }
+            }
+        });
+        $('.s_passwd_input').hide();
+        $('.s_passwd').show();
+    }
 </script>
 <p class="margin20">
     <a target="_blank" href="<?php echo get_absolute_url() ?>oc-admin/index.php" class="button">Finish and go to the administration panel</a>

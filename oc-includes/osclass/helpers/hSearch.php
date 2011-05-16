@@ -117,11 +117,15 @@
                 $where[] = "b.s_slug = '" . $slug_cat[count($slug_cat)-1] . "'";
             }
         }
-        $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
-        foreach($categories as $cat) {
-            $category[] = $cat['pk_i_id'];
+        if(empty($where)) {
+            return null;
+        } else {
+            $categories = Category::newInstance()->listWhere(implode(" OR ", $where));
+            foreach($categories as $cat) {
+                $category[] = $cat['pk_i_id'];
+            }
+            return $category;    
         }
-        return $category;    
     }
     
     function osc_update_search_url($params, $delimiter = '&amp;') {

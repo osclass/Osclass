@@ -45,6 +45,29 @@
             if($language=='') { $language = osc_current_user_locale(); } else { $language = "en_US"; };
             return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \''.osc_current_user_locale().'\', \''.$language.'\') as sorter FROM %s WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC', $this->getTableName());
         }
+
+        public function listAllAdmin($language = "") {
+            if($language=='') { $language = osc_current_user_locale(); } else { $language = "en_US"; };
+            $countries_temp = $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \''.osc_current_user_locale().'\', \''.$language.'\') as sorter FROM %s WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC', $this->getTableName());
+            $countries = array();
+            foreach($countries_temp as $country) {
+                $locales = $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE pk_c_code = '%s'", $this->getTableName(), $country['pk_c_code']);
+                foreach($locales as $locale) {
+                    $country['locales'][$locale['fk_c_locale_code']] = $locale['s_name'];
+                }
+                $countries[] = $country;
+            }
+            return $countries;
+        }
+        
+        public function updateLocale($code, $locale, $name) {
+            $country = $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_c_code = '%s' AND fk_c_locale_code = '%s'", $this->getTableName(), $code, $locale);
+            if($country) {
+                return $this->update(array('s_name' => $name), array('pk_c_code' => $code, 'fk_c_locale_code' => $locale));
+            } else {
+                return $this->conn->osc_dbExec("INSERT INTO %s (pk_c_code, fk_c_locale_code, s_name) VALUES ('%s', '%s', '%s')", $this->getTableName(), $code, $locale, $name );
+            }
+        }
     }
 
 ?>

@@ -476,15 +476,20 @@
             $text  = addslashes($text);
 
             $sql = sprintf("REPLACE INTO %st_item_description SET `s_title` = '%s', `s_description` = '%s', `fk_c_locale_code` = '%s', `fk_i_item_id` = %s, `s_what` = '%s'", DB_TABLE_PREFIX, $title, $text, $locale, $id, $title . " " . $text);
-            $this->conn->osc_dbExec($sql);
-            $date = date('Y-m-d H:i:s');
-            $sql = sprintf("UPDATE %st_item SET `dt_mod_date` = '%s' WHERE `pk_i_id` = %s", DB_TABLE_PREFIX, $date, $id);
             return $this->conn->osc_dbExec($sql);
+            /*$date = date('Y-m-d H:i:s');
+            $sql = sprintf("UPDATE %st_item SET `dt_mod_date` = '%s' WHERE `pk_i_id` = %s", DB_TABLE_PREFIX, $date, $id);
+            return $this->conn->osc_dbExec($sql);*/
         }
 
         public function deleteByPrimaryKey($id)
         {
             osc_run_hook('delete_item', $id);
+            $item = $this->findByPrimaryKey($id);
+            if($item['e_status']=='ACTIVE') {
+                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+            }
+            
             $this->conn->osc_dbExec('DELETE FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
             $this->conn->osc_dbExec('DELETE FROM %st_item_comment WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
             $this->conn->osc_dbExec('DELETE FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);

@@ -17,7 +17,9 @@
      */
 
 
-    $last = end(__get('comments')) ;
+    $comments = __get('comments');
+    if(!is_array($comments)) { $comments = array(); };
+    $last = end($comments);//__get('comments')) ;
     $last_id = $last['pk_i_id'] ;
 ?>
 
@@ -28,6 +30,7 @@
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
+        <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {

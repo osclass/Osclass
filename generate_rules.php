@@ -62,10 +62,12 @@
     $rewrite->addRule('^item/delete/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=item_delete&id=$1&secret=$2');
     $rewrite->addRule('^item/resource/delete/([0-9]+)/([0-9]+)/([0-9A-Za-z]+)/?(.*?)/?$', 'index.php?page=item&action=deleteResource&id=$1&item=$2&code=$3&secret=$4');
     $rewrite->addRule('^item/update/stats$', 'index.php?page=item&action=update_cat_stats'); // juanramon: not used ## it doesn't exist
-    $rewrite->addRule('^item/([0-9]+)$', 'index.php?page=item&id=$1');
-    $rewrite->addRule('^item/([a-zA-Z_]+)/([0-9]+)$', 'index.php?page=item&id=$2&lang=$1');
+    $rewrite->addRule('^item/([0-9]+)$', 'index.php?page=item&id=$1'); // not used?
+    $rewrite->addRule('^item/([a-zA-Z_]+)/([0-9]+)$', 'index.php?page=item&id=$2&lang=$1'); // not used?
     $rewrite->addRule('^item/(.*)$', 'index.php?page=item&action=$1'); // juanramon: not used ## it doesn't exist
     //$rewrite->addRule('^item$', 'index.php?page=item'); // juanramon: not used
+    $rewrite->addRule('^([a-zA-Z_]{5})_(.+)_([0-9]+)\?comments-page=([0-9al]*)$', 'index.php?page=item&id=$3&lang=$1&comments-page=$4');
+    $rewrite->addRule('^(.+)_([0-9]+)\?comments-page=([0-9al]*)$', 'index.php?page=item&id=$2&comments-page=$3');
     $rewrite->addRule('^([a-zA-Z_]{5})_(.+)_([0-9]+)$', 'index.php?page=item&id=$3&lang=$1');
     $rewrite->addRule('^(.+)_([0-9]+)$', 'index.php?page=item&id=$2');
 
