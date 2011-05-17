@@ -155,7 +155,7 @@
                 }
             }
             
-            if( !$user ) {
+            if( !$user || $user['b_enabled']==0) {
                 return 1;
             }
 
