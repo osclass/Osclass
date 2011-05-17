@@ -102,13 +102,13 @@
                                             if (!in_array($value, array('ACTIVE', 'INACTIVE', 'ENABLE', 'DISABLE'))) return false ;
 
                                             if( $value == 'ACTIVE' ) {
-                                                if($iUpdated) {
-                                                    $this->sendCommentActivated($id);
-                                                }
                                                 $iUpdated = $this->itemCommentManager->update(
                                                         array('b_active' => 1)
                                                         ,array('pk_i_id' => $id)
                                                 );
+                                                if($iUpdated) {
+                                                    $this->sendCommentActivated($id);
+                                                }
                                                 osc_add_flash_ok_message( _m('The comment has been approved'), 'admin');
                                             } else if($value=='INACTIVE') {
                                                 $iUpdated = $this->itemCommentManager->update(
