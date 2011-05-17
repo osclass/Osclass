@@ -34,8 +34,13 @@
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
-                                        if(!$user['b_enabled']) {
+                                        if(!$user['b_active']) {
                                             osc_add_flash_error_message(_m('The user has not been validated yet'));
+                                            $this->redirectTo(osc_user_login_url());
+                                        }
+
+                                        if(!$user['b_enabled']) {
+                                            osc_add_flash_error_message(_m('The user has been suspended'));
                                             $this->redirectTo(osc_user_login_url());
                                         }
 

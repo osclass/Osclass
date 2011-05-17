@@ -30,7 +30,7 @@
             switch( $this->action ) {
                 case('dashboard'):      //dashboard...
                                         $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
-                                        $aItems = Item::newInstance()->findByUserID(Session::newInstance()->_get('userId'), 0, $max_items);//Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));
+                                        $aItems = Item::newInstance()->findByUserIDEnabled(Session::newInstance()->_get('userId'), 0, $max_items);//Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));
                                         //calling the view...
                                         $this->_exportVariableToView('items', $aItems) ;
                                         $this->_exportVariableToView('max_items', $max_items) ;
@@ -191,9 +191,9 @@
                 case 'items':                   // view items user
                                                 $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):5;
                                                 $page = (Params::getParam('iPage')!='')?Params::getParam('iPage'):0;
-                                                $total_items = Item::newInstance()->countByUserID($_SESSION['userId']);
+                                                $total_items = Item::newInstance()->countByUserIDEnabled($_SESSION['userId']);
                                                 $total_pages = ceil($total_items/$itemsPerPage);
-                                                $items = Item::newInstance()->findByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
+                                                $items = Item::newInstance()->findByUserIDEnabled($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
 
                                                 $this->_exportVariableToView('items', $items);
                                                 $this->_exportVariableToView('list_total_pages', $total_pages);

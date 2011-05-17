@@ -378,6 +378,12 @@
             return $this->extendData($items);
         }
 
+        public function countByUserIDEnabled($userId)
+        {
+            $items = $this->conn->osc_dbFetchResult('SELECT count(i.pk_i_id) as total FROM %s i WHERE i.b_active = 1 AND i.b_enabled = 1 AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC ', $this->getTableName(), $userId);
+            return $items['total'];
+        }
+
         public function listLocations($scope)
         {
             $availabe_scopes = array('country', 'region', 'city');

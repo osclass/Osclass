@@ -28,8 +28,8 @@
             $this->itemManager = Item::newInstance();
 
             // here allways userId == ''
-            if( Session::newInstance()->_get('userId') != '' ){
-                $this->userId = Session::newInstance()->_get('userId');
+            if( osc_is_web_user_logged_in() ){
+                $this->userId = osc_logged_user_id();
                 $this->user = User::newInstance()->findByPrimaryKey($this->userId);
             }else{
                 $this->userId = null;
@@ -541,6 +541,9 @@
                                 osc_add_flash_error_message( _m('This item hasn\'t been validated') );
                                 $this->redirectTo( osc_base_url(true) );
                             }
+                        } else if ($item['b_enabled'] == 0) {
+                            osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                            $this->redirectTo( osc_base_url(true) );
                         }
                         $mStats = new ItemStats();
                         $mStats->increase('i_num_views', $item['pk_i_id']);
