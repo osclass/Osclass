@@ -294,7 +294,7 @@
             $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
 
             
-            if($item['b_enabled']==1 && $item['b_active']==0) {
+            if($item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
                 $result = $this->manager->update(
                     array('b_active' => 1),
                     array('s_secret' => $secret, 'pk_i_id' => $id)

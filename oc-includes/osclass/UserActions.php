@@ -88,7 +88,7 @@
                     
                 } else {
                     User::newInstance()->update(
-                                    array('b_enabled' => '1')
+                                    array('b_active' => '1')
                                     ,array('pk_i_id' => $userId)
                     );
                     return 2 ;
@@ -125,10 +125,16 @@
 
             if ($this->is_admin) {
                 $iUpdated = 0;
-                if(Params::getParam("b_enabled") != '') {
+                if(Params::getParam("b_enabled") != '' && Params::getParam("b_enabled")==1) {
                     $iUpdated += $this->manager->update(array('b_enabled' => 1), array('pk_i_id' => $userId)) ;
                 } else {
                     $iUpdated += $this->manager->update(array('b_enabled' => 0), array('pk_i_id' => $userId)) ;
+                }
+
+                if(Params::getParam("b_active") != '' && Params::getParam("b_active")==1) {
+                    $iUpdated += $this->manager->update(array('b_active' => 1), array('pk_i_id' => $userId)) ;
+                } else {
+                    $iUpdated += $this->manager->update(array('b_active' => 0), array('pk_i_id' => $userId)) ;
                 }
 
                 if($iUpdated > 0) {
