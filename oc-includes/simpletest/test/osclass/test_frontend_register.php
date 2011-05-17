@@ -239,7 +239,8 @@ class TestOfRegister extends WebTestCase {
         $url_validate = osc_base_url(true) . "?page=register&action=validate&id=".$user['pk_i_id']."&code=".$user['s_secret'];
         $this->selenium->open( $url_validate );
         $this->selenium->waitForPageToLoad("1000");
-        if( $this->selenium->isTextPresent('regexpi:Your account has been validated') ){
+        
+        if( $this->selenium->isTextPresent('regexpi:Your account has already been activated') ){
             $this->assertTrue("todo bien");
         } else {
             $this->assertFalse("Can validate user. ERROR");

@@ -410,7 +410,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->click("link=Items");
         $this->selenium->click("link=» Manage media");
         $this->selenium->waitForPageToLoad("10000");
-
+        
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         // only can delete resources
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
