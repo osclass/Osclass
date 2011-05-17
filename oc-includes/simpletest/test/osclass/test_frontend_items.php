@@ -65,6 +65,7 @@ class TestOfItems extends WebTestCase {
         $input['s_address']         = "c:/address nº 10 2º2ª";
         $input['b_company']         = 0;
         $input['b_enabled']         = 1;
+        $input['b_active']          = 1;
         $input['s_email']           = "carlos+user@osclass.org";
         $this->email                = "carlos+user@osclass.org";
         $input['s_password']        = sha1('carlos');
@@ -138,15 +139,14 @@ class TestOfItems extends WebTestCase {
             $item = $mItem->findByConditions( array('s_contact_email' => 'carlos+usertest@osclass.org') ) ;
             flush();
         }
-        
     }
-
-    function testEditUserItemBadId()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
-        $this->editUserItemBadId();
-    }
+//
+//    function testEditUserItemBadId()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
+//        $this->editUserItemBadId();
+//    }
 
     function testActivate() // Activate
     {
@@ -156,35 +156,35 @@ class TestOfItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Activating first item</div>";
         $this->activateUserItem();
     }
+//
+//    function testEditItem()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+//        $this->login();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
+//        $this->editUserItem();
+//    }
+//
+//
+//    function testDeleteItem()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+//        $this->login();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
+//        $this->deleteItem();
+//    }
 
-    function testEditItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-        $this->login();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
-        $this->editUserItem();
-    }
-
-
-    function testDeleteItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-        $this->login();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
-        $this->deleteItem();
-    }
-
-    function  testdeleteUser()
-    {
-        echo "delete user for testing<br>";
-        $user = User::newInstance()->findByEmail($this->email);
-        User::newInstance()->deleteUser($user['pk_i_id']);
-        $user = User::newInstance()->findByEmail($this->email_fixed);
-        User::newInstance()->deleteUser($user['pk_i_id']);
-        $this->assertTrue(TRUE);
-    }
+//    function  testdeleteUser()
+//    {
+//        echo "delete user for testing<br>";
+//        $user = User::newInstance()->findByEmail($this->email);
+//        User::newInstance()->deleteUser($user['pk_i_id']);
+//        $user = User::newInstance()->findByEmail($this->email_fixed);
+//        User::newInstance()->deleteUser($user['pk_i_id']);
+//        $this->assertTrue(TRUE);
+//    }
     
     /*
      * PRIVATE FUNCTIONS
@@ -195,14 +195,18 @@ class TestOfItems extends WebTestCase {
         $this->selenium->click("login_open");
         $this->selenium->type("email"   , $this->email);
         $this->selenium->type("password", $this->password);
-
-        $this->selenium->click("//button[@type='submit']");
+sleep(5);
+        $this->selenium->click("xpath=//button[@type='submit']");
+        
         $this->selenium->waitForPageToLoad("30000");
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Login user ...</div>";
         if($this->selenium->isTextPresent("User account manager")){
             $this->logged = 1;
             $this->assertTrue("ok");
+            $this->assertTrue(true);
+        }else {
+            $this->assertTrue(false);
         }
     }
 
@@ -243,7 +247,7 @@ class TestOfItems extends WebTestCase {
 
             $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
             $this->selenium->click("link=Add new photo");
-            $this->selenium->type("//div[@id='p-0']/input",  LIB_PATH."simpletest/test/osclass/img_test2.gif");
+            $this->selenium->type("//div[@id='p-0']/div/input",  LIB_PATH."simpletest/test/osclass/img_test2.gif");
 
             if($this->logged == 0){
                 $this->selenium->type("contactName", "carlos");
