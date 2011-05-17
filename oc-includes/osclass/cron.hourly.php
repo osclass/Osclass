@@ -51,12 +51,16 @@ function update_cat_stats() {
     //$manager = CategoryStats::newInstance();
 
 	$conn = getConnection() ;
-	$sql_cats = "SELECT pk_i_id FROM ".DB_TABLE_PREFIX."t_category";
+	$sql_cats = "SELECT pk_i_id, i_expiration_days FROM ".DB_TABLE_PREFIX."t_category";
 	$cats = $conn->osc_dbFetchResults($sql_cats);
 	
 	foreach($cats as $c) {
-        $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m")-1, date("d"),   date("Y")));
-	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' AND fk_i_category_id = %d GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
+        if($c['i_expiration_days']!=0) {
+            $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d")-$c['i_expiration_days'],   date("Y")));
+    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' AND fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
+        } else {
+    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
+        }
         $total = $conn->osc_dbFetchResult($sql);
         $total = $total['total'];
         
