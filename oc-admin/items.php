@@ -42,14 +42,52 @@
                 case 'bulk_actions':
                                         switch ( Params::getParam('bulk_actions') )
                                         {
-                                            case 'activate_all':
+                                            case 'enable_all':
                                                 $id = Params::getParam('id') ;
-                                                $value = 'ACTIVE' ;
+                                                $value = 1 ;
                                                 try {
                                                     if ($id) {
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
-                                                                    array('e_status' => $value)
+                                                                    array('b_enabled' => $value)
+                                                                    ,array('pk_i_id' => $_id)
+                                                            ) ;
+                                                            $item = $this->itemManager->findByPrimaryKey($_id) ;
+                                                            CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
+                                                        }
+                                                    }
+                                                    osc_add_flash_message( _m('The items have been enabled'), 'admin') ;
+                                                } catch (Exception $e) {
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
+                                                }
+                                            break;
+                                            case 'disable_all':
+                                                $id = Params::getParam('id') ;
+                                                $value = 0;
+                                                try {
+                                                    if ($id) {
+                                                        foreach ($id as $_id) {
+                                                            $this->itemManager->update(
+                                                                    array('b_enabled' => $value)
+                                                                    ,array('pk_i_id' => $_id)
+                                                            ) ;
+                                                            $item = $this->itemManager->findByPrimaryKey($_id) ;
+                                                            CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
+                                                        }
+                                                    }
+                                                    osc_add_flash_message( _m('The items have been disabled'), 'admin') ;
+                                                } catch (Exception $e) {
+                                                    osc_add_flash_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
+                                                }
+                                            break;
+                                            case 'activate_all':
+                                                $id = Params::getParam('id') ;
+                                                $value = 1 ;
+                                                try {
+                                                    if ($id) {
+                                                        foreach ($id as $_id) {
+                                                            $this->itemManager->update(
+                                                                    array('b_active' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
@@ -63,12 +101,12 @@
                                             break;
                                             case 'deactivate_all':
                                                 $id = Params::getParam('id') ;
-                                                $value = 'INACTIVE';
+                                                $value = 0;
                                                 try {
                                                     if ($id) {
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
-                                                                    array('e_status' => $value)
+                                                                    array('b_active' => $value)
                                                                     ,array('pk_i_id' => $_id)
                                                             ) ;
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
@@ -168,38 +206,77 @@
                                         if (!is_numeric($id))
                                             return false;
 
-                                        if (!in_array($value, array('ACTIVE', 'INACTIVE')))
+                                        if (!in_array($value, array('ACTIVE', 'INACTIVE','ENABLE','DISABLE')))
                                             return false;
 
                                         try {
-                                            $this->itemManager->update(
-                                                    array('e_status' => $value),
-                                                    array('pk_i_id' => $id)
-                                            );
-
                                             $item = $this->itemManager->findByPrimaryKey($id);
                                             switch ($value) {
                                                 case 'ACTIVE':
+                                                    $this->itemManager->update(
+                                                            array('b_active' => 1),
+                                                            array('pk_i_id' => $id));
                                                     osc_add_flash_message( _m('The item has been activated'), 'admin');
-                                                    CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
-                                                    if($item['fk_i_user_id']!=null) {
-                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                                                        if($user) {
-                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
-                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                                                                ) ;
+                                                    if($item['b_enabled']==1 && $item['b_active']==0) {
+                                                        CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                                                        if($item['fk_i_user_id']!=null) {
+                                                            $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                            if($user) {
+                                                                User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                                                                    ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                    ) ;
+                                                            }
                                                         }
                                                     }
                                                     break;
                                                 case 'INACTIVE':
+                                                    $this->itemManager->update(
+                                                            array('b_active' => 0),
+                                                            array('pk_i_id' => $id));
                                                     osc_add_flash_message( _m('The item has been deactivated'), 'admin');
-                                                    CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-                                                    if($item['fk_i_user_id']!=null) {
-                                                        $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
-                                                        if($user) {
-                                                            User::newInstance()->update(array( 'i_items' => $user['i_items']-1)
-                                                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                                                                ) ;
+                                                    if($item['b_enabled']==1 && $item['b_active']==1) {
+                                                        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                                                        if($item['fk_i_user_id']!=null) {
+                                                            $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                            if($user) {
+                                                                User::newInstance()->update(array( 'i_items' => $user['i_items']-1)
+                                                                                    ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                    ) ;
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case 'ENABLE':
+                                                    $this->itemManager->update(
+                                                            array('b_enabled' => 1),
+                                                            array('pk_i_id' => $id));
+                                                    osc_add_flash_message( _m('The item has been enabled'), 'admin');
+                                                    if($item['b_enabled']==0 && $item['b_active']==1) {
+                                                        CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                                                        if($item['fk_i_user_id']!=null) {
+                                                            $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                            if($user) {
+                                                                User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                                                                    ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                    ) ;
+                                                            }
+                                                        }
+                                                    }
+                                                    break;
+                                                case 'DISABLE':
+                                                    $this->itemManager->update(
+                                                            array('b_enabled' => 0),
+                                                            array('pk_i_id' => $id));
+                                                    osc_add_flash_message( _m('The item has been disabled'), 'admin');
+                                                    if($item['b_enabled']==1 && $item['b_active']==1) {
+                                                        CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                                                        if($item['fk_i_user_id']!=null) {
+                                                            $user = User::newInstance()->findByPrimaryKey($item['fk_i_user_id']);
+                                                            if($user) {
+                                                                User::newInstance()->update(array( 'i_items' => $user['i_items']-1)
+                                                                                    ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                                                                    ) ;
+                                                            }
                                                         }
                                                     }
                                                     break;

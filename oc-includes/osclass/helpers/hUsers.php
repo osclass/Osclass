@@ -23,7 +23,7 @@
     function osc_is_web_user_logged_in() {
         if (Session::newInstance()->_get("userId") != '') {
             $user = User::newInstance()->findByPrimaryKey(Session::newInstance()->_get("userId"));
-            if(isset($user['pk_i_id'])) {
+            if(isset($user['b_enabled']) && $user['b_enabled']==1) {
                 return true ;
             } else {
                 return false;
@@ -33,7 +33,7 @@
         //can already be a logged user or not, we'll take a look into the cookie
         if ( Cookie::newInstance()->get_value('oc_userId') != '' && Cookie::newInstance()->get_value('oc_userSecret') != '') {
             $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') ) ;
-            if(isset($user['pk_i_id'])) {
+            if(isset($user['b_enabled']) && $user['b_enabled']==1) {
                 Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                 Session::newInstance()->_set('userName', $user['s_name']) ;
                 Session::newInstance()->_set('userEmail', $user['s_email']) ;

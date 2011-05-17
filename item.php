@@ -28,8 +28,8 @@
             $this->itemManager = Item::newInstance();
 
             // here allways userId == ''
-            if( Session::newInstance()->_get('userId') != '' ){
-                $this->userId = Session::newInstance()->_get('userId');
+            if( osc_is_web_user_logged_in() ){
+                $this->userId = osc_logged_user_id();
                 $this->user = User::newInstance()->findByPrimaryKey($this->userId);
             }else{
                 $this->userId = null;
@@ -263,7 +263,7 @@
                     $id     = Params::getParam('id');
                     $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
                     View::newInstance()->_exportVariableToView('item', $item[0]);
-                    if ($item[0]['e_status']=='INACTIVE') {
+                    if ($item[0]['b_active']==0) {
                         // ACTIVETE ITEM
                         $mItems = new ItemActions(false) ;
                         $success = $mItems->activate( $item[0]['pk_i_id'], $item[0]['s_secret'] );
@@ -504,7 +504,7 @@
                         $this->redirectTo( osc_item_url() );
                     }
 
-                    if( $aComment['e_status'] != 'ACTIVE' ) {
+                    if( $aComment['b_active'] != 1 ) {
                         osc_add_flash_error_message( _m('The comment is not active, you cannot delete it') );
                         $this->redirectTo( osc_item_url() );
                     }
@@ -534,13 +534,16 @@
                         $this->redirectTo( osc_base_url(true) );
                     }else{
 
-                        if ($item['e_status'] != 'ACTIVE') {
+                        if ($item['b_active'] != 1) {
                             if( $this->userId == $item['fk_i_user_id'] ) {
                                 osc_add_flash_error_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
                             } else {
                                 osc_add_flash_error_message( _m('This item hasn\'t been validated') );
                                 $this->redirectTo( osc_base_url(true) );
                             }
+                        } else if ($item['b_enabled'] == 0) {
+                            osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                            $this->redirectTo( osc_base_url(true) );
                         }
                         $mStats = new ItemStats();
                         $mStats->increase('i_num_views', $item['pk_i_id']);

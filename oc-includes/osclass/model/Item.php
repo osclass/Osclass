@@ -180,9 +180,8 @@
             }
 
             if (!is_null($active)) {
-                if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
-                    $conditions[] = "e_status = '$active'";
-                }
+                $conditions[] = "b_active = 1";
+                $conditions[] = "b_enabled = 1";
             }
 
             if (count($conditions) > 0) {
@@ -231,9 +230,8 @@
             }
 
             if (!is_null($active)) {
-                if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
-                    $conditions[] = "e_status = '$active'";
-                }
+                $conditions[] = "b_active = 1";
+                $conditions[] = "b_enabled = 1";
             }
 
             if (count($conditions) > 0) {
@@ -325,7 +323,7 @@
 
         public function listLatest($limit = 10)
         {
-            return $this->listWhere(" e_status = 'ACTIVE' ORDER BY dt_pub_date DESC LIMIT " . $limit);
+            return $this->listWhere(" b_active = 1 AND b_enabled = 1 ORDER BY dt_pub_date DESC LIMIT " . $limit);
         }
 
         public function insertLocale($id, $locale, $title, $description, $what)
@@ -339,7 +337,7 @@
 
         public function listLatestExtended($limit = 10)
         {
-            return $this->conn->osc_dbFetchResults('SELECT * FROM %s, %st_item_location WHERE %st_item.e_status = \'%s\' AND %st_item_location.fk_i_item_id = %st_item.pk_i_id  ORDER BY %st_item.dt_pub_date DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, 'ACTIVE', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit) ;
+            return $this->conn->osc_dbFetchResults('SELECT * FROM %s, %st_item_location WHERE %st_item.b_active = 1 AND %st_item.b_enabled = 1 AND %st_item_location.fk_i_item_id = %st_item.pk_i_id  ORDER BY %st_item.dt_pub_date DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit) ;
         }
 
         public function listAllWithCategories()
@@ -376,8 +374,14 @@
             } else {
                 $limit_text = ' LIMIT '.$start.", ".$end;
             }
-            $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.e_status = \'ACTIVE\' AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
+            $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.b_active = 1 AND i.b_enabled = 1 AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
             return $this->extendData($items);
+        }
+
+        public function countByUserIDEnabled($userId)
+        {
+            $items = $this->conn->osc_dbFetchResult('SELECT count(i.pk_i_id) as total FROM %s i WHERE i.b_active = 1 AND i.b_enabled = 1 AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC ', $this->getTableName(), $userId);
+            return $items['total'];
         }
 
         public function listLocations($scope)
@@ -426,7 +430,7 @@
                     break;
 
                 case 'pending':
-                    $sql = "SELECT i.*, s.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id LEFT JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE i.`e_status` = 'INACTIVE'";
+                    $sql = "SELECT i.*, s.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id LEFT JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE i.`b_active` = 0";
                     break;
 
                 default:
@@ -486,7 +490,7 @@
         {
             osc_run_hook('delete_item', $id);
             $item = $this->findByPrimaryKey($id);
-            if($item['e_status']=='ACTIVE') {
+            if($item['b_active']==1) {
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
             }
             

@@ -144,6 +144,8 @@
                                         <option value="delete_all"><?php _e('Delete') ?></option>
                                         <option value="activate_all"><?php _e('Activate') ?></option>
                                         <option value="deactivate_all"><?php _e('Deactivate') ?></option>
+                                        <option value="enable_all"><?php _e('Enable') ?></option>
+                                        <option value="disable_all"><?php _e('Disable') ?></option>
                                         <option value="premium_all"><?php _e('Mark as premium') ?></option>
                                         <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
                                 </select>
@@ -158,6 +160,8 @@
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad" <?php if($stat == 'bad') {echo "style='font-weight:bold;'";} ?> ><?php _e('Misclassified') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=offensive" <?php if($stat == 'offensive') {echo "style='font-weight:bold;'";} ?> ><?php _e('Offensive') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired" <?php if($stat == 'expired') {echo "style='font-weight:bold;'";} ?> ><?php _e('Expired') ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=enabled" <?php if($stat == 'enabled') {echo "style='font-weight:bold;'";} ?> ><?php _e('Enabled') ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=disabled" <?php if($stat == 'disabled') {echo "style='font-weight:bold;'";} ?> ><?php _e('Disabled') ?></a>
                             </div>
                 <input type="hidden" name="action" value="bulk_actions" />
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>

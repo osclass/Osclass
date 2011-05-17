@@ -189,7 +189,7 @@
     }
 
     function osc_item_status() {
-        return osc_item_field("e_status");
+        return osc_item_field("b_active");
     }
 
     function osc_item_secret() {
@@ -197,15 +197,15 @@
     }
     
     function osc_item_is_active() {
-        return (osc_item_field("e_status")=="ACTIVE");
+        return (osc_item_field("b_active")==1);
     }
     
     function osc_item_is_inactive() {
-        return (osc_item_field("e_status")=="INACTIVE");
+        return (osc_item_field("b_active")==0);
     }
     
     function osc_item_is_spam() {
-        return (osc_item_field("e_status")=="SPAM");
+        return (osc_item_field("b_spam")==1);
     }
     
     function osc_item_link_spam() {
