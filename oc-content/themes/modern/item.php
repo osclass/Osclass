@@ -26,6 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.js') ; ?>"></script>
         <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.css') ; ?>" rel="stylesheet" type="text/css" />
+        
         <script type="text/javascript">
             $(document).ready(function(){
                 $("a[rel=image_group]").fancybox({
@@ -178,7 +179,7 @@
                                 </script>
                                 <style type="text/css"> div#recaptcha_widget, div#recaptcha_image > img { width:280px; } </style>
                                 <div id="recaptcha_widget">
-                                    <div id="recaptcha_image"></div>
+                                    <div id="recaptcha_image"><img /></div>
                                     <span class="recaptcha_only_if_image"><?php _e('Enter the words above','modern'); ?>:</span>
                                     <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
                                     <div><a href="javascript:Recaptcha.showhelp()"><?php _e('Help', 'modern'); ?></a></div>
@@ -213,6 +214,7 @@
 
                             return true;
                         }
+                        
                     </script>
                 </div>
             </div>

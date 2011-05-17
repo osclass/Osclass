@@ -120,16 +120,20 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'activate':        //activate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
                                             osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
+                                        $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
-                                            $conditions = array('pk_i_id' => $id);
-                                            $values     = array('b_enabled' => 1);
-                                            $iUpdated  += $this->userManager->update($values, $conditions);
+                                            $iUpdated   += $userActions->activate($id);
+                                            //$conditions = array('pk_i_id' => $id);
+                                            //$values     = array('b_enabled' => 1);
+                                            //$iUpdated  += $this->userManager->update($values, $conditions);
+                                            
                                         }
 
                                         switch ($iUpdated) {
@@ -145,16 +149,19 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'deactivate':      //deactivate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
                                             osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
+                                        $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
-                                            $conditions = array('pk_i_id' => $id);
-                                            $values     = array('b_enabled' => 0);
-                                            $iUpdated  += $this->userManager->update($values, $conditions);
+                                            $iUpdated   += $userActions->deactivate($id);
+                                            //$conditions = array('pk_i_id' => $id);
+                                            //$values     = array('b_enabled' => 0);
+                                            //$iUpdated  += $this->userManager->update($values, $conditions);
                                         }
 
                                         switch ($iUpdated) {
@@ -163,6 +170,56 @@
                                             case (1):   $msg = _m('One user has been deactivated');
                                             break;
                                             default:    $msg = sprintf(_m('%s users have been deactivated'), $iUpdated);
+                                            break;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
+                case 'enable':
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->enable($id);
+                                        }
+
+                                        switch ($iUpdated) {
+                                            case (0):   $msg = _m('No user has been enabled');
+                                            break;
+                                            case (1):   $msg = _m('One user has been enabled');
+                                            break;
+                                            default:    $msg = sprintf(_m('%s users have been enabled'), $iUpdated);
+                                            break;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
+                case 'disable':
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->disable($id);
+                                        }
+
+                                        switch ($iUpdated) {
+                                            case (0):   $msg = _m('No user has been disabled');
+                                            break;
+                                            case (1):   $msg = _m('One user has been disabled');
+                                            break;
+                                            default:    $msg = sprintf(_m('%s users have been disabled'), $iUpdated);
                                             break;
                                         }
 

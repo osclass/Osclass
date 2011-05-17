@@ -110,7 +110,8 @@
                     's_contact_name'        => $contactName,
                     's_contact_email'       => $contactEmail,
                     's_secret'              => $code,
-                    'e_status'              => $active,
+                    'b_active'              => ($active=='ACTIVE'?1:0),
+                    'b_enabled'             => 1,
                     'b_show_email'          => $aItem['showEmail']
                 ));
 
@@ -292,22 +293,72 @@
         {
             $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
 
-            $result = $this->manager->update(
-                array('e_status' => 'ACTIVE'),
-                array('s_secret' => $secret, 'pk_i_id' => $id)
-            );
-            if($item[0]['fk_i_user_id']!=null) {
-                $user = User::newInstance()->findByPrimaryKey($item[0]['fk_i_user_id']);
-                if($user) {
-                    User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
-                                        ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                        ) ;
+            
+            if($item['b_enabled']==1 && $item['b_active']==0) {
+                $result = $this->manager->update(
+                    array('b_active' => 1),
+                    array('s_secret' => $secret, 'pk_i_id' => $id)
+                );
+                if($item[0]['fk_i_user_id']!=null) {
+                    $user = User::newInstance()->findByPrimaryKey($item[0]['fk_i_user_id']);
+                    if($user) {
+                        User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
+                                            ,array( 'pk_i_id' => $user['pk_i_id'] )
+                                            ) ;
+                    }
                 }
-            }
 
-            osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
-            CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
-            return $result;
+                osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
+                CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
+                return $result;
+            } else {
+                return false;
+            }
+        }
+        
+        public function deactivate($id) {
+            $item = $this->manager->findByPrimaryKey($id);
+            if($item['b_active']==1) {
+                $result = $this->manager->update(
+                    array('b_active' => 0),
+                    array('pk_i_id' => $id)
+                );
+                if($item['b_enabled']==1) {
+                    CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public function enable($id) {
+            $item = $this->manager->findByPrimaryKey($id);
+            if($item['b_enabled']==0) {
+                $result = $this->manager->update(
+                    array('b_enabled' => 1),
+                    array('pk_i_id' => $id)
+                );
+                if($item['b_active']==1) {
+                    CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public function disable($id) {
+            $item = $this->manager->findByPrimaryKey($id);
+            if($item['b_enabled']==1) {
+                $result = $this->manager->update(
+                    array('b_enabled' => 0),
+                    array('pk_i_id' => $id)
+                );
+                if($item['b_active']==1) {
+                    CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                }
+                return true;
+            }
+            return false;
         }
 
         /**
@@ -322,10 +373,6 @@
                 $this->deleteResourcesFromHD($itemId);
                 return $this->manager->deleteByPrimaryKey($itemId);
             }
-            /*$result = $this->manager->delete(array('pk_i_id' => $itemId, 's_secret' => $secret));
-            if($item['e_status']=='ACTIVE') {
-                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-            }*/
             return false;
         }
 
@@ -601,7 +648,8 @@
                               ,'s_author_email' => $authorEmail
                               ,'s_title'        => $title
                               ,'s_body'         => $body
-                              ,'e_status'       => $status
+                              ,'b_active'       => ($status=='ACTIVE'?1:0)
+                              ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
 
             if( $mComments->insert($aComment) ){

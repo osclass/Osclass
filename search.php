@@ -191,7 +191,8 @@
 
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
-            $this->mSearch->addConditions(sprintf("%st_item.e_status = 'ACTIVE' ", DB_TABLE_PREFIX));
+            $this->mSearch->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+            $this->mSearch->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
 
             // RETRIEVE ITEMS AND TOTAL
             $iTotalItems = $this->mSearch->count();
