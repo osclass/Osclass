@@ -180,7 +180,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->click("xpath=//p[2]/button");
-        $this->selenium->waitForPageToLoad("300000");
+        $this->selenium->waitForPageToLoad("3000000");
 
         $this->assertTrue($this->selenium->isTextPresent("Backup has been done properly"), "Backup sql! ERROR");
     }
@@ -231,7 +231,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->type("contactName" , "contact name");
         $this->selenium->type("contactEmail", "test@mail.com");
 
-        $this->selenium->select("catId", "label=Cars");
+        $this->selenium->select("catId", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "11");

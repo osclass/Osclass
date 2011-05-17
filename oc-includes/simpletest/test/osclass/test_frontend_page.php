@@ -7,7 +7,7 @@ require_once('../../reporter.php');
 require_once '../../../../oc-load.php';
 require_once LIB_PATH . 'Selenium.php';
 
-include 'test_frontend_register.php';
+//include 'test_frontend_register.php';
 
 class TestOfPage extends WebTestCase {
 

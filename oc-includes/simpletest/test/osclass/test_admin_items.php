@@ -135,7 +135,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->type("contactName" , "contact name");
         $this->selenium->type("contactEmail", "test@mail.com");
 
-        $this->selenium->select("catId", "label=Cars");
+        $this->selenium->select("catId", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title item");
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "11");
@@ -147,8 +147,10 @@ class TestOfAdminItems extends WebTestCase {
         if( $bPhotos ){
             $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
             $this->selenium->click("link=Add new photo");
-            $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
+            $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
+        
+        sleep(4);
         
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -270,7 +272,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->type("contactName" , "contact name_");
         $this->selenium->type("contactEmail", "test_@mail.com");
 
-        $this->selenium->select("catId", "label=Cars");
+        $this->selenium->select("catId", "label=regexp:\\s*Cars");
         $this->selenium->type("title[en_US]", "title_item");
         $this->selenium->type("description[en_US]", "description_test_description test description_test");
         $this->selenium->type("price", "11");
@@ -409,7 +411,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->click("link=» Manage media");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Can't activate comment. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         // only can delete resources
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");

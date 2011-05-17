@@ -126,7 +126,7 @@ class TestOfRegister extends WebTestCase {
         $this->selenium->type('s_password2' , 'password');
         $this->selenium->type('s_email'     , 'carlos@osclass.org');
 
-        $this->selenium->click('xpath=//span/button');
+        $this->selenium->click("xpath=//span/button[text()='Create']");
         $this->selenium->waitForPageToLoad(1000);
         
         $this->email = "carlos@osclass.org";
@@ -163,7 +163,7 @@ class TestOfRegister extends WebTestCase {
         
         $this->email = 'carlos+user@osclass.org';
 
-        $this->selenium->click('xpath=//span/button');
+        $this->selenium->click("xpath=//span/button[text()='Create']");
         $this->selenium->waitForPageToLoad("1000");
 
         echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
@@ -179,7 +179,7 @@ class TestOfRegister extends WebTestCase {
             $this->selenium->type('s_password2' , 'password_');
             $this->selenium->type('s_email'     , 'carlos+user@osclass.org');
 
-            $this->selenium->click('xpath=//span/button');
+            $this->selenium->click("xpath=//span/button[text()='Create']");
             $this->selenium->waitForPageToLoad(1000);
 
             echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
@@ -206,7 +206,7 @@ class TestOfRegister extends WebTestCase {
         $this->selenium->type('s_password2' , 'password_');
         $this->selenium->type('s_email'     , 'carlos+user_@osclass.org');
 
-        $this->selenium->click('xpath=//span/button');
+        $this->selenium->click("xpath=//span/button[text()='Create']");
         $this->selenium->waitForPageToLoad(1000);
 
         if( $this->selenium->isTextPresent('regexpi:Passwords don\'t match.') ){

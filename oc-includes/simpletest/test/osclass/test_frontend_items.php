@@ -1,4 +1,7 @@
 <?php
+
+require_once('util_settings.php');
+
 require_once('../../autorun.php');
 require_once('../../web_tester.php');
 require_once('../../reporter.php');
@@ -15,6 +18,8 @@ class TestOfItems extends WebTestCase {
     private $email_fixed;
     private $array;
     private $logged;
+    
+    private $set_selectable_parent_categories;
     
     private $to_delete = array();
 
@@ -37,6 +42,12 @@ class TestOfItems extends WebTestCase {
     }
 
     function  __construct() {
+        
+    }
+
+    /*           TESTS          */
+    function testInitial()
+    {
         echo "insert new user for testing<br>";
         $input['s_secret']          = osc_genRandomPassword() ;
         $input['dt_reg_date']       = DB_FUNC_NOW ;
@@ -66,9 +77,6 @@ class TestOfItems extends WebTestCase {
         $this->email_fixed          = "carlos+test@osclass.org";
         User::newInstance()->insert($input) ;
     }
-
-    /*           TESTS          */
-
     /**
      * insert new item
      * Comprobar:
@@ -83,40 +91,37 @@ class TestOfItems extends WebTestCase {
 /*
  *         TEST WITH NO LOGGED USER
  */
+        $uSettings = new utilSettings();
+        $this->items_wait_time              = $uSettings->set_items_wait_time(0);
+        $this->set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
         $mItem = new Item();
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - </div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - YES, CAN PUBLISH ITEMS</div>";
-        Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'reg_user_post'));
-
-        Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'enabled_item_validation'));
+        $this->bool_reg_user_post           = $uSettings->set_reg_user_post(0);
+        $this->bool_enabled_user_validation = $uSettings->set_moderate_items(-1);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - WITHOUT VALIDATION MAIL</div>";
         $this->insertItem();
 
-        Preference::newInstance()->update(array('s_value' => 1)
-                                         ,array('s_name'  => 'enabled_item_validation'));
+        $this->bool_enabled_user_validation = $uSettings->set_moderate_items(111);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - WITH VALIDATION MAIL</div>";
         $this->insertItem();
 
-        Preference::newInstance()->update(array('s_value' => 1)
-                                         ,array('s_name'  => 'reg_user_post'));
+        $this->bool_reg_user_post           = $uSettings->set_reg_user_post(1);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>NO USER - NO, CAN'T PUBLISH ITEMS</div>";
         $this->insertItem();
 
 /*
  *         TEST WITH LOGGED USER
  */
+        
         echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - </div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'></div>";
-        Preference::newInstance()->update(array('s_value' => 1)
-                                         ,array('s_name'  => 'logged_user_item_validation'));
+        $uSettings->set_logged_user_item_validation(1);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - WITHOUT VALIDATION MAIL</div>";
         $this->login();
         $this->insertItem();
         flush();
-        Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'logged_user_item_validation'));
+        $uSettings->set_logged_user_item_validation(0);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - WITH VALIDATION MAIL</div>";
         $this->login();
         $this->insertItem();
@@ -204,7 +209,7 @@ class TestOfItems extends WebTestCase {
     private function insertItem()
     {
         $reg_user_post               = Preference::newInstance()->findValueByName('reg_user_post');
-        $enabled_item_validation     = Preference::newInstance()->findValueByName('enabled_item_validation');
+        $moderate_items              = Preference::newInstance()->findValueByName('moderate_items');
         $logged_user_item_validation = Preference::newInstance()->findValueByName('logged_user_item_validation');
 
 //        if($reg_user_post) {echo "reg_user_post == true<br>";}else{echo "reg_user_post == false<br>";}
@@ -223,7 +228,7 @@ class TestOfItems extends WebTestCase {
             $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Allow no users to post items .reg_user_post == true. ERROR ");
         } else {
 
-            $this->selenium->select("catId", "label=Cars");
+            $this->selenium->select("catId", "label=regexp:\\s*Cars");
 
             $this->selenium->type("title[en_US]", "title new item");
             $this->selenium->type("description[en_US]", "description new item new item new item");
@@ -251,7 +256,7 @@ class TestOfItems extends WebTestCase {
             echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
 
             if( $this->logged == 0 ){
-                if($enabled_item_validation){
+                if($moderate_items > 0){
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>No user and need validation item - Great! You'll receive an e-mail to activate your item</div>";
                     $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
                 } else {
@@ -272,6 +277,9 @@ class TestOfItems extends WebTestCase {
         return 0;
     }
 
+    
+    
+    
     private function editUserItemBadId()
     {
         $this->selenium->open( osc_base_url(true) . "?page=item&action=item_edit&id=9999" );
@@ -293,7 +301,7 @@ class TestOfItems extends WebTestCase {
         $this->selenium->click("xpath=//div[@class='item'][1]/p[@class='options']/strong/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->selenium->select("catId", "label=Car Parts");
+        $this->selenium->select("catId", "label=regexp:\\s*Car Parts");
 
         $this->selenium->type("title[en_US]", "New title new item");
         $this->selenium->type("description[en_US]", "New description new item new item new item");
@@ -368,5 +376,4 @@ class TestOfItems extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Can't delete item. ERROR ");
     }
 }
-
 ?>

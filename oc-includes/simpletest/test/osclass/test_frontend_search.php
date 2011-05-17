@@ -1,6 +1,7 @@
 <?php
 
-
+error_reporting(E_ALL);
+require_once('util_settings.php');
 
 require_once('../../autorun.php');
 require_once('../../web_tester.php');
@@ -20,6 +21,11 @@ class TestOfSearch extends WebTestCase {
     private $email_fixed;
     private $array;
     private $logged;
+    
+    private $email_items;
+    
+    private $enabled_recaptcha_items;
+    private $items_wait_time;
     private $bool_enabled_user_validation;
     private $bool_reg_user_post;
 
@@ -42,17 +48,15 @@ class TestOfSearch extends WebTestCase {
     }
 
     public function __construct($label = false) {
+        
         parent::__construct($label);
-        // allow no users to add ads
-        // save status
-        $this->bool_enabled_user_validation = Preference::newInstance()->findValueByName('enabled_user_validation');
-        $this->bool_reg_user_post           = Preference::newInstance()->findValueByName('reg_user_post');
-        Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'reg_user_post'));
-
-        Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'enabled_item_validation'));
-
+        
+        $uSettings = new utilSettings();
+        $this->enabled_recaptcha_items      = $uSettings->set_enabled_recaptcha_items(0);
+        $this->items_wait_time              = $uSettings->set_items_wait_time(0);
+        $this->bool_enabled_user_validation = $uSettings->set_moderate_items(-1);
+        $this->bool_reg_user_post           = $uSettings->set_reg_user_post(0);
+        unset($uSettings);
         echo "inserting items...<br>";
     }
 
@@ -60,11 +64,17 @@ class TestOfSearch extends WebTestCase {
     
     public function testInitial()
     {
-       require 'itemData.php';
+        $email = "carlos@osclass.org" ;
+        $this->email_items = $email;
+        require 'itemData.php';
+        require 'item_frontend.php';
+        $itemFrontend = new ItemFrontend();
+        echo "testInitial<br>";
+        flush();
         foreach($aData as $item){
             echo "<div style='background-color: green; color: white;padding-left:15px;'> - TestOfSearch - insertItem()</div>";
             flush();
-            $this->insertItem($item['catId'], $item['title'], $item['description'], $item['price'], $item['regionId'], $item['cityId'], $item['photo'], $item['contactName'], $item['contactEmail']);
+            $itemFrontend->insertItem( $item['catId'], $item['title'], $item['description'], $item['price'], $item['regionId'], $item['cityId'], $item['photo'], $item['contactName'], $item['contactEmail'] , $this->selenium, $this, 0);
         }
     }
 
@@ -194,30 +204,22 @@ class TestOfSearch extends WebTestCase {
 
     public function testFinal()
     {
-        $item = Item::newInstance()->findByConditions( array('s_contact_email' => 'mail@contact.com') ) ;
+        $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->email_items) ) ;
         while( $item ) {
             echo "deleting item ... <br>";
             flush();
             $this->deleteItemUrl( osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] ) );
             flush();
-            $item =Item::newInstance()->findByConditions( array('s_contact_email' => 'mail@contact.com') ) ;
+            $item =Item::newInstance()->findByConditions( array('s_contact_email' => $this->email_items) ) ;
             flush();
         }
 
-        if( $this->bool_enabled_user_validation ){
-            Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'enabled_item_validation'));
-        } else {
-            Preference::newInstance()->update(array('s_value' => 1)
-                                         ,array('s_name'  => 'enabled_item_validation'));
-        }
-        if( $this->bool_reg_user_post ){
-            Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'reg_user_post'));
-        } else {
-            Preference::newInstance()->update(array('s_value' => 1)
-                                         ,array('s_name'  => 'reg_user_post'));
-        }
+        $uSettings = new utilSettings();
+        $uSettings->set_enabled_recaptcha_items( $this->enabled_recaptcha_items );
+        $uSettings->set_items_wait_time( $this->items_wait_time );
+        $uSettings->set_moderate_items( $this->bool_enabled_user_validation );
+        $uSettings->set_reg_user_post( $this->bool_reg_user_post );
+        unset($uSettings);
     }
 
     /*
@@ -259,62 +261,6 @@ class TestOfSearch extends WebTestCase {
         // last item added -> TITLE : Avion ULM TL96 cerca de Biniagual
         $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
         $this->assertTrue(preg_match('/Avion ULM TL96 cerca de Biniagual/', $text), "Can't match last title in item. ERROR");
-    }
-
-    private function insertItem($cat, $title, $description, $price, $regionId, $cityId, $aPhotos, $user, $email )
-    {
-        $reg_user_post = Preference::newInstance()->findValueByName('reg_user_post');
-        $enabled_item_validation = Preference::newInstance()->findValueByName('enabled_item_validation');
-        $logged_user_item_validation = Preference::newInstance()->findValueByName('logged_user_item_validation');
-//        echo "reg_user_post ".$reg_user_post."<br>";
-//        echo "enabled_item_validation ".$enabled_item_validation."<br>";
-//        echo "logged_user_item_validation ".$logged_user_item_validation."<br>";
-        flush();
-
-        $this->selenium->open( osc_base_url(true) );
-
-        $this->selenium->click("link=Publish your ad for free");
-        $this->selenium->waitForPageToLoad("30000");
-
-        $this->selenium->select("catId", "label=regexp:\\s+$cat");
-
-        $this->selenium->type("title[en_US]", $title);
-        $this->selenium->type("description[en_US]", $description);
-        $this->selenium->type("price", $price);
-
-        $this->selenium->select("currency", "label=Euro €");
-
-        $this->selenium->select("regionId", "label=$regionId");
-        $this->selenium->select("cityId", "label=$cityId");
-        $this->selenium->type("cityArea", "my area");
-        $this->selenium->type("address", "my address");
-
-        if( count($aPhotos) > 0 ){
-            $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
-            $this->selenium->click("link=Add new photo");
-            $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
-        }
-        echo $title."<br>";
-        $this->selenium->type("contactName" , $user);
-        $this->selenium->type("contactEmail", $email);
-        
-        $this->selenium->click("//button[text()='Publish']");
-        $this->selenium->waitForPageToLoad("30000");
-        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
-
-        if( $this->logged == 0 ){
-            if($enabled_item_validation){
-                $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
-            } else {
-                $this->assertTrue($this->selenium->isTextPresent("Your post has been published","no logged in error inserting ad.") );
-            }
-        } else {
-            if($logged_user_item_validation){
-                $this->assertTrue($this->selenium->isTextPresent("Your post has been published","insert ad error ") );
-            } else {
-                $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
-            }
-        }
     }
 }
 ?>

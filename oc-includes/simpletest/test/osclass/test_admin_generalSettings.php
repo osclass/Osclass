@@ -31,6 +31,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         echo "<div style='background-color: Wheat; color: black;'>end test</div>";
         flush();
     }
+    
     /*           TESTS          */
     function testCronTab()
     {
@@ -130,6 +131,17 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->items() ;
         flush();
     }
+    
+    function testCategoriesTab()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testCategoriesTab</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - CATEGORIES SETTINGS</div>";
+        $this->categories() ;
+        flush();
+    }
 
     function testGeneralSettings()
     {
@@ -197,6 +209,37 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         }
     }
 
+    private function categories()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=General settings");
+        $this->selenium->click("link=» Categories");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        
+        
+        $selectable_parent_categories = Preference::newInstance()->findValueByName('selectable_parent_categories');
+        if($selectable_parent_categories == 1){ $selectable_parent_categories = 'on';} else { $selectable_parent_categories = 'off'; }
+        
+        $this->selenium->click("selectable_parent_categories");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        
+        $this->assertTrue($this->selenium->isTextPresent("Categories' settings have been updated"), "Can't update categories settings. ERROR");
+        if($selectable_parent_categories == 'on' ) {
+            $this->assertEqual( $this->selenium->getValue("selectable_parent_categories")   , 'off');
+        } else {
+            $this->assertEqual( $this->selenium->getValue("selectable_parent_categories")   , 'on');
+        }
+        
+        $this->selenium->click("selectable_parent_categories");
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+        
+        $this->assertTrue($this->selenium->isTextPresent("Categories' settings have been updated"), "Can't update categories settings. ERROR");
+        $this->assertEqual( $this->selenium->getValue("selectable_parent_categories")   , $selectable_parent_categories );
+    }
+    
     private function cronTab()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -507,10 +550,13 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         if($pref['enabled_comments'] == 1){ $pref['enabled_comments'] = 'on';} else { $pref['enabled_comments'] = 'off'; }
 
         $pref['moderate_comments']  = Preference::newInstance()->findValueByName('moderate_comments') ;
-        if($pref['moderate_comments'] == 1){ $pref['moderate_comments'] = 'off';} else { $pref['moderate_comments'] = 'on'; }
+        if($pref['moderate_comments'] < 0){ $pref['moderate_comments'] = 'off';} else { $pref['moderate_comments'] = 'on'; }
         
         $pref['notify_new_comment'] = Preference::newInstance()->findValueByName('notify_new_comment') ;
         if($pref['notify_new_comment'] == 1){ $pref['notify_new_comment'] = 'on';} else { $pref['notify_new_comment'] = 'off'; }
+        
+        $pref['num_moderate_comments'] = Preference::newInstance()->findValueByName('moderate_comments');
+        $pref['comments_per_page']     = Preference::newInstance()->findValueByName('comments_per_page');
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
@@ -518,8 +564,13 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_comments");
-        $this->selenium->click("moderate_comments");
+        
+        if( !$pref['moderate_comments'] == 'on' ) {
+            $this->selenium->click("moderate_comments");
+        }
         $this->selenium->click("notify_new_comment");
+        $this->selenium->type("num_moderate_comments",10);
+        $this->selenium->type("comments_per_page",0);
 
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -532,9 +583,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
             $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'on' ) ;
         }
         
-        if( $pref['moderate_comments'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('moderate_comments'), 'off' ) ;
-        } else {
+        if(! $pref['moderate_comments'] == 'on' ){
             $this->assertEqual( $this->selenium->getValue('moderate_comments'), 'on' ) ;
         }
 
@@ -543,10 +592,14 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         } else {
             $this->assertEqual( $this->selenium->getValue('notify_new_comment'), 'on' ) ;
         }
+        
+        $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Not saved ok, num comments are 10." );
+        $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Not saved ok, num comments are 10." );
 
         $this->selenium->click("enabled_comments");
-        $this->selenium->click("moderate_comments");
         $this->selenium->click("notify_new_comment");
+        $this->selenium->type("num_moderate_comments",$pref['num_moderate_comments'] );
+        $this->selenium->type("comments_per_page",$pref['comments_per_page'] );
 
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -554,8 +607,9 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Can't update comments settings. ERROR");
         
         $this->assertEqual( $this->selenium->getValue('enabled_comments')    ,  $pref['enabled_comments'] ) ;
-        $this->assertEqual( $this->selenium->getValue('moderate_comments')   ,  $pref['moderate_comments'] ) ;
         $this->assertEqual( $this->selenium->getValue('notify_new_comment')  ,  $pref['notify_new_comment'] ) ;
+        $this->assertEqual( $this->selenium->getValue('num_moderate_comments')  ,  $pref['num_moderate_comments'] ) ;
+        $this->assertEqual( $this->selenium->getValue('comments_per_page')  ,  $pref['comments_per_page'] ) ;
     }
 
     private function getPreferencesItems()
@@ -570,10 +624,13 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $pref['notify_contact_friends']         = Preference::newInstance()->findValueByName('notify_contact_friends') ;
         $pref['enableField#f_price@items']      = Preference::newInstance()->findValueByName('enableField#f_price@items') ;
         $pref['enableField#images@items']       = Preference::newInstance()->findValueByName('enableField#images@items') ;
+        
+        $pref['num_moderate_items']             = Preference::newInstance()->findValueByName('moderate_items') ;
+        $pref['items_wait_time']                = Preference::newInstance()->findValueByName('items_wait_time') ;
 
         if($pref['enabled_recaptcha_items'] == 1){  $pref['enabled_recaptcha_items'] = 'on'; }
         else {                                      $pref['enabled_recaptcha_items'] = 'off'; }
-        if($pref['enabled_item_validation'] == 1){  $pref['enabled_item_validation'] = 'on'; }
+        if($pref['enabled_item_validation'] >= 0){  $pref['enabled_item_validation'] = 'on'; }
         else {                                      $pref['enabled_item_validation'] = 'off'; }
         if($pref['reg_user_post'] == 1){            $pref['reg_user_post']          = 'on'; }
         else {                                      $pref['reg_user_post']          = 'off'; }
@@ -602,7 +659,13 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_recaptcha_items");
-        $this->selenium->click("enabled_item_validation");
+        if( $pref['enabled_item_validation'] != 'on') {
+            $this->selenium->click("enabled_item_validation");
+        } else {
+            $this->selenium->type("num_moderate_items",'111');
+        }
+        $this->selenium->type("items_wait_time", '120' );
+        
         $this->selenium->click("logged_user_item_validation");
         $this->selenium->click("reg_user_post");
         $this->selenium->click("notify_new_item");
@@ -615,11 +678,13 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Items' settings have been updated") , "Can't update items settings. ERROR");
-
+        
+        if( $pref['enabled_item_validation'] == 'on' ) {
+            $this->assertEqual( $this->selenium->getValue('num_moderate_items'), '111' ) ;
+        }
+        $this->assertEqual( $this->selenium->getValue('items_wait_time'), '120' ) ;
         if( $pref['enabled_recaptcha_items'] == 'on' ){     $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'off' ) ;
         } else {                                            $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'on' ) ;}
-        if( $pref['enabled_item_validation'] == 'on' ){     $this->assertEqual( $this->selenium->getValue('enabled_item_validation'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('enabled_item_validation'), 'on' ) ;}
         if( $pref['logged_user_item_validation'] == 'on' ){ $this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'off' ) ;
         } else {                                            $this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'on' ) ;}
         if( $pref['reg_user_post'] == 'on' ){               $this->assertEqual( $this->selenium->getValue('reg_user_post'), 'off' ) ;
@@ -636,7 +701,6 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         } else {                                            $this->assertEqual( $this->selenium->getValue('enableField#images@items'), 'on' ) ;}
 
         $this->selenium->click("enabled_recaptcha_items");
-        $this->selenium->click("enabled_item_validation");
         $this->selenium->click("logged_user_item_validation");
         $this->selenium->click("reg_user_post");
         $this->selenium->click("notify_new_item");
@@ -644,6 +708,8 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("notify_contact_friends");
         $this->selenium->click("enableField#f_price@items");
         $this->selenium->click("enableField#images@items");
+        $this->selenium->type("num_moderate_items", $pref['num_moderate_items'] );
+        $this->selenium->type("items_wait_time", $pref['items_wait_time'] );
 
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -651,7 +717,6 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("Items' settings have been updated") , "Can't update items settings. ERROR");
 
         $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items')        , $pref['enabled_recaptcha_items']) ;
-        $this->assertEqual( $this->selenium->getValue('enabled_item_validation')        , $pref['enabled_item_validation'] ) ;
         $this->assertEqual( $this->selenium->getValue('logged_user_item_validation')    , $pref['logged_user_item_validation'] ) ;
         $this->assertEqual( $this->selenium->getValue('reg_user_post')                  , $pref['reg_user_post'] ) ;
         $this->assertEqual( $this->selenium->getValue('notify_new_item')                , $pref['notify_new_item'] ) ;
@@ -659,7 +724,10 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('notify_contact_friends')         , $pref['notify_contact_friends'] ) ;
         $this->assertEqual( $this->selenium->getValue('enableField#f_price@items')      , $pref['enableField#f_price@items']  ) ;
         $this->assertEqual( $this->selenium->getValue('enableField#images@items')       , $pref['enableField#images@items'] ) ;
-
+        
+        $this->assertEqual( $this->selenium->getValue('items_wait_time')                , $pref['items_wait_time'] ) ;
+        $this->assertEqual( $this->selenium->getValue('num_moderate_items')             , $pref['num_moderate_items'] ) ;
+            
         unset($pref);
     }
 
@@ -757,12 +825,6 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been added as a new country") , "Can't add new country" );
-
-        $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div/a[text()='View more »']") ;
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:Andorra la Vella") , "Can't insert regions of ANDORRA" );
-
-        $this->selenium->click("xpath=//div[@id='i_regions']/div[1]/div/a[text()='View more »']") ;
-        $this->assertTrue( $this->selenium->isTextPresent("regexp:El Mas de Ribafeta") , "Can't insert cities of Andorra la Vella" );
 
         // edit country
         $this->selenium->click("xpath=//div[@id='l_countries']/div[1]/div[1]/div/a[@class='edit']");

@@ -9,7 +9,7 @@ $aux = array(
     'price'         => '10',
     'regionId'      => 'Barcelona','cityId'        => 'Terrassa',
     'cityArea'      => '','address'       => '',
-    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -29,7 +29,7 @@ Thank you for your interest.',
     'price'         => '100',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Terrassa',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -40,7 +40,7 @@ $aux = array(
     'price'         => '101',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Terrassa',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -51,7 +51,7 @@ $aux = array(
     'price'         => '200',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Terrassa',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -63,7 +63,7 @@ $aux = array(
     'price'         => '3200',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Balsareny',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -84,7 +84,7 @@ Con garantia de la casa
     'price'         => '4000',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Balsareny',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -95,7 +95,7 @@ $aux = array(
     'price'         => '4500',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Balsareny',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -107,7 +107,7 @@ para mas informacion o consultas comunicarse con José al Tel. 600 982 984 ',
     'price'         => '1300',
     'regionId'      => 'Barcelona'  ,'cityId'        => 'Balsareny',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -119,7 +119,7 @@ $aux = array(
     'price'         => '900',
     'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -141,7 +141,7 @@ AdTech Ad
     'price'         => '8000',
     'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -167,7 +167,7 @@ AdTech Ad
     'price'         => '48000',
     'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -180,7 +180,7 @@ $aux = array(
     'price'         => '',
     'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array(),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -191,7 +191,7 @@ $aux = array(
     'price'         => '15',
     'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -209,7 +209,7 @@ AdTech Ad
     'price'         => '30',
     'regionId'      => 'Alicante'  ,'cityId'        => 'Agres',
     'cityArea'      => ''           ,'address'       => '',
-    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 );
 array_push($aData, $aux);
 
@@ -220,7 +220,7 @@ array_push($aData, $aux);
 //    'price'         => '',
 //    'regionId'      => 'Madrid'  ,'cityId'        => 'Alameda del Valle',
 //    'cityArea'      => ''           ,'address'       => '',
-//    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => 'mail@contact.com'
+//    'photo'         => array( "img_test1.gif","img_test2.gif"),'contactName'   => 'contact ad 1','contactEmail'  => $email
 //);
 //array_push($aData, $aux);
 ?>

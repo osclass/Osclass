@@ -1,4 +1,7 @@
 <?php
+
+require_once("util_settings.php");
+
 require_once('../../autorun.php');
 require_once('../../web_tester.php');
 require_once('../../reporter.php');
@@ -41,23 +44,29 @@ class TestOfLogin extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Create new user -</div>";
         
         // need enabled_user_validation = 0, this way isn't necessary validate
-        Preference::newInstance()->update(array('s_value' => 0)
-                                         ,array('s_name'  => 'enabled_user_validation'));
+        $uSettings = new utilSettings();
+        $uSettings->set_enabled_user_validation(0);
         // create a new user.
         $mail = 'carlos+user@osclass.org';
         $pass = '123456';
         $this->doRegisterUser($mail,$pass,$this->selenium);
-
+        flush();
+        
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - loginPassIncorrect</div>";
         $this->loginPassIncorrect($mail,'foobar');
+        flush();
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - loginMailIncorrect</div>";
         $this->loginMailIncorrect('some@mail.com',$pass);
+        flush();
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - login correct</div>";
         $this->login($mail,$pass);
+        flush();
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - logout </div>";
         $this->logout();
+        flush();
         echo "<div style='background-color: green; color: white;padding-left:15px;'> - Test login - recover password</div>";
         $this->recoverPass($mail);
+        flush();
 
         $user = User::newInstance()->findByEmail($mail);
         User::newInstance()->deleteUser($user['pk_i_id']);
@@ -83,8 +92,9 @@ class TestOfLogin extends WebTestCase {
         $selenium->type('s_password2' , $pass);
         $selenium->type('s_email'     , $mail);
 
-        $selenium->click('xpath=//span/button');
+        $selenium->click("xpath=//span/button[text()='Create']");
         $selenium->waitForPageToLoad(1000);
+        $this->assertTrue( $this->selenium->isTextPresent("Your account has been created successfully"), "Can't register new user");
     }
     private function logout()
     {
@@ -152,10 +162,10 @@ class TestOfLogin extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
 
         $this->selenium->type("s_email",$mail);
-        $this->selenium->click('xpath=//span/button');
+        $this->selenium->click("xpath=//span/button[text()='Send me a new password']");
         $this->selenium->waitForPageToLoad("30000");
 
-        $this->assertTrue($this->selenium->isTextPresent("We have sent you an email with the instructions to reset your password"),"Can't revocer password. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("We have sent you an email with the instructions to reset your password"),"Can't recover password. ERROR");
     }
 
 }
