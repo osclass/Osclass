@@ -284,6 +284,76 @@
             
             return($input) ;
         }
+        
+        
+        public function activate($user_id) {
+            $user = $this->manager->findByPrimaryKey($user_id);
+            if($user) {
+                $this->manager->update(array('b_active' => 1), array('pk_i_id' => $user_id));
+                if($user['b_enabled']==1) {
+                     $mItem = new ItemActions(true);
+                     $items = Item::newInstance()->findByUserID($user_id);
+                     foreach($items as $item) {
+                         $mItem->enable($item['pk_i_id']);
+                     }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public function deactivate($user_id) {
+            $user = $this->manager->findByPrimaryKey($user_id);
+            if($user) {
+                $this->manager->update(array('b_active' => 0), array('pk_i_id' => $user_id));
+                if($user['b_enabled']==1) {
+                     $mItem = new ItemActions(true);
+                     $items = Item::newInstance()->findByUserID($user_id);
+                     foreach($items as $item) {
+                         $mItem->disable($item['pk_i_id']);
+                     }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public function enable($user_id) {
+            $user = $this->manager->findByPrimaryKey($user_id);
+            if($user) {
+                $this->manager->update(array('b_enabled' => 1), array('pk_i_id' => $user_id));
+                if($user['b_active']==1) {
+                     $mItem = new ItemActions(true);
+                     $items = Item::newInstance()->findByUserID($user_id);
+                     foreach($items as $item) {
+                         $mItem->enable($item['pk_i_id']);
+                     }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public function disable($user_id) {
+            $user = $this->manager->findByPrimaryKey($user_id);
+            if($user) {
+                $this->manager->update(array('b_enabled' => 0), array('pk_i_id' => $user_id));
+                if($user['b_active']==1) {
+                     $mItem = new ItemActions(true);
+                     $items = Item::newInstance()->findByUserID($user_id);
+                     foreach($items as $item) {
+                         $mItem->disable($item['pk_i_id']);
+                     }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
      }
 
 ?>

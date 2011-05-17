@@ -111,9 +111,9 @@
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=ACTIVE\'>'. __('Activate') .'</a>';
                     }
                     if(isset($aRow['b_enabled']) && ($aRow['b_enabled'] == 1)) {
-                        $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=ENABLE\'>'. __('Disable') .'</a>';
+                        $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=DISABLE\'>'. __('Disable') .'</a>';
                     } else if (isset($aRow['b_enabled']) && ($aRow['b_enabled'] == 0)) {
-                        $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=DISABLE\'>'. __('Enable') .'</a>';
+                        $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status&amp;id='. $aRow['pk_i_id'] .'&amp;value=ENABLE\'>'. __('Enable') .'</a>';
                     }
                     if(isset($aRow['b_premium']) && $aRow['b_premium']) {
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=0\'>'. __('Unmark as premium') .'</a>';

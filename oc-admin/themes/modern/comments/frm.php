@@ -123,6 +123,10 @@
                             </div>
                         </div>
                         <div class="FormElement">
+                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo ($comment['b_enabled']?__('ENABLED'):_('DISABLED')); ?> ( <a href="<?php echo osc_admin_base_url(true);?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['b_enabled']==1)?'DISABLE':'ENABLE');?>"><?php echo (($comment['b_enabled']==1)?__('Disable'):__('Enable'));?></a> )
+                            </div>
+                        </div>
+                        <div class="FormElement">
                             <div class="FormElementName"><?php _e('Comment'); ?></div>
                             <div class="FormElementInput">
                                <?php CommentForm::body_input_textarea($comment); ?>

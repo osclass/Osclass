@@ -206,7 +206,7 @@
                                         if (!is_numeric($id))
                                             return false;
 
-                                        if (!in_array($value, array('ACTIVE', 'INACTIVE')))
+                                        if (!in_array($value, array('ACTIVE', 'INACTIVE','ENABLE','DISABLE')))
                                             return false;
 
                                         try {
