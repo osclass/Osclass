@@ -47,6 +47,9 @@
                                             case 4: osc_add_flash_error_message( _m('The reCAPTCHA was not introduced correctly')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
+                                            case 5: osc_add_flash_error_message( _m('The email is not valid')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
                                         }
                 break;
                 case('validate'):       //validate account
