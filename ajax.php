@@ -132,7 +132,14 @@
                                 
                                 if( (int)$userid > 0 ) {
                                     $user = User::newInstance()->findByPrimaryKey($userid);
-                                    Alerts::newInstance()->activate($email, $secret);
+                                    if($user['b_active']==1 && $user['b_enabled']==1) {
+                                        Alerts::newInstance()->activate($email, $secret);
+                                        echo '1';
+                                        return true;
+                                    } else {
+                                        echo '-1';
+                                        return false;
+                                    }
                                 } else {
                                     $user['s_name'] = "";
                                     

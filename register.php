@@ -56,10 +56,10 @@
                                         $user = $userManager->findByIdSecret($id, $code) ;
                                             
                                         if ($user) {
-                                            if (!$user['b_enabled']) {
+                                            if ($user['b_active']==0) {
                                                 $userManager = new User() ;
                                                 $userManager->update(
-                                                        array('b_enabled' => '1')
+                                                        array('b_active' => '1')
                                                         ,array('pk_i_id' => $id, 's_secret' => $code)
                                                 ) ;
                                                 

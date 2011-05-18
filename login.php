@@ -118,7 +118,7 @@
                 break;
                 case('forgot_post'):
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
-                                        if($user) {
+                                        if($user['b_enabled']==1) {
                                             if(Params::getParam('new_password')==Params::getParam('new_password2')) {
                                                 User::newInstance()->update(
                                                     array('s_pass_code' => osc_genRandomPassword(50)
