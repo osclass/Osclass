@@ -219,9 +219,8 @@
                                                                                 }
                                                                             }
                                                                         }
+                                                                        osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'), $countryName), 'admin');
                                                                     }                                                
-                                                                    osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'),
-                                                                                                          $countryName), 'admin');
 
 
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
