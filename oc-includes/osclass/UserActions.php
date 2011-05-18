@@ -38,6 +38,10 @@
 
             $input = $this->prepareData(true) ;
 
+            if(!osc_validate_email($input['s_email'])) {
+                return 5;
+            }
+            
             $email_taken = $this->manager->findByEmail($input['s_email']) ;
             if($email_taken == null) {
                 $this->manager->insert($input) ;
