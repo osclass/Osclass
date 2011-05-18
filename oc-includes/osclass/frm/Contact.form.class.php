@@ -96,7 +96,44 @@
             echo '<input type="file" name="attachment" />';
         }
 
-        static public function js_validation() { ?>
+        static public function js_validation() {
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Code for form validation
+        $("form[name=contact]").validate({
+            rules: {
+                message: {
+                    required: true
+                },
+                yourEmail: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                yourEmail: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
+                },
+                message: {
+                    required: "<?php _e("Message: this field is required"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
+    });
+</script>
+<?php 
+        }
+        
+
+        
+        static public function js_validation_old() { ?>
 <script type="text/javascript">
     function validate_contact() {
         email = $("#yourEmail");
