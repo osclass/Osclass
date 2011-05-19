@@ -122,7 +122,8 @@
                                 <?php osc_show_recaptcha(); ?>
                             </div>
                         </div>
-                        <?php } ?>
+                        <?php }?>
+                        
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>
                     </fieldset>

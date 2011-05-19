@@ -34,8 +34,9 @@
             <div class="content user_forms">
                 <div id="contact" class="inner">
                     <h1><?php _e('Contact seller', 'modern'); ?></h1>
+                    <ul id="error_list"></ul>
                     <?php ContactForm::js_validation(); ?>
-                    <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact" id="contact" >
+                    <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" >
                         <fieldset>
                             <?php ContactForm::primary_input_hidden() ; ?>
                             <?php ContactForm::action_hidden() ; ?>

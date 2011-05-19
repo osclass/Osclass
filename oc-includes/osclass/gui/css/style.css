@@ -349,6 +349,10 @@ option.pad { margin-left:10px;}
 #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
 #error_list label { float:none; width:auto; line-height:1.35em; }
 
+#comment_error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
+#comment_error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
+#comment_error_list label { float:none; width:auto; line-height:1.35em; }
+
 
 label.recaptcha_input_area_text {
     float:none;

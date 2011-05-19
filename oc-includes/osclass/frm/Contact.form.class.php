@@ -101,10 +101,11 @@
 <script type="text/javascript">
     $(document).ready(function(){
         // Code for form validation
-        $("form[name=contact]").validate({
+        $("form[name=contact_form]").validate({
             rules: {
                 message: {
-                    required: true
+                    required: true,
+                    minlength: 1
                 },
                 yourEmail: {
                     required: true,
@@ -117,7 +118,8 @@
                     email: "<?php _e("Invalid email address"); ?>."
                 },
                 message: {
-                    required: "<?php _e("Message: this field is required"); ?>."
+                    required: "<?php _e("Message: this field is required"); ?>.",
+                    minlength: "<?php _e("Message: this field is required"); ?>."
                 }
             },
             errorLabelContainer: "#error_list",
@@ -133,43 +135,6 @@
         
 
         
-        static public function js_validation_old() { ?>
-<script type="text/javascript">
-    function validate_contact() {
-        email = $("#yourEmail");
-        message = $("#message");
-
-        var pattern=/^([a-zA-Z0-9\_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-        var num_error = 0;
-
-        if(!pattern.test(email.val())){
-            email.css('border', '1px solid red');
-            num_error = num_error + 1;
-        }
-
-        if(message.val().length < 1) {
-            message.css('border', '1px solid red');
-            num_error = num_error + 1;
-        }
-
-        if(num_error > 0) {
-            return false;
-        }
-
-        return true;
-    }
-
-    $(document).ready(function(){
-        $("#yourEmail").focus(function(){
-            $(this).css('border', '');
-        });
-
-        $("#message").focus(function(){
-            $(this).css('border', '');
-        });
-    });
-</script>
-        <?php }
 
 
     }

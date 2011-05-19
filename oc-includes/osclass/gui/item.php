@@ -26,6 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.js') ; ?>"></script>
         <link href="<?php echo osc_current_web_theme_js_url('fancybox/jquery.fancybox-1.3.4.css') ; ?>" rel="stylesheet" type="text/css" />
+        
         <script type="text/javascript">
             $(document).ready(function(){
                 $("a[rel=image_group]").fancybox({
@@ -33,13 +34,14 @@
                     'transitionOut'		: 'none',
                     'titlePosition' 	: 'over',
                     'titleFormat'       : function(title, currentArray, currentIndex) {
-                        return '<span id="fancybox-title-over">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
+                        return '<span id="fancybox-title-over"><?php _e('Image', 'modern'); ?>  ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
                     }
                 });
             });
         </script>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <div class="container">
@@ -95,6 +97,8 @@
                     <?php if( osc_comments_enabled() ) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments', 'modern'); ?></h2>
+                            <ul id="comment_error_list"></ul>
+                            <?php CommentForm::js_validation(); ?>
                             <?php if( osc_count_item_comments() >= 1 ) { ?>
                                 <div class="comments_list">
                                     <?php while ( osc_has_item_comments() ) { ?>
@@ -113,7 +117,7 @@
                                     </div>
                                 </div>
                             <?php } ?>
-                            <form action="<?php echo osc_base_url(true) ; ?>" method="post">
+                            <form action="<?php echo osc_base_url(true) ; ?>" method="post" name="comment_form" id="comment_form">
                                 <fieldset>
                                     <h3><?php _e('Leave your comment (spam and offensive messages will be removed)', 'modern') ; ?></h3>
                                     <input type="hidden" name="action" value="add_comment" />
@@ -159,7 +163,9 @@
                         <?php if ( osc_user_phone() != '' ) { ?>
                         <p class="phone"><?php _e("Tel", 'modern'); ?>.: <?php echo osc_user_phone() ; ?></p>
                         <?php } ?>
-                        <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="return validate_contact();">
+                        <ul id="error_list"></ul>
+                        <?php ContactForm::js_validation(); ?>
+                        <form action="<?php echo osc_base_url(true) ; ?>" method="post" name="contact_form" id="contact_form">
                             <?php osc_prepare_user_info() ; ?>
                             <fieldset>
                                 <label for="yourName"><?php _e('Your name (optional)', 'modern') ; ?>:</label> <?php ContactForm::your_name(); ?>
@@ -178,7 +184,7 @@
                                 </script>
                                 <style type="text/css"> div#recaptcha_widget, div#recaptcha_image > img { width:280px; } </style>
                                 <div id="recaptcha_widget">
-                                    <div id="recaptcha_image"></div>
+                                    <div id="recaptcha_image"><img /></div>
                                     <span class="recaptcha_only_if_image"><?php _e('Enter the words above','modern'); ?>:</span>
                                     <input type="text" id="recaptcha_response_field" name="recaptcha_response_field" />
                                     <div><a href="javascript:Recaptcha.showhelp()"><?php _e('Help', 'modern'); ?></a></div>
@@ -189,31 +195,6 @@
                             </fieldset>
                         </form>
                     </div>
-                    <script type="text/javascript">
-                        function validate_contact() {
-                            email = $("#yourEmail");
-                            message = $('#message');
-
-                            var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-                            var num_error = 0;
-
-                            if(!pattern.test(email.val())){
-                                email.css('border', '1px solid red');
-                                num_error = num_error + 1;
-                            }
-
-                            if(message.val().length < 1) {
-                                message.css('border', '1px solid red');
-                                num_error = num_error + 1;
-                            }
-
-                            if(num_error > 0) {
-                                return false;
-                            }
-
-                            return true;
-                        }
-                    </script>
                 </div>
             </div>
             <?php osc_current_web_theme_path('footer.php') ; ?>

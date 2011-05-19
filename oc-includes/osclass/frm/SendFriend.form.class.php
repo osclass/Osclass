@@ -104,29 +104,29 @@
                     required: true,
                     email: true
                 },
-                message: {
+                message:  {
                     required: true
                 }
             },
             messages: {
+                yourName: {
+                    required: "<?php _e("Your name: this field is required"); ?>."
+                },
                 yourEmail: {
-                    required: "<?php _e("Email: this field is required"); ?>.",
-                    email: "<?php _e("Invalid email address"); ?>."
+                    email: "<?php _e("Invalid email address"); ?>.",
+                    required: "<?php _e("Email: this field is required"); ?>."
+                },
+                friendName: {
+                    required: "<?php _e("Friend's name: this field is required"); ?>."
                 },
                 friendEmail: {
                     required: "<?php _e("Friend's email: this field is required"); ?>.",
                     email: "<?php _e("Invalid friend's email address"); ?>."
                 },
-                yourName: {
-                    required: "<?php _e("Your name: this field is required"); ?>."
-                },
-                friendName: {
-                    required: "<?php _e("Friend's name: this field is required"); ?>."
-                },
-                message: {
-                    required: "<?php _e("Message: this field is required"); ?>."
-                }
+                message: "<?php _e("Message: this field is required"); ?>."
+                
             },
+            //onfocusout: function(element) { $(element).valid(); },
             errorLabelContainer: "#error_list",
             wrapper: "li",
             invalidHandler: function(form, validator) {
