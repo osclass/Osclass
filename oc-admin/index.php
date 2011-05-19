@@ -24,6 +24,10 @@
 
     require_once ABS_PATH . 'oc-load.php' ;
 
+    if( file_exists(ABS_PATH . '.maintenance') ) {
+        define('__OSC_MAINTENANCE__', true);
+    }
+    
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
