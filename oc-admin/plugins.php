@@ -69,9 +69,14 @@
                 case 'install':
                     $pn = Params::getParam("plugin");
 
+                    // CATCH FATAL ERRORS
+                    $old_value = error_reporting(0);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn);
                     Plugins::activate($pn);
+                    
                     //run this after installing the plugin
                     Plugins::runHook('install_'.$pn) ;
+                    error_reporting($old_value);            
 
 
                     osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
@@ -156,6 +161,16 @@
         function doView($file) {
             osc_current_admin_theme_path($file) ;
         }
+
+        function errorHandler($pn) {
+            if( false === is_null($aError = error_get_last()) ) {
+                Plugins::deactivate($pn);
+                osc_add_flash_error_message( sprintf(_m('There was a fatal error and the plugin was not installed.<br />Error: "%s" Line: %s<br/>File: %s'), $aError['message'], $aError['line'], $aError['file']), 'admin');
+                $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+            }
+        }
+        
     }
+
 
 ?>
