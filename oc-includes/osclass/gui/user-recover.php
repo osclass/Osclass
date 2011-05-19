@@ -33,7 +33,7 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Recover your password', 'modern') ; ?></h1>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
+                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" >
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="recover_post" />
                         <fieldset>

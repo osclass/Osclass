@@ -212,7 +212,7 @@
                 }
             },
             messages: {
-                s_nameame: {
+                s_name: {
                     minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
                     maxlength: "<?php _e("Name: no more than 50 characters"); ?>."
                 },

@@ -67,9 +67,11 @@
                                 <h2><?php _e('Photos', 'modern'); ?></h2>
                                 <?php ItemForm::photos(); ?>
                                 <div id="photos">
+                                    <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && osc_count_item_resources()<  osc_max_images_per_item())) { ?>
                                     <div class="row">
                                         <input type="file" name="photos[]" />
                                     </div>
+                                    <?php }; ?>
                                 </div>
                                 <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                             </div>
@@ -99,6 +101,11 @@
                                 </div>
                             </div>
                             <?php ItemForm::plugin_edit_item(); ?>
+                        <div class="box">
+                            <div class="row">
+                                <?php osc_show_recaptcha(); ?>
+                            </div>
+                        </div>
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>
                     </fieldset>
