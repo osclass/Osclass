@@ -343,10 +343,20 @@ option.pad { margin-left:10px;}
 .add_item .photos input { margin-right:10px; }
 .add_item .location label { float:left; margin-right:10px; width:120px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
-.add_item #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
-.add_item #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
-.add_item #error_list label { float:none; width:auto; line-height:1.35em; }
 
+
+#error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
+#error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
+#error_list label { float:none; width:auto; line-height:1.35em; }
+
+#comment_error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
+#comment_error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
+#comment_error_list label { float:none; width:auto; line-height:1.35em; }
+
+
+label.recaptcha_input_area_text {
+    float:none;
+}
 /*
 Uniform Theme: Uniform Default
 Version: 1.6
@@ -468,3 +478,15 @@ div.uploader { position: relative; overflow: hidden; cursor: default; }
 div.uploader span.action { float: left; display: inline; padding: 2px 0px; overflow: hidden; cursor: pointer; }
 div.uploader span.filename { padding: 0px 10px; float: left; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: default; }
 div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; top: 0; right: 0; bottom: 0; float: right; height: 25px; border: none; cursor: default; }
+
+#maintenance {
+    
+    position: static;
+    top: 0px;
+    right: 0px;
+    background-color: #bc0202;
+    width: 100%;
+    height:20px;
+    text-align: center;
+    color: #fefefe;
+}

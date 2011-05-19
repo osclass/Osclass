@@ -96,43 +96,45 @@
             echo '<input type="file" name="attachment" />';
         }
 
-        static public function js_validation() { ?>
+        static public function js_validation() {
+?>
 <script type="text/javascript">
-    function validate_contact() {
-        email = $("#yourEmail");
-        message = $("#message");
-
-        var pattern=/^([a-zA-Z0-9\_\.\-\+])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
-        var num_error = 0;
-
-        if(!pattern.test(email.val())){
-            email.css('border', '1px solid red');
-            num_error = num_error + 1;
-        }
-
-        if(message.val().length < 1) {
-            message.css('border', '1px solid red');
-            num_error = num_error + 1;
-        }
-
-        if(num_error > 0) {
-            return false;
-        }
-
-        return true;
-    }
-
     $(document).ready(function(){
-        $("#yourEmail").focus(function(){
-            $(this).css('border', '');
-        });
-
-        $("#message").focus(function(){
-            $(this).css('border', '');
+        // Code for form validation
+        $("form[name=contact_form]").validate({
+            rules: {
+                message: {
+                    required: true,
+                    minlength: 1
+                },
+                yourEmail: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                yourEmail: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
+                },
+                message: {
+                    required: "<?php _e("Message: this field is required"); ?>.",
+                    minlength: "<?php _e("Message: this field is required"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
         });
     });
 </script>
-        <?php }
+<?php 
+        }
+        
+
+        
 
 
     }

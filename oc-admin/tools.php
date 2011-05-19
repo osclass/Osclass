@@ -153,6 +153,27 @@
                 case 'backup_post':
                                         $this->doView('tools/backup.php');
                 break;
+                case 'maintenance':
+                                        $mode = Params::getParam('mode');
+                                        if($mode=='on') {
+                                            $maintenance_file = ABS_PATH . '.maintenance';
+                                            $fileHandler = @fopen($maintenance_file, 'w');
+                                            if($fileHandler) {
+                                                osc_add_flash_ok_message( "Maintenance mode is ON", 'admin') ;
+                                            } else {
+                                                osc_add_flash_error_message( "There were an error creating .maintenance file, please create it manually at the root folder", 'admin') ;
+                                            }
+                                            fclose($fileHandler);
+                                        } else if($mode=='off') {
+                                            $deleted = @unlink(ABS_PATH . '.maintenance');
+                                            if($deleted) {
+                                                osc_add_flash_ok_message( "Maintenance mode is OFF", 'admin') ;
+                                            } else {
+                                                osc_add_flash_error_message( "There were an error removing .maintenance file, please remove it manually from the root folder", 'admin') ;
+                                            }
+                                        }
+                                        $this->doView('tools/maintenance.php');
+                break;
                 default:
             }
         }

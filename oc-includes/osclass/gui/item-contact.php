@@ -26,6 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <div class="container">
@@ -33,8 +34,9 @@
             <div class="content user_forms">
                 <div id="contact" class="inner">
                     <h1><?php _e('Contact seller', 'modern'); ?></h1>
+                    <ul id="error_list"></ul>
                     <?php ContactForm::js_validation(); ?>
-                    <form action="<?php echo osc_base_url(true); ?>" method="post" >
+                    <form action="<?php echo osc_base_url(true); ?>" method="post" name="contact_form" id="contact_form" >
                         <fieldset>
                             <?php ContactForm::primary_input_hidden() ; ?>
                             <?php ContactForm::action_hidden() ; ?>
@@ -51,7 +53,7 @@
                             <label for="phoneNumber"><?php _e('Phone number', 'modern'); ?></label> <?php ContactForm::your_phone_number(); ?><br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php ContactForm::your_message(); ?><br />
                             <?php osc_show_recaptcha(); ?>
-                            <button onclick="return validate_contact();" type="submit"><?php _e('Send message', 'modern'); ?></button>
+                            <button type="submit"><?php _e('Send message', 'modern'); ?></button>
                         </fieldset>
                     </form>
                 </div>

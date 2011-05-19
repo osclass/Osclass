@@ -535,6 +535,18 @@ tr.even td{
     font-size: 12px;
 }
 
+#maintenance {
+    
+    position: static;
+    top: 0px;
+    right: 0px;
+    background-color: #bc0202;
+    width: 100%;
+    height:20px;
+    text-align: center;
+    color: #fefefe;
+}
+
 .close {
     border:0 none;
     float:left;

@@ -296,7 +296,10 @@
                     $perms = osc_save_permissions();
                     osc_change_permissions();
 
-
+                    $maintenance_file = ABS_PATH . '.maintenance';
+                    $fileHandler = @fopen($maintenance_file, 'w');
+                    fclose($fileHandler);
+                    
                     /***********************
                      **** DOWNLOAD FILE ****
                      ***********************/
@@ -384,6 +387,7 @@
 		                                    if(!rmdir($path)) {
 		                                        $rm_errors++;
 		                                    }
+                                            $deleted = @unlink(ABS_PATH . '.maintenance');
 		                                    if($rm_errors==0) {
 		                                        $message = __('Everything was OK! Your OSClass installation is updated');
 		                                    } else {
