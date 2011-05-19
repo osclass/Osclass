@@ -121,14 +121,14 @@
                     $success = $mItems->add();
 
                     if($success!=1 && $success!=2) {
-                        osc_add_flash_message( $success) ;
+                        osc_add_flash_error_message( $success) ;
                         $this->redirectTo( osc_item_post_url() );
                     } else {
 
                         if($success==1) {
-                            osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
+                            osc_add_flash_ok_message( _m('Check your inbox to verify your email address')) ;
                         } else {
-                            osc_add_flash_message( _m('Your item has been published')) ;
+                            osc_add_flash_ok_message( _m('Your item has been published')) ;
                         }
                         
                         // drop all $mItems->data parameters from session
@@ -253,7 +253,7 @@
                         
                         $success = $mItems->edit();
 
-                        if($success){
+                        if($success==1){
                             // drop all $mItems->data parameters from session
                             foreach( $mItems->data as $key => $value ) {
                                 Session::newInstance()->_drop($key);
@@ -261,6 +261,7 @@
                             osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
                             $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                         } else {
+                            osc_add_flash_error_message( $success) ;
                             $this->redirectTo( osc_item_edit_url($secret) ) ;
                         }
                     }

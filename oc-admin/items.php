@@ -384,29 +384,30 @@
                                         
                                         $success = $mItems->edit();
                                         
-                                        if($success){
+                                        if($success==1){
                                             foreach( $mItems->data as $key => $value ) {
                                                 Session::newInstance()->_drop($key);
-                                            }    
-                                        }
-
-                                        $id = Params::getParam('userId') ;
-                                        if($id !='') {
-                                            $user = User::newInstance()->findByPrimaryKey( $id );
-                                            Item::newInstance()->update(array(
-                                                'fk_i_user_id' => $id,
-                                                's_contact_name' => $user['s_name'],
-                                                's_contact_email' => $user['s_email']
-                                            ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
+                                            }
+                                            $id = Params::getParam('userId') ;
+                                            if($id !='') {
+                                                $user = User::newInstance()->findByPrimaryKey( $id );
+                                                Item::newInstance()->update(array(
+                                                    'fk_i_user_id' => $id,
+                                                    's_contact_name' => $user['s_name'],
+                                                    's_contact_email' => $user['s_email']
+                                                ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
+                                            } else {
+                                                Item::newInstance()->update(array(
+                                                    'fk_i_user_id' => NULL,
+                                                    's_contact_name' => Params::getParam('contactName'),
+                                                    's_contact_email' => Params::getParam('contactEmail')
+                                                ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
+                                            }
+                                            osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                         } else {
-                                            Item::newInstance()->update(array(
-                                                'fk_i_user_id' => NULL,
-                                                's_contact_name' => Params::getParam('contactName'),
-                                                's_contact_email' => Params::getParam('contactEmail')
-                                            ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
+                                            osc_add_flash_error_message( $success , 'admin');
                                         }
 
-                                        osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource

@@ -222,8 +222,7 @@
 
             // Handle error
             if ($flash_error) {
-                osc_add_flash_message( $flash_error );
-                $result = false;
+                return $flash_error ;
             } else {
                 $location = array(
                     'fk_c_country_code' => $aItem['countryId'],
@@ -265,9 +264,10 @@
                 $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
 
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
+                return 1;
             }
 
-            return $result;
+            return 0;
         }
 
 
