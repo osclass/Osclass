@@ -98,8 +98,7 @@
 
             // Handle error
             if ($flash_error) {
-                osc_add_flash_message( $flash_error );
-                $success = false;
+                return $flash_error;
             } else {
                 $this->manager->insert(array(
                     'fk_i_user_id'          => $aItem['userId'],
@@ -145,12 +144,6 @@
                 $locationManager = ItemLocation::newInstance();
                 $locationManager->insert($location);
 
-                // OJO
-                /*if ($this->is_admin || !$has_to_validate || osc_is_web_user_logged_in()) {
-                    CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                }*/
-
-                //uploading resources from the input form
                 $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
 
                 osc_run_hook('item_form_post', $aItem['catId'], $itemId);
@@ -158,17 +151,12 @@
                 $item = $this->manager->findByPrimaryKey($itemId);
                 $aItem['item'] = $item;
 
-                // Email user with post activation link.
-                /*if(!$this->is_admin && !osc_is_web_user_logged_in()) {
-                    $this->sendEmails($aItem);
-                }*/
-
                 osc_run_hook('after_item_post') ;
 
                 Session::newInstance()->_set('last_publish_time', time());
                 if($active=='INACTIVE') {
                     $this->sendEmails($aItem);
-                    osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
+                    return 1;
                 } else {
                     if($aItem['userId']!=null) {    
                         $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
@@ -179,7 +167,7 @@
                         }
                     }
                     CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
-                    osc_add_flash_message( _m('Your post has been published')) ;
+                    return 2;
                 }
             }
             return $success;

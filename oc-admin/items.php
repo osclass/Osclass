@@ -455,14 +455,14 @@
                                         
                                         $success = $mItem->add();
                                         
-                                        if( $success ) {
+                                        if( $success==1 || $success==2 ) {
                                             foreach( $mItem->data as $key => $value ) {
                                                 Session::newInstance()->_drop($key);
                                             }
                                             osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
-                                            osc_add_flash_error_message( _m('The item can\'t be added'), 'admin') ;
+                                            osc_add_flash_error_message( $success, 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
                 break;

@@ -120,7 +120,16 @@
                     // POST ITEM ( ADD ITEM )
                     $success = $mItems->add();
 
-                    if($success) {
+                    if($success!=1 && $success!=2) {
+                        osc_add_flash_message( $success) ;
+                        $this->redirectTo( osc_item_post_url() );
+                    } else {
+
+                        if($success==1) {
+                            osc_add_flash_message( _m('Check your inbox to verify your email address')) ;
+                        } else {
+                            osc_add_flash_message( _m('Your item has been published')) ;
+                        }
                         
                         // drop all $mItems->data parameters from session
                         foreach( $mItems->data as $key => $value ) {
@@ -173,8 +182,6 @@
                         $category = Category::newInstance()->findByPrimaryKey(Params::getParam('catId'));
                         View::newInstance()->_exportVariableToView('category', $category);
                         $this->redirectTo(osc_search_category_url());
-                    } else {
-                        $this->redirectTo( osc_item_post_url() );
                     }
                 break;
                 case 'item_edit':
