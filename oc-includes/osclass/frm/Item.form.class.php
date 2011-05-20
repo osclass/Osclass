@@ -500,13 +500,13 @@
             });
             // Description
             $(".description textarea").each(function(){
-                lang_name   = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
+                lang_name   = $(this).parent().prev().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
                 lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
 
                 str = ((lang_count > 1) ? lang_name + ' ' : '');
                 $(this).rules("add", {
                     required: true,
-                    minlength: 10,
+                    minlength: 25,
                     maxlength: 5000,
                     'minstriptags': true,
                     messages: {
