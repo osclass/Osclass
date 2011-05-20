@@ -87,12 +87,38 @@
 
     function osc_item_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        return osc_item_field("s_description", $locale) ;
+        $desc = osc_item_field("s_description", $locale) ;
+        if($desc=='') {
+            $desc = osc_item_field("s_description", osc_language());
+            if($desc=='') {
+                $aLocales = osc_get_locales();
+                foreach($aLocales as $locale) {
+                    $desc = osc_item_field("s_description", $locale);
+                    if($desc!='') {
+                        break;
+                    }
+                }
+            }
+        }
+        return $desc;
     }
 
     function osc_item_title($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        return osc_item_field("s_title");
+        $title = osc_item_field("s_title", $locale) ;
+        if($title=='') {
+            $title = osc_item_field("s_title", osc_language());
+            if($title=='') {
+                $aLocales = osc_get_locales();
+                foreach($aLocales as $locale) {
+                    $title = osc_item_field("s_title", $locale);
+                    if($title!='') {
+                        break;
+                    }
+                }
+            }
+        }
+        return $title;
     }
 
     function osc_item_category($locale = "") {
