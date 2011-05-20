@@ -20,10 +20,23 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+     /**
+     * Helper Items - returns object from the static class (View)
+     * @package osclass_core
+     * @subpackage helpers
+     * @author OSClass
+     */
+ 
 
     ////////////////////////////////////////////////////////////////
     // FUNCTIONS THAT RETURNS OBJECT FROM THE STATIC CLASS (VIEW) //
     ////////////////////////////////////////////////////////////////
+
+    /**
+    * Return item array from view
+    * 
+    * @return array $item, or null if not exist
+    */
     function osc_item() {
         if (View::newInstance()->_exists('items')) {
             $item = View::newInstance()->_current('items') ;
@@ -36,6 +49,11 @@
         return($item) ;
     }
 
+    /**
+    * Return comment array form view
+    * 
+    * @return array $comment 
+    */
     function osc_comment() {
         if (View::newInstance()->_exists('comments')) {
             $comment = View::newInstance()->_current('comments') ;
@@ -45,7 +63,12 @@
 
         return($comment) ;
     }
-
+    
+    /**
+    * Return resource array from view
+    * 
+    * @return array $resource
+    */
     function osc_resource() {
         if (View::newInstance()->_exists('resources')) {
             $resource = View::newInstance()->_current('resources') ;
@@ -56,15 +79,35 @@
         return($resource) ;
     }
 
-
+    /**
+    * Return a specific field from current item
+    * 
+    * @param type $field
+    * @param type $locale
+    * @return field_type 
+    */
     function osc_item_field($field, $locale = "") {
         return osc_field(osc_item(), $field, $locale) ;
     }
 
+    /**
+    * Return a specific field from current comment
+    * 
+    * @param type $field
+    * @param type $locale
+    * @return field_type 
+    */
     function osc_comment_field($field, $locale = '') {
         return osc_field(osc_comment(), $field, $locale) ;
     }
 
+    /**
+    * Return a specific field from current resource
+    * 
+    * @param type $field
+    * @param type $locale
+    * @return field_type 
+    */
     function osc_resource_field($field, $locale = '') {
         return osc_field(osc_resource(), $field, $locale) ;
     }
@@ -77,14 +120,31 @@
     // HELPERS FOR ITEMS //
     ///////////////////////
 
+    
+    /**
+    * Return id from current item
+    * 
+    * @return int
+    */
     function osc_item_id() {
-        return osc_item_field("pk_i_id");
+        return (int) osc_item_field("pk_i_id");
     }
 
+    /**
+    * Return user id from current item
+    * 
+    * @return int
+    */
     function osc_item_user_id() {
-        return osc_item_field("fk_i_user_id") ;
+        return (int) osc_item_field("fk_i_user_id") ;
     }
 
+    /**
+     * Return description from current item, if $locale is unspecified $locale is current user locale
+     *
+     * @param string $locale
+     * @return string $desc 
+     */
     function osc_item_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
         $desc = osc_item_field("s_description", $locale) ;
@@ -100,9 +160,15 @@
                 }
             }
         }
-        return $desc;
+        return (string) $desc;
     }
 
+    /**
+     * Return title from current item, if $locale is unspecified $locale is current user locale
+     * 
+     * @param string $locale
+     * @return string 
+     */
     function osc_item_title($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
         $title = osc_item_field("s_title", $locale) ;
@@ -118,23 +184,39 @@
                 }
             }
         }
-        return $title;
+        return (string) $title;
     }
 
+    /**
+     * Return category from current item
+     *
+     * @param string $locale
+     * @return string 
+     */
     function osc_item_category($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
         $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
-        return osc_field($category, "s_name", $locale) ;
+        return (string) osc_field($category, "s_name", $locale) ;
     }
 
+    /**
+     * Return category description from current item, if $locale is unspecified $locale is current user locale
+     *
+     * @param type $locale
+     * @return string 
+     */
     function osc_item_category_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
         $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
         return osc_field($category, "s_description", $locale) ;
     }
 
+    /**
+     *
+     * @return int 
+     */
     function osc_item_category_id() {
-        return osc_item_field("fk_i_category_id") ;
+        return (int) osc_item_field("fk_i_category_id") ;
     }
 
     function osc_item_pub_date() {
