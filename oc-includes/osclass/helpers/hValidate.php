@@ -125,8 +125,14 @@
     function osc_validate_category ($value) {
         if ( osc_validate_nozero($value) ) {
             $data = Category::newInstance()->findByPrimaryKey($value);
-            if ($data['b_enabled'] == 1) {
-                return true;
+            if (isset($data['b_enabled']) && $data['b_enabled'] == 1) {
+                if(osc_selectable_parent_categories()){
+                    return true;
+                } else {
+                    if($data['fk_i_parent_id']!=null) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
