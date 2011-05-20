@@ -16,7 +16,7 @@ class AllTests extends TestSuite {
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_tools.php');              // OK
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_items.php');              // OK
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_appearance.php');         // OK
-        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_plugins.php');            // MEDIAS copnfigure ?
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_admin_plugins.php');            // OK
     }
 }
 ?>

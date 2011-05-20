@@ -626,12 +626,11 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $pref['enableField#images@items']       = Preference::newInstance()->findValueByName('enableField#images@items') ;
         
         $pref['num_moderate_items']             = Preference::newInstance()->findValueByName('moderate_items') ;
+        $pref['moderate_items']                 = Preference::newInstance()->findValueByName('moderate_items') ;
         $pref['items_wait_time']                = Preference::newInstance()->findValueByName('items_wait_time') ;
 
         if($pref['enabled_recaptcha_items'] == 1){  $pref['enabled_recaptcha_items'] = 'on'; }
         else {                                      $pref['enabled_recaptcha_items'] = 'off'; }
-        if($pref['enabled_item_validation'] >= 0){  $pref['enabled_item_validation'] = 'on'; }
-        else {                                      $pref['enabled_item_validation'] = 'off'; }
         if($pref['reg_user_post'] == 1){            $pref['reg_user_post']          = 'on'; }
         else {                                      $pref['reg_user_post']          = 'off'; }
         if($pref['notify_new_item'] == 1){          $pref['notify_new_item']        = 'on';}
@@ -649,6 +648,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         return $pref;
     }
+    
     private function items()
     {
         $pref = $this->getPreferencesItems();
@@ -659,11 +659,12 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_recaptcha_items");
-        if( $pref['enabled_item_validation'] != 'on') {
-            $this->selenium->click("enabled_item_validation");
-        } else {
-            $this->selenium->type("num_moderate_items",'111');
+        if( $pref['moderate_items'] == -1) {
+            $this->selenium->click("moderate_items");
         }
+        
+        $this->selenium->type("num_moderate_items",'111');
+        
         $this->selenium->type("items_wait_time", '120' );
         
         $this->selenium->click("logged_user_item_validation");
@@ -708,6 +709,10 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("notify_contact_friends");
         $this->selenium->click("enableField#f_price@items");
         $this->selenium->click("enableField#images@items");
+        if( $pref['moderate_items'] == -1) {
+            $this->selenium->type("num_moderate_items", $pref['num_moderate_items'] );
+            $this->selenium->click("moderate_items");
+        }
         $this->selenium->type("num_moderate_items", $pref['num_moderate_items'] );
         $this->selenium->type("items_wait_time", $pref['items_wait_time'] );
 
@@ -726,7 +731,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('enableField#images@items')       , $pref['enableField#images@items'] ) ;
         
         $this->assertEqual( $this->selenium->getValue('items_wait_time')                , $pref['items_wait_time'] ) ;
-        $this->assertEqual( $this->selenium->getValue('num_moderate_items')             , $pref['num_moderate_items'] ) ;
+        $this->assertEqual( Preference::newInstance()->findValueByName('moderate_items'), $pref['num_moderate_items'] ) ;
             
         unset($pref);
     }
