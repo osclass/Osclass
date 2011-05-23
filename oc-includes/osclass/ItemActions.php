@@ -484,8 +484,10 @@
 
             if(osc_sendMail($params)) {
                 osc_add_flash_ok_message( sprintf(_m('We just send your message to %s'), $aItem['friendName']) ) ;
+                return true;
             } else {
                 osc_add_flash_error_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
+                return false;
             }
         }
 
@@ -599,16 +601,16 @@
             Params::setParam('itemURL', $itemURL);
 
             if( $authorName == '' || !preg_match('|^.*?@.{2,}\..{2,3}$|', $authorEmail)) {
-                Session::newInstance()->_set('commentAuthorName', $authorName);
-                Session::newInstance()->_set('commentTitle', $title);
-                Session::newInstance()->_set('commentBody', $body);
+                Session::newInstance()->_setForm('commentAuthorName', $authorName);
+                Session::newInstance()->_setForm('commentTitle', $title);
+                Session::newInstance()->_setForm('commentBody', $body);
                 return 3;
             }
 
             if( ($body == '') ) {
-                Session::newInstance()->_set('commentAuthorName', $authorName);
-                Session::newInstance()->_set('commentAuthorEmail', $authorEmail);
-                Session::newInstance()->_set('commentTitle', $title);
+                Session::newInstance()->_setForm('commentAuthorName', $authorName);
+                Session::newInstance()->_setForm('commentAuthorEmail', $authorEmail);
+                Session::newInstance()->_setForm('commentTitle', $title);
                 return 4;
             }
 

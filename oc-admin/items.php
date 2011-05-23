@@ -379,15 +379,12 @@
                                         $mItems->prepareData(false);
                                         // set all parameters into session
                                         foreach( $mItems->data as $key => $value ) {
-                                            Session::newInstance()->_set($key,$value);
+                                            Session::newInstance()->_setForm($key,$value);
                                         }
                                         
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
-                                            foreach( $mItems->data as $key => $value ) {
-                                                Session::newInstance()->_drop($key);
-                                            }
                                             $id = Params::getParam('userId') ;
                                             if($id !='') {
                                                 $user = User::newInstance()->findByPrimaryKey( $id );
@@ -451,15 +448,12 @@
                                         $mItem->prepareData(true);
                                         // set all parameters into session
                                         foreach( $mItem->data as $key => $value ) {
-                                            Session::newInstance()->_set($key,$value);
+                                            Session::newInstance()->_setForm($key,$value);
                                         }
                                         
                                         $success = $mItem->add();
                                         
                                         if( $success==1 || $success==2 ) {
-                                            foreach( $mItem->data as $key => $value ) {
-                                                Session::newInstance()->_drop($key);
-                                            }
                                             osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
@@ -483,6 +477,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 
