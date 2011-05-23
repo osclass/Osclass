@@ -404,11 +404,11 @@
                                                 ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                             }
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
                                             osc_add_flash_error_message( $success , 'admin');
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=item_edit&id=" . Params::getParam('id') );
                                         }
-
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource
                                         $id = Params::getParam('id') ;
@@ -464,7 +464,7 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=post" ) ;
                                         }
                 break;
                 default:                //default
