@@ -270,16 +270,10 @@
 
                 <div style="clear: both;"></div>
                 <div id="TableCategories" class="TableCategories">
-                    <ul>
-                        <li>
-                            <div style="float:left;">
-                                <?php _e('Category name'); ?>
-                            </div>
-                            <div class="left" style="padding-left:10px;">
-                                <img class="vtip" src="<?php echo osc_current_admin_theme_url(); ?>/images/question.png" title="Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category." alt=""/>
-                            </div>
-                        </li>
-                    </ul>
+                    <div style="padding-left:10px;">
+                        <img src="<?php echo osc_current_admin_theme_url(); ?>images/question.png" />
+                        <?php _e('Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category'); ?>.
+                    </div>
                     <ul id="sortable" class="sortable">
                     <?php foreach($categories as $category) {?>
                     <?php 
@@ -294,16 +288,16 @@
                                     <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
                                     <?php _e('Edit'); ?>
                                     </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>','<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>')">
-                                    <?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?>
+                                    <?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?>
                                     </a> | <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)">
                                     <?php _e('Delete'); ?>
                                     </a>
                                 </div>
-                                <div class="edit content_list_<?php echo $category['pk_i_id'];?>"></div>
+                                <div class="edit content_list_<?php echo $category['pk_i_id']; ?>"></div>
                                 <div style="clear: both;"></div>
                                 
                             </div>
-                            <?php if($has_subcategories) {?>
+                            <?php if($has_subcategories) { ?>
                                 <ul>
                                 <?php if( count($category['categories']) > 0 ) { $has_subcategories = true; } else { $has_subcategories = false; } ?>
                                 <?php foreach($category['categories'] as $category) {?>
@@ -316,7 +310,7 @@
                                                 <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
                                                 <?php _e('Edit'); ?>
                                                 </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>','<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>')">
-                                                <?php _e($category['b_enabled'] == 1 ? 'Disable' : 'Enable'); ?>
+                                                <?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?>
                                                 </a> | <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)">
                                                 <?php _e('Delete'); ?>
                                                 </a>
@@ -325,45 +319,17 @@
                                             <div style="clear: both;"></div>
                                         </div>
                                     </li>
-                                <?php }?>
+                                <?php } ?>
                                 </ul>
-                            <?php }?>
+                            <?php } ?>
                         </li>
-                        
-                        
-                        <?php }; ?>
+                        <?php } ?>
                     </ul>
                 </div>
                
             </div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
-        <!-- Form edit country -->
-        <div id="d_edit_category" class="lightbox_country location" style="height: 140px;">
-            <div>
-                <h4><?php _e('Edit category') ; ?></h4>
-            </div>
-            <div style="padding: 14px;">
-                <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" accept-charset="utf-8">
-                    <input type="hidden" name="page" value="categories" />
-                    <input type="hidden" name="action" value="quick_edit" />
-                    <input type="hidden" name="catId" value="" />
-                    <input type="hidden" name="locale" value="" />
-                    <table>
-                        <tr>
-                            <td><?php _e('Category'); ?>: </td>
-                            <td><input type="text" id="s_name" name="s_name" value="" /></td>
-                        </tr>
-                    </table>
-                    <div style="margin-top: 8px; text-align: right; ">
-                        <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_category').css('display','none');$('#fade').css('display','none');"/>
-                        <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- End form edit country -->
-        <div id="fade" class="black_overlay"></div> 
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>				
