@@ -97,10 +97,10 @@ function get_solution_requirements( ) {
         'MySQLi extension for PHP' => 'MySQLi extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/mysqli.setup.php">install/configure</a>.',
         'GD extension for PHP' => 'GD extension is required. How to <a target="_blank" href="http://www.php.net/manual/en/image.setup.php">install/configure</a>.',
         'Folder <code>oc-content/uploads</code> exists' => 'You have to create <code>uploads</code> folder, i.e.: <code>mkdir ' . ABS_PATH . 'oc-content/uploads/</code>' ,
-        'Folder <code>oc-content/uploads</code> is writable' => 'Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+x ' . ABS_PATH . 'oc-content/uploads/</code>',
+        'Folder <code>oc-content/uploads</code> is writable' => 'Folder <code>uploads</code> has to be writable, i.e.: <code>chmod a+w ' . ABS_PATH . 'oc-content/uploads/</code>',
         'Folder <code>oc-content/languages</code> exists' => 'You have to create <code>languages</code> folder, i.e.: <code>mkdir ' . ABS_PATH . 'oc-content/languages/</code>',
-        'Root directory is writable' => 'Root folder has to be writable, i.e.: <code>chmod a+x ' . ABS_PATH . '</code>',
-        'File <code>config.php</code> is writable' => 'File <code>config.php</code> has to be writable, i.e.: <code>chmod a+x ' . ABS_PATH . 'config.php</code>',
+        'Root directory is writable' => 'Root folder has to be writable, i.e.: <code>chmod a+w ' . ABS_PATH . '</code>',
+        'File <code>config.php</code> is writable' => 'File <code>config.php</code> has to be writable, i.e.: <code>chmod a+w ' . ABS_PATH . 'config.php</code>',
         'File <code>config-sample.php</code> exists' => 'File <code>config-sample.php</code> is required, you should download OSClass again.'
     );
     return $array;
