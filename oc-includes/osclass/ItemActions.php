@@ -67,11 +67,17 @@
             $contactEmail = strip_tags( trim( $aItem['contactEmail'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
             $aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
-
+            
             // Anonymous
             $contactName = (osc_validate_text($contactName,3))? $contactName : __("Anonymous");
 
             // Validate
+            if ( !$this->checkAllowedExt($aPhotos) ) {
+                $flash_error .= _m("Image with incorrect extension.\n");
+            }
+            if ( !$this->checkSize($aItem['photos']) ) {
+                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb\n";
+            }
             foreach(@$aItem['title'] as $key=>$value) {
                 $flash_error .=
                     ((!osc_validate_text($value,9))? _m("Title too short.\n") : '' ) .
@@ -200,6 +206,12 @@
             $aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 
             // Validate
+            if ( !$this->checkAllowedExt($aPhotos) ) {
+                $flash_error .= _m("Image with incorrect extension.\n");
+            }
+            if ( !$this->checkSize($aItem['photos']) ) {
+                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb\n";
+            }
             foreach(@$aItem['title'] as $key=>$value) {
                 $flash_error .=
                     ((!osc_validate_text($value,9))? _m("Title too short.\n") : '' ) .
@@ -220,6 +232,7 @@
                 ((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
                 ((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
 
+            
             // Handle error
             if ($flash_error) {
                 return $flash_error ;
@@ -706,61 +719,61 @@
          * @param <array> $aPhotos
          * @return boolean
          */
-        private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
-        {
-            $success      = true;
-            $flash_error  = array();
-            $contactEmail = strip_tags(trim($contactEmail));
-
-            // Validate input
-            $title_success = false;
-            foreach($title as $key=>$value) {
-                if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
-                    $title_success = true;
-                    break;
-                }
-            }
-            if(!$title_success) {
-                $flash_error[] = _m("Title too short");
-                $success = false;
-            }
-            $description_success = false;
-            foreach($description as $key=>$value) {
-                if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
-                    $description_success = true;
-                    break;
-                }
-            }
-            if(!$description_success) {
-                $flash_error[] = _m("Description too short");
-                $success = false;
-            }
-
-            if(!preg_match("/^[0-9]+$/", $idCat)) {
-                $flash_error[] = _m("Invalid category");
-                $success = false;
-            }
-
-            if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
-                $flash_error[] = _m("Invalid email address");
-                $success = false;
-            }
-
-            // Handle error
-            if (count($flash_error)>0) {
-                osc_add_flash_error_message( implode('<br />', $flash_error) );
-                $success = false;
-            }
-            if ( !$this->checkAllowedExt($aPhotos) ) {
-                $success = false;
-            }
-
-            if ( !$this->checkSize($aPhotos) ) {
-                $success = false;
-            }
-
-            return $success;
-        }
+//        private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
+//        {
+//            $success      = true;
+//            $flash_error  = array();
+//            $contactEmail = strip_tags(trim($contactEmail));
+//
+//            // Validate input
+//            $title_success = false;
+//            foreach($title as $key=>$value) {
+//                if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
+//                    $title_success = true;
+//                    break;
+//                }
+//            }
+//            if(!$title_success) {
+//                $flash_error[] = _m("Title too short");
+//                $success = false;
+//            }
+//            $description_success = false;
+//            foreach($description as $key=>$value) {
+//                if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
+//                    $description_success = true;
+//                    break;
+//                }
+//            }
+//            if(!$description_success) {
+//                $flash_error[] = _m("Description too short");
+//                $success = false;
+//            }
+//
+//            if(!preg_match("/^[0-9]+$/", $idCat)) {
+//                $flash_error[] = _m("Invalid category");
+//                $success = false;
+//            }
+//
+//            if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
+//                $flash_error[] = _m("Invalid email address");
+//                $success = false;
+//            }
+//
+//            // Handle error
+//            if (count($flash_error)>0) {
+//                osc_add_flash_error_message( implode('<br />', $flash_error) );
+//                $success = false;
+//            }
+//            if ( !$this->checkAllowedExt($aPhotos) ) {
+//                $success = false;
+//            }
+//
+//            if ( !$this->checkSize($aPhotos) ) {
+//                $success = false;
+//            }
+//
+//            return $success;
+//        }
 
         /**
          * Return an array with all data necessary for do the action
@@ -1001,13 +1014,13 @@
 
             if($aResources != '') {
                 // get allowedExt
-                $maxSize = osc_max_size_kb() * 1024 ;
+                $maxSize = osc_max_size_kb() * 1024;
                 foreach ($aResources['error'] as $key => $error) {
                     $bool_img = false;
                     if ($error == UPLOAD_ERR_OK) {
                         $size = $aResources['size'][$key];
-                        //echo "bytes: ".$size." [$size > $maxSize]<br>";
-                        if($size > $maxSize){
+                        echo "bytes: ".$size." [$size > $maxSize]<br>";
+                        if($size >= $maxSize){
                             $success = false;
                         }
                     }
