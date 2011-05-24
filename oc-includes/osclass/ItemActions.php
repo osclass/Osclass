@@ -99,7 +99,7 @@
                 ((!osc_validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
                 ((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
                 ((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' ) . 
-                (((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time())? _m("Too fast. You should wait a little to publish your ad.\n") : '' );
+                ((((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time()) && $this->is_admin)? _m("Too fast. You should wait a little to publish your ad.\n") : '' );
 
 
             // Handle error
