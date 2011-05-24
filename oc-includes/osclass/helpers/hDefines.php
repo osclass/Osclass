@@ -195,7 +195,9 @@
      * @return <string>
      */
     function osc_current_web_theme_path($file = '') {
+        osc_run_hook("before_html");
         require WebThemes::newInstance()->getCurrentThemePath() . $file ;
+        osc_run_hook("after_html");
     }
 
     /**
@@ -652,6 +654,17 @@
     }
 
 
-    
-    
+    /**
+     * Prints the additional options to the menu
+     *
+     * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
+     *
+     * @return void
+     */
+    function osc_add_option_menu($option = null) {
+        if($option!=null) {
+            echo '<li><a href="' . $option['url'] . '" >' . $option['name'] . '</a></li>' ;
+        }
+    }
+
 ?>

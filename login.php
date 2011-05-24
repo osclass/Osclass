@@ -28,23 +28,29 @@
         function doModel() {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
+                    
                                         if (!$user) {
                                             osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
-                                        if(!$user['b_active']) {
+                                        if ( $user["s_password"] != sha1( Params::getParam('password') ) ) {
+                                            osc_add_flash_error_message( _m('The password is incorrect')) ;
+                                            $this->redirectTo(osc_user_login_url());
+                                        }
+                                        
+                                        $uActions = new UserActions(false);
+                                        $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
+                                        
+                                        if($logged==0) {
+                                            osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
+                                        } else if($logged==1) {
                                             osc_add_flash_error_message(_m('The user has not been validated yet'));
-                                            $this->redirectTo(osc_user_login_url());
-                                        }
-
-                                        if(!$user['b_enabled']) {
+                                        } else if($logged==2) {
                                             osc_add_flash_error_message(_m('The user has been suspended'));
-                                            $this->redirectTo(osc_user_login_url());
-                                        }
-
-                                        if ( $user["s_password"] == sha1( Params::getParam('password') ) ) {
+                                        } else if($logged==3) {
                                             if ( Params::getParam('remember') == 1 ) {
 
                                                 //this include contains de osc_genRandomPassword function
@@ -61,20 +67,16 @@
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
                                             }
-
-                                            //we are logged in... let's go!
-                                            Session::newInstance()->_set('userId', $user['pk_i_id']) ;
-                                            Session::newInstance()->_set('userName', $user['s_name']) ;
-                                            Session::newInstance()->_set('userEmail', $user['s_email']) ;
-                                            $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
-                                            Session::newInstance()->_set('userPhone', $phone) ;
-
+                                            $this->redirectTo( osc_user_dashboard_url() ) ;
                                         } else {
-                                            osc_add_flash_error_message( _m('The password is incorrect')) ;
+                                            osc_add_flash_error_message(_m('This should never happens'));
                                         }
 
-                                        //returning logged in to the main page...
-                                        $this->redirectTo( osc_user_dashboard_url() ) ;
+                                        if(!$user['b_enabled']) {
+                                            $this->redirectTo(osc_user_login_url());
+                                        }
+
+                                        $this->redirectTo(osc_user_login_url());
                 break ;
                 case('recover'):        //form to recover the password (in this case we have the form in /gui/)
                                         $this->doView( 'user-recover.php' ) ;
