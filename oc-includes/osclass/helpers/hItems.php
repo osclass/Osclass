@@ -32,7 +32,7 @@
     ////////////////////////////////////////////////////////////////
 
     /**
-    * Return item array from view
+    * Return current item array from view
     * 
     * @return array $item, or null if not exist
     */
