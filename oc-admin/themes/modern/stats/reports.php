@@ -97,7 +97,7 @@
 
                 var data = new google.visualization.DataTable();
                 var data2 = new google.visualization.DataTable();
-                data.addColumn('date', '<?php _e('Date'); ?>');
+                data.addColumn('string', '<?php _e('Date'); ?>');
                 data.addColumn('number', '<?php _e('Views'); ?>');
                 data2.addColumn('date', '<?php _e('Date'); ?>');
                 data2.addColumn('number', '<?php _e('Spam'); ?>');
@@ -109,9 +109,9 @@
                 echo "data.addRows(".count($reports).");";
                 echo "data2.addRows(".count($reports).");";
                 foreach($reports as $date => $data) {
-                    echo "data.setValue(".$k.", 0, new Date(\"".str_replace("-", ", ", $date)."\"));";
+                    echo "data.setValue(".$k.", 0, \"".$date."\");";
                     echo "data.setValue(".$k.", 1, ".$data['views'].");";
-                    echo "data2.setValue(".$k.", 0, new Date(\"".str_replace("-", ", ", $date)."\"));";
+                    echo "data2.setValue(".$k.", 0, \"".$date."\");";
                     echo "data2.setValue(".$k.", 1, ".$data['spam'].");";
                     echo "data2.setValue(".$k.", 2, ".$data['repeated'].");";
                     echo "data2.setValue(".$k.", 3, ".$data['bad_classified'].");";

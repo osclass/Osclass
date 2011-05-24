@@ -109,12 +109,12 @@
             function drawChart() {
 
                 var data = new google.visualization.DataTable();
-                data.addColumn('date', '<?php _e('Date'); ?>');
+                data.addColumn('string', '<?php _e('Date'); ?>');
                 data.addColumn('number', '<?php _e('Items'); ?>');
                 <?php $k = 0;
                 echo "data.addRows(".count($items).");";
                 foreach($items as $date => $num) {
-                    echo "data.setValue(".$k.", 0, new Date(\"".str_replace("-", ", ", $date)."\"));";
+                    echo "data.setValue(".$k.", 0, \"".$date."\");";
                     echo "data.setValue(".$k.", 1, ".$num.");";
                     $k++;
                 };

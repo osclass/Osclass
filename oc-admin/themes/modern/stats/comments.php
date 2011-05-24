@@ -68,20 +68,20 @@
             
             <div>
                 <h3><?php _e('Latest comments on the web'); ?></h3>
-                <?php if(count($latest_comments)>0) {print_r("##########");print_r($latest_comments); ?>
+                <?php if(count($latest_comments)>0) {?>
                 <table border="0">
                     <tr>
                         <th>ID</th>
                         <th><?php _e('Title');?></th>
                         <th><?php _e('Author');?></th>
-                        <th><?php _e('Item\'s title');?></th>
+                        <th><?php _e('Comment');?></th>
                     </tr>
                     <?php foreach($latest_comments as $c) { ?>
                     <tr>
                         <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['pk_i_id']; ?></a></td>
                         <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_title']; ?></a></td>
                         <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_author_name'] . " - " . $c['s_author_email']; ?></a></td>
-                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['item_title']; ?></a></td>
+                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=comments&action=comment_edit&amp;id=<?php echo $c['pk_i_id']; ?>"><?php echo $c['s_body']; ?></a></td>
                     </tr>
                     <?php }; ?>
                 </table>
@@ -109,12 +109,12 @@
             function drawChart() {
 
                 var data = new google.visualization.DataTable();
-                data.addColumn('date', '<?php _e('Date'); ?>');
+                data.addColumn('string', '<?php _e('Date'); ?>');
                 data.addColumn('number', '<?php _e('Comments'); ?>');
                 <?php $k = 0;
                 echo "data.addRows(".count($comments).");";
                 foreach($comments as $date => $num) {
-                    echo "data.setValue(".$k.", 0, new Date(\"".str_replace("-", ", ", $date)."\"));";
+                    echo "data.setValue(".$k.", 0, \"".$date."\");";
                     echo "data.setValue(".$k.", 1, ".$num.");";
                     $k++;
                 };
