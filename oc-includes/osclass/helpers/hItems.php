@@ -23,7 +23,7 @@
      /**
      * Helper Items - returns object from the static class (View)
      * @package OSClass
-     * @subpackage Helpers
+     * @subpackage Items
      * @author OSClass
      */
 
