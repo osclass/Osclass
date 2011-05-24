@@ -240,10 +240,10 @@
     /**
      * Return price of current item
      *
-     * @return int
+     * @return float
      */
     function osc_item_price() {
-        return (int) osc_item_field("f_price") ;
+        return (float) osc_item_field("f_price") ;
     }
 
     /**
