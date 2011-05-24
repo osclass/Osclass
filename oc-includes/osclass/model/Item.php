@@ -433,6 +433,14 @@
                     $sql = "SELECT i.*, s.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id LEFT JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE i.`b_active` = 0";
                     break;
 
+                case 'enabled':
+                    $sql = "SELECT i.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id WHERE i.`b_enabled` = 1";
+                    break;
+
+                case 'disabled':
+                    $sql = "SELECT i.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id WHERE i.`b_enabled` = 0";
+                    break;
+
                 default:
                     break;
             }
