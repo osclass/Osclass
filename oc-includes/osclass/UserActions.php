@@ -363,7 +363,28 @@
                 return false;
             }
         }
+
+        public function bootstrap_login($user_id) {
+            $user = User::newInstance()->findByPrimaryKey( $user_id ) ;
+            if (!$user) {
+                return 0;
+            } else if(!$user['b_active']) {
+                return 1;
+            } else if(!$user['b_enabled']) {
+                return 2;
+            } else {
+                //we are logged in... let's go!
+                Session::newInstance()->_set('userId', $user['pk_i_id']) ;
+                Session::newInstance()->_set('userName', $user['s_name']) ;
+                Session::newInstance()->_set('userEmail', $user['s_email']) ;
+                $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
+                Session::newInstance()->_set('userPhone', $phone) ;
+                return 3;
+            }
+
+         }
         
      }
+     
 
 ?>
