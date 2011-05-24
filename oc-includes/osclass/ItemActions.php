@@ -72,7 +72,7 @@
             $contactName = (osc_validate_text($contactName,3))? $contactName : __("Anonymous");
 
             // Validate
-            if ( !$this->checkAllowedExt($aPhotos) ) {
+            if ( !$this->checkAllowedExt($aItem['photos']) ) {
                 $flash_error .= _m("Image with incorrect extension.\n");
             }
             if ( !$this->checkSize($aItem['photos']) ) {
@@ -206,7 +206,7 @@
             $aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 
             // Validate
-            if ( !$this->checkAllowedExt($aPhotos) ) {
+            if ( !$this->checkAllowedExt($aItem['photos']) ) {
                 $flash_error .= _m("Image with incorrect extension.\n");
             }
             if ( !$this->checkSize($aItem['photos']) ) {
