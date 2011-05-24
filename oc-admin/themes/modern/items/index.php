@@ -159,8 +159,8 @@
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=duplicated" <?php if($stat == 'duplicated') {echo "style='font-weight:bold;'";} ?> ><?php _e('Duplicated') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=bad" <?php if($stat == 'bad') {echo "style='font-weight:bold;'";} ?> ><?php _e('Misclassified') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=offensive" <?php if($stat == 'offensive') {echo "style='font-weight:bold;'";} ?> ><?php _e('Offensive') ?></a> |
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired" <?php if($stat == 'expired') {echo "style='font-weight:bold;'";} ?> ><?php _e('Expired') ?></a>
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=enabled" <?php if($stat == 'enabled') {echo "style='font-weight:bold;'";} ?> ><?php _e('Enabled') ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=expired" <?php if($stat == 'expired') {echo "style='font-weight:bold;'";} ?> ><?php _e('Expired') ?></a> |
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=enabled" <?php if($stat == 'enabled') {echo "style='font-weight:bold;'";} ?> ><?php _e('Enabled') ?></a> |
                                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items&stat=disabled" <?php if($stat == 'disabled') {echo "style='font-weight:bold;'";} ?> ><?php _e('Disabled') ?></a>
                             </div>
                 <input type="hidden" name="action" value="bulk_actions" />
