@@ -64,6 +64,7 @@
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
+                <?php osc_show_flash_message('admin') ; ?>
                 <div class="content_header" id="content_header">
                     <div style="float: left;">
                         <img alt="" title="" src="http://localhost/osclass/oc-admin/themes/modern/images/new-folder-icon.png">

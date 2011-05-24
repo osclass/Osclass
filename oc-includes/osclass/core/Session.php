@@ -42,6 +42,10 @@
             if ($this->_get('messages') == '') {
                 $this->_set( 'messages', array() ) ;
             }
+            if( $this->_get('keepForm') == '' ){
+                $this->_set( 'keepForm', array() ) ;
+            }
+
         }
 
         function session_destroy() {
@@ -94,9 +98,50 @@
             $this->_set('messages', $messages) ;
         }
 
+        function _keepForm($key) {
+            $aKeep = $this->_get('keepForm');
+            $aKeep[$key] = 1;
+            $this->_set('keepForm',$aKeep);
+        }
+
+        function _dropKeepForm($key) {
+            $aKeep = $this->_get('keepForm');
+            unset( $aKeep[$key] );
+            $this->_set('keepForm',$aKeep);
+        }
+
+        function _setForm($key, $value) {
+            $form = $this->_get('form') ;
+            $form[$key] = $value ;
+            $this->_set('form', $form) ;
+        }
+
+        function _getForm($key) {
+            $form = $this->_get('form') ;
+            if ( isset($form[$key]) ) {
+                return ( $form[$key] ) ;
+            } else {
+                return ( '' ) ;
+            }
+        }
+
         function _viewMessage() {
             print_r($this->session['messages']) ;
-//            echo "\n" ;
+        }
+
+        function _viewForm() {
+            print_r($_SESSION['form']) ;
+        }
+
+        function  _clearVariables() {
+            $form = $this->_get('form');
+            $aKeep = $this->_get('keepForm');
+            foreach($form as $key => $value) {
+                if( !isset($aKeep[$key]) ) {
+                    unset($_SESSION['form'][$key]) ;
+                    unset($this->session['form'][$key]) ;
+                }
+            }
         }
     }
 

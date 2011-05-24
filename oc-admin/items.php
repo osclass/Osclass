@@ -379,15 +379,12 @@
                                         $mItems->prepareData(false);
                                         // set all parameters into session
                                         foreach( $mItems->data as $key => $value ) {
-                                            Session::newInstance()->_set($key,$value);
+                                            Session::newInstance()->_setForm($key,$value);
                                         }
                                         
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
-                                            foreach( $mItems->data as $key => $value ) {
-                                                Session::newInstance()->_drop($key);
-                                            }
                                             $id = Params::getParam('userId') ;
                                             if($id !='') {
                                                 $user = User::newInstance()->findByPrimaryKey( $id );
@@ -404,11 +401,11 @@
                                                 ), array('pk_i_id' => Params::getParam('id'), 's_secret' => Params::getParam('secret') ) );
                                             }
                                             osc_add_flash_ok_message( _m('Changes saved correctly'), 'admin') ;
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
                                             osc_add_flash_error_message( $success , 'admin');
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=item_edit&id=" . Params::getParam('id') );
                                         }
-
-                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
                 case 'deleteResource':  //delete resource
                                         $id = Params::getParam('id') ;
@@ -451,20 +448,17 @@
                                         $mItem->prepareData(true);
                                         // set all parameters into session
                                         foreach( $mItem->data as $key => $value ) {
-                                            Session::newInstance()->_set($key,$value);
+                                            Session::newInstance()->_setForm($key,$value);
                                         }
                                         
                                         $success = $mItem->add();
                                         
                                         if( $success==1 || $success==2 ) {
-                                            foreach( $mItem->data as $key => $value ) {
-                                                Session::newInstance()->_drop($key);
-                                            }
                                             osc_add_flash_ok_message( _m('A new item has been added'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         } else {
                                             osc_add_flash_error_message( $success, 'admin') ;
-                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                                            $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=post" ) ;
                                         }
                 break;
                 default:                //default
@@ -483,6 +477,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

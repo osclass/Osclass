@@ -36,10 +36,10 @@
                                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                                             if(!osc_check_recaptcha()) {
                                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
-                                                Session::newInstance()->_set("yourName",$yourName);
-                                                Session::newInstance()->_set("yourEmail",$yourEmail);
-                                                Session::newInstance()->_set("subject",$subject);
-                                                Session::newInstance()->_set("message_body",$message);
+                                                Session::newInstance()->_setForm("yourName",$yourName);
+                                                Session::newInstance()->_setForm("yourEmail",$yourEmail);
+                                                Session::newInstance()->_setForm("subject",$subject);
+                                                Session::newInstance()->_setForm("message_body",$message);
                                                 $this->redirectTo(osc_contact_url());
                                                 return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                             }
@@ -47,9 +47,9 @@
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
                                             osc_add_flash_error_message( _m('You have to introduce a correct e-mail') ) ;
-                                            Session::newInstance()->_set("yourName",$yourName);
-                                            Session::newInstance()->_set("subject",$subject);
-                                            Session::newInstance()->_set("message_body",$message);
+                                            Session::newInstance()->_setForm("yourName",$yourName);
+                                            Session::newInstance()->_setForm("subject",$subject);
+                                            Session::newInstance()->_setForm("message_body",$message);
                                             $this->redirectTo(osc_contact_url());
                                         }
 
@@ -99,6 +99,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 
