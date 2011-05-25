@@ -94,7 +94,7 @@
             if($date=='week') {
                 return $this->conn->osc_dbFetchResults("SELECT WEEK(dt_date) as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired FROM %st_item_stats WHERE dt_date > '%s' GROUP BY WEEK(dt_date) ORDER BY dt_date DESC", DB_TABLE_PREFIX, $from_date);
             } else if($date=='month') {
-                return $this->conn->osc_dbFetchResults("SELECT MONTH(dt_date) as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired FROM %st_item_stats WHERE dt_date > '%s' GROUP BY MONTH(dt_date) ORDER BY dt_date DESC", DB_TABLE_PREFIX, $from_date);
+                return $this->conn->osc_dbFetchResults("SELECT MONTHNAME(dt_date) as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired FROM %st_item_stats WHERE dt_date > '%s' GROUP BY MONTH(dt_date) ORDER BY dt_date DESC", DB_TABLE_PREFIX, $from_date);
             } else {
                 return $this->conn->osc_dbFetchResults("SELECT dt_date as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired FROM %st_item_stats WHERE dt_date > '%s' GROUP BY DAY(dt_date) ORDER BY dt_date DESC", DB_TABLE_PREFIX, $from_date);
             }

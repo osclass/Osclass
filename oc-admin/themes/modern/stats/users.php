@@ -46,68 +46,69 @@
 				</div>
 				<div id="content_separator"></div>
 				<?php osc_show_flash_message('admin'); ?>
-			</div> <!-- end of right column -->
 
 
-            <div>
-                <div style="padding: 20px;">
-                    <p>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
-                    </p>
+                <div>
+                    <div style="padding: 20px;">
+                        <p>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            
-            <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                <?php if(count($users)==0) {
-                    _e('There\'re no statistics yet.');
-                }
-                ?>
-            </div>
-            
-            <div id="by_country" style="float:left; width:300px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                <?php if(count($users_by_country)==0) {
-                    _e('There\'re no statistics yet.');
-                }
-                ?>
-            </div>
-            
-            <div id="by_region" style="float:left;width:300px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                <?php if(count($users_by_region)==0) {
-                    _e('There\'re no statistics yet.');
-                }
-                ?>
-            </div>
 
-            <br/>
-            
-            <div>
-                <h3><?php _e('Latest users on the web'); ?></h3>
-                <?php if(count($latest_users)>0) { ?>
-                <table border="0">
-                    <tr>
-                        <th>ID</th>
-                        <th><?php _e('E-Mail');?></th>
-                        <th><?php _e('Name');?></th>
-                    </tr>
-                    <?php foreach($latest_users as $u) { ?>
-                    <tr>
-                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>"><?php echo $u['pk_i_id']; ?></a></td>
-                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>"><?php echo $u['s_email']; ?></a></td>
-                        <td><a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>"><?php echo $u['s_name']; ?></a></td>
-                    </tr>
+                <div id="placeholder" style="float:center; width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                    <?php if(count($users)==0) {
+                        _e('There\'re no statistics yet.');
+                    }
+                    ?>
+                </div>
+                <br/>
+                <div id="by_country" style="float:left; width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                    <?php if(count($users_by_country)==0) {
+                        _e('There\'re no statistics yet.');
+                    }
+                    ?>
+                </div>
+                <br/>
+                <div id="by_region" style="float:left;width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                    <?php if(count($users_by_region)==0) {
+                        _e('There\'re no statistics yet.');
+                    }
+                    ?>
+                </div>
+
+                <br/>
+
+                <div id="latest" style="float:left;width:500px;padding-right:50px;">
+                    <h3><?php _e('Latest users on the web'); ?></h3>
+                    <?php if(count($latest_users)>0) { ?>
+                    <table border="0">
+                        <tr>
+                            <th>ID</th>
+                            <th><?php _e('E-Mail');?></th>
+                            <th><?php _e('Name');?></th>
+                        </tr>
+                        <?php foreach($latest_users as $u) { ?>
+                        <tr>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>"><?php echo $u['pk_i_id']; ?></a></td>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>"><?php echo $u['s_email']; ?></a></td>
+                            <td><a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>"><?php echo $u['s_name']; ?></a></td>
+                        </tr>
+                        <?php }; ?>
+                    </table>
+                    <?php } else { ?>
+                        <p><?php _e('There\'re no statistics yet.'); ?></p>
                     <?php }; ?>
-                </table>
-                <?php } else { ?>
-                    <p><?php _e('There\'re no statistics yet.'); ?></p>
-                <?php }; ?>
-            </div>
+                </div>
+                <br/>
+                <div style="float:left;">
+                    <h3><?php _e('Avg. items per user'); ?></h3>
+                    <?php echo number_format($item,2) . " " . __('items per user');?> 
+                </div>
+			</div> <!-- end of right column -->
             <br/>
-            <div>
-                <h3><?php _e('Avg. items per user'); ?></h3>
-                <?php echo number_format($item,2) . " " . __('items per user');?> 
-            </div>
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
 

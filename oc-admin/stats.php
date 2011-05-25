@@ -136,23 +136,29 @@
                                         $this->doView("stats/comments.php");
                 break;
                 
-                
+                default:
                 case 'items':           // manage stats view
                                         $items = array();
+                                        $reports = array();
                                         if(Params::getParam('type_stat')=='week') {
                                             $stats_items = Stats::newInstance()->new_items_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -70, date("Y"))),'week');
-                                            $first = mktime (0,0,0, date("m"), date("d") -70 +1, date("Y"));
+                                            $stats_reports = Stats::newInstance()->new_reports_count(date('Y-m-d',  mktime (0,0,0, date("m"), date("d") -70, date("Y"))),'week');
                                             for($k = 10;$k>=0;$k--) {
+                                                $reports[date('W', mktime (0,0,0, date("m"), date("d"), date("Y")))-$k]['views'] = 0;
                                                 $items[date('W', mktime (0,0,0, date("m"), date("d"), date("Y")))-$k] = 0;
                                             }
                                         } else if(Params::getParam('type_stat')=='month') {
                                             $stats_items = Stats::newInstance()->new_items_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m")-10, date("d"), date("Y"))),'month');
+                                            $stats_reports = Stats::newInstance()->new_reports_count(date('Y-m-d',  mktime (0,0,0, date("m")-10, date("d"), date("Y"))),'month');
                                             for($k = 10;$k>=0;$k--) {
+                                                $reports[date('F', mktime (0,0,0, date("m")-$k, date("d"), date("Y")))]['views'] = 0;
                                                 $items[date('F', mktime (0,0,0, date("m")-$k, date("d"), date("Y")))] = 0;
                                             }
                                         } else {
                                             $stats_items = Stats::newInstance()->new_items_count(date('Y-m-d H:i:s',  mktime (0,0,0, date("m"), date("d") -10, date("Y"))),'day');
+                                            $stats_reports = Stats::newInstance()->new_reports_count(date('Y-m-d',  mktime (0,0,0, date("m"), date("d") -10, date("Y"))),'day');
                                             for($k = 10;$k>=0;$k--) {
+                                                $reports[date('Y-m-d', mktime (0,0,0, date("m"), date("d")-$k, date("Y")))]['views'] = 0;
                                                 $items[date('Y-m-d', mktime (0,0,0, date("m"), date("d")-$k, date("Y")))] = 0;
                                             }
                                         }
@@ -163,10 +169,18 @@
                                                 $max = $item['num'];
                                             }
                                         }
-                                        
+                                        $max_views = 0;
+                                        foreach($stats_reports as $report) {
+                                            $reports[$report['d_date']]['views'] = $report['views'];
+                                            if($report['views']>$max_views) {
+                                                $max_views = $report['views'];
+                                            }
+                                        }
+                                        $this->_exportVariableToView("reports", $reports);
                                         $this->_exportVariableToView("items", $items);
                                         $this->_exportVariableToView("latest_items", Stats::newInstance()->latest_items());
                                         $this->_exportVariableToView("max", $max);
+                                        $this->_exportVariableToView("max_views", $max_views);
                                         $this->doView("stats/items.php");
                 break;
                 
@@ -206,12 +220,6 @@
                                         $this->doView("stats/users.php");
                 break;
                 
-                
-                default:                // manage stats view
-                                        $users = array();
-                                        $this->_exportVariableToView("users", $users);
-                                        $this->doView("stats/users.php");
-                break;
             }
         }
 

@@ -42,42 +42,40 @@
 				</div>
 				<div id="content_separator"></div>
 				<?php osc_show_flash_message('admin'); ?>
-			</div> <!-- end of right column -->
 
-
-            <div>
-                <div style="padding: 20px;">
-                    <p>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
-                    </p>
+                <div>
+                    <div style="padding: 20px;">
+                        <p>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            
-            <h3><?php _e('Total number of items\' views'); ?></h3>
-            <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                <?php if(count($reports)==0) {
-                    _e('There\'re no statistics yet.');
-                }
-                ?>
-            </div>
 
-            
-            <br/>
+                <h3><?php _e('Total number of items\' views'); ?></h3>
+                <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                    <?php if(count($reports)==0) {
+                        _e('There\'re no statistics yet.');
+                    }
+                    ?>
+                </div>
 
-            <h3><?php _e('Total number of reports'); ?></h3>
-            <div id="placeholder2" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                <?php if(count($reports)==0) {
-                    _e('There\'re no statistics yet.');
-                }
-                ?>
-            </div>
 
-            
-            <br/>
-            
+                <br/>
 
+                <h3><?php _e('Total number of reports'); ?></h3>
+                <div id="placeholder2" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                    <?php if(count($reports)==0) {
+                        _e('There\'re no statistics yet.');
+                    }
+                    ?>
+                </div>
+
+
+                <br/>
+            
+			</div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
 
@@ -99,7 +97,7 @@
                 var data2 = new google.visualization.DataTable();
                 data.addColumn('string', '<?php _e('Date'); ?>');
                 data.addColumn('number', '<?php _e('Views'); ?>');
-                data2.addColumn('date', '<?php _e('Date'); ?>');
+                data2.addColumn('string', '<?php _e('Date'); ?>');
                 data2.addColumn('number', '<?php _e('Spam'); ?>');
                 data2.addColumn('number', '<?php _e('Repeated'); ?>');
                 data2.addColumn('number', '<?php _e('Bad category'); ?>');
