@@ -136,10 +136,12 @@
         function  _clearVariables() {
             $form = $this->_get('form');
             $aKeep = $this->_get('keepForm');
-            foreach($form as $key => $value) {
-                if( !isset($aKeep[$key]) ) {
-                    unset($_SESSION['form'][$key]) ;
-                    unset($this->session['form'][$key]) ;
+            if( is_array($form) ) {
+                foreach($form as $key => $value) {
+                    if( !isset($aKeep[$key]) ) {
+                        unset($_SESSION['form'][$key]) ;
+                        unset($this->session['form'][$key]) ;
+                    }
                 }
             }
         }
