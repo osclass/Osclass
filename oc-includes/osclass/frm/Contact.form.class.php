@@ -38,9 +38,8 @@
         }
 
         static public function your_name() {
-            if( Session::newInstance()->_get("yourName") != "" ) {
-                $name = Session::newInstance()->_get("yourName") ;
-                Session::newInstance()->_drop("yourName") ;
+            if( Session::newInstance()->_getForm("yourName") != "" ) {
+                $name = Session::newInstance()->_getForm("yourName") ;
                 parent::generic_input_text("yourName", $name, null, false);
             } else {
                 parent::generic_input_text("yourName", osc_logged_user_name(), null, false);
@@ -49,9 +48,8 @@
         }
 
         static public function your_email() {
-             if( Session::newInstance()->_get("yourEmail") != "" ) {
-                $email = Session::newInstance()->_get("yourEmail") ;
-                Session::newInstance()->_drop("yourEmail") ;
+             if( Session::newInstance()->_getForm("yourEmail") != "" ) {
+                $email = Session::newInstance()->_getForm("yourEmail") ;
                 parent::generic_input_text("yourEmail", $email, null, false);
             } else {
                 parent::generic_input_text("yourEmail", osc_logged_user_email(), null, false);
@@ -60,9 +58,8 @@
         }
 
         static public function your_phone_number() {
-            if( Session::newInstance()->_get("phoneNumber") != "" ) {
-                $phoneNumber = Session::newInstance()->_get("phoneNumber") ;
-                Session::newInstance()->_drop("phoneNumber") ;
+            if( Session::newInstance()->_getForm("phoneNumber") != "" ) {
+                $phoneNumber = Session::newInstance()->_getForm("phoneNumber") ;
                 parent::generic_input_text("phoneNumber", $phoneNumber, null, false);
             } else {
                 parent::generic_input_text("phoneNumber", osc_logged_user_phone(), null, false);
@@ -71,9 +68,8 @@
         }
 
         static public function the_subject() {
-            if( Session::newInstance()->_get("subject") != "" ) {
-                $subject = Session::newInstance()->_get("subject") ;
-                Session::newInstance()->_drop("subject") ;
+            if( Session::newInstance()->_getForm("subject") != "" ) {
+                $subject = Session::newInstance()->_getForm("subject") ;
                 parent::generic_input_text("subject", $subject, null, false);
             } else {
                 parent::generic_input_text("subject", "", null, false);
@@ -82,9 +78,8 @@
         }
 
         static public function your_message() {
-            if( Session::newInstance()->_get("message_body") != "" ) {
-                $message = Session::newInstance()->_get("message_body") ;
-                Session::newInstance()->_drop("message_body") ;
+            if( Session::newInstance()->_getForm("message_body") != "" ) {
+                $message = Session::newInstance()->_getForm("message_body") ;
                 parent::generic_textarea("message", $message);
             } else {
                 parent::generic_textarea("message", "");

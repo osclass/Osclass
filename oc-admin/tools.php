@@ -164,6 +164,7 @@
                                                 osc_add_flash_error_message( "There were an error creating .maintenance file, please create it manually at the root folder", 'admin') ;
                                             }
                                             fclose($fileHandler);
+                                            $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         } else if($mode=='off') {
                                             $deleted = @unlink(ABS_PATH . '.maintenance');
                                             if($deleted) {
@@ -171,6 +172,7 @@
                                             } else {
                                                 osc_add_flash_error_message( "There were an error removing .maintenance file, please remove it manually from the root folder", 'admin') ;
                                             }
+                                            $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }
                                         $this->doView('tools/maintenance.php');
                 break;

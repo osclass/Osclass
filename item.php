@@ -41,6 +41,9 @@
         function doModel() {
             //calling the view...
 
+            Session::newInstance()->_keepForm('title');
+            Session::newInstance()->_keepForm('currency');
+
             $locales = OSCLocale::newInstance()->listAllEnabled() ;
             $this->_exportVariableToView('locales', $locales) ;
 
@@ -75,12 +78,12 @@
                     $this->_exportVariableToView('regions', $regions) ;
                     $this->_exportVariableToView('cities', $cities) ;
 
-                    if( Session::newInstance()->_get('countryId') != "" ) {
-                        $countryId  = Session::newInstance()->_get('countryId') ;
+                    if( Session::newInstance()->_getForm('countryId') != "" ) {
+                        $countryId  = Session::newInstance()->_getForm('countryId') ;
                         $regions    = Region::newInstance()->getByCountry($countryId) ; 
                         $this->_exportVariableToView('regions', $regions) ;
-                        if(Session::newInstance()->_get('countryId') != "" ) {
-                            $regionId  = Session::newInstance()->_get('regionId') ;
+                        if(Session::newInstance()->_getForm('regionId') != "" ) {
+                            $regionId  = Session::newInstance()->_getForm('regionId') ;
                             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regionId ) ;
                             $this->_exportVariableToView('cities', $cities ) ;
                         }
@@ -107,7 +110,7 @@
                     $mItems->prepareData(true);
                     // set all parameters into session
                     foreach( $mItems->data as $key => $value ) {
-                        Session::newInstance()->_set($key,$value);
+                        Session::newInstance()->_setForm($key,$value);
                     }
                     
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
@@ -129,11 +132,6 @@
                             osc_add_flash_ok_message( _m('Check your inbox to verify your email address')) ;
                         } else {
                             osc_add_flash_ok_message( _m('Your item has been published')) ;
-                        }
-                        
-                        // drop all $mItems->data parameters from session
-                        foreach( $mItems->data as $key => $value ) {
-                            Session::newInstance()->_drop($key);
                         }
                         
                         $PcontactName   = Params::getParam('contactName');
@@ -240,7 +238,7 @@
                         $mItems->prepareData(false);
                         // set all parameters into session
                         foreach( $mItems->data as $key => $value ) {
-                            Session::newInstance()->_set($key,$value);
+                            Session::newInstance()->_setForm($key,$value);
                         }
 
                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
@@ -254,10 +252,6 @@
                         $success = $mItems->edit();
 
                         if($success==1){
-                            // drop all $mItems->data parameters from session
-                            foreach( $mItems->data as $key => $value ) {
-                                Session::newInstance()->_drop($key);
-                            }
                             osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
                             $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;
                         } else {
@@ -386,24 +380,28 @@
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
                     $this->_exportVariableToView('item', $item) ;
                     
+                    Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
+                    Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
+                    Session::newInstance()->_setForm("friendName", Params::getParam('friendName'));
+                    Session::newInstance()->_setForm("friendEmail", Params::getParam('friendEmail'));
+                    Session::newInstance()->_setForm("message_body",Params::getParam('message'));
+
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
-                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
-                            Session::newInstance()->_set("yourEmail",   Params::getParam('yourEmail'));
-                            Session::newInstance()->_set("yourName",    Params::getParam('yourName'));
-                            Session::newInstance()->_set("friendName", Params::getParam('friendName'));
-                            Session::newInstance()->_set("friendEmail", Params::getParam('friendEmail'));
-                            Session::newInstance()->_set("message_body",Params::getParam('message'));
-                            
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
                             $this->redirectTo(osc_item_send_friend_url() );
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
                     }
                     
                     $mItem = new ItemActions(false);
-                    $mItem->send_friend();
+                    $success = $mItem->send_friend();
 
-                    $this->redirectTo( osc_item_url() );
+                    if($success){
+                        $this->redirectTo( osc_item_url() );
+                    } else {
+                        $this->redirectTo(osc_item_send_friend_url() );
+                    }
                 break;
                 case 'contact':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
@@ -429,10 +427,10 @@
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
-                            Session::newInstance()->_set("yourEmail",   Params::getParam('yourEmail'));
-                            Session::newInstance()->_set("yourName",    Params::getParam('yourName'));
-                            Session::newInstance()->_set("phoneNumber", Params::getParam('phoneNumber'));
-                            Session::newInstance()->_set("message_body",Params::getParam('message'));
+                            Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
+                            Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
+                            Session::newInstance()->_setForm("phoneNumber", Params::getParam('phoneNumber'));
+                            Session::newInstance()->_setForm("message_body",Params::getParam('message'));
                             $this->redirectTo( osc_item_url( ) );
                             return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                         }
@@ -541,7 +539,6 @@
                         osc_add_flash_error_message( _m('This item doesn\'t exist') );
                         $this->redirectTo( osc_base_url(true) );
                     }else{
-
                         if ($item['b_active'] != 1) {
                             if( $this->userId == $item['fk_i_user_id'] ) {
                                 osc_add_flash_error_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
@@ -550,7 +547,7 @@
                                 $this->redirectTo( osc_base_url(true) );
                             }
                         } else if ($item['b_enabled'] == 0) {
-                            osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                            osc_add_flash_error_message( _m('The item has been suspended') );
                             $this->redirectTo( osc_base_url(true) );
                         }
                         $mStats = new ItemStats();
@@ -578,6 +575,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

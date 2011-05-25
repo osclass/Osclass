@@ -194,11 +194,12 @@
             $this->mSearch->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
             $this->mSearch->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
 
-            // RETRIEVE ITEMS AND TOTAL
-            $iTotalItems = $this->mSearch->count();
-            $aItems = $this->mSearch->doSearch();
 
             if(!Params::existParam('sFeed')) {
+                // RETRIEVE ITEMS AND TOTAL
+                $iTotalItems = $this->mSearch->count();
+                $aItems = $this->mSearch->doSearch();
+
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
                 //Static data, which is the point?
@@ -248,6 +249,11 @@
                 $this->doView('search.php') ;
 
             } else {
+                $this->mSearch->page(0, osc_num_rss_items());
+                // RETRIEVE ITEMS AND TOTAL
+                $iTotalItems = $this->mSearch->count();
+                $aItems = $this->mSearch->doSearch();
+                
                 $this->_exportVariableToView('items', $aItems) ;
                 if($p_sFeed=='' || $p_sFeed=='rss') {
                     // FEED REQUESTED!

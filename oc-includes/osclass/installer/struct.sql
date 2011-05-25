@@ -198,7 +198,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_i_category_id INT UNSIGNED NOT NULL,
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
-    f_price FLOAT(9, 3) NULL,
+    f_price FLOAT(15, 2) NULL,
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,

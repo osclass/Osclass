@@ -29,9 +29,8 @@
             if( isset($comment['pk_i_id']) ) {
                 $commentId = $comment['pk_i_id'];
             }
-            if(Session::newInstance()->_get('commentId') != '') {
-                $commentId = Session::newInstance()->_get('commentId');
-                Session::newInstance()->_drop('commentId');
+            if(Session::newInstance()->_getForm('commentId') != '') {
+                $commentId = Session::newInstance()->_getForm('commentId');
             }
             if( !is_null($commentId) ) {
                 parent::generic_input_hidden("id", $commentId) ;
@@ -44,9 +43,8 @@
             if( isset($comment['s_title']) ) {
                 $commentTitle = $comment['s_title'];
             }
-            if(Session::newInstance()->_get('commentTitle') != '') {
-                $commentTitle = Session::newInstance()->_get('commentTitle');
-                Session::newInstance()->_drop('commentTitle');
+            if(Session::newInstance()->_getForm('commentTitle') != '') {
+                $commentTitle = Session::newInstance()->_getForm('commentTitle');
             }
             parent::generic_input_text("title", $commentTitle, null, false) ;
         }
@@ -57,9 +55,8 @@
             if( isset($comment['s_author_name']) ) {
                 $commentAuthorName = $comment['s_author_name'];
             }
-            if(Session::newInstance()->_get('commentAuthorName') != '') {
-                $commentAuthorName = Session::newInstance()->_get('commentAuthorName');
-                Session::newInstance()->_drop('commentAuthorName');
+            if(Session::newInstance()->_getForm('commentAuthorName') != '') {
+                $commentAuthorName = Session::newInstance()->_getForm('commentAuthorName');
             }
             parent::generic_input_text("authorName", $commentAuthorName, null, false) ;
         }
@@ -70,9 +67,8 @@
             if( isset($comment['s_author_email']) ) {
                 $commentAuthorEmail = $comment['s_author_email'];
             }
-            if(Session::newInstance()->_get('commentAuthorEmail') != '') {
-                $commentAuthorEmail = Session::newInstance()->_get('commentAuthorEmail');
-                Session::newInstance()->_drop('commentAuthorEmail');
+            if(Session::newInstance()->_getForm('commentAuthorEmail') != '') {
+                $commentAuthorEmail = Session::newInstance()->_getForm('commentAuthorEmail');
             }
             parent::generic_input_text("authorEmail", $commentAuthorEmail, null, false) ;
         }
@@ -83,9 +79,8 @@
             if( isset($comment['s_body']) ) {
                 $commentBody = $comment['s_body'];
             }
-            if(Session::newInstance()->_get('commentBody') != '') {
-                $commentBody = Session::newInstance()->_get('commentBody');
-                Session::newInstance()->_drop('commentBody');
+            if(Session::newInstance()->_getForm('commentBody') != '') {
+                $commentBody = Session::newInstance()->_getForm('commentBody');
             }
             parent::generic_textarea("body", $commentBody);
         }

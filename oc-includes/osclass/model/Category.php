@@ -278,14 +278,18 @@
         public function findByPrimaryKey($pk, $lang = true) {
             if($pk!=null) {
                 $data = $this->listWhere('a.pk_i_id = '.$pk);
-                $data = $data[0];
-                $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
-                $row = array();
-                foreach ($sub_rows as $sub_row) {
-                    $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                if(isset($data[0])) {
+                    $data = $data[0];
+                    $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
+                    $row = array();
+                    foreach ($sub_rows as $sub_row) {
+                        $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                    }
+                    $data['locale'] = $row;
+                    return $data;
+                } else {
+                    return null;
                 }
-                $data['locale'] = $row;
-                return $data;
             } else {
                 return null;
             }
@@ -345,7 +349,17 @@
                 //UPDATE for description of categories
                 $fieldsDescription['fk_i_category_id'] = $pk;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_unique = 1;
+                while(true) {
+                    if(!$this->find_by_slug($slug)) {
+                        break;
+                    } else {
+                        $slug = $slug_tmp . "_" . $slug_unique;
+                        $slug_unique++;
+                    }
+                }
+                $fieldsDescription['s_slug'] = $slug;
                 $set = "";
                 foreach ($fieldsDescription as $key => $value) {
                     if ($set != "")
@@ -386,7 +400,18 @@
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                //$fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_unique = 1;
+                while(true) {
+                    if(!$this->find_by_slug($slug)) {
+                        break;
+                    } else {
+                        $slug = $slug_tmp . "_" . $slug_unique;
+                        $slug_unique++;
+                    }
+                }
+                $fieldsDescription['s_slug'] = $slug;
                 $columns = implode(', ', array_keys($fieldsDescription));
 
                 $set = "";
