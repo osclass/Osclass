@@ -18,7 +18,8 @@ class TestOfAdminPages extends WebTestCase {
 
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
 
-        $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
+        $browser = "*firefox";
+        $this->selenium = new Testing_Selenium( $browser , "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
     }
@@ -280,6 +281,9 @@ class TestOfAdminPages extends WebTestCase {
 
         $this->selenium->mouseOver("//table/tbody/tr/td[contains(.,'$internal_name')]");
         $this->selenium->click("xpath=//table/tbody/tr/td[contains(.,'$internal_name')]/div/a[text()='Delete']");
+
+        // click alert OK
+        
         $this->selenium->waitForPageToLoad("30000");
         
         if( $this->selenium->isTextPresent('One page has been deleted correctly') ){

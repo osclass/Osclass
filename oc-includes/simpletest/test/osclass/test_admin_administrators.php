@@ -17,8 +17,8 @@ class TestOfAdminAdministrators extends WebTestCase {
         $conn->osc_dbExec(sprintf("INSERT INTO `%st_admin` (`s_name` ,`s_username` ,`s_password` ,`s_secret` ,`s_email`) VALUES ('Test Admin','testadmin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','mvqdnrpt','testadmin@test.net')", DB_TABLE_PREFIX));
 
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
-
-        $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
+        $browser = "*firefox";
+        $this->selenium = new Testing_Selenium($browser, "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
     }

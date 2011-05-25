@@ -21,7 +21,8 @@ class TestOfAdminTools extends WebTestCase {
 
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
 
-        $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
+        $browser = "*firefox";
+        $this->selenium = new Testing_Selenium( $browser, "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
     }

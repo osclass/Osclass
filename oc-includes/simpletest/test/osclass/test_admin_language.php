@@ -21,7 +21,8 @@ class TestOfAdminLanguage extends WebTestCase {
 
             echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
 
-            $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
+            $browser = "*firefox";
+            $this->selenium = new Testing_Selenium($browser, "http://localhost/");
             $this->selenium->start();
             $this->selenium->setSpeed("150");
         }
@@ -285,11 +286,11 @@ class TestOfAdminLanguage extends WebTestCase {
         $this->selenium->click("link=Languages");
         $this->selenium->click("link=» Add a language");
         $this->selenium->waitForPageToLoad("10000");
-
+        echo  "Path: ". LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip<br>";
+        flush();
         $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip");
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
-
         $this->assertTrue($this->selenium->isTextPresent("The language has been installed correctly"),"Can't upload language lang_es_ES_2.0.zip");
     }
     private function insertLanguageByLink()

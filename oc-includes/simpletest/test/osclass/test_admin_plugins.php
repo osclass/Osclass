@@ -18,7 +18,8 @@ class TestOfAdminPlugins extends WebTestCase {
 
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
 
-        $this->selenium = new Testing_Selenium("*firefox", "http://localhost/");
+        $browser = "*firefox";
+        $this->selenium = new Testing_Selenium($browser, "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
     }
@@ -81,9 +82,9 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("link=» Add new plugin");
         $this->selenium->waitForPageToLoad("10000");
 
-        $plugin = "plugins_breadcrumbs_1.5.1.zip" ;
+        $plugin = "plugins_breadcrumbs_2.0.zip" ;
 
-        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_1.5.1.zip");
+        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_2.0.zip");
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
 
