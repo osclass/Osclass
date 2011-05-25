@@ -48,6 +48,12 @@
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                     <?php if( is_writable(osc_translations_path()) ) { ?>
+
+                        <p style="border-bottom: 1px black solid;padding-bottom: 10px;">
+                            <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
+                            Download more languages at <a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>
+                        </p>
+
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="action" value="add_post" />
                             <input type="hidden" name="page" value="languages" />
@@ -57,6 +63,7 @@
                             </p>
                             <input id="button_save" type="submit" value="<?php _e('Upload') ; ?>" />
                         </form>
+
                     <?php } else { ?>
                         <p>
                             <?php _e('The translations folder is not writable on your server and you cannot upload translations from the administration panel. Please make the translation folder writable') ; ?>
