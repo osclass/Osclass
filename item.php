@@ -539,7 +539,6 @@
                         osc_add_flash_error_message( _m('This item doesn\'t exist') );
                         $this->redirectTo( osc_base_url(true) );
                     }else{
-
                         if ($item['b_active'] != 1) {
                             if( $this->userId == $item['fk_i_user_id'] ) {
                                 osc_add_flash_error_message( _m('The item hasn\'t been validated. Please validate it in order to show it to the rest of users') );
@@ -548,7 +547,7 @@
                                 $this->redirectTo( osc_base_url(true) );
                             }
                         } else if ($item['b_enabled'] == 0) {
-                            osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                            osc_add_flash_error_message( _m('The item has been suspended') );
                             $this->redirectTo( osc_base_url(true) );
                         }
                         $mStats = new ItemStats();
