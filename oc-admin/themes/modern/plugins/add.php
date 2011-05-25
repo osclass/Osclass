@@ -49,7 +49,7 @@
 
                             <?php if(is_writable(osc_plugins_path())) { ?>
 
-                                <form action="<?php echo osc_admin_base_url(true);?>?page=plugins" method="post" enctype="multipart/form-data">
+                                <form style="float:left;"action="<?php echo osc_admin_base_url(true);?>?page=plugins" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="action" value="add_post" />
                                     <p>
                                         <label for="package"><?php _e('Plugin package'); ?> (.zip)</label>
@@ -57,6 +57,14 @@
                                     </p>
                                     <input id="button_save" type="submit" value="<?php _e('Upload'); ?>" />
                                 </form>
+
+                                <div style="float:left; margin-left: 20px; display: table; height: 40px; #position: relative; overflow: hidden;border: 1px solid #ccc; background: #eee;padding:10px;" >
+                                    <div style="display: table-cell; vertical-align: middle;">
+                                        <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
+                                        Download more plugins at <a href="https://sourceforge.net/projects/osclass/files/Plugins/" target="_blank">Sourceforge</a>
+                                    </div>
+                                </div>
+                                <div style="clear:both;"></div>
 
                             <?php } else { ?>
 
