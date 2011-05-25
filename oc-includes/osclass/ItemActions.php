@@ -1022,7 +1022,7 @@
                     $bool_img = false;
                     if ($error == UPLOAD_ERR_OK) {
                         $size = $aResources['size'][$key];
-                        echo "bytes: ".$size." [$size > $maxSize]<br>";
+//                        echo "bytes: ".$size." [$size > $maxSize]<br>";
                         if($size >= $maxSize){
                             $success = false;
                         }
