@@ -19,6 +19,20 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Translation
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
+     * Translate strings
+     *
+     * @param string $key
+     * @param string $domain
+     * @return string
+     */
     function __($key, $domain = 'core') {
         $gt = Translation::newInstance()->_get($domain);
         
@@ -28,6 +42,13 @@
         return $gt->translate($key);
     }
 
+    /**
+     * Translate strings (echo them)
+     *
+     * @param string $key
+     * @param string $domain
+     * @return string
+     */
     function _e($key, $domain = 'core') {
         $gt = Translation::newInstance()->_get($domain);
 
@@ -39,6 +60,12 @@
         return '';
     }
 
+    /**
+     * Translate string (flash messages)
+     *
+     * @param string $key
+     * @return string
+     */
     function _m($key) {
         return __($key, 'messages');
     }

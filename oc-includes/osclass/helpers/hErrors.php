@@ -17,6 +17,13 @@
      */
 
     /**
+    * Helper Error
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
      * Kill OSClass with an error message
      *
      * @since 1.2

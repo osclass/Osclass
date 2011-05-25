@@ -20,6 +20,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Locales
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     function osc_locale_field($field, $locale = '') {
         return osc_field(osc_locale(), $field, $locale) ;
     }

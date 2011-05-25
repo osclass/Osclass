@@ -20,6 +20,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Location
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     function osc_country() {
         if (View::newInstance()->_exists('countries')) {
             return View::newInstance()->_current('countries') ;

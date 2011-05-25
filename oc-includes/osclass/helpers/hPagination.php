@@ -21,6 +21,13 @@
      */
 
     /**
+    * Helper Pagination
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
      * Return the pagination links of search page
      *
      * @return <string> pagination links

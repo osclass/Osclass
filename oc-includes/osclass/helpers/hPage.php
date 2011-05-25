@@ -20,6 +20,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Pages
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     function osc_static_page() {
         if (View::newInstance()->_exists('pages')) {
             $page = View::newInstance()->_current('pages') ;
