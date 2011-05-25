@@ -37,7 +37,7 @@
                     <div style="float: left;">
                         <img src="<?php echo  osc_current_admin_theme_url('images/pages-icon.png') ; ?>" title="" alt="" />
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Add new page') ; ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Add new theme') ; ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
@@ -50,6 +50,12 @@
                     <div style="padding: 20px;">
 
                         <?php if(is_writable(osc_themes_path())) { ?>
+
+
+                            <p style="border-bottom: 1px black solid;padding-bottom: 10px;">
+                                <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
+                                Download more themes at <a href="https://sourceforge.net/projects/osclass/files/Themes/" target="_blank">Sourceforge</a>
+                            </p>
 
                             <form action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="action" value="add_post" />
