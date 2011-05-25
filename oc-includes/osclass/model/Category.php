@@ -349,7 +349,17 @@
                 //UPDATE for description of categories
                 $fieldsDescription['fk_i_category_id'] = $pk;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_unique = 1;
+                while(true) {
+                    if(!$this->find_by_slug($slug)) {
+                        break;
+                    } else {
+                        $slug = $slug_tmp . "_" . $slug_unique;
+                        $slug_unique++;
+                    }
+                }
+                $fieldsDescription['s_slug'] = $slug;
                 $set = "";
                 foreach ($fieldsDescription as $key => $value) {
                     if ($set != "")
@@ -390,7 +400,18 @@
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                //$fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_unique = 1;
+                while(true) {
+                    if(!$this->find_by_slug($slug)) {
+                        break;
+                    } else {
+                        $slug = $slug_tmp . "_" . $slug_unique;
+                        $slug_unique++;
+                    }
+                }
+                $fieldsDescription['s_slug'] = $slug;
                 $columns = implode(', ', array_keys($fieldsDescription));
 
                 $set = "";
