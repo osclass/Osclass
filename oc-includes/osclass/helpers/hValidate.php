@@ -26,7 +26,14 @@
     * @author OSClass
     */
 
-    // Required: num. of non-punctuation characters (international)
+    /**
+     * Validate the text with a minimum of non-punctuation characters (international)
+     *
+     * @param string $value
+     * @param integer $count
+     * @param boolean $required
+     * @return boolean
+     */
     function osc_validate_text ($value = '', $count = 1, $required = true) {
         if ($required || $value) {
             if ( !preg_match("/([\p{L}][^\p{L}]*){".$count."}/i", strip_tags($value)) ) {

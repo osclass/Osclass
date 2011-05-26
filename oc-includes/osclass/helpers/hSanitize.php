@@ -19,7 +19,13 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- 
+     /**
+    * Helper Sanitize
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     /**
      * Sanitize a website URL.
      * 

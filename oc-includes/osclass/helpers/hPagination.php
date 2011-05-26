@@ -21,7 +21,14 @@
      */
 
     /**
-     * Return the pagination links of search page
+    * Helper Pagination
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
+     * Return the pagination links of search pagination
      *
      * @return <string> pagination links
      */
@@ -30,6 +37,11 @@
         return $pagination->doPagination();
     }
 
+    /**
+     * Return the pagination links of comments pagination
+     *
+     * @return <string> pagination links
+     */
     function osc_comments_pagination() {
         if( (osc_comments_per_page() == 0) || (osc_item_comments_page() === 'all') ) {
             return '';

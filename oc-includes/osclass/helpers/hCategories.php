@@ -20,6 +20,13 @@
      */
 
 
+    /**
+    * Helper Categories
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     function osc_category() {
         if (View::newInstance()->_exists('subcategories')) {
             $category = View::newInstance()->_current('subcategories') ;

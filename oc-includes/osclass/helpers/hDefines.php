@@ -22,6 +22,13 @@
 
 
     /**
+    * Helper Defines
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
      * Gets the root url for your installation
      *
      * @param boolean $with_index true if index.php in the url is needed

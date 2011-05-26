@@ -20,6 +20,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Database Info
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     function osc_db_name() {
         return getSiteInfo('s_db_name', DB_NAME) ;
     }

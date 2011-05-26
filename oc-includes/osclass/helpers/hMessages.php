@@ -21,6 +21,13 @@
      */
 
 
+    /**
+    * Helper Flash Messages
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     // Adds an ephemeral message to the session.
     function osc_add_flash_message($msg, $section = 'pubMessages') {
         Session::newInstance()->_setMessage($section, $msg, 'error') ;
