@@ -283,4 +283,20 @@
         }
         return true;
     }
+
+    /**
+     * validate username, accept letters plus underline, without separators
+     *
+     * @param $value
+     * @param $min
+     */
+    function osc_validate_username( $value, $min = 1 ) {
+        if(strlen($value) >= $min && preg_match('/^[A-Za-z0-9_]+$/',$value) ){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 ?>

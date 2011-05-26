@@ -57,7 +57,7 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
-                                    <legend><?php _e('E-mail'); ?></legend>
+                                    <legend><?php _e('E-mail'); ?> (<?php _e('required'); ?>)</legend>
                                     <input type="text" name="s_email" id="s_email" />
                                 </fieldset>
                             </div>

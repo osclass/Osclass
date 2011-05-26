@@ -58,12 +58,16 @@
                                     $sUserName = trim($sUserName);
                                     
                                     // Checks for legit data
-                                    if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
+                                    if( !osc_validate_email($sEmail, true) ) {
                                         osc_add_flash_error_message( _m("Email invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
-                                    if($sUserName=='') {
+                                    if( !osc_validate_username($sUserName) ) {
                                         osc_add_flash_error_message( _m("Username invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
+                                    if($sName=='') {
+                                        osc_add_flash_error_message( _m("Real Name invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
                                     if($sPassword=='') {
