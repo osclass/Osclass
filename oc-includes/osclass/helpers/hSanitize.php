@@ -29,7 +29,7 @@
     /**
      * Sanitize a website URL.
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_url($value) {
@@ -42,7 +42,7 @@
      * Capitalize first letter of each name.
      * If all-caps, remove all-caps.
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_name($value) {
@@ -53,7 +53,7 @@
     /**
      * Sanitize string that's all-caps
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_allcaps($value) {
@@ -67,7 +67,7 @@
     /**
      * Sanitize number (with no periods)
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_int($value) {
@@ -82,7 +82,7 @@
      * Format phone number. Supports 10-digit with extensions,
      * and defaults to international if cannot match US number.
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_phone($value) {
