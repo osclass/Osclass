@@ -82,140 +82,20 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->waitForPageToLoad("30000");
             // step 5
             $this->assertTrue($this->selenium->isTextPresent("OSClass has been installed."), "OSClass has NOT been installed!");
+            // test change password
+            $this->selenium->click("//div[contains(@class,'s_passwd')]/div/img[contains(@alt,'Modify')]");
+            $this->selenium->type("s_passwd", "new_passwd");
+            $this->selenium->click("xpath=//button[text()='Update']");
+            sleep(2);
+            $value = $this->selenium->getValue("s_passwd");
+
+            $this->assertEqual($value, "new_passwd") ; //($this->selenium->isTextPresent("new_passwd"), "Passwd NOT changed !");
 
             
         } else {
             echo "<div style='background-color: red; color: white;padding-left:15px;'>$config_file EXIST, CANNOT INSTALL OSCLASS IF EXIST</div>";
             $this->can_continue = false;
         }
-    }
-
-    function testStep2()
-    {
-        if($this->can_continue){
-            echo "<div style='background-color: green; color: white;'><h2>testStep2</h2></div>";
-        }
-    }
-
-    function testStep3()
-    {
-        if($this->can_continue){
-            echo "<div style='background-color: green; color: white;'><h2>testStep3</h2></div>";
-        }
-    }
-
-    /*      PRIVATE FUNCTIONS       */
-    private function loginCorrect()
-    {
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->waitForPageToLoad(10000);
-
-        // if you are logged fo log out
-        if( $this->selenium->isTextPresent('Log Out') ){
-            $this->selenium->click('Log Out');
-            $this->selenium->waitForPageToLoad(1000);
-        }
-
-        $this->selenium->type('user', 'testadmin');
-        $this->selenium->type('password', 'password');
-        $this->selenium->click('submit');
-        $this->selenium->waitForPageToLoad(1000);
-
-        if( !$this->selenium->isTextPresent('Log in') ){
-            $this->assertTrue("todo bien");
-        } else {
-            $this->assertFalse("can't loggin");
-        }
-    }
-
-    private function widgetsHeader()
-    {
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
-        $this->selenium->waitForPageToLoad("10000");
-
-        // add header widget
-        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[1]/div/a");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->type("description", "header1");
-
-        $this->selenium->selectFrame("index=0");
-        $this->selenium->type("xpath=//html/body[@id='tinymce']", "New Widget Header");
-        $this->selenium->selectFrame("relative=top");
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-
-        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget header. ERROR" );
-        $this->assertTrue($this->selenium->isTextPresent("header1"), "Can't add widget header. header1 not present. ERROR");
-
-        //remove widget
-        $this->selenium->click("link=Delete");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget header. ERROR" );
-        $this->assertTrue( ! $this->selenium->isTextPresent("header1"), "Can't delete widget header. header1 still present. ERROR");
-    }
-
-    private function widgetsCategories()
-    {
-        $this->selenium->open( osc_admin_base_url(true) ) ;
-        $this->selenium->click("link=Appearance") ;
-        $this->selenium->click("link=» Add or remove widgets") ;
-        $this->selenium->waitForPageToLoad("10000") ;
-
-        // add categories widget
-        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[2]/div/a") ;
-        $this->selenium->waitForPageToLoad("10000") ;
-
-        $this->selenium->type("description", "categories1") ;
-
-        $this->selenium->selectFrame("index=0");
-        $this->selenium->type("xpath=//html/body[@id='tinymce']", "New Widget Category") ;
-        $this->selenium->selectFrame("relative=top") ;
-
-        $this->selenium->click("//input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("30000");
-
-        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget categories. ERROR" );
-        $this->assertTrue($this->selenium->isTextPresent("categories1"), "Can't add widget categories. ERROR");
-
-        //remove widget
-        $this->selenium->click("link=Delete");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget categories. ERROR" );
-        $this->assertTrue( ! $this->selenium->isTextPresent("categories1"), "Can't delete widget categories. ERROR");
-    }
-
-    private function widgetsFooter()
-    {
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Appearance");
-        $this->selenium->click("link=» Add or remove widgets");
-        $this->selenium->waitForPageToLoad("10000");
-
-        // add categories widget
-        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[3]/div/a");
-        $this->selenium->waitForPageToLoad("10000") ;
-
-        $this->selenium->type("description", "footer1") ;
-
-        $this->selenium->selectFrame("index=0");
-        $this->selenium->type("xpath=//html/body[@id='tinymce']", "New Widget Footer") ;
-        $this->selenium->selectFrame("relative=top") ;
-
-        $this->selenium->click("//input[@type='submit']") ;
-        $this->selenium->waitForPageToLoad("30000");
-
-        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget footer. ERROR" );
-        $this->assertTrue($this->selenium->isTextPresent("footer1"), "Can't add widget footer. ERROR");
-
-        //remove widget
-        $this->selenium->click("link=Delete");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget footer. ERROR" );
-        $this->assertTrue( ! $this->selenium->isTextPresent("footer1"), "Can't delete widget footer. ERROR");
     }
 }
 ?>
