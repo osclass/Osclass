@@ -147,7 +147,7 @@
     }
     
     /**
-     * Return if a plugin is installed or not
+     * Gets if a plugin is installed or not
      *
      * @param string $plugin
      * @return void
@@ -167,7 +167,7 @@
     }
     
     /**
-     * Return the path to a plugin's resource
+     * Gets the path to a plugin's resource
      *
      * @param string $file
      * @return string
@@ -177,7 +177,7 @@
     }
     
     /**
-     * Return plugin's configure url
+     * Gets plugin's configure url
      *
      * @param string $plugin
      * @return string
@@ -188,7 +188,7 @@
     
     
     /**
-     * Return the path for ajax
+     * Gets the path for ajax
      *
      * @param string $file
      * @return string
@@ -199,7 +199,7 @@
     }
 
     /**
-     * Return the configure admin's url
+     * Gets the configure admin's url
      *
      * @param string $file
      * @return string
@@ -210,7 +210,7 @@
     }
 
     /**
-     * Return urls for custom plugin administrations options
+     * Gets urls for custom plugin administrations options
      *
      * @param string $file
      * @return string

@@ -28,9 +28,9 @@
     */
 
     /**
-     * Return the pagination links of search pagination
+     * Gets the pagination links of search pagination
      *
-     * @return <string> pagination links
+     * @return string pagination links
      */
     function osc_search_pagination() {
         $pagination = new Pagination();
@@ -38,9 +38,9 @@
     }
 
     /**
-     * Return the pagination links of comments pagination
+     * Gets the pagination links of comments pagination
      *
-     * @return <string> pagination links
+     * @return string pagination links
      */
     function osc_comments_pagination() {
         if( (osc_comments_per_page() == 0) || (osc_item_comments_page() === 'all') ) {
@@ -55,7 +55,7 @@
     }
 
     /**
-     * Return generic pagination links
+     * Gets generic pagination links
      *
      * @array $params
      *          'total' => number of total pages (default osc_search_total_pages())
@@ -75,7 +75,7 @@
      *          'sides' => How many pages to show (default 2)
      *          'url' => Format of the URL of the links, put "{PAGE}" on the page variable. Example http://www.example.com/index.php?page=search&amp;sCategory=2&amp;iPage={PAGE} (default osc_update_search_url(array('iPage' => '{PAGE}'))
      *
-     * @return <string> pagination links
+     * @return string pagination links
      */
     function osc_pagination($params = null) {
         $pagination = new Pagination($params);

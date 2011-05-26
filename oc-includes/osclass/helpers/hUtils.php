@@ -30,7 +30,7 @@
      * Getting from View the $key index
      *
      * @param string $key
-     * @return <type>
+     * @return array
      */
      function __get($key) {
          return View::newInstance()->_get($key) ;
@@ -39,8 +39,8 @@
     /**
      * Get variable from $_REQUEST[$key]
      *
-     * @param <type> $key
-     * @return <type>
+     * @param string $key
+     * @return mixed
      */
     function osc_get_param($key) {
         return Params::getParam($key) ;
@@ -86,7 +86,7 @@
      * Print recaptcha html, if $section = "recover_password"
      * set 'recover_time' at session.
      * 
-     * @param  $section
+     * @param  string $section
      * @return void
      */
     function osc_show_recaptcha($section = '') {
@@ -120,7 +120,7 @@
     /**
      * Prints the user's account menu
      *
-     * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
+     * @param array $options array with options of the form array('name' => 'display name', 'url' => 'url of link')
      * @return void
      */
     function osc_private_user_menu($options = null)
@@ -151,7 +151,7 @@
     }
 
     /**
-     * Return prepared text, with:
+     * Gets prepared text, with:
      * - higlight search pattern and search city
      * - maxim length of text
      *

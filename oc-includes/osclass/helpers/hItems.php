@@ -32,7 +32,7 @@
     ////////////////////////////////////////////////////////////////
 
     /**
-    * Return current item array from view
+    * Gets current item array from view
     * 
     * @return array $item, or null if not exist
     */
@@ -49,7 +49,7 @@
     }
 
     /**
-    * Return comment array form view
+    * Gets comment array form view
     * 
     * @return array $comment 
     */
@@ -64,7 +64,7 @@
     }
     
     /**
-    * Return resource array from view
+    * Gets resource array from view
     * 
     * @return array $resource
     */
@@ -79,7 +79,7 @@
     }
 
     /**
-    * Return a specific field from current item
+    * Gets a specific field from current item
     * 
     * @param type $field
     * @param type $locale
@@ -90,7 +90,7 @@
     }
 
     /**
-    * Return a specific field from current comment
+    * Gets a specific field from current comment
     * 
     * @param type $field
     * @param type $locale
@@ -101,7 +101,7 @@
     }
 
     /**
-    * Return a specific field from current resource
+    * Gets a specific field from current resource
     * 
     * @param type $field
     * @param type $locale
@@ -121,7 +121,7 @@
 
     
     /**
-    * Return id from current item
+    * Gets id from current item
     * 
     * @return int
     */
@@ -130,7 +130,7 @@
     }
 
     /**
-    * Return user id from current item
+    * Gets user id from current item
     * 
     * @return int
     */
@@ -139,7 +139,7 @@
     }
 
     /**
-     * Return description from current item, if $locale is unspecified $locale is current user locale
+     * Gets description from current item, if $locale is unspecified $locale is current user locale
      *
      * @param string $locale
      * @return string $desc 
@@ -163,7 +163,7 @@
     }
 
     /**
-     * Return title from current item, if $locale is unspecified $locale is current user locale
+     * Gets title from current item, if $locale is unspecified $locale is current user locale
      * 
      * @param string $locale
      * @return string 
@@ -187,7 +187,7 @@
     }
 
     /**
-     * Return category from current item
+     * Gets category from current item
      *
      * @param string $locale
      * @return string 
@@ -199,7 +199,7 @@
     }
 
     /**
-     * Return category description from current item, if $locale is unspecified $locale is current user locale
+     * Gets category description from current item, if $locale is unspecified $locale is current user locale
      *
      * @param type $locale
      * @return string 
@@ -211,7 +211,7 @@
     }
 
     /**
-     * Return category id of current item
+     * Gets category id of current item
      *
      * @return int 
      */
@@ -220,7 +220,7 @@
     }
 
     /**
-     * Return publication date of current item
+     * Gets publication date of current item
      *
      * @return string
      */
@@ -229,7 +229,7 @@
     }
 
     /**
-     * Return modification date of current item
+     * Gets modification date of current item
      *
      * @return string
      */
@@ -238,7 +238,7 @@
     }
 
     /**
-     * Return price of current item
+     * Gets price of current item
      *
      * @return float
      */
@@ -247,7 +247,7 @@
     }
 
     /**
-     * Return formated price of current item
+     * Gets formated price of current item
      *
      * @return string
      */
@@ -256,7 +256,7 @@
     }
 
     /**
-     * Return currency of current item
+     * Gets currency of current item
      *
      * @return string
      */
@@ -265,7 +265,7 @@
     }
 
     /**
-     * Return contact name of current item
+     * Gets contact name of current item
      *
      * @return string
      */
@@ -274,7 +274,7 @@
     }
 
     /**
-     * Return contact email of current item
+     * Gets contact email of current item
      *
      * @return string
      */
@@ -283,7 +283,7 @@
     }
 
     /**
-     * Return country name of current item
+     * Gets country name of current item
      *
      * @return string
      */
@@ -292,7 +292,7 @@
     }
 
     /**
-     * Return country code of current item
+     * Gets country code of current item
      * Country code are two letters like US, ES, ...
      *
      * @return string
@@ -302,7 +302,7 @@
     }
 
     /**
-     * Return region of current item
+     * Gets region of current item
      *
      * @return string
      */
@@ -311,7 +311,7 @@
     }
 
     /**
-     * Return city of current item
+     * Gets city of current item
      *
      * @return string
      */
@@ -320,7 +320,7 @@
     }
 
     /**
-     * Return city area of current item
+     * Gets city area of current item
      *
      * @return string
      */
@@ -329,7 +329,7 @@
     }
 
     /**
-     * Return address of current item
+     * Gets address of current item
      *
      * @return string
      */
@@ -338,7 +338,7 @@
     }
 
     /**
-     * Return true if can show email user at frontend, else return false
+     * Gets true if can show email user at frontend, else return false
      *
      * @return boolean
      */
@@ -347,7 +347,7 @@
     }
 
     /**
-     * Return zup code of current item
+     * Gets zup code of current item
      *
      * @return string
      */
@@ -356,7 +356,7 @@
     }
 
     /**
-     * Return latitude of current item
+     * Gets latitude of current item
      *
      * @return float
      */
@@ -365,7 +365,7 @@
     }
 
     /**
-     * Return longitude of current item
+     * Gets longitude of current item
      *
      * @return float
      */
@@ -374,7 +374,7 @@
     }
 
     /**
-     * Return true if current item is marked premium, else return false
+     * Gets true if current item is marked premium, else return false
      *
      * @return boolean
      */
@@ -393,7 +393,7 @@
     }
 
     /**
-     * Return status of current item.
+     * Gets status of current item.
      * b_active = true  -> item is active
      * b_active = false -> item is inactive
      *
@@ -404,7 +404,7 @@
     }
 
     /**
-     * Return secret string of current item
+     * Gets secret string of current item
      *
      * @return string
      */
@@ -413,7 +413,7 @@
     }
 
     /**
-     * Return if current item is active
+     * Gets if current item is active
      *
      * @return boolean
      */
@@ -422,7 +422,7 @@
     }
 
     /**
-     * Return if current item is inactive
+     * Gets if current item is inactive
      *
      * @return boolean
      */
@@ -431,7 +431,7 @@
     }
 
     /**
-     * Return if item is marked as spam
+     * Gets if item is marked as spam
      *
      * @return boolean
      */
@@ -440,7 +440,7 @@
     }
 
     /**
-     * Return link for mark as spam the current item
+     * Gets link for mark as spam the current item
      *
      * @return string
      */
@@ -470,7 +470,7 @@
     }
 
     /**
-     * Return link for mark as repeated the current item
+     * Gets link for mark as repeated the current item
      *
      * @return string
      */
@@ -485,7 +485,7 @@
     }
 
     /**
-     * Return link for mark as offensive the current item
+     * Gets link for mark as offensive the current item
      *
      * @return string
      */
@@ -500,7 +500,7 @@
     }
 
     /**
-     * Return link for mark as expired the current item
+     * Gets link for mark as expired the current item
      *
      * @return string
      */
@@ -515,7 +515,7 @@
     }
 
     /**
-     * Return actual page for current pagination
+     * Gets actual page for current pagination
      *
      * @return int
      */
@@ -524,7 +524,7 @@
     }
 
     /**
-     * Return total of pages for current pagination
+     * Gets total of pages for current pagination
      *
      * @return int
      */
@@ -533,7 +533,7 @@
     }
 
     /**
-     * Return number of items per page for current pagination
+     * Gets number of items per page for current pagination
      *
      * @return <type>
      */
@@ -542,7 +542,7 @@
     }    
 
     /**
-     * Return total number of comments of current item
+     * Gets total number of comments of current item
      *
      * @return int
      */
@@ -551,7 +551,7 @@
     }
 
     /**
-     * Return page of comments in current pagination
+     * Gets page of comments in current pagination
      *
      * @return <type>
      */
@@ -573,7 +573,7 @@
     //////////////////////////
 
     /**
-     * Return id of current comment
+     * Gets id of current comment
      *
      * @return int
      */
@@ -582,7 +582,7 @@
     }
 
     /**
-     * Return publication date of current comment
+     * Gets publication date of current comment
      *
      * @return string
      */
@@ -591,7 +591,7 @@
     }
 
     /**
-     * Return title of current commnet
+     * Gets title of current commnet
      *
      * @return string
      */
@@ -600,7 +600,7 @@
     }
 
     /**
-     * Return author name of current comment
+     * Gets author name of current comment
      *
      * @return string
      */
@@ -609,7 +609,7 @@
     }
 
     /**
-     * Return author email of current comment
+     * Gets author email of current comment
      *
      * @return string
      */
@@ -618,7 +618,7 @@
     }
 
     /**
-     * Return body of current comment
+     * Gets body of current comment
      *
      * @return string
      */
@@ -627,7 +627,7 @@
     }
 
     /**
-     * Return user id of current comment
+     * Gets user id of current comment
      *
      * @return int
      */
@@ -636,7 +636,7 @@
     }
 
     /**
-     * Return  link to delete the current comment of current item
+     * Gets  link to delete the current comment of current item
      *
      * @return string
      */
@@ -653,7 +653,7 @@
     ///////////////////////////
 
     /**
-     * Return id of current resource
+     * Gets id of current resource
      *
      * @return int
      */
@@ -662,7 +662,7 @@
     }
 
     /**
-     * Return name of current resource
+     * Gets name of current resource
      *
      * @return string
      */
@@ -671,7 +671,7 @@
     }
 
     /**
-     * Return content type of current resource
+     * Gets content type of current resource
      *
      * @return string
      */
@@ -680,7 +680,7 @@
     }
 
     /**
-     * Return extension of current resource
+     * Gets extension of current resource
      *
      * @return string
      */
@@ -689,7 +689,7 @@
     }
 
     /**
-     * Return path of current resource
+     * Gets path of current resource
      *
      * @return string
      */
@@ -698,7 +698,7 @@
     }
 
     /**
-     * Return thumbnail url of current resource
+     * Gets thumbnail url of current resource
      *
      * @return <type>
      */
@@ -707,7 +707,7 @@
     }
 
     /**
-     * Return url of current resource
+     * Gets url of current resource
      *
      * @return string
      */
@@ -716,7 +716,7 @@
     }
 
     /**
-     * Return original resource url of current resource
+     * Gets original resource url of current resource
      *
      * @return string
      */
@@ -732,7 +732,7 @@
     /////////////
 
     /**
-     * Return next item if there is, else return null
+     * Gets next item if there is, else return null
      *
      * @return array
      */
@@ -753,7 +753,7 @@
     }
 
     /**
-     * Return number of items in current array items
+     * Gets number of items in current array items
      *
      * @return int
      */
@@ -762,7 +762,7 @@
     }
 
     /**
-     * Return number of resources in array resources of current item
+     * Gets number of resources in array resources of current item
      *
      * @return int
      */
@@ -774,7 +774,7 @@
     }
 
     /**
-     * Return next item resource if there is, else return null
+     * Gets next item resource if there is, else return null
      *
      * @return array
      */
@@ -786,7 +786,7 @@
     }
 
     /**
-     * Return current resource of current array resources of current item
+     * Gets current resource of current array resources of current item
      *
      * @return array
      */
@@ -798,7 +798,7 @@
     }
 
     /**
-     * Return number of item comments of current item
+     * Gets number of item comments of current item
      *
      * @return int
      */
@@ -810,7 +810,7 @@
     }
 
     /**
-     * Return next comment of current item comments
+     * Gets next comment of current item comments
      *
      * @return array
      */
@@ -825,7 +825,7 @@
     // HOME //
     //////////
     /**
-     * Return next item of last items
+     * Gets next item of last items
      *
      * @return array
      */
@@ -837,7 +837,7 @@
     }
 
     /**
-     * Return number of latest items
+     * Gets number of latest items
      *
      * @return int
      */
@@ -871,7 +871,7 @@
     }
 
     /**
-     * Return number of items
+     * Gets number of items
      *
      * @access private
      * @return int
@@ -881,7 +881,7 @@
     }
 
     /**
-     * Return number of item resources
+     * Gets number of item resources
      *
      * @access private
      * @return int
