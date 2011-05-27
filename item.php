@@ -41,9 +41,6 @@
         function doModel() {
             //calling the view...
 
-            Session::newInstance()->_keepForm('title');
-            Session::newInstance()->_keepForm('currency');
-
             $locales = OSCLocale::newInstance()->listAllEnabled() ;
             $this->_exportVariableToView('locales', $locales) ;
 
