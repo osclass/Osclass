@@ -8,7 +8,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'theme', 'modern', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
-    ,('osclass', 'pageDesc', 'open source classifieds', 'STRING')
+    ,('osclass', 'pageDesc', '', 'STRING')
     ,('osclass', 'maxSizeKb', 2048, 'INTEGER')
     ,('osclass', 'allowedExt', 'png,gif,jpg', 'STRING')
     ,('osclass', 'dimThumbnail', '240x200', 'STRING')
