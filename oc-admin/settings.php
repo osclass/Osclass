@@ -59,6 +59,8 @@
                                         $enabledFieldImagesItems    = (($enabledFieldImagesItems != '') ? true : false);
                                         $numImagesItems             = Params::getParam('numImages@items');
                                         if($numImagesItems=='') { $numImagesItems = 0; }
+                                        $regUserCanContact          = Params::getParam('reg_user_can_contact');
+                                        $regUserCanContact          = (($regUserCanContact != '') ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
@@ -89,6 +91,8 @@
                                                                                       ,array('s_name'  => 'items_wait_time'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $numImagesItems)
                                                                                       ,array('s_name'  => 'numImages@items'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserCanContact)
+                                                                                      ,array('s_name'  => 'reg_user_can_contact'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Items\' settings have been updated'), 'admin');
@@ -108,6 +112,8 @@
                                         $commentsPerPage  = Params::getParam('comments_per_page');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
+                                        $regUserPostComments  = Params::getParam('reg_user_post_comments');
+                                        $regUserPostComments  = (($regUserPostComments != '') ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
                                                                                       ,array('s_name' => 'enabled_comments'));
@@ -122,6 +128,9 @@
                                                                                       ,array('s_name' => 'notify_new_comment'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
                                                                                       ,array('s_name' => 'comments_per_page'));
+
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPostComments )
+                                                                                      ,array('s_name' => 'reg_user_post_comments'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Comments\' settings have been updated'), 'admin');
