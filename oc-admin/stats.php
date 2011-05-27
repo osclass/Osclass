@@ -211,7 +211,6 @@
                                             }
                                         }
                                         $item = Stats::newInstance()->items_by_user();
-                                        print_r($item);
                                         $this->_exportVariableToView("users_by_country", Stats::newInstance()->users_by_country());
                                         $this->_exportVariableToView("users_by_region", Stats::newInstance()->users_by_region());
                                         $this->_exportVariableToView("item", !is_numeric($item['avg'])?0:$item['avg']);
