@@ -202,9 +202,7 @@
      * @return string
      */
     function osc_current_web_theme_path($file = '') {
-        osc_run_hook("before_html");
         require WebThemes::newInstance()->getCurrentThemePath() . $file ;
-        osc_run_hook("after_html");
     }
 
     /**
