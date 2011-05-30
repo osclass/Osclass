@@ -55,6 +55,24 @@
     }
 
     /**
+     * Gets if only users can post comments
+     *
+     * @return boolean
+     */
+    function osc_reg_user_post_comments() {
+        return (getPreference('reg_user_post_comments')) ;
+    }
+
+    /**
+     * Gets if only users can contact to seller
+     *
+     * @return boolean
+     */
+    function osc_reg_user_can_contact() {
+        return (getPreference('reg_user_can_contact')) ;
+    }
+    
+    /**
      * Gets if users are enabled or not
      *
      * @return boolean 

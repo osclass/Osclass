@@ -28,7 +28,7 @@
                             <img src="oc-includes/images/osclass-logo.png" alt="OSClass" title="OSClass"/>
                         </a>
                         <br/>
-                        Version 2.0
+                        Version 2.1
                     </h1>
                 </div>
                 <div id="content">
@@ -67,20 +67,38 @@
                             </ol>
                         </div>
                     </div>
-                    <div id="upgrade">
+                     <div id="upgrade">
                         <h2 class="title">How to upgrade</h2>
-                        <p>OSClass will show an autoupgrade message if a new (and stable) version is available. Follow the link and after a few moments you will be enjoying a new version of your favorite open source classifieds software. Had you expected more steps or difficult instructions? Sorry! but we made that easy. We recommend to do a backup before you attemp to upgrade your OSClass installation, you coud perform that from the admin panel (if you modified any core file, it will probably be replaced by new version software. Be carefull).</p>
-						<p>The Autoupgrade feature will perform the following steps for you :
-							<ul>
-								<li>Step 1: Check if there's a new version os OSClass.</li>
-								<li>Step 2: Download it.</li>
-								<li>Step 3: Unzip it.</li>
-								<li>Step 4: Remove old files, copy new ones (remember: if you edited any core file, it will probable be replaced by a new one).</li>
-								<li>Step 5: Perform changes in the tables (if necessary).</li>
-								<li>Step 6: Perform extra-actions (if necessary).</li>
-							</ul>
-						</p>
-						<p>If you experienced any problem during the process, please don't hesitate in contact us in <a href="http://forums.osclass.org/">OSClass Support Forums</a>. We recommend to perform a backup of database and files before each upgrade. You could backup your data from the "Backup" option in the admin panel. If you want to run the autoupgrade manually you could do that from the following URL : http://www.yourdomain.com/path/to/osclass/oc-admin/tools.php?action=upgrade </p>
+                        <p>
+                            OSClass will show an autoupgrade message at admin panel if a new (and stable) version is available. Only need follow instructions for begin the upgrade.
+                            We recommend to do a backup before you attempt to upgrade your OSClass installation, you could perform that from the admin panel (if you modified any
+                            core file, it will probably be replaced by new version software. Be carefull).
+                        </p>
+                        <div class="space-left-10"><h3 style="border-bottom: 1px solid grey;color: #444444;">Autoupgrade</h3>
+                            <p>The Autoupgrade feature will perform the following steps for you :
+                                <ul>
+                                    <li>Step 1: Check if there's a new version os OSClass.</li>
+                                    <li>Step 2: Download it.</li>
+                                    <li>Step 3: Unzip it.</li>
+                                    <li>Step 4: Remove old files, copy new ones (remember: if you edited any core file, it will probable be replaced by a new one).</li>
+                                    <li>Step 5: Perform changes in the tables (if necessary).</li>
+                                    <li>Step 6: Perform extra-actions (if necessary).</li>
+                                </ul>
+                            </p>
+                         </div>
+                        <p>Follow the link and after a few moments you will be enjoying
+                            a new version of your favorite open source classifieds software. Had you expected more steps or difficult instructions? Sorry! but we made that easy.
+                        </p>
+                        <div class="space-left-10"><h3 style="border-bottom: 1px solid grey;color: #444444;">Manual upgrade</h3>
+                            <p>
+                                You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.
+                                Then run manually oc-includes/osclass/upgrade-funcs.php for do upgrade complete.
+                            </p>
+                        </div>
+                        <p>If you experienced any problem during the process, please don't hesitate in contact us in <a href="http://forums.osclass.org/">OSClass Support Forums</a>.
+                            We recommend to perform a backup of database and files before each upgrade. You could backup your data from the "Backup" option in the admin panel.
+                            If you want to run the autoupgrade manually you could do that from the following URL : http://www.yourdomain.com/path/to/osclass/oc-admin/tools.php?action=upgrade
+                        </p>
                     </div>
                     <div id="resources">
                         <h2 class="title">Online Resources</h2>
