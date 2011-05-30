@@ -116,6 +116,7 @@ require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
+require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';

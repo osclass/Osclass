@@ -660,7 +660,51 @@
                                         $dimPreview        = Params::getParam('dimPreview');
                                         $dimNormal         = Params::getParam('dimNormal');
                                         $keepOriginalImage = Params::getParam('keep_original_image');
+                                        $type_watermark    = Params::getParam('watermark_type');
+                                        $watermark_color   = Params::getParam('watermark_text_color');
+                                        $watermark_text    = Params::getParam('watermark_text');
+                                        $watermark_image   = Params::getParam('watermark_image');
+                                       
+                                        switch ($type_watermark) {
+                                            case 'none':
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text_color'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_image'));
+                                            break;
+                                            case 'text':
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_color)
+                                                                                              ,array('s_name'  => 'watermark_text_color'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_text)
+                                                                                              ,array('s_name'  => 'watermark_text'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_image'));
+                                            break;
+                                            case 'image':
+                                                // upload image & move to path
+                                                if( $_FILES['watermark_image']['error'] == UPLOAD_ERR_OK ) {
+                                                    $tmpName = $_FILES['watermark_image']['tmp_name'] ;
+                                                    $path = osc_content_path() . 'uploads/watermark.png' ;
+                                                    if( move_uploaded_file($tmpName, $path) ){
+                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $path)
+                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                    } else {
+                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                    }
+                                                }
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text_color'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text'));
+                                            break;
 
+                                            default:
+                                            break;
+                                        }
+                                        
                                         // format parameters
                                         $maxSizeKb         = strip_tags($maxSizeKb);
                                         $allowedExt        = strip_tags($allowedExt);
