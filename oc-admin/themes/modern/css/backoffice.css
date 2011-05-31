@@ -505,6 +505,22 @@ tr.even td{
 .FlashMessage.info { background-color:#FFF78D; border: 0px;}
 .FlashMessage.error { background-color:#FFD2CF; border: 0px;}
 
+.pubMessages {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #FFD2CF;
+	font-weight: bold;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-align: center;
+	border: 1px solid red;
+	width:100%;
+	margin-bottom: 10px;
+    margin-top: 10px;
+}
+.pubMessages.ok { background-color:#9CDA9B; border: 0px;}
+.pubMessages.info { background-color:#FFF78D; border: 0px;}
+.pubMessages.error { background-color:#FFD2CF; border: 0px;}
 
 .dataTables_empty {
 	min-height: 300px;

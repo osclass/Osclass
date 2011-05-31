@@ -118,12 +118,9 @@
                         <?php if(osc_images_enabled_at_items()) { ?>
                             <div>
                                 <h2><?php _e('Photos') ; ?></h2>
+                                <?php ItemForm::photos(); ?>
                                 <div id="photos">
-                                    <?php foreach($resources as $_r) {?>
-                                        <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                            <img src="<?php echo osc_base_url().$_r['s_path'].$_r['pk_i_id']."_thumbnail.".$_r['s_extension']; ?>" /><a onclick="deleteResource(<?php echo $_r['pk_i_id'];?>)" style="cursor:pointer;" class="delete"><?php _e('Delete'); ?></a>
-                                        </div>
-                                    <?php } ?>
+                                    
                                     <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && count($resources)<  osc_max_images_per_item())) { ?>
                                     <div>
                                         <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
