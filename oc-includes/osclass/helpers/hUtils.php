@@ -64,6 +64,14 @@
             } else {
                 if(isset($item["locale"]) && isset($item["locale"][$locale]) && isset($item["locale"][$locale][$field])) {
                     return $item["locale"][$locale][$field] ;
+                }else{
+                    if(isset($item["locale"])){
+                        foreach($item["locale"] as $locale => $data) {
+                            if( isset($item["locale"][$locale][$field] ) ) {
+                                return $item["locale"][$locale][$field] ;
+                            }
+                        }
+                    }
                 }
             }
         }

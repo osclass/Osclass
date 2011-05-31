@@ -186,14 +186,14 @@
                                             $id = Params::getParam('id') ;
                                             if ($id != '') {
                                                 $default_lang = osc_language() ;
-                                                foreach ($id as $i) {
+                                                foreach ($id as $i) {                                                    
                                                     if($default_lang == $i) {
                                                         $msg = _m('Some language can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it');
                                                     } else {
                                                         $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
+                                                        osc_add_flash_ok_message($msg, 'admin') ;
                                                     }
                                                 }
-                                                osc_add_flash_ok_message($msg, 'admin') ;
                                             } else {
                                                 osc_add_flash_error_message( _m('There was a problem updating the languages. The language ids were lost'), 'admin') ;
                                             }
