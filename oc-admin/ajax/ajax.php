@@ -255,15 +255,17 @@
                             
                         }
                     }
-                    try {
-                        $categoryManager = Category::newInstance() ;
-                        $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
-                    } catch (Exception $e) {
-                        $error = 1;
-                        $message = __("Error while updating.");
+
+                    $l = osc_current_admin_locale();
+                    if( !$error ){
+                        try {
+                            $categoryManager = Category::newInstance() ;
+                            $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                        } catch (Exception $e) {
+                            $error = 1;
+                            $message = __("Error while updating.");
+                        }
                     }
-                    
-                    $l = osc_current_user_locale();
                     
                     $result = "{";
                     if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
