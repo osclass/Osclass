@@ -55,6 +55,7 @@
                                 <label for="new_password2"><?php _e('Repeat new password', 'modern') ; ?> *</label>
                                 <input type="password" name="new_password2" id="new_password2" value="" />
                             </p>
+                            <div style="clear:both;"></div>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>
                     </form>
