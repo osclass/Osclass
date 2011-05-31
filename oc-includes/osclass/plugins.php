@@ -155,9 +155,9 @@
                     unset($data);
                     $conn->commit();
                     Plugins::reload();
+                    return true;
                 } else {
-                    osc_add_flash_ok_message( _m('Error: Plugin already installed'), 'admin') ;
-
+                    return false;
                 }
             } catch (Exception $e) {
                 $conn->rollback();
