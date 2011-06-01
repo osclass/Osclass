@@ -581,22 +581,26 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
+                                                                $msg_current = '';
                                                                 foreach($aCurrencyCode as $currencyCode) {
                                                                     if(preg_match('/.{1,3}/', $currencyCode) && $currencyCode != osc_currency()) {
                                                                         $rowChanged += Currency::newInstance()->delete(array('pk_c_code' => $currencyCode));
+                                                                    }
+                                                                    if($currencyCode == osc_currency()) {
+                                                                        $msg_current = ". " . $currencyCode . " could not be deleted because it's the default currency";
                                                                     }
                                                                 }
 
                                                                 $msg = '';
                                                                 switch ($rowChanged) {
                                                                     case ('0'): $msg = __('No currencies have been deleted');
-                                                                            osc_add_flash_error_message($msg, 'admin');
+                                                                            osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                     case ('1'): $msg = __('One currency has been deleted');
-                                                                            osc_add_flash_error_message($msg, 'admin');
+                                                                            osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                     default:    $msg = sprintf(__('%s currencies have been deleted'), $rowChanged);
-                                                                            osc_add_flash_ok_message($msg, 'admin');
+                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                 }
 
