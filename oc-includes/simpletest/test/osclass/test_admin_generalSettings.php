@@ -794,7 +794,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->type("pageDesc"    , $pref['pageDesc']);
 
         $this->selenium->select("currency_admin", "label=" . $pref['currency'] ) ;
-        $this->selenium->select("weekStart"     , "label=" . $pref['weekStart'] ) ;
+        $this->selenium->select("weekStart"     , "value=" . $pref['weekStart'] ) ;
         $this->selenium->select("num_rss_items" , "label=" . $pref['num_rss_items'] ) ;
 
         $this->selenium->click($pref['df']);
