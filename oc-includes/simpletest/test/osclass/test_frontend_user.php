@@ -48,6 +48,7 @@ class TestOfUser extends WebTestCase {
         $input['s_address']         = "c:/address nº 10 2º2ª";
         $input['b_company']         = 0;
         $input['b_enabled']         = 1;
+        $input['b_active']          = 1;
         $input['s_email']           = "carlos+user@osclass.org";
         $this->email                = "carlos+user@osclass.org";
         $input['s_password']        = sha1('carlos');
@@ -132,7 +133,7 @@ class TestOfUser extends WebTestCase {
         $this->selenium->type("new_password2"   , $this->password);
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
+        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
         $this->assertTrue( $this->selenium->isTextPresent("Current password doesn't match"),
                            "Can change password even if current password don't match. ERROR");
 
@@ -143,7 +144,7 @@ class TestOfUser extends WebTestCase {
         $this->selenium->type("new_password2"   , $this->password);
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
+echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
         $this->assertTrue( $this->selenium->isTextPresent("Passwords can't be empty"),
                            "Passwords can be EMPTY. ERROR");
 
@@ -154,7 +155,7 @@ class TestOfUser extends WebTestCase {
         $this->selenium->type("new_password2"   , 'def');
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
+echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
         $this->assertTrue( $this->selenium->isTextPresent("Passwords don't match"),
                            "Passwords can don't match. ERROR");
 
@@ -235,8 +236,8 @@ class TestOfUser extends WebTestCase {
         $this->selenium->type("new_email" , "carlos+new@osclass.org");
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Your email has been changed successfully"),
+echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
+        $this->assertTrue( $this->selenium->isTextPresent("We have sent you an e-mail. Follow the instructions to validate the changes"),
                            "Can't change email!. ERROR");
 
         Preference::newInstance()->update(array('s_value' => 1)

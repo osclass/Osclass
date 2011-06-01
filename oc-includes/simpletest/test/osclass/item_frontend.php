@@ -54,18 +54,18 @@ class ItemFrontend {
 
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("30000");
-//        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
+        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
         flush();
         
         if( $logged == 0 ){
             if($enabled_item_validation){
                 $simpletest->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
             } else {
-                $simpletest->assertTrue($this->selenium->isTextPresent("Your post has been published","no logged in error inserting ad.") );
+                $simpletest->assertTrue($this->selenium->isTextPresent("Your item has been published","no logged in error inserting ad.") );
             }
         } else {
             if($logged_user_item_validation){
-                $simpletest->assertTrue($this->selenium->isTextPresent("Your post has been published","insert ad error ") );
+                $simpletest->assertTrue($this->selenium->isTextPresent("Your item has been published","insert ad error ") );
             } else {
                 $simpletest->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
             }
