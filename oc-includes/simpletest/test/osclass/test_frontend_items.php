@@ -124,7 +124,6 @@ class TestOfItems extends WebTestCase {
         flush();
         $uSettings->set_logged_user_item_validation(0);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>USER LOGGED IN - WITH VALIDATION MAIL</div>";
-        $this->login();
         $this->insertItem();
         flush();
 
@@ -140,13 +139,13 @@ class TestOfItems extends WebTestCase {
             flush();
         }
     }
-//
-//    function testEditUserItemBadId()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
-//        $this->editUserItemBadId();
-//    }
+
+    function testEditUserItemBadId()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditUserItemBadId</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Trying go to bad item url.</div>";
+        $this->editUserItemBadId();
+    }
 
     function testActivate() // Activate
     {
@@ -156,35 +155,35 @@ class TestOfItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Activating first item</div>";
         $this->activateUserItem();
     }
-//
-//    function testEditItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-//        $this->login();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
-//        $this->editUserItem();
-//    }
-//
-//
-//    function testDeleteItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
-//        $this->login();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
-//        $this->deleteItem();
-//    }
 
-//    function  testdeleteUser()
-//    {
-//        echo "delete user for testing<br>";
-//        $user = User::newInstance()->findByEmail($this->email);
-//        User::newInstance()->deleteUser($user['pk_i_id']);
-//        $user = User::newInstance()->findByEmail($this->email_fixed);
-//        User::newInstance()->deleteUser($user['pk_i_id']);
-//        $this->assertTrue(TRUE);
-//    }
+    function testEditItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+        $this->login();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Editing first item</div>";
+        $this->editUserItem();
+    }
+
+
+    function testDeleteItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Log in user ...</div>";
+        $this->login();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>Deleting first item in the list</div>";
+        $this->deleteItem();
+    }
+
+    function  testdeleteUser()
+    {
+        echo "delete user for testing<br>";
+        $user = User::newInstance()->findByEmail($this->email);
+        User::newInstance()->deleteUser($user['pk_i_id']);
+        $user = User::newInstance()->findByEmail($this->email_fixed);
+        User::newInstance()->deleteUser($user['pk_i_id']);
+        $this->assertTrue(TRUE);
+    }
     
     /*
      * PRIVATE FUNCTIONS
@@ -195,9 +194,9 @@ class TestOfItems extends WebTestCase {
         $this->selenium->click("login_open");
         $this->selenium->type("email"   , $this->email);
         $this->selenium->type("password", $this->password);
-sleep(5);
+
         $this->selenium->click("xpath=//button[@type='submit']");
-        
+        echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
         $this->selenium->waitForPageToLoad("30000");
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Login user ...</div>";
@@ -265,12 +264,12 @@ sleep(5);
                     $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
                 } else {
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>Great! We've just published your item</div>";
-                    $this->assertTrue($this->selenium->isTextPresent("Your post has been published","no logged in error inserting ad.") );
+                    $this->assertTrue($this->selenium->isTextPresent("Your item has been published","no logged in error inserting ad.") );
                 }
             } else {
                 if($logged_user_item_validation){
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>without validation. Great! We've just published your item</div>";
-                    $this->assertTrue($this->selenium->isTextPresent("Your post has been published","insert ad error ") );
+                    $this->assertTrue($this->selenium->isTextPresent("Your item has been published","insert ad error ") );
                 } else {
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>Registered user and need validation item - Great! You'll receive an e-mail to activate your item</div>";
                     $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
