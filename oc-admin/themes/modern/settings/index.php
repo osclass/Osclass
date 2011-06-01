@@ -125,7 +125,7 @@
                                 <fieldset>
                                     <legend><?php _e('Week starts on'); ?></legend>
                                     <select name="weekStart" id="weekStart">
-                                        <option value="0" selected="selected"><?php _e('Sunday'); ?></option>
+                                        <option value="0" <?php if(osc_week_starts_at() == '0') { ?>selected="selected"<?php } ?>><?php _e('Sunday'); ?></option>
                                         <option value="1" <?php if(osc_week_starts_at() == '1') { ?>selected="selected"<?php } ?>><?php _e('Monday') ; ?></option>
                                         <option value="2" <?php if(osc_week_starts_at() == '2') { ?>selected="selected"<?php } ?>><?php _e('Tuesday') ; ?></option>
                                         <option value="3" <?php if(osc_week_starts_at() == '3') { ?>selected="selected"<?php } ?>><?php _e('Wednesday') ; ?></option>
