@@ -101,7 +101,7 @@
                                                 $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
                                                 Session::newInstance()->_set('userPhone', $phone) ;
                                             } else {
-                                                osc_add_flash_error_message( _m('Your account has already been activated')) ;
+                                                osc_add_flash_error_message( _m('Your account has already been validated')) ;
                                             }
                                         } else {
                                             osc_add_flash_error_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
