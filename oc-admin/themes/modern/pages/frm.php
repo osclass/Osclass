@@ -56,6 +56,7 @@
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_toolbar_location : "top",
                 plugins : "media",
+                entity_encoding : "raw",
             theme_advanced_buttons1_add : "media"
             });
         </script>

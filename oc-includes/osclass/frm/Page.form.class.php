@@ -48,7 +48,7 @@
                     echo '<div class="FormElement">';
                         echo '<div class="FormElementName">' . __('Body') . '</div>';
                         echo '<div class="FormElementInput">' ;
-                            parent::generic_textarea($locale['pk_c_code'] . '#s_text', (isset($category['locale'][$locale['pk_c_code']])) ? htmlentities($category['locale'][$locale['pk_c_code']]['s_text']) : "") ;
+                            parent::generic_textarea($locale['pk_c_code'] . '#s_text', (isset($category['locale'][$locale['pk_c_code']])) ? ($category['locale'][$locale['pk_c_code']]['s_text']) : "") ;
                         echo '</div>' ;
                     echo '</div>';
                 if($num_locales>1) { echo '</div>'; };
