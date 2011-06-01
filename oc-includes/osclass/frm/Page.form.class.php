@@ -42,7 +42,7 @@
                     echo '<div class="FormElement">';
                         echo '<div class="FormElementName">' . __('Title') . '</div>';
                         echo '<div class="FormElementInput">' ;
-                            parent::generic_input_text($locale['pk_c_code'] . '#s_title', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_title'] : "") ;
+                            parent::generic_input_text($locale['pk_c_code'] . '#s_title', (isset($category['locale'][$locale['pk_c_code']])) ? utf8_decode($category['locale'][$locale['pk_c_code']]['s_title']) : "") ;
                         echo '</div>' ;
                     echo '</div>';
                     echo '<div class="FormElement">';
