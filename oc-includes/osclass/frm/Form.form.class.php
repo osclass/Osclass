@@ -32,25 +32,25 @@
         }
 
         static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false) {
-            echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . htmlentities($value) . '" ' ;
+            echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . htmlentities(utf8_decode($value)) . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
             if ($readOnly) echo 'disabled readonly ' ;
             echo '/>' ;
         }
 
         static protected function generic_password($name, $value, $maxLength = null, $readOnly = false) {
-            echo '<input id="' . $name . '" type="password" name="' . $name . '" value="' . htmlentities($value) . '" ' ;
+            echo '<input id="' . $name . '" type="password" name="' . $name . '" value="' . htmlentities(utf8_decode($value)) . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
             if ($readOnly) echo 'disabled readonly ' ;
             echo '/>' ;
         }
 
         static protected function generic_input_hidden($name, $value) {
-            echo '<input id="' . $name . '" type="hidden" name="' . $name . '" value="' . htmlentities($value) . '" />' ;
+            echo '<input id="' . $name . '" type="hidden" name="' . $name . '" value="' . htmlentities(utf8_decode($value)) . '" />' ;
         }
 
         static protected function generic_input_checkbox($name, $value, $checked = false) {
-            echo '<input id="' . $name . '" type="checkbox" name="' . $name . '" value="' . htmlentities($value) . '" ' ;
+            echo '<input id="' . $name . '" type="checkbox" name="' . $name . '" value="' . htmlentities(utf8_decode($value)) . '" ' ;
             if ($checked) echo 'checked="checked" ' ;
             echo '/>' ;
         }
