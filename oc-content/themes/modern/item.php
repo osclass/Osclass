@@ -95,6 +95,7 @@
                         </ul>
                     </div>
                     <?php if( osc_comments_enabled() ) { ?>
+                        <?php if( osc_reg_user_post_comments () && osc_is_web_user_logged_in() || !osc_reg_user_post_comments() ) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments', 'modern'); ?></h2>
                             <ul id="comment_error_list"></ul>
@@ -136,6 +137,7 @@
                                 </fieldset>
                             </form>
                         </div>
+                        <?php } ?>
                     <?php } ?>
                 </div>
                 <div id="sidebar">
@@ -154,6 +156,7 @@
                         </div>
                         <?php } ?>
                     <?php } ?>
+                    <?php if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
                         <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_item_contact_name(); ?></p>
@@ -195,6 +198,7 @@
                             </fieldset>
                         </form>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
             <?php osc_current_web_theme_path('footer.php') ; ?>

@@ -28,7 +28,7 @@
     */
 
     /**
-     * Return cookie's life
+     * Gets cookie's life
      *
      * @return int 
      */
@@ -37,7 +37,7 @@
     }
 
     /**
-     * Return if comments are enabled or not
+     * Gets if comments are enabled or not
      *
      * @return boolean 
      */
@@ -46,7 +46,7 @@
     }
 
     /**
-     * Return comments per page
+     * Gets comments per page
      *
      * @return int 
      */
@@ -55,7 +55,25 @@
     }
 
     /**
-     * Return if users are enabled or not
+     * Gets if only users can post comments
+     *
+     * @return boolean
+     */
+    function osc_reg_user_post_comments() {
+        return (getPreference('reg_user_post_comments')) ;
+    }
+
+    /**
+     * Gets if only users can contact to seller
+     *
+     * @return boolean
+     */
+    function osc_reg_user_can_contact() {
+        return (getPreference('reg_user_can_contact')) ;
+    }
+    
+    /**
+     * Gets if users are enabled or not
      *
      * @return boolean 
      */
@@ -64,7 +82,7 @@
     }
 
     /**
-     * Return if user registration is enabled
+     * Gets if user registration is enabled
      *
      * @return boolean 
      */
@@ -73,7 +91,7 @@
     }
 
     /**
-     * Return is user validation is enabled or not
+     * Gets is user validation is enabled or not
      *
      * @return boolean 
      */
@@ -82,7 +100,7 @@
     }
 
     /**
-     * Return if validation for logged users is required or not
+     * Gets if validation for logged users is required or not
      *
      * @return boolean 
      */
@@ -91,7 +109,7 @@
     }
 
     /**
-     * Return how many comments should be posted before auto-moderation
+     * Gets how many comments should be posted before auto-moderation
      *
      * @return int 
      */
@@ -100,7 +118,7 @@
     }
 
     /**
-     * Return if notification of new comments is enabled or not
+     * Gets if notification of new comments is enabled or not
      *
      * @return boolean 
      */
@@ -109,7 +127,7 @@
     }
 
     /**
-     * Return if nice urls are enabled or not
+     * Gets if nice urls are enabled or not
      *
      * @return boolean 
      */
@@ -118,7 +136,7 @@
     }
 
     /**
-     * Return if mod rewrite is loaded or not (if apache runs on cgi mode, mod rewrite will not be detected)
+     * Gets if mod rewrite is loaded or not (if apache runs on cgi mode, mod rewrite will not be detected)
      *
      * @return boolean 
      */
@@ -127,7 +145,7 @@
     }
 
     /**
-     * Return if original images should be kept
+     * Gets if original images should be kept
      *
      * @return boolean 
      */
@@ -136,7 +154,7 @@
     }
 
     /**
-     * Return if autocron is enabled
+     * Gets if autocron is enabled
      *
      * @return boolean 
      */
@@ -145,7 +163,7 @@
     }
 
     /**
-     * Return if recaptcha for items is enabled or not
+     * Gets if recaptcha for items is enabled or not
      *
      * @return boolean 
      */
@@ -154,7 +172,7 @@
     }
 
     /**
-     * Return how many seconds should an user wait to post a second item (0 for no waiting)
+     * Gets how many seconds should an user wait to post a second item (0 for no waiting)
      *
      * @return int
      */
@@ -163,7 +181,7 @@
     }
     
     /**
-     * Return how many items should be moderated to enable auto-moderation
+     * Gets how many items should be moderated to enable auto-moderation
      *
      * @return int 
      */
@@ -172,7 +190,7 @@
     }
     
     /**
-     * Return if only registered users can publish new items or anyone could
+     * Gets if only registered users can publish new items or anyone could
      *
      * @return boolean 
      */
@@ -181,7 +199,7 @@
     }
 
     /**
-     * Return if the prices are o not enabled on the item's form
+     * Gets if the prices are o not enabled on the item's form
      *
      * @return boolean 
      */
@@ -190,7 +208,7 @@
     }
 
     /**
-     * Return if images are o not enabled in item's form
+     * Gets if images are o not enabled in item's form
      *
      * @return boolean 
      */
@@ -199,7 +217,7 @@
     }
 
     /**
-     * Return how many images are allowed per item (o for unlimited)
+     * Gets how many images are allowed per item (o for unlimited)
      *
      * @return int 
      */
@@ -208,7 +226,7 @@
     }
 
     /**
-     * Return if notification are sent to admin when a send-a-friend message is sent
+     * Gets if notification are sent to admin when a send-a-friend message is sent
      *
      * @return boolean 
      */
@@ -217,7 +235,7 @@
     }
 
     /**
-     * Return if notification are sent to admin when a contact message is sent
+     * Gets if notification are sent to admin when a contact message is sent
      *
      * @return boolean 
      */
@@ -226,7 +244,7 @@
     }
 
     /**
-     * Return item attachment is enabled
+     * Gets item attachment is enabled
      *
      * @return boolean
      */
@@ -235,7 +253,7 @@
     }
 
     /**
-     * Return if contact attachment is enabled
+     * Gets if contact attachment is enabled
      *
      * @return boolean
      */
@@ -244,7 +262,7 @@
     }
 
     /**
-     * Return if notification are sent to admin with new item
+     * Gets if notification are sent to admin with new item
      *
      * @return boolean
      */
@@ -253,7 +271,7 @@
     }
 
     /**
-     * Return if the mailserver requires authetification
+     * Gets if the mailserver requires authetification
      *
      * @return boolean
      */
@@ -264,7 +282,7 @@
 
     //OTHER FUNCTIONS TO GET INFORMATION OF PREFERENCES
     /**
-     * Return the rewrite rules (generated via generate_rules.php at root folder)
+     * Gets the rewrite rules (generated via generate_rules.php at root folder)
      *
      * @return string
      */
@@ -273,7 +291,7 @@
     }
 
     /**
-     * Return max kb of uploads
+     * Gets max kb of uploads
      *
      * @return int
      */
@@ -282,7 +300,7 @@
     }
 
     /**
-     * Return allowed extensions of uploads
+     * Gets allowed extensions of uploads
      *
      * @return string
      */
@@ -291,7 +309,7 @@
     }
 
     /**
-     * Return thumbnails' dimensions
+     * Gets thumbnails' dimensions
      *
      * @return string
      */
@@ -300,7 +318,7 @@
     }
 
     /**
-     * Return preview images' dimensions
+     * Gets preview images' dimensions
      *
      * @return string
      */
@@ -309,7 +327,7 @@
     }
 
     /**
-     * Return normal size images' dimensions
+     * Gets normal size images' dimensions
      *
      * @return string
      */
@@ -318,7 +336,7 @@
     }
 
     /**
-     * Return when was the last version check
+     * Gets when was the last version check
      *
      * @return string
      */
@@ -327,7 +345,7 @@
     }
 
     /**
-     * Return current version
+     * Gets current version
      *
      * @return int
      */
@@ -336,7 +354,7 @@
     }
 
     /**
-     * Return website's title
+     * Gets website's title
      *
      * @return string
      */
@@ -345,7 +363,7 @@
     }
 
     /**
-     * Return website's default language
+     * Gets website's default language
      *
      * @return string
      */
@@ -354,7 +372,7 @@
     }
 
     /**
-     * Return website's admin default language
+     * Gets website's admin default language
      *
      * @return string
      */
@@ -363,7 +381,7 @@
     }
 
     /**
-     * Return current theme
+     * Gets current theme
      *
      * @return string
      */
@@ -372,7 +390,7 @@
     }
 
     /**
-     * Return current admin theme
+     * Gets current admin theme
      *
      * @return string
      */
@@ -381,7 +399,7 @@
     }
 
     /**
-     * Return website description
+     * Gets website description
      *
      * @return string
      */
@@ -390,7 +408,7 @@
     }
 
     /**
-     * Return contact email
+     * Gets contact email
      *
      * @return string
      */
@@ -399,7 +417,7 @@
     }
     
     /**
-     * Return date format
+     * Gets date format
      *
      * @return string
      */
@@ -408,7 +426,7 @@
     }
 
     /**
-     * Return time format
+     * Gets time format
      *
      * @return string
      */
@@ -417,7 +435,7 @@
     }
 
     /**
-     * Return week start day
+     * Gets week start day
      *
      * @return string
      */
@@ -426,7 +444,7 @@
     }
 
     /**
-     * Return number of items to display on RSS
+     * Gets number of items to display on RSS
      *
      * @return int
      */
@@ -435,7 +453,7 @@
     }
 
     /**
-     * Return default currency
+     * Gets default currency
      *
      * @return string
      */
@@ -444,7 +462,7 @@
     }
 
     /**
-     * Return akismet key
+     * Gets akismet key
      *
      * @return string
      */
@@ -453,7 +471,7 @@
     }
 
     /**
-     * Return recaptcha private key
+     * Gets recaptcha private key
      *
      * @return string
      */
@@ -462,7 +480,7 @@
     }
 
     /**
-     * Return recaptcha public key
+     * Gets recaptcha public key
      *
      * @return string
      */
@@ -471,7 +489,7 @@
     }
 
     /**
-     * Return mailserver's type
+     * Gets mailserver's type
      *
      * @return string
      */
@@ -480,7 +498,7 @@
     }
 
     /**
-     * Return mailserver's host
+     * Gets mailserver's host
      *
      * @return string
      */
@@ -489,7 +507,7 @@
     }
 
     /**
-     * Return mailserver's port
+     * Gets mailserver's port
      *
      * @return int
      */
@@ -498,7 +516,7 @@
     }
 
     /**
-     * Return mailserver's username
+     * Gets mailserver's username
      *
      * @return string
      */
@@ -507,7 +525,7 @@
     }
 
     /**
-     * Return mailserver's password
+     * Gets mailserver's password
      *
      * @return string
      */
@@ -516,7 +534,7 @@
     }
 
     /**
-     * Return if use SSL on the mailserver
+     * Gets if use SSL on the mailserver
      *
      * @return boolean
      */
@@ -525,7 +543,7 @@
     }
 
     /**
-     * Return list of active plugins
+     * Gets list of active plugins
      *
      * @return string
      */
@@ -534,7 +552,7 @@
     }
 
     /**
-     * Return default order field at search
+     * Gets default order field at search
      *
      * @return string
      */
@@ -543,7 +561,7 @@
     }
 
     /**
-     * Return default order type at search
+     * Gets default order type at search
      *
      * @return string
      */
@@ -552,7 +570,7 @@
     }
     
     /**
-     * Return default show as at search
+     * Gets default show as at search
      *
      * @return string
      */
@@ -561,7 +579,7 @@
     }
 
     /**
-     * Return max results per page at search
+     * Gets max results per page at search
      *
      * @return int
      */
@@ -570,7 +588,7 @@
     }
 
     /**
-     * Return default results per page at search
+     * Gets default results per page at search
      *
      * @return int
      */
@@ -579,7 +597,7 @@
     }
 
     /**
-     * Return max latest items
+     * Gets max latest items
      *
      * @return int
      */
@@ -588,7 +606,7 @@
     }
 
     /**
-     * Return if save searches is enabled or not
+     * Gets if save searches is enabled or not
      *
      * @return boolean
      */
@@ -601,7 +619,7 @@
     }
 
     /**
-     * Return how many seconds between item post to not consider it SPAM
+     * Gets how many seconds between item post to not consider it SPAM
      *
      * @return int
      */
@@ -610,7 +628,7 @@
     }
     
     /**
-     * Return how many seconds between comment post to not consider it SPAM
+     * Gets how many seconds between comment post to not consider it SPAM
      *
      * @return int
      */
@@ -619,7 +637,7 @@
     }
     
     /**
-     * Return if parent categories are enabled or not
+     * Gets if parent categories are enabled or not
      *
      * @return boolean
      */
@@ -630,6 +648,8 @@
     /**
      * generic function to retrieve preferences
      *
+     * @param string $key
+     * @param string $section
      * @return string
      */
     function osc_get_preference($key, $section = 'osclass') {
@@ -639,6 +659,10 @@
     /**
      * generic function to insert/update preferences
      *
+     * @param string $key
+     * @param mixed $value
+     * @param string $section
+     * @param string $type
      * @return boolean
      */
     function osc_set_preference($key, $value = '', $section = 'osclass', $type = 'STRING') {
@@ -648,10 +672,12 @@
     /**
      * generic function to delete preferences
      *
+     * @param string $key
+     * @param string $section
      * @return boolean
      */
-    function osc_delete_preference($value = '', $section = 'osclass') {
-        return Preference::newInstance()->delete(array('s_name' => $value, 's_section' => $section));
+    function osc_delete_preference($key = '', $section = 'osclass') {
+        return Preference::newInstance()->delete(array('s_name' => $key, 's_section' => $section));
     }
 
     /**
@@ -666,8 +692,9 @@
 
     //PRIVATE FUNCTION (if there was a class :P)
     /**
-     * Return preference
+     * Gets preference
      *
+     * @param string $key
      * @return boolean
      */
     function getBoolPreference($key) {
@@ -682,8 +709,10 @@
 
     //PRIVATE FUNCTION FOR GETTING NO BOOLEAN INFORMATION (if there was a class :P)
     /**
-     * Return preference
+     * Gets preference
      *
+     * @param string $key
+     * @param string $section
      * @return string
      */
     function getPreference($key, $section = 'osclass') {

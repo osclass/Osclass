@@ -28,9 +28,9 @@
     */
 
     /**
-     * Return search object
+     * Gets search object
      *
-     * @return <type>
+     * @return mixed
      */
     function osc_search() {
         if(View::newInstance()->_exists('search')) {
@@ -43,9 +43,9 @@
     }
 
     /**
-     * Return available search orders
+     * Gets available search orders
      *
-     * @return <type>
+     * @return array
      */
     function osc_list_orders() {
         return  array(
@@ -56,7 +56,7 @@
     }
     
     /**
-     * Return current search page
+     * Gets current search page
      *
      * @return int
      */
@@ -65,7 +65,7 @@
     }
     
     /**
-     * Return total pages of search
+     * Gets total pages of search
      *
      * @return int
      */
@@ -74,7 +74,7 @@
     }
     
     /**
-     * Return if "has pic" option is enabled or not in the search
+     * Gets if "has pic" option is enabled or not in the search
      *
      * @return boolean
      */
@@ -83,25 +83,25 @@
     }
     
     /**
-     * Return current search order
+     * Gets current search order
      *
-     * @return <type>
+     * @return string
      */
     function osc_search_order() {
         return View::newInstance()->_get('search_order');
     }
     
     /**
-     * Return current search order type
+     * Gets current search order type
      *
-     * @return <type>
+     * @return string
      */
     function osc_search_order_type() {
         return View::newInstance()->_get('search_order_type');
     }
     
     /**
-     * Return current search pattern
+     * Gets current search pattern
      *
      * @return string
      */
@@ -114,7 +114,7 @@
     }
     
     /**
-     * Return current search city
+     * Gets current search city
      *
      * @return string
      */
@@ -123,7 +123,7 @@
     }
     
     /**
-     * Return current search max price
+     * Gets current search max price
      *
      * @return float
      */
@@ -132,7 +132,7 @@
     }
     
     /**
-     * Return current search min price
+     * Gets current search min price
      *
      * @return float
      */
@@ -141,7 +141,7 @@
     }
     
     /**
-     * Return current search total items
+     * Gets current search total items
      *
      * @return int
      */
@@ -150,7 +150,7 @@
     }
     
     /**
-     * Return current search "show as" variable (show the items as a list or as a gallery)
+     * Gets current search "show as" variable (show the items as a list or as a gallery)
      *
      * @return string
      */
@@ -159,7 +159,7 @@
     }
     
     /**
-     * Return current search start item record
+     * Gets current search start item record
      *
      * @return int
      */
@@ -168,7 +168,7 @@
     }
     
     /**
-     * Return current search end item record
+     * Gets current search end item record
      *
      * @return int
      */
@@ -177,9 +177,9 @@
     }
     
     /**
-     * Return current search category
+     * Gets current search category
      *
-     * @return <type>
+     * @return array
      */
     function osc_search_category() {
         if (View::newInstance()->_exists('search_subcategories')) {
@@ -193,7 +193,7 @@
     }
     
     /**
-     * Return current search category id
+     * Gets current search category id
      *
      * @return int
      */
@@ -236,6 +236,11 @@
         return osc_base_url(true) ."?" . http_build_query($merged, '', $delimiter);
     }
 
+    /**
+     * Load the form for the alert subscription
+     *
+     * @return void
+     */
     function osc_alert_form() {
         $search = osc_search();
         $search->order() ;
@@ -245,7 +250,7 @@
     }
     
     /**
-     * Return alert of current search
+     * Gets alert of current search
      *
      * @return string
      */
@@ -254,7 +259,7 @@
     }
 
     /**
-     * Return for a default search (all categories, noother option)
+     * Gets for a default search (all categories, noother option)
      *
      * @return string
      */
@@ -267,8 +272,9 @@
     }
 
     /**
-     * Return search url given params
+     * Gets search url given params
      *
+     * @params array $params
      * @return string
      */
     function osc_search_url($params = null) {
@@ -282,7 +288,7 @@
     }
     
     /**
-     * Return list of countries with items
+     * Gets list of countries with items
      *
      * @return array
      */
@@ -295,7 +301,7 @@
     }
 
     /**
-     * Return list of regions with items
+     * Gets list of regions with items
      *
      * @return array
      */
@@ -308,7 +314,7 @@
     }
 
     /**
-     * Return list of cities with items
+     * Gets list of cities with items
      *
      * @return array
      */
@@ -321,7 +327,7 @@
     }
     
     /**
-     * Return the next country in the list_countries list
+     * Gets the next country in the list_countries list
      *
      * @return array
      */
@@ -333,8 +339,9 @@
     }
 
     /**
-     * Return the next region in the list_regions list
+     * Gets the next region in the list_regions list
      *
+     * @param string $country
      * @return array
      */
     function osc_has_list_regions($country = '%%%%') {
@@ -345,8 +352,9 @@
     }
 
     /**
-     * Return the next city in the list_cities list
+     * Gets the next city in the list_cities list
      *
+     * @param string $region
      * @return array
      */
     function osc_has_list_cities($region = '%%%%') {
@@ -360,7 +368,7 @@
     }
 
     /**
-     * Return the total number of countries in list_countries
+     * Gets the total number of countries in list_countries
      *
      * @return int
      */
@@ -372,8 +380,9 @@
     }
 
     /**
-     * Return the total number of regions in list_regions
+     * Gets the total number of regions in list_regions
      *
+     * @param string $country
      * @return int
      */
     function osc_count_list_regions($country = '%%%%') {
@@ -384,8 +393,9 @@
     }
 
     /**
-     * Return the total number of cities in list_cities
+     * Gets the total number of cities in list_cities
      *
+     * @param string $region
      * @return int
      */
     function osc_count_list_cities($region = '%%%%') {
@@ -396,7 +406,7 @@
     }
 
     /**
-     * Return the the name of current "list region"
+     * Gets the the name of current "list region"
      *
      * @return string
      */
@@ -405,7 +415,7 @@
     }
     
     /**
-     * Return the number of items of current "list region"
+     * Gets the number of items of current "list region"
      *
      * @return int
      */
@@ -414,7 +424,7 @@
     }
 
     /**
-     * Return the the name of current "list city""
+     * Gets the the name of current "list city""
      *
      * @return string
      */
@@ -423,7 +433,7 @@
     }
 
     /**
-     * Return the number of items of current "list city"
+     * Gets the number of items of current "list city"
      *
      * @return int
      */
@@ -432,7 +442,7 @@
     }
     
     /**
-     * Return the url of current "list country""
+     * Gets the url of current "list country""
      *
      * @return string
      */
@@ -441,7 +451,7 @@
     }
 
     /**
-     * Return the url of current "list region""
+     * Gets the url of current "list region""
      *
      * @return string
      */
@@ -450,7 +460,7 @@
     }
 
     /**
-     * Return the url of current "list city""
+     * Gets the url of current "list city""
      *
      * @return string
      */
@@ -462,8 +472,9 @@
      ** LATEST SEARCHES **
      **********************/
     /**
-     * Return the latest searches done in the website
+     * Gets the latest searches done in the website
      *
+     * @param int $limit
      * @return array
      */
     function osc_get_latest_searches($limit = 20) {
@@ -474,7 +485,7 @@
     }
 
     /**
-     * Return the total number of latest searches done in the website
+     * Gets the total number of latest searches done in the website
      *
      * @return int
      */
@@ -486,7 +497,7 @@
     }
     
     /**
-     * Return the next latest search
+     * Gets the next latest search
      *
      * @return array
      */
@@ -498,7 +509,7 @@
     }
 
     /**
-     * Return the current latest search
+     * Gets the current latest search
      *
      * @return array
      */
@@ -510,7 +521,7 @@
     }
     
     /**
-     * Return the current latest search pattern
+     * Gets the current latest search pattern
      *
      * @return string
      */
@@ -519,7 +530,7 @@
     }
 
     /**
-     * Return the current latest search date
+     * Gets the current latest search date
      *
      * @return string
      */
@@ -528,7 +539,7 @@
     }
 
     /**
-     * Return the current latest search total
+     * Gets the current latest search total
      *
      * @return string
      */

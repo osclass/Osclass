@@ -60,7 +60,11 @@
 
         public function extendData($items)
         {
-            $prefLocale = osc_current_user_locale();
+            if(defined('OC_ADMIN')) {
+                $prefLocale = osc_current_admin_locale();
+            } else {
+                $prefLocale = osc_current_user_locale();
+            }
 
             $results = array();
             foreach ($items as $item) {

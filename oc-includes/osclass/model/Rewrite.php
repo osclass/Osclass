@@ -87,6 +87,9 @@
             if(isset($_SERVER['REQUEST_URI'])) {
                 $request_uri = urldecode(preg_replace('@^' . REL_WEB_URL . '@', "", $_SERVER['REQUEST_URI']));
                 if(osc_rewrite_enabled()) {
+                    $this->extractParams($request_uri);
+                    $tmp_ar = explode("?", $request_uri);
+                    $request_uri = $tmp_ar[0];
                     foreach($this->rules as $match => $uri) {
                         // UNCOMMENT TO DEBUG
                         //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";

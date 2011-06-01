@@ -143,4 +143,15 @@ Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
+
+function osc_show_maintenance() {
+    if(defined('__OSC_MAINTENANCE__')) { ?>
+        <div id="maintenance" name="maintenance">
+             <?php _e("Your website is currently under maintenance mode"); ?>
+        </div>
+    <?php };
+}
+
+osc_add_hook("header", "osc_show_maintenance");
+
 ?>

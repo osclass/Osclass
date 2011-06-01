@@ -28,24 +28,58 @@
     * @author OSClass
     */
 
-    // Adds an ephemeral message to the session.
+    /**
+     * Adds an ephemeral message to the session. (error style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
     function osc_add_flash_message($msg, $section = 'pubMessages') {
         Session::newInstance()->_setMessage($section, $msg, 'error') ;
     }
 
+    /**
+     * Adds an ephemeral message to the session. (ok style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
     function osc_add_flash_ok_message($msg, $section = 'pubMessages') {
         Session::newInstance()->_setMessage($section, $msg, 'ok') ;
     }
 
+    /**
+     * Adds an ephemeral message to the session. (error style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
     function osc_add_flash_error_message($msg, $section = 'pubMessages') {
         Session::newInstance()->_setMessage($section, $msg, 'error') ;
     }
 
+    /**
+     * Adds an ephemeral message to the session. (info style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
     function osc_add_flash_info_message($msg, $section = 'pubMessages') {
         Session::newInstance()->_setMessage($section, $msg, 'info') ;
     }
 
-    //Shows all the pending flash messages in session and cleans up the array.
+    /**
+     * Shows all the pending flash messages in session and cleans up the array.
+     *
+     * @param $section
+     * @param $class
+     * @param $id
+     * @return void
+     */
     function osc_show_flash_message($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
         $message = Session::newInstance()->_getMessage($section) ;
 

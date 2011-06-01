@@ -87,7 +87,7 @@
                             $("#jsMessage").html("");
                         });
                     }, 3000);
-                    $('div.content_list_<?php echo osc_category_id();?>').hide();
+                    $('div.content_list_<?php echo osc_category_id();?>').html('');
                 },
                 error: function(){
                     $("#jsMessage").fadeIn("fast");

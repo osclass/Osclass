@@ -19,11 +19,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-<?php if(defined('__OSC_MAINTENANCE__')) { ?>
-<div id="maintenance" name="maintenance">
-     <?php _e("Your website is currently under maintenance mode"); ?>
-</div>
-<?php }; ?>
 <div id="header">
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">

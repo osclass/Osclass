@@ -7,11 +7,11 @@
      */
 
     /**
-     * Return a specific field from current user
+     * Gets a specific field from current user
      *
-     * @param <type> $field
-     * @param <type> $locale
-     * @return <type>
+     * @param string $field
+     * @param string $locale
+     * @return mixed
      */
     function osc_user_field($field, $locale = "") {
         if (View::newInstance()->_exists('users')) {
@@ -23,9 +23,9 @@
     }
 
     /**
-     * Return user array from view
+     * Gets user array from view
      *
-     * @return <type>
+     * @return array
      */
     function osc_user() {
         if (View::newInstance()->_exists('users')) {
@@ -38,7 +38,7 @@
     }
 
     /**
-     * Return true if user is logged in web
+     * Gets true if user is logged in web
      *
      * @return boolean
      */
@@ -72,7 +72,7 @@
     }
 
     /**
-     * Return logged user id
+     * Gets logged user id
      *
      * @return int
      */
@@ -81,7 +81,7 @@
     }
 
     /**
-     * Return logged user mail
+     * Gets logged user mail
      *
      * @return string
      */
@@ -90,7 +90,7 @@
     }
 
     /**
-     * Return logged user email
+     * Gets logged user email
      *
      * @return string
      */
@@ -99,7 +99,7 @@
     }
 
     /**
-     * Return logged user phone
+     * Gets logged user phone
      *
      * @return string
      */
@@ -108,7 +108,7 @@
     }
 
     /**
-     * Return true if admin user is logged in
+     * Gets true if admin user is logged in
      *
      * @return boolean
      */
@@ -142,7 +142,7 @@
     }
 
     /**
-     * Return logged admin id
+     * Gets logged admin id
      *
      * @return int
      */
@@ -151,7 +151,7 @@
     }
 
     /**
-     * Return logged admin username
+     * Gets logged admin username
      *
      * @return string
      */
@@ -160,7 +160,7 @@
     }
 
     /**
-     * Return logged admin name
+     * Gets logged admin name
      * @return string
      */
     function osc_logged_admin_name() {
@@ -168,7 +168,7 @@
     }
 
     /**
-     * Return logged admin email
+     * Gets logged admin email
      *
      * @return string
      */
@@ -177,7 +177,7 @@
     }
 
     /**
-     * Return name of current user
+     * Gets name of current user
      *
      * @return string
      */
@@ -186,7 +186,7 @@
     }
 
     /**
-     * Return email of current user
+     * Gets email of current user
      *
      * @return string
      */
@@ -195,7 +195,7 @@
     }
 
     /**
-     * Return registration date of current user
+     * Gets registration date of current user
      *
      * @return string
      */
@@ -204,7 +204,7 @@
     }
 
     /**
-     * Return id of current user
+     * Gets id of current user
      *
      * @return int
      */
@@ -213,7 +213,7 @@
     }
 
     /**
-     * Return website of current user
+     * Gets website of current user
      *
      * @return string
      */
@@ -222,7 +222,7 @@
     }
 
     /**
-     * Return description/information of current user
+     * Gets description/information of current user
      *
      * @return string
      */
@@ -231,7 +231,7 @@
     }
 
     /**
-     * Return phone of current user
+     * Gets phone of current user
      *
      * @return string
      */
@@ -240,7 +240,7 @@
     }
 
     /**
-     * Return cell phone of current user
+     * Gets cell phone of current user
      *
      * @return string
      */
@@ -249,7 +249,7 @@
     }
 
     /**
-     * Return phone_land if exist, else if exist return phone_mobile,
+     * Gets phone_land if exist, else if exist return phone_mobile,
      * else return string blank
      * @return string
      */
@@ -263,7 +263,7 @@
     }
 
     /**
-     * Return country of current user
+     * Gets country of current user
      *
      * @return string
      */
@@ -272,7 +272,7 @@
     }
 
     /**
-     * Return region of current user
+     * Gets region of current user
      *
      * @return string
      */
@@ -281,7 +281,7 @@
     }
 
     /**
-     * Return city of current user
+     * Gets city of current user
      *
      * @return string
      */
@@ -290,7 +290,7 @@
     }
 
     /**
-     * Return city area of current user
+     * Gets city area of current user
      *
      * @return string
      */
@@ -299,7 +299,7 @@
     }
 
     /**
-     * Return address of current user
+     * Gets address of current user
      *
      * @return address
      */
@@ -308,7 +308,7 @@
     }
 
     /**
-     * Return postal zip of current user
+     * Gets postal zip of current user
      *
      * @return string
      */
@@ -317,7 +317,7 @@
     }
 
     /**
-     * Return latitude of current user
+     * Gets latitude of current user
      *
      * @return float
      */
@@ -326,7 +326,7 @@
     }
 
     /**
-     * Return longitude of current user
+     * Gets longitude of current user
      *
      * @return float
      */
@@ -335,7 +335,7 @@
     }
 
     /**
-     * Return number of items validated of current user
+     * Gets number of items validated of current user
      *
      * @return int
      */
@@ -344,7 +344,7 @@
     }
 
     /**
-     * Return number of comments validated of current user
+     * Gets number of comments validated of current user
      *
      * @return int
      */
@@ -357,17 +357,17 @@
     /////////////
 
     /**
-     * Return a specific field from current alert
+     * Gets a specific field from current alert
      *
      * @param array $field
-     * @return <type>
+     * @return mixed
      */
     function osc_alert_field($field) {
         return osc_field(View::newInstance()->_current('alerts'), $field, '') ;
     }
 
     /**
-     * Return next alert if there is, else return null
+     * Gets next alert if there is, else return null
      *
      * @return array
      */
@@ -379,7 +379,7 @@
     }
 
     /**
-     * Return number of alerts in array alerts
+     * Gets number of alerts in array alerts
      * @return int
      */
     function osc_count_alerts() {
@@ -387,7 +387,7 @@
     }
 
     /**
-     * Return current alert fomr view
+     * Gets current alert fomr view
      *
      * @return array
      */
@@ -396,7 +396,7 @@
     }
 
     /**
-     * Return search field of current alert
+     * Gets search field of current alert
      *
      * @return string
      */
@@ -405,7 +405,7 @@
     }
 
     /**
-     * Return secret of current alert
+     * Gets secret of current alert
      * @return string
      */
     function osc_alert_secret() {
@@ -413,7 +413,7 @@
     }
 
     /**
-     * Return the search object of a specific alert
+     * Gets the search object of a specific alert
      *
      * @return Search
      */
@@ -422,7 +422,7 @@
     }
     
     /**
-     * Return next user in users array
+     * Gets next user in users array
      * 
      * @return <type>
      */
