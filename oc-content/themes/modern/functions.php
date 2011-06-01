@@ -120,7 +120,9 @@
                     $text = osc_page_title();
                 break;
             }
-            return htmlentities(utf8_decode($text));
+            
+            $text = str_replace('"', "'", $text);
+            return ($text);
          }
      }
 
@@ -172,8 +174,12 @@
                     osc_reset_items();
                     $text = $result;
                 break;
+            
+                
             }
-            return htmlentities(utf8_decode($text));
+            
+            $text = str_replace('"', "'", $text);
+            return ($text);
          }
      }
 ?>
