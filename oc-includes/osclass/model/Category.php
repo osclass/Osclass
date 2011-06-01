@@ -142,7 +142,11 @@
                     $all_relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
                 }
             }
-            $tree = $this->sideTree($all_relation[0], $all_categories, $all_relation);
+            if(isset($all_relation[0])) {
+                $tree = $this->sideTree($all_relation[0], $all_categories, $all_relation);
+            } else {
+                $tree = array();
+            }
             return $tree;
         }
 
