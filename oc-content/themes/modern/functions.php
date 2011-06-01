@@ -146,6 +146,7 @@
                 break;
                 case('page'):
                     $text = osc_highlight(strip_tags(osc_static_page_text()), 140);
+                    $text = html_entity_decode($text, null, 'UTF-8');
                 break;
                 case('search'):
                     $result = '';
