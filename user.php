@@ -99,8 +99,7 @@
                                                 } else {
                                                     $user = User::newInstance()->findByEmail(Params::getParam('new_email'));
                                                     if(!isset($user['pk_i_id'])) {
-                                                        if( osc_user_validation_enabled() )
-                                                        {
+                                                        //if( osc_user_validation_enabled() ) {
                                                             $userEmailTmp = array() ;
                                                             $userEmailTmp['fk_i_user_id'] = Session::newInstance()->_get('userId') ;
                                                             $userEmailTmp['s_new_email'] = Params::getParam('new_email') ;
@@ -147,16 +146,16 @@
                                                             }
                                                             $this->redirectTo( osc_user_profile_url() ) ;
 
-                                                        } else {
+                                                        /*} else {
 
                                                             User::newInstance()->update(
                                                                 array( 's_email' => Params::getParam('new_email') )
-                                                                ,array( 'pk_i_id' => Params::getParam('userId') )
+                                                                ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
                                                             ) ;
                                                             osc_add_flash_ok_message( _m('Your email has been changed successfully')) ;
                                                             $this->redirectTo( osc_user_profile_url() ) ;
 
-                                                        }
+                                                        }*/
                                                     } else {
                                                         osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
                                                         $this->redirectTo( osc_change_user_email_url() ) ;

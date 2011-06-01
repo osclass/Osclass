@@ -72,14 +72,17 @@
                     // CATCH FATAL ERRORS
                     $old_value = error_reporting(0);
                     register_shutdown_function(array($this, 'errorHandler'), $pn);
-                    Plugins::activate($pn);
+                    $installed = Plugins::activate($pn);
                     
-                    //run this after installing the plugin
-                    Plugins::runHook('install_'.$pn) ;
+                    if($installed) {
+                        //run this after installing the plugin
+                        Plugins::runHook('install_'.$pn) ;
+                        osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
+                    } else {
+                        osc_add_flash_error_message( _m('Error: Plugin already installed'), 'admin') ;
+                    }
                     error_reporting($old_value);            
 
-
-                    osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'uninstall':
