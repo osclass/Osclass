@@ -51,14 +51,6 @@
     }
     
 
-    // UNCOMMENT THEESE LINES IF YOU'RE A DEVELOPER
-    //if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
-    //    $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-    //    $conn = getConnection();
-    //    $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
-    //}
-    //print_r($error_queries[0]);
-
     if($version<203) {
         $conn->osc_dbExec("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER'),('osclass', 'items_wait_time', '90', 'INTEGER'),('osclass', 'comments_per_page', '10', 'INTEGER'),('osclass', 'numImages@items', '0', 'INTEGER')", DB_TABLE_PREFIX);
         $users = User::newInstance()->listAll();
@@ -93,8 +85,13 @@
         osc_changeVersionTo(203) ;
     }
 
+    if($version<210) {
+        $conn->osc_dbExec("INSERT INTO %st_preference VALUES ('osclass', 'reg_user_post_comments', '0', 'BOOLEAN'),('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')", DB_TABLE_PREFIX);
+        osc_changeVersionTo(210) ;
+    }
 
-    // UNCOMMENT THEESE LINES IF YOU'RE A DEVELOPER
+    
+    // UNCOMMENT THESE LINES IF YOU'RE TESTING UPGRADE
     //osc_changeVersionTo(202) ;
 
     
