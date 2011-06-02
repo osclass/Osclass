@@ -75,8 +75,8 @@
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $type, $email);
         }
 
-        public function createAlert($userid = null, $email, $alert, $secret, $type = 'DAILY') {
-            if($userid == null){
+        public function createAlert($userid = 0, $email, $alert, $secret, $type = 'DAILY') {
+            if($userid == 0 || $userid == null){
                 $results = $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_search LIKE \'%s\' AND fk_i_user_id = 0 AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $alert, $email);
             } else {
                 $results = $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_search LIKE \'%s\' AND fk_i_user_id = %s', DB_TABLE_PREFIX, $alert, $userid);
