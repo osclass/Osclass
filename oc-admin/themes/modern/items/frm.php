@@ -53,7 +53,9 @@
                 } else {
                     $("#contact_info").hide();
                 }
-                $('textarea, button,select, input:file').uniform();
+                if (typeof $.uniform != 'undefined') {
+                    $('textarea, button,select, input:file').uniform();
+                }
             });
         </script>
         <?php ItemForm::location_javascript('admin'); ?>
