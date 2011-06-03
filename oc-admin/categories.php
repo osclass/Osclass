@@ -204,7 +204,20 @@
                     }
                     $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break;
+                case('settings'):     // calling the categories view
+                                        $this->doView('categories/settings.php');
+                break;
+                case('settings_post'):// updating categories option
+                                        $selectableParent = Params::getParam('selectable_parent_categories');
 
+                                        $updated = Preference::newInstance()->update(array('s_value' => $selectableParent)
+                                                                                    ,array('s_name'  => 'selectable_parent_categories'));
+                                        if($updated > 0) {
+                                            osc_add_flash_ok_message( _m('Categories\' settings have been updated'), 'admin');
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=categories&action=settings');
+
+                break;
                 default:
                     $this->_exportVariableToView("categories", $this->categoryManager->toTreeAll() );
                     $this->doView("categories/index.php");
