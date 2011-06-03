@@ -76,8 +76,9 @@
                 </div>
 
                 <div id="add_item_form" class="item-form">
+                    <h1><?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?></h1>
                     <ul id="error_list"></ul>
-                    <form name="item" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data">
+                    <form name="item" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data" >
                         <input type="hidden" name="page" value="items" />
                         <?php if($new_item) { ?>
                             <input type="hidden" name="action" value="post_item" />
@@ -169,8 +170,8 @@
                             <button type="submit"><?php if($new_item) { _e('Add item'); } else { _e('Update'); } ?></button>
                             <button type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=items';" ><?php _e('Cancel'); ?></button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
 
         </div>

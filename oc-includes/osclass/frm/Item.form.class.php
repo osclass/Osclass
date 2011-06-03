@@ -551,7 +551,7 @@
                     }
                 });
             });
-             Description
+             //Description
             $(".description textarea").each(function(){
                 lang_name   = $(this).parent().prev().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
                 lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
