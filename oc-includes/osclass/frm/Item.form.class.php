@@ -220,12 +220,20 @@
         }
         // OK
         static public function region_select($regions = null, $item = null) {
-            if($regions==null) { $regions = osc_get_regions(); };
+            // if have input text instead of select
+            if( Session::newInstance()->_getForm('region') != ''){
+                $regions = null;
+            } else {
+                if($regions==null) { $regions = osc_get_regions(); };
+            }
             if($item==null) { $item = osc_item(); };
             
             if( count($regions) > 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
+                    if( Session::newInstance()->_getForm('countryId') != "" ) {
+                        $regions = Region::newInstance()->getByCountry(Session::newInstance()->_getForm('countryId')) ;
+                    }
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
@@ -244,21 +252,21 @@
                 return true ;
             }
         }
-        // OK
-        static public function region_text($item = null) {
-            if($item==null) { $item = osc_item(); };
-            if( Session::newInstance()->_getForm('region') != "" ) {
-                $item['s_region'] = Session::newInstance()->_getForm('region');
-            }
-            parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
-        }
+        
         // OK
         static public function city_select($cities = null, $item = null) {
-            if($cities==null) { $cities = osc_get_cities(); };
+            if( Session::newInstance()->_getForm('city') != ''){
+                $cities = null;
+            } else {
+                if($cities==null) { $cities = osc_get_cities(); };
+            }
             if($item==null) { $item = osc_item(); };
             if( count($cities) > 1 ) {
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
+                    if( Session::newInstance()->_getForm('regionId') != "" ) {
+                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d", Session::newInstance()->_getForm('regionId') ) ;
+                    }
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
@@ -277,15 +285,7 @@
                 return true ;
             }
         }
-        // OK 
-        static public function city_text($item = null) {
-            if($item==null) { $item = osc_item(); };
-            if( Session::newInstance()->_getForm('city') != "" ) {
-                $item['s_city'] = Session::newInstance()->_getForm('city');
-            }
-            parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
-            return true ;
-        }
+       
         // OK
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
@@ -347,7 +347,7 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#countryId").change(function(){
+        $("#countryId").live("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
@@ -357,37 +357,103 @@
             var result = '';
 
             if(pk_c_code != '') {
+
+                if (typeof $.uniform != 'undefined') {
+                    $.uniform.restore("#regionId");
+                    $.uniform.restore("#region");
+                    $.uniform.restore("#cityId");
+                    $.uniform.restore("#city");
+                }
+                
                 $("#regionId").attr('disabled',false);
                 $("#cityId").attr('disabled',true);
+
                 $.ajax({
                     type: "POST",
                     url: url,
                     dataType: 'json',
                     success: function(data){
                         var length = data.length;
+                        
                         if(length > 0) {
+
                             result += '<option value=""><?php _e("Select a region..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+                            
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
+
+                            $("#city").before('<select name="cityId" id="cityId" ></select>');
+                            $("#city").remove();
+                            
+                            $("#regionId").val("");
+
+                            if (typeof $.uniform != 'undefined') {
+                                $("#regionId").uniform();
+                                $("#cityId").uniform();
+                                $("#uniform-regionId span").html("<?php _e("Select a region..."); ?>");
+                                $("#uniform-cityId span").html("<?php _e("Select a city..."); ?>");
+                            }
+
                         } else {
-                            result += '<option value=""><?php _e('No results') ?></option>';
+
                             $("#regionId").before('<input type="text" name="region" id="region" />');
                             $("#regionId").remove();
+                            
+                            $("#cityId").before('<input type="text" name="city" id="city" />');
+                            $("#cityId").remove();
+                            
+                            if (typeof $.uniform != 'undefined') {
+                                $("#region").uniform();
+                                $("#city").uniform();
+                            }
                         }
+
                         $("#regionId").html(result);
+                        $("#cityId").html('<option selected value=""><?php _e("Select a city..."); ?></option>');
                     }
                  });
+
              } else {
-                $("#regionId").attr('disabled',true);
-                $("#cityId").attr('disabled',true);
+                 if (typeof $.uniform != 'undefined') {
+                     $.uniform.restore("#regionId");
+                     $.uniform.restore("#region");
+                     $.uniform.restore("#cityId");
+                     $.uniform.restore("#city");
+                 }
+
+                 // add empty select
+                 $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
+                 $("#region").remove();
+                 
+                 $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
+                 $("#city").remove();
+
+                 if( $("#regionId").length > 0 ){
+                     $("#regionId").html('<option value=""><?php _e("Select a region..."); ?></option>');
+                 } else {
+                     $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
+                     $("#region").remove();
+                 }
+                 if( $("#cityId").length > 0 ){
+                     $("#cityId").html('<option value=""><?php _e("Select a city..."); ?></option>');
+                 } else {
+                     $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
+                     $("#city").remove();
+                 }
+                 if (typeof $.uniform != 'undefined') {
+                     $("#regionId").uniform();
+                     $("#cityId").uniform();
+                 }
+
+                 $("#regionId").attr('disabled',true);
+                 $("#cityId").attr('disabled',true);
              }
         });
 
-
-        $("#regionId").change(function(){
+        $("#regionId").live("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
@@ -398,6 +464,12 @@
             var result = '';
 
             if(pk_c_code != '') {
+                
+                if (typeof $.uniform != 'undefined') {
+                    $.uniform.restore("#cityId");
+                    $.uniform.restore("#city");
+                }
+
                 $("#cityId").attr('disabled',false);
                 $.ajax({
                     type: "POST",
@@ -406,7 +478,7 @@
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php _e("Select a city..."); ?></option>';
+                            result += '<option selected value=""><?php _e("Select a city..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
@@ -418,6 +490,11 @@
                             $("#cityId").remove();
                         }
                         $("#cityId").html(result);
+                        // uniform
+                        if (typeof $.uniform != 'undefined') {
+                            $("#cityId").uniform();
+                            $("#city").uniform();
+                        }
                     }
                  });
              } else {
