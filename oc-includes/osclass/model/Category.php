@@ -251,23 +251,8 @@
             }
         }
 
-        public function findSubcategories($cat_id, $withads = false) {
-            if (!$withads) {
-                $results = $this->listWhere("fk_i_parent_id = %d", $cat_id);
-            } else {
-                // ( DATE_SUB ( CURDATE(), INTERVAL a.i_expiration_days DAY) <= c.dt_pub_date ) OR
-                // That was on the SQL but I don't know why it failed.
-                $results = $this->conn->osc_dbFetchResults("SELECT a.pk_i_id, b.s_name, count(a.pk_i_id) FROM %s as a, %s as b, %s as c WHERE " .
-                        "a.fk_i_parent_id = %d AND a.pk_i_id = c.fk_i_category_id AND b.fk_i_category_id = c.fk_i_category_id AND " .
-                        "(  a.i_expiration_days = 0 ) GROUP BY b.s_name ORDER BY a.i_position DESC",
-                        $this->getTableName(),
-                        $this->getTableDescriptionName(),
-                        $this->getTableItemName(),
-                        $cat_id
-                );
-            }
-
-            return ($results);
+        public function findSubcategories($cat_id) {
+            return $this->listWhere("fk_i_parent_id = %d", $cat_id);
         }
 
         //overwritten

@@ -57,7 +57,7 @@ function update_cat_stats() {
 	foreach($cats as $c) {
         if($c['i_expiration_days']!=0) {
             $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d")-$c['i_expiration_days'],   date("Y")));
-    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE `dt_pub_date` > '%s' AND fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
+    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE (`dt_pub_date` > '%s' OR b_premium = 1) AND fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
         } else {
     	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
         }
