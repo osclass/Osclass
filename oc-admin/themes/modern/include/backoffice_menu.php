@@ -52,9 +52,6 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
             </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add">&raquo; <?php _e('Add a new category'); ?></a>
-            </li>
         </ul>
 
         <h3>

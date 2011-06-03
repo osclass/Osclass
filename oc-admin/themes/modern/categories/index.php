@@ -154,6 +154,7 @@
                         error: function(){
                             $("#jsMessage").fadeIn("fast");
                             $("#jsMessage").html("<?php _e('Ajax error, try again.');?>");
+
                             setTimeout(function(){
                                 $("#jsMessage").fadeOut("slow", function () {
                                     $("#jsMessage").html("");
@@ -231,6 +232,7 @@
 
                         $("#jsMessage").fadeIn("fast");
                         $("#jsMessage").html(message);
+
                         setTimeout(function(){
                             $("#jsMessage").fadeOut("slow", function () {
                                 $("#jsMessage").html("");
@@ -271,8 +273,16 @@
                 <div style="clear: both;"></div>
                 <div id="TableCategories" class="TableCategories">
                     <div style="padding-left:10px;">
-                        <img src="<?php echo osc_current_admin_theme_url(); ?>images/question.png" />
-                        <?php _e('Drag&drop the categories to reorder them the way you like. Click on the pencil icon to quick edit the name of the category'); ?>.
+                        <p>
+                            <img src="<?php echo osc_current_admin_theme_url(); ?>images/question.png" />
+                            <?php _e('Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category'); ?>.
+                        </p>
+                        <p style="padding-left: 20px;">
+                            <strong class="publish_button">
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add_post_default"><?php _e('+ Add new category'); ?></a>
+                            </strong>
+                        </p>
+
                     </div>
                     <ul id="sortable" class="sortable">
                     <?php foreach($categories as $category) {?>

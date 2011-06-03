@@ -574,3 +574,13 @@ tr.even td{
 .close img {
     border: 0;
 }
+
+#jsMessage { background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:fixed; text-align: center; top:0; width:100%; }
+
+.publish_button {
+    -moz-border-radius: 5px 5px 5px 5px;
+    background-color: #E6E6E6;
+    border: 1px solid #AAAAAA;
+    margin: 9px 10px 0 0;
+    padding: 6px 10px 7px;
+}
