@@ -69,7 +69,7 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <div class="content_header" id="content_header">
                     <div style="float: left;">
-                        <img alt="" title="" src="http://localhost/osclass/oc-admin/themes/modern/images/new-folder-icon.png">
+                        <img alt="" title="" src="<?php echo osc_current_admin_theme_url('images/new-folder-icon.png') ; ?>">
                     </div>
                     <div id="content_header_arrow">» <?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?></div>
                     <div style="clear: both;"></div>
