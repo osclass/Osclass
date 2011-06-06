@@ -62,7 +62,6 @@
                                                 break;
                                             }
 
-                                            osc_add_flash_error_message($msg, 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=languages');
                 break;
                 case 'edit':                // editing a language
