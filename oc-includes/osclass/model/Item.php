@@ -284,6 +284,8 @@
             return $total_ads['total'];
         }
 
+        // LEAVE THIS FOR COMPATIBILITIES ISSUES (ONLY SITEMAP GENERATOR)
+        // BUT REMEMBER TO DELETE IN ANYTHING > 2.1.x THANKS
         public function listLatest($limit = 10)
         {
             return $this->listWhere(" b_active = 1 AND b_enabled = 1 ORDER BY dt_pub_date DESC LIMIT " . $limit);

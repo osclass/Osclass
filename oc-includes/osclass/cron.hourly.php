@@ -38,7 +38,9 @@ function count_items_subcategories($category = null) {
     $categories = Category::newInstance()->isParentOf($category['pk_i_id']);
     if($categories!=null) {
         foreach($categories as $c) {
-            $total += count_items_subcategories($c);
+            if($c['b_enabled']==1) {
+                $total += count_items_subcategories($c);
+            }
         }
     }
     $conn = getConnection();
@@ -55,12 +57,12 @@ function update_cat_stats() {
 	$cats = $conn->osc_dbFetchResults($sql_cats);
 	
 	foreach($cats as $c) {
-        if($c['i_expiration_days']!=0) {
-            $date = date('Y-m-d H:i:s', mktime(0, 0, 0, date("m"), date("d")-$c['i_expiration_days'],   date("Y")));
-    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE (`dt_pub_date` > '%s' OR b_premium = 1) AND fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $date, $c['pk_i_id']);
-        } else {
+        if($c['i_expiration_days']==0) {
     	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
+        } else {
+    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 AND (b_premium = 1 || TIMESTAMPDIFF(DAY,dt_pub_date,NOW()) < %d) GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id'], $c['i_expiration_days']);
         }
+        
         $total = $conn->osc_dbFetchResult($sql);
         $total = $total['total'];
         

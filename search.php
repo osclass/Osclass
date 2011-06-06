@@ -191,8 +191,9 @@
 
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
-            $this->mSearch->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
-            $this->mSearch->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
+            // TODO: DELETE THIS IN 2.1 IF SEARCHES WORKED FINE ;)
+            //$this->mSearch->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+            //$this->mSearch->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
 
 
             if(!Params::existParam('sFeed')) {
