@@ -175,6 +175,18 @@
                                     </select>
                                 </fieldset>
                             </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Number of recent items displayed at home') ; ?></legend>
+                                    <select name="max_latest_items_at_home" id="max_latest_items_at_home">
+                                        <option value="5" <?php echo (osc_max_latest_items_at_home() == '5') ? 'selected="selected"' : '' ; ?>>5</option>
+                                        <option value="10" <?php echo (osc_max_latest_items_at_home() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
+                                        <option value="25" <?php echo (osc_max_latest_items_at_home() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
+                                        <option value="50" <?php echo (osc_max_latest_items_at_home() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
+                                    </select>
+                                </fieldset>
+                            </div>
                             <div style="clear: both;"></div>
                             <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
                         </form>

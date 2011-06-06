@@ -655,6 +655,7 @@
                                         $sWeekStart    = Params::getParam('weekStart');
                                         $sTimeFormat   = Params::getParam('timeFormat');
                                         $sNumRssItems  = Params::getParam('num_rss_items');
+                                        $maxLatestItems = Params::getParam('max_latest_items_at_home');
 
                                         // preparing parameters
                                         $sPageTitle    = strip_tags($sPageTitle);
@@ -666,6 +667,7 @@
                                         $sWeekStart    = strip_tags($sWeekStart);
                                         $sTimeFormat   = strip_tags($sTimeFormat);
                                         $sNumRssItems  = strip_tags($sNumRssItems);
+                                        $maxLatestItems = strip_tags($maxLatestItems);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
@@ -685,6 +687,8 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
