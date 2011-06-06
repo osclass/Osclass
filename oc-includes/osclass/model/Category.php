@@ -412,6 +412,8 @@
                 $sql = 'INSERT INTO ' . $this->getTableDescriptionName() . ' (' . $columns . ') VALUES (' . $set . ')';
                 $this->conn->osc_dbExec($sql);
             }
+
+            return $category_id;
         }
 
         public function insert_description($fields_description) {

@@ -300,58 +300,6 @@
                         $this->redirectTo( osc_base_url() ) ;
                     }
                 break;
-                /*case 'deleteResource':
-                    $id     = Params::getParam('id') ;
-                    $item   = Params::getParam('item') ;
-                    $code   = Params::getParam('code') ;
-                    $secret = Params::getParam('secret') ;
-
-                    // Check for required fields
-                    if ( !( is_numeric($id) && is_numeric($item) && preg_match('/^([a-z0-9]+)$/i', $code) ) ) {
-                        osc_add_flash_error_message( _m("The selected photo couldn't be deleted, the url doesn't exist") ) ;
-                        if($this->userId == null) {
-                            $this->redirectTo(osc_base_url());
-                        } else {
-                            $this->redirectTo(osc_user_dashboard_url());
-                        }
-                    }
-
-                    $aItem = $this->itemManager->findByPrimaryKey($item);
-
-                    // Check if the item exists
-                    if(count($aItem) == 0) {
-                        osc_add_flash_error_message( _m('The item doesn\'t exist') );
-                        $this->redirectTo(osc_base_url());
-                    }
-
-                    // Check if the item belong to the user
-                    if($this->userId != null && $this->userId != $aItem['fk_i_user_id']) {
-                        osc_add_flash_error_message( _m('The item doesn\'t belong to you') );
-                        $this->redirectTo(osc_item_url_ns($item));
-                    }
-
-                    // Check if the secret passphrase match with the item
-                    if($this->userId == null && $secret != $aItem['s_secret']) {
-                        osc_add_flash_error_message( _m('The item doesn\'t belong to you') );
-                        $this->redirectTo(osc_item_url_ns($item));
-                    }
-
-                    // Does id & code combination exist?
-                    $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
-
-                    if ($result > 0) {
-                        // Delete: file, db table entry
-                        osc_deleteResource($id);
-                        ItemResource::newInstance()->delete(array('pk_i_id' => $id, 'fk_i_item_id' => $item, 's_name' => $code) );
-
-                        osc_add_flash_ok_message( _m('The selected photo has been successfully deleted') ) ;
-                    } else {
-                        osc_add_flash_error_message( _m("The selected photo couldn't be deleted") ) ;
-                    }
-
-                    // Redirect to item_edit. If unregistered user, include $secret.
-                    $this->redirectTo( osc_item_edit_url($secret, $item) );
-                break;*/
                 case 'mark':
                     $mItem = new ItemActions(false) ;
 
@@ -583,8 +531,8 @@
         function doView($file) {
             osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
-            osc_run_hook("after_html");
             Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
     }
 

@@ -57,8 +57,8 @@
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
                     <div style="padding: 20px;">
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="page" value="settings" />
-                            <input type="hidden" name="action" value="items_post" />
+                            <input type="hidden" name="page" value="items" />
+                            <input type="hidden" name="action" value="settings_post" />
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>

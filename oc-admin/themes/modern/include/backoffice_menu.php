@@ -36,12 +36,17 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items">&raquo; <?php _e('Manage items'); ?></a>
             </li>
-            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a></li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a>
+            </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=media">&raquo; <?php _e('Manage media'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=settings">&raquo; <?php _e('Settings'); ?></a>
             </li>
         </ul>
 
@@ -53,7 +58,7 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add">&raquo; <?php _e('Add a new category'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=settings">&raquo; <?php _e('Settings'); ?></a>
             </li>
         </ul>
 
@@ -126,16 +131,10 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings">&raquo; <?php _e('General settings'); ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=items">&raquo; <?php _e('Items'); ?></a>
-            </li>
-            <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=users">&raquo; <?php _e('Users'); ?></a>
-            </li>
-            <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=categories">&raquo; <?php _e('Categories'); ?></a>
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=contact">&raquo; <?php _e('Contact'); ?></a>
