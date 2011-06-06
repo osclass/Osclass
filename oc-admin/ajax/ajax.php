@@ -205,16 +205,9 @@
                 case 'delete_category':
                     $id = Params::getParam("id");
                     $error = 0;
-                    $json_subcategories = ', "afectedIds": [';
+                    
                     try {
                         $categoryManager = Category::newInstance() ;
-                        $subcats = $categoryManager->findSubcategories($id);
-                        if (count($subcats) > 0) {
-                            foreach ($subcats as $s) {
-                                $json_subcategories .= '{ "id" : "'.$s["pk_i_id"].'"},';
-                            }
-                            $json_subcategories = substr($json_subcategories,0,-1); 
-                        }
                         $categoryManager->deleteByPrimaryKey($id) ;
                       
                         $message = __('The categories have been deleted');
@@ -222,11 +215,10 @@
                         $error = 1;
                         $message = __('Error while deleting');
                     }
-                    $json_subcategories .= ']';
                     
                     $result = "{";
                     if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
-                    else {       $result .= '"ok" : "Saved." '.$json_subcategories; }
+                    else {       $result .= '"ok" : "Saved." '; }
                     $result .= "}";
                     
                     echo $result;

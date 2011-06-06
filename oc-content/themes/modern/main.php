@@ -98,9 +98,9 @@
                                              </td>
                                              <td class="text">
                                                  <h3><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></h3>
-                                                 <p><?php echo osc_item_description() ; ?></p>
-                                             </td>
-                                            <td class="price"><strong><?php echo osc_item_formated_price() ; ?></strong></td>
+                                                 <p><strong><?php echo osc_item_formated_price() ; ?> - <?php echo osc_item_city(); ?> (<?php echo osc_item_region();?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong></p>
+                                                 <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ) ; ?></p>
+                                             </td>                                       
                                          </tr>
                                         <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
                                     <?php } ?>

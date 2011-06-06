@@ -53,19 +53,8 @@
                     </div>
                 </div>
 
-                <h3><?php _e('Total number of items\' views'); ?></h3>
-                <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
-                    <?php if(count($reports)==0) {
-                        _e('There\'re no statistics yet.');
-                    }
-                    ?>
-                </div>
-
-
-                <br/>
-
                 <h3><?php _e('Total number of reports'); ?></h3>
-                <div id="placeholder2" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
+                <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($reports)==0) {
                         _e('There\'re no statistics yet.');
                     }
@@ -94,37 +83,28 @@
             function drawChart() {
 
                 var data = new google.visualization.DataTable();
-                var data2 = new google.visualization.DataTable();
                 data.addColumn('string', '<?php _e('Date'); ?>');
-                data.addColumn('number', '<?php _e('Views'); ?>');
-                data2.addColumn('string', '<?php _e('Date'); ?>');
-                data2.addColumn('number', '<?php _e('Spam'); ?>');
-                data2.addColumn('number', '<?php _e('Repeated'); ?>');
-                data2.addColumn('number', '<?php _e('Bad category'); ?>');
-                data2.addColumn('number', '<?php _e('Offensive'); ?>');
-                data2.addColumn('number', '<?php _e('Expired'); ?>');
+                data.addColumn('number', '<?php _e('Spam'); ?>');
+                data.addColumn('number', '<?php _e('Repeated'); ?>');
+                data.addColumn('number', '<?php _e('Bad category'); ?>');
+                data.addColumn('number', '<?php _e('Offensive'); ?>');
+                data.addColumn('number', '<?php _e('Expired'); ?>');
                 <?php $k = 0;
                 echo "data.addRows(".count($reports).");";
-                echo "data2.addRows(".count($reports).");";
                 foreach($reports as $date => $data) {
                     echo "data.setValue(".$k.", 0, \"".$date."\");";
-                    echo "data.setValue(".$k.", 1, ".$data['views'].");";
-                    echo "data2.setValue(".$k.", 0, \"".$date."\");";
-                    echo "data2.setValue(".$k.", 1, ".$data['spam'].");";
-                    echo "data2.setValue(".$k.", 2, ".$data['repeated'].");";
-                    echo "data2.setValue(".$k.", 3, ".$data['bad_classified'].");";
-                    echo "data2.setValue(".$k.", 4, ".$data['offensive'].");";
-                    echo "data2.setValue(".$k.", 5, ".$data['expired'].");";
+                    echo "data.setValue(".$k.", 1, ".$data['spam'].");";
+                    echo "data.setValue(".$k.", 2, ".$data['repeated'].");";
+                    echo "data.setValue(".$k.", 3, ".$data['bad_classified'].");";
+                    echo "data.setValue(".$k.", 4, ".$data['offensive'].");";
+                    echo "data.setValue(".$k.", 5, ".$data['expired'].");";
                     $k++;
                 };
                 ?>
 
                 // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.LineChart(document.getElementById('placeholder'));
-                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max['views']*1.1);?>}});
-
-                var chart2 = new google.visualization.ColumnChart(document.getElementById('placeholder2'));
-                chart2.draw(data2, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max['other']*1.1);?>}});
+                var chart = new google.visualization.ColumnChart(document.getElementById('placeholder'));
+                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max['other']*1.1);?>}});
             }
             </script>
         <?php }; ?>
