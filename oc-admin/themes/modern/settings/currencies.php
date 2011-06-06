@@ -74,8 +74,8 @@
                         [
                             "<input type='checkbox' name='code[]' value='<?php echo $c['pk_c_code']; ?>' />",
                             "<?php echo $c['pk_c_code']; ?> <div><a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=delete&amp;code[]=<?php echo $c['pk_c_code']; ?>'><?php _e('Delete'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=settings&amp;action=currencies&amp;type=edit&amp;code=<?php echo $c['pk_c_code']; ?>'><?php _e('Edit'); ?></a></div>",
-                            "<?php echo $c['s_name']; ?>",
-                            "<?php echo $c['s_description']; ?>"
+                            "<?php echo addcslashes($c['s_name'],'"'); ?>",
+                            "<?php echo addcslashes($c['s_description'],'"'); ?>"
                         ]  <?php echo $last_id != $c['pk_c_code'] ? ',' : ''; ?>
                         <?php } ?>
                     ],
