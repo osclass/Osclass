@@ -646,6 +646,15 @@
     }
 
     /**
+     * Return max. number of latest items displayed at home index
+     *
+     * @return int
+     */
+    function osc_max_latest_items_at_home() {
+        return(getPreference('maxLatestItems@home')) ;
+    }
+
+    /**
      * generic function to retrieve preferences
      *
      * @param string $key
