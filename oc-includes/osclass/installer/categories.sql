@@ -67,7 +67,7 @@ INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id, i_position, fk_i_parent_id, b_e
 INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug) VALUES (31, 'en_US', 'Cars', 'cars');
 INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id, i_position, fk_i_parent_id, b_enabled) VALUES (32, 2, 2, 0);
 INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug) VALUES (32, 'en_US', 'Car Parts', 'car-parts');
-INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id, i_position, fk_i_parent_id, b_enabled) VALUES (33, 3. 2, 0);
+INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id, i_position, fk_i_parent_id, b_enabled) VALUES (33, 3, 2, 0);
 INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug) VALUES (33, 'en_US', 'Motorcycles', 'motorcycles');
 INSERT INTO /*TABLE_PREFIX*/t_category (pk_i_id, i_position, fk_i_parent_id, b_enabled) VALUES (34, 4, 2, 0);
 INSERT INTO /*TABLE_PREFIX*/t_category_description (fk_i_category_id, fk_c_locale_code, s_name, s_slug) VALUES (34, 'en_US', 'Boats - Ships', 'boats-ships');
