@@ -48,7 +48,7 @@ class ItemFrontend {
             $this->selenium->click("link=Add new photo");
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
-//        echo $title."<br>";
+        echo $title."<br>";
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
 

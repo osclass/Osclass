@@ -202,25 +202,48 @@ class TestOfSearch extends WebTestCase {
         $this->assertTrue($count == 9 , "There aren't 9 items filtered by [ Show only items with pictures ]");
     }
 
-    public function testFinal()
-    {
-        $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->email_items) ) ;
-        while( $item ) {
-            echo "deleting item ... <br>";
-            flush();
-            $this->deleteItemUrl( osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] ) );
-            flush();
-            $item =Item::newInstance()->findByConditions( array('s_contact_email' => $this->email_items) ) ;
-            flush();
-        }
+    /**
+     *  1) expire one category
+     *  2) update dt_pub_date 
+     *  3) run cron.hourly.php manualy (update values)
+     *  4) asserts
+     *      frontend
+     *      backoffice
+     *      search
+     *      
+     */
+//    public function testExpiredItems()
+//    {
+//
+//    }
+//
+//    private function curl_cron_hourly()
+//    {
+//        $url = osc_base_url(true) . "oc-includes/osclass/cron.hourly.php";
+//        $handler = curl_init( $url );
+//        $response = curl_exec ($handler);
+//        curl_close($handler);
+//    }
 
-        $uSettings = new utilSettings();
-        $uSettings->set_enabled_recaptcha_items( $this->enabled_recaptcha_items );
-        $uSettings->set_items_wait_time( $this->items_wait_time );
-        $uSettings->set_moderate_items( $this->bool_enabled_user_validation );
-        $uSettings->set_reg_user_post( $this->bool_reg_user_post );
-        unset($uSettings);
-    }
+//    public function testFinal()
+//    {
+//        $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->email_items) ) ;
+//        while( $item ) {
+//            echo "deleting item ... <br>";
+//            flush();
+//            $this->deleteItemUrl( osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] ) );
+//            flush();
+//            $item =Item::newInstance()->findByConditions( array('s_contact_email' => $this->email_items) ) ;
+//            flush();
+//        }
+//
+//        $uSettings = new utilSettings();
+//        $uSettings->set_enabled_recaptcha_items( $this->enabled_recaptcha_items );
+//        $uSettings->set_items_wait_time( $this->items_wait_time );
+//        $uSettings->set_moderate_items( $this->bool_enabled_user_validation );
+//        $uSettings->set_reg_user_post( $this->bool_reg_user_post );
+//        unset($uSettings);
+//    }
 
     /*
      * PRIVATE FUNCTIONS
