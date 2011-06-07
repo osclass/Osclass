@@ -42,7 +42,12 @@
         }
 
         public function decreaseNumItems($categoryId) {
-            $this->conn->osc_dbExec('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 0) ON DUPLICATE KEY UPDATE i_num_items = i_num_items - 1', $this->getTableName(), $categoryId);
+            $result = $this->conn->osc_dbFetchResult("SELECT i_num_items FROM %s WHERE fk_i_category_id = %d", $this->getTableName(), $categoryId);
+            if(isset($result['i_num_items'])) {
+                $this->conn->osc_dbExec('UPDATE %s SET i_num_items = i_num_items - 1 WHERE i_num_items > 0 AND fk_i_category_id = %d', $this->getTableName(), $categoryId);
+            } ELSE {
+                $this->conn->osc_dbExec('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 0)', $this->getTableName(), $categoryId);
+            }
             $result = Category::newInstance()->findByPrimaryKey($categoryId);
             if($result['fk_i_parent_id']!=NULL) {
                 $this->decreaseNumItems($result['fk_i_parent_id']);

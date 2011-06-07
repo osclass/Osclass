@@ -356,7 +356,7 @@
                         if($category['i_expiration_days'] > 0) {
                             $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
                             $date = time() ;
-                            if($item_date < $date) {
+                            if($item_date < $date && $item['b_premium']!=1) {
                                 // The item is expired, we can not contact the seller
                                 osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
                                 $this->redirectTo(osc_create_item_url($item));
@@ -396,7 +396,7 @@
                     if($category['i_expiration_days'] > 0) {
                         $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
                         $date = time();
-                        if($item_date < $date) {
+                        if($item_date < $date && $item['b_premium']!=1) {
                             // The item is expired, we can not contact the seller
                             osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
                             $this->redirectTo(osc_item_url( ));

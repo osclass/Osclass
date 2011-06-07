@@ -47,12 +47,7 @@
             $this->getDBParams();
 
 
-            if($this->stat) {
-                $list_items = $this->findByItemStat($this->stat);
-
-            } else {
-                $list_items = $this->list_items((Params::getParam('catId')=='')?null:Params::getParam('catId'), $this->start, $this->limit, null, $this->order_by, $this->search);
-            }
+                $list_items = $this->list_items((Params::getParam('catId')=='')?null:Params::getParam('catId'), $this->start, $this->limit, ($this->stat?$this->stat:''), $this->order_by, $this->search);
 
             $this->result = $list_items['items'];
             $this->filtered_total = $list_items['found'];
