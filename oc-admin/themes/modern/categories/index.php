@@ -253,7 +253,6 @@
                     <div id="jsMessage" class="" style="float:right;display:none;"></div>
                     <div style="clear: both;"></div>
                 </div>
-                <div id="zlayout" style="display:none;width: 100%;height: 100%;position:absolute;left:0px;top:0px;z-index:+1;background-color: gray;">WAITING ... </div>
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
 
