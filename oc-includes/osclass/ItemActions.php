@@ -156,10 +156,8 @@
                 osc_run_hook('item_form_post', $aItem['catId'], $itemId);
                 
                 // We need at least one record in t_item_stats
-                if($this->is_admin) {
-                    $mStats = new ItemStats();
-                    $mStats->increase('i_num_views', $itemId);
-                }
+                $mStats = new ItemStats();
+                $mStats->emptyRow($itemId);
 
 
                 $item = $this->manager->findByPrimaryKey($itemId);

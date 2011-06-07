@@ -36,6 +36,10 @@
         public function increase($column, $id) {
            $this->conn->osc_dbExec('INSERT INTO %s (fk_i_item_id, dt_date, %3$s) VALUES (%d, NOW(),1) ON DUPLICATE KEY UPDATE %3$s = %3$s + 1', $this->getTableName(), $id, $column) ;
         }
+
+        public function emptyRow($id) {
+           $this->conn->osc_dbExec('INSERT INTO %s (fk_i_item_id, dt_date) VALUES (%d, NOW())', $this->getTableName(), $id) ;
+        }
     }
 
 ?>
