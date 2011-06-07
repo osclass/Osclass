@@ -157,7 +157,7 @@
                 
                 // We need at least one record in t_item_stats
                 $mStats = new ItemStats();
-                $mStats->increase('i_num_views', $itemId);
+                $mStats->emptyRow($itemId);
 
 
                 $item = $this->manager->findByPrimaryKey($itemId);
