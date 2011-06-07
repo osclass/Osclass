@@ -63,6 +63,7 @@
                 echo '<link>', $item['link'], '</link>', PHP_EOL;
                 echo '<guid>', $item['link'], '</guid>', PHP_EOL;
                 echo '<description><![CDATA[', $item['description'], ']]></description>', PHP_EOL;
+                echo '<pubDate>', date('r',strtotime($item['dt_pub_date'])) , '</pubDate>', PHP_EOL;
                 echo '</item>', PHP_EOL;
             }
             echo '</channel>', PHP_EOL;
