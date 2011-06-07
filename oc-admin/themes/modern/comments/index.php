@@ -75,7 +75,7 @@
                         <?php foreach(__get('comments') as $c) { ?>
                             [
                                 "<input type='checkbox' name='id[]' value='<?php echo $c['pk_i_id']; ?>' />"
-                                ,"<?php echo $c['s_author_name']; ?> (<a target='_blank' href='<?php echo osc_item_url_ns( $c['fk_i_item_id'] ) ; ?>'><?php echo $c['s_title']; ?></a>)<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true) ; ?>?page=comments&action=comment_edit&id=<?php echo $c['pk_i_id'] ; ?>' id='dt_link_edit'><?php _e('Edit'); ?></a><?php
+                                ,"<?php echo addcslashes($c['s_author_name'],'"'); ?> (<a target='_blank' href='<?php echo osc_item_url_ns( $c['fk_i_item_id'] ) ; ?>'><?php echo $c['s_title']; ?></a>)<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true) ; ?>?page=comments&action=comment_edit&id=<?php echo $c['pk_i_id'] ; ?>' id='dt_link_edit'><?php _e('Edit'); ?></a><?php
                                     if(isset($c['b_active']) && ($c['b_active'] == 1)) {
                                         echo ' | <a href=\'' . osc_admin_base_url(true) . '?page=comments&action=status&id='. $c['pk_i_id'] .'&value=INACTIVE\'>' . __('Deactivate') . '</a>' ;
                                     } else if (isset($c['b_active']) && ($c['b_active'] == 0)) {
@@ -88,7 +88,7 @@
                                     }
                                     
                                     ?> | <a onclick=\"javascript:return confirm('<?php _e('This action can\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true) ; ?>?page=comments&action=delete&id=<?php echo $c['pk_i_id'] ; ?>' id='dt_link_delete'><?php _e('Delete') ; ?></a></div>"
-                                ,"<?php echo addslashes(preg_replace('|\s+|',' ',$c['s_body'])); ?>"
+                                ,"<?php echo addcslashes(preg_replace('|\s+|',' ',$c['s_body']),'"'); ?>"
                                 ,"<?php echo $c['dt_pub_date'] ; ?>"
                             ] <?php echo $last_id != $c['pk_i_id'] ? ',' : ''; ?>
                         <?php } ?>
