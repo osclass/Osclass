@@ -37,7 +37,7 @@
         private static $instance ;
 
 
-        public function __construct() {
+        public function __construct($expired = false) {
             $this->city_areas = array();
             $this->cities = array();
             $this->regions = array();
@@ -48,12 +48,22 @@
             $this->order();
             $this->limit();
             $this->results_per_page = 10;
+            if(!$expired) {
+                $this->addTable(sprintf('%st_category', DB_TABLE_PREFIX));
+                $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
+                $this->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
+                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->addConditions(sprintf("%st_category.b_enabled = 1", DB_TABLE_PREFIX));
+                $this->addConditions(sprintf("%st_category.pk_i_id = %st_item.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                //AND (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < %st_category.i_expiration_days) AND %st_category.b_enabled = 1 AND %st_category.pk_i_id = %st_item.fk_i_category_id
+
+            }
             parent::__construct();
         }
 
-        public static function newInstance() {
+        public static function newInstance($expired = false) {
             if(!self::$instance instanceof self) {
-                self::$instance = new self ;
+                self::$instance = new self($expired) ;
             }
             return self::$instance ;
         }
@@ -276,6 +286,7 @@
             }
             $this->pruneBranches($tree) ;
         }
+        
 
         public function makeSQL($count = false) {
 
@@ -304,9 +315,17 @@
             }
 
             if($count) {
-                $this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s AND %st_item.pk_i_id = d.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX);
+                $conditionsSQL = implode(' AND ', $this->conditions);
+                if($conditionsSQL!='') {
+                    $conditionsSQL = " AND ".$conditionsSQL;
+                }
+                $this->sql = sprintf("SELECT COUNT(DISTINCT %st_item.pk_i_id) as totalItems FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.pk_i_id = d.fk_i_item_id ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX);
             } else {
-                $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id AND %s AND %st_item.pk_i_id = d.fk_i_item_id ORDER BY %st_item.%s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(' AND ', $this->conditions), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
+                $conditionsSQL = implode(' AND ', $this->conditions);
+                if($conditionsSQL!='') {
+                    $conditionsSQL = " AND ".$conditionsSQL;
+                }
+                $this->sql = sprintf("SELECT SQL_CALC_FOUND_ROWS DISTINCT %st_item.*, %st_item_location.* FROM %st_item, %st_item_location, %s WHERE %st_item_location.fk_i_item_id = %st_item.pk_i_id %s AND %st_item.pk_i_id = d.fk_i_item_id ORDER BY %st_item.%s %s LIMIT %d, %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $conditionsSQL, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $this->order_column, $this->order_direction, $this->limit_init, $this->results_per_page);
 
             }
             return $this->sql;
@@ -318,12 +337,12 @@
             $this->addTable(sprintf("%st_item_location", DB_TABLE_PREFIX));
             $condition_sql = implode(' AND ', $this->conditions);
             if($condition_sql!='') {
-                $where_sql = " WHERE " . $condition_sql;
+                $where_sql = " AND " . $condition_sql;
             } else {
                 $where_sql = "";
             }
 
-            $this->sql = sprintf("SELECT %st_item_location.s_country as country_name, %st_item_location.fk_i_city_id as city_id, %st_item_location.fk_c_country_code, %st_item_location.s_region as region_name, %st_item_location.fk_i_region_id as region_id, %st_item_location.s_city as city_name,COUNT( DISTINCT %st_item_location.fk_i_item_id) as items FROM %st_item, %s %s GROUP BY %st_item_location.%s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), $where_sql, DB_TABLE_PREFIX, $location);
+            $this->sql = sprintf("SELECT %st_item_location.s_country as country_name, %st_item_location.fk_i_city_id as city_id, %st_item_location.fk_c_country_code, %st_item_location.s_region as region_name, %st_item_location.fk_i_region_id as region_id, %st_item_location.s_city as city_name,COUNT( DISTINCT %st_item_location.fk_i_item_id) as items FROM %st_item, %s WHERE %s GROUP BY %st_item_location.%s", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, implode(', ', $this->tables), $where_sql, DB_TABLE_PREFIX, $location);
 
             return $this->sql;
         }

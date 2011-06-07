@@ -171,22 +171,50 @@
             return $this->listWhere('fk_i_category_id = %d', $catId);
         }
 
-        public function list_items($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null)
+        public function list_items($category = null, $start = 0, $limit = 10, $stat = '', $order_by = null, $search = null)
         {
-            $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS i.* FROM %st_item i, %st_category c WHERE c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+            $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS DISTINCT i.* FROM %st_item i, %st_category c, %st_item_description id, %st_item_stats s WHERE c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
 
             $conditions = array();
             if (!is_null($category)) {
                 $conditions[] = '(c.pk_i_id = ' . $category['pk_i_id'] . ' OR c.fk_i_parent_id = ' . $category['pk_i_id'] . ')';
-                if ($category['i_expiration_days'] > 0) {
-                    $conditions[] = 'DATE_SUB(CURDATE(),INTERVAL ' . $category['i_expiration_days'] . ' DAY) <= i.dt_pub_date';
-                }
             }
 
-            if (!is_null($active)) {
-                $conditions[] = "b_active = 1";
-                $conditions[] = "b_enabled = 1";
+            
+            switch($stat) {
+                case "spam":
+                    $conditions[] = "s.`i_num_spam` > 0";
+                    $conditions[] = " AND i.pk_i_id = s.fk_i_item_id";
+                    break;
+                case "duplicated":
+                    $conditions[] = "s.`i_num_duplicated` > 0";
+                    $conditions[] = " AND i.pk_i_id = s.fk_i_item_id";
+                    break;
+                case "bad":
+                    $conditions[] = "s.`i_num_bad_classified` > 0";
+                    $conditions[] = " AND i.pk_i_id = s.fk_i_item_id";
+                    break;
+                case "offensive":
+                    $conditions[] = "s.`i_num_offensive` > 0";
+                    $conditions[] = " AND i.pk_i_id = s.fk_i_item_id";
+                    break;
+                case "expired":
+                    $conditions[] = "s.`i_num_expired` > 0";
+                    $conditions[] = " AND i.pk_i_id = s.fk_i_item_id";
+                    break;
+                case "pending":
+                    $conditions[] = "i.`b_active` = 0";
+                    break;
+                case "enabled":
+                    $conditions[] = "i.`b_enabled` = 1";
+                    break;
+                case "disabled":
+                    $conditions[] = "i.`b_enabled` = 0";
+                    break;
+                default:
+                    break;
             }
+            
 
             if (count($conditions) > 0) {
                 $sql .= ' AND ';
@@ -199,8 +227,9 @@
             }
 
             if ($search) {
-                //$sql .= " AND ";
-                //$sql .= "i.s_title LIKE '%$search%' OR i.s_description LIKE '%$search%'";
+                $sql .= " AND ";
+                $sql .= "(id.s_title LIKE '%".$search."%' OR id.s_description LIKE '%".$search."%')";
+                $sql .= " AND i.pk_i_id = id.fk_i_item_id";
             }
 
             if ($order_by) {
@@ -220,76 +249,6 @@
             $items = $this->extendCategoryName($items);
 
             return array('found' => $found, 'items' => $items);
-        }
-
-        public function list_items_conditions($category = null, $start = 0, $limit = 10, $conditions = array(), $active = null, $order_by = null, $search = null)
-        {
-            $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS i.* FROM %st_item i, %st_category c WHERE AND c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
-
-            if (!is_null($category)) {
-                $conditions[] = '(c.pk_i_id = ' . $category['pk_i_id'] . ' OR c.fk_i_parent_id = ' . $category['pk_i_id'] . ')';
-                if ($category['i_expiration_days'] > 0) {
-                    $conditions[] = 'DATE_SUB(CURDATE(),INTERVAL ' . $category['i_expiration_days'] . ' DAY) <= i.dt_pub_date';
-                }
-            }
-
-            if (!is_null($active)) {
-                $conditions[] = "b_active = 1";
-                $conditions[] = "b_enabled = 1";
-            }
-
-            if (count($conditions) > 0) {
-                $sql .= ' AND ';
-                for ($i = 0; $i < count($conditions); $i++) {
-                    $sql .= $conditions[$i];
-                    if ($i < (count($conditions) - 1)) {
-                        $sql .= ' AND ';
-                    }
-                }
-            }
-
-            if ($search) {
-                //$sql .= " AND ";
-                //$sql .= "i.s_title LIKE '%$search%' OR i.s_description LIKE '%$search%'";
-            }
-
-            if ($order_by) {
-                $sql .= ' ORDER BY ' . $order_by['column_name'] . ' ' . $order_by['type'];
-            } else {
-                $sql .= ' ORDER BY i.dt_pub_date DESC';
-            }
-
-            if ($start == 0 && $limit == 0) {
-                $sql .= '';
-            } else {
-                $sql .= ' LIMIT ' . $start . ',' . $limit;
-            }
-
-            $aItems = $this->conn->osc_dbFetchResults($sql);
-            $found = $this->found_rows();
-            $items = $this->extendData($aItems);
-            $items = $this->extendCategoryName($items);
-
-            return array('found' => $found, 'items' => $items);
-        }
-
-        public function list_premiums($category = null, $start = 0, $limit = 2, $active = null, $order_by = null, $search = null)
-        {
-            $condtions = array();
-            $conditions[] = ' b_premium = 1 ';
-            return list_items_conditions($category, $start, $limit, $conditions, $active, $order_by, $search);
-        }
-
-        public function list_no_premiums($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null)
-        {
-            $condtions = array();
-            $conditions[] = ' b_premium = 0 ';
-            return list_items_conditions($category, $start, $limit, $conditions, $active, $order_by, $search);
-        }
-
-        public function list_items_with_premiums($category = null, $start = 0, $limit = 10, $premium_start = 0, $premium_limit = 2, $active = null, $order_by = null, $search = null)
-        {
-            $premiums = list_premiums($category, $premium_start, $premium_limit, $active, $order_by, $search);
         }
 
         public function found_rows()
@@ -325,6 +284,8 @@
             return $total_ads['total'];
         }
 
+        // LEAVE THIS FOR COMPATIBILITIES ISSUES (ONLY SITEMAP GENERATOR)
+        // BUT REMEMBER TO DELETE IN ANYTHING > 2.1.x THANKS
         public function listLatest($limit = 10)
         {
             return $this->listWhere(" b_active = 1 AND b_enabled = 1 ORDER BY dt_pub_date DESC LIMIT " . $limit);
@@ -408,52 +369,6 @@
             $results = $this->conn->osc_dbFetchResults($sql);
 
             return $results;
-        }
-
-        public function findByItemStat($stat)
-        {
-            switch($stat) {
-                case 'spam':
-                    $sql = "SELECT i.*, s.i_num_spam as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_spam` > 0";
-                    break;
-
-                case 'duplicated':
-                    $sql = "SELECT i.*, s.i_num_repeated as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_repeated` > 0";
-                    break;
-
-                case 'bad':
-                    $sql = "SELECT i.*, s.i_num_bad_classified as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_bad_classified` > 0";
-                    break;
-
-                case 'offensive':
-                    $sql = "SELECT i.*, s.i_num_offensive as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_offensive` > 0";
-                    break;
-
-                case 'expired':
-                    $sql = "SELECT i.*, s.i_num_expired as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_expired` > 0";
-                    break;
-
-                case 'pending':
-                    $sql = "SELECT i.*, s.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id LEFT JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE i.`b_active` = 0";
-                    break;
-
-                case 'enabled':
-                    $sql = "SELECT i.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id WHERE i.`b_enabled` = 1";
-                    break;
-
-                case 'disabled':
-                    $sql = "SELECT i.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id WHERE i.`b_enabled` = 0";
-                    break;
-
-                default:
-                    break;
-            }
-
-            $aItems = $this->conn->osc_dbFetchResults($sql);
-            $found = $this->found_rows();
-            $items = $this->extendData($aItems);
-            $items = $this->extendCategoryName($items);
-            return array('found' => $found, 'items' => $items);
         }
 
         public function clearStat($id, $stat)

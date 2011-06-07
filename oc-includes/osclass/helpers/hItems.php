@@ -831,7 +831,9 @@
      */
     function osc_has_latest_items() {
         if ( !View::newInstance()->_exists('items') ) {
-            View::newInstance()->_exportVariableToView('items', Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+            $search = new Search();
+            $search->limit(0, osc_max_latest_items());
+            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));//Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
         }
         return osc_has_items() ;
     }
@@ -843,7 +845,9 @@
      */
     function osc_count_latest_items() {
         if ( !View::newInstance()->_exists('items') ) {
-            View::newInstance()->_exportVariableToView('items', Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+            $search = new Search();
+            $search->limit(0, osc_max_latest_items());
+            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));//Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
         }
         return osc_priv_count_items() ;
     }
