@@ -166,9 +166,16 @@
                 return false;
             }
             
-            function enable_cat(id, enabled){
+            function enable_cat(id){
                 
-                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=enable_category&id='+id+'&enabled='+enabled; 
+                var enabled = '';
+                if( $('div[category_id='+ id +']').hasClass('disabled') ){
+                    enabled = 1;
+                } else {
+                    enabled = 0;
+                }
+                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=enable_category&id='+id+'&enabled='+enabled;
+                
                 $.ajax({
                     url: url,
                     context: document.body,
@@ -186,45 +193,26 @@
                                 $('div[category_id='+ id +']').addClass('disabled');
                                 $('div[category_id='+ id +']').removeClass('enabled');
                                 
-                                var js = "enable_cat('"+id+"','1')";
-                                // create a function from the "js" string
-                                var newclick = new Function(js);
-                                
-                                $('div[category_id='+ id +']').find('a.enable').attr('onclick',"").click(newclick);
                                 $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable');?>');
                                 
                                 for(var i = 0; i < ret.afectedIds.length; i++) {
                                     id =  ret.afectedIds[i].id ;
                                     $('div[category_id='+ id +']').addClass('disabled');
                                     $('div[category_id='+ id +']').removeClass('enabled');
-                                    js = "enable_cat('"+id+"','1')";
-                                    // create a function from the "js" string
-                                    newclick = new Function(js);
-
-                                    $('div[category_id='+ id +']').find('a.enable').attr('onclick',"").click(newclick);
+                                    
                                     $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable');?>');
                                 }
                             } else {
                                 $('div[category_id='+ id +']').removeClass('disabled');
                                 $('div[category_id='+ id +']').addClass('enabled');
                                 
-                                var js = "enable_cat('"+id+"','0')";
-                                // create a function from the "js" string
-                                var newclick = new Function(js);
-
-                                $('div[category_id='+ id +']').find('a.enable').attr('onclick','').click(newclick);
                                 $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable');?>');
                                 
                                 for(var i = 0; i < ret.afectedIds.length; i++) {
                                     id =  ret.afectedIds[i].id ;
                                     $('div[category_id='+ id +']').removeClass('disabled');
                                     $('div[category_id='+ id +']').addClass('enabled');
-                                    
-                                    js = "enable_cat('"+id+"','0')";
-                                    // create a function from the "js" string
-                                    newclick = new Function(js);
-
-                                    $('div[category_id='+ id +']').find('a.enable').attr('onclick',"").click(newclick);
+                                 
                                     $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable');?>');
                                 }
                             }
@@ -297,7 +285,7 @@
                                 <div style="float:right;">
                                     <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
                                     <?php _e('Edit'); ?>
-                                    </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>','<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>')">
+                                    </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')">
                                     <?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?>
                                     </a> | <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)">
                                     <?php _e('Delete'); ?>
@@ -319,7 +307,7 @@
                                             <div style="float:right;">
                                                 <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
                                                 <?php _e('Edit'); ?>
-                                                </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>','<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>')">
+                                                </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')">
                                                 <?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?>
                                                 </a> | <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)">
                                                 <?php _e('Delete'); ?>

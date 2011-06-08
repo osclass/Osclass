@@ -270,7 +270,8 @@
                             $feed->addItem(array(
                                 'title' => osc_item_title(),
                                 'link' => htmlentities( osc_item_url() ),
-                                'description' => osc_item_description()
+                                'description' => osc_item_description(),
+                                'dt_pub_date' => osc_item_pub_date()
                             ));
                         }
                     }
