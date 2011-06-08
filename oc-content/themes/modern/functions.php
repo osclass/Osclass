@@ -19,6 +19,19 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+     function add_logo_header() {
+         $html = '<img border="0" alt="'. osc_page_title() .'" src="'. osc_base_url() .'oc-content/themes/'. osc_theme() .'/images/logo.png">';
+         $js = " <script>
+                    $(document).ready(function () {
+                        $('#logo').html('".$html."');
+                    });
+                 </script>";
+         
+        echo $js;
+    }
+
+    osc_add_hook("header", "add_logo_header");
+
      if( !function_exists('meta_title') ) {
          function meta_title( ) {
             $location = Rewrite::newInstance()->get_location();
