@@ -428,6 +428,8 @@ function finish_installation( ) {
     require_once LIB_PATH . 'osclass/model/Admin.php' ;
     require_once LIB_PATH . 'osclass/model/Preference.php' ;
     require_once LIB_PATH . 'osclass/model/Category.php';
+    require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
+    require_once LIB_PATH . 'osclass/plugins.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/core/Params.php';
     require_once LIB_PATH . 'osclass/compatibility.php';
