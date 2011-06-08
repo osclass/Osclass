@@ -91,7 +91,7 @@
                     }
 
                     // Check if the secret passphrase match with the item
-                    if($userId == null && $secret != $aItem['s_secret']) {
+                    if($userId == null && $aItem['fk_i_user_id']==null && $secret != $aItem['s_secret']) {
                         $json['success'] = false;
                         $json['msg'] = _m('The item doesn\'t belong to you');
                         echo json_encode($json);
