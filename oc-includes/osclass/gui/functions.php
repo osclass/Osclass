@@ -35,7 +35,7 @@
     function modern_admin_menu() {
         echo '<h3><a href="#">Modern theme</a></h3>
         <ul>
-            <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
+            <li><a href="' . osc_admin_render_theme_url('oc-includes/osclass/gui/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
         </ul>';
     }
 
