@@ -610,11 +610,11 @@
                 },
                 cityArea: {
                     minlength: 3,
-                    maxlength: 35
+                    maxlength: 50
                 },
                 address: {
-                    minlength: 5,
-                    maxlength: 50
+                    minlength: 3,
+                    maxlength: 100
                 }
             },
             messages: {
@@ -645,11 +645,11 @@
                 cityId: "<?php _e("Select a city"); ?>.",
                 cityArea: {
                     minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("City area: no more than 35 characters"); ?>."
+                    maxlength: "<?php _e("City area: no more than 50 characters"); ?>."
                 },
                 address: {
-                    minlength: "<?php _e("Address: enter at least 5 characters"); ?>.",
-                    maxlength: "<?php _e("Address: no more than 50 characters"); ?>."
+                    minlength: "<?php _e("Address: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Address: no more than 100 characters"); ?>."
                 }
             },
             errorLabelContainer: "#error_list",

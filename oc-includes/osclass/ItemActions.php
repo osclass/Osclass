@@ -35,7 +35,6 @@
         public function add()
         {
             $success = true;
-//            $aItem = $this->prepareData(true);
             $aItem = $this->data;
             $code = osc_genRandomPassword();
             $flash_error = '';
@@ -57,7 +56,7 @@
 
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
-                $aItem['title'][$key] = strip_tags( trim ( $value ) );//osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
+                $aItem['title'][$key] = strip_tags( trim ( $value ) );
             }
             foreach(@$aItem['description'] as $key=>$value) {
                 $aItem['description'][$key] = $purifier->purify($value);
@@ -96,9 +95,9 @@
                 ((!osc_validate_email($contactEmail))? _m("Email invalid.\n") : '' ) .
                 ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
                 ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
-                ((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' ) . 
+                ((!osc_validate_max($aItem['cityArea'],50))? _m("Municipality too long.\n") : '' ) .
+                ((!osc_validate_text($aItem['address'],3,false))? _m("Address too short.\n") : '' ) .
+                ((!osc_validate_max($aItem['address'],100))? _m("Address too long.\n") : '' ) .
                 ((((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time()) && !$this->is_admin)? _m("Too fast. You should wait a little to publish your ad.\n") : '' );
 
 
@@ -187,7 +186,6 @@
 
 
         function edit() {
-//            $aItem = $this->prepareData(false);
             $aItem = $this->data;
             $flash_error = '';
 
@@ -234,9 +232,9 @@
                 ((!osc_validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
                 ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
                 ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['cityArea'],35))? _m("Municipality too long.\n") : '' ) .
-                ((!osc_validate_text($aItem['address'],5,false))? _m("Address too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['address'],50))? _m("Address too long.\n") : '' );
+                ((!osc_validate_max($aItem['cityArea'],50))? _m("Municipality too long.\n") : '' ) .
+                ((!osc_validate_text($aItem['address'],3,false))? _m("Address too short.\n") : '' ) .
+                ((!osc_validate_max($aItem['address'],100))? _m("Address too long.\n") : '' );
 
             
             // Handle error
@@ -719,71 +717,6 @@
         }
 
         /**
-         * Validate some things previous to add or edit
-         * @param <string> $title
-         * @param <string> $description
-         * @param <string> $contactEmail
-         * @param <string> $idCat
-         * @param <array> $aPhotos
-         * @return boolean
-         */
-//        private function validate( $title, $description, $contactEmail, $idCat, $aPhotos )
-//        {
-//            $success      = true;
-//            $flash_error  = array();
-//            $contactEmail = strip_tags(trim($contactEmail));
-//
-//            // Validate input
-//            $title_success = false;
-//            foreach($title as $key=>$value) {
-//                if(preg_match("/([\p{L}][^\p{L}]*){3}/i",strip_tags(trim($value)))) {
-//                    $title_success = true;
-//                    break;
-//                }
-//            }
-//            if(!$title_success) {
-//                $flash_error[] = _m("Title too short");
-//                $success = false;
-//            }
-//            $description_success = false;
-//            foreach($description as $key=>$value) {
-//                if(preg_match("/([\p{L}][^\p{L}]*){10}/i",strip_tags(trim($value),'<b><strong><u><i><em><a><span><p><ul><ol><li>'))) {
-//                    $description_success = true;
-//                    break;
-//                }
-//            }
-//            if(!$description_success) {
-//                $flash_error[] = _m("Description too short");
-//                $success = false;
-//            }
-//
-//            if(!preg_match("/^[0-9]+$/", $idCat)) {
-//                $flash_error[] = _m("Invalid category");
-//                $success = false;
-//            }
-//
-//            if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$contactEmail)) {
-//                $flash_error[] = _m("Invalid email address");
-//                $success = false;
-//            }
-//
-//            // Handle error
-//            if (count($flash_error)>0) {
-//                osc_add_flash_error_message( implode('<br />', $flash_error) );
-//                $success = false;
-//            }
-//            if ( !$this->checkAllowedExt($aPhotos) ) {
-//                $success = false;
-//            }
-//
-//            if ( !$this->checkSize($aPhotos) ) {
-//                $success = false;
-//            }
-//
-//            return $success;
-//        }
-
-        /**
          * Return an array with all data necessary for do the action
          * @param <type> $action
          */
@@ -1000,7 +933,6 @@
             }
 
             $this->data = $aItem;
-//            return $aItem;
         }
 
         function insertItemLocales($type, $title, $description, $itemId )
