@@ -27,13 +27,15 @@
                     });
                  </script>";
 
-        echo $js;
+         if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+            echo $js;
+         }
     }
 
     osc_add_hook("header", "add_logo_header");
 
     function modern_admin_menu() {
-        echo '<h3><a href="#">Modern theme</a></h3>
+        echo '<h3><a href="#">'. __('Modern theme','modern') .'</a></h3>
         <ul>
             <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
         </ul>';
