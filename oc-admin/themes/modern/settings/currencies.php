@@ -89,7 +89,7 @@
                         {"sTitle": "<?php _e('Code'); ?>",
                          "sWidth": "150px" },
                         {"sTitle": "<?php _e('Name'); ?>" },
-                        {"sTitle": "<?php _e('Description'); ?>" },
+                        {"sTitle": "<?php _e('Description'); ?>" }
                     ]
                 });
 
