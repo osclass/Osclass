@@ -27,6 +27,8 @@
     if( file_exists(ABS_PATH . '.maintenance') ) {
         define('__OSC_MAINTENANCE__', true);
     }
+
+    WebThemes::newInstance();
     
     switch( Params::getParam('page') )
     {
