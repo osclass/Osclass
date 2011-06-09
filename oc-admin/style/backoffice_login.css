@@ -4,6 +4,7 @@ body {
 	border-top-width: 30px;
 	border-top-style: solid;
 	font: 11px "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
+        text-align: center;
 }
 
 form {
@@ -69,7 +70,7 @@ form p { margin-bottom: 24px; }
 	text-decoration: none;
 }
 
-#login { width: 370px; margin: 3em auto; } 
+#login { width: 370px; margin: 3em auto; text-align: left;}
 
 .FlashMessage, .message {
 	margin: 0 0 16px 0px;
