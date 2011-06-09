@@ -781,7 +781,7 @@
             $aItem = array();
 
             if( $is_add ) {   // ADD
-
+                
                 $userId = null;
                 if($this->is_admin){
                     if(Params::getParam('userId') != '') {
@@ -812,8 +812,12 @@
                                 }
                             }
                         }
-                    } else if(osc_moderate_items()==0){
-                        $active = 'INACTIVE';
+                    } else if(osc_moderate_items()==0 ){
+                        if(osc_is_web_user_logged_in() && osc_logged_user_item_validation() ) {
+                            $active = 'ACTIVE';
+                        } else {
+                            $active = 'INACTIVE';
+                        }
                     } else {
                         $active = 'ACTIVE';
                     }
