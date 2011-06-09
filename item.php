@@ -351,20 +351,24 @@
                 case 'contact':
 
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
-                    $this->_exportVariableToView('item', $item) ;
-
-                    if( osc_item_is_expired () ) {
-                        osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
-                        $this->redirectTo( osc_item_url() );
-                    }
-
-                    if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
-                        $this->doView('item-contact.php');
+                    if( empty($item) ){
+                        osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                        $this->redirectTo( osc_base_url(true) );
                     } else {
-                        osc_add_flash_error_message( _m('You can\'t contact the seller, only registered users can')) ;
-                        $this->redirectTo( osc_item_url() );
+                        $this->_exportVariableToView('item', $item) ;
+                        
+                        if( osc_item_is_expired () ) {
+                            osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
+                            $this->redirectTo( osc_item_url() );
+                        }
+
+                        if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
+                            $this->doView('item-contact.php');
+                        } else {
+                            osc_add_flash_error_message( _m('You can\'t contact the seller, only registered users can')) ;
+                            $this->redirectTo( osc_item_url() );
+                        }
                     }
-                    
                 break;
                 case 'contact_post':
 
