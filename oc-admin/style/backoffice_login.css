@@ -70,7 +70,7 @@ form p { margin-bottom: 24px; }
 	text-decoration: none;
 }
 
-#login { width: 370px; margin: 3em auto; text-align: left;}
+#login { width: 370px; margin: 3em auto 0 auto; text-align: left;}
 
 .FlashMessage, .message {
 	margin: 0 0 16px 0px;
