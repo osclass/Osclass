@@ -189,8 +189,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_stats (
     i_num_items INT UNSIGNED NOT NULL DEFAULT 0,
 
         PRIMARY KEY (fk_i_category_id),
-	FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
-);
+        FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_item (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
