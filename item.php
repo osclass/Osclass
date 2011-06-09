@@ -47,12 +47,12 @@
             switch( $this->action ){
                 case 'item_add': // post
                     if( !osc_users_enabled () ){
-                        osc_add_flash_message( _m('Users not enabled') ) ;
+                        osc_add_flash_error_message( _m('Users not enabled') ) ;
                         $this->redirectTo(osc_base_url(true));
                     }
                     if( osc_reg_user_post() && $this->user==null) {
                         // CHANGEME: This text
-                        osc_add_flash_message( _m('Only registered users are allowed to post items')) ;
+                        osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                         $this->redirectTo(osc_user_login_url());
                     }
 
@@ -70,7 +70,6 @@
                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                     }
 
-                                        
                     $this->_exportVariableToView('countries',$countries ) ;
                     $this->_exportVariableToView('regions', $regions) ;
                     $this->_exportVariableToView('cities', $cities) ;
@@ -210,7 +209,6 @@
                         $this->doView('item-edit.php');
                     }else{
                         // add a flash message [ITEM NO EXISTE]
-                        //$this->redirectTo(osc_base_url(true));
                         osc_add_flash_error_message( _m('Sorry, we don\'t have any items with that ID')) ;
                         if($this->user!=null) {
                             $this->redirectTo(osc_user_list_items_url());

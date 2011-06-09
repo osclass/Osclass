@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -50,7 +49,7 @@
     // Item rules
     $rewrite->addRule('^item/mark/(.*?)/([0-9]+)$', 'index.php?page=item&action=mark&as=$1&id=$2');
     $rewrite->addRule('^item/send-friend/([0-9]+)$', 'index.php?page=item&action=send_friend&id=$1');
-    $rewrite->addRule('^item/contact/([0-9]+)$', 'index.php?page=item&action=contact&id=$1'); // juanramon: not used # leave the theme has the contact form on the same page of the item, but you could do in other page, it could be usefull in the future
+    $rewrite->addRule('^item/contact/([0-9]+)$', 'index.php?page=item&action=contact&id=$1');
     $rewrite->addRule('^item/new$', 'index.php?page=item&action=item_add');
     $rewrite->addRule('^item/new/([0-9]+)$', 'index.php?page=item&action=item_add&catId=$1');
     $rewrite->addRule('^item/activate/([0-9]+)/(.*?)/?$', 'index.php?page=item&action=activate&id=$1&secret=$2');

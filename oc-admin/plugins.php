@@ -50,17 +50,17 @@
 
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
-                                osc_add_flash_error_message($msg, 'admin');
+                                    osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(1):   $msg = _m('The plugin has been uploaded correctly');
-                                osc_add_flash_ok_message($msg, 'admin');
+                                   osc_add_flash_ok_message($msg, 'admin');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
-                                osc_add_flash_error_message($msg, 'admin');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the plugin');
-                                osc_add_flash_error_message($msg, 'admin');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                     }
 

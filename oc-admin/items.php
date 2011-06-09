@@ -469,8 +469,6 @@
                                         $iUpdated                   = 0;
                                         $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
                                         $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
-                                        //$enabledItemValidation      = Params::getParam('enabled_item_validation');
-                                        //$enabledItemValidation      = (($enabledItemValidation != '') ? true : false);
                                         $moderateItems              = Params::getParam('moderate_items');
                                         $moderateItems              = (($moderateItems != '') ? true : false);
                                         $numModerateItems           = Params::getParam('num_moderate_items');
@@ -496,8 +494,6 @@
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
                                                                                       ,array('s_name'  => 'enabled_recaptcha_items'));
-                                        //$iUpdated += Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
-                                        //                                              ,array('s_name'  => 'enabled_item_validation'));
                                         if($moderateItems) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateItems)
                                                                                           ,array('s_name' => 'moderate_items'));
@@ -531,9 +527,6 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=items&action=settings');
                 break;
-
-
-
 
                 default:                //default
                                         $catId = Params::getParam('catId') ;

@@ -191,11 +191,6 @@
 
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
-            // TODO: DELETE THIS IN 2.1 IF SEARCHES WORKED FINE ;)
-            //$this->mSearch->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
-            //$this->mSearch->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
-
-
             if(!Params::existParam('sFeed')) {
                 // RETRIEVE ITEMS AND TOTAL
                 $iTotalItems = $this->mSearch->count();
@@ -203,27 +198,7 @@
 
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
-                //Static data, which is the point?
-                /*$aOrders   = array(
-                                 __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
-                                ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
-                                ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
-                             );*/
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
-
-                //Categories for select at view "search.php"
-                //$mCategories = new Category();
-                //$aCategories = $mCategories->findRootCategories();
-                //$mCategoryStats = new CategoryStats();
-                /*$aCategories = $mCategories->toTree();
-                foreach($aCategories as $k => $v) {
-                    $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);
-                    if($iCategoryNumItems > 0) {
-                        $aCategories[$k]['total'] = $iCategoryNumItems;
-                    } else {
-                        unset($aCategories[$k]);
-                    }
-                }*/
 
                 osc_run_hook('search', $this->mSearch) ;
 

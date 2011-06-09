@@ -1,6 +1,5 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -66,13 +65,7 @@
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->edit( $userId ) ;
 
-                                        // This has been moved to special area (only password changes)
-                                        /*if( $success == 1 ) {
-                                            osc_add_flash_error_message( _m('Passwords don\'t match') ) ;
-                                        } else {*/
-                                            osc_add_flash_ok_message( _m('Your profile has been updated successfully') ) ;
-                                        //}
-
+                                        osc_add_flash_ok_message( _m('Your profile has been updated successfully') ) ;
                                         $this->redirectTo( osc_user_profile_url() ) ;
                 break ;
                 case('alerts'):         //alerts
@@ -99,63 +92,51 @@
                                                 } else {
                                                     $user = User::newInstance()->findByEmail(Params::getParam('new_email'));
                                                     if(!isset($user['pk_i_id'])) {
-                                                        //if( osc_user_validation_enabled() ) {
-                                                            $userEmailTmp = array() ;
-                                                            $userEmailTmp['fk_i_user_id'] = Session::newInstance()->_get('userId') ;
-                                                            $userEmailTmp['s_new_email'] = Params::getParam('new_email') ;
+                                                        $userEmailTmp = array() ;
+                                                        $userEmailTmp['fk_i_user_id'] = Session::newInstance()->_get('userId') ;
+                                                        $userEmailTmp['s_new_email'] = Params::getParam('new_email') ;
 
-                                                            UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
+                                                        UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
 
-                                                            $code = osc_genRandomPassword(30) ;
-                                                            $date = date('Y-m-d H:i:s') ;
+                                                        $code = osc_genRandomPassword(30) ;
+                                                        $date = date('Y-m-d H:i:s') ;
 
-                                                            $userManager = new User() ;
-                                                            $userManager->update (
-                                                                array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR'] )
-                                                                ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
-                                                            );
+                                                        $userManager = new User() ;
+                                                        $userManager->update (
+                                                            array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR'] )
+                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
+                                                        );
 
-                                                            $locale = osc_current_user_locale() ;
-                                                            $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
-                                                            if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                                $content = $aPage['locale'][$locale] ;
-                                                            } else {
-                                                                $content = current($aPage['locale']) ;
-                                                            }
+                                                        $locale = osc_current_user_locale() ;
+                                                        $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
+                                                        if(isset($aPage['locale'][$locale]['s_title'])) {
+                                                            $content = $aPage['locale'][$locale] ;
+                                                        } else {
+                                                            $content = current($aPage['locale']) ;
+                                                        }
 
-                                                            if (!is_null($content)) {
-                                                                $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+                                                        if (!is_null($content)) {
+                                                            $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
 
-                                                                $words = array() ;
-                                                                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                                                                $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>', osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url ) ;
-                                                                $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                                $body = osc_mailBeauty($content['s_text'], $words) ;
+                                                            $words = array() ;
+                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
+                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>', osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url ) ;
+                                                            $title = osc_mailBeauty($content['s_title'], $words) ;
+                                                            $body = osc_mailBeauty($content['s_text'], $words) ;
 
-                                                                $params = array(
-                                                                    'subject' => $title
-                                                                    ,'to' => Params::getParam('new_email')
-                                                                    ,'to_name' => Session::newInstance()->_get('userName')
-                                                                    ,'body' => $body
-                                                                    ,'alt_body' => $body
-                                                                ) ;
-                                                                osc_sendMail($params) ;
-                                                                osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
-                                                            } else {
-                                                                osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
-                                                            }
-                                                            $this->redirectTo( osc_user_profile_url() ) ;
-
-                                                        /*} else {
-
-                                                            User::newInstance()->update(
-                                                                array( 's_email' => Params::getParam('new_email') )
-                                                                ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
+                                                            $params = array(
+                                                                'subject' => $title
+                                                                ,'to' => Params::getParam('new_email')
+                                                                ,'to_name' => Session::newInstance()->_get('userName')
+                                                                ,'body' => $body
+                                                                ,'alt_body' => $body
                                                             ) ;
-                                                            osc_add_flash_ok_message( _m('Your email has been changed successfully')) ;
-                                                            $this->redirectTo( osc_user_profile_url() ) ;
-
-                                                        }*/
+                                                            osc_sendMail($params) ;
+                                                            osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
+                                                        } else {
+                                                            osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
+                                                        }
+                                                        $this->redirectTo( osc_user_profile_url() ) ;
                                                     } else {
                                                         osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
                                                         $this->redirectTo( osc_change_user_email_url() ) ;
@@ -179,10 +160,8 @@
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                User::newInstance()->update(
-                                                            array( 's_password' => sha1( Params::getParam ('new_password') ) )
-                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
-                                                    ) ;
+                                                User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password') ) )
+                                                                           ,array( 'pk_i_id' => Session::newInstance()->_get('userId') ) ) ;
 
                                                 osc_add_flash_ok_message( _m('Password has been changed')) ;
                                                 $this->redirectTo( osc_user_profile_url() ) ;
@@ -213,9 +192,9 @@
                     }
 
                     if( $result == 1 ) {
-                        osc_add_flash_message(__('Alert activated.'));
+                        osc_add_flash_ok_message(_m('Alert activated'));
                     }else{
-                        osc_add_flash_message(__('Ops! There was a problem trying to activate alert. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
                     }
 
                     $this->redirectTo( osc_base_url(true) );
@@ -225,9 +204,9 @@
                     $secret = Params::getParam('secret');
                     if($email!='' && $secret!='') {
                         Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
-                        osc_add_flash_ok_message(__('Unsubscribed correctly.'));
+                        osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
-                        osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
                     }
                     $this->redirectTo(osc_user_alerts_url());
                 break;

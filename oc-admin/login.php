@@ -59,11 +59,11 @@
                                                 Session::newInstance()->_set('adminLocale', Params::getParam('locale')) ;
 
                                             } else {
-                                                osc_add_flash_message( _m('The password is incorrect'), 'admin') ;
+                                                osc_add_flash_error_message( _m('The password is incorrect'), 'admin') ;
                                             }
 
                                         } else {
-                                            osc_add_flash_message( _m('That username does not exist'), 'admin') ;
+                                            osc_add_flash_error_message( _m('That username does not exist'), 'admin') ;
                                         }
 
                                         //returning logged in to the main page...
@@ -79,7 +79,7 @@
                                         
                                             if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                                                 if(!osc_check_recaptcha()) {
-                                                    osc_add_flash_message( _m('The Recaptcha code is wrong'), 'admin') ;
+                                                    osc_add_flash_error_message( _m('The Recaptcha code is wrong'), 'admin') ;
                                                     $this->redirectTo( osc_admin_base_url(true).'?page=login&action=recover' );
                                                     return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                                 }
