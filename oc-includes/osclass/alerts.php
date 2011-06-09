@@ -21,7 +21,7 @@
 
     function osc_runAlert($type = null) {
 
-        if ($type == null) {
+        if ( !in_array($type, array('HOURLY', 'DAILY', 'WEEKLY', 'INSTANT')) ) {
             return;
         }
 
