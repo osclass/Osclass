@@ -393,6 +393,29 @@
     }
 
     /**
+     * Return true if item is expired, else return false
+     * 
+     * @return boolean  
+     */
+    function osc_item_is_expired() {
+        if( osc_item_is_premium() ) {
+            return false;
+        } else {
+            $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+            $expiration = $category['i_expiration_days'];
+
+            if($expiration == 0){ return false; }
+            else{
+                $date_expiration = strtotime(date("Y-m-d H:i:s", strtotime( osc_item_pub_date() )) . " +$expiration day");
+                $now             = strtotime(date('Y-m-d H:i:s'));
+
+                if( $date_expiration < $now ) { return true; }
+                else { return false; }
+            }
+        }
+    }
+    
+    /**
      * Gets status of current item.
      * b_active = true  -> item is active
      * b_active = false -> item is inactive
