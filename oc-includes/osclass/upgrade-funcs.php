@@ -24,16 +24,16 @@
     require_once ABS_PATH . 'oc-load.php';
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
     
-    if(!defined('AUTO_UPGRADE') && Params::getParam('skipdb')=='') {
+    if( !defined('AUTO_UPGRADE') && Params::getParam('skipdb') == '' ) {
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
-            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
+            $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
             $conn = getConnection();
             $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
         }
         if(!$error_queries[0]) {
             $skip_db_link = osc_base_url() . "oc-includes/osclass/upgrade-funcs.php?skipdb=true";
-            $title = __('OSClass &raquo; Has some errors') ;
-            $message = __('We encountered some problems updating the database structure. The following queries failed:');
+            $title    = __('OSClass &raquo; Has some errors') ;
+            $message  = __('We encountered some problems updating the database structure. The following queries failed:');
             $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
             $message .= "<br/><br/>" . sprintf(__('These errors could be false-positive errors. If you\'re sure that is the case, you could <a href="%s">continue with the upgrade</a>, or <a href="http://forums.osclass.org/">ask in our forums</a>.'), $skip_db_link);
             osc_die($title, $message) ;
@@ -84,22 +84,25 @@
                                               ,array('pk_i_id'  => $comment['pk_i_id']));
         }
         unset($comments);
-        
-        $enableItemValidation = getBoolPreference('enable_item_validation');
-        
-        
+
         // Drop e_status column in t_item and t_item_comment
         $conn->osc_dbExec(sprintf("ALTER TABLE %st_item DROP e_status", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("ALTER TABLE %st_item_comment DROP e_status", DB_TABLE_PREFIX));
+        // Delete enabled_item_validation in t_preference
         $conn->osc_dbExec(sprintf("DELETE FROM %st_preference WHERE s_name = 'enabled_item_validation'", DB_TABLE_PREFIX));
 
+        // insert two new e-mail notifications
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_alert_validation', 1, NOW() )", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', 'Please validate your alert', '<p>Hi {USER_NAME},</p>\n<p>Please validate your alert registration by clicking on the following link: {VALIDATION_LINK}</p>\n<p>Thank you!</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $conn->get_last_id()));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_comment_validated', 1, NOW() )", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Your comment has been approved', '<p>Hi {COMMENT_AUTHOR},</p>\n<p>Your comment has been approved on the following item: {ITEM_URL}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $conn->get_last_id()));
+        
         osc_changeVersionTo(210) ;
     }
     
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
         $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';
-
         osc_die($title, $message) ;
     }
 
