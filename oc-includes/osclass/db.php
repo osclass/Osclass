@@ -368,7 +368,7 @@
                                 switch (strtolower($field_name[1])) {
                                     case '':
                                     case 'on':
-                                    case 'foreign':
+                                    //case 'foreign':
                                     case 'primary':
                                     case 'index':
                                     case 'fulltext':

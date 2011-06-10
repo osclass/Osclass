@@ -125,8 +125,7 @@ function check_requirements($array) {
  *
  * @return boolean Check if allowed to send stats to Osclass
  */
-function reportToOsclass()
-{
+function reportToOsclass() {
     return $_COOKIE['osclass_save_stats'] ;
 }
 
@@ -134,15 +133,14 @@ function reportToOsclass()
  * insert/update preference allow_report_osclass
  * @param boolean $bool
  */
-function set_allow_report_osclass($bool)
-{
+function set_allow_report_osclass($bool) {
     require_once ABS_PATH . 'config.php' ;
 
     $value = 0;
     if($bool) {$value = 1;}
 
     $conn = getConnection() ;
-    $sql = sprintf("INSERT INTO `osclass`.`%st_preference` (`s_section`,`s_name`,`s_value`,`e_type`) VALUES ('osclass','allow_report_osclass','$value','BOOLEAN')",DB_TABLE_PREFIX);
+    $sql  = sprintf("INSERT INTO %st_preference (s_section, s_name, s_value, e_type) VALUES ('osclass', 'allow_report_osclass', '$value', 'BOOLEAN')", DB_TABLE_PREFIX);
     $conn->osc_dbExec($sql) ;
 }
 

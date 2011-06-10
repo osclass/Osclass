@@ -45,59 +45,59 @@
 
     $conn = getConnection();
 
-    if($version<202) {
-        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '1', 'BOOLEAN'),('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
-        osc_changeVersionTo(202) ;
-    }
-    
-
-    if($version<203) {
-        $conn->osc_dbExec("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '0', 'INTEGER'),('osclass', 'items_wait_time', '90', 'INTEGER'),('osclass', 'comments_per_page', '10', 'INTEGER'),('osclass', 'numImages@items', '0', 'INTEGER')", DB_TABLE_PREFIX);
+    if($version < 210) {
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'selectable_parent_categories', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'ping_search_engines', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'numImages@items', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $enableItemValidation = (getBoolPreference('enable_item_validation') ? 0 : -1);
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'moderate_items', '$enableItemValidation', 'INTEGER')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'items_wait_time', '0', 'INTEGER')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'comments_per_page', '10', 'INTEGER')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'allow_report_osclass', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
+        
         $users = User::newInstance()->listAll();
         foreach($users as $user) {
             $comments = count(ItemComment::newInstance()->findByAuthorID($user['pk_i_id']));
-            $items = count(Item::newInstance()->findByUserIDEnabled($user['pk_i_id']));
+            $items    = count(Item::newInstance()->findByUserIDEnabled($user['pk_i_id']));
             User::newInstance()->update(array( 'i_items' => $items, 'i_comments' => $comments )
-                                        ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                        ) ;
+                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) ) ;
             // CHANGE FROM b_enabled to b_active
             User::newInstance()->update(array( 'b_active' => $user['b_enabled'], 'b_enabled' => 1 )
-                                        ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                        ) ;
+                                       ,array( 'pk_i_id'  => $user['pk_i_id'] ) ) ;
         }
         unset($users);
-        $items = $conn->osc_dbFetchResults("SELECT * FROM %st_item", DB_TABLE_PREFIX);
+        
+        $items = $conn->osc_dbFetchResults(sprintf("SELECT * FROM %st_item", DB_TABLE_PREFIX));
         foreach($items as $item) {
-            Item::newInstance()->update(array("b_active" => ($item['e_status']=='ACTIVE'?1:0),
-                    'b_enabled' => 1),
-                    array('pk_i_id' => $item['pk_i_id']));
+            Item::newInstance()->update(array("b_active" => ($item['e_status'] == 'ACTIVE' ? 1 : 0 ) , 'b_enabled' => 1)
+                                       ,array('pk_i_id'  => $item['pk_i_id']));
         }
         unset($items);
-        $comments = $conn->osc_dbFetchResults("SELECT * FROM %st_item_comment", DB_TABLE_PREFIX);
+        
+        $comments = $conn->osc_dbFetchResults(sprintf("SELECT * FROM %st_item_comment", DB_TABLE_PREFIX));
         foreach($comments as $comment) {
-            ItemComment::newInstance()->update(array("b_active" => ($comment['e_status']=='ACTIVE'?1:0),
-                    'b_enabled' => 1),
-                    array('pk_i_id' => $comment['pk_i_id']));
+            ItemComment::newInstance()->update(array("b_active" => ($comment['e_status'] == 'ACTIVE' ? 1 : 0), 'b_enabled' => 1)
+                                              ,array('pk_i_id'  => $comment['pk_i_id']));
         }
         unset($comments);
-        $conn->osc_dbExec("ALTER TABLE %st_item DROP `e_status`", DB_TABLE_PREFIX);
-        $conn->osc_dbExec("ALTER TABLE %st_item_comment DROP `e_status`", DB_TABLE_PREFIX);
-        osc_changeVersionTo(203) ;
-    }
+        
+        $enableItemValidation = getBoolPreference('enable_item_validation');
+        
+        
+        // Drop e_status column in t_item and t_item_comment
+        $conn->osc_dbExec(sprintf("ALTER TABLE %st_item DROP e_status", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("ALTER TABLE %st_item_comment DROP e_status", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("DELETE FROM %st_preference WHERE s_name = 'enable_item_validation'", DB_TABLE_PREFIX));
 
-    if($version<210) {
-        $conn->osc_dbExec("INSERT INTO %st_preference VALUES ('osclass', 'reg_user_post_comments', '0', 'BOOLEAN'),('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')", DB_TABLE_PREFIX);
         osc_changeVersionTo(210) ;
     }
-
-    
-    // UNCOMMENT THESE LINES IF YOU'RE TESTING UPGRADE
-    //osc_changeVersionTo(202) ;
-
     
     if(Params::getParam('action') == '') {
-
-        $title = 'OSClass &raquo; Updated correctly' ;
+        $title   = 'OSClass &raquo; Updated correctly' ;
         $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';
 
         osc_die($title, $message) ;
