@@ -354,10 +354,12 @@ option.pad { margin-left:10px;}
 #comment_error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
 #comment_error_list label { float:none; width:auto; line-height:1.35em; }
 
+label.recaptcha_input_area_text { float:none; }
 
-label.recaptcha_input_area_text {
-    float:none;
-}
+/* -- STATIC PAGES --------------------------------------- */
+.page { margin: 10px 0; padding: 10px 0 0; clear: both; }
+.page h1 { font-size: 2em; margin: 0 0 10px; }
+
 /*
 Uniform Theme: Uniform Default
 Version: 1.6

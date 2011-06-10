@@ -99,6 +99,7 @@
                         </ul>
                     </div>
                     <?php if( osc_comments_enabled() ) { ?>
+                        <?php if( osc_reg_user_post_comments () && osc_is_web_user_logged_in() || !osc_reg_user_post_comments() ) { ?>
                         <div id="comments">
                             <h2><?php _e('Comments', 'modern'); ?></h2>
                             <ul id="comment_error_list"></ul>
@@ -140,6 +141,7 @@
                                 </fieldset>
                             </form>
                         </div>
+                        <?php } ?>
                     <?php } ?>
                 </div>
                 <div id="sidebar">

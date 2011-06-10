@@ -101,9 +101,9 @@
 
                                 <div class="row two_input">
                                     <h6><?php _e('Price', 'modern') ; ?></h6>
-                                    <?php _e('Min', 'modern') ; ?>.
+                                    <div><?php _e('Min', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min() ; ?>" size="6" maxlength="6" />
-                                    <?php _e('Max', 'modern') ; ?>.
+                                    <div><?php _e('Max', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
