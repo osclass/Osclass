@@ -65,7 +65,7 @@
                                     <label for="enabled_recaptcha_items"><?php _e('Enable reCAPTCHA'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo ((osc_moderate_items()==-1) ? '' : 'checked="true"'); ?> name="moderate_items" onclick="checkbox_change();" id="moderate_items" value="1" />
-                                    <label for="enabled_item_validation"><?php _e('Enable item validation by users'); ?></label>
+                                    <label><?php _e('Enable item validation by users'); ?></label>
                                     <br />
                                     <div name="num_moderate_items_div" id="num_moderate_items_div" <?php echo ((osc_moderate_items()==-1) ? 'style="display:none"' : ''); ?>>
                                         &nbsp;<label><?php _e('Number of items from same author that should be validated before skipping validation (0 for always moderation)'); ?></label>
