@@ -138,15 +138,11 @@
                     
                     echo $result;
                     break;
-
-                case 'categories_name': // Save the category's name in quick edit
-                    $id = explode("_", Params::getParam('div'));
-                    $name = Params::getParam('name');
-                    $locale = Params::getParam('locale');
-                    Category::newInstance()->update_name($id, $locale, $name);
-                    echo '1';
+                case 'category_edit_iframe':
+                    $this->_exportVariableToView("category", Category::newInstance()->findByPrimaryKey(Params::getParam("id")));
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
+                    $this->doView("categories/iframe.php");
                     break;
-                
                 case 'enable_category':
                     $id = Params::getParam("id");
                     $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
@@ -265,8 +261,7 @@
                     $result .= "}";
                     
                     echo $result;
-                    break;
-                    
+                    break; 
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
