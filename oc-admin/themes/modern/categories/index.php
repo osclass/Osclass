@@ -104,9 +104,12 @@
             list_original = $('.sortable').nestedSortable('serialize');
             
             function show_iframe(class_name, id) {
+
+                $('.edit #settings_form').remove();
+
                 var name = 'frame_'+ id ; 
                 var id_  = 'frame_'+ id ;
-                var url  = '<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit_iframe&id='+id; 
+                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=category_edit_iframe&id='+id;
                 $.ajax({
                     url: url,
                     context: document.body,
