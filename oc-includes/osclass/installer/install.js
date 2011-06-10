@@ -80,6 +80,10 @@ function validate_form() {
     var input = $("#target_form input");
     $("#lightbox").css('display','');
 
+    if( $('input[name=c_country]:checked').val() == 'International' ) {
+        alert('You\'ve chosen worlwide, it might take a while')
+    }
+
     $.ajax({
         type: 'POST',
         dataType: 'json',
