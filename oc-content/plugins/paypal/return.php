@@ -67,6 +67,14 @@ $response = PPHttpPost($ENDPOINT, $req_str);
             // PUBLISH FEE
             $conn = getConnection();
             $conn->osc_dbExec("UPDATE %st_paypal_publish SET `dt_date` = '%s', `b_paid` =  '1', `fk_i_paypal_id` = '%d' WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, date('Y-m-d H:i:s'), $paypal_id, $rpl[1]);
+
+            
+            $item = Item::newInstance()->findByPrimaryKey($rpl[1]);
+            $category = Category::newInstance()->findByPrimaryKey($item['fk_i_item_id']);
+            View::newInstance()->_exportVariableToView('category', $category);
+            $html = '<p>'.__("Payment processed correctly","paypal").' <a href="'.osc_search_category_url().'">'.__("Click here to continue", "paypal").'</a></p>';
+            
+            
         } else if($produt_type[0]=="201") {
             // PREMIUM FEE
             $conn = getConnection();
@@ -74,22 +82,35 @@ $response = PPHttpPost($ENDPOINT, $req_str);
             if($paid) {
                 $conn->osc_dbExec("UPDATE %st_paypal_premium SET `dt_date` = '%s', `fk_i_paypal_id` = '%d' WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, date('Y-m-d H:i:s'), $paypal_id, $rpl[1]);
             } else {
-                $conn->osc_dbExec("INSERT INTO  %st_paypal_premium (`fk_i_item_id` ,`dt_date` ,`fk_i_paypal_id`)VALUES ('%d',  '%s',  '%s')", DB_TABLE_PREFIX, $item['pk_i_id'], date('Y-m-d H:i:s'), $paypal_id);
+                $conn->osc_dbExec("INSERT INTO  %st_paypal_premium (`fk_i_item_id` ,`dt_date` ,`fk_i_paypal_id`)VALUES ('%d',  '%s',  '%s')", DB_TABLE_PREFIX, $rpl[1], date('Y-m-d H:i:s'), $paypal_id);
             }
+            
+            
+            $html = '<p>'.__("Payment processed correctly","paypal").' <a href="'.osc_render_file_url(osc_plugin_folder(__FILE__)."user_menu.php").'">'.__("Click here to continue", "paypal").'</a></p>';
+            
+            
         } else {
             // THIS SHOULD NEVER HAPPEN (YET)
             // PUBLISH/PREMIUM PACKS
         }
-        
-        
-        echo "Your Payment Has Completed! click <a href='#'>HERE</a> to download your goods";
-        //place in logic to make digital goods available
-    
-        //$response = PPHttpPost($ENDPOINT, $req_str);
-        header("Location :".osc_base_url()."oc-content/plugins/".osc_plugin_folder(__FILE__)."return.php?".$_SERVER['QUERY_STRING']);
-        //print_r($_SERVER);
 
+        osc_add_flash_ok_message(__("Payment processed correctly","paypal"));
     } else if($doresponse['ACK'] == "Failure" || $doresponse['ACK'] == "FailureWithWarning") {
-        header("Location :".osc_render_file_url(osc_plugin_folder(__FILE__)."cancel.php?".$_SERVER['QUERY_STRING']."&failed=1"));
+        osc_add_flash_error_message(__("There was a problem processing your payment. Please contact the administrators","paypal"));
+        $html = '<p><a href="CasaLomaOrch-PutOnYourOldGreyBonnet.mp3">'.__("Click here to continue", "paypal").'</a></p>';
     }
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <script type="text/javascript" src="https://www.paypalobjects.com/js/external/dg.js"></script>
+        <title><?php echo osc_page_title(); ?></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            top.rd.innerHTML = '<?php echo $html; ?>';
+            top.dg.closeFlow();
+        </script>
+    </body>
+</html>

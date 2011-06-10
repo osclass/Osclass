@@ -134,7 +134,7 @@
                         $PcontactName   = Params::getParam('contactName');
                         $PcontactEmail  = Params::getParam('contactEmail');
                         $itemId         = Params::getParam('itemId');
-                        $item           = array();
+                        $item           = $this->itemManager->findByPrimaryKey($itemId);
 
                         if( Session::newInstance()->_get('userId') == '' ){
                             $mPages = new Page() ;
@@ -147,7 +147,7 @@
                             } else {
                                 $content = current($aPage['locale']);
                             }
-                            $item =  $this->itemManager->findByPrimaryKey($itemId);
+                            //$item =  $this->itemManager->findByPrimaryKey($itemId);
 
                             $item_url = osc_item_url( ) ;
                             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';

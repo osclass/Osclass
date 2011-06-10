@@ -44,19 +44,20 @@ function PPHttpPost($my_endpoint, $my_api_str){
 }
 
 
-function paypal_save_log($concept, $code, $amount, $email, $user, $item, $product_type, $source) {
+function paypal_save_log($concept, $code, $amount, $currency, $email, $user, $item, $product_type, $source) {
     
     $conn = getConnection();
-    $conn->osc_dbExec("INSERT INTO %st_paypal_log (`s_concept`, `dt_date`, `s_code`, `f_amount`, `s_email`, `fk_i_user_id`, `fk_i_item_id`, `s_source`, `i_product_type`) VALUES 
+    $conn->osc_dbExec("INSERT INTO %st_paypal_log (`s_concept`, `dt_date`, `s_code`, `f_amount`, `s_currency_code`, `s_email`, `fk_i_user_id`, `fk_i_item_id`, `s_source`, `i_product_type`) VALUES 
         ('".$concept."',"
         ."'".date("Y-m-d H:i:s")."',"
         ."'".$code."',"
         ."'".$amount."',"
+        ."'".$currency."',"
         ."'".$email."',"
         ."'".$user."',"
         ."'".$item."',"
         ."'".$product_type."',"
-        ."'".$source."',"
+        ."'".$source."'"
         .")", DB_TABLE_PREFIX);
     return $conn->get_last_id();
 }

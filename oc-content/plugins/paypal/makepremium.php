@@ -29,6 +29,11 @@
                         <?php echo sprintf(__("The current fee for this category is: %.2f %s", "paypal"), $category_fee, osc_get_preference("currency", "paypal")); ?><br/>
                         <?php paypal_button($category_fee, sprintf(__("Premium fee for item %d at %s", "paypal"), $item['pk_i_id'], osc_page_title()), $item['fk_i_user_id']."|".$item['pk_i_id']."|".$item['s_contact_email'], "201x".$item['fk_i_category_id']); ?>
                     </div>
+                    <div style="claer:both;"></div>
+                    <div name="result_div" id="result_div"></div>
+                    <script type="text/javascript">
+                        var rd = document.getElementById("result_div");
+                    </script>
                 </div>
 
                 <?php

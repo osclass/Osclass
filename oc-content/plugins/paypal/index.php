@@ -143,8 +143,6 @@ function paypal_redirect_to($url) {
 }
 
 function paypal_publish($item) {
-    //$conn = getConnection();
-    //$conn->osc_dbExec("INSERT INTO ");
     if(osc_get_preference('pay_per_post', 'paypal')) {
         // Check if it's already payed or not
         $conn = getConnection();

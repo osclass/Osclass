@@ -4,6 +4,7 @@ CREATE TABLE  /*TABLE_PREFIX*/t_paypal_log (
     dt_date DATETIME NOT NULL ,
     s_code VARCHAR( 17 ) NOT NULL ,
     f_amount FLOAT NOT NULL ,
+    s_currency_code VARCHAR( 3 ) NULL ,
     s_email VARCHAR( 200 ) NULL ,
     fk_i_user_id INT NULL ,
     fk_i_item_id INT NULL ,
