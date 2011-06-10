@@ -223,10 +223,7 @@
                 case 'edit_category_post':
                     $id = Params::getParam("id");
 
-                    $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
-                    $fields['i_position'] = (Params::getParam("i_position") != '') ? Params::getParam("i_position") : 0;
-                    $fields['b_enabled'] = (Params::getParam("b_enabled")!='' ) ? 1 : 0;
 
                     $error = 0;
                     $postParams = Params::getParamsAsArray();

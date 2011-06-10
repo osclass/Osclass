@@ -24,9 +24,7 @@
 <div id="settings_form">
     <form action="<?php echo osc_admin_base_url(true); ?>?page=ajax" method="post">
             <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
-            <input type="hidden" name="fk_i_parent_id" value="<?php echo $category['fk_i_parent_id']; ?>" />
-            <input type="hidden" name="i_position" value="<?php echo $category['i_position']; ?>" />
-            <input type="hidden" name="b_enabled" value="<?php if($category["b_enabled"]!='' ){echo 1;}else{echo 0;} ?>" />
+            
             <?php CategoryForm::primary_input_hidden($category) ; ?>
             
             <div class="FormElement">
