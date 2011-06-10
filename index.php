@@ -92,6 +92,11 @@
                             $do = new CWebContact() ;
                             $do->doModel() ;
         break;
+        case ('custom'):   //contact
+                            require_once(osc_base_path() . 'custom.php') ;
+                            $do = new CWebCustom() ;
+                            $do->doModel() ;
+        break;
         default:            // home and static pages that are mandatory...
                             require_once(osc_base_path() . 'main.php') ;
                             $do = new CWebMain() ;
