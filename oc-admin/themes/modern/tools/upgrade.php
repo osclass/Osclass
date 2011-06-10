@@ -54,7 +54,7 @@
                     } else {
                         steps.innerHTML += "<?php _e('current version:', 'admin'); ?> " + data.version + "<br/>" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
-                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url() ; ?>images/loading.gif\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
+                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;

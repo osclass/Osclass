@@ -25,7 +25,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Plugins'); ?></div>              
 	        <div id="content">
 		        <div id="separator"></div>	
 		        <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>

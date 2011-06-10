@@ -26,14 +26,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-        <script src="<?php echo osc_current_admin_theme_url(); ?>js/vtip/vtip.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_current_admin_theme_url(); ?>js/vtip/css/vtip.css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url(); ?>js/jquery.ui.nestedSortable.js"></script>
+        <script src="<?php echo osc_current_admin_theme_url('js/vtip/vtip.js'); ?>" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_current_admin_theme_url('js/vtip/css/vtip.css'); ?>" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/jquery.ui.nestedSortable.js'); ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Categories'); ?></div>
         <script type="text/javascript">
             $(function() {
                 
@@ -67,12 +66,12 @@
                                     var ret = eval( "(" + res + ")");
                                     var message = "";
                                     if(ret.error) { 
-                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                                         message += ret.error; 
 
                                     }
                                     if(ret.ok){ 
-                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                                         message += ret.ok; 
                                     }
 
@@ -131,11 +130,11 @@
                             var ret = eval( "(" + res + ")");
                             var message = "";
                             if(ret.error) { 
-                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                                 message += ret.error; 
                             }
                             if(ret.ok){
-                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                                 message += ret.ok;
                                 
                                 $('#list_'+id).fadeOut("slow");
@@ -183,37 +182,37 @@
                         var ret = eval( "(" + res + ")");
                         var message = "";
                         if(ret.error) { 
-                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                             message += ret.error; 
                         }
                         if(ret.ok){ 
-                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                             message += ret.ok;
                             if(enabled == 0) {
                                 $('div[category_id='+ id +']').addClass('disabled');
                                 $('div[category_id='+ id +']').removeClass('enabled');
                                 
-                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable');?>');
+                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable'); ?>');
                                 
                                 for(var i = 0; i < ret.afectedIds.length; i++) {
                                     id =  ret.afectedIds[i].id ;
                                     $('div[category_id='+ id +']').addClass('disabled');
                                     $('div[category_id='+ id +']').removeClass('enabled');
                                     
-                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable');?>');
+                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable'); ?>');
                                 }
                             } else {
                                 $('div[category_id='+ id +']').removeClass('disabled');
                                 $('div[category_id='+ id +']').addClass('enabled');
                                 
-                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable');?>');
+                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable'); ?>');
                                 
                                 for(var i = 0; i < ret.afectedIds.length; i++) {
                                     id =  ret.afectedIds[i].id ;
                                     $('div[category_id='+ id +']').removeClass('disabled');
                                     $('div[category_id='+ id +']').addClass('enabled');
                                  
-                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable');?>');
+                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable'); ?>');
                                 }
                             }
                         }
@@ -247,7 +246,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/cat-icon.png" title="" alt="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/cat-icon.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
                     <div id="jsMessage" class="" style="float:right;display:none;"></div>
@@ -262,12 +261,12 @@
                 <div id="TableCategories" class="TableCategories">
                     <div style="padding-left:10px;">
                         <p>
-                            <img src="<?php echo osc_current_admin_theme_url(); ?>images/question.png" />
+                            <img src="<?php echo osc_current_admin_theme_url('images/question.png'); ?>" />
                             <?php _e('Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category'); ?>.
                         </p>
                         <p style="padding-left: 20px;">
                             <strong class="publish_button">
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add_post_default"><?php _e('+ Add new category'); ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add_post_default">+ <?php _e('Add new category'); ?></a>
                             </strong>
                         </p>
 
@@ -324,7 +323,6 @@
                         <?php } ?>
                     </ul>
                 </div>
-               
             </div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->

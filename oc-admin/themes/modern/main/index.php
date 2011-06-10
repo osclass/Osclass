@@ -34,8 +34,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
-
         <script type="text/javascript">
             $.extend({
                 initDashboard: function(args) {
@@ -168,7 +166,6 @@
 								<?php _e('Number of administrators') ; ?>: <?php echo $numAdmins; ?><br />
 							</div>							
 						</div>
-
 					</div>
 
 					<!-- right side -->
