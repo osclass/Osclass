@@ -50,17 +50,17 @@
 
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
-                                osc_add_flash_error_message($msg, 'admin');
+                                    osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(1):   $msg = _m('The plugin has been uploaded correctly');
-                                osc_add_flash_ok_message($msg, 'admin');
+                                   osc_add_flash_ok_message($msg, 'admin');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
-                                osc_add_flash_error_message($msg, 'admin');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the plugin');
-                                osc_add_flash_error_message($msg, 'admin');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                     }
 
@@ -124,6 +124,25 @@
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
                         //osc_renderPluginView($file);
                         $this->doView("plugins/view.php");
+                    }
+                    break;
+
+                case 'render':
+                    $file = Params::getParam("file");
+                    if($file!="") {
+                        // We pass the GET variables (in case we have somes)
+                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
+                            $file = $match[1];
+                            if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
+                                for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
+                                    Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
+                                }
+                            }
+                        } else {
+                            $file = $_REQUEST['file'];
+                        };
+                        $this->_exportVariableToView("file", ABS_PATH . $file);
+                        $this->doView("theme/view.php");
                     }
                     break;
 

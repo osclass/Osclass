@@ -54,7 +54,7 @@ function check(id) {
 function validate_form() {
     email = document.getElementById('email');
     error = document.getElementById('email-error');
-    var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.\-])+\.([a-zA-Z])+([a-zA-Z])+$/;
     var num_error = 0;
     if( !pattern.test(email.value) ) {
         email.setAttribute('style', 'color:red;');
@@ -79,6 +79,10 @@ function validate_form() {
 
     var input = $("#target_form input");
     $("#lightbox").css('display','');
+
+    if( $('input[name=c_country]:checked').val() == 'International' ) {
+        alert('You\'ve chosen worlwide, it might take a while')
+    }
 
     $.ajax({
         type: 'POST',

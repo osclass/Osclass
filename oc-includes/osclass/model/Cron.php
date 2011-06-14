@@ -35,7 +35,7 @@
         public function getTableName() { return DB_TABLE_PREFIX . 't_cron'; }
 
         public function getCronByType($type) {
-            return $this->conn->osc_dbFetchResults('SELECT * FROM %st_cron WHERE e_type = \'%s\'', DB_TABLE_PREFIX, $type);
+            return $this->conn->osc_dbFetchResult('SELECT * FROM %st_cron WHERE e_type = \'%s\'', DB_TABLE_PREFIX, $type);
         }
 
     }

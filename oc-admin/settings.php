@@ -106,7 +106,7 @@
                                                                     }
                                                                     $exists = $mCountries->findByCode($countryCode);
                                                                     if(isset($exists['s_name'])) {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                       $countryName), 'admin');
                                                                     } else {
                                                                         $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_code&term=' .
@@ -159,7 +159,7 @@
                                                                                 }
                                                                             }
                                                                         }
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'), $countryName), 'admin');
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
                                                                     }                                                
 
 
@@ -174,19 +174,12 @@
                                                                         if(!$result) {
                                                                             $ok = false;
                                                                         }
-                                                                    }                                                                    /*if(!isset($exists['pk_c_code']) || $exists['pk_c_code']==$old_exists['pk_c_code']) {
-                                                                        $mCountries->update(array('s_name' => $newCountry)
-                                                                                           ,array('s_name' => $oldCountry));
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been edited'),
-                                                                                                          $newCountry), 'admin');
-                                                                    } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
-                                                                                                           $newCountry),'admin');
-                                                                    }*/
+                                                                    }
+
                                                                     if($ok) {
-                                                                        osc_add_flash_ok_message(__('Country has been edited'), 'admin');
+                                                                        osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_ok_message(__('There were some problems editing the country'), 'admin');
+                                                                        osc_add_flash_ok_message(_m('There were some problems editing the country'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -206,9 +199,9 @@
                                                                         }
                                                                         $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_error_message(sprintf(_m('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -225,10 +218,10 @@
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
                                                                             $mRegions->insert($data);
-                                                                            osc_add_flash_ok_message(sprintf(__('%s has been added as a new region'),
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
                                                                                                              $regionName), 'admin');
                                                                         } else {
-                                                                            osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                              $regionName), 'admin');
                                                                         }
                                                                     }
@@ -243,11 +236,11 @@
                                                                         if($regionId != '') {
                                                                             $mRegions->update(array('s_name' => $newRegion)
                                                                                              ,array('pk_i_id' => $regionId));
-                                                                            osc_add_flash_ok_message(sprintf(__('%s has been edited'),
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                               $newRegion), 'admin');
                                                                         }
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                             $newRegion), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -264,7 +257,7 @@
                                                                         $mCities->delete(array('fk_i_region_id' => $regionId));
                                                                         $mRegion->delete(array('pk_i_id' => $regionId));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been deleted'),
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
                                                                                 $aRegion['s_name']), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -281,10 +274,10 @@
                                                                                               ,'s_name'            => $newCity
                                                                                               ,'fk_c_country_code' => $countryCode));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been added as a new city'),
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -299,10 +292,10 @@
                                                                         $mCities->update(array('s_name' => $newCity)
                                                                                         ,array('pk_i_id' => $cityId));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been edited'),
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -314,7 +307,7 @@
                                                                     $aCity   = $mCities->findByPrimaryKey($cityId);
                                                                     $mCities->delete(array('pk_i_id' => $cityId));
 
-                                                                    osc_add_flash_ok_message(sprintf(__('%s has been deleted'),
+                                                                    osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
                                                                                                      $aCity['s_name']), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -504,19 +497,19 @@
                                                                         $rowChanged += Currency::newInstance()->delete(array('pk_c_code' => $currencyCode));
                                                                     }
                                                                     if($currencyCode == osc_currency()) {
-                                                                        $msg_current = ". " . $currencyCode . " could not be deleted because it's the default currency";
+                                                                        $msg_current = sprintf('. ' . _m("%s could not be deleted because it's the default currency"), $currencyCode) ;
                                                                     }
                                                                 }
 
                                                                 $msg = '';
                                                                 switch ($rowChanged) {
-                                                                    case ('0'): $msg = __('No currencies have been deleted');
+                                                                    case ('0'): $msg = _m('No currencies have been deleted');
                                                                             osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
-                                                                    case ('1'): $msg = __('One currency has been deleted');
+                                                                    case ('1'): $msg = _m('One currency has been deleted');
                                                                             osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
-                                                                    default:    $msg = sprintf(__('%s currencies have been deleted'), $rowChanged);
+                                                                    default:    $msg = sprintf(_m('%s currencies have been deleted'), $rowChanged);
                                                                             osc_add_flash_ok_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                 }
@@ -740,14 +733,14 @@
 
             $countries = json_decode($countries_json);
             if(isset($countries->error)) {
-                osc_add_flash_error_message(sprintf(__('%s cannot be added'), $country), 'admin');
+                osc_add_flash_error_message(sprintf(_m('%s cannot be added'), $country), 'admin');
                 return false;
             }
 
             foreach($countries as $c) {
                 $exists = $manager_country->findByCode($c->id);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(__('%s already was in the database'), $exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_country->insert(array(
@@ -791,7 +784,7 @@
                 }
             }
 
-            osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'), $country), 'admin');
+            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $country), 'admin');
         }
 
         function install_location_by_region() {
@@ -819,14 +812,14 @@
                                                   urlencode(implode(',', $aCountry)) . '&term=' . urlencode(implode(',', $aRegion)));
             $regions = json_decode($regions_json);
             if(isset($regions->error)) {
-                osc_add_flash_error_message(sprintf(__('%s cannot be added'), $region), 'admin');
+                osc_add_flash_error_message(sprintf(_m('%s cannot be added'), $region), 'admin');
                 return false;
             }
 
             foreach($regions as $r) {
                 $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(__('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_region->insert(array(
@@ -857,7 +850,7 @@
                 unset($cities_json);
             }
 
-            osc_add_flash_ok_message(sprintf(__('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
+            osc_add_flash_ok_message(sprintf(_m('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
         }
     }
 

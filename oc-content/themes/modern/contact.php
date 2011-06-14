@@ -40,9 +40,9 @@
                         <input type="hidden" name="action" value="contact_post" />
 
                         <fieldset>
-                            <label for="subject"><?php _e('Subject', 'modern') ; ?> <?php _e('(optional)'); ?></label> <?php ContactForm::the_subject() ; ?><br />
+                            <label for="subject"><?php _e('Subject', 'modern') ; ?> (<?php _e('optional', 'modern'); ?>)</label> <?php ContactForm::the_subject() ; ?><br />
                             <label for="message"><?php _e('Message', 'modern') ; ?></label> <?php ContactForm::your_message() ; ?><br />
-                            <label for="yourName"><?php _e('Your name', 'modern') ; ?> <?php _e('(optional)'); ?></label> <?php ContactForm::your_name() ; ?><br />
+                            <label for="yourName"><?php _e('Your name', 'modern') ; ?> (<?php _e('optional', 'modern'); ?>)</label> <?php ContactForm::your_name() ; ?><br />
                             <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?></label> <?php ContactForm::your_email(); ?><br />
                             
                             <?php osc_show_recaptcha(); ?>

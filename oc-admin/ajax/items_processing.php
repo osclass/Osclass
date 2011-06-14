@@ -47,10 +47,63 @@
             $this->getDBParams();
 
 
-                $list_items = $this->list_items((Params::getParam('catId')=='')?null:Params::getParam('catId'), $this->start, $this->limit, ($this->stat?$this->stat:''), $this->order_by, $this->search);
-
-            $this->result = $list_items['items'];
-            $this->filtered_total = $list_items['found'];
+            $mSearch = new Search(true);
+            $mSearch->limit($this->start, $this->limit);
+            $mSearch->order($this->order_by['column_name'], $this->order_by['type']);
+            if(Params::getParam("catId")!="") {
+                $mSearch->addCategory(Params::getParam("catId"));
+            }
+            if($this->search) {
+                $mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $this->search, $this->search));
+            }
+            
+            switch($this->stat) {
+                case "spam":
+                    $mSearch->addConditions("s.`i_num_spam` > 0");
+                    $mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+                    break;
+                case "duplicated":
+                    $mSearch->addConditions("s.`i_num_duplicated` > 0");
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+                    break;
+                case "bad":
+                    $mSearch->addConditions("s.`i_num_bad_classified` > 0");
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+                    break;
+                case "offensive":
+                    $mSearch->addConditions("s.`i_num_offensive` > 0");
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+                    break;
+                case "expired":
+                    $mSearch->addConditions("s.`i_num_expired` > 0");
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+                    break;
+                case "pending":
+                    $conditions[] = "i.`b_active` = 0";
+                    $mSearch->addConditions(sprintf("%st_item.b_active = 0", DB_TABLE_PREFIX));
+                    break;
+                case "enabled":
+                    $conditions[] = "i.`b_enabled` = 1";
+                    $mSearch->addConditions(sprintf("%st_item.b_enabled = 1", DB_TABLE_PREFIX));
+                    break;
+                case "disabled":
+                    $mSearch->addConditions(sprintf("%st_item.b_enabled = 0", DB_TABLE_PREFIX));
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            
+            
+            $list_items = $mSearch->doSearch(true);
+            $this->result = Item::newInstance()->extendCategoryName(Item::newInstance()->extendData($list_items));
+            $this->filtered_total = $mSearch->count();
             $this->total = $this->total_items();
 
             $this->toDatatablesFormat();

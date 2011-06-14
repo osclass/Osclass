@@ -28,7 +28,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Statistics'); ?></div>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<div id="content">
 			<div id="separator"></div>	
@@ -36,7 +35,7 @@
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title="" />
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Item'); ?></div>
 					<div style="clear: both;"></div>
@@ -47,16 +46,16 @@
                 <div>
                     <div style="padding: 20px;">
                         <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments&type_stat=day"><?php _e('Last 10 days'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments&type_stat=week"><?php _e('Last 10 weeks'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments&type_stat=month"><?php _e('Last 10 months'); ?></a>
                         </p>
                     </div>
                 </div>
 
                 <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($comments)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
@@ -70,9 +69,9 @@
                     <table border="0">
                         <tr>
                             <th>ID</th>
-                            <th><?php _e('Title');?></th>
-                            <th><?php _e('Author');?></th>
-                            <th><?php _e('Comment');?></th>
+                            <th><?php _e('Title'); ?></th>
+                            <th><?php _e('Author'); ?></th>
+                            <th><?php _e('Comment'); ?></th>
                         </tr>
                         <?php foreach($latest_comments as $c) { ?>
                         <tr>
@@ -84,7 +83,7 @@
                         <?php }; ?>
                     </table>
                     <?php } else { ?>
-                        <p><?php _e('There\'re no statistics yet.'); ?></p>
+                        <p><?php _e('There\'re no statistics yet'); ?>.</p>
                     <?php }; ?>
                 </div>
                 <br/>
@@ -92,7 +91,7 @@
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
 
-        <?php if(count($comments)>0) {?>
+        <?php if(count($comments)>0) { ?>
             <script type="text/javascript">
 
             // Load the Visualization API and the piechart package.
@@ -123,7 +122,7 @@
                 chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max*1.1);?>}});
             }
             </script>
-        <?php }; ?>
+        <?php } ?>
         
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>

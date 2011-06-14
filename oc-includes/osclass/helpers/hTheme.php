@@ -1,4 +1,5 @@
 <?php
+
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -18,25 +19,15 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
-    <head>
-        <?php osc_current_web_theme_path('head.php') ; ?>
-        <meta name="robots" content="noindex, nofollow" />
-        <meta name="googlebot" content="noindex, nofollow" />
-    </head>
-    <body>
-        <div class="container">
-            <?php osc_current_web_theme_path('header.php') ; ?>
-            <div class="page">
-                <h1><?php echo osc_static_page_title() ; ?></h1>
-                <div><?php echo osc_static_page_text() ; ?></div>
-            </div>
-            <?php osc_current_web_theme_path('footer.php') ; ?>
-        </div>
-        <?php osc_show_flash_message() ; ?>
-        <?php osc_run_hook('footer'); ?>
-    </body>
-</html>
+    /**
+     * Gets urls for current theme administrations options
+     *
+     * @param string $file must be a relative path, from ABS_PATH
+     * @return string
+     */
+    function osc_admin_render_theme_url($file = '') {
+        return osc_admin_base_url(true).'?page=plugins&action=render&file=' . $file;
+    }
+    
+?>

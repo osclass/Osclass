@@ -26,14 +26,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
-        <script src="<?php echo osc_current_admin_theme_url(); ?>js/vtip/vtip.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_current_admin_theme_url(); ?>js/vtip/css/vtip.css" />
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url(); ?>js/jquery.ui.nestedSortable.js"></script>
+        <script src="<?php echo osc_current_admin_theme_url('js/vtip/vtip.js'); ?>" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo osc_current_admin_theme_url('js/vtip/css/vtip.css'); ?>" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/jquery.ui.nestedSortable.js'); ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Categories'); ?></div>
         <script type="text/javascript">
             $(function() {
                 
@@ -67,12 +66,12 @@
                                     var ret = eval( "(" + res + ")");
                                     var message = "";
                                     if(ret.error) { 
-                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                                         message += ret.error; 
 
                                     }
                                     if(ret.ok){ 
-                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                                         message += ret.ok; 
                                     }
 
@@ -105,9 +104,12 @@
             list_original = $('.sortable').nestedSortable('serialize');
             
             function show_iframe(class_name, id) {
+
+                $('.edit #settings_form').remove();
+
                 var name = 'frame_'+ id ; 
                 var id_  = 'frame_'+ id ;
-                var url  = '<?php echo osc_admin_base_url(true); ?>?page=categories&action=edit_iframe&id='+id; 
+                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=category_edit_iframe&id='+id;
                 $.ajax({
                     url: url,
                     context: document.body,
@@ -131,11 +133,11 @@
                             var ret = eval( "(" + res + ")");
                             var message = "";
                             if(ret.error) { 
-                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                                 message += ret.error; 
                             }
                             if(ret.ok){
-                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                                 message += ret.ok;
                                 
                                 $('#list_'+id).fadeOut("slow");
@@ -166,9 +168,16 @@
                 return false;
             }
             
-            function enable_cat(id, enabled){
+            function enable_cat(id){
                 
-                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=enable_category&id='+id+'&enabled='+enabled; 
+                var enabled = '';
+                if( $('div[category_id='+ id +']').hasClass('disabled') ){
+                    enabled = 1;
+                } else {
+                    enabled = 0;
+                }
+                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=enable_category&id='+id+'&enabled='+enabled;
+                
                 $.ajax({
                     url: url,
                     context: document.body,
@@ -176,56 +185,37 @@
                         var ret = eval( "(" + res + ")");
                         var message = "";
                         if(ret.error) { 
-                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
                             message += ret.error; 
                         }
                         if(ret.ok){ 
-                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                            message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
                             message += ret.ok;
                             if(enabled == 0) {
                                 $('div[category_id='+ id +']').addClass('disabled');
                                 $('div[category_id='+ id +']').removeClass('enabled');
                                 
-                                var js = "enable_cat('"+id+"','1')";
-                                // create a function from the "js" string
-                                var newclick = new Function(js);
-                                
-                                $('div[category_id='+ id +']').find('a.enable').attr('onclick',"").click(newclick);
-                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable');?>');
+                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable'); ?>');
                                 
                                 for(var i = 0; i < ret.afectedIds.length; i++) {
                                     id =  ret.afectedIds[i].id ;
                                     $('div[category_id='+ id +']').addClass('disabled');
                                     $('div[category_id='+ id +']').removeClass('enabled');
-                                    js = "enable_cat('"+id+"','1')";
-                                    // create a function from the "js" string
-                                    newclick = new Function(js);
-
-                                    $('div[category_id='+ id +']').find('a.enable').attr('onclick',"").click(newclick);
-                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable');?>');
+                                    
+                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Enable'); ?>');
                                 }
                             } else {
                                 $('div[category_id='+ id +']').removeClass('disabled');
                                 $('div[category_id='+ id +']').addClass('enabled');
                                 
-                                var js = "enable_cat('"+id+"','0')";
-                                // create a function from the "js" string
-                                var newclick = new Function(js);
-
-                                $('div[category_id='+ id +']').find('a.enable').attr('onclick','').click(newclick);
-                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable');?>');
+                                $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable'); ?>');
                                 
                                 for(var i = 0; i < ret.afectedIds.length; i++) {
                                     id =  ret.afectedIds[i].id ;
                                     $('div[category_id='+ id +']').removeClass('disabled');
                                     $('div[category_id='+ id +']').addClass('enabled');
-                                    
-                                    js = "enable_cat('"+id+"','0')";
-                                    // create a function from the "js" string
-                                    newclick = new Function(js);
-
-                                    $('div[category_id='+ id +']').find('a.enable').attr('onclick',"").click(newclick);
-                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable');?>');
+                                 
+                                    $('div[category_id='+ id +']').find('a.enable').text('<?php _e('Disable'); ?>');
                                 }
                             }
                         }
@@ -259,7 +249,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/cat-icon.png" title="" alt="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/cat-icon.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Categories'); ?></div>
                     <div id="jsMessage" class="" style="float:right;display:none;"></div>
@@ -274,12 +264,12 @@
                 <div id="TableCategories" class="TableCategories">
                     <div style="padding-left:10px;">
                         <p>
-                            <img src="<?php echo osc_current_admin_theme_url(); ?>images/question.png" />
+                            <img src="<?php echo osc_current_admin_theme_url('images/question.png'); ?>" />
                             <?php _e('Drag&drop the categories to reorder them the way you like. Click on edit link to edit the category'); ?>.
                         </p>
                         <p style="padding-left: 20px;">
                             <strong class="publish_button">
-                                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add_post_default"><?php _e('+ Add new category'); ?></a>
+                                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add_post_default">+ <?php _e('Add new category'); ?></a>
                             </strong>
                         </p>
 
@@ -297,7 +287,7 @@
                                 <div style="float:right;">
                                     <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
                                     <?php _e('Edit'); ?>
-                                    </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>','<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>')">
+                                    </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')">
                                     <?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?>
                                     </a> | <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)">
                                     <?php _e('Delete'); ?>
@@ -319,7 +309,7 @@
                                             <div style="float:right;">
                                                 <a onclick="show_iframe('content_list_<?php echo $category['pk_i_id'];?>','<?php echo $category['pk_i_id'];?>');">
                                                 <?php _e('Edit'); ?>
-                                                </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>','<?php echo $category['b_enabled'] == 1 ? '0' : '1'; ?>')">
+                                                </a> | <a class="enable" onclick="enable_cat('<?php echo $category['pk_i_id']; ?>')">
                                                 <?php $category['b_enabled'] == 1 ? _e('Disable') : _e('Enable'); ?>
                                                 </a> | <a onclick="delete_category(<?php echo $category['pk_i_id']; ?>)">
                                                 <?php _e('Delete'); ?>
@@ -336,7 +326,6 @@
                         <?php } ?>
                     </ul>
                 </div>
-               
             </div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->

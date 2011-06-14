@@ -66,9 +66,9 @@
                     }
 
                     if( $result == 1 ) {
-                        osc_add_flash_message(__('Alert activated.'));
+                        osc_add_flash_ok_message(_m('Alert activated'));
                     }else{
-                        osc_add_flash_message(__('Ops! There was a problem trying to activate alert. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
                     }
 
                     $this->redirectTo( osc_base_url(true) );
@@ -78,9 +78,9 @@
                     $secret = Params::getParam('secret');
                     if($email!='' && $secret!='') {
                         Alerts::newInstance()->delete(array('s_email' => $email, 'S_secret' => $secret));
-                        osc_add_flash_ok_message(__('Unsubscribed correctly.'));
+                        osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
-                        osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
                     }
                     $this->redirectTo(osc_base_url());
 

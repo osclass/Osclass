@@ -50,7 +50,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Users'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php UserForm::location_javascript("admin") ; ?>
@@ -90,7 +89,7 @@
                                     <?php UserForm::check_password_text($user); ?>
                                 </fieldset>
                                 <p id="password-error" style="display:none;">
-                                    <?php _e('Passwords don\'t match.'); ?>
+                                    <?php _e('Passwords don\'t match'); ?>.
                                 </p>
                             </div>
 

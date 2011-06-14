@@ -189,8 +189,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_stats (
     i_num_items INT UNSIGNED NOT NULL DEFAULT 0,
 
         PRIMARY KEY (fk_i_category_id),
-	FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
-);
+        FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_item (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -354,7 +354,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_alerts (
   s_search LONGTEXT,
   s_secret VARCHAR(40) NULL,
   b_active BOOLEAN NOT NULL DEFAULT FALSE,
-  e_type enum('INSTANT','DAILY','WEEKLY','CUSTOM') NOT NULL
+  e_type enum('INSTANT','HOURLY','DAILY','WEEKLY','CUSTOM') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_keywords (

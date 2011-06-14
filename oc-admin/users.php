@@ -130,10 +130,6 @@
                                         $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
                                             $iUpdated   += $userActions->activate($id);
-                                            //$conditions = array('pk_i_id' => $id);
-                                            //$values     = array('b_enabled' => 1);
-                                            //$iUpdated  += $this->userManager->update($values, $conditions);
-                                            
                                         }
 
                                         switch ($iUpdated) {
@@ -159,9 +155,6 @@
                                         $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
                                             $iUpdated   += $userActions->deactivate($id);
-                                            //$conditions = array('pk_i_id' => $id);
-                                            //$values     = array('b_enabled' => 0);
-                                            //$iUpdated  += $this->userManager->update($values, $conditions);
                                         }
 
                                         switch ($iUpdated) {

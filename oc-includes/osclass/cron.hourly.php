@@ -1,111 +1,87 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-// Load lots of fancy stuff
-// DO NOT TOUCH
-if(!defined('__FROM_CRON__')) {
-	define('__FROM_CRON__', true);
-}
-if(!defined('__OSC_LOADED__')) {
-	require_once '../../oc-load.php';
-}
+    if( !defined('__FROM_CRON__') ) {
+        define('__FROM_CRON__', true);
+    }
 
-	// INSERT HERE YOUR FUNCTIONS, DO NOT FORGET TO CALL THEM AT THE END
-	// THEY WILL RUN HOURLY
+    if( !defined('__OSC_LOADED__') ) {
+        define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
+        require_once ABS_PATH . 'oc-load.php';
+    }
 
-
-function count_items_subcategories($category = null) {
-    $manager = CategoryStats::newInstance();
-    $total = $manager->countItemsFromCategory($category['pk_i_id']);
-    $categories = Category::newInstance()->isParentOf($category['pk_i_id']);
-    if($categories!=null) {
-        foreach($categories as $c) {
-            if($c['b_enabled']==1) {
-                $total += count_items_subcategories($c);
+    function count_items_subcategories($category = null) {
+        $manager = CategoryStats::newInstance();
+        $total = $manager->countItemsFromCategory($category['pk_i_id']);
+        $categories = Category::newInstance()->isParentOf($category['pk_i_id']);
+        if($categories!=null) {
+            foreach($categories as $c) {
+                if($c['b_enabled']==1) {
+                    $total += count_items_subcategories($c);
+                }
             }
         }
+        $conn = getConnection();
+        $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $category['pk_i_id'], $total, $total);
+        return $total;
     }
-    $conn = getConnection();
-    $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $category['pk_i_id'], $total, $total);
-    return $total;
-}
 
-function update_cat_stats() {
+    function update_cat_stats() {
+        $conn = getConnection() ;
+        $sql_cats = "SELECT pk_i_id, i_expiration_days FROM ".DB_TABLE_PREFIX."t_category";
+        $cats = $conn->osc_dbFetchResults($sql_cats);
 
-    //$manager = CategoryStats::newInstance();
+        foreach($cats as $c) {
+            if($c['i_expiration_days']==0) {
+                $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
+            } else {
+                $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 AND (b_premium = 1 || TIMESTAMPDIFF(DAY,dt_pub_date,NOW()) < %d) GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id'], $c['i_expiration_days']);
+            }
 
-	$conn = getConnection() ;
-	$sql_cats = "SELECT pk_i_id, i_expiration_days FROM ".DB_TABLE_PREFIX."t_category";
-	$cats = $conn->osc_dbFetchResults($sql_cats);
-	
-	foreach($cats as $c) {
-        if($c['i_expiration_days']==0) {
-    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
-        } else {
-    	    $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 AND (b_premium = 1 || TIMESTAMPDIFF(DAY,dt_pub_date,NOW()) < %d) GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id'], $c['i_expiration_days']);
+            $total = $conn->osc_dbFetchResult($sql);
+            $total = $total['total'];
+
+            $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
         }
-        
-        $total = $conn->osc_dbFetchResult($sql);
-        $total = $total['total'];
-        
-        /*$manager->update(
-            array(
-                'i_num_items' => $total
-                ), array('fk_i_category_id' => $c['pk_i_id'])
-            );*/
-        $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
-	}
-	
-	
-	$categories = Category::newInstance()->findRootCategories();
-	foreach($categories as $c) {
-        /*$manager->update(
-			array(
-				'i_num_items' => count_items_subcategories($c)
-			), array('fk_i_category_id' => $c['pk_i_id'])
-		);*/
-		$total = count_items_subcategories($c);
-        //$conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
 
-			
-	}
-	
-}
-
-
-function purge_latest_searches_hourly() {
-    $purge = osc_purge_latest_searches();
-    if($purge=='day') {
-        LatestSearches::newInstance()->purgeDate(date('Y-m-d H:i:s', (time()-3600)));
-    } else if($purge!='forever' && $purge!='day' && $purge!='week') {
-        LatestSearches::newInstance()->purgeNumber($purge);
+        $categories = Category::newInstance()->findRootCategories();
+        foreach($categories as $c) {
+            $total = count_items_subcategories($c);
+        }
     }
-}
 
 
-update_cat_stats();
-purge_latest_searches_hourly();
-osc_runAlert('HOURLY');
+    function purge_latest_searches_hourly() {
+        $purge = osc_purge_latest_searches();
+        if($purge == 'day') {
+            LatestSearches::newInstance()->purgeDate(date('Y-m-d H:i:s', (time()-3600)));
+        } else if($purge!='forever' && $purge!='day' && $purge!='week') {
+            LatestSearches::newInstance()->purgeNumber($purge);
+        }
+    }
 
-osc_run_hook('cron_hourly');
+    osc_add_hook('cron_hourly', 'update_cat_stats');
+    osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
+    osc_runAlert('HOURLY');
 
+    osc_run_hook('cron_hourly');
 
 ?>

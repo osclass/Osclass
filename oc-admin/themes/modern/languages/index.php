@@ -29,8 +29,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Languages'); ?></div>
-
         <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
@@ -103,7 +101,7 @@
                 });
         </script>
 
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
 
         <div id="content">
             <div id="separator"></div>
@@ -114,7 +112,7 @@
 
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/icon-language.png" title="" alt=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/icon-language.png') ; ?>" title="" alt=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Languages'); ?></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&action=add" id="button_open"><?php _e('Add') ; ?></a>

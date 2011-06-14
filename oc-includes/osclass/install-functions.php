@@ -125,8 +125,7 @@ function check_requirements($array) {
  *
  * @return boolean Check if allowed to send stats to Osclass
  */
-function reportToOsclass()
-{
+function reportToOsclass() {
     return $_COOKIE['osclass_save_stats'] ;
 }
 
@@ -134,15 +133,14 @@ function reportToOsclass()
  * insert/update preference allow_report_osclass
  * @param boolean $bool
  */
-function set_allow_report_osclass($bool)
-{
+function set_allow_report_osclass($bool) {
     require_once ABS_PATH . 'config.php' ;
 
     $value = 0;
     if($bool) {$value = 1;}
 
     $conn = getConnection() ;
-    $sql = sprintf("INSERT INTO `osclass`.`%st_preference` (`s_section`,`s_name`,`s_value`,`e_type`) VALUES ('osclass','allow_report_osclass','$value','BOOLEAN')",DB_TABLE_PREFIX);
+    $sql  = sprintf("INSERT INTO %st_preference (s_section, s_name, s_value, e_type) VALUES ('osclass', 'allow_report_osclass', '$value', 'BOOLEAN')", DB_TABLE_PREFIX);
     $conn->osc_dbExec($sql) ;
 }
 
@@ -428,6 +426,8 @@ function finish_installation( ) {
     require_once LIB_PATH . 'osclass/model/Admin.php' ;
     require_once LIB_PATH . 'osclass/model/Preference.php' ;
     require_once LIB_PATH . 'osclass/model/Category.php';
+    require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
+    require_once LIB_PATH . 'osclass/plugins.php';
     require_once LIB_PATH . 'osclass/model/Item.php';
     require_once LIB_PATH . 'osclass/core/Params.php';
     require_once LIB_PATH . 'osclass/compatibility.php';
@@ -516,27 +516,27 @@ function display_database_config() {
         <table>
             <tbody>
                 <tr>
-                    <th><label for="dbhost">Host</label></th>
+                    <th align="left"><label for="dbhost">Host</label></th>
                     <td><input type="text" id="dbhost" name="dbhost" value="localhost" size="25" /></td>
                     <td class="small">Server name or IP where the database engine resides</td>
                 </tr>
                 <tr>
-                    <th><label for="dbname">Database name</label></th>
+                    <th align="left"><label for="dbname">Database name</label></th>
                     <td><input type="text" id="dbname" name="dbname" value="osclass" size="25" /></td>
                     <td class="small">The name of the database you want to run OSClass in</td>
                 </tr>
                 <tr>
-                    <th><label for="username">User Name</label></th>
+                    <th align="left"><label for="username">User Name</label></th>
                     <td><input type="text" id="username" name="username" size="25" /></td>
                     <td class="small">Your MySQL username</td>
                 </tr>
                 <tr>
-                    <th><label for="password">Password</label></th>
+                    <th align="left"><label for="password">Password</label></th>
                     <td><input type="password" id="password" name="password" value="" size="25" /></td>
                     <td class="small">Your MySQL password</td>
                 </tr>
                 <tr>
-                    <th><label for="tableprefix">Table prefix</label></th>
+                    <th align="left"><label for="tableprefix">Table prefix</label></th>
                     <td><input type="text" id="tableprefix" name="tableprefix" value="oc_" size="25" /></td>
                     <td class="small">If you want to run multiple OSClass installations in a single database, change this</td>
                 </tr>
@@ -570,12 +570,12 @@ function display_database_config() {
                     <td class="small">Check here if the database is not created and you want to create it now</td>
                 </tr>
                 <tr id="admin_username_row">
-                    <th><label for="admin_username">DB admin username</label></th>
+                    <th align="left"><label for="admin_username">DB admin username</label></th>
                     <td><input type="text" id="admin_username" name="admin_username" size="25" disabled/></td>
                     <td></td>
                 </tr>
                 <tr id="admin_password_row">
-                    <th><label for="admin_password">DB admin password</label></th>
+                    <th align="left"><label for="admin_password">DB admin password</label></th>
                     <td><input type="password" id="admin_password" name="admin_password" value="" size="25" disabled/></td>
                     <td></td>
                 </tr>

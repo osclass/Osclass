@@ -53,7 +53,7 @@
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php SendFriendForm::your_message(); ?> <br/>
                             <?php osc_show_recaptcha(); ?>
                             <br/>
-                            <button type="button"><?php _e('Send', 'modern'); ?></button>
+                            <button type="submit"><?php _e('Send', 'modern'); ?></button>
                         </fieldset>
                     </form>
                 </div>

@@ -36,7 +36,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/admin-icon.png" title="" alt=""/>
+                        <img src="<?php echo  osc_current_admin_theme_url('images/admin-icon.png') ; ?>" title="" alt=""/>
                     </div>
                     <div id="content_header_arrow">&raquo;<?php _e('Edit admin'); ?></div>
                     <div style="clear: both;"></div>
