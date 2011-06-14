@@ -26,6 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <div class="container">
@@ -33,7 +34,8 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Register an account for free', 'modern') ; ?></h1>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" onSubmit="javascript:return checkForm();">
+                    <ul id="error_list"></ul>
+                    <form name="register" id="register" action="<?php echo osc_base_url(true) ; ?>" method="post" >
                         <input type="hidden" name="page" value="register" />
                         <input type="hidden" name="action" value="register_post" />
                         

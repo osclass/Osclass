@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
@@ -35,14 +35,21 @@
 
                                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                                             if(!osc_check_recaptcha()) {
-                                                osc_add_flash_message( _m('The Recaptcha code is wrong')) ;
+                                                osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
+                                                Session::newInstance()->_setForm("yourName",$yourName);
+                                                Session::newInstance()->_setForm("yourEmail",$yourEmail);
+                                                Session::newInstance()->_setForm("subject",$subject);
+                                                Session::newInstance()->_setForm("message_body",$message);
                                                 $this->redirectTo(osc_contact_url());
                                                 return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
                                             }
                                         }
 
                                         if( !preg_match('|.*?@.{2,}\..{2,}|',$yourEmail) ) {
-                                            osc_add_flash_message( _m('You have to introduce a correct e-mail') ) ;
+                                            osc_add_flash_error_message( _m('You have to introduce a correct e-mail') ) ;
+                                            Session::newInstance()->_setForm("yourName",$yourName);
+                                            Session::newInstance()->_setForm("subject",$subject);
+                                            Session::newInstance()->_setForm("message_body",$message);
                                             $this->redirectTo(osc_contact_url());
                                         }
 
@@ -65,7 +72,7 @@
                                             $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
 
                                             if(!is_writable(osc_content_path() . 'uploads/')) {
-                                                osc_add_flash_message( _m('There has been some errors sending the message')) ;
+                                                osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
                                                 $this->redirectTo( osc_base_url() );
                                             }
 
@@ -80,7 +87,7 @@
 
                                         osc_sendMail($params) ;
 
-                                        osc_add_flash_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
+                                        osc_add_flash_ok_message( _m('Your e-mail has been sent properly. Thank your for contacting us!') ) ;
 
                                         $this->redirectTo( osc_base_url() ) ;
                 break;
@@ -91,7 +98,10 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
     }
 

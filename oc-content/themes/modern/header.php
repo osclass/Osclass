@@ -19,7 +19,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <div id="header">
     <a id="logo" href="<?php echo osc_base_url() ; ?>"><strong><?php echo osc_page_title() ; ?></strong></a>
     <div id="user_menu">
@@ -44,7 +43,9 @@
                             <?php UserForm::password_login_text() ; ?>
                             <p class="checkbox"><?php UserForm::rememberme_login_checkbox();?> <label for="rememberMe"><?php _e('Remember me', 'modern') ; ?></label></p>
                             <button type="submit"><?php _e('Log in', 'modern') ; ?></button>
-                            &nbsp;&nbsp;<a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern');?></a>
+                            <div class="forgot">
+                                <a href="<?php echo osc_recover_user_password_url() ; ?>"><?php _e("Forgot password?", 'modern');?></a>
+                            </div>
                         </fieldset>
                     </form>
                 </li>

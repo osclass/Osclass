@@ -31,7 +31,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Plugins'); ?></div>              
         <script type="text/javascript">
 
             function checkAll (frm, check) {

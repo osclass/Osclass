@@ -19,17 +19,42 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-     //getting from View
+    /**
+     * Helper Utils
+     * @package OSClass
+     * @subpackage Helpers
+     * @author OSClass
+     */
+     
+    /**
+     * Getting from View the $key index
+     *
+     * @param string $key
+     * @return array
+     */
      function __get($key) {
          return View::newInstance()->_get($key) ;
      }
 
-    //get params
+    /**
+     * Get variable from $_REQUEST[$key]
+     *
+     * @param string $key
+     * @return mixed
+     */
     function osc_get_param($key) {
         return Params::getParam($key) ;
     }
 
-    //generic function for view layer
+    /**
+     * Generic function for view layer, return the $field of $item
+     * with specific $locate
+     *
+     * @param array $item
+     * @param string $field
+     * @param string $locale
+     * @return string
+     */
     function osc_field($item, $field, $locale) {
         if(!is_null($item)) {
             if($locale == "") {
@@ -39,19 +64,39 @@
             } else {
                 if(isset($item["locale"]) && isset($item["locale"][$locale]) && isset($item["locale"][$locale][$field])) {
                     return $item["locale"][$locale][$field] ;
+                }else{
+                    if(isset($item["locale"])){
+                        foreach($item["locale"] as $locale => $data) {
+                            if( isset($item["locale"][$locale][$field] ) ) {
+                                return $item["locale"][$locale][$field] ;
+                            }
+                        }
+                    }
                 }
             }
         }
         return '' ;
     }
     
-
+    /**
+     * Print all widgets belonging to $location
+     *
+     * @param string $location
+     * @return void
+     */
     function osc_show_widgets($location) {
         $widgets = Widget::newInstance()->findByLocation($location);
         foreach ($widgets as $w)
             echo $w['s_content'] ;
     }
 
+    /**
+     * Print recaptcha html, if $section = "recover_password"
+     * set 'recover_time' at session.
+     * 
+     * @param  string $section
+     * @return void
+     */
     function osc_show_recaptcha($section = '') {
         if( osc_recaptcha_public_key() ) {
             require_once osc_lib_path() . 'recaptchalib.php' ;
@@ -72,8 +117,9 @@
 
     /**
      * Formats the date using the appropiate format.
+     *
+     * @param string $date
      */
-    //osc_formatDate
     function osc_format_date($date) {
         //$date = strtotime($item['dt_pub_date']) ;
         return date(osc_date_format(), strtotime($date)) ;
@@ -82,8 +128,7 @@
     /**
      * Prints the user's account menu
      *
-     * @param array with options of the form array('name' => 'display name', 'url' => 'url of link')
-     *
+     * @param array $options array with options of the form array('name' => 'display name', 'url' => 'url of link')
      * @return void
      */
     function osc_private_user_menu($options = null)
@@ -113,6 +158,17 @@
         echo '</ul>' ;
     }
 
+    /**
+     * Gets prepared text, with:
+     * - higlight search pattern and search city
+     * - maxim length of text
+     *
+     * @param string $txt
+     * @param int  $len
+     * @param string $start_tag
+     * @param string $end_tag
+     * @return string
+     */
     function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
 
         if (strlen($txt) > $len) {

@@ -1,19 +1,23 @@
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2010 OSCLASS
      *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
      *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
      *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
     class CAdminEmails extends AdminSecBaseModel
@@ -65,12 +69,12 @@
                             if(!$this->emailManager->isIndelible($id)) {
                                 $this->emailManager->updateInternalName($id, $s_internal_name);
                             }
-                            osc_add_flash_message( _m('The email/alert has been updated'), 'admin' );
+                            osc_add_flash_ok_message( _m('The email/alert has been updated'), 'admin' );
                             $this->redirectTo(osc_admin_base_url(true)."?page=emails");
                         }
-                        osc_add_flash_message( _m('You can\'t repeat internal name'), 'admin');
+                        osc_add_flash_error_message( _m('You can\'t repeat internal name'), 'admin');
                     } else {
-                        osc_add_flash_message( _m('The email couldn\'t be updated, at least one title should not be empty'), 'admin') ;
+                        osc_add_flash_error_message( _m('The email couldn\'t be updated, at least one title should not be empty'), 'admin') ;
                     }
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                     break;
@@ -86,6 +90,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

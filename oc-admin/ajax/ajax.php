@@ -1,4 +1,5 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -87,7 +88,177 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
                     break;
+            
+                case 'categories_order': // Save the order of the categories
 
+                    $aIds = Params::getParam('list') ;
+                    $orderParent = 0 ;
+                    $orderSub    = 0 ;
+                    $catParent   = 0 ;
+                    
+                    $catManager = Category::newInstance();
+                    
+                    foreach($aIds as $id => $parent ) {
+                        if($parent == 'root'){
+                            if(! $catManager->update_order($id, $orderParent) ) {
+                                $error = 1;
+                            }
+                            // set parent category 
+                            $conditions = array('pk_i_id' => $id);
+                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            if(! $catManager->update($array, $conditions) > 0) {
+                                $error = 1;
+                            }
+                            $orderParent++;
+                        } else {
+                            if( $parent != $catParent ) {
+                                $catParent = $parent;
+                                $orderSub = 0;
+                            }
+                            if(! $catManager->update_order($id, $orderSub) ) {
+                                $error = 1;
+                            }
+                            
+                            // set parent category 
+                            $conditions = array('pk_i_id' => $id);
+                            $array['fk_i_parent_id'] = $catParent;
+                            if(! $catManager->update($array, $conditions) > 0) {
+                                $error = 1;
+                            }
+                            $orderSub++;
+                        }
+                    }
+                    
+                    $result = "{";
+                    $error = 0;
+
+                    if($error) { $result .= '"error" : "'.__("Some error ocurred").'"'; }
+                    else {       $result .= '"ok" : "'.__("Order saved").'"'; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    break;
+                case 'category_edit_iframe':
+                    $this->_exportVariableToView("category", Category::newInstance()->findByPrimaryKey(Params::getParam("id")));
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
+                    $this->doView("categories/iframe.php");
+                    break;
+                case 'enable_category':
+                    $id = Params::getParam("id");
+                    $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
+                    $error = 0;
+                    $aUpdated = "";
+                    try {
+                        if ($id!='') {
+                            $categoryManager = Category::newInstance() ;
+                            $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
+                            if ($enabled==1) {
+                                $msg = __('The category has been enabled') ;
+                            } else {
+                                $msg = __('The category has been disabled') ;
+                            }
+                            
+                            $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
+                            $aUpdated = $categoryManager->listWhere( "fk_i_parent_id = $id" );
+                            if ($enabled==1) {
+                                $msg .= "<br>" . __('The subcategories has been enabled') ;
+                            } else {
+                                $msg .= "<br>" . __('The subcategories has been disabled') ;
+                            }
+                            
+                        } else {
+                            $error = 1;
+                            $msg = __('There was a problem with this page. The ID for the category hasn\'t been set') ;
+                        }
+                        $message = $msg;
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error: %s') ." ".$e->getMessage();
+                    }
+                    
+                    $result = "{";
+                    $error = 0;
+
+                    if($error) { $result .= '"error" : "'.$message.'"'; }
+                    else {       
+                        $result .= '"ok" : "'.$message.'"'; 
+                        if( count($aUpdated) > 0 ){
+                            $result .= ', "afectedIds": [';
+                            foreach($aUpdated as $category){
+                                $result .= '{ "id" : "'.$category['pk_i_id'].'" },';
+                            }
+                            $result = substr($result,0,-1); 
+                            $result .= ']';
+                        } else {
+                            $result .= ', "afectedIds": []';
+                        }
+                    }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
+                case 'delete_category':
+                    $id = Params::getParam("id");
+                    $error = 0;
+                    
+                    try {
+                        $categoryManager = Category::newInstance() ;
+                        $categoryManager->deleteByPrimaryKey($id) ;
+                      
+                        $message = __('The categories have been deleted');
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error while deleting');
+                    }
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "Saved." '; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
+                case 'edit_category_post':
+                    $id = Params::getParam("id");
+
+                    $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
+
+                    $error = 0;
+                    $postParams = Params::getParamsAsArray();
+                    foreach ($postParams as $k => $v) {
+                        if (preg_match('|(.+?)#(.+)|', $k, $m)) {
+                            if($m[2] == 's_name') {
+                                if($v != ""){
+                                    $aFieldsDescription[$m[1]][$m[2]] = $v;
+                                }else{
+                                    $error = 1;
+                                    $message = __("All titles are required");
+                                }
+                            }
+                            
+                        }
+                    }
+
+                    $l = osc_current_admin_locale();
+                    if( !$error ){
+                        try {
+                            $categoryManager = Category::newInstance() ;
+                            $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                        } catch (Exception $e) {
+                            $error = 1;
+                            $message = __("Error while updating.");
+                        }
+                    }
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "'.__("Saved").'", "text" : "'.$aFieldsDescription[$l]['s_name'].'"'; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    break; 
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {
@@ -111,7 +282,10 @@
                     $perms = osc_save_permissions();
                     osc_change_permissions();
 
-
+                    $maintenance_file = ABS_PATH . '.maintenance';
+                    $fileHandler = @fopen($maintenance_file, 'w');
+                    fclose($fileHandler);
+                    
                     /***********************
                      **** DOWNLOAD FILE ****
                      ***********************/
@@ -152,7 +326,7 @@
 			                                $lines = file(ABS_PATH.'oc-temp/remove.list', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 			                                foreach ($lines as $line_num => $r_file) {
 				                                $unlink = @unlink(ABS_PATH.$r_file);
-				                                if(!$unlink) { $remove_error_msg .= __('Error removing file: ').$r_file."<br/>"; }
+				                                if(!$unlink) { $remove_error_msg .= sprintf(__('Error removing file: %s'), $r_file) . "<br/>"; }
 			                                }
 		                                }
 		                                // Removing files is not important for the rest of the proccess
@@ -172,6 +346,7 @@
                                              **********************************/
 		                                    if(file_exists(osc_lib_path() . 'osclass/upgrade-funcs.php')) {
 			                                    // There should be no errors here
+			                                    define('AUTO_UPGRADE', true);
 			                                    require_once osc_lib_path() . 'osclass/upgrade-funcs.php';
 		                                    }
                     		                // Additional actions is not important for the rest of the proccess
@@ -198,6 +373,7 @@
 		                                    if(!rmdir($path)) {
 		                                        $rm_errors++;
 		                                    }
+                                            $deleted = @unlink(ABS_PATH . '.maintenance');
 		                                    if($rm_errors==0) {
 		                                        $message = __('Everything was OK! Your OSClass installation is updated');
 		                                    } else {

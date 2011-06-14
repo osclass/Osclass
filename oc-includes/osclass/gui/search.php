@@ -68,13 +68,7 @@
                             <?php require(osc_search_show_as() == 'list' ? 'search_list.php' : 'search_gallery.php') ; ?>
                         <?php } ?>
                         <div class="paginate" >
-                        <?php for($i = 0 ; $i < osc_search_total_pages() ; $i++) {
-                            if($i == osc_search_page()) {
-                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
-                            } else {
-                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_update_search_url(array('iPage' => $i)), ($i + 1));
-                            }
-                        } ?>
+                        <?php echo osc_search_pagination(); ?>
                         </div>
                     </div>
                 </div>
@@ -107,12 +101,13 @@
 
                                 <div class="row two_input">
                                     <h6><?php _e('Price', 'modern') ; ?></h6>
-                                    <?php _e('Min', 'modern') ; ?>.
+                                    <div><?php _e('Min', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min() ; ?>" size="6" maxlength="6" />
-                                    <?php _e('Max', 'modern') ; ?>.
+                                    <div><?php _e('Max', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
 
+                                <?php  osc_get_non_empty_categories(); ?>
                                 <?php  if ( osc_count_categories() ) { ?>
                                     <div class="row checkboxes">
                                         <h6><?php _e('Category', 'modern') ; ?></h6>
@@ -130,7 +125,7 @@
                             </fieldset>
 
                             <?php
-                                if(osc_search_category() != '') {
+                                if(osc_search_category_id()) {
                                     osc_run_hook('search_form', osc_search_category_id()) ;
                                 } else {
                                     osc_run_hook('search_form') ;

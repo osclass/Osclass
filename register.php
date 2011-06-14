@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
@@ -35,16 +35,19 @@
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
-                                            case 1: osc_add_flash_message( _m('The user has been created. An activation email has been sent')) ;
+                                            case 1: osc_add_flash_ok_message( _m('The user has been created. An activation email has been sent')) ;
                                                     $this->redirectTo( osc_base_url() ) ;
                                             break;
-                                            case 2: osc_add_flash_message( _m('Your account has been created successfully')) ;
+                                            case 2: osc_add_flash_ok_message( _m('Your account has been created successfully')) ;
                                                     $this->doView('user-login.php') ;
                                             break;
-                                            case 3: osc_add_flash_message( _m('The specified e-mail is already in use')) ;
+                                            case 3: osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
-                                            case 4: osc_add_flash_message( _m('The reCAPTCHA was not introduced correctly')) ;
+                                            case 4: osc_add_flash_error_message( _m('The reCAPTCHA was not introduced correctly')) ;
+                                                    $this->doView('user-register.php') ;
+                                            break;
+                                            case 5: osc_add_flash_error_message( _m('The email is not valid')) ;
                                                     $this->doView('user-register.php') ;
                                             break;
                                         }
@@ -56,10 +59,10 @@
                                         $user = $userManager->findByIdSecret($id, $code) ;
                                             
                                         if ($user) {
-                                            if (!$user['b_enabled']) {
+                                            if ($user['b_active']==0) {
                                                 $userManager = new User() ;
                                                 $userManager->update(
-                                                        array('b_enabled' => '1')
+                                                        array('b_active' => '1')
                                                         ,array('pk_i_id' => $id, 's_secret' => $code)
                                                 ) ;
                                                 
@@ -76,7 +79,7 @@
                                                 if (!is_null($content)) {
                                                     $words   = array();
                                                     $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{WEB_URL}') ;
-                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), osc_base_url() ) ;
+                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>' ) ;
                                                     $title = osc_mailBeauty($content['s_title'], $words) ;
                                                     $body = osc_mailBeauty($content['s_text'], $words) ;
 
@@ -90,7 +93,7 @@
                                                     osc_sendMail($emailParams) ;
                                                 }
                                                 osc_run_hook('validate_user', $user) ;
-                                                osc_add_flash_message( _m('Your account has been validated')) ;
+                                                osc_add_flash_ok_message( _m('Your account has been validated')) ;
                                                 // Auto-login
                                                 Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                                                 Session::newInstance()->_set('userName', $user['s_name']) ;
@@ -98,10 +101,10 @@
                                                 $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
                                                 Session::newInstance()->_set('userPhone', $phone) ;
                                             } else {
-                                                osc_add_flash_message( _m('Your account has already been activated')) ;
+                                                osc_add_flash_error_message( _m('Your account has already been validated')) ;
                                             }
                                         } else {
-                                            osc_add_flash_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
+                                            osc_add_flash_error_message( _m('The link is not valid anymore. Sorry for the inconvenience!')) ;
                                         }
                                         $this->redirectTo( osc_base_url() ) ;
                 break;
@@ -111,7 +114,10 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
     }
 

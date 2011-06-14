@@ -170,7 +170,7 @@ Enjoy!
       if(selected.length == 0){
         selected = elem.find("option:first");
       }
-      spanTag.html(selected.html());
+      spanTag.html(selected.text());
       
       elem.css('opacity', 0);
       elem.wrap(divTag);

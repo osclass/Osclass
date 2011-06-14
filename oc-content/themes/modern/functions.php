@@ -19,6 +19,30 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    function add_logo_header() {
+         $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
+         $js = " <script>
+                    $(document).ready(function () {
+                        $('#logo').html('".$html."');
+                    });
+                 </script>";
+
+         if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+            echo $js;
+         }
+    }
+
+    osc_add_hook("header", "add_logo_header");
+
+    function modern_admin_menu() {
+        echo '<h3><a href="#">'. __('Modern theme','modern') .'</a></h3>
+        <ul>
+            <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
+        </ul>';
+    }
+
+    osc_add_hook('admin_menu', 'modern_admin_menu');
+
      if( !function_exists('meta_title') ) {
          function meta_title( ) {
             $location = Rewrite::newInstance()->get_location();
@@ -27,15 +51,15 @@
             switch ($location) {
                 case ('item'):
                     switch ($section) {
-                        case 'item_add':    return __('Publish an item','modern') . ' - ' . osc_page_title(); break;
-                        case 'item_edit':   return __('Edit your item','modern') . ' - ' . osc_page_title(); break;
-                        case 'send_friend': return __('Send to a friend','modern') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
-                        case 'contact':     return __('Contact seller','modern') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
-                        default:            return osc_item_title() . ' - ' . osc_page_title(); break;
+                        case 'item_add':    $text = __('Publish an item','modern') . ' - ' . osc_page_title(); break;
+                        case 'item_edit':   $text = __('Edit your item','modern') . ' - ' . osc_page_title(); break;
+                        case 'send_friend': $text = __('Send to a friend','modern') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
+                        case 'contact':     $text = __('Contact seller','modern') . ' - ' . osc_item_title() . ' - ' . osc_page_title(); break;
+                        default:            $text = osc_item_title() . ' - ' . osc_page_title(); break;
                     }
                 break;
                 case('page'):
-                    return osc_static_page_title() . ' - ' . osc_page_title();
+                    $text = osc_static_page_title() . ' - ' . osc_page_title();
                 break;
                 case('search'):
                     $region   = Params::getParam('sRegion');
@@ -57,7 +81,7 @@
                     $b_region   = ($region != '');
 
                     if($b_show_all) {
-                        return __('Show all items', 'modern') . ' - ' . $s_page . osc_page_title();
+                        $text = __('Show all items', 'modern') . ' - ' . $s_page . osc_page_title();
                     }
 
                     $result = '';
@@ -90,36 +114,39 @@
                         $result = __('Search', 'modern');
                     }
 
-                    return $result . ' - ' . $s_page . osc_page_title();
+                    $text = $result . ' - ' . $s_page . osc_page_title();
                 break;
                 case('login'):
                     switch ($section) {
-                        case('recover'): return __('Recover your password','modern') . ' - ' . osc_page_title();
-                        default:         return __('Login','modern') . ' - ' . osc_page_title();
+                        case('recover'): $text = __('Recover your password','modern') . ' - ' . osc_page_title();
+                        default:         $text = __('Login','modern') . ' - ' . osc_page_title();
                     }
                 break;
                 case('register'):
-                    return __('Create a new account','modern') . ' - ' . osc_page_title();
+                    $text = __('Create a new account','modern') . ' - ' . osc_page_title();
                 break;
                 case('user'):
                     switch ($section) {
-                        case('dashboard'):       return __('Dashboard','modern') . ' - ' . osc_page_title(); break;
-                        case('items'):           return __('Manage my items','modern') . ' - ' . osc_page_title(); break;
-                        case('alerts'):          return __('Manage my alerts','modern') . ' - ' . osc_page_title(); break;
-                        case('profile'):         return __('Update my profile','modern') . ' - ' . osc_page_title(); break;
-                        case('change_email'):    return __('Change my email','modern') . ' - ' . osc_page_title(); break;
-                        case('change_password'): return __('Change my password','modern') . ' - ' . osc_page_title(); break;
-                        case('forgot'):          return __('Recover my password','modern') . ' - ' . osc_page_title(); break;
-                        default:                 return osc_page_title(); break;
+                        case('dashboard'):       $text = __('Dashboard','modern') . ' - ' . osc_page_title(); break;
+                        case('items'):           $text = __('Manage my items','modern') . ' - ' . osc_page_title(); break;
+                        case('alerts'):          $text = __('Manage my alerts','modern') . ' - ' . osc_page_title(); break;
+                        case('profile'):         $text = __('Update my profile','modern') . ' - ' . osc_page_title(); break;
+                        case('change_email'):    $text = __('Change my email','modern') . ' - ' . osc_page_title(); break;
+                        case('change_password'): $text = __('Change my password','modern') . ' - ' . osc_page_title(); break;
+                        case('forgot'):          $text = __('Recover my password','modern') . ' - ' . osc_page_title(); break;
+                        default:                 $text = osc_page_title(); break;
                     }
                 break;
                 case('contact'):
-                    return __('Contact','modern') . ' - ' . osc_page_title();
+                    $text = __('Contact','modern') . ' - ' . osc_page_title();
                 break;
                 default:
-                    return osc_page_title();
+                    $text = osc_page_title();
                 break;
             }
+            
+            $text = str_replace('"', "'", $text);
+            return ($text);
          }
      }
 
@@ -127,27 +154,28 @@
          function meta_description( ) {
             $location = Rewrite::newInstance()->get_location();
             $section  = Rewrite::newInstance()->get_section();
+            $text = '';
 
             switch ($location) {
                 case ('item'):
                     switch ($section) {
-                        case 'item_add':    return ''; break;
-                        case 'item_edit':   return ''; break;
-                        case 'send_friend': return ''; break;
-                        case 'contact':     return ''; break;
+                        case 'item_add':    $text = ''; break;
+                        case 'item_edit':   $text = ''; break;
+                        case 'send_friend': $text = ''; break;
+                        case 'contact':     $text = ''; break;
                         default:
-                            return osc_item_category() . ', ' . osc_highlight(osc_item_description(), 140) . '..., ' . osc_item_category();
+                            $text = osc_item_category() . ', ' . osc_highlight(osc_item_description(), 140) . '..., ' . osc_item_category();
                             break;
                     }
                 break;
                 case('page'):
-                    return osc_highlight(strip_tags(osc_static_page_text()), 140);
+                    $text = osc_highlight(strip_tags(osc_static_page_text()), 140);
                 break;
                 case('search'):
                     $result = '';
 
                     if(osc_count_items() == 0) {
-                        return '';
+                        $text = '';
                     }
 
                     if(osc_has_items ()) {
@@ -155,12 +183,12 @@
                     }
 
                     osc_reset_items();
-                    return $result;
+                    $text = $result;
                 case(''): // home
                     $result = '';
 
                     if(osc_count_latest_items() == 0) {
-                        return '';
+                        $text = '';
                     }
 
                     if(osc_has_latest_items()) {
@@ -168,9 +196,12 @@
                     }
 
                     osc_reset_items();
-                    return $result;
+                    $text = $result;
                 break;
             }
+            
+            $text = str_replace('"', "'", $text);
+            return ($text);
          }
      }
 ?>

@@ -29,7 +29,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php'); ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Plugins'); ?></div>              
         <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
@@ -79,8 +78,8 @@
                         <?php osc_plugin_is_installed($p) ? $installed = 1 : $installed = 0; ?>
                             [
                                 "<input type='hidden' name='installed' value='<?php echo $installed ?>' /><input type='checkbox' name='id[]' value='<?php echo $p; ?>' />",
-                                "<?php echo $p_info['plugin_name']; ?>&nbsp;<div id='datatables_quick_edit'><?php if($installed) { ?><?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a> | <?php }; ?><?php if(osc_plugin_check_update($p_info['filename'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=upgrade-plugin&plugin=<?php echo $p_info['filename']; ?>'><?php _e('There\'s a new version. You should update!'); ?></a> | <?php }; ?><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?></div>",
-                                '<?php echo $p_info['description']; ?>'
+                                "<?php echo addcslashes($p_info['plugin_name'], '"'); ?>&nbsp;<div id='datatables_quick_edit'><?php if($installed) { ?><?php if(isset($active_plugins[$p.'_configure'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=admin&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Configure'); ?></a> | <?php }; ?><?php if(osc_plugin_check_update($p_info['filename'])) { ?><a href='<?php echo osc_admin_base_url(true);?>?page=upgrade-plugin&plugin=<?php echo $p_info['filename']; ?>'><?php _e('There\'s a new version. You should update!'); ?></a> | <?php }; ?><a onclick=\"javascript:return confirm('<?php _e('This action can not be undone. Uninstalling plugins may result in a permanent lost of data. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=uninstall&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Uninstall'); ?></a><?php } else { ?><a href='<?php echo osc_admin_base_url(true);?>?page=plugins&action=install&amp;plugin=<?php echo $p_info['filename']; ?>'><?php _e('Install'); ?></a><?php }; ?></div>",
+                                "<?php echo addcslashes($p_info['description'], '"'); ?>"
                             ] <?php echo $p != end($plugins) ? ',' : ''; ?>
                         <?php } ?>
                     ],
@@ -109,7 +108,7 @@
                 });
             });
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>

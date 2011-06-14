@@ -20,10 +20,29 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Locales
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
+     * Gets locale generic field
+     *
+     * @param $field
+     * @param $locale
+     * @return string
+     */
     function osc_locale_field($field, $locale = '') {
         return osc_field(osc_locale(), $field, $locale) ;
     }
 
+    /**
+     * Gets locale object
+     *
+     * @return array
+     */
     function osc_locale() {
         if (View::newInstance()->_exists('locales')) {
             $locale = View::newInstance()->_current('locales') ;
@@ -35,6 +54,11 @@
         return($locale) ;
     }
 
+    /**
+     * Gets list of locales
+     *
+     * @return array
+     */
     function osc_get_locales() {
         if (!View::newInstance()->_exists('locales')) {
             $locale = OSCLocale::newInstance()->listAllEnabled() ;
@@ -45,15 +69,29 @@
         return $locale;
     }
 
+    /**
+     * Private function to count locales
+     *
+     * @return boolean
+     */
     function osc_priv_count_locales() {
         return View::newInstance()->_count('locales') ;
     }
 
+    /**
+     * Reset iterator of locales
+     *
+     * @return void
+     */
     function osc_goto_first_locale() {
         View::newInstance()->_reset('locales') ;
     }
 
-    //SELECT OF LOCALES AT ALL THE PAGES
+    /**
+     * Gets number of enabled locales for website
+     *
+     * @return int
+     */
     function osc_count_web_enabled_locales() {
         if ( !View::newInstance()->_exists('locales') ) {
             View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
@@ -61,6 +99,11 @@
         return osc_priv_count_locales() ;
     }
 
+    /**
+     * Iterator for enabled locales for website
+     *
+     * @return array
+     */
     function osc_has_web_enabled_locales() {
         if ( !View::newInstance()->_exists('locales') ) {
             View::newInstance()->_exportVariableToView('locales', OSCLocale::newInstance()->listAllEnabled() ) ;
@@ -69,14 +112,29 @@
         return View::newInstance()->_next('locales') ;
     }
 
+    /**
+     * Gets current locale's code
+     *
+     * @return string
+     */
     function osc_locale_code() {
         return osc_locale_field("pk_c_code") ;
     }
 
+    /**
+     * Gets current locale's name
+     *
+     * @return string
+     */
     function osc_locale_name() {
         return osc_locale_field("s_name") ;
     }
 
+    /**
+     * Gets current locale's currency format
+     *
+     * @return string
+     */
     function osc_locale_currency_format() {
         $aLocales = osc_get_locales();
         $cLocale  = $aLocales[0];
@@ -91,10 +149,20 @@
         return $cLocale['s_currency_format'] ;
     }
 
+    /**
+     * Gets list of enabled locales
+     *
+     * @return array
+     */
     function osc_all_enabled_locales_for_admin($indexed_by_pk = false) {
         return ( OSCLocale::newInstance()->listAllEnabled(true, $indexed_by_pk)) ;
     }
 
+    /**
+     * Gets current locale object
+     *
+     * @return array
+     */
     function osc_get_current_user_locale() {
         View::newInstance()->_exportVariableToView('locale', OSCLocale::newInstance()->findByPrimaryKey(osc_current_user_locale()) ) ;
     }

@@ -45,7 +45,6 @@
                         <input type="hidden" name="page" value="item" />
                         <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
                         <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
-                        <div class="left_column">
                             <div class="box general_info">
                                 <h2><?php _e('General Information', 'modern'); ?></h2>
                                 <div class="row">
@@ -68,16 +67,16 @@
                                 <h2><?php _e('Photos', 'modern'); ?></h2>
                                 <?php ItemForm::photos(); ?>
                                 <div id="photos">
+                                    <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && osc_count_item_resources()<  osc_max_images_per_item())) { ?>
                                     <div class="row">
                                         <input type="file" name="photos[]" />
                                     </div>
+                                    <?php }; ?>
                                 </div>
                                 <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                             </div>
                             <?php } ?>
-                        </div>
 
-                        <div class="right_column">
                             <div class="box location">
                                 <h2><?php _e('Location', 'modern'); ?></h2>
                                 <div class="row">
@@ -102,6 +101,10 @@
                                 </div>
                             </div>
                             <?php ItemForm::plugin_edit_item(); ?>
+                        <div class="box">
+                            <div class="row">
+                                <?php osc_show_recaptcha(); ?>
+                            </div>
                         </div>
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>

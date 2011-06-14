@@ -31,14 +31,13 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('General Settings'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo $current_theme ; ?>/images/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('General settings') ; ?></div>
                     <div style="clear: both;"></div>
@@ -125,7 +124,7 @@
                                 <fieldset>
                                     <legend><?php _e('Week starts on'); ?></legend>
                                     <select name="weekStart" id="weekStart">
-                                        <option value="0" selected="selected"><?php _e('Sunday'); ?></option>
+                                        <option value="0" <?php if(osc_week_starts_at() == '0') { ?>selected="selected"<?php } ?>><?php _e('Sunday'); ?></option>
                                         <option value="1" <?php if(osc_week_starts_at() == '1') { ?>selected="selected"<?php } ?>><?php _e('Monday') ; ?></option>
                                         <option value="2" <?php if(osc_week_starts_at() == '2') { ?>selected="selected"<?php } ?>><?php _e('Tuesday') ; ?></option>
                                         <option value="3" <?php if(osc_week_starts_at() == '3') { ?>selected="selected"<?php } ?>><?php _e('Wednesday') ; ?></option>
@@ -175,10 +174,21 @@
                                     </select>
                                 </fieldset>
                             </div>
+
+                            <div style="float: left; width: 50%;">
+                                <fieldset>
+                                    <legend><?php _e('Number of recent items displayed at home') ; ?></legend>
+                                    <select name="max_latest_items_at_home" id="max_latest_items_at_home">
+                                        <option value="5" <?php echo (osc_max_latest_items_at_home() == '5') ? 'selected="selected"' : '' ; ?>>5</option>
+                                        <option value="10" <?php echo (osc_max_latest_items_at_home() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
+                                        <option value="25" <?php echo (osc_max_latest_items_at_home() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
+                                        <option value="50" <?php echo (osc_max_latest_items_at_home() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
+                                    </select>
+                                </fieldset>
+                            </div>
                             <div style="clear: both;"></div>
                             <input id="button_save" type="submit" value="<?php _e('Update') ; ?>" />
                         </form>
-
                     </div>
                 </div>
             </div> <!-- end of right column -->

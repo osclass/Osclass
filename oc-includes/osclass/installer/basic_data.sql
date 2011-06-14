@@ -4,12 +4,12 @@ INSERT INTO /*TABLE_PREFIX*/t_currency (pk_c_code, s_name, s_description, b_enab
     ('EUR', 'European Union euro', 'Euro €', true);
 
 INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
-    ('osclass', 'version', 203, 'INTEGER')
+    ('osclass', 'version', 210, 'INTEGER')
     ,('osclass', 'theme', 'modern', 'STRING')
     ,('osclass', 'admin_language', 'en_US', 'STRING')
     ,('osclass', 'language', 'en_US', 'STRING')
-    ,('osclass', 'pageDesc', 'open source classifieds', 'STRING')
-    ,('osclass', 'maxSizeKb', 1000000, 'INTEGER')
+    ,('osclass', 'pageDesc', '', 'STRING')
+    ,('osclass', 'maxSizeKb', 2048, 'INTEGER')
     ,('osclass', 'allowedExt', 'png,gif,jpg', 'STRING')
     ,('osclass', 'dimThumbnail', '240x200', 'STRING')
     ,('osclass', 'dimPreview', '480x340', 'STRING')
@@ -19,6 +19,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'timeFormat', 'g:i a', 'STRING')
     ,('osclass', 'weekStart', '0', 'STRING')
     ,('osclass', 'moderate_comments', '0', 'INTEGER')
+    ,('osclass', 'moderate_items', '0', 'INTEGER')
     ,('osclass', 'reg_user_post', '1', 'BOOLEAN')
     ,('osclass', 'num_rss_items', '50', 'INTEGER')
     ,('osclass', 'active_plugins', '', 'STRING')
@@ -30,8 +31,8 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'notify_contact_friends', '1', 'BOOLEAN')
     ,('osclass', 'notify_new_comment', '1', 'BOOLEAN')
     ,('osclass', 'enabled_recaptcha_items', '0', 'BOOLEAN')
-    ,('osclass', 'enabled_item_validation', '1', 'BOOLEAN')
     ,('osclass', 'logged_user_item_validation', '1', 'BOOLEAN')
+    ,('osclass', 'items_wait_time', '0', 'INTEGER')
     ,('osclass', 'enabled_user_validation', '1', 'BOOLEAN')
     ,('osclass', 'enabled_user_registration', '1', 'BOOLEAN')
     ,('osclass', 'enabled_users','1', 'BOOLEAN')
@@ -49,6 +50,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'rewrite_rules', '', 'STRING')
     ,('osclass', 'enableField#f_price@items', '1', 'BOOLEAN')
     ,('osclass', 'enableField#images@items', '1', 'BOOLEAN')
+    ,('osclass', 'numImages@items', '4', 'INTEGER')
     ,('osclass', 'maxLatestItems@home', '10', 'INTEGER')
     ,('osclass', 'defaultResultsPerPage@search', '10', 'INTEGER')
     ,('osclass', 'maxResultsPerPage@search', '50', 'INTEGER')
@@ -58,7 +60,13 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'admin_theme', 'modern', 'STRING')
     ,('osclass', 'akismetKey', '', 'STRING')
     ,('osclass', 'recaptchaPrivKey', '', 'STRING')
-    ,('osclass', 'recaptchaPubKey', '', 'STRING');
+    ,('osclass', 'recaptchaPubKey', '', 'STRING')
+    ,('osclass', 'comments_per_page', '10', 'INTEGER')
+    ,('osclass', 'save_latest_searches', '0', 'BOOLEAN')
+    ,('osclass', 'purge_latest_searches', '1000', 'STRING')
+    ,('osclass', 'selectable_parent_categories', '0', 'BOOLEAN')
+    ,('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')
+    ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
     ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
