@@ -31,6 +31,7 @@ if(Params::getParam('plugin_action')=='done') {
     osc_set_preference('api_username', Params::getParam("api_username"), 'paypal', 'STRING');
     osc_set_preference('api_password', Params::getParam("api_password"), 'paypal', 'STRING');
     osc_set_preference('api_signature', Params::getParam("api_signature"), 'paypal', 'STRING');
+    echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>' . __('Congratulations. The plugin is now configured','paypal') . '.</p></div>' ;
     osc_reset_preferences();
 }
 
@@ -87,22 +88,22 @@ if(Params::getParam('plugin_action')=='done') {
                 <legend><?php _e('Help', 'paypal'); ?></legend>
                 <h3><?php _e("Setting up your Paypal account","paypal");?></h3>
                 <p>
-                    <?php _e("Before being able to use Paypal plugin, you need to set up some configuration at your Paypal account.");?>
+                    <?php _e("Before being able to use Paypal plugin, you need to set up some configuration at your Paypal account.", "paypal");?>
                     <br/>
                     <?php _e("Your Paypal account has to be set as Business or Premier, you could change that at Your Profile, under My Settings.","paypal");?>
                     <br/>
                     <?php _e("You need Paypal API credentials.","paypal");?>
-                    <!--<br/>
-                    <?php _e("You need to tell Paypal where is your IPN file","paypal");?>-->
+                    <br/>
+                    <?php _e("You need to tell Paypal where is your IPN file","paypal");?>
                 </p>
-                <!--<h3><?php _e("Setting up your IPN","paypal");?></h3>
+                <h3><?php _e("Setting up your IPN","paypal");?></h3>
                 <p>
                     <?php _e("Click Profile on the My Account tab.", "paypal"); ?>
                     <br/>
                     <?php _e("Click Instant Payment Notification Preferences in the Selling Preferences column.", "paypal"); ?>
                     <br/>
                     <?php _e("Click Choose IPN Settings to specify your listener’s URL and activate the listener  (usually is http://www.yourdomain.com/oc-content/plugins/paypal/notify_url.php).", "paypal"); ?>
-                </p>-->
+                </p>
                 <h3><?php _e("How to obtain API credentials", "paypal"); ?></h3>
                 <p>
                     <?php _e("In order to use the Paypal plugin you will need Paypal API credentials, you could obtain them for free following theses steps:", "paypal"); ?>

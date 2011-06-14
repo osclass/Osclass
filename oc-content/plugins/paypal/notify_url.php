@@ -4,6 +4,7 @@
  * CONFIGURATION - EDIT THIS *
  *****************************/
 $sandbox = true; // true if you're testing your installation, set to false once it's ready for production
+$email_admin = true;
 
 
 
@@ -46,13 +47,18 @@ if (!$fp) {
         $res = fgets ($fp, 1024);
         if (strcmp ($res, "VERIFIED") == 0) {
             // TODO:
-            // Check the payment_status is Completed
             // Check that txn_id has not been previously processed
             // Check that receiver_email is your Primary PayPal email
             // Check that payment_amount/payment_currency are correct
             // Process payment
             if($_REQUEST['payment_status']=="Completed") {
-                // PROCESS PAYMENT HERE
+                // Load stuff
+                require_once "../../../oc-load.php";
+                require_once osc_plugins_path().osc_plugin_folder(__FILE__).'functions.php';
+                // Have we processed the payment already?
+                $conn = getConnection();
+                $conn->osc_dbFetchResult("SELECT * FROM %st_paypal_log WHERE s_code = '%s'", DB_TABLE_PREFIX, Params::getParam('txn_idn'));
+                
                 $emailtext = "";
                 foreach ($_REQUEST as $key => $value){ 
                   $emailtext .= $key . " = " .$value ."\n\n"; 
