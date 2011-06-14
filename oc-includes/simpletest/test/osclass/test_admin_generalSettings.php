@@ -122,27 +122,27 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         flush();
     }
 
-    function testItemsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testItemsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - ITEMS SETTINGS</div>";
-        $this->items() ;
-        flush();
-    }
+//    function testItemsTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testItemsTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - ITEMS SETTINGS</div>";
+//        $this->items() ;
+//        flush();
+//    }
     
-    function testCategoriesTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCategoriesTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - CATEGORIES SETTINGS</div>";
-        $this->categories() ;
-        flush();
-    }
+//    function testCategoriesTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testCategoriesTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - CATEGORIES SETTINGS</div>";
+//        $this->categories() ;
+//        flush();
+//    }
 
     function testGeneralSettings()
     {
@@ -561,7 +561,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
-        $this->selenium->click("xpath=//div[@id='menu']/ul[8]/li[3]/a"); // >> comments
+        $this->selenium->click("xpath=//div[@id='menu']/ul[8]/li[2]/a");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_comments");
