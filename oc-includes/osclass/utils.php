@@ -107,6 +107,32 @@ function osc_plugin_path($file) {
 }
 
 /**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_url($file) {
+    // Sanitize windows paths and duplicated slashes
+    $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
+    $dir = WEB_PATH . 'oc-content/plugins/' . preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    return $dir;
+}
+
+/**
+ * Fix the problem of symbolics links in the path of the file
+ *
+ * @param string $file The filename of plugin.
+ * @return string The fixed path of a plugin.
+ */
+function osc_plugin_folder($file) {
+    // Sanitize windows paths and duplicated slashes
+    $dir = preg_replace('|/+|','/', str_replace('\\','/',dirname($file)));
+    $dir = preg_replace('#^.*oc-content\/plugins\/#','',$dir) . "/";
+    return $dir;
+}
+
+/**
  * Serialize the data (usefull at plugins activation)
  * @return the data serialized
  */
@@ -216,8 +242,6 @@ function osc_doRequest($url, $_data) {
 
             // close the socket connection:
             fclose($fp);
-        } else {
-            osc_add_flash_message( _m('Error, auto-cron is not working propertly'), 'admin');
         }
     }
 }

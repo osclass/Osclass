@@ -26,7 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-
+        
         <!-- only item-post.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
@@ -43,8 +43,6 @@
                     <fieldset>
                     <input type="hidden" name="action" value="item_add_post" />
                     <input type="hidden" name="page" value="item" />
-                    <!-- left -->
-                    <div class="left_column">
                         <div class="box general_info">
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
@@ -73,9 +71,7 @@
                             <a href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo', 'modern'); ?></a>
                         </div>
                         <?php } ?>
-                    </div>
-                    <!-- right -->
-                    <div class="right_column">
+                    
                         <div class="box location">
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
@@ -115,12 +111,19 @@
                                 <div style="width: 120px;text-align: right;float:left;">
                                     <?php ItemForm::show_email_checkbox() ; ?>
                                 </div>
-                                <label for="showEmail" style="width: 250px;float:right;"><?php _e('Show e-mail on the item page', 'modern'); ?></label>
+                                <label for="showEmail" style="width: 250px;"><?php _e('Show e-mail on the item page', 'modern'); ?></label>
                             </div>
                         </div>
                         <?php }; ?>
                         <?php ItemForm::plugin_post_item(); ?>
-                    </div>
+                        <?php if( osc_recaptcha_items_enabled() ) {?>
+                        <div class="box">
+                            <div class="row">
+                                <?php osc_show_recaptcha(); ?>
+                            </div>
+                        </div>
+                        <?php }?>
+                        
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>
                     </fieldset>

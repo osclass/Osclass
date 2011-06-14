@@ -26,6 +26,7 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
+        <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
         <div class="container">
@@ -33,8 +34,8 @@
             <div class="content user_forms">
                 <div id="contact" class="inner">
                     <h1><?php _e('Send to a friend', 'modern'); ?></h1>
-                    <?php SendFriendForm::js_validation(); ?>
-                    <form id="send-friend" name="send-friend" action="<?php echo osc_base_url(true); ?>" method="post">
+                    <ul id="error_list"></ul>
+                    <form id="sendfriend" name="sendfriend" action="<?php echo osc_base_url(true); ?>" method="post">
                         <fieldset>
                             <input type="hidden" name="action" value="send_friend_post" />
                             <input type="hidden" name="page" value="item" />
@@ -50,11 +51,14 @@
                             <label for="friendName"><?php _e("Your friend's name", 'modern'); ?></label> <?php SendFriendForm::friend_name(); ?> <br/>
                             <label for="friendEmail"><?php _e("Your friend's e-mail address", 'modern'); ?></label> <?php SendFriendForm::friend_email(); ?> <br/>
                             <label for="message"><?php _e('Message', 'modern'); ?></label> <?php SendFriendForm::your_message(); ?> <br/>
-                            <button onclick="return validate_form();" type="button"><?php _e('Send', 'modern'); ?></button>
+                            <?php osc_show_recaptcha(); ?>
+                            <br/>
+                            <button type="submit"><?php _e('Send', 'modern'); ?></button>
                         </fieldset>
                     </form>
                 </div>
             </div>
+            <?php SendFriendForm::js_validation(); ?>
             <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
         <?php osc_show_flash_message() ; ?>

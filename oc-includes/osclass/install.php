@@ -34,10 +34,19 @@ require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
+require_once LIB_PATH . 'osclass/helpers/hSearch.php';
 require_once LIB_PATH . 'osclass/helpers/hLocale.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
+require_once LIB_PATH . 'osclass/core/Params.php';
+require_once LIB_PATH . 'osclass/utils.php';
 
-( isset($_REQUEST['step']) ) ? $step = (int) $_REQUEST['step'] : $step = '1' ;
+require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
+require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
+
+$step = Params::getParam('step');
+if( !is_numeric($step) ) {
+    $step = '1';
+}
 
 if( is_osclass_installed( ) ) {
     $message = 'You appear to have already installed OSClass. To reinstall please clear your old database tables first.' ;
@@ -50,14 +59,23 @@ switch ($step) {
         $error = check_requirements($requirements) ;
         break;
     case 2:
-        if( isset($_REQUEST['save_stats']) ) {
-            setcookie('osclass_save_stats', 1) ;
-            header('Location: '. get_absolute_url() . 'oc-includes/osclass/install.php?step=2') ;
+        if( Params::getParam('save_stats') == '1'  || isset($_COOKIE['osclass_save_stats'])) {
+            setcookie('osclass_save_stats', 1, time() + (24*60*60) );
+        } else {
+            setcookie('osclass_save_stats', 0, time() + (24*60*60) );
         }
+
+        if( Params::getParam('ping_engines') == '1' || isset($_COOKIE['osclass_ping_engines']) ) {
+            setcookie('osclass_ping_engines', 1, time() + (24*60*60) );
+        } else {
+            setcookie('osclass_ping_engines', 0, time()+ (24*60*60) );
+        }
+
         break;
     case 3:
-        if( isset($_POST['dbname']) )
+        if( Params::getParam('dbname') != '' ) {
             $error = oc_install();
+        }
         break;
     case 5:
         
@@ -77,8 +95,23 @@ switch ($step) {
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
+        <?php if($step == 5) { ?>
+        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/password_strength_plugin.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/style.css" />
+        <?php } ?>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/css/vtip.css" />
+        <?php if( $step == 5 ) {?>
+        <script>
+            $(document).ready( function() {
+                //BASIC
+                $(".password_test").passStrength({
+                    userid:	"#user_id",
+                    messageloc:		1
+                });
+            });
+        </script>
+        <?php } ?>
     </head>
     <body>
         <div id="wrapper">
@@ -101,21 +134,37 @@ switch ($step) {
                     <h2 class="target">Welcome</h2>
                     <form action="install.php" method="POST">
                         <div class="form-table">
-                        <?php if($error) { ?>
+                            <?php if($error) { ?>
                             <p>Check the next requirements:</p>
-                        <?php } else { ?>
+                            <div class="requirements_help">
+                                <p><b>Requirements help:</b></p>
+                                <ul>
+                                <?php $solve_requirements = get_solution_requirements(); foreach($requirements as $k => $v) { ?>
+                                    <?php  if(!$v && $solve_requirements[$k] != ''){ ?>
+                                    <li><?php echo $solve_requirements[$k]; ?></li>
+                                    <?php } ?>
+                                <?php } ?>
+                                    <li><a href="http://forums.osclass.org/">Need more help?</a></li>
+                                </ul>
+                            </div>
+                            <?php } else { ?>
                             <p>All right! All the requirements have met:</p>
-                        <?php } ?>
+                            <?php } ?>
                             <ul>
                             <?php foreach($requirements as $k => $v) { ?>
                                 <li><?php echo $k; ?> <img src="<?php echo get_absolute_url(); ?>oc-includes/images/<?php echo $v ? 'tick.png' : 'cross.png'; ?>" alt="" title="" /></li>
                             <?php } ?>
                             </ul>
                             <div class="more-stats">
+                                <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
+                                <label for="ping_engines">
+                                    Allow my site to appear in search engines like Gooogle.
+                                </label>
+                                <br/>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
                                 <input type="hidden" name="step" value="2" />
                                 <label for="save_stats">
-                                    <b>Optional:</b> Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.
+                                    Help make OSClass better by automatically sending usage statistics and crash reports to OSClass.
                                 </label>
                             </div>
                         </div>
@@ -140,6 +189,10 @@ switch ($step) {
                     } elseif($step == 4) {
                         display_categories();
                     } elseif($step == 5) {
+                        // ping engines
+                        ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
+                        setcookie('osclass_save_stats', '', time() - 3600);
+                        setcookie('osclass_ping_engines', '', time() - 3600);
                         display_finish();
                     }
                 ?>

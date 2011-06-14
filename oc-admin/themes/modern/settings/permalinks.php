@@ -33,14 +33,13 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
 		<div id="content">
             <div id="separator"></div>
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo  osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Permalinks settings'); ?></div>
 					<div style="clear: both;"></div>

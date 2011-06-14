@@ -29,8 +29,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Languages'); ?></div>
-
         <script type="text/javascript">
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings )
@@ -77,9 +75,9 @@
                             <?php foreach ($locales as $l) { ?>
                             [
                                 "<input type='checkbox' name='id[]' value='<?php echo $l['pk_c_code']; ?>' />"
-                                ,"<?php echo $l['s_name']; ?> <div id='datatables_quick_edit'> <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=edit&amp;id=<?php echo $l['pk_c_code'] ; ?>'><?php _e('Edit') ; ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled'] == 1 ? 'Disable (website)' : 'Enable (website)'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled_bo'] == 1 ? 'Disable (oc-admin)' : 'Enable (oc-admin)'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=delete&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e('Delete'); ?></a></div>"
-                                ,"<?php echo $l['s_short_name']; ?>"
-                                ,"<?php echo $l['s_description']; ?>"
+                                ,"<?php echo str_replace('"', '\"', $l['s_name']); ?> <div id='datatables_quick_edit'> <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=edit&amp;id=<?php echo $l['pk_c_code'] ; ?>'><?php _e('Edit') ; ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled'] == 1 ? 'disable_selected' : 'enable_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled'] == 1 ? 'Disable (website)' : 'Enable (website)'); ?></a> | <a href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=<?php echo $l['b_enabled_bo'] == 1 ? 'disable_bo_selected' : 'enable_bo_selected'; ?>&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e($l['b_enabled_bo'] == 1 ? 'Disable (oc-admin)' : 'Enable (oc-admin)'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=languages&action=delete&amp;id[]=<?php echo $l['pk_c_code']; ?>'><?php _e('Delete'); ?></a></div>"
+                                ,"<?php echo str_replace('"', '\"', $l['s_short_name']); ?>"
+                                ,"<?php echo str_replace('"', '\"', $l['s_description']) ; ?>"
                                 ,"<?php echo ($l['b_enabled']) ? __("Yes") : __("No"); ?>"
                                 ,"<?php echo ($l['b_enabled_bo']) ? __("Yes") : __("No"); ?>"
                             ]  <?php echo $last_id != $l['pk_c_code'] ? ',' : ''; ?>
@@ -103,7 +101,7 @@
                 });
         </script>
 
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
 
         <div id="content">
             <div id="separator"></div>
@@ -114,7 +112,7 @@
 
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/icon-language.png" title="" alt=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/icon-language.png') ; ?>" title="" alt=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Languages'); ?></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=languages&action=add" id="button_open"><?php _e('Add') ; ?></a>
@@ -123,7 +121,7 @@
 
                 <div id="content_separator"></div>
 
-                <?php osc_show_flash_message('admin')  ?>
+                <?php osc_show_flash_message('admin') ; ?>
 
                 <div id="TableToolsToolbar">
                     <select name="action" id="bulk_actions" class="display">

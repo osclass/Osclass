@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -29,6 +29,21 @@
 	    function isLogged() {
             return osc_is_admin_user_logged_in() ;
 	    }
+        
+        function logout() {
+            //destroying session
+            Session::newInstance()->session_destroy() ;
+            Session::newInstance()->_drop('adminId') ;
+            Session::newInstance()->_drop('adminUserName') ;
+            Session::newInstance()->_drop('adminName') ;
+            Session::newInstance()->_drop('adminEmail') ;
+            Session::newInstance()->_drop('adminLocale') ;
+
+            Cookie::newInstance()->pop('oc_adminId') ;
+            Cookie::newInstance()->pop('oc_adminSecret') ;
+            Cookie::newInstance()->pop('oc_adminLocale') ;
+            Cookie::newInstance()->set() ;
+        }
 
 	    function showAuthFailPage() {
             require osc_admin_base_path() . 'gui/login.php' ;

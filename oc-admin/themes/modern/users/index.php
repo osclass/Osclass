@@ -27,7 +27,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Users'); ?></div>
         <script type="text/javascript">
 	        $(function() {		
 		        $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
@@ -73,8 +72,16 @@
 				        <?php foreach($users as $u) { ?>
 					        [
 						        "<input type='checkbox'  name='id[]' value='<?php echo $u['pk_i_id']; ?>' />"
-						        ,"<?php echo $u['s_email'] ; ?>&nbsp;<div id='datatables_quick_edit'><?php if($u['b_enabled']==0) {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=activate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Activate user'); ?></a><?php } else {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=deactivate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Deactivate user'); ?></a><?php }; ?> | <a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=users&action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>"
-						        ,"<?php echo $u['s_name'] ; ?>"
+						        ,"<?php echo $u['s_email'] ; ?>&nbsp;<div id='datatables_quick_edit'><?php
+                                
+                                if($u['b_active']==0) {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=activate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Activate user'); ?></a><?php } else {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=deactivate&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Deactivate user'); ?></a><?php }; 
+
+                                ?> | <?php
+                                
+                                if($u['b_enabled']==0) {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=enable&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Enable user'); ?></a><?php } else {?><a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=disable&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Disable user'); ?></a><?php }; 
+
+                                ?> | <a href='<?php echo osc_admin_base_url(true); ?>?page=users&action=edit&amp;id=<?php echo $u['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=users&action=delete&amp;id[]=<?php echo $u['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>"
+						        ,"<?php echo addcslashes($u['s_name'], '"') ; ?>"
 						        ,"<?php echo $u['dt_reg_date'] ; ?>"
                                 ,"<?php echo $u['dt_mod_date'] ; ?>"
 					        ] <?php echo $last_id != $u['pk_i_id'] ? ',' : '' ; ?>
@@ -104,7 +111,7 @@
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/user-group-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/user-group-icon.png') ; ?>" alt="" title="" />
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
 					<a href="<?php echo osc_admin_base_url(true); ?>?page=users&action=create" id="button_open"><?php _e('Add a new user') ; ?></a>
@@ -116,11 +123,13 @@
                     <div id="TableToolsToolbar">
                         <select name="action" id="action" class="display">
                             <option value=""><?php _e('Bulk Actions'); ?></option>
-                            <option value="delete"><?php _e('Delete') ?></option>
-                            <option value="activate"><?php _e('Activate') ?></option>
-                            <option value="deactivate"><?php _e('Deactivate') ?></option>
+                            <option value="delete"><?php _e('Delete'); ?></option>
+                            <option value="activate"><?php _e('Activate'); ?></option>
+                            <option value="deactivate"><?php _e('Deactivate'); ?></option>
+                            <option value="enable"><?php _e('Enable'); ?></option>
+                            <option value="disable"><?php _e('Disable'); ?></option>
                         </select>
-                        &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
+                        &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply'); ?></button>
                     </div>
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
 					<br />

@@ -24,6 +24,12 @@
 
     require_once ABS_PATH . 'oc-load.php' ;
 
+    if( file_exists(ABS_PATH . '.maintenance') ) {
+        define('__OSC_MAINTENANCE__', true);
+    }
+
+    WebThemes::newInstance();
+    
     switch( Params::getParam('page') )
     {
         case('items'):      require_once(osc_admin_base_path() . 'items.php') ;
@@ -84,6 +90,10 @@
         break;
         case('tools'):      require_once(osc_admin_base_path() . 'tools.php') ;
                             $do = new CAdminTools() ;
+                            $do->doModel() ;
+        break;
+        case('stats'):      require_once(osc_admin_base_path() . 'stats.php') ;
+                            $do = new CAdminStats() ;
                             $do->doModel() ;
         break;
         default:            //login of oc-admin

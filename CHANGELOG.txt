@@ -1,3 +1,25 @@
+OSClass 2.1 2011-06-14
+----------------------
+- Help messages if you don't pass the requirements in the installer
+- Ping search engines in the installation
+- Change password at the end of the installation
+- Limit amount of items per user in a set time
+- Limit the number of photos that the user can add in an item
+- Statistics module: new users, new items...
+- Skip admin validation if the user has more than a defined number of items/comments
+- Improved category management: you can reorder, edit, delete, disable in the same page
+- Upload a logo to the header
+- Disable adding new items in root categories
+- Fill automatically the fields in case that something goes wrong
+- Delete photos of items via ajax
+- Improved pagination in search page
+- Added maintenance mode (in case you want to disable the website to the users)
+- Email verification on alerts
+- Disable contact item for non-registered users
+- Fancybox in modern theme
+- Improved expiration features
+- Some bugs fixed
+
 OSClass 2.0.3 2011-05-05
 ------------------------
 - Price is showed fine when there're more than one language enabled

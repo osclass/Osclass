@@ -106,7 +106,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     s_website VARCHAR(100) NULL,
     s_phone_land VARCHAR(45),
     s_phone_mobile VARCHAR(45),
-    b_enabled BOOLEAN NOT NULL DEFAULT FALSE,
+    b_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    b_active BOOLEAN NOT NULL DEFAULT FALSE,
     s_pass_code VARCHAR(100) NULL ,
     s_pass_date DATETIME NULL ,
     s_pass_question VARCHAR(100) NULL ,
@@ -126,6 +127,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_user (
     d_coord_long DECIMAL(10, 6),
     i_permissions VARCHAR(2) DEFAULT 0,
     b_company BOOLEAN NOT NULL DEFAULT FALSE,
+    i_items INT UNSIGNED NULL DEFAULT 0,
+    i_comments INT UNSIGNED NULL DEFAULT 0,
 
 
         PRIMARY KEY (pk_i_id),
@@ -173,7 +176,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_description (
     fk_i_category_id INT UNSIGNED NOT NULL,
     fk_c_locale_code CHAR(5) NOT NULL,
     s_name VARCHAR(100) NOT NULL,
-    s_description VARCHAR(200) NULL,
+    s_description TEXT NULL,
     s_slug VARCHAR(100) NOT NULL,
 
         PRIMARY KEY (fk_i_category_id, fk_c_locale_code),
@@ -186,8 +189,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_category_stats (
     i_num_items INT UNSIGNED NOT NULL DEFAULT 0,
 
         PRIMARY KEY (fk_i_category_id),
-	FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
-);
+        FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_item (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -195,12 +198,14 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_i_category_id INT UNSIGNED NOT NULL,
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
-    f_price FLOAT(9, 3) NULL,
+    f_price FLOAT(15, 2) NULL,
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
     b_premium BOOLEAN NULL,
-    e_status ENUM('ACTIVE', 'INACTIVE', 'SPAM') NOT NULL,
+    b_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    b_active BOOLEAN NOT NULL DEFAULT FALSE,
+    b_spam BOOLEAN NOT NULL DEFAULT FALSE,
     s_secret VARCHAR(40) NULL,
     b_show_email BOOLEAN NULL,
 
@@ -288,7 +293,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_comment (
     s_author_name VARCHAR(100) NOT NULL,
     s_author_email VARCHAR(100) NOT NULL,
     s_body TEXT NOT NULL,
-    e_status ENUM('ACTIVE', 'INACTIVE', 'SPAM') NOT NULL,
+    b_enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    b_active BOOLEAN NOT NULL DEFAULT FALSE,
+    b_spam BOOLEAN NOT NULL DEFAULT FALSE,
     fk_i_user_id INT UNSIGNED NULL,
 
         PRIMARY KEY (pk_i_id),
@@ -345,7 +352,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_alerts (
   s_email VARCHAR(100) DEFAULT NULL,
   fk_i_user_id INT UNSIGNED DEFAULT NULL,
   s_search LONGTEXT,
-  e_type enum('INSTANT','DAILY','WEEKLY','CUSTOM') NOT NULL
+  s_secret VARCHAR(40) NULL,
+  b_active BOOLEAN NOT NULL DEFAULT FALSE,
+  e_type enum('INSTANT','HOURLY','DAILY','WEEKLY','CUSTOM') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 CREATE TABLE /*TABLE_PREFIX*/t_keywords (
@@ -364,3 +373,9 @@ CREATE TABLE /*TABLE_PREFIX*/t_keywords (
         FOREIGN KEY (fk_i_city_id) REFERENCES /*TABLE_PREFIX*/t_city (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_latest_searches (
+  d_date DATETIME NOT NULL,
+  s_search VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+

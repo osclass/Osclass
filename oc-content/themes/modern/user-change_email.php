@@ -51,6 +51,7 @@
                                 <label for="new_email"><?php _e('New e-mail', 'modern') ; ?> *</label>
                                 <input type="text" name="new_email" id="new_email" value="" />
                             </p>
+                            <div style="clear:both;"></div>
                             <button type="submit"><?php _e('Update', 'modern') ; ?></button>
                         </fieldset>
                     </form>

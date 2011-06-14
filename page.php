@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
@@ -44,7 +44,7 @@
                     //calling the view...
                     if( Params::getParam('lang') != '' ) {
                         Session::newInstance()->_set('userLocale', Params::getParam('lang'));
-                    };
+                    }
 
                     $this->_exportVariableToView('page', $page) ;
                     $this->doView('page.php') ;
@@ -54,7 +54,10 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
     }
 

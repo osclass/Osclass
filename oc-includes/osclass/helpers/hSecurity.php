@@ -22,8 +22,15 @@
 
 
     /**
+    * Helper Security
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
      * Creates a random password.
-     * @param int password length. Default to 8.
+     * @param int password $length. Default to 8.
      * @return string
      */
     function osc_genRandomPassword($length = 8) {

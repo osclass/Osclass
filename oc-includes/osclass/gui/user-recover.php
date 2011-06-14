@@ -26,18 +26,6 @@
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-        <script type="text/javascript">
-            function validateForm() {
-                var validator = new FormValidator();
-                try {
-                    validator.addValidation('email', FormValidator.TYPE_EMAIL) ;
-                    return validator.run();
-                } catch(e) {
-                    alert(e);
-                    return false;
-                }
-            }
-        </script>
     </head>
     <body>
         <div class="container">
@@ -45,7 +33,7 @@
             <div class="content user_forms">
                 <div class="inner">
                     <h1><?php _e('Recover your password', 'modern') ; ?></h1>
-                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" onsubmit="javascript:return validateForm() ;">
+                    <form action="<?php echo osc_base_url(true) ; ?>" method="post" >
                         <input type="hidden" name="page" value="login" />
                         <input type="hidden" name="action" value="recover_post" />
                         <fieldset>

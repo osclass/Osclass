@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0.3') ;
+define('OSCLASS_VERSION', '2.1') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -34,7 +34,7 @@ define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
-    $title = 'OSClass &raquo; Error' ;
+    $title   = 'OSClass &raquo; Error' ;
     $message = 'There doesn\'t seem to be a <code>config.php</code> file. OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
     $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
 
@@ -62,7 +62,11 @@ require_once LIB_PATH . 'osclass/helpers/hUtils.php';
 require_once LIB_PATH . 'osclass/helpers/hCategories.php';
 require_once LIB_PATH . 'osclass/helpers/hTranslations.php';
 require_once LIB_PATH . 'osclass/helpers/hSecurity.php';
+require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
+require_once LIB_PATH . 'osclass/helpers/hValidate.php';
 require_once LIB_PATH . 'osclass/helpers/hPage.php';
+require_once LIB_PATH . 'osclass/helpers/hPagination.php';
+require_once LIB_PATH . 'osclass/helpers/hTheme.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
@@ -105,11 +109,14 @@ require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
 require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
+require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
+require_once LIB_PATH . 'osclass/model/Stats.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
+require_once LIB_PATH . 'osclass/classes/Pagination.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -127,6 +134,7 @@ define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
     if(osc_auto_cron()) {
         osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
+
     }
 }
 
@@ -136,5 +144,20 @@ Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
+
+function osc_show_maintenance() {
+    if(defined('__OSC_MAINTENANCE__')) { ?>
+        <div id="maintenance" name="maintenance">
+             <?php _e("Your website is currently under maintenance mode"); ?>
+        </div>
+    <?php };
+}
+
+function osc_meta_generator() {
+    echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
+}
+
+osc_add_hook("header", "osc_show_maintenance");
+osc_add_hook("header", "osc_meta_generator");
 
 ?>

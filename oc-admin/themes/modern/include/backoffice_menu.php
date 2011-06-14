@@ -36,12 +36,17 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=items">&raquo; <?php _e('Manage items'); ?></a>
             </li>
-            <li><a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a></li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=post">&raquo; <?php _e('Add new item'); ?></a>
+            </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=media">&raquo; <?php _e('Manage media'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&action=settings">&raquo; <?php _e('Settings'); ?></a>
             </li>
         </ul>
 
@@ -53,7 +58,7 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=categories">&raquo; <?php _e('Manage categories'); ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=add">&raquo; <?php _e('Add a new category'); ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=categories&action=settings">&raquo; <?php _e('Settings'); ?></a>
             </li>
         </ul>
 
@@ -126,9 +131,6 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings">&raquo; <?php _e('General settings'); ?></a>
             </li>
             <li>
-                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=items">&raquo; <?php _e('Items'); ?></a>
-            </li>
-            <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=comments">&raquo; <?php _e('Comments'); ?></a>
             </li>
             <li>
@@ -158,6 +160,9 @@
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=cron">&raquo; <?php _e('Cron system'); ?></a>
             </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=settings&action=latestsearches">&raquo; <?php _e('Last Searches'); ?></a>
+            </li>
         </ul>
 
         <h3>
@@ -175,6 +180,9 @@
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=images">&raquo; <?php _e('Regenerate thumbnails'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance">&raquo; <?php _e('Maintenance mode'); ?></a>
             </li>
         </ul>
 
@@ -208,6 +216,24 @@
             </li>
             <li>
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit">&raquo; <?php _e('Edit Your Profile'); ?></a>
+            </li>
+        </ul>
+
+        <h3>
+            <a href="#"><?php _e('Statistics'); ?></a>
+        </h3>
+        <ul>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users">&raquo; <?php _e('Users'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items">&raquo; <?php _e('Items'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=comments">&raquo; <?php _e('Comments'); ?></a>
+            </li>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports">&raquo; <?php _e('Reports'); ?></a>
             </li>
         </ul>
 

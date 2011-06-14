@@ -21,18 +21,79 @@
      */
 
 
-    // Adds an ephemeral message to the session.
+    /**
+    * Helper Flash Messages
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
+     * Adds an ephemeral message to the session. (error style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
     function osc_add_flash_message($msg, $section = 'pubMessages') {
-        Session::newInstance()->_setMessage($section, $msg) ;
+        Session::newInstance()->_setMessage($section, $msg, 'error') ;
     }
 
-    //Shows all the pending flash messages in session and cleans up the array.
+    /**
+     * Adds an ephemeral message to the session. (ok style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
+    function osc_add_flash_ok_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'ok') ;
+    }
+
+    /**
+     * Adds an ephemeral message to the session. (error style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
+    function osc_add_flash_error_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'error') ;
+    }
+
+    /**
+     * Adds an ephemeral message to the session. (info style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
+    function osc_add_flash_info_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'info') ;
+    }
+
+    /**
+     * Shows all the pending flash messages in session and cleans up the array.
+     *
+     * @param $section
+     * @param $class
+     * @param $id
+     * @return void
+     */
     function osc_show_flash_message($section = 'pubMessages', $class = "FlashMessage", $id = "FlashMessage") {
         $message = Session::newInstance()->_getMessage($section) ;
 
-        if ($message != '') {
+        echo '<div id="flash_js"></div>';
+        
+        if (isset($message['msg']) && $message['msg'] != '') {
+            echo '<div id="' . $id . '" class="' . $class . ' ' . $message['type'] . '">' ;
+                echo $message['msg'];
+            echo '</div>' ;
+
+            Session::newInstance()->_dropMessage($section) ;
+        } else if($message!='') {
             echo '<div id="' . $id . '" class="' . $class . '">' ;
-                echo Session::newInstance()->_getMessage($section) ;
+                echo $message;
             echo '</div>' ;
 
             Session::newInstance()->_dropMessage($section) ;

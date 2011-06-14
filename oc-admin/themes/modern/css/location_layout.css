@@ -34,8 +34,10 @@
         filter: alpha(opacity=80);
     }
 
-    a.edit {
+    .locations a.edit {
         text-decoration: none;
+        display: inline;
+        padding-top: 0;
     }
 
     a.edit:hover{

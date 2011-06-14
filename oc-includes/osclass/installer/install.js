@@ -54,7 +54,7 @@ function check(id) {
 function validate_form() {
     email = document.getElementById('email');
     error = document.getElementById('email-error');
-    var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.\-])+\.([a-zA-Z])+([a-zA-Z])+$/;
     var num_error = 0;
     if( !pattern.test(email.value) ) {
         email.setAttribute('style', 'color:red;');
@@ -80,17 +80,21 @@ function validate_form() {
     var input = $("#target_form input");
     $("#lightbox").css('display','');
 
+    if( $('input[name=c_country]:checked').val() == 'International' ) {
+        alert('You\'ve chosen worlwide, it might take a while')
+    }
+
     $.ajax({
         type: 'POST',
+        dataType: 'json',
         url: 'install-location.php',
         data: input,
         timeout: 600000,
         success: function(data) {
-            if(!data.match(/file_get_contents/)) {
+            if(data.status == 200) {
                 window.location = 'install.php?step=4';
             } else {
-                alert('There have been some error');
-                $("#lightbox").css('display','none');
+                window.location = 'install.php?step=4&error_location=1';
             }
         },
         error: function(data) {

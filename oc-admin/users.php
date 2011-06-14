@@ -1,19 +1,23 @@
-<?php
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
      *
-     * Copyright (C) 2010 OSCLASS
+     *                        Copyright (C) 2010 OSCLASS
      *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
      *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
      *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
     class CAdminUsers extends AdminSecBaseModel
@@ -61,11 +65,11 @@
                                         $userActions = new UserActions(true) ;
                                         $success = $userActions->add() ;
                                         switch($success) {
-                                            case 1: osc_add_flash_message( _m('The user has been created. We\'ve sent an activation e-mail'), 'admin') ;
+                                            case 1: osc_add_flash_ok_message( _m('The user has been created. We\'ve sent an activation e-mail'), 'admin') ;
                                             break;
-                                            case 2: osc_add_flash_message( _m('The user has been created and activated'), 'admin') ;
+                                            case 2: osc_add_flash_ok_message( _m('The user has been created and activated'), 'admin') ;
                                             break;
-                                            case 3: osc_add_flash_message( _m('Sorry, but that e-mail is already in use'), 'admin') ;
+                                            case 3: osc_add_flash_error_message( _m('Sorry, but that e-mail is already in use'), 'admin') ;
                                             break;
                                         }
 
@@ -105,27 +109,27 @@
                                         $success = $userActions->edit( Params::getParam("id") ) ;
 
                                         switch($success) {
-                                            case (1):  osc_add_flash_message( _m('Passwords don\'t match'), 'admin') ;
+                                            case (1):  osc_add_flash_error_message( _m('Passwords don\'t match'), 'admin') ;
                                             break;
-                                            case (2):  osc_add_flash_message( _m('The user has been updated and activated'), 'admin') ;
+                                            case (2):  osc_add_flash_ok_message( _m('The user has been updated and activated'), 'admin') ;
                                             break;
-                                            default:   osc_add_flash_message( _m('The user has been updated'), 'admin');
+                                            default:   osc_add_flash_ok_message( _m('The user has been updated'), 'admin');
                                             break;
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'activate':        //activate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
-                                            osc_add_flash_message(_m('User id isn\'t in the correct format'), 'admin');
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
+                                        $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
-                                            $conditions = array('pk_i_id' => $id);
-                                            $values     = array('b_enabled' => 1);
-                                            $iUpdated  += $this->userManager->update($values, $conditions);
+                                            $iUpdated   += $userActions->activate($id);
                                         }
 
                                         switch ($iUpdated) {
@@ -137,20 +141,20 @@
                                             break;
                                         }
 
-                                        osc_add_flash_message($msg, 'admin');
+                                        osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'deactivate':      //deactivate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
-                                            osc_add_flash_message(_m('User id isn\'t in the correct format'), 'admin');
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
+                                        $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
-                                            $conditions = array('pk_i_id' => $id);
-                                            $values     = array('b_enabled' => 0);
-                                            $iUpdated  += $this->userManager->update($values, $conditions);
+                                            $iUpdated   += $userActions->deactivate($id);
                                         }
 
                                         switch ($iUpdated) {
@@ -162,14 +166,64 @@
                                             break;
                                         }
 
-                                        osc_add_flash_message($msg, 'admin');
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
+                case 'enable':
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->enable($id);
+                                        }
+
+                                        switch ($iUpdated) {
+                                            case (0):   $msg = _m('No user has been enabled');
+                                            break;
+                                            case (1):   $msg = _m('One user has been enabled');
+                                            break;
+                                            default:    $msg = sprintf(_m('%s users have been enabled'), $iUpdated);
+                                            break;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
+                case 'disable':
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->disable($id);
+                                        }
+
+                                        switch ($iUpdated) {
+                                            case (0):   $msg = _m('No user has been disabled');
+                                            break;
+                                            case (1):   $msg = _m('One user has been disabled');
+                                            break;
+                                            default:    $msg = sprintf(_m('%s users have been disabled'), $iUpdated);
+                                            break;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'delete':          //delete
                                         $iDeleted = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
-                                            osc_add_flash_message(_m('User id isn\'t in the correct format'), 'admin');
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
                                         foreach($userId as $id) {
@@ -187,7 +241,7 @@
                                             break;
                                         }
 
-                                        osc_add_flash_message($msg, 'admin');
+                                        osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 default:                // manage users view
@@ -202,6 +256,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

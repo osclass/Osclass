@@ -28,7 +28,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e("Upgrade");?></div>
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#steps_div").hide();
@@ -47,15 +46,15 @@
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';
-                steps.innerHTML += "<?php _e('Checking for updates (installed version: ', 'admin'); ?>" + version + "): " ;
+                steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" + version + "): " ;
 
                 $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
-                        steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date! (current version: ', 'admin'); ?>" + data.version + ")" ;
+                        steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date!', 'admin'); ?>";
                     } else {
-                        steps.innerHTML += "<?php _e('current version: ', 'admin'); ?>" + data.version + "<br/>" ;
+                        steps.innerHTML += "<?php _e('current version:', 'admin'); ?> " + data.version + "<br/>" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
-                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url() ; ?>images/loading.gif\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
+                            steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
 
                             var tempAr = data.url.split('/') ;
                             fileToUnzip = tempAr.pop() ;
@@ -78,7 +77,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/tools-icon.png" title="" alt="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/tools-icon.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Upgrade OSClass', 'admin'); ?></div>
                     <div style="clear: both;"></div>

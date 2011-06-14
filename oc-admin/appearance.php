@@ -1,4 +1,5 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -39,35 +40,22 @@
 
                     switch ($status) {
                         case(0):   $msg = _m('The theme folder is not writable');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(1):   $msg = _m('The theme has been installed correctly');
+                                   osc_add_flash_ok_message($msg, 'admin');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the theme');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                     }
 
-                    osc_add_flash_message($msg, 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
-                /*case 'delete':
-                    $themes = Params::getParam('theme') ;
-                    if ( isset( $themes ) && is_array( $themes ) ) {
-                        foreach ($themes as $theme) {
-                            if (!osc_deleteDir(THEMES_PATH . $theme))
-                                osc_add_flash_message( _m('Directory "%s" can\'t be removed'), $theme);
-                        }
-                    } else if (isset( $themes )) {
-                        if (!osc_deleteDir(THEMES_PATH . $themes)){
-                            osc_add_flash_message( _m('Directory "%s" can\'t be removed'), $themes);
-                        }
-                    } else {
-                        osc_add_flash_message( _m('No theme selected'));
-                    }
-                    $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
-                break;*/
                 case 'widgets':
                     $info = WebThemes::newInstance()->loadThemeInfo(osc_theme());
 
@@ -82,7 +70,7 @@
                     Widget::newInstance()->delete(
                         array('pk_i_id' => Params::getParam('id') )
                     );
-                    osc_add_flash_message( _m('Widget removed correctly'), 'admin');
+                    osc_add_flash_ok_message( _m('Widget removed correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
                 case 'add_widget_post':
@@ -94,7 +82,7 @@
                             ,'s_content' => Params::getParam('content')
                         )
                     );
-                    osc_add_flash_message( _m('Widget added correctly'), 'admin');
+                    osc_add_flash_ok_message( _m('Widget added correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
                 case 'activate':
@@ -102,7 +90,7 @@
                             array('s_value' => Params::getParam('theme') )
                             ,array('s_section' => 'osclass', 's_name' => 'theme')
                     );
-                    osc_add_flash_message( _m('Theme activated correctly'), 'admin');
+                    osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 default:
@@ -120,6 +108,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

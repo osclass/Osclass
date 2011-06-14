@@ -1,4 +1,5 @@
 <?php
+
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -23,11 +24,24 @@
 
     require_once ABS_PATH . 'oc-load.php' ;
     
+    if( file_exists(ABS_PATH . '.maintenance') ) {
+        if(!osc_is_admin_user_logged_in()) {
+            require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+
+            $title = 'OSClass &raquo; Error' ;
+            $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode') . '.', osc_page_title() ) ;
+
+            osc_die($title, $message) ;
+        } else {
+            define('__OSC_MAINTENANCE__', true);
+        }
+    }
+
     switch( Params::getParam('page') )
     {
         case ('user'):      // user pages (with security)
 
-                            if(Params::getParam('action')=='change_email_confirm'
+                            if(Params::getParam('action')=='change_email_confirm' || Params::getParam('action')=='activate_alert'
                             || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())) {
                                 require_once(osc_base_path() . 'user-non-secure.php') ;
                                 $do = new CWebUserNonSecure() ;

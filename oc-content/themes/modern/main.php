@@ -19,7 +19,6 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
@@ -53,11 +52,11 @@
                         ?>
                         <?php while ( osc_has_categories() ) { ?>
                             <div class="category">
-                                <h1><strong><a href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></strong></h1>
+                                <h1><strong><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></strong></h1>
                                 <?php if ( osc_count_subcategories() > 0 ) { ?>
                                     <ul>
                                         <?php while ( osc_has_subcategories() ) { ?>
-                                            <li><a href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></li>
+                                            <li><a class="category <?php echo osc_category_slug() ; ?>" href="<?php echo osc_search_category_url() ; ?>"><?php echo osc_category_name() ; ?></a> <span>(<?php echo osc_category_total_items() ; ?>)</span></li>
                                         <?php } ?>
                                     </ul>
                                 <?php } ?>
@@ -99,9 +98,9 @@
                                              </td>
                                              <td class="text">
                                                  <h3><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></h3>
-                                                 <p><?php echo osc_item_description() ; ?></p>
-                                             </td>
-                                            <td class="price"><strong><?php echo osc_item_formated_price() ; ?></strong></td>
+                                                 <p><strong><?php echo osc_item_formated_price() ; ?> - <?php echo osc_item_city(); ?> (<?php echo osc_item_region();?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong></p>
+                                                 <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ) ; ?></p>
+                                             </td>                                       
                                          </tr>
                                         <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
                                     <?php } ?>
@@ -115,12 +114,12 @@
                 </div>
                 <div id="sidebar">
                     <div class="navigation">
-                        <?php if(osc_count_list_regions()>0) {?>
+                        <?php if(osc_count_list_cities()>0) {?>
                         <div class="box location">
                             <h3><strong><?php _e("Location", 'modern'); ?></strong></h3>
                             <ul>
-                            <?php while(osc_has_list_regions()) { ?>
-                                <li><a href="<?php echo osc_search_url(array('sRegion' => osc_list_region_name()));?>"><?php echo osc_list_region_name();?></a> <em>(<?php echo osc_list_region_items();?>)</em></li>
+                            <?php while(osc_has_list_cities()) { ?>
+                                <li><a href="<?php echo osc_search_url(array('sCity' => osc_list_city_name()));?>"><?php echo osc_list_city_name();?></a> <em>(<?php echo osc_list_city_items();?>)</em></li>
                             <?php } ?>
                             </ul>
                         </div>
