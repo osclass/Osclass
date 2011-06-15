@@ -19,7 +19,7 @@
     $items = __get("items") ;
     $last_item = end( $items ) ;
     $last_id = $last_item['pk_i_id'] ;
-    $stat = __get("stat");
+    $stat = __get("stat") ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

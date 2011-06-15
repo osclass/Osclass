@@ -40,6 +40,15 @@
         }
     }
 
+    // UPDATE DATABASE
+    if( !defined('AUTO_UPGRADE') ) {
+        if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
+            $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
+            $conn = getConnection();
+            $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+        }
+    }
+
     $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 

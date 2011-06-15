@@ -287,7 +287,6 @@
             return 0;
         }
 
-
         /**
          * Activetes an item
          * @param <type> $secret
@@ -297,7 +296,6 @@
         public function activate( $id, $secret )
         {
             $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
-
             
             if($item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
                 $result = $this->manager->update(
