@@ -148,7 +148,7 @@ Session::newInstance()->session_start() ;
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
-             <?php _e("Your website is currently under maintenance mode"); ?>
+             <?php _e("The website is currently under maintenance mode"); ?>
         </div>
     <?php };
 }
