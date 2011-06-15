@@ -241,6 +241,54 @@ function paypal_send_email($item, $category_fee) {
     }
     
 }
+
+
+function paypal_supertoolbar() {
+    
+    if(osc_is_web_user_logged_in()) {
+        $conn = getConnection();
+        $toolbar = SuperToolBar::newInstance();
+        if(Rewrite::newInstance()->get_location()=='item') {
+            if(osc_item_user_id()==  osc_logged_user_id()) {
+                if(osc_get_preference('pay_per_post', 'paypal')) {
+                    $paid = $conn->osc_dbFetchResult("SELECT b_paid FROM %st_paypal_publish WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, osc_item_id());
+                    if(!$paid || (isset($paid) && $paid['b_paid']==0)) {
+                        $ppl_category = $conn->osc_dbFetchResult("SELECT f_publish_cost FROM %st_paypal_prices WHERE fk_i_category_id = %d", DB_TABLE_PREFIX, osc_item_category_id());
+                        if($ppl_category && isset($ppl_category['f_publish_cost'])) {
+                            $category_fee = $ppl_category["f_publish_cost"];
+                        } else {
+                            $category_fee = osc_get_preference("default_publish_cost", "paypal");
+                        }
+                        if($category_fee>0) {
+                            $publish_url = osc_render_file_url(osc_plugin_folder(__FILE__)."payperpublish.php&itemId=".osc_item_id());
+                            $toolbar->addOption('<a href="'.$publish_url.'" />'.__("Pay to publish it", "superuser").'</a>');
+                        }
+                    }
+                }
+
+                if(osc_get_preference('allow_premium', 'paypal')) {
+                    if(!paypal_is_premium(osc_item_id())) {
+                        $ppl_category = $conn->osc_dbFetchResult("SELECT f_premium_cost FROM %st_paypal_prices WHERE fk_i_category_id = %d", DB_TABLE_PREFIX, osc_item_category_id());
+                        if($ppl_category && isset($ppl_category['f_premium_cost']) && $ppl_category['f_premium_cost']>0) {
+                            $category_fee = $ppl_category["f_premium_cost"];
+                        } else {
+                            $category_fee = osc_get_preference("default_premium_cost", "paypal");
+                        }
+                        if($category_fee>0) {
+                            $premium_url = osc_render_file_url(osc_plugin_folder(__FILE__)."makepremium.php&itemId=".osc_item_id());
+                            $toolbar->addOption('<a href="'.$premium_url.'" />'.__("Make this ad premium", "superuser").'</a>');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+      
+    
+    
+}
+
 // This is needed in order to be able to activate the plugin
 osc_register_plugin(osc_plugin_path(__FILE__), 'paypal_install');
 // This is a hack to show a Configure link at plugins table (you could also use some other hook to show a custom option panel)
@@ -253,4 +301,5 @@ osc_add_hook('header', 'paypal_load_js');
 osc_add_hook('posted_item', 'paypal_publish');
 osc_add_hook('user_menu', 'paypal_user_menu');
 
+osc_add_hook('supertoolbar_hook', 'paypal_supertoolbar');
 ?>
