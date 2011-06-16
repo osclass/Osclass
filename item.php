@@ -204,9 +204,13 @@
 
                         $currencies = Currency::newInstance()->listAll();
 
-                        $this->_exportVariableToView('item', $item) ;
-                        //$this->_exportVariableToView('user', $this->user) ;
+                        $this->_exportVariableToView('item', $item);
+                        /*$this->_exportVariableToView('categories', $categories);
+                        $this->_exportVariableToView('countries', $countries);
+                        $this->_exportVariableToView('regions', $regions);
+                        $this->_exportVariableToView('cities', $cities);*/
 
+                        osc_run_hook("before_item_edit", $item);
                         $this->doView('item-edit.php');
                     }else{
                         // add a flash message [ITEM NO EXISTE]

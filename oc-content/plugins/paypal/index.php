@@ -356,6 +356,18 @@ function paypal_premium_off($id) {
 }
 
 /**
+ * Executed before editing an item
+ * 
+ * @param array $item 
+ */
+function paypal_before_edit($item) {
+    if(osc_get_preference('pay_per_post', 'paypal')=='1' || (osc_get_preferentce('allow_premium','paypal')=='1' && paypal_is_premium($item['pk_i_id']))) {
+        $cat[0] = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+        View::newInstance()->_exportVariableToView('categories', $cat);
+    }
+}
+
+/**
  * ADD HOOKS
  */
 osc_register_plugin(osc_plugin_path(__FILE__), 'paypal_install');
@@ -369,4 +381,5 @@ osc_add_hook('user_menu', 'paypal_user_menu');
 osc_add_hook('supertoolbar_hook', 'paypal_supertoolbar');
 osc_add_hook('cron_hourly', 'paypal_cron');
 osc_add_hook('item_premium_off', 'paypal_premium_off');
+osc_add_hook('before_item_edit', 'paypal_before_edit');
 ?>

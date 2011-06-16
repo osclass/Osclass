@@ -36,7 +36,13 @@
                 $catId = Session::newInstance()->_getForm('catId');
             }
 
-            if($categories==null) { $categories = osc_get_categories(); };
+            if($categories==null) {
+                if(View::newInstance()->_exists('categories')) {
+                    $categories = View::newInstance()->_get('categories') ;
+                } else {
+                    $categories = osc_get_categories();
+                }
+            };
             if($item==null) { $item = osc_item(); };
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
