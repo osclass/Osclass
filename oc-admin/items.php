@@ -123,11 +123,9 @@
                                                 $value = 1 ;
                                                 try {
                                                     if ($id) {
+                                                        $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
-                                                            $this->itemManager->update(
-                                                                    array('b_premium' => $value)
-                                                                    ,array('pk_i_id' => $_id)
-                                                            ) ;
+                                                            $mItems->premium($_id);
                                                         }
                                                     }
                                                     osc_add_flash_ok_message( _m('The items have been marked as premium'), 'admin') ;
@@ -140,11 +138,9 @@
                                                 $value = 0 ;
                                                 try {
                                                     if ($id) {
+                                                        $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
-                                                            $this->itemManager->update(
-                                                                    array('b_premium' => $value)
-                                                                    ,array('pk_i_id' => $_id)
-                                                            ) ;
+                                                            $mItems->premium($_id,false);
                                                         }
                                                     }
                                                     osc_add_flash_ok_message( _m('The changes have been made'), 'admin') ;
@@ -303,10 +299,12 @@
                                             return false;
 
                                         try {
-                                            $this->itemManager->update(
+                                            $mItems = new ItemActions(true);
+                                            $mItems->premium($id, $value==1?true:false);
+                                            /*$this->itemManager->update(
                                                     array('b_premium' => $value),
                                                     array('pk_i_id' => $id)
-                                            );
+                                            );*/
                                             osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
                                         } catch (Exception $e) {
                                             osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');

@@ -9,6 +9,7 @@ CREATE TABLE  /*TABLE_PREFIX*/t_paypal_log (
     fk_i_user_id INT NULL ,
     fk_i_item_id INT NULL ,
     s_source VARCHAR( 10 ) NOT NULL,
+    i_product_type VARCHAR( 15 ) NOT NULL,
 
     PRIMARY KEY(pk_i_id)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

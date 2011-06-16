@@ -61,8 +61,8 @@ $response = PPHttpPost($ENDPOINT, $req_str);
     if($doresponse['ACK'] == "Success" || $doresponse['ACK'] == "SuccessWithWarning") {
         //Save transaction to DB
         $rpl = explode("|", Params::getParam("rpl"));
-        $paypal_id = paypal_save_log(urldecode($response['L_PAYMENTREQUEST_0_NAME0']), urldecode($doresponse['PAYMENTINFO_0_TRANSACTIONID']), urldecode($doresponse['PAYMENTINFO_0_AMT']), urldecode($doresponse['PAYMENTINFO_0_CURRENCYCODE']),$rpl[2], $rpl[0], $rpl[1],urldecode($response['L_PAYMENTREQUEST_0_NUMBER0']),"PAYPAL");
         $produt_type = explode("x", urldecode($response['L_PAYMENTREQUEST_0_NUMBER0']));
+        $paypal_id = paypal_save_log(urldecode($response['L_PAYMENTREQUEST_0_NAME0']), urldecode($doresponse['PAYMENTINFO_0_TRANSACTIONID']), urldecode($doresponse['PAYMENTINFO_0_AMT']), urldecode($doresponse['PAYMENTINFO_0_CURRENCYCODE']),isset($response['EMAIL'])?urldecode($response['EMAIL']):'', $rpl[0], $rpl[1],$produt_type[0],"PAYPAL");
         if($produt_type[0]=="101") {
             // PUBLISH FEE
             $conn = getConnection();
@@ -110,7 +110,7 @@ $response = PPHttpPost($ENDPOINT, $req_str);
     <body>
         <script type="text/javascript">
             top.rd.innerHTML = '<?php echo $html; ?>';
-            top.dg.closeFlow();
+            //top.dg.closeFlow();
         </script>
     </body>
 </html>

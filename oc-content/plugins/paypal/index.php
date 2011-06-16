@@ -85,7 +85,8 @@ function paypal_button($amount = "0.00", $description = "", $rpl="||", $itemnumb
     $APISIGNATURE = osc_get_preference('api_signature', 'paypal');
     $ENDPOINT     = "https://api-3t.sandbox.paypal.com/nvp";
     $VERSION      = "65.1"; //must be >= 65.1
-    $REDIRECTURL  = "https://www.sandbox.paypal.com/incontext?token=";
+    //$REDIRECTURL  = "https://www.sandbox.paypal.com/incontext?token=";
+    $REDIRECTURL  = "https://www.paypal.com/incontext?token=";
   
     //Build the Credential String:
     $cred_str = "USER=" . $APIUSERNAME . "&PWD=" . $APIPASSWORD . "&SIGNATURE=" . $APISIGNATURE . "&VERSION=" . $VERSION;
@@ -106,6 +107,7 @@ function paypal_button($amount = "0.00", $description = "", $rpl="||", $itemnumb
     . "&L_PAYMENTREQUEST_0_TAXAMT0=0"
     . "&L_PAYMENTREQUEST_0_AMT0=".$amount
     . "&L_PAYMENTREQUEST_0_DESC0=Download"
+    . "&CUSTOM=".$rpl
     . "&useraction=commit";
   
     //combine the two strings and make the API Call
@@ -283,10 +285,21 @@ function paypal_supertoolbar() {
             }
         }
     }
+}
 
-      
-    
-    
+function paypal_cron() {
+    $conn = getConnection();
+    $items = $conn->osc_dbFetchResults("SELECT fk_i_item_id FROM %st_paypal_premium WHERE TIMESTAMPDIFF(DAY,dt_date,NOW()) >= %d", DB_TABLE_PREFIX, osc_get_preference("premium_days", "paypal"));
+    $mItem = new ItemActions(false);
+    foreach($itemas as $item) {
+        $mItem->premium($item['fk_i_item_id'], false);
+    }
+    $conn->osc_dbExec("DELETE FROM %st_paypal_premium WHERE TIMESTAMPDIFF(DAY,dt_date,NOW()) >= %d", DB_TABLE_PREFIX, osc_get_preference("premium_days", "paypal"));
+}
+
+function paypal_premium_off($id) {
+    $conn = getConnection();
+    $conn->osc_dbExec("DELETE FROM %st_paypal_premium WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $id);
 }
 
 // This is needed in order to be able to activate the plugin
@@ -302,4 +315,6 @@ osc_add_hook('posted_item', 'paypal_publish');
 osc_add_hook('user_menu', 'paypal_user_menu');
 
 osc_add_hook('supertoolbar_hook', 'paypal_supertoolbar');
+osc_add_hook('cron_hourly', 'paypal_cron');
+osc_add_hook('item_premium_off', 'paypal_premium_off');
 ?>

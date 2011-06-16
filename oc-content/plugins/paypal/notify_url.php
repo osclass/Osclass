@@ -57,7 +57,25 @@ if (!$fp) {
                 require_once osc_plugins_path().osc_plugin_folder(__FILE__).'functions.php';
                 // Have we processed the payment already?
                 $conn = getConnection();
-                $conn->osc_dbFetchResult("SELECT * FROM %st_paypal_log WHERE s_code = '%s'", DB_TABLE_PREFIX, Params::getParam('txn_idn'));
+                $payment = $conn->osc_dbFetchResult("SELECT * FROM %st_paypal_log WHERE s_code = '%s'", DB_TABLE_PREFIX, Params::getParam('txn_idn'));
+                if(!isset($payment['pk_i_id'])) {
+                    $data = explode("x", Params::getParam('item_number1'));
+                    paypal_save_log(Params::getParam('item_name1'), Params::getParam('txn_id'), Params::getParam('payment_gros'), Params::getParam('mc_currency'), Params::getParam('payer_email'), '0', $data[2], Params::getParam('item_number1'), 'PAYPAL');
+                    
+                    if($data[0]=="101") {
+                        // PUBLISH FEE
+                        $conn->osc_dbExec("UPDATE %st_paypal_publish SET `dt_date` = '%s', `b_paid` =  '1', `fk_i_paypal_id` = '%d' WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, date('Y-m-d H:i:s'), $paypal_id, $rpl[1]);
+                    } else if($data[0]=="201") {
+                        // PREMIUM FEE
+                        $paid = $conn->osc_dbFetchResult("SELECT * FROM %st_paypal_premium WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $rpl[1]);
+                        if($paid) {
+                            $conn->osc_dbExec("UPDATE %st_paypal_premium SET `dt_date` = '%s', `fk_i_paypal_id` = '%d' WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, date('Y-m-d H:i:s'), $paypal_id, $rpl[1]);
+                        } else {
+                            $conn->osc_dbExec("INSERT INTO  %st_paypal_premium (`fk_i_item_id` ,`dt_date` ,`fk_i_paypal_id`)VALUES ('%d',  '%s',  '%s')", DB_TABLE_PREFIX, $rpl[1], date('Y-m-d H:i:s'), $paypal_id);
+                        }
+                    }
+                    
+                } // ELSE THE PAY IS ALREADY PROCESSED
                 
                 $emailtext = "";
                 foreach ($_REQUEST as $key => $value){ 
