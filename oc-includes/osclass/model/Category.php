@@ -176,14 +176,16 @@
 
         private function sideTree($branch, $categories, $relation) {
             $tree = array();
-            foreach($branch as $b) {
-                $aux = $categories[$b];
-                if(isset($relation[$b]) && is_array($relation[$b])) {
-                    $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
-                } else {
-                    $aux['categories'] = array();
+            if( !empty($branch) ) {
+                foreach($branch as $b) {
+                    $aux = $categories[$b];
+                    if(isset($relation[$b]) && is_array($relation[$b])) {
+                        $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
+                    } else {
+                        $aux['categories'] = array();
+                    }
+                    $tree[] = $aux;
                 }
-                $tree[] = $aux;
             }
             return $tree;
         }
