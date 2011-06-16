@@ -3,7 +3,7 @@
 /*****************************
  * CONFIGURATION - EDIT THIS *
  *****************************/
-$sandbox = true; // true if you're testing your installation, set to false once it's ready for production
+$sandbox = false;//true; // true if you're testing your installation, set to false once it's ready for production
 $email_admin = true;
 
 

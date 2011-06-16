@@ -44,6 +44,20 @@ function PPHttpPost($my_endpoint, $my_api_str){
 }
 
 
+/**
+* Create a record on the DB for the paypal transaction
+* 
+* @param string $concept
+* @param string $code
+* @param float $amount
+* @param string $currency
+* @param string $email
+* @param integer $user
+* @param integer $item
+* @param string $product_type (publish fee, premium, pack and which category)
+* @param string $source
+* @return integer $last_id
+*/
 function paypal_save_log($concept, $code, $amount, $currency, $email, $user, $item, $product_type, $source) {
     
     $conn = getConnection();
@@ -62,6 +76,12 @@ function paypal_save_log($concept, $code, $amount, $currency, $email, $user, $it
     return $conn->get_last_id();
 }
 
+/**
+* Know if the ad is paid
+* 
+* @param integer $itemId
+* @return boolean
+*/
 function paypal_is_paid($itemId) {
     $conn = getConnection();
     $paid = $conn->osc_dbFetchResult("SELECT b_paid FROM %st_paypal_publish WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $itemId);
@@ -71,6 +91,12 @@ function paypal_is_paid($itemId) {
     return false;
 }
 
+/**
+* Know if the ad is marked as premium (and paid)
+* 
+* @param integer $itemId
+* @return boolean
+*/
 function paypal_is_premium($itemId) {
     $conn = getConnection();
     $paid = $conn->osc_dbFetchResult("SELECT dt_date FROM %st_paypal_premium WHERE fk_i_item_id = %d AND TIMESTAMPDIFF(DAY,dt_date,NOW()) < %d", DB_TABLE_PREFIX, $itemId, osc_get_preference("premium_days", "paypal"));

@@ -9,8 +9,13 @@ Author URI: http://www.osclass.org/
 Short Name: paypal
 */
 
+// LOAD STUFF
 require_once osc_plugins_path().osc_plugin_folder(__FILE__).'functions.php';
 
+
+/**
+* Create tables and variables on t_preference and t_pages
+*/
 function paypal_install() {
     $conn = getConnection() ;
     $conn->autocommit(false);
@@ -45,6 +50,9 @@ function paypal_install() {
     $conn->autocommit(true);
 }
 
+/**
+* Clean up all the tables and preferences
+*/
 function paypal_uninstall() {
     $conn = getConnection() ;
     $conn->autocommit(false);
@@ -74,10 +82,23 @@ function paypal_uninstall() {
     $conn->autocommit(true);
 }
 
+/**
+* Gets the path of paypals folder
+* 
+* @return string
+*/
 function paypal_path() {
     return osc_base_url()."oc-content/plugins/".osc_plugin_folder(__FILE__);
 }
 
+/**
+* Create and print a "Pay with Paypal" button
+* 
+* @param float $amount
+* @param string $description
+* @param string $rpl custom variables
+* @param string $itemnumber (publish fee, premium, pack and which category)
+*/
 function paypal_button($amount = "0.00", $description = "", $rpl="||", $itemnumber = "101") {
 
     $APIUSERNAME  = osc_get_preference('api_username', 'paypal');
@@ -126,12 +147,13 @@ function paypal_button($amount = "0.00", $description = "", $rpl="||", $itemnumb
         </script><?php
     } else if($response['ACK'] == "Failure" || $response['ACK'] == "FailureWithWarning") {
         $redirect_url = ""; //SOMETHING FAILED
-        //print_r($response);
     }
     
 }
 
-
+/**
+* Create a menu on the admin panel
+*/
 function paypal_admin_menu() {
     echo '<h3><a href="#">Paypal Options</a></h3>
     <ul> 
@@ -140,16 +162,29 @@ function paypal_admin_menu() {
     </ul>';
 }
 
+/**
+ * Load paypal's js library
+ */
 function paypal_load_js() {
     echo "<script src ='https://www.paypalobjects.com/js/external/dg.js' type='text/javascript'></script>";
 }
 
-
+/**
+ * Redirect to function, for some reason "header" function was not working inside an "IF" clause
+ *
+ * @param string $url 
+ */
 function paypal_redirect_to($url) {
     header('Location: ' . $url);
     exit;
 }
 
+
+/**
+ * Redirect to payment page after publishing an item
+ *
+ * @param integer $item 
+ */
 function paypal_publish($item) {
     if(osc_get_preference('pay_per_post', 'paypal')) {
         // Check if it's already payed or not
@@ -180,11 +215,19 @@ function paypal_publish($item) {
     paypal_redirect_to(osc_search_category_url());
 }
 
+/**
+ * Create a new menu option on users' dashboards
+ */
 function paypal_user_menu() {
     echo '<li class="opt_paypal" ><a href="' . osc_render_file_url(osc_plugin_folder(__FILE__)."user_menu.php") . '" >' . __("Paypal Options", "paypal") . '</a></li>' ;
 }
 
-
+/**
+ * Send email to un-registered users with payment options
+ * 
+ * @param integer $item
+ * @param float $category_fee 
+ */
 function paypal_send_email($item, $category_fee) {
     
     if(!osc_is_web_user_logged_in()) {
@@ -244,7 +287,9 @@ function paypal_send_email($item, $category_fee) {
     
 }
 
-
+/**
+ * Add new options to supertoolbar plugin (if installed)
+ */
 function paypal_supertoolbar() {
     
     if(osc_is_web_user_logged_in()) {
@@ -287,6 +332,9 @@ function paypal_supertoolbar() {
     }
 }
 
+/**
+ * Executed hourly with cron to clean up the expired-premium ads
+ */
 function paypal_cron() {
     $conn = getConnection();
     $items = $conn->osc_dbFetchResults("SELECT fk_i_item_id FROM %st_paypal_premium WHERE TIMESTAMPDIFF(DAY,dt_date,NOW()) >= %d", DB_TABLE_PREFIX, osc_get_preference("premium_days", "paypal"));
@@ -297,23 +345,27 @@ function paypal_cron() {
     $conn->osc_dbExec("DELETE FROM %st_paypal_premium WHERE TIMESTAMPDIFF(DAY,dt_date,NOW()) >= %d", DB_TABLE_PREFIX, osc_get_preference("premium_days", "paypal"));
 }
 
+/**
+ * Executed when an item is manually set to NO-premium to clean up it on the plugin's table
+ * 
+ * @param integer $id 
+ */
 function paypal_premium_off($id) {
     $conn = getConnection();
     $conn->osc_dbExec("DELETE FROM %st_paypal_premium WHERE fk_i_item_id = %d", DB_TABLE_PREFIX, $id);
 }
 
-// This is needed in order to be able to activate the plugin
+/**
+ * ADD HOOKS
+ */
 osc_register_plugin(osc_plugin_path(__FILE__), 'paypal_install');
-// This is a hack to show a Configure link at plugins table (you could also use some other hook to show a custom option panel)
 osc_add_hook(osc_plugin_path(__FILE__)."_configure", '');
-// This is a hack to show a Uninstall link at plugins table (you could also use some other hook to show a custom option panel)
 osc_add_hook(osc_plugin_path(__FILE__)."_uninstall", 'paypal_uninstall');
 
 osc_add_hook('admin_menu', 'paypal_admin_menu');
 osc_add_hook('header', 'paypal_load_js');
 osc_add_hook('posted_item', 'paypal_publish');
 osc_add_hook('user_menu', 'paypal_user_menu');
-
 osc_add_hook('supertoolbar_hook', 'paypal_supertoolbar');
 osc_add_hook('cron_hourly', 'paypal_cron');
 osc_add_hook('item_premium_off', 'paypal_premium_off');
