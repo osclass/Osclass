@@ -275,8 +275,19 @@
                     }
                 } 
 
-                if (!(checkdnsrr($domain,"MX") || checkdnsrr($domain,"A"))) {
-                    return false;
+                if(function_exists(checkdnsrr)) {
+                    if (!checkdnsrr($domain,"MX") ) {
+                        return false;
+                    }
+                } else {
+                    require_once LIB_PATH . 'Net/DNS.php';
+
+                    $resolver = new Net_DNS_Resolver();
+                    $response_mx = $resolver->query($domain, 'MX');
+                    
+                    if ( (count( $response_mx->answer ) == 0) ) {
+                        return false;
+                    }
                 }
             }
             return true;
