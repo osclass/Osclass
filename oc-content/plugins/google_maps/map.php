@@ -4,8 +4,6 @@
 <?php if($item['d_coord_lat'] != '' && $item['d_coord_long'] != '') {?>
     <script type="text/javascript">
 //        if(GBrowserIsCompatible()) {
-
-        geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(<?php echo $item['d_coord_lat']; ?>, <?php echo $item['d_coord_long']; ?>);
         var myOptions = {
           zoom: 13,
