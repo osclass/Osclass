@@ -145,7 +145,7 @@
 							<?php $totalWithItems = 0 ; ?>
                             <?php foreach($categories as $c) { ?>
                                 <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
-                                    <a href="<?php osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
+                                    <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
                                     <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
                                     <br />
                                     <?php $totalWithItems++ ; ?>
