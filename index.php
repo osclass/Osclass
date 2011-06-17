@@ -29,7 +29,7 @@
             require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
             $title = 'OSClass &raquo; Error' ;
-            $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode.'), osc_page_title() ) ;
+            $message = sprintf(__('We are sorry for any inconvenience. %s is under maintenance mode') . '.', osc_page_title() ) ;
 
             osc_die($title, $message) ;
         } else {

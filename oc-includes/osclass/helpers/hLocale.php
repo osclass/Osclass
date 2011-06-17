@@ -189,7 +189,7 @@
      * You get the right locale code. If an admin is using the website in another language different of the default one, or
      * the admin uses the default one, you'll get it.
      *
-     * @return string Locale Code
+     * @return string OSCLocale Code
      */
     function osc_current_admin_locale( ) {
         if(Session::newInstance()->_get('adminLocale') != '') {

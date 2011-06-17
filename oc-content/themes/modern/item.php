@@ -39,8 +39,13 @@
                 });
             });
         </script>
+        <?php if( osc_item_is_expired () ) { ?>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
+        <?php } else { ?>
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
+        <?php } ?>
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
     </head>
     <body>
@@ -79,7 +84,11 @@
                         <p><?php echo osc_item_description() ; ?></p>
                         <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                         <p class="contact_button">
+                            <?php if( !osc_item_is_expired () ) { ?>
+                            <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                             <strong><a href="#contact"><?php _e('Contact seller', 'modern') ; ?></a></strong>
+                            <?php     } ?>
+                            <?php } ?>
                             <strong class="share"><a href="<?php echo osc_item_send_friend_url() ; ?>" rel="nofollow"><?php _e('Share', 'modern') ; ?></a></strong>
                         </p>
                         <?php osc_run_hook('location') ; ?>
@@ -156,7 +165,8 @@
                         </div>
                         <?php } ?>
                     <?php } ?>
-                    <?php if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
+                    <?php if( !osc_item_is_expired () ) { ?>
+                    <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
                         <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_item_contact_name(); ?></p>
@@ -198,6 +208,7 @@
                             </fieldset>
                         </form>
                     </div>
+                    <?php     } ?>
                     <?php } ?>
                 </div>
             </div>

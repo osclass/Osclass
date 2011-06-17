@@ -24,9 +24,7 @@
 <div id="settings_form">
     <form action="<?php echo osc_admin_base_url(true); ?>?page=ajax" method="post">
             <input type="hidden" name="action" value="<?php echo $action_frm; ?>" />
-            <input type="hidden" name="fk_i_parent_id" value="<?php echo $category['fk_i_parent_id']; ?>" />
-            <input type="hidden" name="i_position" value="<?php echo $category['i_position']; ?>" />
-            <input type="hidden" name="b_enabled" value="<?php if($category["b_enabled"]!='' ){echo 1;}else{echo 0;} ?>" />
+            
             <?php CategoryForm::primary_input_hidden($category) ; ?>
             
             <div class="FormElement">
@@ -67,7 +65,7 @@
                   
                     var message = "";
                     if(ret.error) {
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/cross.png"/>';
+                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png');?>"/>';
                         message += ret.error; 
 
                     }
@@ -75,7 +73,7 @@
                         $('#settings_form').fadeOut('fast', function(){
                             $('#settings_form').remove();
                         });
-                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url();?>images/tick.png"/>';
+                        message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png');?>"/>';
                         message += ret.ok;
                         $('div#settings_form').parent().parent().find('.quick_edit').html(ret.text);
                     }

@@ -248,7 +248,7 @@
      * @return void
      */
     function osc_categories_select($name = 'sCategory', $category = null) {
-        CategoryForm::category_select(Category::newInstance()->toTree(), $category, __("- Select a category -"), $name) ;
+        CategoryForm::category_select(Category::newInstance()->toTree(), $category, __('Select a category'), $name) ;
     }
 
 

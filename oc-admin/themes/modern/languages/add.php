@@ -25,8 +25,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Languages'); ?></div>
-
         <div id="content">
             <div id="separator"></div>
 
@@ -42,7 +40,7 @@
                 </div>
 
                 <div id="content_separator"></div>
-                <?php osc_show_flash_message('amin') ; ?>
+                <?php osc_show_flash_message('admin') ; ?>
 
                 <!-- add new plugin form -->
                 <div id="settings_form" style="border: 1px solid #ccc; background: #eee; ">
@@ -51,7 +49,7 @@
 
                         <p style="border-bottom: 1px black solid;padding-bottom: 10px;">
                             <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
-                            Download more languages at <a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>
+                            <?php printf(__('Download more languages at %s'), '<a href="https://sourceforge.net/projects/osclass/files/Languages/" target="_blank">Sourceforge</a>'); ?>
                         </p>
 
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="POST" enctype="multipart/form-data">
@@ -82,4 +80,3 @@
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
 </html>
-

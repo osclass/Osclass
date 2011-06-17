@@ -29,11 +29,9 @@
 <meta http-equiv="Expires" content="Fri, Jan 01 1970 00:00:00 GMT" />
 
 <link href="<?php echo osc_current_web_theme_styles_url('style.css') ; ?>" rel="stylesheet" type="text/css" />
-<link href="<?php echo osc_current_web_theme_styles_url('jquery-ui.css') ; ?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo osc_current_web_theme_styles_url('tabs.css') ; ?>" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.js') ; ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery-ui.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.uniform.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('global.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('tabber-minimized.js') ; ?>"></script>

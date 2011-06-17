@@ -25,14 +25,13 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Import'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/tools-icon.png" title="" alt=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/tools-icon.png') ; ?>" title="" alt=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Maintenance mode'); ?></div>
                     <div style="clear: both;"></div>
@@ -46,9 +45,9 @@
                             <?php _e("While in maintenance mode, users can not access your website. Useful if you need to make some changes on your website. Use the following button to toggle ON/OFF maintenance mode"); ?>.
                         </p>
                         <p>
-                            <?php echo __("Maintenance mode is:"). " " .($maintenance?__('ON'):__('OFF'));?>
+                            <?php echo __("Maintenance mode is:"). " " . ($maintenance ? __('ON') : __('OFF') ); ?>
                         </p>
-                        <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance&mode=<?php echo $maintenance?'off':'on'; ?>"><button><?php $maintenance?_e('Disable maintenance mode'):_e('Enable maintenance mode'); ?></button></a>
+                        <a href="<?php echo osc_admin_base_url(true); ?>?page=tools&action=maintenance&mode=<?php echo $maintenance?'off':'on'; ?>"><button><?php $maintenance ? _e('Disable maintenance mode') : _e('Enable maintenance mode'); ?></button></a>
                     </div>
                 </div>
             </div> <!-- end of right column -->

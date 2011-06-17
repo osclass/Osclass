@@ -16,10 +16,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
     $comments = __get('comments');
     if(!is_array($comments)) { $comments = array(); };
-    $last = end($comments);//__get('comments')) ;
+    $last = end($comments);
     $last_id = $last['pk_i_id'] ;
 ?>
 

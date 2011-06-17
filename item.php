@@ -47,12 +47,12 @@
             switch( $this->action ){
                 case 'item_add': // post
                     if( !osc_users_enabled () ){
-                        osc_add_flash_message( _m('Users not enabled') ) ;
+                        osc_add_flash_error_message( _m('Users not enabled') ) ;
                         $this->redirectTo(osc_base_url(true));
                     }
                     if( osc_reg_user_post() && $this->user==null) {
                         // CHANGEME: This text
-                        osc_add_flash_message( _m('Only registered users are allowed to post items')) ;
+                        osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                         $this->redirectTo(osc_user_login_url());
                     }
 
@@ -70,7 +70,6 @@
                         $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                     }
 
-                                        
                     $this->_exportVariableToView('countries',$countries ) ;
                     $this->_exportVariableToView('regions', $regions) ;
                     $this->_exportVariableToView('cities', $cities) ;
@@ -214,7 +213,6 @@
                         $this->doView('item-edit.php');
                     }else{
                         // add a flash message [ITEM NO EXISTE]
-                        //$this->redirectTo(osc_base_url(true));
                         osc_add_flash_error_message( _m('Sorry, we don\'t have any items with that ID')) ;
                         if($this->user!=null) {
                             $this->redirectTo(osc_user_list_items_url());
@@ -353,31 +351,26 @@
                     }
                 break;
                 case 'contact':
-                    if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
 
-                        $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
-                        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']) ;
-                        if($category['i_expiration_days'] > 0) {
-                            $item_date = strtotime($item['dt_pub_date'])+($category['i_expiration_days']*(24*3600)) ;
-                            $date = time() ;
-                            if($item_date < $date && $item['b_premium']!=1) {
-                                // The item is expired, we can not contact the seller
-                                osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
-                                $this->redirectTo(osc_create_item_url($item));
-                            }
-                        }
-
-                        $this->_exportVariableToView('item', $item) ;
-
-                        $this->doView('item-contact.php');
+                    $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
+                    if( empty($item) ){
+                        osc_add_flash_error_message( _m('This item doesn\'t exist') );
+                        $this->redirectTo( osc_base_url(true) );
                     } else {
-                        $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                         $this->_exportVariableToView('item', $item) ;
                         
-                        osc_add_flash_error_message( _m('You can\'t contact the seller, only registered users can')) ;
-                        $this->redirectTo( osc_item_url() );
+                        if( osc_item_is_expired () ) {
+                            osc_add_flash_error_message( _m('We\'re sorry, but the item has expired. You can\'t contact the seller')) ;
+                            $this->redirectTo( osc_item_url() );
+                        }
+
+                        if( osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ){
+                            $this->doView('item-contact.php');
+                        } else {
+                            osc_add_flash_error_message( _m('You can\'t contact the seller, only registered users can')) ;
+                            $this->redirectTo( osc_item_url() );
+                        }
                     }
-                    
                 break;
                 case 'contact_post':
 

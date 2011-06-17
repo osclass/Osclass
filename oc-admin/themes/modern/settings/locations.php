@@ -38,7 +38,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Locations'); ?></div>
                     <div style="clear: both;"></div>
@@ -51,7 +51,7 @@
                     <div style="float:left; width: 33%; ">
                         <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
                             <div style="float:left;">
-                                <h3 style="">
+                                <h3>
                                     <?php _e('Countries'); ?>
                                 </h3>
                             </div>

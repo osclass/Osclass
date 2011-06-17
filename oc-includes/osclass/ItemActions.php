@@ -49,7 +49,7 @@
             $purifier = new HTMLPurifier($config);
 
             // Requires email validation?
-            $has_to_validate = (osc_moderate_items()!=-1)? true : false ;
+            $has_to_validate = (osc_moderate_items() != -1) ? true : false ;
 
             // Check status
             $active = $aItem['active'];
@@ -72,33 +72,33 @@
 
             // Validate
             if ( !$this->checkAllowedExt($aItem['photos']) ) {
-                $flash_error .= _m("Image with incorrect extension.\n");
+                $flash_error .= _m("Image with incorrect extension.") . PHP_EOL;
             }
             if ( !$this->checkSize($aItem['photos']) ) {
-                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb\n";
+                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb" . PHP_EOL;
             }
             foreach(@$aItem['title'] as $key=>$value) {
                 $flash_error .=
-                    ((!osc_validate_text($value,9))? _m("Title too short.\n") : '' ) .
-                    ((!osc_validate_max($value,80))? _m("Title too long.\n") : '' );
+                    ((!osc_validate_text($value,9)) ? _m("Title too short.") . PHP_EOL : '' ) .
+                    ((!osc_validate_max($value,80)) ? _m("Title too long.") . PHP_EOL : '' );
             }
             foreach(@$aItem['description'] as $key=>$value) {
                 $flash_error .=
-                    ((!osc_validate_text($value,25))? _m("Description too short.\n") : '' ) .
-                    ((!osc_validate_max($value,5000))? _m("Description too long.\n") : '' );
+                    ((!osc_validate_text($value,25)) ? _m("Description too short.") . PHP_EOL : '' ) .
+                    ((!osc_validate_max($value,5000)) ? _m("Description too long."). PHP_EOL : '' );
             }
             $flash_error .=
-                ((!osc_validate_category($aItem['catId']))? _m("Category invalid.\n") : '' ) .
-                ((!osc_validate_number($aItem['price']))? _m("Price must be number.\n") : '' ) .
-                ((!osc_validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
-                ((!osc_validate_max($contactName,35))? _m("Name too long.\n") : '' ) .
-                ((!osc_validate_email($contactEmail))? _m("Email invalid.\n") : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
-                ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['cityArea'],50))? _m("Municipality too long.\n") : '' ) .
-                ((!osc_validate_text($aItem['address'],3,false))? _m("Address too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['address'],100))? _m("Address too long.\n") : '' ) .
-                ((((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time()) && !$this->is_admin)? _m("Too fast. You should wait a little to publish your ad.\n") : '' );
+                ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
+                ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'],9)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($contactName,35)) ? _m("Name too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
+                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityArea'],3,false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityArea'],50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['address'],3,false)) ? _m("Address too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['address'],100)) ? _m("Address too long.") . PHP_EOL : '' ) .
+                ((((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
 
 
             // Handle error
@@ -200,7 +200,7 @@
 
             // Sanitize
             foreach(@$aItem['title'] as $key=>$value) {
-                $aItem['title'][$key] = strip_tags( trim ( $value ) );//osc_sanitize_allcaps( strip_tags( trim ( $value ) ) );
+                $aItem['title'][$key] = strip_tags( trim ( $value ) );
             }
             foreach(@$aItem['description'] as $key=>$value) {
                 $aItem['description'][$key] = $purifier->purify($value);
@@ -211,30 +211,30 @@
 
             // Validate
             if ( !$this->checkAllowedExt($aItem['photos']) ) {
-                $flash_error .= _m("Image with incorrect extension.\n");
+                $flash_error .= _m("Image with incorrect extension.") . PHP_EOL;
             }
             if ( !$this->checkSize($aItem['photos']) ) {
-                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb\n";
+                $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() . " Kb" . PHP_EOL;
             }
             foreach(@$aItem['title'] as $key=>$value) {
                 $flash_error .=
-                    ((!osc_validate_text($value,9))? _m("Title too short.\n") : '' ) .
-                    ((!osc_validate_max($value,80))? _m("Title too long.\n") : '' );
+                    ((!osc_validate_text($value,9))? _m("Title too short.") . PHP_EOL : '' ) .
+                    ((!osc_validate_max($value,80))? _m("Title too long.") . PHP_EOL : '' );
             }
             foreach(@$aItem['description'] as $key=>$value) {
                 $flash_error .=
-                    ((!osc_validate_text($value,25))? _m("Description too short.\n") : '' ) .
-                    ((!osc_validate_max($value,5000))? _m("Description too long.\n") : '' );
+                    ((!osc_validate_text($value,25))? _m("Description too short.") . PHP_EOL : '' ) .
+                    ((!osc_validate_max($value,5000))? _m("Description too long.") . PHP_EOL : '' );
             }
             $flash_error .=
-                ((!osc_validate_category($aItem['catId']))? _m("Category invalid.\n") : '' ) .
-                ((!osc_validate_number($aItem['price']))? _m("Price must be number.\n") : '' ) .
-                ((!osc_validate_max($aItem['price'],9))? _m("Price too long.\n") : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.\n") : '' ) .
-                ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['cityArea'],50))? _m("Municipality too long.\n") : '' ) .
-                ((!osc_validate_text($aItem['address'],3,false))? _m("Address too short.\n") : '' ) .
-                ((!osc_validate_max($aItem['address'],100))? _m("Address too long.\n") : '' );
+                ((!osc_validate_category($aItem['catId']))? _m("Category invalid.") . PHP_EOL : '' ) .
+                ((!osc_validate_number($aItem['price']))? _m("Price must be number.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'],9))? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityArea'],50))? _m("Municipality too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['address'],3,false))? _m("Address too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['address'],100))? _m("Address too long.") . PHP_EOL : '' );
 
             
             // Handle error
@@ -287,7 +287,6 @@
             return 0;
         }
 
-
         /**
          * Activetes an item
          * @param <type> $secret
@@ -297,7 +296,6 @@
         public function activate( $id, $secret )
         {
             $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
-
             
             if($item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
                 $result = $this->manager->update(
@@ -797,7 +795,7 @@
             $aItem = array();
 
             if( $is_add ) {   // ADD
-
+                
                 $userId = null;
                 if($this->is_admin){
                     if(Params::getParam('userId') != '') {
@@ -828,8 +826,12 @@
                                 }
                             }
                         }
-                    } else if(osc_moderate_items()==0){
-                        $active = 'INACTIVE';
+                    } else if(osc_moderate_items()==0 ){
+                        if(osc_is_web_user_logged_in() && osc_logged_user_item_validation() ) {
+                            $active = 'ACTIVE';
+                        } else {
+                            $active = 'INACTIVE';
+                        }
                     } else {
                         $active = 'ACTIVE';
                     }

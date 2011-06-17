@@ -138,15 +138,11 @@
                     
                     echo $result;
                     break;
-
-                case 'categories_name': // Save the category's name in quick edit
-                    $id = explode("_", Params::getParam('div'));
-                    $name = Params::getParam('name');
-                    $locale = Params::getParam('locale');
-                    Category::newInstance()->update_name($id, $locale, $name);
-                    echo '1';
+                case 'category_edit_iframe':
+                    $this->_exportVariableToView("category", Category::newInstance()->findByPrimaryKey(Params::getParam("id")));
+                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
+                    $this->doView("categories/iframe.php");
                     break;
-                
                 case 'enable_category':
                     $id = Params::getParam("id");
                     $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
@@ -227,10 +223,7 @@
                 case 'edit_category_post':
                     $id = Params::getParam("id");
 
-                    $fields['fk_i_parent_id'] = (Params::getParam("fk_i_parent_id")!='') ? Params::getParam("fk_i_parent_id") : null;
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
-                    $fields['i_position'] = (Params::getParam("i_position") != '') ? Params::getParam("i_position") : 0;
-                    $fields['b_enabled'] = (Params::getParam("b_enabled")!='' ) ? 1 : 0;
 
                     $error = 0;
                     $postParams = Params::getParamsAsArray();
@@ -265,8 +258,7 @@
                     $result .= "}";
                     
                     echo $result;
-                    break;
-                    
+                    break; 
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
                     if($ajaxfile!='') {

@@ -158,7 +158,7 @@ switch ($step) {
                             <div class="more-stats">
                                 <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
                                 <label for="ping_engines">
-                                    Allow my site to appear in search engines like Gooogle.
+                                    Allow my site to appear in search engines like Google.
                                 </label>
                                 <br/>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>

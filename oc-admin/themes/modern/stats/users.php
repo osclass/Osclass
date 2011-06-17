@@ -31,7 +31,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Statistics'); ?></div>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<div id="content">
 			<div id="separator"></div>	
@@ -39,7 +38,7 @@
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title="" />
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Users'); ?></div>
 					<div style="clear: both;"></div>
@@ -47,34 +46,33 @@
 				<div id="content_separator"></div>
 				<?php osc_show_flash_message('admin'); ?>
 
-
                 <div>
                     <div style="padding: 20px;">
                         <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=day"><?php _e('Last 10 days'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=week"><?php _e('Last 10 weeks'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=users&type_stat=month"><?php _e('Last 10 months'); ?></a>
                         </p>
                     </div>
                 </div>
 
                 <div id="placeholder" style="float:center; width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($users)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
                 <br/>
                 <div id="by_country" style="float:left; width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($users_by_country)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
                 <br/>
                 <div id="by_region" style="float:left;width:400px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($users_by_region)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
@@ -87,8 +85,8 @@
                     <table border="0">
                         <tr>
                             <th>ID</th>
-                            <th><?php _e('E-Mail');?></th>
-                            <th><?php _e('Name');?></th>
+                            <th><?php _e('E-Mail'); ?></th>
+                            <th><?php _e('Name'); ?></th>
                         </tr>
                         <?php foreach($latest_users as $u) { ?>
                         <tr>
@@ -99,20 +97,20 @@
                         <?php }; ?>
                     </table>
                     <?php } else { ?>
-                        <p><?php _e('There\'re no statistics yet.'); ?></p>
+                        <p><?php _e('There\'re no statistics yet'); ?></p>
                     <?php }; ?>
                 </div>
                 <br/>
                 <div style="float:left;">
                     <h3><?php _e('Avg. items per user'); ?></h3>
-                    <?php echo number_format($item,2) . " " . __('items per user');?> 
+                    <?php echo number_format($item,2) . " " . __('items per user'); ?> 
                 </div>
 			</div> <!-- end of right column -->
             <br/>
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
 
-        <?php if(count($users)>0) {?>
+        <?php if(count($users)>0) { ?>
             <script type="text/javascript">
 
             // Load the Visualization API and the piechart package.
@@ -140,38 +138,34 @@
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.LineChart(document.getElementById('placeholder'));
-                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max*1.1);?>}});
-                
-                
+                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max*1.1); ?>}});
                 
                 var data_country = new google.visualization.DataTable();
-                data_country.addColumn('string', '<?php _e('Country');?>');
-                data_country.addColumn('number', '<?php _e('Users per country');?>');
-                data_country.addRows(<?php echo count($users_by_country);?>);
+                data_country.addColumn('string', '<?php _e('Country'); ?>');
+                data_country.addColumn('number', '<?php _e('Users per country'); ?>');
+                data_country.addRows(<?php echo count($users_by_country); ?>);
                 <?php foreach($users_by_country as $k => $v) {
                     echo "data_country.setValue(".$k.", 0, '".(($v['s_country']==NULL)?__('Unknown'):$v['s_country'])."');";
                     echo "data_country.setValue(".$k.", 1, ".$v['num'].");";
-                }; ?>
+                } ?>
 
                 // Create and draw the visualization.
-                new google.visualization.PieChart(document.getElementById('by_country')).draw(data_country, {title:"<?php _e('Users per country');?>"});
+                new google.visualization.PieChart(document.getElementById('by_country')).draw(data_country, {title:"<?php _e('Users per country'); ?>"});
                 
                 var data_region = new google.visualization.DataTable();
-                data_region.addColumn('string', '<?php _e('Region');?>');
-                data_region.addColumn('number', '<?php _e('Users per region');?>');
-                data_region.addRows(<?php echo count($users_by_region);?>);
+                data_region.addColumn('string', '<?php _e('Region'); ?>');
+                data_region.addColumn('number', '<?php _e('Users per region'); ?>');
+                data_region.addRows(<?php echo count($users_by_region); ?>);
                 <?php foreach($users_by_region as $k => $v) {
                     echo "data_region.setValue(".$k.", 0, '".(($v['s_region']==NULL)?__('Unknown'):$v['s_region'])."');";
                     echo "data_region.setValue(".$k.", 1, ".$v['num'].");";
                 }; ?>
 
                 // Create and draw the visualization.
-                new google.visualization.PieChart(document.getElementById('by_region')).draw(data_region, {title:"<?php _e('Users per region');?>"});
-                
-                
+                new google.visualization.PieChart(document.getElementById('by_region')).draw(data_region, {title:"<?php _e('Users per region'); ?>"});
             }
             </script>
-        <?php }; ?>
+        <?php } ?>
         
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>

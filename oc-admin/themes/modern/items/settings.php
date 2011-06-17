@@ -38,19 +38,17 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Items settings'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Items'); ?></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings form -->
@@ -67,7 +65,7 @@
                                     <label for="enabled_recaptcha_items"><?php _e('Enable reCAPTCHA'); ?></label>
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo ((osc_moderate_items()==-1) ? '' : 'checked="true"'); ?> name="moderate_items" onclick="checkbox_change();" id="moderate_items" value="1" />
-                                    <label for="enabled_item_validation"><?php _e('Enable item validation by users'); ?></label>
+                                    <label><?php _e('Enable item validation by users'); ?></label>
                                     <br />
                                     <div name="num_moderate_items_div" id="num_moderate_items_div" <?php echo ((osc_moderate_items()==-1) ? 'style="display:none"' : ''); ?>>
                                         &nbsp;<label><?php _e('Number of items from same author that should be validated before skipping validation (0 for always moderation)'); ?></label>
