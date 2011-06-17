@@ -4,8 +4,15 @@
  */
 
 
-function osc_datatable()
+function osc_datatable( json )
 {
+
+    var _iDisplayLength = 0;
+
+    // pasear json
+    _iDisplayLength = json.iDisplayLength;
+
+    alert(_iDisplayLength);
 
 
     function _fnHeader(){}

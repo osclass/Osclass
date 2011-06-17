@@ -32,16 +32,11 @@
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(function() {
-                $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
-                            var anRows = [];
-
-                            for (var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ ) {
-                                    var nRow = oSettings.aoData[ oSettings.aiDisplay[i] ].nTr;
-                                    anRows.push(nRow);
-                            }
-                            return anRows;
-                };
-                sSearchName = "<?php _e('Search'); ?>...";
+                oTable = new osc_datatable({
+                    'iDisplayLength' : '10'
+                });
+            });
+//                sSearchName = "<?php _e('Search'); ?>...";
 //                oTable = $('#datatables_list').dataTable({
 //                            "bProcessing": true
 //                            ,"bServerSide": true
