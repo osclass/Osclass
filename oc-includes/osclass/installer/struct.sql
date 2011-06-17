@@ -379,3 +379,30 @@ CREATE TABLE /*TABLE_PREFIX*/t_latest_searches (
   s_search VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
+CREATE TABLE /*TABLE_PREFIX*/t_meta_fields (
+    pk_i_id INT UNSIGNED NOT NULL,
+    s_name VARCHAR(255) NOT NULL,
+    ENUM(  'TEXT',  'TEXTAREA' ) NOT NULL DEFAULT  'TEXT',
+
+        PRIMARY KEY (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_meta_categories (
+    fk_i_category_id INT UNSIGNED NOT NULL,
+    fk_i_field_id INT UNSIGNED NOT NULL,
+
+        PRIMARY KEY (fk_i_category_id, fk_i_field_id),
+        FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
+        FOREIGN KEY (fk_i_field_id) REFERENCES /*TABLE_PREFIX*/t_meta_fields (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_item_meta (
+    fk_i_item_id INT UNSIGNED NOT NULL,
+    fk_i_field_id INT UNSIGNED NOT NULL,
+    s_value TEXT NULL,
+
+        PRIMARY KEY (fk_i_item_id, fk_i_field_id),
+        FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id),
+        FOREIGN KEY (fk_i_field_id) REFERENCES /*TABLE_PREFIX*/t_meta_fields (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
