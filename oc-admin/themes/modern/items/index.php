@@ -32,9 +32,50 @@
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(function() {
-                oTable = new osc_datatable({
-                    'iDisplayLength' : '10'
+                oTable = new osc_datatable();
+                oTable.fnInit({
+                    'idTable'       : 'datatables_list',
+                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>",
+                    'iDisplayLength': '10',
+                    'iColumns'      : '6',
+
+                    "aoColumns": [
+                        {
+                            "sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
+                            ,"bSortable": false
+                            ,"sClass": "center"
+                            ,"sWidth": "10px"
+                            ,"bSearchable": false
+                        }
+                        ,{
+                            "sTitle": "<?php _e('Title') ; ?>"
+                            ,"sWidth": "20%"
+                            ,"bSortable": false
+                        }
+                        ,{
+                            "sTitle": "<?php _e('User') ; ?>"
+                            ,"bSortable": false
+                            ,"sWidth": "25%"
+                        }
+                        ,{
+                            "sTitle": "<?php _e('Category') ; ?>"
+                            ,"bSortable": false
+                        }
+                        ,{
+                            "sTitle": "<?php _e('Location') ; ?>"
+                            ,"sWidth": "20%"
+                            ,"bSortable": false
+                        }
+                        ,{
+                            "sTitle": "<?php _e('Date') ; ?>"
+                             ,"sWidth": "100px"
+                             ,"bSearchable": false
+                        }
+                    ]
                 });
+                // display table.
+//                oTable._fnInit();
+
             });
 //                sSearchName = "<?php _e('Search'); ?>...";
 //                oTable = $('#datatables_list').dataTable({
