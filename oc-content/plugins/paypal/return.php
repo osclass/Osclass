@@ -96,8 +96,13 @@ $response = PPHttpPost($ENDPOINT, $req_str);
 
         osc_add_flash_ok_message(__("Payment processed correctly","paypal"));
     } else if($doresponse['ACK'] == "Failure" || $doresponse['ACK'] == "FailureWithWarning") {
+        $rpl = explode("|", Params::getParam("rpl"));
+        $item = Item::newInstance()->findByPrimaryKey($rpl[1]);
+        $category = Category::newInstance()->findByPrimaryKey($item['fk_i_item_id']);
+        View::newInstance()->_exportVariableToView('category', $category);
+        $html = '<p>'.__("There was a problem processing your payment. Please contact the administrators and","paypal").' <a href="'.osc_search_category_url().'">'.__("Click here to continue", "paypal").'</a></p>';
+
         osc_add_flash_error_message(__("There was a problem processing your payment. Please contact the administrators","paypal"));
-        $html = '<p><a href="CasaLomaOrch-PutOnYourOldGreyBonnet.mp3">'.__("Click here to continue", "paypal").'</a></p>';
     }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
