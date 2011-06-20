@@ -1,8 +1,10 @@
-<?php 
-    require_once "../../../oc-load.php";
-    require_once osc_plugins_path().osc_plugin_folder(__FILE__).'functions.php';
-    $ppl_data = explode("|", Params::getParam("rpl"));
-    $item = Item::newInstance()->findByPrimaryKey($ppl_data[1]);
+<?php
+    define('ABS_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/');
+    require_once ABS_PATH . 'oc-load.php';
+    require_once osc_plugins_path() . osc_plugin_folder(__FILE__) . 'functions.php';
+
+    $ppl_data = explode('|', Params::getParam('rpl'));
+    $item     = Item::newInstance()->findByPrimaryKey($ppl_data[1]);
     $category = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
     View::newInstance()->_exportVariableToView('category', $category);
     $url = osc_search_category_url();
@@ -16,7 +18,7 @@
     </head>
     <body>
         <script type="text/javascript">
-            top.rd.innerHTML = '<?php _e("You cancel the payment process or there was an error. If the error continue, please contact the administrator.", "paypal"); ?><br/><br/><?php _e("If you do not want to continue the process", "paypal"); ?> <a href="<?php echo $url; ?>" /><?php _e("click here", "paypal"); ?></a>';
+            top.rd.innerHTML = '<?php _e('You cancel the payment process or there was an error. If the error continue, please contact the administrator', 'paypal'); ?>.<br/><br/><?php _e('If you do not want to continue the process', 'paypal'); ?> <a href="<?php echo $url; ?>" /><?php _e('click here', 'paypal'); ?></a>';
             top.dg.closeFlow();
         </script>
     </body>
