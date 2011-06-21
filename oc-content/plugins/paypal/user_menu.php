@@ -1,9 +1,9 @@
 <?php 
-    $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):5;
-    $page = (Params::getParam('iPage')!='')?Params::getParam('iPage'):0;
-    $total_items = Item::newInstance()->countByUserIDEnabled($_SESSION['userId']);
-    $total_pages = ceil($total_items/$itemsPerPage);
-    $items = Item::newInstance()->findByUserIDEnabled($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
+    $itemsPerPage = (Params::getParam('itemsPerPage') != '') ? Params::getParam('itemsPerPage') : 5;
+    $page         = (Params::getParam('iPage') != '') ? Params::getParam('iPage') : 0;
+    $total_items  = Item::newInstance()->countByUserIDEnabled($_SESSION['userId']);
+    $total_pages  = ceil($total_items/$itemsPerPage);
+    $items        = Item::newInstance()->findByUserIDEnabled($_SESSION['userId'], $page * $itemsPerPage, $itemsPerPage);
 
     View::newInstance()->_exportVariableToView('items', $items);
     View::newInstance()->_exportVariableToView('list_total_pages', $total_pages);
@@ -55,12 +55,12 @@
                                 </div>
                         <?php } ?>
                         <br />
-                        <div class="paginate" >
+                        <div class="paginate">
                         <?php for($i = 0 ; $i < osc_list_total_pages() ; $i++) {
                             if($i == osc_list_page()) {
-                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_render_file_url(osc_plugin_folder(__FILE__)."user_menu.php")."?iPage=".$i, ($i + 1));
+                                printf('<a class="searchPaginationSelected" href="%s">%d</a>', osc_render_file_url(osc_plugin_folder(__FILE__) . 'user_menu.php') . '?iPage=' . $i, ($i + 1));
                             } else {
-                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_render_file_url(osc_plugin_folder(__FILE__)."user_menu.php")."?iPage=".$i, ($i + 1));
+                                printf('<a class="searchPaginationNonSelected" href="%s">%d</a>', osc_render_file_url(osc_plugin_folder(__FILE__) . 'user_menu.php') . '?iPage='. $i, ($i + 1));
                             }
                         } ?>
                         </div>
