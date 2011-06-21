@@ -20,10 +20,10 @@
 //}
     </script>
 <?php } else { ?>
-    <script type="text/javascript">
+    <script type="text/javascript"> 
         var map = null;
         var geocoder = null;
-
+     
 //        if (GBrowserIsCompatible()) {
             var myOptions = {
               zoom: 13,
@@ -35,7 +35,7 @@
             map = new google.maps.Map(document.getElementById("itemMap"), myOptions);
             geocoder = new google.maps.Geocoder();
 //        }
-
+     
         function showAddress(address) {
             if (geocoder) {
                 geocoder.geocode( { 'address': address}, function(results, status) {
@@ -51,7 +51,7 @@
                   });
             }
         }
-
+        
         <?php
             $addr = array();
             if($item['s_address']!='' && $item['s_address']!=null) { $addr[] = $item['s_address']; };
