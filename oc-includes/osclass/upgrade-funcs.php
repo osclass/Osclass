@@ -49,12 +49,11 @@
         }
     }
 
-    $version = osc_version() ;
     Preference::newInstance()->update(array('s_value' => time()), array( 's_section' => 'osclass', 's_name' => 'last_version_check'));
 
     $conn = getConnection();
 
-    if($version < 210) {
+    if(osc_version() < 210) {
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'save_latest_searches', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'purge_latest_searches', '1000', 'STRING')", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'selectable_parent_categories', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
@@ -108,7 +107,11 @@
         
         osc_changeVersionTo(210) ;
     }
-    
+
+    if(osc_version() < 211) {
+        osc_changeVersionTo(211) ;
+    }
+
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
         $message = 'OSClass has been updated successfully. <a href="http://forums.osclass.org/">Need more help?</a>';
