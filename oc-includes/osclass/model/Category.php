@@ -170,20 +170,27 @@
                     $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
                 }
             }
+
+            if(count($this->relation) == 0) {
+                return null;
+            }
+
             $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
             return $this->tree;
         }
 
         private function sideTree($branch, $categories, $relation) {
             $tree = array();
-            foreach($branch as $b) {
-                $aux = $categories[$b];
-                if(isset($relation[$b]) && is_array($relation[$b])) {
-                    $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
-                } else {
-                    $aux['categories'] = array();
+            if( !empty($branch) ) {
+                foreach($branch as $b) {
+                    $aux = $categories[$b];
+                    if(isset($relation[$b]) && is_array($relation[$b])) {
+                        $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
+                    } else {
+                        $aux['categories'] = array();
+                    }
+                    $tree[] = $aux;
                 }
-                $tree[] = $aux;
             }
             return $tree;
         }
