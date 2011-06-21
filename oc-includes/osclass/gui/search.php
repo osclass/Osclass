@@ -89,6 +89,7 @@
                             </fieldset>
 
                             <fieldset class="box show_only">
+                                <?php if( osc_images_enabled_at_items() ) { ?>
                                 <h3><strong><?php _e('Show only', 'modern') ; ?></strong></h3>
                                 <div class="row checkboxes">
                                     <ul>
@@ -98,7 +99,8 @@
                                         </li>
                                     </ul>
                                 </div>
-
+                                <?php } ?>
+                                <?php if( osc_price_enabled_at_items() ) { ?>
                                 <div class="row two_input">
                                     <h6><?php _e('Price', 'modern') ; ?></h6>
                                     <div><?php _e('Min', 'modern') ; ?>.</div>
@@ -106,7 +108,7 @@
                                     <div><?php _e('Max', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
-
+                                <?php } ?>
                                 <?php  osc_get_non_empty_categories(); ?>
                                 <?php  if ( osc_count_categories() ) { ?>
                                     <div class="row checkboxes">

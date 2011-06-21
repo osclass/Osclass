@@ -508,7 +508,6 @@
              }
         });
 
-
         if( $("#regionId").attr('value') == "")  {
             $("#cityId").attr('disabled',true);
         }
@@ -528,7 +527,7 @@
             "minstriptags",
             function(value, element) {
                 altered_input = strip_tags(value);
-                if (altered_input.length < 10) {
+                if (altered_input.length < 3) {
                     return false;
                 } else {
                     return true;
@@ -536,46 +535,6 @@
             },
             "<?php _e("Description: needs to be longer"); ?>."
         );
-
-        // Validate fields in each locale.
-        $("form[name=item] button").click(function() {
-            lang_count = $(".title input").length;
-            // Title
-            $(".title input").each(function(){
-                lang_name   = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
-                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
-
-                str = ((lang_count > 1) ? lang_name + ' ' : '');
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 9,
-                    maxlength: 80,
-                    messages: {
-                        required: str + "<?php _e("Title: this field is required"); ?>.",
-                        minlength: str + "<?php _e("Title: enter at least 9 characters"); ?>.",
-                        maxlength: str + "<?php _e("Title: no more than 80 characters"); ?>."
-                    }
-                });
-            });
-             //Description
-            $(".description textarea").each(function(){
-                lang_name   = $(this).parent().prev().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
-                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
-
-                str = ((lang_count > 1) ? lang_name + ' ' : '');
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 25,
-                    maxlength: 5000,
-                    'minstriptags': true,
-                    messages: {
-                        required: str + "<?php _e("Description: this field is required"); ?>.",
-                        minlength: str + "<?php _e("Description: needs to be longer"); ?>.",
-                        maxlength: str + "<?php _e("Description: no more than 5000 characters"); ?>."
-                    }
-                });
-            });
-        });
 
         // Code for form validation
         $("form[name=item]").validate({
