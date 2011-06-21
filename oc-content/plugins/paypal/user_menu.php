@@ -33,16 +33,22 @@
                                         <?php _e('Price', 'paypal') ; ?>: <?php echo osc_format_price(osc_item_price()); ?>
                                         </p>
                                         <p class="options">
-                                            <?php if(paypal_is_paid(osc_item_id())) { ?>
-                                                <strong><?php _e('Paid!', 'paypal'); ?></strong>
-                                            <?php } else { ?>
-                                                <strong><a href="<?php echo osc_render_file_url(osc_plugin_folder(__FILE__)."payperpublish.php&itemId=".osc_item_id()); ?>"><?php _e('Pay for this item', 'paypal'); ?></a></strong>
+                                            <?php if(osc_get_preference("pay_per_post", "paypal")=="1") { ?>
+                                                <?php if(paypal_is_paid(osc_item_id())) { ?>
+                                                    <strong><?php _e('Paid!', 'paypal'); ?></strong>
+                                                <?php } else { ?>
+                                                    <strong><a href="<?php echo osc_render_file_url(osc_plugin_folder(__FILE__)."payperpublish.php&itemId=".osc_item_id()); ?>"><?php _e('Pay for this item', 'paypal'); ?></a></strong>
+                                                <?php }; ?>
                                             <?php }; ?>
-                                            <span>|</span>
-                                            <?php if(paypal_is_premium(osc_item_id())) { ?>
-                                                <strong><?php _e('Already premium!', 'paypal'); ?></strong>
-                                            <?php } else { ?>
-                                                <strong><a href="<?php echo osc_render_file_url(osc_plugin_folder(__FILE__)."makepremium.php&itemId=".osc_item_id()); ?>"><?php _e('Make premium', 'paypal'); ?></a></strong>
+                                            <?php if(osc_get_preference("pay_per_post", "paypal")=="1" && osc_get_preference("allow_premium", "paypal")=="1") { ?>
+                                                <span>|</span>
+                                            <?php }; ?>
+                                            <?php if(osc_get_preference("allow_premium", "paypal")=="1") { ?>
+                                                <?php if(paypal_is_premium(osc_item_id())) { ?>
+                                                    <strong><?php _e('Already premium!', 'paypal'); ?></strong>
+                                                <?php } else { ?>
+                                                    <strong><a href="<?php echo osc_render_file_url(osc_plugin_folder(__FILE__)."makepremium.php&itemId=".osc_item_id()); ?>"><?php _e('Make premium', 'paypal'); ?></a></strong>
+                                                <?php }; ?>
                                             <?php }; ?>
                                         </p>
                                         <br />

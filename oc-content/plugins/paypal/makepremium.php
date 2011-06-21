@@ -66,7 +66,7 @@
         ?>
         <h1><?php _e("There was an error", "paypal");?></h1>
         <br/>
-        <div><p><?php _e("The item is already a premium ad", "paypal");?></p></div>
+        <div><p><?php _e("Premiums ads are not allowed", "paypal");?></p></div>
         <?php
     }
 

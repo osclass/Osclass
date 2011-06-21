@@ -368,6 +368,28 @@ function paypal_before_edit($item) {
 }
 
 /**
+ * Executed before showing an item
+ * 
+ * @param array $item 
+ */
+function paypal_show_item($item) {
+    if(osc_get_preference("pay_per_post", "paypal")=="1" && !paypal_is_paid($item['pk_i_id']) ) {
+        $conn = getConnection();
+        $ppl_category = $conn->osc_dbFetchResult("SELECT f_publish_cost FROM %st_paypal_prices WHERE fk_i_category_id = %d", DB_TABLE_PREFIX, $item['fk_i_category_id']);
+        if($ppl_category && isset($ppl_category['f_publish_cost'])) {
+            $category_fee = $ppl_category["f_publish_cost"];
+        } else {
+            $category_fee = osc_get_preference("default_publish_cost", "paypal");
+        }
+        if($category_fee>0) {
+            osc_add_flash_error_message( __('You need to pay the publish fee in order to make the ad public to the rest of users', 'paypal') );
+            paypal_redirect_to(osc_render_file_url(osc_plugin_folder(__FILE__)."payperpublish.php&itemId=".$item['pk_i_id']));
+        }
+    }
+};
+
+
+/**
  * ADD HOOKS
  */
 osc_register_plugin(osc_plugin_path(__FILE__), 'paypal_install');
@@ -382,4 +404,5 @@ osc_add_hook('supertoolbar_hook', 'paypal_supertoolbar');
 osc_add_hook('cron_hourly', 'paypal_cron');
 osc_add_hook('item_premium_off', 'paypal_premium_off');
 osc_add_hook('before_item_edit', 'paypal_before_edit');
+osc_add_hook('show_item', 'paypal_show_item');
 ?>
