@@ -27,7 +27,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Statistics'); ?></div>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<div id="content">
 			<div id="separator"></div>	
@@ -35,7 +34,7 @@
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title="" />
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Reports'); ?></div>
 					<div style="clear: both;"></div>
@@ -46,9 +45,9 @@
                 <div>
                     <div style="padding: 20px;">
                         <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=day"><?php _e('Last 10 days'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=week"><?php _e('Last 10 weeks'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=reports&type_stat=month"><?php _e('Last 10 months'); ?></a>
                         </p>
                     </div>
                 </div>
@@ -56,7 +55,7 @@
                 <h3><?php _e('Total number of reports'); ?></h3>
                 <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($reports)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
@@ -68,7 +67,7 @@
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
 
-        <?php if(count($reports)>0) {?>
+        <?php if(count($reports)>0) { ?>
             <script type="text/javascript">
 
             // Load the Visualization API and the piechart package.
@@ -104,10 +103,10 @@
 
                 // Instantiate and draw our chart, passing in some options.
                 var chart = new google.visualization.ColumnChart(document.getElementById('placeholder'));
-                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max['other']*1.1);?>}});
+                chart.draw(data, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max['other']*1.1); ?>}});
             }
             </script>
-        <?php }; ?>
+        <?php } ?>
         
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>

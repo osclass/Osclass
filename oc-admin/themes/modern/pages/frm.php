@@ -41,7 +41,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Pages'); ?></div>              
         <script type="text/javascript">
             tinyMCE.init({
                 mode : "textareas",
@@ -66,7 +65,7 @@
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/pages-icon.png" title="" alt="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/pages-icon.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e($title); ?></div>
                     <div style="clear: both;"></div>
@@ -105,4 +104,4 @@
             </div> <!-- end of container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
-</html>				
+</html>

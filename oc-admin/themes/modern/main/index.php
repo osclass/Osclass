@@ -34,8 +34,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
-
         <script type="text/javascript">
             $.extend({
                 initDashboard: function(args) {
@@ -147,7 +145,7 @@
 							<?php $totalWithItems = 0 ; ?>
                             <?php foreach($categories as $c) { ?>
                                 <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
-                                    <a href="<?php osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
+                                    <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
                                     <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
                                     <br />
                                     <?php $totalWithItems++ ; ?>
@@ -168,7 +166,6 @@
 								<?php _e('Number of administrators') ; ?>: <?php echo $numAdmins; ?><br />
 							</div>							
 						</div>
-
 					</div>
 
 					<!-- right side -->

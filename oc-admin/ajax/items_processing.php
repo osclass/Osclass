@@ -60,27 +60,27 @@
             switch($this->stat) {
                 case "spam":
                     $mSearch->addConditions("s.`i_num_spam` > 0");
-                    $mSearch->addConditions(sprintf(" AND %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                     $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
                     break;
                 case "duplicated":
                     $mSearch->addConditions("s.`i_num_duplicated` > 0");
-                    $mSearch->addConditions(sprintf(" AND %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                     $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
                     break;
                 case "bad":
                     $mSearch->addConditions("s.`i_num_bad_classified` > 0");
-                    $mSearch->addConditions(sprintf(" AND %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                     $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
                     break;
                 case "offensive":
                     $mSearch->addConditions("s.`i_num_offensive` > 0");
-                    $mSearch->addConditions(sprintf(" AND %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                     $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
                     break;
                 case "expired":
                     $mSearch->addConditions("s.`i_num_expired` > 0");
-                    $mSearch->addConditions(sprintf(" AND %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                     $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
                     break;
                 case "pending":

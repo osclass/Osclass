@@ -30,7 +30,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Statistics'); ?></div>
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<div id="content">
 			<div id="separator"></div>	
@@ -38,7 +37,7 @@
 		    <div id="right_column">
 			    <div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title="" />
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title="" />
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Item'); ?></div>
 					<div style="clear: both;"></div>
@@ -46,13 +45,12 @@
 				<div id="content_separator"></div>
 				<?php osc_show_flash_message('admin'); ?>
 
-
                 <div>
                     <div style="padding: 20px;">
                         <p>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items&type_stat=day"><?php _e('Last 10 days', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items&type_stat=week"><?php _e('Last 10 weeks', 'admin'); ?></a>
-                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items&type_stat=month"><?php _e('Last 10 months', 'admin'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items&type_stat=day"><?php _e('Last 10 days'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items&type_stat=week"><?php _e('Last 10 weeks'); ?></a>
+                            <a href="<?php echo osc_admin_base_url(true); ?>?page=stats&action=items&type_stat=month"><?php _e('Last 10 months'); ?></a>
                         </p>
                     </div>
                 </div>
@@ -60,7 +58,7 @@
                 <h3><?php _e('New items'); ?></h3>
                 <div id="placeholder" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($items)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
@@ -68,7 +66,7 @@
                 <h3><?php _e('Total number of items\' views'); ?></h3>
                 <div id="placeholder_total" style="width:600px;height:300px;margin:0 auto;padding-bottom: 45px;">
                     <?php if(count($reports)==0) {
-                        _e('There\'re no statistics yet.');
+                        _e('There\'re no statistics yet');
                     }
                     ?>
                 </div>
@@ -99,7 +97,7 @@
                         <?php }; ?>
                     </table>
                     <?php } else { ?>
-                        <p><?php _e('There\'re no statistics yet.'); ?></p>
+                        <p><?php _e('There\'re no statistics yet'); ?></p>
                     <?php }; ?>
                 </div>
                 <br/>
@@ -108,7 +106,7 @@
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
 
-        <?php if(count($items)>0) {?>
+        <?php if(count($items)>0) { ?>
             <script type="text/javascript">
 
             // Load the Visualization API and the piechart package.
@@ -152,7 +150,7 @@
                 chart2.draw(data2, {width: 600, height: 300, vAxis: {maxValue: <?php echo ceil($max_views*1.1);?>}});
             }
             </script>
-        <?php }; ?>
+        <?php } ?>
         
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>

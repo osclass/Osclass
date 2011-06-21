@@ -25,25 +25,24 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Plugins'); ?></div>              
-	        <div id="content">
-		        <div id="separator"></div>	
-		        <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-                        <div id="right_column">
-			        <div id="content_header" class="content_header">
-                                    <div style="float: left;">
-                                        <img src="<?php echo osc_current_admin_theme_url('images/plugins-icon.png') ; ?>" title="" alt="" />
-                                    </div>
-                                    <div id="content_header_arrow">&raquo; <?php _e('Theme'); ?></div>
-                                    <div style="clear: both;"></div>
-			        </div>
-			        
-			        <div id="content_separator"></div>
-			        <div id="TableToolsToolbar"></div>
-			        <div>
-                                    <?php require __get("file") ; ?>
-                                </div>
-		        </div> <!-- end of right column -->
+        <div id="content">
+            <div id="separator"></div>	
+            <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
+            <div id="right_column">
+                <div id="content_header" class="content_header">
+                    <div style="float: left;">
+                        <img src="<?php echo osc_current_admin_theme_url('images/plugins-icon.png'); ?>" title="" alt="" />
+                    </div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Theme'); ?></div>
+                    <div style="clear: both;"></div>
+                </div>
+
+                <div id="content_separator"></div>
+                <div id="TableToolsToolbar"></div>
+                <div>
+                <?php require __get("file") ; ?>
+                </div>
+            </div> <!-- end of right column -->
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>

@@ -109,22 +109,22 @@
 
                                         switch ( osc_dbdump($path, $filename) ) {
                                             case(-1):   $msg = _m('Path is empty') ;
-                                                    osc_add_flash_error_message( $msg, 'admin') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-2):   $msg = sprintf(_m('Could not connect with the database. Error: %s'), mysql_error()) ;
-                                                    osc_add_flash_error_message( $msg, 'admin') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-3):   $msg = sprintf(_m('Could not select the database. Error: %s'), mysql_error()) ;
-                                                    osc_add_flash_error_message( $msg, 'admin') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-4):   $msg = _m('There are no tables to back up') ;
-                                                    osc_add_flash_error_message( $msg, 'admin') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             case(-5):   $msg = _m('The folder is not writable') ;
-                                                    osc_add_flash_error_message( $msg, 'admin') ;
+                                                        osc_add_flash_error_message( $msg, 'admin') ;
                                             break;
                                             default:    $msg = _m('Backup has been done properly') ;
-                                                    osc_add_flash_ok_message( $msg, 'admin') ;
+                                                        osc_add_flash_ok_message( $msg, 'admin') ;
                                             break;
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
@@ -159,18 +159,18 @@
                                             $maintenance_file = ABS_PATH . '.maintenance';
                                             $fileHandler = @fopen($maintenance_file, 'w');
                                             if($fileHandler) {
-                                                osc_add_flash_ok_message( "Maintenance mode is ON", 'admin') ;
+                                                osc_add_flash_ok_message( _m('Maintenance mode is ON'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( "There were an error creating .maintenance file, please create it manually at the root folder", 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin') ;
                                             }
                                             fclose($fileHandler);
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         } else if($mode=='off') {
                                             $deleted = @unlink(ABS_PATH . '.maintenance');
                                             if($deleted) {
-                                                osc_add_flash_ok_message( "Maintenance mode is OFF", 'admin') ;
+                                                osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( "There were an error removing .maintenance file, please remove it manually from the root folder", 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }

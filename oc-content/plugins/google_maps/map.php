@@ -1,48 +1,57 @@
-<div style="width: 100%; float:left; margin:20px 0 10px 60px"> 
-    <div id="itemMap"></div>
+<div style="width: 100%; float:left; margin:20px 0 10px 60px">
+    <div id="itemMap" style="width: 100%; height: 240px; width: 480px;"></div>
 </div>
 <?php if($item['d_coord_lat'] != '' && $item['d_coord_long'] != '') {?>
     <script type="text/javascript">
-        if(GBrowserIsCompatible()) {
-            var map   = new GMap2(document.getElementById("itemMap"), { size: new GSize(480,240) });
-            var point = new GLatLng(<?php echo $item['d_coord_lat']; ?>, <?php echo $item['d_coord_long']; ?>);
-            map.setCenter(point, 13);
-            var marker = new GMarker(point);
-            map.addOverlay(marker);
-            marker.show();
+//        if(GBrowserIsCompatible()) {
+        var latlng = new google.maps.LatLng(<?php echo $item['d_coord_lat']; ?>, <?php echo $item['d_coord_long']; ?>);
+        var myOptions = {
+          zoom: 13,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          size: new google.maps.Size(480,240)
         }
+
+        map = new google.maps.Map(document.getElementById("itemMap"), myOptions);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: latlng
+      });
+//}
     </script>
 <?php } else { ?>
-    <script type="text/javascript"> 
+    <script type="text/javascript">
         var map = null;
         var geocoder = null;
-     
-        if (GBrowserIsCompatible()) {
-            map = new GMap2(document.getElementById("itemMap"), { size: new GSize(480,240) });
-            map.setCenter(new GLatLng(37.4419, -122.1419), 13);
-            geocoder = new GClientGeocoder();
-        }
-     
+
+//        if (GBrowserIsCompatible()) {
+            var myOptions = {
+              zoom: 13,
+              center: new google.maps.LatLng(37.4419, -122.1419),
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              size: new google.maps.Size(480,240)
+            }
+
+            map = new google.maps.Map(document.getElementById("itemMap"), myOptions);
+            geocoder = new google.maps.Geocoder();
+//        }
+
         function showAddress(address) {
             if (geocoder) {
-                geocoder.getLatLng(
-                    address,
-                    function(point) {
-                        if (!point) {
-                            //alert(address + " not found");
-                        } else {
-                            map.setCenter(point, 13);
-                            var marker = new GMarker(point);
-                            map.addOverlay(marker);
-                            // As this is user-generated content, we display it as
-                            // text rather than HTML to reduce XSS vulnerabilities.
-                            marker.openInfoWindow(document.createTextNode(address));
-                        }
+                geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                      map.setCenter(results[0].geometry.location);
+                      var marker = new google.maps.Marker({
+                          map: map,
+                          position: results[0].geometry.location
+                      });
+                    } else {
+                      alert("Geocode was not successful for the following reason: " + status);
                     }
-                );
+                  });
             }
         }
-        
+
         <?php
             $addr = array();
             if($item['s_address']!='' && $item['s_address']!=null) { $addr[] = $item['s_address']; };

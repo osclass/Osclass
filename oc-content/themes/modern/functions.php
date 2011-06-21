@@ -198,8 +198,6 @@
                     osc_reset_items();
                     $text = $result;
                 break;
-            
-                
             }
             
             $text = str_replace('"', "'", $text);

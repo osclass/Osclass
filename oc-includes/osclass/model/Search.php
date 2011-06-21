@@ -347,7 +347,6 @@
             return $this->sql;
         }
 
-
         public function count() {
             $this->conn->osc_dbFetchResults($this->makeSQL(false));
             $sql = "SELECT FOUND_ROWS() as totalItems";

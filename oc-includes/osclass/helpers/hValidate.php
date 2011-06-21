@@ -258,28 +258,23 @@
 
                 if ($localLen < 1 || $localLen > 64) {
                     return false;
-			    } else if ($domainLen < 1 || $domainLen > 255) {
+                } else if ($domainLen < 1 || $domainLen > 255) {
                     return false;
-			    } else if ($local[0] == '.' || $local[$localLen-1] == '.') {
+                } else if ($local[0] == '.' || $local[$localLen-1] == '.') {
                     return false;
-			    } else if (preg_match('/\\.\\./', $local)) {
+                } else if (preg_match('/\\.\\./', $local)) {
                     return false;
-			    } else if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $domain)) {
+                } else if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $domain)) {
                     return false;
-			    } else if (preg_match('/\\.\\./', $domain)) {
+                } else if (preg_match('/\\.\\./', $domain)) {
                     return false;
-			    } else if (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&amp;`_=\\/$\'*+?^{}|~.-])+$/',
-                            str_replace("\\\\","",$local))) {
+                } else if (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&amp;`_=\\/$\'*+?^{}|~.-])+$/', str_replace("\\\\","",$local))) {
                     if (!preg_match('/^"(\\\\"|[^"])+"$/', str_replace("\\\\","",$local))) {
                         return false;
                     }
-                } 
-
-                if (!(checkdnsrr($domain,"MX") || checkdnsrr($domain,"A"))) {
-                    return false;
                 }
+                return true;
             }
-            return true;
         }
         return true;
     }
