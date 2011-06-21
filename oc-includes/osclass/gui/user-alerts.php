@@ -49,7 +49,7 @@
                                         <div><a href="<?php echo osc_item_url(); ?>"><?php echo osc_item_title() ; ?></a></div>
                                         <div class="userItemData" >
                                         <?php _e('Publication date', 'modern') ; ?>: <?php echo osc_format_date(osc_item_pub_date()) ; ?><br />
-                                        <?php _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()) ; ?>
+                                        <?php if( osc_price_enabled_at_items() ) { _e('Price', 'modern') ; ?>: <?php echo osc_format_price(osc_item_price()) ; } ?>
                                         </div>
                                     </div>
                                     <br />
