@@ -404,7 +404,7 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 #datatables_list_info,
 #datatables_list {
 	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size: 14px; 
+	font-size: 12px;
 }
 
 #datatables_list {
@@ -419,8 +419,7 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 
 #datatable_wrapper {
     	display: none;
-        padding-top: 10px;
-        height: 25px;
+        height: 15px;
 }
 
 #datatables_quick_edit a {

@@ -31,7 +31,25 @@
         private $order_by = array();
         private $stat;
 
-        private $column_names = array(0=>'dt_pub_date', 1=>'s_title', 2=>'s_description', 3=>'s_category_name', 4=>'dt_pub_date');
+        private $column_names   = 
+            array(  0=> 'dt_pub_date',
+                    1=> 's_title',
+                    2=> 's_name',
+                    3=> 's_category_name',
+                    4=> 's_country',
+                    5=> 's_region',
+                    6=> 's_city',
+                    7=> 'dt_pub_date');
+
+        private $tables_columns = 
+            array(  0=> NULL,
+                    1=> NULL,
+                    2=> '%st_user',
+                    3=> NULL,
+                    4=> NULL,//'%st_item_location',
+                    5=> NULL,//'%st_item_location',
+                    6=> NULL,
+                    7=> NULL);
 
         /* For Datatables */
         private $sOutput = null;
@@ -49,7 +67,13 @@
 
             $mSearch = new Search(true);
             $mSearch->limit($this->start, $this->limit);
-            $mSearch->order($this->order_by['column_name'], $this->order_by['type']);
+
+            if($this->order_by['table_name']!=NULL){
+                    $this->order_by['table_name'] = sprintf($this->order_by['table_name'], DB_TABLE_PREFIX);
+            }
+
+            $mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] );
+
             if(Params::getParam("catId")!="") {
                 $mSearch->addCategory(Params::getParam("catId"));
             }
@@ -98,10 +122,10 @@
                     break;
             }
             
-            
-            
-            
             $list_items = $mSearch->doSearch(true);
+
+
+
             $this->result = Item::newInstance()->extendCategoryName(Item::newInstance()->extendData($list_items));
             $this->filtered_total = $mSearch->count();
             $this->total = $this->total_items();
@@ -121,7 +145,10 @@
                 if($k == 'sEcho') $this->sEcho = intval($v);
 
                 /* for sorting */
-                if($k == 'iSortCol_0') $this->order_by['column_name'] = $this->column_names[$v];
+                if($k == 'iSortCol_0') {
+                    $this->order_by['column_name'] = $this->column_names[$v];
+                    $this->order_by['table_name'] = $this->tables_columns[$v];
+                }
                 if($k == 'sSortDir_0') $this->order_by['type'] = $v;
                 if($k == 'sSearch') $this->search = $v;
                 if($k == 'stat') $this->stat = $v;
@@ -138,11 +165,21 @@
 
             if(count($this->result)>0) {
                 $count = 0;
+//                echo "<pre>";print_r($this->result[1]);echo "</pre>";
                 foreach ($this->result as $aRow)
                 {
+                    // make address (Location)
+                    $addr = array();
+                    if($aRow['s_address']!='' && $aRow['s_address']!=null) { $addr[] = $aRow['s_address']; };
+                    if($aRow['s_city']!='' && $aRow['s_city']!=null) { $addr[] = $aRow['s_city']; };
+                    if($aRow['s_zip']!='' && $aRow['s_zip']!=null) { $addr[] = $aRow['s_zip']; };
+                    if($aRow['s_region']!='' && $aRow['s_region']!=null) { $addr[] = $aRow['s_region']; };
+                    if($aRow['s_country']!='' && $aRow['s_country']!=null) { $addr[] = $aRow['s_country']; };
+                    $address = implode(", ", $addr);
                     
                     $this->sOutput .= "[";
-                    $this->sOutput .= '"<input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' />",';
+                    $this->sOutput .= '"<div style=\'margin-left: 8px;\'><input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' /></div>",';
+                    
                     $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['s_title'])).' <br/>';
                     $this->sOutput .= '<div id=\'datatable_wrapper\'><div id=\'datatables_quick_edit\' ';
                     if($count % 2) {
@@ -150,7 +187,7 @@
                     }else{
                         $this->sOutput .= ' class=\'odd\' ';
                     }
-                    $this->sOutput .= ' style=\'position:absolute;padding:4px;\'>';
+                    $this->sOutput .= ' style=\'position:absolute;\'>';
                     $this->sOutput .= '<a href=\''.osc_admin_base_url(true).'?page=comments&action=list&amp;id='.$aRow['pk_i_id'].'\'>'.  __('View comments') .'</a>';
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=media&action=list&amp;id='. $aRow['pk_i_id'] .'\'>'. __('View media') .'</a>';
                     if(isset($aRow['b_active']) && ($aRow['b_active'] == 1)) {
@@ -184,11 +221,14 @@
                         $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['num_total'])).'",';
                     } else {
                         $description = mb_substr($aRow['s_description'], 0, 200, 'utf-8');
-                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ', $description)).'",';
+//                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ', $description)).'",';
                     }
                     /* END OF - if $_GET['stat'] */
-
+                    $this->sOutput .= '"'.$aRow['s_user_name'].'",';
                     $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
+                    $this->sOutput .= '"'.$aRow['s_country'].'",';
+                    $this->sOutput .= '"'.$aRow['s_region'].'",';
+                    $this->sOutput .= '"'.$aRow['s_city'].'",';
                     $this->sOutput .= '"'.addslashes($aRow['dt_pub_date']).'"';
 
                     if(end($this->result) == $aRow) {

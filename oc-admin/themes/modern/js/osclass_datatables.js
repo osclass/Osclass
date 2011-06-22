@@ -15,25 +15,55 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
 var osc_datatable = function() {
+
+    // private attr
     this._idTable        = 'default' ;
-    this._iDisplayLength = 0 ;
+    this._sAjaxSource    = '' ;
+    this._iDisplayLength = 5 ;
     this._iColumns       = 0 ;
     this._aoColumns      = new Array() ;
-    this._sAjaxSource    = '' ;
     this._aoData         = new Array() ;
-    this.loaded          = false;
     this._iTotalRecords         = -1;
     this._iTotalDisplayRecords  = -1;
+    this._iDisplayStart         = 0;
+    this._iSortableCol          = 0;
+    this._sSortDir              = 'desc';
+   
     
-    // funciones
-    this.fnInit    = fnInit;
-    this._fnHeader  = _fnHeader;
-    this._fnBody    = _fnBody;
-    this.fnDisplayTable  = fnDisplayTable;
+    // array of class
+    this.oClasses = new Array();
+    this.oClasses.sPageButton   = "paginate_button";
+    this.oClasses.sPageFirst    = "first";
+    this.oClasses.sPagePrevious = "previous";
+    this.oClasses.sPageNext     = "next";
+    this.oClasses.sPageLast     = "last";
+
+    // public methods
+    this.fnInit         = fnInit;
+    this.fnDisplayTable = fnDisplayTable;
+    // private methods
+    this._fnHeader      = _fnHeader;
+
+    this._fnBody        = _fnBody;
+    this._fnReBody      = _fnReBody;
+    
+    this._fnFooter      = _fnFooter;
+    this._fnReFooter    = _fnReFooter;
+
+    this._paginate      = _paginate;
+
+    this._fnUpdateData  = _fnUpdateData;
+    this._fnUpdateSort  = _fnUpdateSort;
+    this._fnInitData    = _fnInitData;
+    this._fnPageChange  = _fnPageChange;
+    this._fnReDraw      = _fnReDraw;
+    this._fnRecordsDisplay = _fnRecordsDisplay;
 }
 
+/*
+ * Initializing attributes from json
+ */
 function fnInit(json) {
     
     this._idTable        = json.idTable;
@@ -41,52 +71,110 @@ function fnInit(json) {
     this._iColumns       = json.iColumns;
     this._aoColumns      = json.aoColumns;
     this._sAjaxSource    = json.sAjaxSource;
-    url  = this._sAjaxSource + "&iDisplayStart=1&iDisplayLength=10&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
+    this._oLanguage      = json.oLanguage;
 
-    var data,tr,tdr,l;
-    /* Ensure that the json data is fully loaded sync*/
-    var json_ = $.ajax({
-        async: false,   // bloquea el navegador
-        url: url,
-        dataType: "json",
-        success:  function(json_) {
-            alert("LOADED");
-        }
-    }).responseText;//json
+    if( IsNumeric(json.iDisplayStart)){
+        this._iDisplayStart = parseInt( json.iDisplayStart );
+    }
 
-    json_ = eval( '(' + json_ + ')') ;
+    // load data from sAjaxSource
+    this._fnInitData();
 
-    this._aoData = json_.aaData;
-    this._iTotalRecords = json_.iTotalRecords;
-    this._iTotalDisplayRecords  = json_.iTotalDisplayRecords;
-    this.loaded    = true;
-    
+    // show table
     this.fnDisplayTable();
-    
 }
 
+/*
+ * Create the table structure header/body/footer.
+ */
 function fnDisplayTable()
 {
-    // show header
-    console.log("IN "+this._aoColumns+"fnDisplayTable"+this._idTable);
     this._fnHeader() ;
     this._fnBody() ;
-//    this._fnFooter() ;
+    this._fnFooter() ;
+    // add extra data
+    // add label processing
+    $('#'+this._idTable).before( $('<div id="' +this._idTable+ '_processing" class="dataTables_processing" style="display:none;">Processing...</div>') );
 }
 
+/*
+ * Append to table thead element.
+ */
 function _fnHeader(){
+    var n_cols = this._aoColumns.length;
+    var style_first = "border-left: 1px solid rgb(170, 170, 170); -moz-border-radius-topleft: 4px;";
+    var style_last  = "border-right: 1px solid rgb(170, 170, 170); -moz-border-radius-topright: 4px;";
+
     var _thead = $('<thead></thead>');
-    for(var i=0; i < this._aoColumns.length; i++) {
-        _thead.append( $('<th></th>').html(this._aoColumns[i].sTitle) );
+    
+    for(var i=0; i < n_cols; i++) {
+        var style = "";
+        if(i == 0) {
+            style = style_first ;
+        } else if (i == n_cols-1 ){
+            style = style_last ;
+        }
+        
+        if( this._aoColumns[i].sWidth != '') {
+            style += "width: " + (this._aoColumns[i].sWidth) + ";" ;
+        }
+
+        var _th = $('<th></th>').html(this._aoColumns[i].sTitle);
+        // añadir clases a th  sorting_disabled / sorting / sorting_asc / sorting_desc
+        if(this._aoColumns[i].bSortable == true){
+            _th.addClass('sorting');
+
+            _this = this;
+
+            var colSort = i ;
+            _th.bind( 'click', {msg: colSort}, function (event) {
+                _this._fnUpdateSort(event.data.msg);
+                
+                if( $(this).hasClass('sorting') ){
+                    $(this).removeClass('sorting');
+                    _this._sSortDir = 'asc';
+                } else if( $(this).hasClass('sorting_desc') ){
+                    $(this).removeClass('sorting_desc');
+                    _this._sSortDir = 'asc';
+                } else if ( $(this).hasClass('sorting_asc') ) {
+                    $(this).removeClass('sorting_asc');
+                    _this._sSortDir = 'desc';
+                }
+
+                $('.sorting_asc').each(function(){ $(this).removeClass('sorting_asc'); $(this).addClass('sorting'); });
+                $('.sorting_desc').each(function(){ $(this).removeClass('sorting_desc'); $(this).addClass('sorting'); });
+                $(this).addClass('sorting_'+_this._sSortDir);
+                _this._fnReDraw();
+            } );
+            
+        }else{
+            _th.addClass('sorting_disabled');
+        }
+        
+        // adding style
+        if(style != '') {
+            _th.attr( 'style', style ) ;
+        }
+        // add th into thead
+        _thead.append( _th );
     }
     $('#'+this._idTable).append(_thead);
 }
 
+function _fnUpdateSort(value){
+    this._iDisplayStart = 0;
+    this._iSortableCol  = value;
+}
+/*
+ * Append to table, tbody element.
+ */
 function _fnBody(){
     var _tbody = $('<tbody></tbody>');
-    alert(this._aoData.length + "  --  " + this._iColumns ) ;
+
     for(var i=0; i < this._aoData.length; i++){
         _row = $('<tr></tr>');
+        if(i%2) {_row.addClass('even');}
+        else {_row.addClass('odd');}
         for(var j = 0; j < this._aoData[i].length; j++){
             _row.append( $('<td></td>').html( this._aoData[i][j] ) );
         }
@@ -94,123 +182,291 @@ function _fnBody(){
     }
     $('#'+this._idTable).append(_tbody);
 }
-//
-//osc_datatable.prototype._fnFooter = function() {
-//    var _tfooter = $('<div></div>');
-//    _tfooter.addClass('bottom');
-//    $('#'+_idTable).after(_tfooter);
-//}
-//
 
-//
-//
-//function osc_datatable( json )
-//{
-//    this._idTable        = '' ;
-//    this._iDisplayLength = 0 ;
-//    this._iColumns       = 0 ;
-//    this._aoColumns      = new Array() ;
-//    this._sAjaxSource    = '' ;
-//    this._aoData         = new Array() ;
-//    this.loaded          = false;
-//
-//
-//    // pasear json
-//    this._idTable        = json.idTable;
-//    this._iDisplayLength = json.iDisplayLength;
-//    this._iColumns       = json.iColumns;
-//    this._aoColumns      = json.aoColumns;
-//    this._sAjaxSource    = json.sAjaxSource;
-//
-//    this._iTotalRecords         = 0;
-//    this._iTotalDisplayRecords  = 0;
-//
-//    // private functions
-//    this._fnHeader  = _fnHeader;
-//    osc_datatable.prototype._fnBody    = _fnBody;
-//    osc_datatable.prototype._fnFooter  = _fnFooter;
-//
-//
-//    osc_datatable.prototype.fnDisplayTable = fnDisplayTable;
-//
-//    // get data from ajax
-////    this._sAjaxSource += "&iDisplayStart=1&iDisplayLength="+this._iDisplayLength+"&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
-//    this._sAjaxSource += "&iDisplayStart=1&iDisplayLength=2&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
-//    $.getJSON(this._sAjaxSource , function(json){
-//        this._aoData                = json.aaData;
-//        this._iTotalRecords         = json.iTotalRecords;
-//        this._iTotalDisplayRecords  = json.iTotalDisplayRecords;
-//        this.loaded = true;
-//
-//    });
-//
-//    setTimeout( function(){ }, 200 );
-//
-//    if( this.loaded ) { alert("FOO"); }
-//    else {alert("NO");}
-//    fnDisplayTable();
-////    $.get(this._sAjaxSource,
-////        function(data){
-////            var json = eval('(' + data + ')');
-////            $('#'+this._idTable).append(var_dump(json));
-////
-////            this._aoData                = json.aaData ;
-////            this._iTotalRecords         = json.iTotalRecords;
-////            this._iTotalDisplayRecords  = json.iTotalDisplayRecords;
-////            this.loaded = true;
-////    });
-//
-//
-//}
-//
-//
-//
-//// public functions
-//function fnDisplayTable()
-//{
-//    /* Ensure that the table data is fully initialised */
-//
-//
-//    // show header
-//    this._fnHeader() ;
-//    this._fnBody() ;
-//    this._fnFooter() ;
-//}
-//
-//function _fnHeader()
-//{
-//    alert(this._aoColumns) ;
-//    var _thead = $('<thead></thead>');
-//    for(var i=0; i < this._aoColumns.length; i++) {
-//        _thead.append( $('<th></th>').html(this._aoColumns[i].sTitle) );
-//    }
-//    $('#'+this._idTable).append(_thead);
-//}
-//
-//function _fnBody()
-//{
-//
-//    var _tbody = $('<tbody></tbody>');
-//    alert(this._iTotalDisplayRecords + "  --  " + this._iColumns ) ;
-//    alert(this._aoData);
-//    for(var i=0; i < this._iTotalDisplayRecords; i++){
-//        _row = $('<tr></tr>');
-//        for(var j = 0; j < this._iColumns; j++){
-//            _row.append( $('<td></td>').html( this._aoData[i][j] ) );
-//        }
-//        _tbody.append(_row) ;
-//    }
-//    $('#'+this._idTable).append(_tbody);
-//}
-//function _fnFooter(){
-//    var _tfooter = $('<div></div>');
-//    _tfooter.addClass('bottom');
-//    $('#'+this._idTable).after(_tfooter);
-//}
+/*
+ * Append to table footer element.
+ */
+function _fnFooter() {
+    var _tfooter = $('<div></div>');
+    _tfooter.addClass('bottom');
+
+    var _div_info = $('<div></div>');
+    _div_info.addClass('dataTables_info');
+    _div_info.attr('id', this._idTable+'_info');
+    
+    var str = this._oLanguage.sInfo;
+    // replace _START_, _END_, _TOTAL_
+    str = str.replace("_START_", this._iDisplayStart+1 );
+    str = str.replace("_END_",   this._iDisplayStart + this._aoData.length );
+    str = str.replace("_TOTAL_", this._iTotalRecords );
+
+    _div_info.html(str);
+    _tfooter.append(_div_info);
+
+    // create pagination
+    var _node_pag = $('<div></div>');
+    _node_pag.attr('id', this._idTable+'_paginate');
+    this._paginate('full', _node_pag);
+    _tfooter.append(_node_pag);
+
+    var _div_clear = $('<div></div>');
+    _div_clear.attr('style', 'clear:both;');
+    _tfooter.append(_div_clear);
+
+    $('#'+this._idTable).after(_tfooter);
+    
+}
+
+/*
+ * fill node_pad with pagination links and bind on click event
+ */
+function _paginate(type, node_pag) {
+
+    if(type == 'full') {
+        var nFirst      = $('<span></span>') ;
+        var nPrevious   = $('<span></span>') ;
+        var nList       = $('<span></span>') ;
+        var nNext       = $('<span></span>') ;
+        var nLast       = $('<span></span>') ;
 
 
-//    this.text = "";
-//    for(var i=0; i < this._aoColumns.length; i++) {
-//        this.text += this._aoColumns[i].sTitle + "\n";
-//    }
-//    alert(this.text);
+        nFirst.html( this._oLanguage.oPaginate.sFirst ) ;
+        nPrevious.html( this._oLanguage.oPaginate.sPrevious ) ;
+        nNext.html( this._oLanguage.oPaginate.sNext) ;
+        nLast.html( this._oLanguage.oPaginate.sLast) ;
+
+        nFirst.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPageFirst );
+        nPrevious.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPagePrevious ) ;
+        nNext.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPageNext ) ;
+        nLast.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPageLast ) ;
+
+        node_pag.append(nFirst);
+        node_pag.append(nPrevious);
+        node_pag.append(nList);
+        node_pag.append(nNext);
+        node_pag.append(nLast);
+
+        _this = this;
+
+        nFirst.bind( 'click', function () {
+            if ( _this._fnPageChange( "first" ) )
+            {
+                _this._fnReDraw();
+            }
+        } );
+
+        nPrevious.bind( 'click', function() {
+            if ( _this._fnPageChange( "previous" ) )
+            {
+                _this._fnReDraw();
+            }
+        } );
+
+        nNext.bind( 'click', function() {
+
+            if ( _this._fnPageChange( "next" ) )
+            {
+                _this._fnReDraw();
+            }
+        } );
+
+        nLast.bind( 'click', function() {
+            if ( _this._fnPageChange( "last" ) )
+            {
+                _this._fnReDraw();
+            }
+        } );
+
+        node_pag.addClass( 'paging_full_numbers dataTables_paginate');
+    }
+
+}
+
+/*
+ * Update the body and footer content.
+ */
+function _fnReDraw(){
+
+    // show processing
+    $('#'+this._idTable+"_processing").show();
+    // get data from sAjaxsource
+    this._fnUpdateData();
+    // redraw body and footer
+    this._fnReBody();
+    this._fnReFooter();
+    $('#'+this._idTable+"_processing").hide();
+}
+
+/**
+ * redraw body with new data.
+ */
+function _fnReBody(){
+    // remove all rows form tbody
+
+    $('#'+this._idTable+' > tbody > tr').each(function(index, value){
+        $(this).remove();
+    });
+    var _tbody = $('#'+this._idTable+" > tbody");
+
+    for(var i=0; i < this._aoData.length; i++){
+        _row = $('<tr></tr>');
+        if(i%2) {_row.addClass('even');}
+        else {_row.addClass('odd');}
+        for(var j = 0; j < this._aoData[i].length; j++){
+            _row.append( $('<td></td>').html( this._aoData[i][j] ) );
+        }
+        _tbody.append(_row) ;
+    }
+}
+
+/**
+ * redraw footer with new data.
+ */
+function _fnReFooter() {
+
+    var _div_info = $('div#'+this._idTable+'_info'); //Showing 1 to 10 of 13 entries
+
+    var str = this._oLanguage.sInfo;
+    // replace _START_, _END_, _TOTAL_
+    str = str.replace("_START_", this._iDisplayStart+1 );
+    str = str.replace("_END_",   this._iDisplayStart + this._aoData.length );
+    str = str.replace("_TOTAL_", this._iTotalRecords );
+
+    _div_info.html(str);
+
+    // create pagination
+    var _node_pag = $('div#'+this._idTable+'_paginate').html('');
+    this._paginate('full', _node_pag);
+
+}
+
+function _fnInitData(){
+     // get data
+    url  = this._sAjaxSource + "&iDisplayStart=0&iDisplayLength=" + this._iDisplayLength ;//+ "&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
+    // add data for sorting
+    for(var i = 0; i < this._aoColumns.length; i++){
+        if(this._aoColumns[i]['bSortable'] == true){
+            url += "&bSortable_"+i+"=true";
+        } else {
+            url += "&bSortable_"+i+"=false";
+        }
+
+        if(this._aoColumns[i]['defaultSortable'] == true){
+            url += "&iSortCol_0=0";
+            url += "&sSortDir_0="+this._sSortDir;
+        }
+    }
+    
+    /* Ensure that the json data is fully loaded sync*/
+    var json = $.ajax({
+        async: false,   // bloquea el navegador
+        url: url,
+        dataType: "json",
+        success:  function(json) {
+
+        }
+    }).responseText;//json
+    
+    json = eval( '(' + json + ')') ;
+    this._aoData        = json.aaData;
+    this._iTotalRecords = json.iTotalRecords;
+    this._iTotalDisplayRecords  = json.iTotalDisplayRecords;
+}
+/*
+ * Get data from sAjaxSource
+ *  _aoData
+ *  _iTotalRecords
+ *  _iTotalDisplayRecords
+ */
+function _fnUpdateData(){
+
+    // get data
+    url  = this._sAjaxSource + "&iDisplayStart=" + this._iDisplayStart + "&iDisplayLength=" + this._iDisplayLength ;//+ "&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
+    // add data for sorting
+    for(var i = 0; i < this._aoColumns.length; i++){
+        if(this._aoColumns[i]['bSortable'] == true){
+            url += "&bSortable_"+i+"=true";
+        } else {
+            url += "&bSortable_"+i+"=false";
+        }
+    }
+    url += "&iSortCol_0="+this._iSortableCol;
+    url += "&sSortDir_0="+this._sSortDir;
+    
+
+    // url += ....
+    /* Ensure that the json data is fully loaded sync*/
+    var json = $.ajax({
+        async: false,   // bloquea el navegador
+        url: url,
+        dataType: "json",
+        success:  function(json) {
+
+        }
+    }).responseText;//json
+    json = eval( '(' + json + ')') ;
+    this._aoData        = json.aaData;
+    this._iTotalRecords = json.iTotalRecords;
+    this._iTotalDisplayRecords  = json.iTotalDisplayRecords;
+}
+
+/*
+* Function: _fnPageChange
+* Purpose: Alter the display settings to change the page
+* Returns: bool:true - page has changed, false - no change (no effect) eg 'first' on page 1
+* Inputs: object:oSettings - dataTables settings object
+* string:sAction - paging action to take: "first", "previous", "next" or "last"
+*/
+function _fnPageChange ( sAction )
+{
+    var iOldStart = this._iDisplayStart;
+
+    if ( sAction == "first" )
+    {
+        this._iDisplayStart = 0;
+    }
+    else if ( sAction == "previous" )
+    {
+        this._iDisplayStart = this._iDisplayLength>=0 ? this._iDisplayStart - this._iDisplayLength : 0;
+
+        /* Correct for underrun */
+        if ( this._iDisplayStart < 0 ){
+            this._iDisplayStart = 0;
+        }
+    } else if ( sAction == "next" ){
+        if ( this._iDisplayLength >= 0 ) {
+            /* Make sure we are not over running the display array */
+            if ( parseInt(this._iDisplayStart) + parseInt(this._iDisplayLength) < this._fnRecordsDisplay() ){
+                this._iDisplayStart += parseInt(this._iDisplayLength);
+            }
+        }else{
+            this._iDisplayStart = 0;
+        }
+    } else if ( sAction == "last" ){
+        if ( this._iDisplayLength >= 0 ){
+            var iPages = parseInt( (this._fnRecordsDisplay()-1) / this._iDisplayLength, 10 ) + 1;
+            this._iDisplayStart = (iPages-1) * this._iDisplayLength;
+        }else{
+            this._iDisplayStart = 0;
+        }
+    }else{
+        console.log("Unknown paging action: "+sAction ) ;
+    }
+
+    return iOldStart != this._iDisplayStart;
+}
+
+/*
+ * Total number of records
+ */
+function _fnRecordsDisplay() {
+//    return this._iTotalDisplayRecords;
+    return this._iTotalRecords;
+}
+
+
+// utils functions
+function IsNumeric(input)
+{
+    return (input - 0) == input && input.length > 0;
+}
