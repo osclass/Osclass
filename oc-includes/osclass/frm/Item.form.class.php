@@ -690,7 +690,7 @@
     }
     function addNewPhoto() {
         var max = <?php echo osc_max_images_per_item(); ?>;
-        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        var num_img = $('input[name="photos[]"]').size() + $("a.delete").size();
         if((max!=0 && num_img<max) || max==0) {
             var id = 'p-' + photoIndex++;
 
@@ -727,13 +727,13 @@
      */
     function add_file_field() {
         var count = 0;
-        $("input[name='photos[]']").each(function(index) {
+        $('input[name="photos[]"]').each(function(index) {
             if ( $(this).val() == '' ) {
                 count++;
             }
         });
         var max = <?php echo osc_max_images_per_item(); ?>;
-        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        var num_img = $('input[name="photos[]"]').size() + $("a.delete").size();
         if (count == 0 && (max==0 || (max!=0 && num_img<max))) {
             addNewPhoto();
         }
