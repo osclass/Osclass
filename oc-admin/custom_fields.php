@@ -40,6 +40,14 @@
             switch ($this->action)
             {
 
+                case 'add_post':
+                    if(Params::getParam('field_name')!='') {
+                        $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type"));
+                    }
+                    osc_add_flash_ok_message(_m("New custom field added"), "admin");
+                    $this->redirectTo(osc_admin_base_url(true)."?page=cfields");
+                    break;
+                
                 default:
 
                     $this->_exportVariableToView("fields", $this->fieldManager->listAll());

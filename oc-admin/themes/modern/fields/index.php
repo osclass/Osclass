@@ -28,51 +28,90 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
+        <script type="text/javascript">
+            
+            function show_iframe(class_name, id) {
+
+                //$('.edit #settings_form').remove();
+
+                var name = 'frame_'+ id ; 
+                var id_  = 'frame_'+ id ;
+                var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=field_categories_iframe&id='+id;
+                $.ajax({
+                    url: url,
+                    context: document.body,
+                    success: function(res){
+                        $('div.'+class_name).html(res);
+                        $('div.'+class_name).fadeIn("fast");
+                    }
+                });
+                
+                return false;
+            }
+            
+            
+        </script>
         <div id="content">
-            <div id="separator"></div>
+            <div id="separator"></div>	
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url('images/pages-icon.png') ; ?>" alt="" title=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/cat-icon.png') ; ?>" title="" alt="" />
                     </div>
-                    <div id="content_header_arrow">&raquo; <?php _e('Custom fields'); ?></div>
+                    <div id="content_header_arrow">&raquo; <?php _e('Custom Fields'); ?></div>
+                    <div id="jsMessage" class="" style="float:right;display:none;"></div>
                     <div style="clear: both;"></div>
                 </div>
-
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
 
-                <div class="dataTables_wrapper">
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list">
-                        <thead>
-                            <tr>
-                                <th style="width: 10%; " class="sorting"><?php _e('ID'); ?></th>
-                                <th class="sorting" ><?php _e('Description'); ?></th>
-                                <th style="width: 10%; " ><?php _e('Type'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                                $odd = 1;
-                                foreach($fields as $field) {
-                                    if($odd==1) {
-                                        $odd_even = "odd";
-                                        $odd = 0;
-                                    } else {
-                                        $odd_even = "even";
-                                        $odd = 1;
-                                    }
-;
-                            ?>
-                                <tr class="<?php echo $odd_even;?>">
-                                    <td><?php echo $field['pk_i_id']; ?><div><a href="<?php echo osc_admin_base_url(true); ?>?page=cfields&action=edit&amp;id=<?php echo  $field["pk_i_id"] ?>"><?php _e('Edit'); ?></a></div></td>
-                                    <td><?php echo $field['s_name']; ?></td>
-                                    <td><?php echo $field['e_type']; ?></td>
-                                </tr>                          
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                <div id="jsMessage" class="FlashMessage" style="display:none;"></div>
+
+                <div style="clear: both;"></div>
+                <div id="TableFields" class="TableFields">
+                    <ul>
+                    <?php foreach($fields as $field) {?>
+                        <li id="list_<?php echo $field['pk_i_id']; ?>" class="field_li" >
+                            <div class="field_div" field_id="<?php echo $field['pk_i_id'];?>" >
+                                <div class="quick_edit" id="<?php echo "quick_edit_".$field['pk_i_id']; ?>" style="float:left;">
+                                    <?php echo $field['s_name'];?> 
+                                </div>
+                                <div style="float:right;">
+                                    <a onclick="show_iframe('content_list_<?php echo $field['pk_i_id'];?>','<?php echo $field['pk_i_id'];?>');">
+                                    <?php _e('Edit'); ?>
+                                    </a>
+                                </div>
+                                <div class="edit content_list_<?php echo $field['pk_i_id']; ?>"></div>
+                                <div style="clear: both;"></div>
+                                
+                            </div>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+                <div>
+                    <div style="padding: 20px;">
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="cfields" />
+                            <input type="hidden" name="action" value="add_post" />
+                            <div style="float: left; width: 100%;">
+                                <fieldset>
+                                    <legend><?php _e('Add new custom field'); ?></legend>
+                                    <label for="auto_cron"><?php _e('Name'); ?></label>
+                                    <input type="text" name="field_name" id="field_name" value="" />
+                                    <br/>
+                                    <label><?php _e('Type'); ?></label>
+                                    <select name="field_type" id="field_type">
+                                        <option value="TEXT">TEXT</option>
+                                        <option value="TEXTAREA">TEXTAREA</option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <input id="button_save" type="submit" value="<?php _e('Add') ; ?>" />
+                        </form>
+                    </div>
                 </div>
                 <div style="clear: both;"></div>
             </div> <!-- end of right column -->
@@ -80,4 +119,4 @@
         </div> <!-- end of container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
-</html>				
+</html>

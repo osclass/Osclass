@@ -130,6 +130,7 @@ require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {

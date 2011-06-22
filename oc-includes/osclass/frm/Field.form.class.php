@@ -29,32 +29,10 @@
         }
 
         static public function name_input_text($field = null) {
-            parent::generic_input_text("s_name", (isset($field) && isset($field["s_internal_name"])) ? $field["s_internal_name"] : "", null, (isset($field['b_indelible']) && $field['b_indelible'] == 1) ? true : false) ;
+            parent::generic_input_text("s_name", (isset($field) && isset($field["s_name"])) ? $field["s_name"] : "", null, false) ;
             return true ;
         }
 
-        static public function multilanguage_name_description($locales, $category = null) {
-            $num_locales = count($locales);
-            if($num_locales>1) { echo '<div class="tabber">'; };
-            foreach($locales as $locale) {
-               if($num_locales>1) {  echo '<div class="tabbertab">'; };
-                    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-                    echo '<div class="FormElement">';
-                        echo '<div class="FormElementName">' . __('Title') . '</div>';
-                        echo '<div class="FormElementInput">' ;
-                            parent::generic_input_text($locale['pk_c_code'] . '#s_title', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_title'] : "") ;
-                        echo '</div>' ;
-                    echo '</div>';
-                    echo '<div class="FormElement">';
-                        echo '<div class="FormElementName">' . __('Body') . '</div>';
-                        echo '<div class="FormElementInput">' ;
-                            parent::generic_textarea($locale['pk_c_code'] . '#s_text', (isset($category['locale'][$locale['pk_c_code']])) ? ($category['locale'][$locale['pk_c_code']]['s_text']) : "") ;
-                        echo '</div>' ;
-                    echo '</div>';
-                if($num_locales>1) { echo '</div>'; };
-             }
-             if($num_locales>1) { echo '</div>'; };
-        }
     }
 
 ?>

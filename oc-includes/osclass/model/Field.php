@@ -86,7 +86,12 @@
          */
         public function categories($id)
         {
-            return  $this->conn->osc_dbFetchResult("SELECT * FROM %st_meta_categories WHERE fk_i_field_id = %d", DB_TABLE_PREFIX, $id);
+            $categories = $this->conn->osc_dbFetchResults("SELECT fk_i_category_id FROM %st_meta_categories WHERE fk_i_field_id = %d", DB_TABLE_PREFIX, $id);
+            $cats = array();
+            foreach($categories as $k => $v) {
+                $cats[] = $v['fk_i_category_id'];
+            }
+            return $cats;
         }
 
         /**
@@ -99,6 +104,43 @@
             return $this->conn->osc_dbFetchResults("SELECT * FROM %st_meta_fields", DB_TABLE_PREFIX);
         }
 
+        
+        /**
+         * Insert a new field
+         * 
+         * @param type $name
+         * @param type $type
+         * @param type $categories 
+         */
+        public function insertField($name, $type, $categories = null) {
+            $this->insert(array("s_name" => $name, "e_type" =>$type));
+            $id = $this->conn->get_last_id();
+            $categories = array(96, 99);
+            if($categories!=null) {
+                foreach($categories as $c) {
+                    $this->conn->osc_dbExec("INSERT INTO %st_meta_categories ( `fk_i_category_id`, `fk_i_field_id` ) VALUES ('%d', '%d')", DB_TABLE_PREFIX, $c, $id);
+                }
+            }
+        }
+        
+        
+        public function insertCategories($id, $categories = null) {
+            if($categories!=null) {
+                foreach($categories as $c) {
+                    $this->conn->osc_dbExec("INSERT INTO %st_meta_categories ( `fk_i_category_id`, `fk_i_field_id` ) VALUES ('%d', '%d')", DB_TABLE_PREFIX, $c, $id);
+                    $subcategories = Category::newInstance()->findSubcategories($c);
+                    if(count($subcategories)>0) {
+                        foreach($subcategories as $k => $v) {
+                            $this->insertCategories($id, array($v['pk_i_id']));
+                        }
+                    }
+                }
+            }
+        }
+        
+        public function cleanCategoriesFromField($id) {
+            return $this->conn->osc_dbExec("DELETE FROM %st_meta_categories WHERE fk_i_field_id = %d", DB_TABLE_PREFIX, $id);
+        }
 
     }
 
