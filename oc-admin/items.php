@@ -530,12 +530,25 @@
 
                 default:                //default
                                         $catId = Params::getParam('catId') ;
-
+                    
+                                        $countries = Country::newInstance()->listAll() ;
+                                        $regions = array() ;
+                                        if( count($countries) > 0 ) {
+                                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
+                                        }
+                                        $cities = array() ;
+                                        if( count($regions) > 0 ) {
+                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                                        }
                                         //preparing variables for the view
+                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("items", ( ($catId) ? $this->itemManager->findByCategoryID($catId) : $this->itemManager->listAllWithCategories() ) ) ;
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
 
+                                        $this->_exportVariableToView("countries", $countries);
+                                        $this->_exportVariableToView("regions", $regions);
+                                        $this->_exportVariableToView("cities", $cities);
                                         //calling the view...
                                         $this->doView('items/index.php') ;
             }

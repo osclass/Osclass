@@ -29,6 +29,17 @@ var osc_datatable = function() {
     this._iDisplayStart         = 0;
     this._iSortableCol          = 0;
     this._sSortDir              = 'desc';
+
+    // filters
+    this._fUserId           = undefined;
+    this._fCountryId        = undefined;
+    this._fRegionId         = undefined;
+    this._fCityId           = undefined;
+    this._fCatId            = undefined;
+    this._b_premium         = undefined;
+    this._b_active          = undefined;
+    this._b_enabled         = undefined;
+    this._b_spam            = undefined;
    
     
     // array of class
@@ -59,6 +70,8 @@ var osc_datatable = function() {
     this._fnPageChange  = _fnPageChange;
     this._fnReDraw      = _fnReDraw;
     this._fnRecordsDisplay = _fnRecordsDisplay;
+
+    this.applyFilters   = applyFilters;
 }
 
 /*
@@ -330,9 +343,17 @@ function _fnReFooter() {
     // replace _START_, _END_, _TOTAL_
     str = str.replace("_START_", this._iDisplayStart+1 );
     str = str.replace("_END_",   this._iDisplayStart + this._aoData.length );
-    str = str.replace("_TOTAL_", this._iTotalRecords );
-
-    _div_info.html(str);
+    
+    // sInfoFiltered
+    var str1 = "";
+    if( this._iTotalRecords != this._iTotalDisplayRecords ) {
+        str1 += this._oLanguage.sInfoFiltered;
+        str1 = str1.replace("_MAX_", this._iTotalRecords );
+        str = str.replace("_TOTAL_", this._iTotalDisplayRecords );
+    } else {
+        str = str.replace("_TOTAL_", this._iTotalRecords );
+    }
+    _div_info.html(str+" "+str1);
 
     // create pagination
     var _node_pag = $('div#'+this._idTable+'_paginate').html('');
@@ -381,7 +402,7 @@ function _fnInitData(){
 function _fnUpdateData(){
 
     // get data
-    url  = this._sAjaxSource + "&iDisplayStart=" + this._iDisplayStart + "&iDisplayLength=" + this._iDisplayLength ;//+ "&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
+    url  = this._sAjaxSource + "&iDisplayStart=" + this._iDisplayStart + "&iDisplayLength=" + this._iDisplayLength ;
     // add data for sorting
     for(var i = 0; i < this._aoColumns.length; i++){
         if(this._aoColumns[i]['bSortable'] == true){
@@ -392,9 +413,28 @@ function _fnUpdateData(){
     }
     url += "&iSortCol_0="+this._iSortableCol;
     url += "&sSortDir_0="+this._sSortDir;
-    
-
+    var count = 0;
+    // filters
+    if(this._fUserId != undefined){               url += "&fCol_userIdValue="+this._fUserId;  }
+    if(this._fCountryId != undefined ){     url += "&fCol_countryId="+this._fCountryId; }
+    if(this._fRegionId != undefined ){      url += "&fCol_regionId="+this._fRegionId; }
+    if(this._fCityId != undefined ){        url += "&fCol_cityId="+this._fCityId;  }
+    if(this._fCatId  != undefined ){        url += "&fCol_catId="+this._fCatId;  }
+    // filters item table
+    if(this._b_premium  != undefined ){     url += "&fCol_bPremium="+this._b_premium;  }
+    if(this._b_active  != undefined ){      url += "&fCol_bActive="+this._b_active;  }
+    if(this._b_enabled  != undefined ){     url += "&fCol_bEnabled="+this._b_enabled;  }
+    if(this._b_spam  != undefined ){        url += "&fCol_bSpam="+this._b_spam;  }
+    // filters item stat table
+    if(this._i_num_bad_classified != undefined ) {url += "&stat=bad";}
+    if(this._i_num_spam != undefined ) { url += "&stat=spam"; }
+    if(this._i_num_repeated != undefined ) { url += "&stat=duplicated"; }
+    if(this._i_num_offensive != undefined ) { url += "&stat=offensive"; }
+    if(this._i_num_expired != undefined ) { url += "&stat=expired"; }
+    // search
+    if(this._sSearch != "") { url += "&sSearch="+this._sSearch; }
     // url += ....
+    
     /* Ensure that the json data is fully loaded sync*/
     var json = $.ajax({
         async: false,   // bloquea el navegador
@@ -469,4 +509,30 @@ function _fnRecordsDisplay() {
 function IsNumeric(input)
 {
     return (input - 0) == input && input.length > 0;
+}
+// filters
+function applyFilters(){
+
+    // get filters
+    // userId
+    this._fUserId       = ( $('#userId').val() == '' ) ? undefined : $('#userId').val() ;
+    // get location
+    this._fCountryId    = ( $('#countryId').val() == '' ) ? undefined : $('#countryId').val() ;
+    this._fRegionId     = ( $('#regionId').val() == '' ) ? undefined : $('#regionId').val();
+    this._fCityId       = ( $('#cityId').val() == '' ) ? undefined : $('#cityId').val();
+    
+    this._fCatId        = ( $('#catId').val() == '' ) ? undefined : $('#catId').val();
+    
+    this._b_premium     = ( $('#b_premium').val() == '' ) ? undefined : $('#b_premium').val();
+    this._b_active      = ( $('#b_active').val() == '' ) ? undefined : $('#b_active').val();
+    this._b_enabled     = ( $('#b_enabled').val() == '' ) ? undefined : $('#b_enabled').val();
+    this._b_spam        = ( $('#b_spam').val() == '' ) ? undefined : $('#b_spam').val();
+
+    this._i_num_bad_classified  = ( $('#i_num_bad_classified').val() == '' ) ? undefined : $('#i_num_bad_classified').val();
+    this._i_num_spam            = ( $('#i_num_spam').val() == '' ) ? undefined : $('#i_num_spam').val();
+
+    this._sSearch               = $('#sSearch').val();
+
+    this._fnReDraw();
+    
 }

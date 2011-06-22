@@ -31,7 +31,7 @@
         private $order_by = array();
         private $stat;
 
-        private $column_names   = 
+        private $column_names  = 
             array(  0=> 'dt_pub_date',
                     1=> 's_title',
                     2=> 's_name',
@@ -46,14 +46,28 @@
                     1=> NULL,
                     2=> '%st_user',
                     3=> NULL,
-                    4=> NULL,//'%st_item_location',
-                    5=> NULL,//'%st_item_location',
+                    4=> NULL,
+                    5=> NULL,
                     6=> NULL,
                     7=> NULL);
+
+        private $tables_filters =
+            array( 
+                'fCol_userIdValue'  => '%st_item.fk_i_user_id'
+                ,'fCol_countryId'   => '%st_item_location.fk_c_country_code'
+                ,'fCol_regionId'    => '%st_item_location.fk_i_region_id'
+                ,'fCol_cityId'      => '%st_item_location.fk_i_city_id'
+                ,'fCol_catId'       => '%st_item.fk_i_category_id'
+                ,'fCol_bPremium'    => '%st_item.b_premium'
+                ,'fCol_bActive'     => '%st_item.b_active'
+                ,'fCol_bEnabled'    => '%st_item.b_enabled'
+                ,'fCol_bSpam'       => '%st_item.b_spam'
+                );
 
         /* For Datatables */
         private $sOutput = null;
         private $sEcho = null;
+        private $filters = array();
 
         private $_get;
 
@@ -121,10 +135,20 @@
                 default:
                     break;
             }
+
+            // filters
             
+            foreach($this->filters as $aFilter ){
+                $sFilter = "";
+                $sFilter .= $aFilter[0]." = '".$aFilter[1]."'";
+                $sFilter = sprintf( $sFilter , DB_TABLE_PREFIX ) ;
+                $mSearch->addConditions( $sFilter );
+            }
+            
+            
+
+            // do Search
             $list_items = $mSearch->doSearch(true);
-
-
 
             $this->result = Item::newInstance()->extendCategoryName(Item::newInstance()->extendData($list_items));
             $this->filtered_total = $mSearch->count();
@@ -152,20 +176,31 @@
                 if($k == 'sSortDir_0') $this->order_by['type'] = $v;
                 if($k == 'sSearch') $this->search = $v;
                 if($k == 'stat') $this->stat = $v;
+
+                // get all filters
+                // user filter
+                if($k == 'fCol_userIdValue')    array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_countryId')      array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_regionId')       array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_cityId')         array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_catId')          array_push($this->filters, array($this->tables_filters[$k], $v ));
+
+                if($k == 'fCol_bPremium')       array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_bActive')        array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_bEnabled')       array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_bSpam')          array_push($this->filters, array($this->tables_filters[$k], $v ));
             }
         }
 
         /* START - format functions */
         private function toDatatablesFormat() {
             $this->sOutput = '{';
-//            $this->sOutput .= '"sEcho": '.($this->sEcho).', ';
             $this->sOutput .= '"iTotalRecords": '.($this->total).', ';
             $this->sOutput .= '"iTotalDisplayRecords": '.($this->filtered_total).', ';
             $this->sOutput .= '"aaData": [ ';
 
             if(count($this->result)>0) {
                 $count = 0;
-//                echo "<pre>";print_r($this->result[1]);echo "</pre>";
                 foreach ($this->result as $aRow)
                 {
                     // make address (Location)
