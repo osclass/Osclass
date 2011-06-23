@@ -156,7 +156,7 @@
                     if( !$error ){
                         try {
                             Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
-                            Field::newInstance()->update(array('s_name' => Params::getParam("s_name")), array('pk_i_id' => Params::getParam("id")));
+                            Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type")), array('pk_i_id' => Params::getParam("id")));
                             Field::newInstance()->insertCategories(Params::getParam("id"), Params::getParam("categories"));
                         } catch (Exception $e) {
                             $error = 1;

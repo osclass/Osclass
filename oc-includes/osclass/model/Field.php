@@ -70,6 +70,28 @@
         /**
          * Find a field by its name
          *
+         * @param string $id
+         * @return array Field information. If there's no information, return an empty array.
+         */
+        public function findByCategory($id)
+        {
+            return  $this->conn->osc_dbFetchResults("SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id);
+        }
+
+        /**
+         * Find fields from a category and an item
+         *
+         * @param string $id
+         * @return array Field information. If there's no information, return an empty array.
+         */
+        public function findByCategoryItem($catId, $itemId)
+        {
+            return  $this->conn->osc_dbFetchResults("SELECT query.*, im.s_value as s_value FROM (SELECT mf.* FROM %st_meta_fields mf, %st_meta_categories mc WHERE mc.fk_i_category_id = %d AND mf.pk_i_id = mc.fk_i_field_id) as query LEFT JOIN %st_item_meta im ON im.fk_i_field_id = query.pk_i_id AND im.fk_i_item_id = %d", DB_TABLE_PREFIX, DB_TABLE_PREFIX, $catId, DB_TABLE_PREFIX, $itemId);
+        }
+
+        /**
+         * Find a field by its name
+         *
          * @param string $name
          * @return array Field information. If there's no information, return an empty array.
          */
@@ -140,6 +162,10 @@
         
         public function cleanCategoriesFromField($id) {
             return $this->conn->osc_dbExec("DELETE FROM %st_meta_categories WHERE fk_i_field_id = %d", DB_TABLE_PREFIX, $id);
+        }
+        
+        public function replace($itemId, $field, $value) {
+            return $this->conn->osc_dbExec("REPLACE INTO %st_item_meta ( `fk_i_item_id`, `fk_i_field_id`, `s_value` ) VALUES ('%d', '%d', '%s')", DB_TABLE_PREFIX, $itemId, $field, $value);
         }
 
     }

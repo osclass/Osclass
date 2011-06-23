@@ -34,10 +34,7 @@
                 <div class="FormElementName"><?php _e('Field\'s name'); ?></div>
                 <div class="FormElementInput">
                     <?php FieldForm::name_input_text($field); ?>
-                    <select name="field_type" id="field_type">
-                        <option value="TEXT">TEXT</option>
-                        <option value="TEXTAREA">TEXTAREA</option>
-                    </select>
+                    <?php FieldForm::type_select($field); ?>
                 </div>
             </div>
 

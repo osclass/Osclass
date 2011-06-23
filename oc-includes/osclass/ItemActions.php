@@ -152,6 +152,16 @@
 
                 $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
 
+                /**
+                 * META FIELDS
+                 */
+                $meta = Params::getParam("meta");
+                if(count($meta)>0) {
+                    $mField = Field::newInstance();
+                    foreach($meta as $k => $v) {
+                        $mField->replace($itemId, $k, $v);
+                    }
+                }
                 osc_run_hook('item_form_post', $aItem['catId'], $itemId);
                 
                 // We need at least one record in t_item_stats
@@ -280,6 +290,16 @@
                 // UPLOAD item resources
                 $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
 
+                /**
+                 * META FIELDS
+                 */
+                $meta = Params::getParam("meta");
+                if(count($meta)>0) {
+                    $mField = Field::newInstance();
+                    foreach($meta as $k => $v) {
+                        $mField->replace($aItem['idItem'], $k, $v);
+                    }
+                }
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 return 1;
             }
