@@ -49,6 +49,7 @@ var osc_datatable = function() {
     this.oClasses.sPagePrevious = "previous";
     this.oClasses.sPageNext     = "next";
     this.oClasses.sPageLast     = "last";
+    this.oClasses.sPageButtonActive = "paginate_active";
 
     // public methods
     this.fnInit         = fnInit;
@@ -63,6 +64,7 @@ var osc_datatable = function() {
     this._fnReFooter    = _fnReFooter;
 
     this._paginate      = _paginate;
+    this._fnUpdatePagination = _fnUpdatePagination;
 
     this._fnUpdateData  = _fnUpdateData;
     this._fnUpdateSort  = _fnUpdateSort;
@@ -72,6 +74,8 @@ var osc_datatable = function() {
     this._fnRecordsDisplay = _fnRecordsDisplay;
 
     this.applyFilters   = applyFilters;
+
+    this.fnGetFilteredNodes = fnGetFilteredNodes;
 }
 
 /*
@@ -91,8 +95,12 @@ function fnInit(json) {
     }
 
     // load data from sAjaxSource
+    _this = this;
     this._fnInitData();
-
+    $('#select_range').change(function(){
+        _this._iDisplayLength = $(this).val();
+        _this._fnReDraw();
+    });
     // show table
     this.fnDisplayTable();
 }
@@ -105,6 +113,8 @@ function fnDisplayTable()
     this._fnHeader() ;
     this._fnBody() ;
     this._fnFooter() ;
+    // add list pages
+    this._fnUpdatePagination();
     // add extra data
     // add label processing
     $('#'+this._idTable).before( $('<div id="' +this._idTable+ '_processing" class="dataTables_processing" style="display:none;">Processing...</div>') );
@@ -154,8 +164,8 @@ function _fnHeader(){
                     _this._sSortDir = 'desc';
                 }
 
-                $('.sorting_asc').each(function(){ $(this).removeClass('sorting_asc'); $(this).addClass('sorting'); });
-                $('.sorting_desc').each(function(){ $(this).removeClass('sorting_desc'); $(this).addClass('sorting'); });
+                $('.sorting_asc').each(function(){$(this).removeClass('sorting_asc');$(this).addClass('sorting');});
+                $('.sorting_desc').each(function(){$(this).removeClass('sorting_desc');$(this).addClass('sorting');});
                 $(this).addClass('sorting_'+_this._sSortDir);
                 _this._fnReDraw();
             } );
@@ -211,9 +221,18 @@ function _fnFooter() {
     // replace _START_, _END_, _TOTAL_
     str = str.replace("_START_", this._iDisplayStart+1 );
     str = str.replace("_END_",   this._iDisplayStart + this._aoData.length );
-    str = str.replace("_TOTAL_", this._iTotalRecords );
 
-    _div_info.html(str);
+    // sInfoFiltered
+    var str1 = "";
+    if( this._iTotalRecords != this._iTotalDisplayRecords ) {
+        str1 += this._oLanguage.sInfoFiltered;
+        str1 = str1.replace("_MAX_", this._iTotalRecords );
+        str = str.replace("_TOTAL_", this._iTotalDisplayRecords );
+    } else {
+        str = str.replace("_TOTAL_", this._iTotalRecords );
+    }
+    _div_info.html(str+" "+str1);
+    
     _tfooter.append(_div_info);
 
     // create pagination
@@ -250,6 +269,7 @@ function _paginate(type, node_pag) {
 
         nFirst.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPageFirst );
         nPrevious.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPagePrevious ) ;
+        nList.addClass( "list_pages" );
         nNext.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPageNext ) ;
         nLast.addClass( this.oClasses.sPageButton+" "+this.oClasses.sPageLast ) ;
 
@@ -307,6 +327,7 @@ function _fnReDraw(){
     // redraw body and footer
     this._fnReBody();
     this._fnReFooter();
+    this._fnUpdatePagination();
     $('#'+this._idTable+"_processing").hide();
 }
 
@@ -415,24 +436,30 @@ function _fnUpdateData(){
     url += "&sSortDir_0="+this._sSortDir;
     var count = 0;
     // filters
-    if(this._fUserId != undefined){               url += "&fCol_userIdValue="+this._fUserId;  }
-    if(this._fCountryId != undefined ){     url += "&fCol_countryId="+this._fCountryId; }
-    if(this._fRegionId != undefined ){      url += "&fCol_regionId="+this._fRegionId; }
-    if(this._fCityId != undefined ){        url += "&fCol_cityId="+this._fCityId;  }
-    if(this._fCatId  != undefined ){        url += "&fCol_catId="+this._fCatId;  }
+    if(this._fUserId != undefined)         url += "&fCol_userIdValue="+this._fUserId;  
+    if(this._fCountryId != undefined )     url += "&fCol_countryId="+this._fCountryId; 
+    if(this._fRegionId != undefined )      url += "&fCol_regionId="+this._fRegionId; 
+    if(this._fCityId != undefined )        url += "&fCol_cityId="+this._fCityId;  
+    if(this._fCatId  != undefined )        url += "&fCol_catId="+this._fCatId;  
     // filters item table
-    if(this._b_premium  != undefined ){     url += "&fCol_bPremium="+this._b_premium;  }
-    if(this._b_active  != undefined ){      url += "&fCol_bActive="+this._b_active;  }
-    if(this._b_enabled  != undefined ){     url += "&fCol_bEnabled="+this._b_enabled;  }
-    if(this._b_spam  != undefined ){        url += "&fCol_bSpam="+this._b_spam;  }
+    if(this._b_premium  != undefined )     url += "&fCol_bPremium="+this._b_premium;  
+    if(this._b_active  != undefined )      url += "&fCol_bActive="+this._b_active;  
+    if(this._b_enabled  != undefined )     url += "&fCol_bEnabled="+this._b_enabled;  
+    if(this._b_spam  != undefined )        url += "&fCol_bSpam="+this._b_spam;  
     // filters item stat table
-    if(this._i_num_bad_classified != undefined ) {url += "&stat=bad";}
-    if(this._i_num_spam != undefined ) { url += "&stat=spam"; }
-    if(this._i_num_repeated != undefined ) { url += "&stat=duplicated"; }
-    if(this._i_num_offensive != undefined ) { url += "&stat=offensive"; }
-    if(this._i_num_expired != undefined ) { url += "&stat=expired"; }
+//    if(this._i_num_bad_classified != undefined ) url += "&stat=bad";
+//    if(this._i_num_spam != undefined )           url += "&stat=spam";
+//    if(this._i_num_repeated != undefined )       url += "&stat=duplicated";
+//    if(this._i_num_offensive != undefined )      url += "&stat=offensive";
+//    if(this._i_num_expired != undefined )        url += "&stat=expired";
+
+    if(this._i_num_bad_classified != undefined ) url += "&bad=bad";
+    if(this._i_num_spam != undefined )           url += "&spam=spam";
+    if(this._i_num_repeated != undefined )       url += "&duplicated=duplicated";
+    if(this._i_num_offensive != undefined )      url += "&offensive=offensive";
+    if(this._i_num_expired != undefined )        url += "&expired=expired";
     // search
-    if(this._sSearch != "") { url += "&sSearch="+this._sSearch; }
+    if(this._sSearch != undefined)          url += "&sSearch="+this._sSearch;
     // url += ....
     
     /* Ensure that the json data is fully loaded sync*/
@@ -496,12 +523,62 @@ function _fnPageChange ( sAction )
     return iOldStart != this._iDisplayStart;
 }
 
+function _fnUpdatePagination() {
+//    alert('updatePagination');
+    var iPageCount = 5 ;
+    var iPageCountHalf = Math.floor(iPageCount / 2);
+    var iPages = Math.ceil((this._fnRecordsDisplay()) / this._iDisplayLength);
+    var iCurrentPage = Math.ceil(this._iDisplayStart / this._iDisplayLength) + 1;
+    var sList = "";
+    var iStartButton, iEndButton, i, iLen;
+    // oClasses
+
+    /* Pages calculation */
+    if (iPages < iPageCount) {
+        iStartButton = 1;
+        iEndButton = iPages;
+    } else {
+        if (iCurrentPage <= iPageCountHalf){
+            iStartButton = 1;
+            iEndButton = iPageCount;
+        }else{
+            if (iCurrentPage >= (iPages - iPageCountHalf)){
+                iStartButton = iPages - iPageCount + 1;
+                iEndButton = iPages;
+            }else{
+                iStartButton = iCurrentPage - Math.ceil(iPageCount / 2) + 1;
+                iEndButton = iStartButton + iPageCount - 1;
+            }
+        }
+    }
+
+    /* Build the dynamic list */
+    for ( i=iStartButton ; i<=iEndButton ; i++ ){
+        if ( iCurrentPage != i ){
+            sList += '<span class="'+this.oClasses.sPageButton+'">'+i+'</span>';
+        }else{
+            sList += '<span class="'+this.oClasses.sPageButtonActive+'">'+i+'</span>';
+        }
+    }
+
+    var qjPaginateList = $('span.list_pages');
+    qjPaginateList.html( sList );
+
+    _this = this;
+
+    $('span',qjPaginateList).bind( 'click', function () {
+            var num = parseInt((this.innerHTML), 10) ;
+            var target = num - 1 ;
+            _this._iDisplayStart = target * _this._iDisplayLength;
+            _this._fnReDraw();
+        });
+}
+
 /*
  * Total number of records
  */
 function _fnRecordsDisplay() {
-//    return this._iTotalDisplayRecords;
-    return this._iTotalRecords;
+    return this._iTotalDisplayRecords;
 }
 
 
@@ -510,14 +587,77 @@ function IsNumeric(input)
 {
     return (input - 0) == input && input.length > 0;
 }
+
+String.prototype.base64_encode = base64_encode;
+function base64_encode( data ) {
+    // Encodes string using MIME base64 algorithm
+    //
+    // version: 902.2516
+    // discuss at: http://phpjs.org/functions/base64_encode
+    // +   original by: Tyler Akins (http://rumkin.com)
+    // +   improved by: Bayron Guevara
+    // +   improved by: Thunder.m
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   bugfixed by: Pellentesque Malesuada
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // -    depends on: utf8_encode
+    // *     example 1: base64_encode('Kevin van Zonneveld');
+    // *     returns 1: 'S2V2aW4gdmFuIFpvbm5ldmVsZA=='
+    // mozilla has this native
+    // - but breaks in 2.0.0.12!
+    //if (typeof window['atob'] == 'function') {
+    //    return atob(data);
+    //}
+
+    var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    var o1, o2, o3, h1, h2, h3, h4, bits, i = ac = 0, enc="", tmp_arr = [];
+
+    if (!data) {
+        return data;
+    }
+
+//    data = utf8_encode(data+'');
+
+    do { // pack three octets into four hexets
+        o1 = data.charCodeAt(i++);
+        o2 = data.charCodeAt(i++);
+        o3 = data.charCodeAt(i++);
+
+        bits = o1<<16 | o2<<8 | o3;
+
+        h1 = bits>>18 & 0x3f;
+        h2 = bits>>12 & 0x3f;
+        h3 = bits>>6 & 0x3f;
+        h4 = bits & 0x3f;
+
+        // use hexets to index into b64, and append result to encoded string
+        tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
+    } while (i < data.length);
+
+    enc = tmp_arr.join('');
+
+    switch( data.length % 3 ){
+        case 1:
+            enc = enc.slice(0, -2) + '==';
+        break;
+        case 2:
+            enc = enc.slice(0, -1) + '=';
+        break;
+    }
+
+    return enc;
+}
+
+
 // filters
 function applyFilters(){
 
     // get filters
-    // userId
+    
     this._fUserId       = ( $('#userId').val() == '' ) ? undefined : $('#userId').val() ;
-    // get location
+    
     this._fCountryId    = ( $('#countryId').val() == '' ) ? undefined : $('#countryId').val() ;
+
     this._fRegionId     = ( $('#regionId').val() == '' ) ? undefined : $('#regionId').val();
     this._fCityId       = ( $('#cityId').val() == '' ) ? undefined : $('#cityId').val();
     
@@ -530,9 +670,19 @@ function applyFilters(){
 
     this._i_num_bad_classified  = ( $('#i_num_bad_classified').val() == '' ) ? undefined : $('#i_num_bad_classified').val();
     this._i_num_spam            = ( $('#i_num_spam').val() == '' ) ? undefined : $('#i_num_spam').val();
+    this._i_num_repeated        = ( $('#i_num_repeated').val() == '' ) ? undefined : $('#i_num_repeated').val();
+    this._i_num_offensive       = ( $('#i_num_offensive').val() == '' ) ? undefined : $('#i_num_offensive').val();
+    this._i_num_expired         = ( $('#i_num_expired').val() == '' ) ? undefined : $('#i_num_expired').val();
 
-    this._sSearch               = $('#sSearch').val();
+    var string = $('#sSearch').val();
+    this._sSearch   = string.base64_encode(string);
+    if(this._sSearch == "") this._sSearch = undefined;
+    this._iDisplayStart = 0;
 
     this._fnReDraw();
-    
+}
+
+function fnGetFilteredNodes(){
+    alert("entra");
+    return $('#'+this._idTable+' input');
 }

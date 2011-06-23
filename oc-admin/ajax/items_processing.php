@@ -82,10 +82,6 @@
             $mSearch = new Search(true);
             $mSearch->limit($this->start, $this->limit);
 
-            if($this->order_by['table_name']!=NULL){
-                    $this->order_by['table_name'] = sprintf($this->order_by['table_name'], DB_TABLE_PREFIX);
-            }
-
             $mSearch->order($this->order_by['column_name'], $this->order_by['type'], $this->order_by['table_name'] );
 
             if(Params::getParam("catId")!="") {
@@ -95,49 +91,37 @@
                 $mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $this->search, $this->search));
             }
             
-            switch($this->stat) {
-                case "spam":
-                    $mSearch->addConditions("s.`i_num_spam` > 0");
-                    $mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
-                    break;
-                case "duplicated":
-                    $mSearch->addConditions("s.`i_num_duplicated` > 0");
-                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
-                    break;
-                case "bad":
-                    $mSearch->addConditions("s.`i_num_bad_classified` > 0");
-                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
-                    break;
-                case "offensive":
-                    $mSearch->addConditions("s.`i_num_offensive` > 0");
-                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
-                    break;
-                case "expired":
-                    $mSearch->addConditions("s.`i_num_expired` > 0");
-                    $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
-                    $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
-                    break;
-                case "pending":
-                    $conditions[] = "i.`b_active` = 0";
-                    $mSearch->addConditions(sprintf("%st_item.b_active = 0", DB_TABLE_PREFIX));
-                    break;
-                case "enabled":
-                    $conditions[] = "i.`b_enabled` = 1";
-                    $mSearch->addConditions(sprintf("%st_item.b_enabled = 1", DB_TABLE_PREFIX));
-                    break;
-                case "disabled":
-                    $mSearch->addConditions(sprintf("%st_item.b_enabled = 0", DB_TABLE_PREFIX));
-                    break;
-                default:
-                    break;
+            if(@$this->stat['spam']) {
+                $mSearch->addField('s.`i_num_spam`');
+                $mSearch->addConditions("s.`i_num_spam` > 0");
+                $mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+            }
+            if(@$this->stat['duplicated']) {
+                $mSearch->addField('s.`i_num_duplicated`');
+                $mSearch->addConditions("s.`i_num_duplicated` > 0");
+                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+            }
+            if(@$this->stat['bad']) {
+                $mSearch->addField('s.`i_num_bad_classified`');
+                $mSearch->addConditions("s.`i_num_bad_classified` > 0");
+                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+            }
+            if(@$this->stat['offensive']) {
+                $mSearch->addField('s.`i_num_offensive`');
+                $mSearch->addConditions("s.`i_num_offensive` > 0");
+                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
+            }
+            if(@$this->stat['expired']) {
+                $mSearch->addField('s.`i_num_expired`');
+                $mSearch->addConditions("s.`i_num_expired` > 0");
+                $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
+                $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             }
 
-            // filters
-            
             foreach($this->filters as $aFilter ){
                 $sFilter = "";
                 $sFilter .= $aFilter[0]." = '".$aFilter[1]."'";
@@ -163,6 +147,7 @@
         }
 
         private function getDBParams() {
+            
             foreach($this->_get as $k=>$v) {
                 if($k == 'iDisplayStart') $this->start = intval($v);
                 if($k == 'iDisplayLength') $this->limit = intval($v);
@@ -174,9 +159,24 @@
                     $this->order_by['table_name'] = $this->tables_columns[$v];
                 }
                 if($k == 'sSortDir_0') $this->order_by['type'] = $v;
-                if($k == 'sSearch') $this->search = $v;
-                if($k == 'stat') $this->stat = $v;
+                if($k == 'sSearch') {
+                    $this->search = base64_decode($v);
+                }
+//                if($k == 'stat') $this->stat = $v;
+                if($k == 'spam') $this->stat['spam'] = true;
+//                else $this->stat['spam'] = false;
 
+                if($k == 'duplicated') $this->stat['duplicated'] = true;
+//                else $this->stat['duplicated'] = false;
+
+                if($k == 'offensive') $this->stat['offensive'] = true;
+//                else $this->stat['offensive'] = false;
+
+                if($k == 'bad') {$this->stat['bad'] = true;}
+//                else $this->stat['bad'] = false;
+
+                if($k == 'expired') $this->stat['expired'] = true;
+//                else $this->stat['expired'] = false;
                 // get all filters
                 // user filter
                 if($k == 'fCol_userIdValue')    array_push($this->filters, array($this->tables_filters[$k], $v ));

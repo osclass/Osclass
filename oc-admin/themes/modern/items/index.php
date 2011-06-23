@@ -48,6 +48,9 @@
 
         </script>
         <style>
+            fieldset {
+                width: 100px;
+            }
             fieldset label{
                width: 100px;
                display: inline-block;
@@ -60,6 +63,18 @@
                 padding-top: 10px;
                 display: inline-block;
             }
+            fieldset div.selector {
+                width: 70px;
+            }
+            fieldset div.selector span{
+                width: 40px;
+            }
+            #uniform-select_range{
+                width: 70px;
+            }
+            #uniform-select_range span{
+                width: 40px;
+            }
        </style>
         <?php ItemForm::location_javascript('admin'); ?>
         <script type="text/javascript">
@@ -67,8 +82,8 @@
                 oTable = new osc_datatable();
                 oTable.fnInit({
                     'idTable'       : 'datatables_list',
-                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items",//&catId=<?php echo Params::getParam('catId');?>",
-                    'iDisplayLength': '10',
+                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>",
+                    'iDisplayLength': '5',
                     'iColumns'      : '8',
                     'oLanguage'     : {
                             "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
@@ -159,113 +174,174 @@
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <div>
-                    <div id="TableToolsLinks">
-                        <strong>Filter by:</strong>
-                        <div class="row">
-                            <label><?php _e('Search') ; ?></label>
-                            <input id="sSearch" type="text" name="sSearch"/>
+                    <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
+                        <div class="top">
+                            <div style="float:left;"><?php _e('Show') ; ?>
+                                <select class="display" id="select_range">
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="100">100</option>
+                                </select> <?php _e('entries') ; ?>
+                            </div>
+                            <div id="TableToolsToolbar">
+                                <select id="bulk_actions" name="bulk_actions" class="display">
+                                        <option value=""><?php _e('Bulk actions'); ?></option>
+                                        <option value="delete_all"><?php _e('Delete') ?></option>
+                                        <option value="activate_all"><?php _e('Activate') ?></option>
+                                        <option value="deactivate_all"><?php _e('Deactivate') ?></option>
+                                        <option value="enable_all"><?php _e('Enable') ?></option>
+                                        <option value="disable_all"><?php _e('Disable') ?></option>
+                                        <option value="premium_all"><?php _e('Mark as premium') ?></option>
+                                        <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
+                                </select>
+                                &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
+                            </div>
                         </div>
-                        <div class="row">
-                            <label><?php _e('Item posted by'); ?></label>
-                            <?php ItemForm::user_select($users, NULL, __('Non-registered user')); ?>
+                        <input type="hidden" name="action" value="bulk_actions" />
+                        <div style="clear:both;"></div>
+                        <div id="show_filter" style="cursor: pointer;padding-top:10px;border-bottom:1px gray solid;" onclick="$('#TableToolsLinks').toggle();"> <strong>+ <?php _e('Show filters')?></strong> </div>
+                        <div id="TableToolsLinks" style="display:none;">
+                            <div style="float:left;">
+                                
+                                <div class="row">
+                                    <label><?php _e('Search') ; ?></label>
+                                    <input id="sSearch" type="text" name="sSearch"/><span>*(<?php _e('Title and Description'); ?>)</span>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('Item posted by'); ?></label>
+                                    <?php ItemForm::user_select($users, NULL, __('Non-registered user')); ?>
+                                </div>
+
+                                <div class="row">
+                                    <label><?php _e('Country'); ?></label>
+                                    <?php $item = array(); $item["countryId"] = "";ItemForm::country_select($countries, $item ) ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('Region'); ?></label>
+                                    <?php ItemForm::region_select($regions, "NULL") ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('City'); ?></label>
+                                    <?php ItemForm::city_select($cities, "NULL") ; ?>
+                                </div>
+
+                                <div class="row">
+                                    <label for="catId"><?php _e('Category') ?>:</label>
+                                    <?php $item = array(); $item["fk_i_category_id"] = Params::getParam('catId'); ItemForm::category_select($categories, $item ); ?>
+                                </div>
+                            </div>
+                            <div class="" style="float:left;">
+                                <fieldset>
+                                    <strong><?php _e('Status') ?></strong>
+                                    <br/>
+                                    <label for="b_premium"><?php _e('Premium') ?></label>
+                                    <select id="b_premium" name="b_premium" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="b_active"><?php _e('Active') ?></label>
+                                    <select id="b_active" name="b_active" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="b_enabled"><?php _e('Enabled') ?></label>
+                                    <select id="b_enabled" name="b_enabled" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="b_spam"><?php _e('Spam') ?></label>
+                                    <select id="b_spam" name="b_spam" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="" style="float:left;">
+                                <fieldset>
+                                    <strong><?php _e('Mark as') ?></strong>
+                                    <br/>
+                                    <label for="i_num_spam"><?php _e('Spam') ?></label>
+                                    <select id="i_num_spam" name="i_num_spam" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_bad_classified"><?php _e('Misclassified') ?></label>
+                                    <select id="i_num_bad_classified" name="i_num_bad_classified" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_repeated"><?php _e('Duplicated') ?></label>
+                                    <select id="i_num_repeated" name="i_num_repeated" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_offensive"><?php _e('Offensive') ?></label>
+                                    <select id="i_num_offensive" name="i_num_offensive" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_expired"><?php _e('Expired') ?></label>
+                                    <select id="i_num_expired" name="i_num_expired" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                </fieldset>
+
+                            </div>
+                            <div style="clear:both;"></div>
+                            <div>
+                                <div style="float:left;width:70px;padding-top:10px;"><button type="button" onclick="oTable.applyFilters();">APPLY</button></div>
+                                <div style="float:left;width:140px;padding-top:10px;padding-left:10px;"><button type="button" onclick="window.location.href='<?php echo osc_admin_base_url(true);?>?page=items'">RESET FILTERS</button></div>
+                            </div>
+                            <div style="padding-top:10px;border-bottom:1px gray solid;clear:both;"></div>
                         </div>
                         
-                        <div class="row">
-                            <label><?php _e('Country'); ?></label>
-                            <?php ItemForm::country_select($countries, NULL) ; ?>
-                        </div>
-                        <div class="row">
-                            <label><?php _e('Region'); ?></label>
-                            <?php ItemForm::region_select($regions, NULL) ; ?>
-                        </div>
-                        <div class="row">
-                            <label><?php _e('City'); ?></label>
-                            <?php ItemForm::city_select($cities, NULL) ; ?>
-                        </div>
-                        
-                        <div class="row">
-                            <label for="catId"><?php _e('Category') ?>:</label>
-                            <?php ItemForm::category_select($categories, "null" ); ?>
-                        </div>
-                        <div class="row">
-                            <label for="b_premium"><?php _e('Premium') ?></label>
-                            <select id="b_premium" name="b_premium" style="opacity: 0;">
-                                <option value="">-</option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
-                            </select>
-                            
-                        </div>
-                        <div class="row">
-                            <label for="b_active"><?php _e('Active') ?></label>
-                            <select id="b_active" name="b_active" style="opacity: 0;">
-                                <option value="">-</option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
-                            </select>
-                            
-                        </div>
-                        <div class="row">
-                            <label for="b_enabled"><?php _e('Enabled') ?></label>
-                            <select id="b_enabled" name="b_enabled" style="opacity: 0;">
-                                <option value="">-</option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
-                            </select>
-                            
-                        </div>
-                        <div class="row">
-                            <label for="b_spam"><?php _e('Spam') ?></label>
-                            <select id="b_spam" name="b_spam" style="opacity: 0;">
-                                <option value="">-</option>
-                                <option value="1"><?php _e('ON'); ?></option>
-                                <option value="0"><?php _e('OFF'); ?></option>
-                            </select>
-                        </div>
-                        <div class="">
-                            <strong><?php _e('Mark as') ?></strong>
-                            <fieldset>
-                                <label for="i_num_spam"><?php _e('Spam') ?></label>
-                                <select id="i_num_spam" name="i_num_spam" style="opacity: 0;">
-                                    <option value="">-</option>
-                                    <option value="1"><?php _e('ON'); ?></option>
-                                </select>
-                                <br/>
-                                <label for="i_num_bad_classified"><?php _e('Misclassified') ?></label>
-                                <select id="i_num_bad_classified" name="i_num_bad_classified" style="opacity: 0;">
-                                    <option value="">-</option>
-                                    <option value="1"><?php _e('ON'); ?></option>
-                                </select>
-                                <br/>
-                                <label for="i_num_repeated"><?php _e('Duplicated') ?></label>
-                                <select id="i_num_repeated" name="i_num_repeated" style="opacity: 0;">
-                                    <option value="">-</option>
-                                    <option value="1"><?php _e('ON'); ?></option>
-                                </select>
-                                <br/>
-                                <label for="i_num_offensive"><?php _e('Offensive') ?></label>
-                                <select id="i_num_offensive" name="i_num_offensive" style="opacity: 0;">
-                                    <option value="">-</option>
-                                    <option value="1"><?php _e('ON'); ?></option>
-                                </select>
-                                <br/>
-                                <label for="i_num_expired"><?php _e('Expired') ?></label>
-                                <select id="i_num_expired" name="i_num_expired" style="opacity: 0;">
-                                    <option value="">-</option>
-                                    <option value="1"><?php _e('ON'); ?></option>
-                                </select>
-                            </fieldset>
-                            
-                        </div>
-                        <div class="row">
-                            <div style="padding-top:10px;"><button onclick="oTable.applyFilters();">APPLY</button></div>
-                        </div>
-                    </div>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
+                        <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
+                    </form>
                 </div>
 
             </div> <!-- end of right column -->
-
+            <script>
+                
+                    $('#check_all').live('change',
+                        function(){
+                            if( $(this).attr('checked') ){
+                                $('#'+oTable._idTable+" input").each(function(){
+                                    $(this).attr('checked','checked');
+                                });
+                            } else {
+                                $('#'+oTable._idTable+" input").each(function(){
+                                    $(this).attr('checked','');
+                                });
+                            }
+//                            $('#'+oTable._idTable+" input").each(function(){
+//                                $(this).attr('checked','checked');
+//                            });
+                        }
+                    );
+                
+                
+//                $("#show_filter").hover(
+//                    function () {
+//                        $(this).css("border-bottom","3px solid gray");
+//                    },
+//                    function () {
+//                        $(this).css("border-bottom","1px solid gray");
+//                    }
+//                );
+            </script>
             <div style="clear: both;"></div>
 
         </div> <!-- end of container -->

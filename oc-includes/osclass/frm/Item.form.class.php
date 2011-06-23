@@ -38,6 +38,7 @@
 
             if($categories==null) { $categories = osc_get_categories(); };
             if($item==null) { $item = osc_item(); };
+            
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -227,6 +228,7 @@
             } else {
                 if($regions==null) { $regions = osc_get_regions(); };
             }
+            
             if($item==null) { $item = osc_item(); };
             
             if( count($regions) > 1 ) {
