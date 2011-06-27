@@ -975,7 +975,7 @@
      * @return array
      */    
     function osc_item_meta_value() {
-        return osc_field(osc_item_meta(), 's_value', '') ;
+        return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
     }
    
     /**
