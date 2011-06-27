@@ -30,6 +30,8 @@
         private $search;
         private $order_by = array();
         private $stat;
+        private $extraCols = 0;
+        private $sExtraCol = array();
 
         private $column_names  = 
             array(  0=> 'dt_pub_date',
@@ -92,31 +94,41 @@
             }
             
             if(@$this->stat['spam']) {
-                $mSearch->addField('s.`i_num_spam`');
+                $this->extraCols++;
+                $this->sExtraCol['i_num_spam'] = true;
+                $mSearch->addField('SUM(s.`i_num_spam`) as i_num_spam');
                 $mSearch->addConditions("s.`i_num_spam` > 0");
                 $mSearch->addConditions(sprintf("%st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                 $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             }
             if(@$this->stat['duplicated']) {
-                $mSearch->addField('s.`i_num_duplicated`');
-                $mSearch->addConditions("s.`i_num_duplicated` > 0");
+                $this->extraCols++;
+                $this->sExtraCol['i_num_repeated'] = true;
+                $mSearch->addField('SUM(s.`i_num_repeated`) as i_num_repeated');
+                $mSearch->addConditions("s.`i_num_repeated` > 0");
                 $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                 $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             }
             if(@$this->stat['bad']) {
-                $mSearch->addField('s.`i_num_bad_classified`');
+                $this->extraCols++;
+                $this->sExtraCol['i_num_bad_classified'] = true;
+                $mSearch->addField('SUM(s.`i_num_bad_classified`) as i_num_bad_classified');
                 $mSearch->addConditions("s.`i_num_bad_classified` > 0");
                 $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                 $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             }
             if(@$this->stat['offensive']) {
-                $mSearch->addField('s.`i_num_offensive`');
+                $this->extraCols++;
+                $this->sExtraCol['i_num_offensive'] = true;
+                $mSearch->addField('SUM(s.`i_num_offensive`) as i_num_offensive');
                 $mSearch->addConditions("s.`i_num_offensive` > 0");
                 $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                 $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
             }
             if(@$this->stat['expired']) {
-                $mSearch->addField('s.`i_num_expired`');
+                $this->extraCols++;
+                $this->sExtraCol['i_num_expired'] = true;
+                $mSearch->addField('SUM(s.`i_num_expired`) as i_num_expired');
                 $mSearch->addConditions("s.`i_num_expired` > 0");
                 $mSearch->addConditions(sprintf(" %st_item.pk_i_id = s.fk_i_item_id", DB_TABLE_PREFIX));
                 $mSearch->addTable(sprintf("%st_item_stats s", DB_TABLE_PREFIX));
@@ -162,21 +174,11 @@
                 if($k == 'sSearch') {
                     $this->search = base64_decode($v);
                 }
-//                if($k == 'stat') $this->stat = $v;
-                if($k == 'spam') $this->stat['spam'] = true;
-//                else $this->stat['spam'] = false;
-
-                if($k == 'duplicated') $this->stat['duplicated'] = true;
-//                else $this->stat['duplicated'] = false;
-
-                if($k == 'offensive') $this->stat['offensive'] = true;
-//                else $this->stat['offensive'] = false;
-
-                if($k == 'bad') {$this->stat['bad'] = true;}
-//                else $this->stat['bad'] = false;
-
-                if($k == 'expired') $this->stat['expired'] = true;
-//                else $this->stat['expired'] = false;
+                if($k == 'spam')        $this->stat['spam'] = true;
+                if($k == 'duplicated')  $this->stat['duplicated'] = true;
+                if($k == 'offensive')   $this->stat['offensive'] = true;
+                if($k == 'bad')         $this->stat['bad'] = true;
+                if($k == 'expired')     $this->stat['expired'] = true;
                 // get all filters
                 // user filter
                 if($k == 'fCol_userIdValue')    array_push($this->filters, array($this->tables_filters[$k], $v ));
@@ -197,6 +199,27 @@
             $this->sOutput = '{';
             $this->sOutput .= '"iTotalRecords": '.($this->total).', ';
             $this->sOutput .= '"iTotalDisplayRecords": '.($this->filtered_total).', ';
+            $this->sOutput .= '"iExtraCols": '.($this->extraCols).', ';
+
+            $this->sOutput .= '"sExtraCols": [';
+            if(isset($this->sExtraCol['i_num_spam'])) {
+                $this->sOutput .= '"spam",';
+            }
+            if(isset($this->sExtraCol['i_num_repeated'])) {
+                $this->sOutput .= '"duplicated",';
+            }
+            if(isset($this->sExtraCol['i_num_bad_classified'])) {
+                $this->sOutput .= '"bad",';
+            }
+            if(isset($this->sExtraCol['i_num_offensive'])) {
+                $this->sOutput .= '"offensive",';
+            }
+            if(isset($this->sExtraCol['i_num_expired'])) {
+                $this->sOutput .= '"expired",';
+            }
+            if($this->extraCols > 0) $this->sOutput = substr($this->sOutput,0,-1);
+            $this->sOutput .= '], ';
+
             $this->sOutput .= '"aaData": [ ';
 
             if(count($this->result)>0) {
@@ -213,9 +236,13 @@
                     $address = implode(", ", $addr);
                     
                     $this->sOutput .= "[";
-                    $this->sOutput .= '"<div style=\'margin-left: 8px;\'><input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' /></div>",';
+                    $this->sOutput .= '"<div style=\'width:10px;\'><input type=\'checkbox\' name=\'id[]\' value=\''.$aRow['pk_i_id'].'\' /></div>",';
                     
-                    $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['s_title'])).' <br/>';
+                    $title         =   mb_substr($aRow['s_title'], 0, 30, 'utf-8');
+                    if($title != $aRow['s_title']) {
+                        $title .= "...";
+                    }
+                    $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$title)).' <br/>';
                     $this->sOutput .= '<div id=\'datatable_wrapper\'><div id=\'datatables_quick_edit\' ';
                     if($count % 2) {
                         $this->sOutput .= ' class=\'even\' ';
@@ -237,8 +264,13 @@
                     }
                     if(isset($aRow['b_premium']) && $aRow['b_premium']) {
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=0\'>'. __('Unmark as premium') .'</a>';
-                    } else { //if (isset($aRow['b_premium']) && !$aRow['b_premium']) {
+                    } else { 
                         $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_premium&amp;id='. $aRow['pk_i_id'] .'&amp;value=1\'>'. __('Mark as premium') .'</a>';
+                    }
+                    if(isset($aRow['b_spam']) && $aRow['b_spam']) {
+                        $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_spam&amp;id='. $aRow['pk_i_id'] .'&amp;value=0\'>'. __('Unmark as spam') .'</a>';
+                    } else {
+                        $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=status_spam&amp;id='. $aRow['pk_i_id'] .'&amp;value=1\'>'. __('Mark as spam') .'</a>';
                     }
                     $this->sOutput .= ' | <a href=\''.osc_admin_base_url(true).'?page=items&action=item_edit&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Edit') .'</a>';
                                             $var = 'onclick=\"javascript:return confirm(\''.__('This action can not be undone. Are you sure you want to continue?').'\')\"';
@@ -251,13 +283,12 @@
                     }
 
                     /* if $_GET['stat'] */
-
-                    if(isset($aRow['num_total'])) {
-                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['num_total'])).'",';
-                    } else {
-                        $description = mb_substr($aRow['s_description'], 0, 200, 'utf-8');
-//                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ', $description)).'",';
-                    }
+//                    if(isset($aRow['num_total'])) {
+//                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['num_total'])).'",';
+//                    } else {
+//                        $description = mb_substr($aRow['s_description'], 0, 200, 'utf-8');
+////                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ', $description)).'",';
+//                    }
                     /* END OF - if $_GET['stat'] */
                     $this->sOutput .= '"'.$aRow['s_user_name'].'",';
                     $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
@@ -265,6 +296,25 @@
                     $this->sOutput .= '"'.$aRow['s_region'].'",';
                     $this->sOutput .= '"'.$aRow['s_city'].'",';
                     $this->sOutput .= '"'.addslashes($aRow['dt_pub_date']).'"';
+                    if($this->extraCols > 0) $this->sOutput .= ',';
+
+                    if(isset($aRow['i_num_spam'])) {
+                        $this->sOutput .= '"'.$aRow['i_num_spam'].'",';
+                    }
+                    if(isset($aRow['i_num_repeated'])) {
+                        $this->sOutput .= '"'.$aRow['i_num_repeated'].'",';
+                    }
+                    if(isset($aRow['i_num_bad_classified'])) {
+                        $this->sOutput .= '"'.$aRow['i_num_bad_classified'].'",';
+                    }
+                    if(isset($aRow['i_num_offensive'])) {
+                        $this->sOutput .= '"'.$aRow['i_num_offensive'].'",';
+                    }
+                    if(isset($aRow['i_num_expired'])) {
+                        $this->sOutput .= '"'.$aRow['i_num_expired'].'",';
+                    }
+                    if($this->extraCols > 0) $this->sOutput = substr($this->sOutput,0,-1);
+
 
                     if(end($this->result) == $aRow) {
                         $this->sOutput .= "]";

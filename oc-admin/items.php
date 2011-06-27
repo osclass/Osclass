@@ -313,6 +313,32 @@
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
+                case 'status_spam':  //status spam
+                                        $id = Params::getParam('id') ;
+                                        $value = Params::getParam('value') ;
+
+                                        if (!$id)
+                                            return false;
+
+                                        $id = (int) $id;
+
+                                        if (!is_numeric($id))
+                                            return false;
+
+                                        if (!in_array($value, array(0, 1)))
+                                            return false;
+
+                                        try {
+                                            $this->itemManager->update(
+                                                    array('b_spam' => $value),
+                                                    array('pk_i_id' => $id)
+                                            );
+                                            osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
+                                        } catch (Exception $e) {
+                                            osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                break;
                 case 'clear_stat':
                                         $id     = Params::getParam('id') ;
                                         $stat   = Params::getParam('stat') ;

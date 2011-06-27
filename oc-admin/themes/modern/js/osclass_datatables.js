@@ -1,36 +1,83 @@
-    /**
-     * OSClass – software for creating and publishing online classified advertising platforms
-     *
-     * Copyright (C) 2010 OSCLASS
-     *
-     * This program is free software: you can redistribute it and/or modify it under the terms
-     * of the GNU Affero General Public License as published by the Free Software Foundation,
-     * either version 3 of the License, or (at your option) any later version.
-     *
-     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-     * See the GNU Affero General Public License for more details.
-     *
-     * You should have received a copy of the GNU Affero General Public
-     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+/**
+ * OSClass – software for creating and publishing online classified advertising platforms
+ *
+ * Copyright (C) 2010 OSCLASS
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms
+ * of the GNU Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+/*
+ * Constructor osc_datatable
+ * Set up class variables  with default values
+ */
+var osc_datatable = function()
+{
+    /*
+     * Table id
      */
-
-var osc_datatable = function() {
-
-    // private attr
-    this._idTable        = 'default' ;
-    this._sAjaxSource    = '' ;
-    this._iDisplayLength = 5 ;
-    this._iColumns       = 0 ;
-    this._aoColumns      = new Array() ;
-    this._aoData         = new Array() ;
-    this._iTotalRecords         = -1;
-    this._iTotalDisplayRecords  = -1;
-    this._iDisplayStart         = 0;
-    this._iSortableCol          = 0;
-    this._sSortDir              = 'desc';
-
-    // filters
+    this._idTable               = 'default' ;
+    /*
+     * Source ajax
+     */
+    this._sAjaxSource           = '' ;
+    /*
+     * Number of rows for display
+     */
+    this._iDisplayLength        = 5 ;
+    /*
+     * Number of columns
+     */
+    this._iColumns              = 0 ;
+    /*
+     * Array of objects, columns (contains sTitle, sWidth, bSortable, sClass,..)
+     */
+    this._aoColumns             = new Array() ;
+    /*
+     * Array of objects, data (contains data table)
+     */
+    this._aoData                = new Array() ;
+    /*
+     * Total records , returned on ajax
+     */
+    this._iTotalRecords         = -1 ;
+    /*
+     * Total records for display (no equal _iTotalRecords if data is filtered),
+     * returned on ajax
+     */
+    this._iTotalDisplayRecords  = -1 ;
+    /*
+     * Number of column in which starts to show
+     */
+    this._iDisplayStart         = 0 ;
+    /*
+     * Number of column for sorting data
+     */
+    this._iSortableCol          = 0 ;
+    /*
+     * Sorting direction ASC or DESC
+     */
+    this._sSortDir              = 'desc' ;
+    /*
+     * Number of extra columns being added
+     */
+    this._iExtraCols            = 0 ;
+    /*
+     * array of strings, array of columns names
+     */
+    this._sExtraCols            = "" ;
+    /*
+     * Search filters.
+     */
     this._fUserId           = undefined;
     this._fCountryId        = undefined;
     this._fRegionId         = undefined;
@@ -40,9 +87,9 @@ var osc_datatable = function() {
     this._b_active          = undefined;
     this._b_enabled         = undefined;
     this._b_spam            = undefined;
-   
-    
-    // array of class
+    /*
+     * Array of classes, used for identify elements
+     */
     this.oClasses = new Array();
     this.oClasses.sPageButton   = "paginate_button";
     this.oClasses.sPageFirst    = "first";
@@ -50,39 +97,40 @@ var osc_datatable = function() {
     this.oClasses.sPageNext     = "next";
     this.oClasses.sPageLast     = "last";
     this.oClasses.sPageButtonActive = "paginate_active";
-
-    // public methods
+    /*
+     * Public functions
+     */
     this.fnInit         = fnInit;
     this.fnDisplayTable = fnDisplayTable;
-    // private methods
-    this._fnHeader      = _fnHeader;
-
+    /*
+     * Private functions
+     */
     this._fnBody        = _fnBody;
     this._fnReBody      = _fnReBody;
-    
+    this._fnHeader      = _fnHeader;
+    this._fnReHeader    = _fnReHeader;
     this._fnFooter      = _fnFooter;
     this._fnReFooter    = _fnReFooter;
-
-    this._paginate      = _paginate;
-    this._fnUpdatePagination = _fnUpdatePagination;
-
     this._fnUpdateData  = _fnUpdateData;
     this._fnUpdateSort  = _fnUpdateSort;
     this._fnInitData    = _fnInitData;
     this._fnPageChange  = _fnPageChange;
     this._fnReDraw      = _fnReDraw;
+    this._paginate      = _paginate;
+    this._fnUpdatePagination = _fnUpdatePagination;
     this._fnRecordsDisplay = _fnRecordsDisplay;
 
     this.applyFilters   = applyFilters;
-
-    this.fnGetFilteredNodes = fnGetFilteredNodes;
 }
 
 /*
- * Initializing attributes from json
+ * Initializing attributes from json, setting propieties
+ * like: table id, num. of rows to display, num. of columns,
+ * table strings,
+ * Also do the first call to ajax source, and display the table.
  */
-function fnInit(json) {
-    
+function fnInit(json)
+{
     this._idTable        = json.idTable;
     this._iDisplayLength = json.iDisplayLength;
     this._iColumns       = json.iColumns;
@@ -132,21 +180,18 @@ function _fnHeader(){
     
     for(var i=0; i < n_cols; i++) {
         var style = "";
-        if(i == 0) {
-            style = style_first ;
-        } else if (i == n_cols-1 ){
-            style = style_last ;
-        }
-        
+        if(i == 0)                  style = style_first+"padding-left:10px;" ;
+        else if (i == n_cols-1 )    style = style_last ;
+        // apply width
         if( this._aoColumns[i].sWidth != '') {
             style += "width: " + (this._aoColumns[i].sWidth) + ";" ;
         }
-
+        // add sTitle to header
         var _th = $('<th></th>').html(this._aoColumns[i].sTitle);
         // añadir clases a th  sorting_disabled / sorting / sorting_asc / sorting_desc
+        // add class for sorting and bind the click event
         if(this._aoColumns[i].bSortable == true){
             _th.addClass('sorting');
-
             _this = this;
 
             var colSort = i ;
@@ -184,6 +229,9 @@ function _fnHeader(){
     $('#'+this._idTable).append(_thead);
 }
 
+/*
+ * Set start and sortableCol
+ */
 function _fnUpdateSort(value){
     this._iDisplayStart = 0;
     this._iSortableCol  = value;
@@ -203,7 +251,18 @@ function _fnBody(){
         }
         _tbody.append(_row) ;
     }
+
+    if(this._aoData.length == 0 && this._iExtraCols == 0){
+        _row = $('<tr></tr>');
+        _row.addClass('odd');
+        _row.addClass('dataTables_empty');
+        _row.append( $('<td></td>').attr('style','vertical-align: middle;').attr('colspan',this._iColumns).html( this._oLanguage.sZeroRecords ) );
+        _tbody.append(_row) ;
+    }
+
     $('#'+this._idTable).append(_tbody);
+
+
 }
 
 /*
@@ -316,32 +375,120 @@ function _paginate(type, node_pag) {
 }
 
 /*
- * Update the body and footer content.
+ * Update all the table ( header,body and footer content).
  */
-function _fnReDraw(){
-
+function _fnReDraw()
+{
     // show processing
     $('#'+this._idTable+"_processing").show();
     // get data from sAjaxsource
     this._fnUpdateData();
     // redraw body and footer
+    this._fnReHeader();
     this._fnReBody();
     this._fnReFooter();
     this._fnUpdatePagination();
     $('#'+this._idTable+"_processing").hide();
 }
 
-/**
- * redraw body with new data.
+/*
+ * Update the table header content.
  */
-function _fnReBody(){
-    // remove all rows form tbody
+function _fnReHeader()
+{
+    var n_cols = this._aoColumns.length;
+    var style_first = "border-left:  1px solid rgb(170, 170, 170); -moz-border-radius-topleft:  4px;";
+    var style_last  = "border-right: 1px solid rgb(170, 170, 170); -moz-border-radius-topright: 4px;";
 
+    var _thead = $('#'+this._idTable+' thead');
+
+    _thead.html('');
+    
+    for(var i=0; i < n_cols; i++) {
+        var style = "";
+        if(i == 0) {
+            style = style_first +"padding-left:10px;" ;
+        } else if (i == n_cols-1 ){
+            if(this._iExtraCols == 0) {
+                style = style_last ;
+            }
+        }
+
+        if( this._aoColumns[i].sWidth != '') {
+            style += "width: " + (this._aoColumns[i].sWidth) + ";" ;
+        }
+
+        var _th = $('<th></th>').html(this._aoColumns[i].sTitle);
+        
+        if(this._aoColumns[i].bSortable == true){
+
+            if( this._iSortableCol == i ){
+                if( this._sSortDir == 'desc'){
+                    _th.addClass('sorting_desc');
+                }else{
+                    _th.addClass('sorting_asc');
+                }
+            } else {
+                _th.addClass('sorting');
+            }
+            
+            _this = this;
+            var colSort = i ;
+            _th.bind( 'click', {msg: colSort}, function (event) {
+                
+                _this._fnUpdateSort(event.data.msg);
+
+                if( $(this).hasClass('sorting') ){
+                    $(this).removeClass('sorting');
+                    _this._sSortDir = 'asc';
+                } else if( $(this).hasClass('sorting_desc') ){
+                    $(this).removeClass('sorting_desc');
+                    _this._sSortDir = 'asc';
+                } else if ( $(this).hasClass('sorting_asc') ) {
+                    $(this).removeClass('sorting_asc');
+                    _this._sSortDir = 'desc';
+                }
+
+                $('.sorting_asc').each(function(){$(this).removeClass('sorting_asc');$(this).addClass('sorting');});
+                $('.sorting_desc').each(function(){$(this).removeClass('sorting_desc');$(this).addClass('sorting');});
+                $(this).addClass('sorting_'+_this._sSortDir);
+                // redraw table
+                _this._fnReDraw();
+            } );
+
+        }else{
+            _th.addClass('sorting_disabled');
+        }
+
+        // adding style
+        if(style != '') {
+            _th.attr( 'style', style ) ;
+        }
+        // add th into thead
+        _thead.append( _th );
+    }
+
+    // add extra columns to table
+    for(var i=0; i < this._iExtraCols; i++){
+        var _th = $('<th></th>').html(this._sExtraCols[i]);
+        if ( i == this._iExtraCols-1 ) {
+            _th.attr("style", style_last ) ;
+        }
+        _thead.append(_th);
+    }
+}
+
+/*
+ * Update the table body content with new data.
+ */
+function _fnReBody()
+{
+    // remove all rows form tbody
     $('#'+this._idTable+' > tbody > tr').each(function(index, value){
         $(this).remove();
     });
+    // add new content
     var _tbody = $('#'+this._idTable+" > tbody");
-
     for(var i=0; i < this._aoData.length; i++){
         _row = $('<tr></tr>');
         if(i%2) {_row.addClass('even');}
@@ -351,21 +498,29 @@ function _fnReBody(){
         }
         _tbody.append(_row) ;
     }
+    if(this._aoData.length == 0 && this._iExtraCols == 0){
+        _row = $('<tr></tr>');
+        _row.addClass('odd');
+        _row.addClass('dataTables_empty');
+        _row.attr('colspan',this._iColumns);
+        _row.append( $('<td></td>').attr('style','vertical-align: middle;').attr('colspan',this._iColumns).html( this._oLanguage.sZeroRecords ) );
+        _tbody.append(_row) ;
+    }
 }
 
-/**
- * redraw footer with new data.
+/*
+ * Update the table footer.
  */
-function _fnReFooter() {
-
-    var _div_info = $('div#'+this._idTable+'_info'); //Showing 1 to 10 of 13 entries
+function _fnReFooter()
+{
+    var _div_info = $('div#'+this._idTable+'_info'); // Showing 1 to 10 of 13 entries
 
     var str = this._oLanguage.sInfo;
     // replace _START_, _END_, _TOTAL_
     str = str.replace("_START_", this._iDisplayStart+1 );
     str = str.replace("_END_",   this._iDisplayStart + this._aoData.length );
     
-    // sInfoFiltered
+    // if data has been filtered
     var str1 = "";
     if( this._iTotalRecords != this._iTotalDisplayRecords ) {
         str1 += this._oLanguage.sInfoFiltered;
@@ -382,9 +537,13 @@ function _fnReFooter() {
 
 }
 
-function _fnInitData(){
-     // get data
-    url  = this._sAjaxSource + "&iDisplayStart=0&iDisplayLength=" + this._iDisplayLength ;//+ "&iSortCol_0=0&sSortDir_0=desc&sEcho=2";
+/*
+ * First get data from ajax source, without filters
+ */
+function _fnInitData()
+{
+    // get data
+    url  = this._sAjaxSource + "&iDisplayStart="+ this._iDisplayStart +"&iDisplayLength=" + this._iDisplayLength ;
     // add data for sorting
     for(var i = 0; i < this._aoColumns.length; i++){
         if(this._aoColumns[i]['bSortable'] == true){
@@ -399,29 +558,29 @@ function _fnInitData(){
         }
     }
     
-    /* Ensure that the json data is fully loaded sync*/
     var json = $.ajax({
-        async: false,   // bloquea el navegador
+        async: false,  
         url: url,
         dataType: "json",
         success:  function(json) {
 
         }
-    }).responseText;//json
+    }).responseText; //json
     
     json = eval( '(' + json + ')') ;
     this._aoData        = json.aaData;
     this._iTotalRecords = json.iTotalRecords;
     this._iTotalDisplayRecords  = json.iTotalDisplayRecords;
 }
-/*
- * Get data from sAjaxSource
- *  _aoData
- *  _iTotalRecords
- *  _iTotalDisplayRecords
- */
-function _fnUpdateData(){
 
+/*
+ * Get data from ajax source
+ *  _aoData         - contains data table
+ *  _iTotalRecords  - Num. of records
+ *  _iTotalDisplayRecords - Num. of records to display
+ */
+function _fnUpdateData()
+{
     // get data
     url  = this._sAjaxSource + "&iDisplayStart=" + this._iDisplayStart + "&iDisplayLength=" + this._iDisplayLength ;
     // add data for sorting
@@ -435,34 +594,29 @@ function _fnUpdateData(){
     url += "&iSortCol_0="+this._iSortableCol;
     url += "&sSortDir_0="+this._sSortDir;
     var count = 0;
-    // filters
+    /*
+     * Filters, add filters to url
+     */
     if(this._fUserId != undefined)         url += "&fCol_userIdValue="+this._fUserId;  
     if(this._fCountryId != undefined )     url += "&fCol_countryId="+this._fCountryId; 
     if(this._fRegionId != undefined )      url += "&fCol_regionId="+this._fRegionId; 
     if(this._fCityId != undefined )        url += "&fCol_cityId="+this._fCityId;  
-    if(this._fCatId  != undefined )        url += "&fCol_catId="+this._fCatId;  
+    if(this._fCatId  != undefined )        url += "&fCol_catId="+this._fCatId;
+    // search
+    if(this._sSearch != undefined)         url += "&sSearch="+this._sSearch;
     // filters item table
     if(this._b_premium  != undefined )     url += "&fCol_bPremium="+this._b_premium;  
     if(this._b_active  != undefined )      url += "&fCol_bActive="+this._b_active;  
     if(this._b_enabled  != undefined )     url += "&fCol_bEnabled="+this._b_enabled;  
     if(this._b_spam  != undefined )        url += "&fCol_bSpam="+this._b_spam;  
     // filters item stat table
-//    if(this._i_num_bad_classified != undefined ) url += "&stat=bad";
-//    if(this._i_num_spam != undefined )           url += "&stat=spam";
-//    if(this._i_num_repeated != undefined )       url += "&stat=duplicated";
-//    if(this._i_num_offensive != undefined )      url += "&stat=offensive";
-//    if(this._i_num_expired != undefined )        url += "&stat=expired";
-
     if(this._i_num_bad_classified != undefined ) url += "&bad=bad";
     if(this._i_num_spam != undefined )           url += "&spam=spam";
     if(this._i_num_repeated != undefined )       url += "&duplicated=duplicated";
     if(this._i_num_offensive != undefined )      url += "&offensive=offensive";
     if(this._i_num_expired != undefined )        url += "&expired=expired";
-    // search
-    if(this._sSearch != undefined)          url += "&sSearch="+this._sSearch;
     // url += ....
     
-    /* Ensure that the json data is fully loaded sync*/
     var json = $.ajax({
         async: false,   // bloquea el navegador
         url: url,
@@ -471,31 +625,30 @@ function _fnUpdateData(){
 
         }
     }).responseText;//json
+
+    // parse json and save values
     json = eval( '(' + json + ')') ;
     this._aoData        = json.aaData;
     this._iTotalRecords = json.iTotalRecords;
     this._iTotalDisplayRecords  = json.iTotalDisplayRecords;
+    this._iExtraCols = json.iExtraCols;
+    this._sExtraCols = json.sExtraCols;
 }
 
 /*
-* Function: _fnPageChange
-* Purpose: Alter the display settings to change the page
+*  _fnPageChange
+* Alter the display settings to change the page
 * Returns: bool:true - page has changed, false - no change (no effect) eg 'first' on page 1
-* Inputs: object:oSettings - dataTables settings object
-* string:sAction - paging action to take: "first", "previous", "next" or "last"
+* sAction - paging action to take: "first", "previous", "next" or "last"
 */
 function _fnPageChange ( sAction )
 {
     var iOldStart = this._iDisplayStart;
 
-    if ( sAction == "first" )
-    {
+    if ( sAction == "first" ) {
         this._iDisplayStart = 0;
-    }
-    else if ( sAction == "previous" )
-    {
+    } else if ( sAction == "previous" ) {
         this._iDisplayStart = this._iDisplayLength>=0 ? this._iDisplayStart - this._iDisplayLength : 0;
-
         /* Correct for underrun */
         if ( this._iDisplayStart < 0 ){
             this._iDisplayStart = 0;
@@ -523,8 +676,12 @@ function _fnPageChange ( sAction )
     return iOldStart != this._iDisplayStart;
 }
 
+/*
+ * _fnUpdatePagination
+ * Update the list of page buttons shows
+ */
 function _fnUpdatePagination() {
-//    alert('updatePagination');
+
     var iPageCount = 5 ;
     var iPageCountHalf = Math.floor(iPageCount / 2);
     var iPages = Math.ceil((this._fnRecordsDisplay()) / this._iDisplayLength);
@@ -575,13 +732,11 @@ function _fnUpdatePagination() {
 }
 
 /*
- * Total number of records
+ * Total display number of records
  */
 function _fnRecordsDisplay() {
     return this._iTotalDisplayRecords;
 }
-
-
 // utils functions
 function IsNumeric(input)
 {
@@ -649,7 +804,9 @@ function base64_encode( data ) {
 }
 
 
-// filters
+/*
+ * Initialize filters
+ */
 function applyFilters(){
 
     // get filters
@@ -680,9 +837,4 @@ function applyFilters(){
     this._iDisplayStart = 0;
 
     this._fnReDraw();
-}
-
-function fnGetFilteredNodes(){
-    alert("entra");
-    return $('#'+this._idTable+' input');
 }

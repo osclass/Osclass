@@ -83,10 +83,11 @@
                 oTable.fnInit({
                     'idTable'       : 'datatables_list',
                     "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>",
-                    'iDisplayLength': '5',
+                    'iDisplayLength': '10',
                     'iColumns'      : '8',
                     'oLanguage'     : {
                             "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
+                            ,"sZeroRecords":  "<?php _e('No matching records found') ; ?>"
                             ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries') ; ?>)"
                             ,"oPaginate": {
                                         "sFirst":    "<?php _e('First') ; ?>",
@@ -97,7 +98,7 @@
                     },
                     "aoColumns": [
                         {
-                            "sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
+                            "sTitle": "<div style='width:10px;'><input id='check_all' type='checkbox' /></div>"
                             ,"bSortable": false
                             ,"sClass": "center"
                             ,"sWidth": "10px"
@@ -153,6 +154,26 @@
                 $('#datatable_wrapper', this).hide();
                 $('#datatables_quick_edit', this).hide();
             });
+
+            $('#show_filter').live('mouseover', function(event) {
+                $(this).css('color', 'black');
+
+            });
+
+            $('#show_filter').live('mouseleave', function(event) {
+                $(this).css('color', '#555555');
+            });
+            
+            function show_filters(){
+                div_filter = this;
+                $('#TableToolsLinks').toggle(function(){
+                    if( $('#show_filter strong').html() == '+ <?php _e('Show filters')?>' ){
+                        $('#show_filter strong').html('- <?php _e('Show filters')?>');
+                    } else {
+                        $('#show_filter strong').html('+ <?php _e('Show filters')?>');
+                    }
+                });
+            }
             
         </script>
         <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
@@ -175,32 +196,10 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <div>
                     <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
-                        <div class="top">
-                            <div style="float:left;"><?php _e('Show') ; ?>
-                                <select class="display" id="select_range">
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                    <option value="100">100</option>
-                                </select> <?php _e('entries') ; ?>
-                            </div>
-                            <div id="TableToolsToolbar">
-                                <select id="bulk_actions" name="bulk_actions" class="display">
-                                        <option value=""><?php _e('Bulk actions'); ?></option>
-                                        <option value="delete_all"><?php _e('Delete') ?></option>
-                                        <option value="activate_all"><?php _e('Activate') ?></option>
-                                        <option value="deactivate_all"><?php _e('Deactivate') ?></option>
-                                        <option value="enable_all"><?php _e('Enable') ?></option>
-                                        <option value="disable_all"><?php _e('Disable') ?></option>
-                                        <option value="premium_all"><?php _e('Mark as premium') ?></option>
-                                        <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
-                                </select>
-                                &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
-                            </div>
-                        </div>
+                        
                         <input type="hidden" name="action" value="bulk_actions" />
                         <div style="clear:both;"></div>
-                        <div id="show_filter" style="cursor: pointer;padding-top:10px;border-bottom:1px gray solid;" onclick="$('#TableToolsLinks').toggle();"> <strong>+ <?php _e('Show filters')?></strong> </div>
+                        <div id="show_filter" style="color:#555555; cursor: pointer;padding-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
                         <div id="TableToolsLinks" style="display:none;">
                             <div style="float:left;">
                                 
@@ -302,12 +301,35 @@
                             </div>
                             <div style="clear:both;"></div>
                             <div>
-                                <div style="float:left;width:70px;padding-top:10px;"><button type="button" onclick="oTable.applyFilters();">APPLY</button></div>
-                                <div style="float:left;width:140px;padding-top:10px;padding-left:10px;"><button type="button" onclick="window.location.href='<?php echo osc_admin_base_url(true);?>?page=items'">RESET FILTERS</button></div>
+                                <div style="float:left;width:70px;padding-top:10px;"><button type="button" onclick="oTable.applyFilters();"><?php _e('Apply') ; ?></button></div>
+                                <div style="float:left;width:140px;padding-top:10px;padding-left:10px;"><button type="button" onclick="window.location.href='<?php echo osc_admin_base_url(true);?>?page=items'"><?php _e('Reset filters') ; ?></button></div>
                             </div>
                             <div style="padding-top:10px;border-bottom:1px gray solid;clear:both;"></div>
                         </div>
-                        
+
+                        <div class="top" style="margin-top:10px;">
+                            <div style="float:left;"><?php _e('Show') ; ?>
+                                <select class="display" id="select_range">
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="100">100</option>
+                                </select> <?php _e('entries') ; ?>
+                            </div>
+                            <div id="TableToolsToolbar">
+                                <select id="bulk_actions" name="bulk_actions" class="display">
+                                        <option value=""><?php _e('Bulk actions'); ?></option>
+                                        <option value="delete_all"><?php _e('Delete') ?></option>
+                                        <option value="activate_all"><?php _e('Activate') ?></option>
+                                        <option value="deactivate_all"><?php _e('Deactivate') ?></option>
+                                        <option value="enable_all"><?php _e('Enable') ?></option>
+                                        <option value="disable_all"><?php _e('Disable') ?></option>
+                                        <option value="premium_all"><?php _e('Mark as premium') ?></option>
+                                        <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
+                                </select>
+                                &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
+                            </div>
+                        </div>
                         <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
                     </form>
                 </div>
@@ -326,21 +348,9 @@
                                     $(this).attr('checked','');
                                 });
                             }
-//                            $('#'+oTable._idTable+" input").each(function(){
-//                                $(this).attr('checked','checked');
-//                            });
                         }
                     );
-                
-                
-//                $("#show_filter").hover(
-//                    function () {
-//                        $(this).css("border-bottom","3px solid gray");
-//                    },
-//                    function () {
-//                        $(this).css("border-bottom","1px solid gray");
-//                    }
-//                );
+
             </script>
             <div style="clear: both;"></div>
 
