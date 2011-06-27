@@ -414,6 +414,22 @@
             }
             return false;
         }
+        
+        public function premium($id, $on = true) {
+            if($on) {
+                $this->manager->update(
+                    array('b_premium' => '1')
+                    ,array('pk_i_id' => $id)
+                );
+                osc_run_hook("item_premium_on", $id);
+            } else {
+                $this->manager->update(
+                    array('b_premium' => '0')
+                    ,array('pk_i_id' => $id)
+                );
+                osc_run_hook("item_premium_off", $id);
+            }
+        }
 
         /**
          *

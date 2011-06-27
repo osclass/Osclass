@@ -1,0 +1,15 @@
+#supertoolbar_toolbar {
+    
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: #fcfeb1;
+    height:18px;
+    text-align: left;
+    color: #fefefe;
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-bottom: 6px;
+}
