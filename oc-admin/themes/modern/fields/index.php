@@ -71,8 +71,9 @@
                 <div style="clear: both;"></div>
                 <div id="TableFields" class="TableFields">
                     <ul>
-                    <?php foreach($fields as $field) {?>
-                        <li id="list_<?php echo $field['pk_i_id']; ?>" class="field_li" >
+                    <?php $even = true;
+                    foreach($fields as $field) {?>
+                        <li id="list_<?php echo $field['pk_i_id']; ?>" class="field_li <?php echo $even?'even':'odd';?>" >
                             <div class="field_div" field_id="<?php echo $field['pk_i_id'];?>" >
                                 <div class="quick_edit" id="<?php echo "quick_edit_".$field['pk_i_id']; ?>" style="float:left;">
                                     <?php echo $field['s_name'];?> 
@@ -87,7 +88,7 @@
                                 
                             </div>
                         </li>
-                        <?php } ?>
+                        <?php $even = !$even; } ?>
                     </ul>
                 </div>
                 <div>

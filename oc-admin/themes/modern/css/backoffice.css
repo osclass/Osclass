@@ -584,3 +584,20 @@ tr.even td{
     margin: 9px 10px 0 0;
     padding: 6px 10px 7px;
 }
+
+
+.field_li {
+    list-style: none;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.field_li.odd {
+    background-color: #E6E6E6;
+}
+
+.field_li.even {
+    background-color: #FFFFFF;
+}
+
