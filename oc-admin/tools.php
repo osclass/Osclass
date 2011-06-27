@@ -161,7 +161,7 @@
                                             if($fileHandler) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is ON'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There were an error creating .maintenance file, please create it manually at the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin') ;
                                             }
                                             fclose($fileHandler);
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
@@ -170,7 +170,7 @@
                                             if($deleted) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There were an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }

@@ -502,7 +502,6 @@
              }
         });
 
-
         if( $("#regionId").attr('value') == "")  {
             $("#cityId").attr('disabled',true);
         }
@@ -522,7 +521,7 @@
             "minstriptags",
             function(value, element) {
                 altered_input = strip_tags(value);
-                if (altered_input.length < 10) {
+                if (altered_input.length < 3) {
                     return false;
                 } else {
                     return true;
@@ -530,46 +529,6 @@
             },
             "<?php _e("Description: needs to be longer"); ?>."
         );
-
-        // Validate fields in each locale.
-        $("form[name=item] button").click(function() {
-            lang_count = $(".title input").length;
-            // Title
-            $(".title input").each(function(){
-                lang_name   = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
-                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
-
-                str = ((lang_count > 1) ? lang_name + ' ' : '');
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 9,
-                    maxlength: 80,
-                    messages: {
-                        required: str + "<?php _e("Title: this field is required"); ?>.",
-                        minlength: str + "<?php _e("Title: enter at least 9 characters"); ?>.",
-                        maxlength: str + "<?php _e("Title: no more than 80 characters"); ?>."
-                    }
-                });
-            });
-             //Description
-            $(".description textarea").each(function(){
-                lang_name   = $(this).parent().prev().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
-                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
-
-                str = ((lang_count > 1) ? lang_name + ' ' : '');
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 25,
-                    maxlength: 5000,
-                    'minstriptags': true,
-                    messages: {
-                        required: str + "<?php _e("Description: this field is required"); ?>.",
-                        minlength: str + "<?php _e("Description: needs to be longer"); ?>.",
-                        maxlength: str + "<?php _e("Description: no more than 5000 characters"); ?>."
-                    }
-                });
-            });
-        });
 
         // Code for form validation
         $("form[name=item]").validate({
@@ -731,7 +690,7 @@
     }
     function addNewPhoto() {
         var max = <?php echo osc_max_images_per_item(); ?>;
-        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        var num_img = $('input[name="photos[]"]').size() + $("a.delete").size();
         if((max!=0 && num_img<max) || max==0) {
             var id = 'p-' + photoIndex++;
 
@@ -768,13 +727,13 @@
      */
     function add_file_field() {
         var count = 0;
-        $("input[name='photos[]']").each(function(index) {
+        $('input[name="photos[]"]').each(function(index) {
             if ( $(this).val() == '' ) {
                 count++;
             }
         });
         var max = <?php echo osc_max_images_per_item(); ?>;
-        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        var num_img = $('input[name="photos[]"]').size() + $("a.delete").size();
         if (count == 0 && (max==0 || (max!=0 && num_img<max))) {
             addNewPhoto();
         }
