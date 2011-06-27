@@ -56,7 +56,7 @@
         }
 
         static protected function generic_textarea($name, $value) {
-            echo '<textarea id="' . $name . '" name="' . $name . '" rows="10"/>' . $value . '</textarea>' ;
+            echo '<textarea id="' . $name . '" name="' . $name . '" rows="10" >' . $value . '</textarea>' ;
         }
 
     }

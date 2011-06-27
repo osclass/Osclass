@@ -1,3 +1,10 @@
+OSClass 2.1.1 2011-06-22
+----------------------
+- Filter of title and description is not too restrictive now
+- Fixed a warning message when there aren't categories
+- Fixed error checkdnsrr in windows
+- We don't show price filters or any field related with prices when it is disabled
+
 OSClass 2.1 2011-06-14
 ----------------------
 - Help messages if you don't pass the requirements in the installer

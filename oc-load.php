@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.1') ;
+define('OSCLASS_VERSION', '2.1.1') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -112,6 +112,7 @@ require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/model/Stats.php';
+require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
@@ -129,6 +130,9 @@ require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
+
+require_once LIB_PATH . 'osclass/functions.php';
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {

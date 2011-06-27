@@ -34,9 +34,9 @@
          */
         public function add()
         {
-            $success = true;
-            $aItem = $this->data;
-            $code = osc_genRandomPassword();
+            $success     = true;
+            $aItem       = $this->data;
+            $code        = osc_genRandomPassword();
             $flash_error = '';
 
             // Initiate HTML Purifier
@@ -61,12 +61,13 @@
             foreach(@$aItem['description'] as $key=>$value) {
                 $aItem['description'][$key] = $purifier->purify($value);
             }
-            $aItem['price'] = strip_tags( trim( $aItem['price'] ) );
-            $contactName = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
-            $contactEmail = strip_tags( trim( $aItem['contactEmail'] ) );
+
+            $aItem['price']    = strip_tags( trim( $aItem['price'] ) );
+            $contactName       = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
+            $contactEmail      = strip_tags( trim( $aItem['contactEmail'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
-            $aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
-            
+            $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
+
             // Anonymous
             $contactName = (osc_validate_text($contactName,3))? $contactName : __("Anonymous");
 
@@ -77,29 +78,45 @@
             if ( !$this->checkSize($aItem['photos']) ) {
                 $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() ." Kb" . PHP_EOL;
             }
-            foreach(@$aItem['title'] as $key=>$value) {
-                $flash_error .=
-                    ((!osc_validate_text($value,9)) ? _m("Title too short.") . PHP_EOL : '' ) .
-                    ((!osc_validate_max($value,80)) ? _m("Title too long.") . PHP_EOL : '' );
+
+            $title_message = '';
+            foreach(@$aItem['title'] as $key => $value) {
+                if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
+                    $title_message = '';
+                    break;
+                }
+
+                $title_message .=
+                    (!osc_validate_text($value, 1) ? _m("Title too short.") . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 100) ? _m("Title too long.") . PHP_EOL : '' );
             }
-            foreach(@$aItem['description'] as $key=>$value) {
-                $flash_error .=
-                    ((!osc_validate_text($value,25)) ? _m("Description too short.") . PHP_EOL : '' ) .
-                    ((!osc_validate_max($value,5000)) ? _m("Description too long."). PHP_EOL : '' );
+            $flash_error .= $title_message;
+
+            $desc_message = '';
+            foreach(@$aItem['description'] as $key => $value) {
+                if( osc_validate_text($value, 3) &&  osc_validate_max($value, 5000) )  {
+                    $desc_message = '';
+                    break;
+                }
+
+                $desc_message .=
+                    (!osc_validate_text($value, 3) ? _m("Description too short.") . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
             }
+            $flash_error .= $desc_message;
+
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'],9)) ? _m("Price too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($contactName,35)) ? _m("Name too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['cityArea'],3,false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['cityArea'],50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['address'],3,false)) ? _m("Address too short.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['address'],100)) ? _m("Address too long.") . PHP_EOL : '' ) .
-                ((((time()-Session::newInstance()->_get('last_submit_item'))<osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
-
+                ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
+                ((((time() - Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
 
             // Handle error
             if ($flash_error) {
@@ -152,12 +169,21 @@
 
                 $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
 
+                /**
+                 * META FIELDS
+                 */
+                $meta = Params::getParam("meta");
+                if(count($meta)>0) {
+                    $mField = Field::newInstance();
+                    foreach($meta as $k => $v) {
+                        $mField->replace($itemId, $k, $v);
+                    }
+                }
                 osc_run_hook('item_form_post', $aItem['catId'], $itemId);
                 
                 // We need at least one record in t_item_stats
                 $mStats = new ItemStats();
                 $mStats->emptyRow($itemId);
-
 
                 $item = $this->manager->findByPrimaryKey($itemId);
                 $aItem['item'] = $item;
@@ -173,8 +199,7 @@
                         $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
                         if($user) {
                             User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
-                                                ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                                ) ;
+                                                       ,array( 'pk_i_id' => $user['pk_i_id'] ) );
                         }
                     }
                     CategoryStats::newInstance()->increaseNumItems($aItem['catId']);
@@ -184,9 +209,8 @@
             return $success;
         }
 
-
         function edit() {
-            $aItem = $this->data;
+            $aItem       = $this->data;
             $flash_error = '';
 
             // Initiate HTML Purifier
@@ -205,9 +229,10 @@
             foreach(@$aItem['description'] as $key=>$value) {
                 $aItem['description'][$key] = $purifier->purify($value);
             }
-            $aItem['price'] = strip_tags( trim( $aItem['price'] ) );
+
+            $aItem['price']    = strip_tags( trim( $aItem['price'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
-            $aItem['address'] = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
+            $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 
             // Validate
             if ( !$this->checkAllowedExt($aItem['photos']) ) {
@@ -216,27 +241,43 @@
             if ( !$this->checkSize($aItem['photos']) ) {
                 $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() . " Kb" . PHP_EOL;
             }
-            foreach(@$aItem['title'] as $key=>$value) {
-                $flash_error .=
-                    ((!osc_validate_text($value,9))? _m("Title too short.") . PHP_EOL : '' ) .
-                    ((!osc_validate_max($value,80))? _m("Title too long.") . PHP_EOL : '' );
-            }
-            foreach(@$aItem['description'] as $key=>$value) {
-                $flash_error .=
-                    ((!osc_validate_text($value,25))? _m("Description too short.") . PHP_EOL : '' ) .
-                    ((!osc_validate_max($value,5000))? _m("Description too long.") . PHP_EOL : '' );
-            }
-            $flash_error .=
-                ((!osc_validate_category($aItem['catId']))? _m("Category invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_number($aItem['price']))? _m("Price must be number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'],9))? _m("Price too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId']))? _m("Location not selected.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['cityArea'],3,false))? _m("Municipality too short.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['cityArea'],50))? _m("Municipality too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_text($aItem['address'],3,false))? _m("Address too short.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['address'],100))? _m("Address too long.") . PHP_EOL : '' );
 
-            
+            $title_message = '';
+            foreach(@$aItem['title'] as $key => $value) {
+                if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
+                    $td_message = '';
+                    break;
+                }
+
+                $td_message .=
+                    (!osc_validate_text($value, 1) ? _m("Title too short.") . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 100) ? _m("Title too long.") . PHP_EOL : '' );
+            }
+            $flash_error .= $td_message;
+
+            $desc_message = '';
+            foreach(@$aItem['description'] as $key => $value) {
+                if( osc_validate_text($value, 3) &&  osc_validate_max($value, 5000) )  {
+                    $desc_message = '';
+                    break;
+                }
+
+                $desc_message .=
+                    (!osc_validate_text($value, 3) ? _m("Description too short.") . PHP_EOL : '' ) .
+                    (!osc_validate_max($value, 5000) ? _m("Description too long."). PHP_EOL : '' );
+            }
+            $flash_error .= $desc_message;
+
+            $flash_error .=
+                ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
+                ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['address'], 3, false))? _m("Address too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' );
+
             // Handle error
             if ($flash_error) {
                 return $flash_error ;
@@ -280,6 +321,16 @@
                 // UPLOAD item resources
                 $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
 
+                /**
+                 * META FIELDS
+                 */
+                $meta = Params::getParam("meta");
+                if(count($meta)>0) {
+                    $mField = Field::newInstance();
+                    foreach($meta as $k => $v) {
+                        $mField->replace($aItem['idItem'], $k, $v);
+                    }
+                }
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 return 1;
             }
@@ -295,7 +346,7 @@
          */
         public function activate( $id, $secret )
         {
-            $item   = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
+            $item = $this->manager->listWhere("i.s_secret = '%s' AND i.pk_i_id = '%s' ", $secret, $id);
             
             if($item[0]['b_enabled']==1 && $item[0]['b_active']==0) {
                 $result = $this->manager->update(
@@ -636,15 +687,15 @@
             if($userId==null) {
                 $num_comments = 0;
             } else {
-                $user = User::newInstance()->findByPrimaryKey($userId);
+                $user         = User::newInstance()->findByPrimaryKey($userId);
                 $num_comments = $user['i_comments'];
             }
 
             if ($num_moderate_comments == -1 || ($num_moderate_comments != 0 && $num_comments >= $num_moderate_comments)) {
-                $status = 'ACTIVE';
+                $status     = 'ACTIVE';
                 $status_num = 2;
             } else {
-                $status = 'INACTIVE';
+                $status     = 'INACTIVE';
                 $status_num = 1;
             }
 
@@ -669,7 +720,7 @@
                               ,'s_author_email' => $authorEmail
                               ,'s_title'        => $title
                               ,'s_body'         => $body
-                              ,'b_active'       => ($status=='ACTIVE'?1:0)
+                              ,'b_active'       => ($status=='ACTIVE' ? 1 : 0)
                               ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
 
@@ -677,14 +728,13 @@
                 if($status_num==2 && $userId!=null) { // COMMENT IS ACTIVE
                     $user = User::newInstance()->findByPrimaryKey($userId);
                     if($user) {
-                        User::newInstance()->update(array( 'i_comments' => $user['i_comments']+1)
-                                            ,array( 'pk_i_id' => $user['pk_i_id'] )
-                                            ) ;
+                        User::newInstance()->update(array( 'i_comments' => $user['i_comments'] + 1)
+                                                   ,array( 'pk_i_id'    => $user['pk_i_id'] ) );
                     }
                 }
-                $notify = osc_notify_new_comment() ;
+                $notify      = osc_notify_new_comment() ;
                 $admin_email = osc_contact_email() ;
-                $prefLocale = osc_language() ;
+                $prefLocale  = osc_language() ;
 
                 //Notify admin
                 if ($notify) {

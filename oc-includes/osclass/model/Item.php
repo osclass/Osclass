@@ -332,6 +332,10 @@
             $sql = sprintf("UPDATE %st_item SET `dt_mod_date` = '%s' WHERE `pk_i_id` = %s", DB_TABLE_PREFIX, $date, $id);
             return $this->conn->osc_dbExec($sql);*/
         }
+        
+        public function meta_fields($id) {
+            return $this->conn->osc_dbFetchResults("SELECT im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type FROM %st_item i, %st_item_meta im, %st_meta_categories mc, %st_meta_fields mf WHERE im.fk_i_item_id = %d AND mf.pk_i_id = im.fk_i_field_id AND i.pk_i_id = %d AND mf.pk_i_id = mc.fk_i_field_id AND mc.fk_i_category_id = i.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id, $id);
+        }
 
         public function deleteByPrimaryKey($id)
         {

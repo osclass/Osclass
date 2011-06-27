@@ -763,6 +763,9 @@
         if ( View::newInstance()->_exists('resources') ) {
             View::newInstance()->_erase('resources') ;
         }
+        if ( View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_erase('metafields') ;
+        }
         return View::newInstance()->_next('items') ;
     }
 
@@ -916,4 +919,81 @@
     function osc_priv_count_item_resources() {
         return (int) View::newInstance()->_count('resources') ;
     }
-?>
+    
+    /***************
+     * META FIELDS *
+     ***************/
+    
+    /**
+     * Gets number of item meta field
+     *
+     * @return integer
+     */    
+    function osc_count_item_meta() {
+        if ( !View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+        }
+        return View::newInstance()->_count('metafields') ;
+    }
+    
+    /**
+     * Gets next item meta field if there is, else return null
+     *
+     * @return array
+     */
+    function osc_has_item_meta() {
+        if ( !View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+        }
+        return View::newInstance()->_next('metafields') ;
+    }
+
+    /**
+     * Gets item meta fields
+     *
+     * @return array
+     */
+    function osc_get_item_meta() {
+        if ( !View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+        }
+        return View::newInstance()->_get('metafields') ;
+    }
+
+    /**
+     * Gets item meta field
+     *
+     * @return array
+     */    
+    function osc_item_meta() {
+        return View::newInstance()->_current('metafields') ;
+    }
+   
+    /**
+     * Gets item meta value
+     *
+     * @return array
+     */    
+    function osc_item_meta_value() {
+        return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
+    }
+   
+    /**
+     * Gets item meta name
+     *
+     * @return array
+     */    
+    function osc_item_meta_name() {
+        return osc_field(osc_item_meta(), 's_name', '') ;
+    }
+   
+    /**
+     * Gets item meta id
+     *
+     * @return array
+     */    
+    function osc_item_meta_id() {
+        return osc_field(osc_item_meta(), 'pk_i_id', '') ;
+    }
+   
+ ?>

@@ -170,6 +170,11 @@
                     $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
                 }
             }
+
+            if(count($this->relation) == 0) {
+                return null;
+            }
+
             $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
             return $this->tree;
         }
