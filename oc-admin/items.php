@@ -600,7 +600,6 @@
                                         }
                                         //preparing variables for the view
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("items", ( ($catId) ? $this->itemManager->findByCategoryID($catId) : $this->itemManager->listAllWithCategories() ) ) ;
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
 
