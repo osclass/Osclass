@@ -39,13 +39,11 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
-
             $(document).ready(function(){
                 if (typeof $.uniform != 'undefined') {
                     $('textarea, button,select, input:file').uniform();
                 }
             });
-
         </script>
         <style>
             fieldset {
@@ -197,13 +195,11 @@
                 <?php osc_show_flash_message('admin') ; ?>
                 <div>
                     <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
-                        
                         <input type="hidden" name="action" value="bulk_actions" />
                         <div style="clear:both;"></div>
                         <div id="show_filter" style="color:#555555; cursor: pointer;margin-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
                         <div id="TableToolsLinks" style="display:none;">
                             <div style="float:left;">
-                                
                                 <div class="row">
                                     <label><?php _e('Search') ; ?></label>
                                     <input id="sSearch" type="text" name="sSearch"/><span style="padding-left:1em;">*(<?php _e('Title and Description'); ?>)</span>
@@ -212,7 +208,6 @@
                                     <label><?php _e('Item posted by'); ?></label>
                                     <?php ItemForm::user_select($users, "NULL", __('Non-registered user')); ?>
                                 </div>
-
                                 <div class="row">
                                     <label><?php _e('Country'); ?></label>
                                     <?php $item = array(); $item["countryId"] = "";ItemForm::country_select($countries, $item ) ; ?>
@@ -298,7 +293,6 @@
                                         <option value="1"><?php _e('ON'); ?></option>
                                     </select>
                                 </fieldset>
-
                             </div>
                             <div style="clear:both;"></div>
                             <div>
@@ -319,14 +313,14 @@
                             </div>
                             <div id="TableToolsToolbar">
                                 <select id="bulk_actions" name="bulk_actions" class="display">
-                                        <option value=""><?php _e('Bulk actions'); ?></option>
-                                        <option value="delete_all"><?php _e('Delete') ?></option>
-                                        <option value="activate_all"><?php _e('Activate') ?></option>
-                                        <option value="deactivate_all"><?php _e('Deactivate') ?></option>
-                                        <option value="enable_all"><?php _e('Enable') ?></option>
-                                        <option value="disable_all"><?php _e('Disable') ?></option>
-                                        <option value="premium_all"><?php _e('Mark as premium') ?></option>
-                                        <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
+                                    <option value=""><?php _e('Bulk actions'); ?></option>
+                                    <option value="delete_all"><?php _e('Delete') ?></option>
+                                    <option value="activate_all"><?php _e('Activate') ?></option>
+                                    <option value="deactivate_all"><?php _e('Deactivate') ?></option>
+                                    <option value="enable_all"><?php _e('Enable') ?></option>
+                                    <option value="disable_all"><?php _e('Disable') ?></option>
+                                    <option value="premium_all"><?php _e('Mark as premium') ?></option>
+                                    <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
                                 </select>
                                 &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
                             </div>
@@ -337,29 +331,26 @@
 
             </div> <!-- end of right column -->
             <script>
-                
-                    $('#check_all').live('change',
-                        function(){
-                            if( $(this).attr('checked') ){
-                                $('#'+oTable._idTable+" input").each(function(){
-                                    $(this).attr('checked','checked');
-                                });
-                            } else {
-                                $('#'+oTable._idTable+" input").each(function(){
-                                    $(this).attr('checked','');
-                                });
-                            }
+                $('#check_all').live('change',
+                    function(){
+                        if( $(this).attr('checked') ){
+                            $('#'+oTable._idTable+" input").each(function(){
+                                $(this).attr('checked','checked');
+                            });
+                        } else {
+                            $('#'+oTable._idTable+" input").each(function(){
+                                $(this).attr('checked','');
+                            });
                         }
-                    );
-//                    $(document).ready(function(){
-                        $('#sSearch').bind('keypress', function(e) {
-                            if(e.keyCode==13){
-                                oTable.applyFilters();
-                                return false;
-                            }
-                        });
-//                    });
+                    }
+                );
 
+                $('#sSearch').bind('keypress', function(e) {
+                    if(e.keyCode==13){
+                        oTable.applyFilters();
+                        return false;
+                    }
+                });
             </script>
             <div style="clear: both;"></div>
 
