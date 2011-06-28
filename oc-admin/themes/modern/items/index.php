@@ -16,17 +16,12 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $users  = __get("users");
-    $items  = __get("items") ;
-    $stat   = __get("stat") ;
-
+    $users      = __get("users");
+    $stat       = __get("stat") ;
     $categories = __get("categories");
     $countries  = __get("countries");
     $regions    = __get("regions");
     $cities     = __get("cities");
-
-    $last_item  = end( $items ) ;
-    $last_id    = $last_item['pk_i_id'] ;
     
 ?>
 
@@ -222,7 +217,7 @@
 
                                 <div class="row">
                                     <label for="catId"><?php _e('Category') ?>:</label>
-                                    <?php $item = array(); $item["fk_i_category_id"] = Params::getParam('catId'); ItemForm::category_select($categories, $item ); ?>
+                                    <?php ItemForm::category_select($categories, null, null, true); ?>
                                 </div>
                             </div>
                             <div class="" style="float:left;">

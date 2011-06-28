@@ -28,15 +28,15 @@
 
         static public function category_select($categories, $category, $default_item = null, $name = "sCategory") {
             echo '<select name="' . $name . '" id="' . $name . '">' ;
-                if(isset($default_item)) {
-                    echo '<option value="">' . $default_item . '</option>' ;
+            if(isset($default_item)) {
+                echo '<option value="">' . $default_item . '</option>' ;
+            }
+            foreach($categories as $c) {
+                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+                if(isset($c['categories']) && is_array($c['categories'])) {
+                    CategoryForm::subcategory_select($c['categories'], $category, $default_item, 1);
                 }
-                foreach($categories as $c) {
-                    echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
-                    if(isset($c['categories']) && is_array($c['categories'])) {
-                        CategoryForm::subcategory_select($c['categories'], $category, $default_item, 1);
-                    }
-                }
+            }
             echo '</select>' ;
             return true ;
         }

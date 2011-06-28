@@ -28,22 +28,23 @@
             parent::generic_input_hidden("id", $item["pk_i_id"]) ;
         }
         // OK
-        static public function category_select($categories = null, $item = null, $default_item = null)
+        static public function category_select($categories = null, $item = null, $default_item = null, $parent_selectable = false)
         {
             // Did user select a specific category to post in?
-            $catId = Params::getParam('catId');
+            $catId = Params::getParam('catId') ;
             if(Session::newInstance()->_getForm('catId') != ""){
-                $catId = Session::newInstance()->_getForm('catId');
+                $catId = Session::newInstance()->_getForm('catId') ;
             }
 
-            if($categories==null) {
+            if($categories == null) {
                 if(View::newInstance()->_exists('categories')) {
                     $categories = View::newInstance()->_get('categories') ;
                 } else {
-                    $categories = osc_get_categories();
+                    $categories = osc_get_categories() ;
                 }
-            };
-            if($item==null) { $item = osc_item(); };
+            }
+            
+            if ($item == null) { $item = osc_item() ; }
             
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
@@ -53,7 +54,7 @@
             }
 
             foreach($categories as $c) {
-                if(!osc_selectable_parent_categories()){
+                if ( !osc_selectable_parent_categories() && !$parent_selectable ) {
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
