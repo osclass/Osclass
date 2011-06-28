@@ -173,7 +173,7 @@
                  * META FIELDS
                  */
                 $meta = Params::getParam("meta");
-                if(count($meta)>0) {
+                if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
                         $mField->replace($itemId, $k, $v);
