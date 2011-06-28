@@ -149,11 +149,13 @@
         echo '<ul class="user_menu">' ;
 
             $var_l = count($options) ;
-            for($var_o = 0 ; $var_o < $var_l ; $var_o++) {
+            for($var_o = 0 ; $var_o < ($var_l-1) ; $var_o++) {
                 echo '<li class="' . $options[$var_o]['class'] . '" ><a href="' . $options[$var_o]['url'] . '" >' . $options[$var_o]['name'] . '</a></li>' ;
             }
 
             osc_run_hook('user_menu') ;
+            
+            echo '<li class="' . $options[$var_l-1]['class'] . '" ><a href="' . $options[$var_l-1]['url'] . '" >' . $options[$var_l-1]['name'] . '</a></li>' ;
 
         echo '</ul>' ;
     }
