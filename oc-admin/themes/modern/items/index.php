@@ -75,7 +75,7 @@
                 oTable = new osc_datatable();
                 oTable.fnInit({
                     'idTable'       : 'datatables_list',
-                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>",
+                    "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items<?php if(Params::getParam('catId') != ""):?>&catId=<?php echo Params::getParam('catId');?><?php endif; ?>",
                     'iDisplayLength': '10',
                     'iColumns'      : '8',
                     'oLanguage'     : {
@@ -200,7 +200,10 @@
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Item posted by'); ?></label>
-                                    <?php ItemForm::user_select($users, "NULL", __('Non-registered user')); ?>
+                                    <?php
+                                        array_unshift($users, array('pk_i_id' => 'NULL', 's_name' => __('Non-registered user')) );
+                                        UserForm::user_select($users);
+                                    ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Country'); ?></label>

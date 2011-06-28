@@ -597,11 +597,12 @@ function _fnUpdateData()
     /*
      * Filters, add filters to url
      */
+    // &catId=integer_id like from admin panel dashboard
+    if(this._fCatId  != undefined )        url += "&catId="+this._fCatId;
     if(this._fUserId != undefined)         url += "&fCol_userIdValue="+this._fUserId;  
     if(this._fCountryId != undefined )     url += "&fCol_countryId="+this._fCountryId; 
     if(this._fRegionId != undefined )      url += "&fCol_regionId="+this._fRegionId; 
     if(this._fCityId != undefined )        url += "&fCol_cityId="+this._fCityId;  
-    if(this._fCatId  != undefined )        url += "&fCol_catId="+this._fCatId;
     // search
     if(this._sSearch != undefined)         url += "&sSearch="+this._sSearch;
     // filters item table
@@ -818,7 +819,7 @@ function applyFilters(){
     this._fRegionId     = ( $('#regionId').val() == '' ) ? undefined : $('#regionId').val();
     this._fCityId       = ( $('#cityId').val() == '' ) ? undefined : $('#cityId').val();
     
-    this._fCatId        = ( $('#catId').val() == '' ) ? undefined : $('#catId').val();
+    this._fCatId        = $('#catId').val();
     
     this._b_premium     = ( $('#b_premium').val() == '' ) ? undefined : $('#b_premium').val();
     this._b_active      = ( $('#b_active').val() == '' ) ? undefined : $('#b_active').val();

@@ -185,6 +185,10 @@
             return true ;
         }
         
+        static public function user_select($users){
+            Form::generic_select('userId', $users, 'pk_i_id', 's_name',  __('All') , NULL );
+        }
+
         static public function js_validation() {
 ?>
 <script type="text/javascript">
