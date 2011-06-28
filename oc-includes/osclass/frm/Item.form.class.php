@@ -44,6 +44,7 @@
                 }
             };
             if($item==null) { $item = osc_item(); };
+            
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -77,7 +78,7 @@
             if(Session::newInstance()->_getForm('catId') != ""){
                 $catId = Session::newInstance()->_getForm('catId');
             }
-            
+//            echo "[$catId]<br>";
             // How many indents to add?
             $deep_string = "";
             for($var = 0;$var<$deep;$var++) {
@@ -87,7 +88,8 @@
 
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
+
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
@@ -232,6 +234,7 @@
             } else {
                 if($regions==null) { $regions = osc_get_regions(); };
             }
+            
             if($item==null) { $item = osc_item(); };
             
             if( count($regions) > 1 ) {

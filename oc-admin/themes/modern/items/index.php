@@ -16,10 +16,18 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    $items = __get("items") ;
-    $last_item = end( $items ) ;
-    $last_id = $last_item['pk_i_id'] ;
-    $stat = __get("stat") ;
+    $users  = __get("users");
+    $items  = __get("items") ;
+    $stat   = __get("stat") ;
+
+    $categories = __get("categories");
+    $countries  = __get("countries");
+    $regions    = __get("regions");
+    $cities     = __get("cities");
+
+    $last_item  = end( $items ) ;
+    $last_id    = $last_item['pk_i_id'] ;
+    
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -31,17 +39,66 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
+
+            $(document).ready(function(){
+                if (typeof $.uniform != 'undefined') {
+                    $('textarea, button,select, input:file').uniform();
+                }
+            });
+
+        </script>
+        <style>
+            fieldset {
+                width: 100px;
+            }
+            fieldset label{
+               width: 100px;
+               display: inline-block;
+            }
+            .row {
+               height: 32px;
+            }
+            .row > label {
+                width: 100px;
+                padding-top: 10px;
+                display: inline-block;
+            }
+            fieldset div.selector {
+                width: 70px;
+            }
+            fieldset div.selector span{
+                width: 40px;
+            }
+            #uniform-select_range{
+                width: 70px;
+            }
+            #uniform-select_range span{
+                width: 40px;
+            }
+       </style>
+        <?php ItemForm::location_javascript('admin'); ?>
+        <script type="text/javascript">
             $(function() {
                 oTable = new osc_datatable();
                 oTable.fnInit({
                     'idTable'       : 'datatables_list',
                     "sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>",
                     'iDisplayLength': '10',
-                    'iColumns'      : '6',
-
+                    'iColumns'      : '8',
+                    'oLanguage'     : {
+                            "sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
+                            ,"sZeroRecords":  "<?php _e('No matching records found') ; ?>"
+                            ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries') ; ?>)"
+                            ,"oPaginate": {
+                                        "sFirst":    "<?php _e('First') ; ?>",
+                                        "sPrevious": "<?php _e('Previous') ; ?>",
+                                        "sNext":     "<?php _e('Next') ; ?>",
+                                        "sLast":     "<?php _e('Last') ; ?>"
+                                    }
+                    },
                     "aoColumns": [
                         {
-                            "sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
+                            "sTitle": "<div style='width:10px;'><input id='check_all' type='checkbox' /></div>"
                             ,"bSortable": false
                             ,"sClass": "center"
                             ,"sWidth": "10px"
@@ -49,116 +106,83 @@
                         }
                         ,{
                             "sTitle": "<?php _e('Title') ; ?>"
-                            ,"sWidth": "20%"
-                            ,"bSortable": false
+                            ,"sWidth": "25%"
+                            ,"bSortable": true
                         }
                         ,{
                             "sTitle": "<?php _e('User') ; ?>"
-                            ,"bSortable": false
-                            ,"sWidth": "25%"
+                            ,"bSortable": true
+                            ,"sWidth": "10%"
                         }
                         ,{
                             "sTitle": "<?php _e('Category') ; ?>"
-                            ,"bSortable": false
+                            ,"sWidth": "15%"
+                            ,"bSortable": true
                         }
                         ,{
-                            "sTitle": "<?php _e('Location') ; ?>"
-                            ,"sWidth": "20%"
-                            ,"bSortable": false
+                            "sTitle": "<?php _e('County') ; ?>"
+                            ,"sWidth": "10%"
+                            ,"bSortable": true
+                        }
+                        ,{
+                            "sTitle": "<?php _e('Region') ; ?>"
+                            ,"sWidth": "10%"
+                            ,"bSortable": true
+                        }
+                        ,{
+                            "sTitle": "<?php _e('City') ; ?>"
+                            ,"sWidth": "10%"
+                            ,"bSortable": true
                         }
                         ,{
                             "sTitle": "<?php _e('Date') ; ?>"
-                             ,"sWidth": "100px"
-                             ,"bSearchable": false
+                            ,"sWidth": "100px"
+                            ,"bSearchable": false
+                            ,"bSortable": true
+                            ,"defaultSortable" : true
                         }
                     ]
                 });
-                // display table.
-//                oTable._fnInit();
+            });
+            
+            $('#datatables_list tr').live('mouseover', function(event) {
+                $('#datatable_wrapper', this).show();
+                $('#datatables_quick_edit', this).show();
+            });
+
+            $('#datatables_list tr').live('mouseleave', function(event) {
+                $('#datatable_wrapper', this).hide();
+                $('#datatables_quick_edit', this).hide();
+            });
+
+            $('#show_filter').live('mouseover', function(event) {
+                $(this).css('color', 'black');
 
             });
-//                sSearchName = "<?php _e('Search'); ?>...";
-//                oTable = $('#datatables_list').dataTable({
-//                            "bProcessing": true
-//                            ,"bServerSide": true
-//                            ,"sAjaxSource": "<?php echo osc_admin_base_url(true); ?>?page=ajax&action=items&catId=<?php echo Params::getParam('catId');?>"
-//                                            <?php if($stat) { ?>
-//                                                ,"fnServerData": function ( sSource, aoData, fnCallback ) {
-//                                                        /* Add some extra data to the sender */
-//                                                        aoData.push( { "name": "stat", "value": "<?php echo $stat ; ?>" } );
-//                                                        $.getJSON( sSource, aoData, function (json) {
-//                                                                /* Do whatever additional processing you want on the callback, then tell DataTables */
-//                                                                fnCallback(json)
-//                                                        } );
-//                                                }
-//                                            <?php } ?>
-//                                            ,"bAutoWidth": false
-//                                            ,"sDom": '<"top"fl>rt<"bottom"ip<"clear">'
-//                                            ,"oLanguage": {
-//                                                    "sProcessing":   "<?php _e('Processing') ; ?>..."
-//                                                    ,"sLengthMenu":   "<?php _e('Show _MENU_ entries') ; ?>"
-//                                                    ,"sZeroRecords":  "<?php _e('No matching records found') ; ?>"
-//                                                    ,"sInfo":         "<?php _e('Showing _START_ to _END_ of _TOTAL_ entries') ; ?>"
-//                                                    ,"sInfoEmpty":    "<?php _e('Showing 0 to 0 of 0 entries') ; ?>"
-//                                                    ,"sInfoFiltered": "(<?php _e('filtered from _MAX_ total entries') ; ?>)"
-//                                                    ,"sInfoPostFix":  ""
-//                                                    ,"sSearch":       "<?php _e('Search') ; ?>:"
-//                                                    ,"sUrl":          ""
-//                                                    ,"oPaginate": {
-//                                                        "sFirst":    "<?php _e('First') ; ?>",
-//                                                        "sPrevious": "<?php _e('Previous') ; ?>",
-//                                                        "sNext":     "<?php _e('Next') ; ?>",
-//                                                        "sLast":     "<?php _e('Last') ; ?>"
-//                                                    }
-//                                                    ,"sLengthMenu": '<div style="float:left;"><?php _e('Show') ; ?> <select class="display" id="select_range">'+
-//                                                                                                                        '<option value="10">10</option>'+
-//                                                                                                                        '<option value="15">15</option>'+
-//                                                                                                                        '<option value="20">20</option>'+
-//                                                                                                                        '<option value="100">100</option>'+
-//                                                                                                                   '</select> <?php _e('entries') ; ?>'
-//                                                    ,"sSearch": '<span class="ui-icon ui-icon-search" style="display: inline-block;"></span>'
-//                                            }
-//                                            ,"sPaginationType": "full_numbers"
-//                                            ,"aoColumns": [
-//                                                {"sTitle": "<div style='margin-left: 8px;'><input id='check_all' type='checkbox' /></div>"
-//                                                 ,"bSortable": false
-//                                                 ,"sClass": "center"
-//                                                 ,"sWidth": "10px"
-//                                                 ,"bSearchable": false
-//                                                }
-//                                                ,{"sTitle": "<?php _e('Title') ; ?>"
-//                                                  ,"bSortable": false
-//                                                  ,"sWidth": "25%"
-//                                                 }
-//                                                <?php if($stat) { ?>
-//                                                    ,{"sTitle": "<?php _e('Count') ; ?>"
-//                                                     ,"bSortable": false
-//                                                    }
-//                                                <?php } else { ?>
-//                                                    ,{"sTitle": "<?php _e('Description') ; ?>"
-//                                                     ,"bSortable": false
-//                                                    }
-//                                                <?php } ?>
-//                                                ,{"sTitle": "<?php _e('Category') ; ?>"
-//                                                 ,"sWidth": "20%"
-//                                                 ,"bSortable": false
-//                                                }
-//                                                ,{"sTitle": "<?php _e('Date') ; ?>"
-//                                                 ,"sWidth": "100px"
-//                                                 ,"bSearchable": false
-//                                                }
-//                                            ]
-//                        });
-//                        oTable.fnSort ( [[0, 'desc']] );
-//            });
+
+            $('#show_filter').live('mouseleave', function(event) {
+                $(this).css('color', '#555555');
+            });
+            
+            function show_filters(){
+                div_filter = this;
+                $('#TableToolsLinks').toggle(function(){
+                    if( $('#show_filter strong').html() == '+ <?php _e('Show filters')?>' ){
+                        $('#show_filter strong').html('- <?php _e('Show filters')?>');
+                    } else {
+                        $('#show_filter strong').html('+ <?php _e('Show filters')?>');
+                    }
+                });
+            }
+            
         </script>
         <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
-
+        
         <div id="content">
             <div id="separator"></div>
 
             <?php osc_current_admin_theme_path('include/backoffice_menu.php') ; ?>
-
+            
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -170,25 +194,164 @@
 
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
+                <div>
+                    <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=items" method="post">
+                        
+                        <input type="hidden" name="action" value="bulk_actions" />
+                        <div style="clear:both;"></div>
+                        <div id="show_filter" style="color:#555555; cursor: pointer;padding-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
+                        <div id="TableToolsLinks" style="display:none;">
+                            <div style="float:left;">
+                                
+                                <div class="row">
+                                    <label><?php _e('Search') ; ?></label>
+                                    <input id="sSearch" type="text" name="sSearch"/><span>*(<?php _e('Title and Description'); ?>)</span>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('Item posted by'); ?></label>
+                                    <?php ItemForm::user_select($users, NULL, __('Non-registered user')); ?>
+                                </div>
 
-                <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
+                                <div class="row">
+                                    <label><?php _e('Country'); ?></label>
+                                    <?php $item = array(); $item["countryId"] = "";ItemForm::country_select($countries, $item ) ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('Region'); ?></label>
+                                    <?php ItemForm::region_select($regions, "NULL") ; ?>
+                                </div>
+                                <div class="row">
+                                    <label><?php _e('City'); ?></label>
+                                    <?php ItemForm::city_select($cities, "NULL") ; ?>
+                                </div>
+
+                                <div class="row">
+                                    <label for="catId"><?php _e('Category') ?>:</label>
+                                    <?php $item = array(); $item["fk_i_category_id"] = Params::getParam('catId'); ItemForm::category_select($categories, $item ); ?>
+                                </div>
+                            </div>
+                            <div class="" style="float:left;">
+                                <fieldset>
+                                    <strong><?php _e('Status') ?></strong>
+                                    <br/>
+                                    <label for="b_premium"><?php _e('Premium') ?></label>
+                                    <select id="b_premium" name="b_premium" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="b_active"><?php _e('Active') ?></label>
+                                    <select id="b_active" name="b_active" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="b_enabled"><?php _e('Enabled') ?></label>
+                                    <select id="b_enabled" name="b_enabled" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="b_spam"><?php _e('Spam') ?></label>
+                                    <select id="b_spam" name="b_spam" style="opacity: 0;">
+                                        <option value=""><?php _e('ALL'); ?></option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                        <option value="0"><?php _e('OFF'); ?></option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                            <div class="" style="float:left;">
+                                <fieldset>
+                                    <strong><?php _e('Mark as') ?></strong>
+                                    <br/>
+                                    <label for="i_num_spam"><?php _e('Spam') ?></label>
+                                    <select id="i_num_spam" name="i_num_spam" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_bad_classified"><?php _e('Misclassified') ?></label>
+                                    <select id="i_num_bad_classified" name="i_num_bad_classified" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_repeated"><?php _e('Duplicated') ?></label>
+                                    <select id="i_num_repeated" name="i_num_repeated" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_offensive"><?php _e('Offensive') ?></label>
+                                    <select id="i_num_offensive" name="i_num_offensive" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                    <br/>
+                                    <label for="i_num_expired"><?php _e('Expired') ?></label>
+                                    <select id="i_num_expired" name="i_num_expired" style="opacity: 0;">
+                                        <option value="">-</option>
+                                        <option value="1"><?php _e('ON'); ?></option>
+                                    </select>
+                                </fieldset>
+
+                            </div>
+                            <div style="clear:both;"></div>
+                            <div>
+                                <div style="float:left;width:70px;padding-top:10px;"><button type="button" onclick="oTable.applyFilters();"><?php _e('Apply') ; ?></button></div>
+                                <div style="float:left;width:140px;padding-top:10px;padding-left:10px;"><button type="button" onclick="window.location.href='<?php echo osc_admin_base_url(true);?>?page=items'"><?php _e('Reset filters') ; ?></button></div>
+                            </div>
+                            <div style="padding-top:10px;border-bottom:1px gray solid;clear:both;"></div>
+                        </div>
+
+                        <div class="top" style="margin-top:10px;">
+                            <div style="float:left;"><?php _e('Show') ; ?>
+                                <select class="display" id="select_range">
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="100">100</option>
+                                </select> <?php _e('entries') ; ?>
+                            </div>
+                            <div id="TableToolsToolbar">
+                                <select id="bulk_actions" name="bulk_actions" class="display">
+                                        <option value=""><?php _e('Bulk actions'); ?></option>
+                                        <option value="delete_all"><?php _e('Delete') ?></option>
+                                        <option value="activate_all"><?php _e('Activate') ?></option>
+                                        <option value="deactivate_all"><?php _e('Deactivate') ?></option>
+                                        <option value="enable_all"><?php _e('Enable') ?></option>
+                                        <option value="disable_all"><?php _e('Disable') ?></option>
+                                        <option value="premium_all"><?php _e('Mark as premium') ?></option>
+                                        <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
+                                </select>
+                                &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
+                            </div>
+                        </div>
+                        <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
+                    </form>
+                </div>
 
             </div> <!-- end of right column -->
+            <script>
+                
+                    $('#check_all').live('change',
+                        function(){
+                            if( $(this).attr('checked') ){
+                                $('#'+oTable._idTable+" input").each(function(){
+                                    $(this).attr('checked','checked');
+                                });
+                            } else {
+                                $('#'+oTable._idTable+" input").each(function(){
+                                    $(this).attr('checked','');
+                                });
+                            }
+                        }
+                    );
 
-            <script type="text/javascript">
-                $(document).ready(function() {
-//                    $('#datatables_list tr').live('mouseover', function(event) {
-//                        $('#datatable_wrapper', this).show();
-//                        $('#datatables_quick_edit', this).show();
-//                    });
-//
-//                    $('#datatables_list tr').live('mouseleave', function(event) {
-//                        $('#datatable_wrapper', this).hide();
-//                        $('#datatables_quick_edit', this).hide();
-//                    });
-                });
             </script>
-
             <div style="clear: both;"></div>
 
         </div> <!-- end of container -->

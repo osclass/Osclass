@@ -311,6 +311,32 @@
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
+                case 'status_spam':  //status spam
+                                        $id = Params::getParam('id') ;
+                                        $value = Params::getParam('value') ;
+
+                                        if (!$id)
+                                            return false;
+
+                                        $id = (int) $id;
+
+                                        if (!is_numeric($id))
+                                            return false;
+
+                                        if (!in_array($value, array(0, 1)))
+                                            return false;
+
+                                        try {
+                                            $this->itemManager->update(
+                                                    array('b_spam' => $value),
+                                                    array('pk_i_id' => $id)
+                                            );
+                                            osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
+                                        } catch (Exception $e) {
+                                            osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                break;
                 case 'clear_stat':
                                         $id     = Params::getParam('id') ;
                                         $stat   = Params::getParam('stat') ;
@@ -528,12 +554,25 @@
 
                 default:                //default
                                         $catId = Params::getParam('catId') ;
-
+                    
+                                        $countries = Country::newInstance()->listAll() ;
+                                        $regions = array() ;
+                                        if( count($countries) > 0 ) {
+                                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
+                                        }
+                                        $cities = array() ;
+                                        if( count($regions) > 0 ) {
+                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                                        }
                                         //preparing variables for the view
+                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("items", ( ($catId) ? $this->itemManager->findByCategoryID($catId) : $this->itemManager->listAllWithCategories() ) ) ;
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
 
+                                        $this->_exportVariableToView("countries", $countries);
+                                        $this->_exportVariableToView("regions", $regions);
+                                        $this->_exportVariableToView("cities", $cities);
                                         //calling the view...
                                         $this->doView('items/index.php') ;
             }
