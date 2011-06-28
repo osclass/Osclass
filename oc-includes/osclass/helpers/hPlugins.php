@@ -35,7 +35,7 @@
      */
     function osc_run_hook($hook) {
         $args = func_get_args();
-        call_user_func_array("Plugins::runHook", $args);
+        call_user_func_array(array('Plugins', 'runHook'), $args);
     }
     
     /**
