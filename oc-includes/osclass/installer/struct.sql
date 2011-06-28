@@ -202,7 +202,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
-    b_premium BOOLEAN NULL,
+    b_premium BOOLEAN NOT NULL DEFAULT FALSE,
     b_enabled BOOLEAN NOT NULL DEFAULT TRUE,
     b_active BOOLEAN NOT NULL DEFAULT FALSE,
     b_spam BOOLEAN NOT NULL DEFAULT FALSE,

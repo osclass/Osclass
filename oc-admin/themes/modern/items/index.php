@@ -175,6 +175,7 @@
                 });
             }
             
+            
         </script>
         <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
         
@@ -199,17 +200,17 @@
                         
                         <input type="hidden" name="action" value="bulk_actions" />
                         <div style="clear:both;"></div>
-                        <div id="show_filter" style="color:#555555; cursor: pointer;padding-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
+                        <div id="show_filter" style="color:#555555; cursor: pointer;margin-top:10px;border-bottom:1px #444444 solid;" onclick="show_filters();"> <strong>+ <?php _e('Show filters')?></strong> </div>
                         <div id="TableToolsLinks" style="display:none;">
                             <div style="float:left;">
                                 
                                 <div class="row">
                                     <label><?php _e('Search') ; ?></label>
-                                    <input id="sSearch" type="text" name="sSearch"/><span>*(<?php _e('Title and Description'); ?>)</span>
+                                    <input id="sSearch" type="text" name="sSearch"/><span style="padding-left:1em;">*(<?php _e('Title and Description'); ?>)</span>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Item posted by'); ?></label>
-                                    <?php ItemForm::user_select($users, NULL, __('Non-registered user')); ?>
+                                    <?php ItemForm::user_select($users, "NULL", __('Non-registered user')); ?>
                                 </div>
 
                                 <div class="row">
@@ -350,6 +351,14 @@
                             }
                         }
                     );
+//                    $(document).ready(function(){
+                        $('#sSearch').bind('keypress', function(e) {
+                            if(e.keyCode==13){
+                                oTable.applyFilters();
+                                return false;
+                            }
+                        });
+//                    });
 
             </script>
             <div style="clear: both;"></div>
