@@ -148,6 +148,40 @@
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
                                                 }
                                             break;
+                                            case 'spam_all':
+                                                $id = Params::getParam('id') ;
+                                                $value = 1 ;
+                                                try {
+                                                    if ($id) {
+                                                        foreach ($id as $_id) {
+                                                            $this->itemManager->update(
+                                                                array('b_spam' => $value),
+                                                                array('pk_i_id' => $_id)
+                                                            );
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( _m('The items have been marked as spam'), 'admin') ;
+                                                } catch (Exception $e) {
+                                                    osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
+                                                }
+                                            break;
+                                            case 'despam_all':
+                                                $id = Params::getParam('id') ;
+                                                $value = 0 ;
+                                                try {
+                                                    if ($id) {
+                                                        foreach ($id as $_id) {
+                                                            $this->itemManager->update(
+                                                                array('b_spam' => $value),
+                                                                array('pk_i_id' => $_id)
+                                                            );
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( _m('The changes have been made'), 'admin') ;
+                                                } catch (Exception $e) {
+                                                    osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
+                                                }
+                                            break;
                                             case 'delete_all':
                                                 $id = Params::getParam('id') ;
                                                 $success = false;

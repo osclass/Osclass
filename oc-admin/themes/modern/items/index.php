@@ -175,7 +175,6 @@
             
             
         </script>
-        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
         
         <div id="content">
             <div id="separator"></div>
@@ -319,8 +318,10 @@
                                     <option value="deactivate_all"><?php _e('Deactivate') ?></option>
                                     <option value="enable_all"><?php _e('Enable') ?></option>
                                     <option value="disable_all"><?php _e('Disable') ?></option>
-                                    <option value="premium_all"><?php _e('Mark as premium') ?></option>
+                                    <option value="premium_all"><?php _e('Mark as premium') ?></option>spam_all
                                     <option value="depremium_all"><?php _e('Unmark as premium') ?></option>
+                                    <option value="spam_all"><?php _e('Mark as spam') ?></option>
+                                    <option value="despam_all"><?php _e('Unmark as spam') ?></option>
                                 </select>
                                 &nbsp;<button id="bulk_apply" class="display"><?php _e('Apply') ?></button>
                             </div>

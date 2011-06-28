@@ -281,15 +281,7 @@
                     } else {
                         $this->sOutput .= '</div></div>",';
                     }
-
-                    /* if $_GET['stat'] */
-//                    if(isset($aRow['num_total'])) {
-//                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['num_total'])).'",';
-//                    } else {
-//                        $description = mb_substr($aRow['s_description'], 0, 200, 'utf-8');
-////                        $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ', $description)).'",';
-//                    }
-                    /* END OF - if $_GET['stat'] */
+                    
                     $this->sOutput .= '"'.$aRow['s_user_name'].'",';
                     $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
                     $this->sOutput .= '"'.$aRow['s_country'].'",';
@@ -324,7 +316,6 @@
                     }
                     $count++;
                 }
-            //$this->sOutput = substr_replace( $this->sOutput, "", -1 ); /* XXX: for some reason this line breaks everything... */
             }
             $this->sOutput .= ']}';
 

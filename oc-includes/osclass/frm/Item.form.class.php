@@ -78,7 +78,6 @@
             if(Session::newInstance()->_getForm('catId') != ""){
                 $catId = Session::newInstance()->_getForm('catId');
             }
-//            echo "[$catId]<br>";
             // How many indents to add?
             $deep_string = "";
             for($var = 0;$var<$deep;$var++) {
