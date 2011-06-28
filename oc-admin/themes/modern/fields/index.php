@@ -50,6 +50,53 @@
             }
             
             
+            function delete_field(id){
+                var answer = confirm('<?php _e('WARNING: This will also delete the information related to this field. This action cann not be undone. Are you sure you want to continue?'); ?>');
+                if(answer){
+                    var url  = '<?php echo osc_admin_base_url(true); ?>?page=ajax&action=delete_field&id='+id;
+                    $.ajax({
+                        url: url,
+                        context: document.body,
+                        success: function(res){
+                            var ret = eval( "(" + res + ")");
+                            var message = "";
+                            if(ret.error) { 
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/cross.png'); ?>"/>';
+                                message += ret.error; 
+                            }
+                            if(ret.ok){
+                                message += '<img style="padding-right:5px;padding-top:2px;" src="<?php echo osc_current_admin_theme_url('images/tick.png'); ?>"/>';
+                                message += ret.ok;
+                                
+                                $('#list_'+id).fadeOut("slow");
+                                $('#list_'+id).remove();
+                            }
+                            
+                            $("#jsMessage").fadeIn("fast");
+                            $("#jsMessage").html(message);
+                            setTimeout(function(){
+                                $("#jsMessage").fadeOut("slow", function () {
+                                    $("#jsMessage").html("");
+                                });
+                            }, 3000);
+
+                        },
+                        error: function(){
+                            $("#jsMessage").fadeIn("fast");
+                            $("#jsMessage").html("<?php _e('Ajax error, try again.');?>");
+
+                            setTimeout(function(){
+                                $("#jsMessage").fadeOut("slow", function () {
+                                    $("#jsMessage").html("");
+                                });
+                            }, 3000);
+                        }
+                    });
+                }
+                return false;
+            }
+            
+            
         </script>
         <div id="content">
             <div id="separator"></div>	
@@ -81,6 +128,10 @@
                                 <div style="float:right;">
                                     <a onclick="show_iframe('content_list_<?php echo $field['pk_i_id'];?>','<?php echo $field['pk_i_id'];?>');">
                                     <?php _e('Edit'); ?>
+                                    </a>
+                                    <span> | </span>
+                                    <a onclick="delete_field('<?php echo $field['pk_i_id'];?>');">
+                                    <?php _e('Delete'); ?>
                                     </a>
                                 </div>
                                 <div class="edit content_list_<?php echo $field['pk_i_id']; ?>"></div>

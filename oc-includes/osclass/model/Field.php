@@ -172,6 +172,12 @@
             return $this->conn->osc_dbExec("REPLACE INTO %st_item_meta ( `fk_i_item_id`, `fk_i_field_id`, `s_value` ) VALUES ('%d', '%d', '%s')", DB_TABLE_PREFIX, $itemId, $field, $value);
         }
 
+        public function deleteByPrimaryKey($id) {
+            $this->conn->osc_dbExec("DELETE FROM %st_item_meta WHERE fk_i_field_id = '%d'", DB_TABLE_PREFIX, $id);
+            $this->conn->osc_dbExec("DELETE FROM %st_meta_categories WHERE fk_i_field_id = '%d'", DB_TABLE_PREFIX, $id);
+            $this->conn->osc_dbExec("DELETE FROM %st_meta_fields WHERE pk_i_id = '%d'", DB_TABLE_PREFIX, $id);
+        }
+        
     }
 
 ?>

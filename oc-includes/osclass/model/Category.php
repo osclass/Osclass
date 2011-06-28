@@ -332,7 +332,7 @@
 
             osc_run_hook("delete_category", $pk);
             
-            $this->conn->osc_dbExec("DELETE FROM %st_plugin_category WHERE fk_i_category_id = '" . $pk . "'");
+            $this->conn->osc_dbExec("DELETE FROM %st_plugin_category WHERE fk_i_category_id = '" . $pk . "'", DB_TABLE_PREFIX);
             $this->conn->osc_dbExec("DELETE FROM %s WHERE fk_i_category_id = '" . $pk . "'", $this->getTableDescriptionName());
             $this->conn->osc_dbExec("DELETE FROM %s WHERE fk_i_category_id = '" . $pk . "'", $this->getTableStats());
             $this->conn->osc_dbExec("DELETE FROM %s WHERE pk_i_id = '" . $pk . "'", $this->getTableName());
