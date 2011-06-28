@@ -131,7 +131,7 @@
         /* START - format functions */
         private function toDatatablesFormat() {
             $this->sOutput = '{';
-//            $this->sOutput .= '"sEcho": '.($this->sEcho).', ';
+            $this->sOutput .= '"sEcho": '.($this->sEcho).', ';
             $this->sOutput .= '"iTotalRecords": '.($this->total).', ';
             $this->sOutput .= '"iTotalDisplayRecords": '.($this->filtered_total).', ';
             $this->sOutput .= '"aaData": [ ';
@@ -179,7 +179,6 @@
                     }
 
                     /* if $_GET['stat'] */
-
                     if(isset($aRow['num_total'])) {
                         $this->sOutput .= '"'.addslashes(preg_replace('|\s+|',' ',$aRow['num_total'])).'",';
                     } else {
