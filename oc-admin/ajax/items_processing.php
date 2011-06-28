@@ -136,13 +136,15 @@
 
             foreach($this->filters as $aFilter ){
                 $sFilter = "";
-                $sFilter .= $aFilter[0]." = '".$aFilter[1]."'";
+                
+                if($aFilter[1] == 'NULL') {
+                    $sFilter .= $aFilter[0]." IS NULL";
+                } else {
+                    $sFilter .= $aFilter[0]." = '".$aFilter[1]."'";
+                }
                 $sFilter = sprintf( $sFilter , DB_TABLE_PREFIX ) ;
                 $mSearch->addConditions( $sFilter );
             }
-            
-            
-
             // do Search
             $list_items = $mSearch->doSearch(true);
 
