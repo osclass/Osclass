@@ -171,6 +171,28 @@
                     
                     echo $result;
                     break;
+                case 'delete_field':
+                    $id = Params::getParam("id");
+                    $error = 0;
+                    
+                    try {
+                        $fieldManager = Field::newInstance() ;
+                        $fieldManager->deleteByPrimaryKey($id) ;
+                      
+                        $message = __('The custom field have been deleted');
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error while deleting');
+                    }
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "Saved." '; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
                 case 'enable_category':
                     $id = Params::getParam("id");
                     $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
