@@ -95,6 +95,7 @@ switch ($step) {
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-admin/themes/modern/js/location.js') ; ?>" type="text/javascript"></script>
         <?php if($step == 5) { ?>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/password_strength_plugin.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/style.css" />
