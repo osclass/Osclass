@@ -152,7 +152,7 @@
      * @param string $country
      * @return boolean
      */
-    function osc_validate_location ($city, $region, $country) {
+    function osc_validate_location ($city,$sCity,$region,$sRegion,$country,$sCountry) {
         if ( osc_validate_nozero($city) && osc_validate_nozero($region) && osc_validate_text($country,2) ) {
             $data = Country::newInstance()->findByCode($country);
             $countryId = $data['pk_c_code'];
@@ -166,6 +166,12 @@
                     }
                 }
             }
+        } else if(osc_validate_nozero($region) && osc_validate_text($country,2) && $sCity != "" ) {
+            return true;
+        } else if($sRegion != "" && osc_validate_text($country,2) && $sCity != "" ) {
+            return true;
+        } else if($sRegion != "" && $sCountry != "" && $sCity != "" ){
+            return true;
         }
         return false;
     }

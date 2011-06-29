@@ -111,7 +111,7 @@
                 ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
@@ -272,7 +272,7 @@
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['regionId'], $aItem['countryId'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false))? _m("Address too short.") . PHP_EOL : '' ) .
@@ -922,12 +922,13 @@
 
             // get params
             $aItem['catId']         = Params::getParam('catId');
+            $aItem['countryId']     = Params::getParam('countryId');
+            $aItem['country']       = Params::getParam('country');
             $aItem['region']        = Params::getParam('region');
-            $aItem['city']          = Params::getParam('city');
             $aItem['regionId']      = Params::getParam('regionId');
+            $aItem['city']          = Params::getParam('city');
             $aItem['cityId']        = Params::getParam('cityId');
             $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : 0;
-            $aItem['countryId']     = Params::getParam('countryId');
             $aItem['cityArea']      = Params::getParam('cityArea');
             $aItem['address']       = Params::getParam('address');
             $aItem['currency']      = Params::getParam('currency');
@@ -944,7 +945,7 @@
                 $countryName = $country['s_name'];
             } else {
                 $countryId = null;
-                $countryName = null;
+                $countryName = $aItem['country'];
             }
             $aItem['countryId']   = $countryId;
             $aItem['countryName']   = $countryName;
