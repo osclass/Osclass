@@ -515,9 +515,11 @@
             $("#cityId").attr('disabled',true);
         }
 
-        if( $("#countryId").attr('type').match(/select-one/) ) {
-            if( $("#countryId").attr('value') == "")  {
-                $("#regionId").attr('disabled',true);
+        if($("#countryId").length != 0) {
+            if( $("#countryId").attr('type').match(/select-one/) ) {
+                if( $("#countryId").attr('value') == "")  {
+                    $("#regionId").attr('disabled',true);
+                }
             }
         }
 
