@@ -50,7 +50,6 @@
 
                                     $this->_exportVariableToView( "numItems", Item::newInstance()->count() ) ;
                                     $this->_exportVariableToView( "numItemsPerCategory", CategoryStats::newInstance()->toNumItemsMap() ) ;
-                                    $this->_exportVariableToView( "categories", Category::newInstance()->listAll() ) ;
                                     $this->_exportVariableToView( "newsList", osc_listNews() ) ;
                                     $this->_exportVariableToView( "comments", ItemComment::newInstance()->getLastComments(5) ) ;
 

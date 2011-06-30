@@ -21,7 +21,6 @@
     $numAdmins = __get("numAdmins") ;
     $numItems = __get("numItems") ;
     $numItemsPerCategory = __get("numItemsPerCategory") ;
-    $categories = __get("categories") ;
     $newsList = __get("newsList") ;
     $comments = __get("comments") ;
 ?>
@@ -142,16 +141,24 @@
 						<div id="last_items" class="ui-widget-content ui-corner-all">
 							<h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
 							<div id="last_items_body">
-							<?php $totalWithItems = 0 ; ?>
-                            <?php foreach($categories as $c) { ?>
-                                <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
-                                    <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
-                                    <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
-                                    <br />
-                                    <?php $totalWithItems++ ; ?>
-                                <?php } ?>
-							<?php } ?>
-							
+                                                        <?php $totalWithItems = 0 ;?>
+                                                        <?php foreach($numItemsPerCategory['parent'] as $idParent => $aParent) {?>
+                                                            <?php if($aParent['numItems'] > 0){?>
+                                                                <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $idParent;?>"><?php echo $aParent['s_name'] ; ?></a>
+                                                                <?php echo "(" . $aParent['numItems'] . "&nbsp;" . ( ( $aParent['numItems'] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                                                <br />
+                                                                <?php $totalWithItems++ ; ?>
+                                                                <?php foreach($numItemsPerCategory['subcategories'][$idParent] as $idSubCat => $aSubCat) {?>
+                                                                    <?php if($aSubCat['numItems'] > 0){?>
+                                                                        <?php echo "&nbsp;&nbsp;"; ?>
+                                                                        <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $idSubCat;?>"><?php echo $aSubCat['s_name'] ; ?></a>
+                                                                        <?php echo "(" . $aSubCat['numItems'] . "&nbsp;" . ( ( $aSubCat['numItems'] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                                                        <br />
+                                                                        <?php $totalWithItems++ ; ?>
+                                                                    <?php }?>
+                                                                <?php }?>
+                                                            <?php }?>
+                                                        <?php }?>
 							<?php if ($totalWithItems == 0) {
 								_e('There aren\'t any uploaded items yet');
 							 } ?>

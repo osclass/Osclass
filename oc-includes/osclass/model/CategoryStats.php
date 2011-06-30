@@ -68,8 +68,10 @@
             if(is_null($numItemsMap)) {
                 $numItemsMap = $this->toNumItemsMap();
             }
-            if(isset($numItemsMap[$cat['pk_i_id']]))
-                return $numItemsMap[$cat['pk_i_id']];
+            if(isset($numItemsMap['parent'][$cat['pk_i_id']]))
+                return $numItemsMap['parent'][$cat['pk_i_id']];
+            else if (isset($numItemsMap['subcategories'][$cat['pk_i_id']]))
+                return $numItemsMap['subcategories'][$cat['pk_i_id']];
             else
                 return 0;
         }
@@ -77,10 +79,25 @@
         public function toNumItemsMap() {
             $map = array();
             $all = $this->listAll();
+
+            $roots = Category::newInstance()->findRootCategories();
+
             foreach($all as $a)
                 $map[$a['fk_i_category_id']] = $a['i_num_items'];
 
-            return $map;
+            $new_map = array();
+            foreach($roots as $root ){
+                $root_description = Category::newInstance()->findByPrimaryKey($root['pk_i_id']);
+                $new_map['parent'][ $root['pk_i_id'] ] =  array('numItems' => $map[ $root['pk_i_id'] ], 's_name' => $root_description['s_name'] );
+                $subcategories = Category::newInstance()->findSubcategories($root['pk_i_id']);
+                $aux = array();
+                foreach($subcategories as $sub) {
+                    $sub_description = Category::newInstance()->findByPrimaryKey($sub['pk_i_id']);
+                    $aux[$sub['pk_i_id']] = array('numItems' => $map[$sub['pk_i_id']], 's_name' => $sub_description['s_name'] );
+                }
+                $new_map['subcategories'][$root['pk_i_id']] = $aux;
+            }
+            return $new_map;
         }
     }
 
