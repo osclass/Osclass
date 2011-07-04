@@ -69,9 +69,9 @@
                 $numItemsMap = $this->toNumItemsMap();
             }
             if(isset($numItemsMap['parent'][$cat['pk_i_id']]))
-                return $numItemsMap['parent'][$cat['pk_i_id']];
+                return $numItemsMap['parent'][$cat['pk_i_id']]['numItems'];
             else if (isset($numItemsMap['subcategories'][$cat['pk_i_id']]))
-                return $numItemsMap['subcategories'][$cat['pk_i_id']];
+                return $numItemsMap['subcategories'][$cat['pk_i_id']]['numItems'];
             else
                 return 0;
         }
