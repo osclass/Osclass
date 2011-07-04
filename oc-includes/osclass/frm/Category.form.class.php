@@ -56,7 +56,8 @@
         }
 
 
-        static public function plugin_categories($categories = null, $selected = null, $depth = 0) {
+        // XXX: marked to delete
+        /*static public function plugin_categories($categories = null, $selected = null, $depth = 0) {
 
             if($categories!=null && is_array($categories)) {
 
@@ -72,7 +73,7 @@
                 }
                 echo '</div>';
             }
-        }
+        }*/
 
         static public function categories_tree($categories = null, $selected = null, $depth = 0) {
 
