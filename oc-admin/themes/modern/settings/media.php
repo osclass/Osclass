@@ -125,8 +125,8 @@
         </div><!-- end of container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
         <script type="text/javascript">
-            $('#watermark_none').change(function(){
-                if($(this).checked != 'undefined'){
+            $('input#watermark_none').change(function(){
+                if( $(this).attr('checked') ){
                     $('.watermark_text').hide();
                     $('.watermark_image').hide();
                 }
@@ -135,12 +135,25 @@
                 if($(this).checked != 'undefined'){
                     $('.watermark_text').show();
                     $('.watermark_image').hide();
+                    if( !$('input#keep_original_image').attr('checked') ) {
+                        alert("<?php _e("Is highly recommended to have 'Keep original image' option active when you want watermarks."); ?>");
+                    }
                 }
             });
             $('#watermark_image').change(function(){
                 if($(this).checked != 'undefined'){
                     $('.watermark_image').show();
                     $('.watermark_text').hide();
+                    if( !$('input#keep_original_image').attr('checked') ) {
+                        alert("<?php _e("Is highly recommended to have 'Keep original image' option active when you want watermarks."); ?>");
+                    }
+                }
+            });
+            $('#keep_original_image').change(function(){
+                if( !$(this).attr('checked') ){
+                    if( !$('#watermark_none').attr('checked') ) {
+                        alert("<?php _e("Is highly recommended to have 'Keep original image' option active when you want watermarks."); ?>");
+                    }
                 }
             });
             $(document).ready(function() {

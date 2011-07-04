@@ -36,8 +36,6 @@ class Watermark{
         $image = imagecreatetruecolor($watermark_width, $watermark_height);
         $image = $this->getImageResource($filepath, $mime );
         $size = getimagesize( $filepath );
-        $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2) ;
-        $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2) ;
 
         $dest_x = ($size[0]/2) - ($watermark_width /2);
         $dest_y = ($size[1]/2) - ($watermark_height/2);
