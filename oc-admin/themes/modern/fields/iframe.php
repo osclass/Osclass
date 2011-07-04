@@ -25,8 +25,9 @@
     $catsPerCol = round(count($categories)/$numCols);
 ?>
 
+<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
 <div id="settings_form">
-    <form action="<?php echo osc_admin_base_url(true); ?>?page=ajax" method="post">
+    <form action="<?php echo osc_admin_base_url(true); ?>?page=ajax" method="post" id="field_form">
             <input type="hidden" name="action" value="field_categories_post" />
            <?php FieldForm::primary_input_hidden($field); ?>
 
@@ -47,10 +48,12 @@
                         <tr style="vertical-align: top;">
                             <td style="font-weight: bold;" colspan="<?php echo $numCols; ?>">
                                 <label for="categories"><?php _e("Preset categories");?></label><br />
-                                <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', false); return false;"><?php _e("Uncheck all");?></a>
+                                <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('field_form', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('field_form', false); return false;"><?php _e("Uncheck all");?></a>
                             </td>
                             <td>
-                                <?php CategoryForm::plugin_categories($categories, $selected); ?>
+                                <ul id="cat_tree">
+                                    <?php CategoryForm::categories_tree($categories, $selected); ?>
+                                </ul>
                             </td>
                         </tr>
                     </table>
@@ -69,8 +72,33 @@
 
     </form>
 </div>
-
 <script type="text/javascript">
+    $(document).ready(function(){
+        $("#cat_tree").treeview({
+            animated: "fast",
+            collapsed: true,
+            unique: true
+        });
+    });
+    
+    function checkAll (frm, check) {
+        var aa = document.getElementById(frm);
+        for (var i = 0 ; i < aa.elements.length ; i++) {
+            aa.elements[i].checked = check;
+        }
+    }
+
+    function checkCat(id, check) {
+        var lay = document.getElementById("cat" + id);
+        if(lay) {
+        inp = lay.getElementsByTagName("input");
+        for (var i = 0, maxI = inp.length ; i < maxI; ++i) {
+            if(inp[i].type == "checkbox") {
+                inp[i].checked = check;
+            }
+        }}
+    }    
+    
     $(document).ready(function() {
         $('#settings_form form').submit(function() {
             $.ajax({

@@ -74,6 +74,27 @@
             }
         }
 
+        static public function categories_tree($categories = null, $selected = null, $depth = 0) {
+
+            if($categories!=null && is_array($categories)) {
+
+                echo '<ul id="cat'.$categories[0]['fk_i_parent_id'].'">';
+                
+                $d_string = '';
+                for($var_d=0;$var_d<$depth;$var_d++) {
+                    $d_string .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+                }
+
+                foreach($categories as $c) {
+                    echo '<li>';
+                    echo $d_string.'<input type="checkbox" name="categories[]" value="'.$c['pk_i_id'].'" onclick="javascript:checkCat(\''.$c['pk_i_id'].'\', this.checked);" '.(in_array($c['pk_i_id'], $selected)?'checked':'').'>'.(($depth==0)?'<span style="font-size:25px">':'').$c['s_name'].(($depth==0)?'</span>':'').'</input><br />';
+                    CategoryForm::categories_tree($c['categories'], $selected, $depth+1);
+                    echo '</li>';
+                }
+                echo '</ul>';
+            }
+        }
+
         static public function expiration_days_input_text($category = null) {
             parent::generic_input_text("i_expiration_days", (isset($category) && isset($category['i_expiration_days'])) ? $category["i_expiration_days"] : "", 3) ;
             return true ;
