@@ -60,7 +60,7 @@ class Watermark{
         $color  = $this->imageColorAllocateHex($image, $color);
 
         // calculate watermark position and get full path to font file
-        $offset = $this->calculateOffset($image);
+        $offset = $this->calculateOffset($image, $text);
 
         // Add the text to image
         imagettftext($image, 20, 0, $offset['x'], $offset['y'], $color, $this->font , $text);
@@ -90,12 +90,12 @@ class Watermark{
      * @param array $opt
      * @return array
      */
-    private function calculateOffset($image) { //, array $opt) {
+    private function calculateOffset($image,$text) { //, array $opt) {
         $offset = array('x' => 0, 'y' => 0);
 
         // get image size and calculate bounding box
         $isize  = $this->getImageSize($image);
-        $bbox   = $this->calculateBBox();
+        $bbox   = $this->calculateBBox($text);
 
         $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2) ;
         $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2) ;
@@ -122,14 +122,14 @@ class Watermark{
      * @param array $opt
      * @return array
      */
-    private function calculateBBox() {
+    private function calculateBBox($text) {
         // http://ruquay.com/sandbox/imagettf/
 
         $bbox = imagettfbbox(
             20,
             0,
             $this->font,
-            'Foobar'
+            $text
         );
 
         $bbox = array(
