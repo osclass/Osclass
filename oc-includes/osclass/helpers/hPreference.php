@@ -698,6 +698,51 @@
         return Preference::newInstance()->toArray();
     }
     
+    /**
+     * Return if need mark images with text
+     * 
+     * @return boolean
+     */
+    function osc_is_watermark_text() {
+       $text = getPreference('watermark_text');
+       if($text != ''){
+           return true;
+       } else {
+           return false;
+       }
+    }
+
+    /**
+     * Return if need mark images with image
+     * 
+     * @return boolean
+     */
+    function osc_is_watermark_image() {
+        $image = getPreference('watermark_image');
+        if($image != ''){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Return watermark text color
+     *
+     * @return string
+     */
+    function osc_watermark_text_color() {
+        return getPreference('watermark_text_color');
+    }
+
+    /**
+     * Return watermark text
+     * 
+     * @return string
+     */
+    function osc_watermark_text() {
+        return getPreference('watermark_text');
+    }
 
     //PRIVATE FUNCTION (if there was a class :P)
     /**
