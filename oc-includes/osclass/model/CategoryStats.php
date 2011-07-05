@@ -79,6 +79,8 @@
         public function toNumItemsMap() {
             $map = array();
             $all = $this->listAll();
+	
+	    if( empty($all) ) return array();
 
             $roots = Category::newInstance()->findRootCategories();
 

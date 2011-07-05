@@ -187,7 +187,7 @@
                                                 $default_lang = osc_language() ;
                                                 foreach ($id as $i) {                                                    
                                                     if($default_lang == $i) {
-                                                        $msg = _m('Some language can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it');
+                                                        $msg = _m('The language can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it');
                                                     } else {
                                                         $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                     }
