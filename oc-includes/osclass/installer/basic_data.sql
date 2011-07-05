@@ -66,7 +66,10 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'purge_latest_searches', '1000', 'STRING')
     ,('osclass', 'selectable_parent_categories', '0', 'BOOLEAN')
     ,('osclass', 'reg_user_post_comments', '0', 'BOOLEAN')
-    ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN');
+    ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')
+    ,('osclass', 'watermark_text', '', 'STRING')
+    ,('osclass', 'watermark_text_color', '', 'STRING')
+    ,('osclass', 'watermark_image', '', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES
     ('HOURLY', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),

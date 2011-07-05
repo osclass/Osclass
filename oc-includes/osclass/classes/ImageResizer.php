@@ -61,7 +61,7 @@
 
             $newIm = imagecreatetruecolor($newW, $newH);
             imagealphablending($newIm, false);
-            $colorTransparent = imagecolorallocatealpha($newIm, 0, 0, 0, 127);
+            $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
             imagefill($newIm, 0, 0, $colorTransparent);
             imagesavealpha($newIm, true);
             imagecopyresized($newIm, $this->im, 0, 0, 0, 0, $newW, $newH, $w, $h);
@@ -88,7 +88,7 @@
 
             $newIm = imagecreatetruecolor($width,$height);//$newW, $newH);
             imagealphablending($newIm, false);
-            $colorTransparent = imagecolorallocatealpha($newIm, 0, 0, 0, 127);
+            $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
             imagefill($newIm, 0, 0, $colorTransparent);
             imagesavealpha($newIm, true);
             imagecopyresampled($newIm, $this->im, (($width-$newW)/2), (($height-$newH)/2), 0, 0, $newW, $newH, $w, $h);
@@ -102,7 +102,7 @@
         public function saveToFile($imagePath) {
             if(file_exists($imagePath) && !is_writable($imagePath)) throw new Exception("$imagePath is not writable!");
 
-            imagepng($this->im, $imagePath, 7);
+            imagejpeg($this->im, $imagePath);
         }
 
         public function show() {

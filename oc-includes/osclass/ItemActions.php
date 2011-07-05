@@ -1087,6 +1087,7 @@
         public function uploadItemResources($aResources,$itemId)
         {
             if($aResources != '') {
+                $wat = new Watermark();
 
                 $itemResourceManager = ItemResource::newInstance() ;
 
@@ -1105,27 +1106,39 @@
                             $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
                             // Create thumbnail
-                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
                             $size = explode('x', osc_thumbnail_dimensions()) ;
                             ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
+                            if( osc_is_watermark_text() ) {
+                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg');
+                            } elseif ( osc_is_watermark_image() ){
+                                $wat->doWatermarkImage( $path, 'image/jpeg');
+                            }
+
                             // Create normal size
-                            $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
+                            $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
                             $size = explode('x', osc_normal_dimensions()) ;
                             ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
+                            if( osc_is_watermark_text() ) {
+                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
+                            } elseif ( osc_is_watermark_image() ){
+                                $wat->doWatermarkImage( $path, 'image/jpeg');
+                            }
+
                             if( osc_keep_original_image() ) {
-                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
+                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg' ;
                                 move_uploaded_file($tmpName, $path) ;
                             }
 
                             $s_path = 'oc-content/uploads/' ;
-                            $resourceType = 'image/png' ;
+                            $resourceType = 'image/jpeg' ;
                             $itemResourceManager->update(
                                                     array(
                                                         's_path'            => $s_path
                                                         ,'s_name'           => osc_genRandomPassword()
-                                                        ,'s_extension'      => 'png'
+                                                        ,'s_extension'      => 'jpg'
                                                         ,'s_content_type'   => $resourceType
                                                     )
                                                     ,array(
