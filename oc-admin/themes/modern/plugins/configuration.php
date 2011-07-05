@@ -55,8 +55,7 @@
             $(document).ready(function(){
                 $("#cat_tree").treeview({
                     animated: "fast",
-                    collapsed: true,
-                    unique: true
+                    collapsed: true
                 });
             });
 

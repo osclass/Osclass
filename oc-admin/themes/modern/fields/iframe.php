@@ -25,6 +25,7 @@
     $catsPerCol = round(count($categories)/$numCols);
 ?>
 
+<link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
 <div id="settings_form">
     <form action="<?php echo osc_admin_base_url(true); ?>?page=ajax" method="post" id="field_form">
@@ -76,8 +77,7 @@
     $(document).ready(function(){
         $("#cat_tree").treeview({
             animated: "fast",
-            collapsed: true,
-            unique: true
+            collapsed: true
         });
     });
     

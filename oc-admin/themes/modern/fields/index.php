@@ -49,7 +49,13 @@
                 return false;
             }
             
-            
+            function show_add() {
+                $('#addframe').fadeIn('fast');
+            }
+            $(document).ready(function(){
+                $("#addframe").hide();
+            });
+                
             function delete_field(id){
                 var answer = confirm('<?php _e('WARNING: This will also delete the information related to this field. This action cann not be undone. Are you sure you want to continue?'); ?>');
                 if(answer){
@@ -107,6 +113,7 @@
                         <img src="<?php echo osc_current_admin_theme_url('images/cat-icon.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Custom Fields'); ?></div>
+                    <div style="float:right;"><button id="button_add" onclick="show_add();" ><?php _e('Add new field') ; ?></button></div>
                     <div id="jsMessage" class="" style="float:right;display:none;"></div>
                     <div style="clear: both;"></div>
                 </div>
@@ -116,6 +123,30 @@
                 <div id="jsMessage" class="FlashMessage" style="display:none;"></div>
 
                 <div style="clear: both;"></div>
+                <div id="addframe">
+                    <div style="padding: 20px;">
+                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
+                            <input type="hidden" name="page" value="cfields" />
+                            <input type="hidden" name="action" value="add_post" />
+                            <div style="float: left; width: 100%;">
+                                <fieldset>
+                                    <legend><?php _e('Add new custom field'); ?></legend>
+                                    <label for="auto_cron"><?php _e('Name'); ?></label>
+                                    <input type="text" name="field_name" id="field_name" value="" />
+                                    <br/>
+                                    <label><?php _e('Type'); ?></label>
+                                    <select name="field_type" id="field_type">
+                                        <option value="TEXT">TEXT</option>
+                                        <option value="TEXTAREA">TEXTAREA</option>
+                                    </select>
+                                    <span style="float:right;"><input id="button_save" type="submit" value="<?php _e('Add') ; ?>" /></span>
+                                </fieldset>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </form>
+                    </div>
+                </div>
+                
                 <div id="TableFields" class="TableFields">
                     <ul>
                     <?php $even = true;
@@ -141,29 +172,6 @@
                         </li>
                         <?php $even = !$even; } ?>
                     </ul>
-                </div>
-                <div>
-                    <div style="padding: 20px;">
-                        <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="page" value="cfields" />
-                            <input type="hidden" name="action" value="add_post" />
-                            <div style="float: left; width: 100%;">
-                                <fieldset>
-                                    <legend><?php _e('Add new custom field'); ?></legend>
-                                    <label for="auto_cron"><?php _e('Name'); ?></label>
-                                    <input type="text" name="field_name" id="field_name" value="" />
-                                    <br/>
-                                    <label><?php _e('Type'); ?></label>
-                                    <select name="field_type" id="field_type">
-                                        <option value="TEXT">TEXT</option>
-                                        <option value="TEXTAREA">TEXTAREA</option>
-                                    </select>
-                                </fieldset>
-                            </div>
-                            <div style="clear: both;"></div>
-                            <input id="button_save" type="submit" value="<?php _e('Add') ; ?>" />
-                        </form>
-                    </div>
                 </div>
                 <div style="clear: both;"></div>
             </div> <!-- end of right column -->
