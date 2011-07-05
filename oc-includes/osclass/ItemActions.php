@@ -990,7 +990,7 @@
             }
 
             if( $aItem['price'] != '' ) {
-                $aItem['price'] = (int) $aItem['price'];
+                $aItem['price'] = (float) $aItem['price'];
             }
 
             if( $aItem['catId'] == ''){
