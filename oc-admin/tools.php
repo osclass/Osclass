@@ -109,6 +109,10 @@
                                                 ) ;
 
                                                 // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
+                                                if( $extension != 'jpg' ) {
+                                                    $files_to_remove = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "*" . $extension;
+                                                    array_map( "unlink", glob( $files_to_remove ) );
+                                                }
                                                 // ....
                                             } else {
                                                 // no es imagen o imagen sin extesión

@@ -112,6 +112,7 @@
                                     <p>
                                         <label for="watermark_image"><?php _e('Watermark image'); ?></label><br />
                                         <input type="file" name="watermark_image"/>
+                                        *<?php _e("Notice that OSClass don't have take care about size of watermark image");?>.
                                     </p>
                                 </div>
 
