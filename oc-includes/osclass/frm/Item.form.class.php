@@ -381,12 +381,6 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
-                            // existe input hidden + span  ?
-                            if( $('input#regionId').length == 1 ){
-                                $("input#regionId").before('<select name="regionId" id="regionId" ></select>');
-                                $('input#regionId').next().remove();
-                                $('input#regionId').remove();
-                            }
 
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
@@ -488,15 +482,6 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
-
-
-                            // existe input hidden + span  ?
-                            if( $('input#cityId').length == 1 ){
-                                $("input#cityId").before('<select name="cityId" id="cityId" ></select>');
-                                $('input#cityId').next().remove();
-                                $('input#cityId').remove();
-                            }
-
 
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
