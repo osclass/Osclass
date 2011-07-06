@@ -364,6 +364,13 @@ function checkForm() {
             var result = '';
 
             if(pk_c_code != '') {
+                if (typeof $.uniform != 'undefined') {
+                    $.uniform.restore("#regionId");
+                    $.uniform.restore("#region");
+                    $.uniform.restore("#cityId");
+                    $.uniform.restore("#city");
+                }
+
                 $("#regionId").attr('disabled',false);
                 $("#cityId").attr('disabled',true);
                 $.ajax({
@@ -382,6 +389,14 @@ function checkForm() {
 
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
+
+                            if (typeof $.uniform != 'undefined') {
+                                $("#regionId").uniform();
+                                $("#cityId").uniform();
+                                $("#uniform-regionId span").html("<?php _e("Select a region..."); ?>");
+                                $("#uniform-cityId span").html("<?php _e("Select a city..."); ?>");
+                            }
+
                         } else {
                             result += '<option value=""><?php _e('No results') ?></option>';
                             $("#regionId").before('<input type="text" name="region" id="region" />');
@@ -389,17 +404,52 @@ function checkForm() {
 
                             $("#cityId").before('<input type="text" name="city" id="city" />');
                             $("#cityId").remove();
+
+                            if (typeof $.uniform != 'undefined') {
+                                $("#region").uniform();
+                                $("#city").uniform();
+                            }
                         }
                         $("#regionId").html(result);
                         $("#cityId").html('<option selected value=""><?php _e("Select a city..."); ?></option>');
                     }
                  });
              } else {
+                 if (typeof $.uniform != 'undefined') {
+                     $.uniform.restore("#regionId");
+                     $.uniform.restore("#region");
+                     $.uniform.restore("#cityId");
+                     $.uniform.restore("#city");
+                 }
+
+                 // add empty select
+                 $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
+                 $("#region").remove();
+
+                 $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
+                 $("#city").remove();
+
+                 if( $("#regionId").length > 0 ){
+                     $("#regionId").html('<option value=""><?php _e("Select a region..."); ?></option>');
+                 } else {
+                     $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
+                     $("#region").remove();
+                 }
+                 if( $("#cityId").length > 0 ){
+                     $("#cityId").html('<option value=""><?php _e("Select a city..."); ?></option>');
+                 } else {
+                     $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
+                     $("#city").remove();
+                 }
+                 if (typeof $.uniform != 'undefined') {
+                     $("#regionId").uniform();
+                     $("#cityId").uniform();
+                 }
+
                 $("#regionId").attr('disabled',true);
                 $("#cityId").attr('disabled',true);
              }
         });
-
 
         $("#regionId").live("change",function(){
             var pk_c_code = $(this).val();
@@ -408,9 +458,16 @@ function checkForm() {
             <?php } else { ?>
                 var url = '<?php echo osc_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php }; ?>
+                
             var result = '';
 
             if(pk_c_code != '') {
+
+                if (typeof $.uniform != 'undefined') {
+                    $.uniform.restore("#cityId");
+                    $.uniform.restore("#city");
+                }
+
                 $("#cityId").attr('disabled',false);
                 $.ajax({
                     type: "POST",
@@ -419,7 +476,7 @@ function checkForm() {
                     success: function(data){
                         var length = data.length;
                         if(length > 0) {
-                            result += '<option value=""><?php _e("Select a city..."); ?></option>';
+                            result += '<option selected value=""><?php _e("Select a city..."); ?></option>';
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
@@ -431,6 +488,11 @@ function checkForm() {
                             $("#cityId").remove();
                         }
                         $("#cityId").html(result);
+                        // uniform
+                        if (typeof $.uniform != 'undefined') {
+                            $("#cityId").uniform();
+                            $("#city").uniform();
+                        }
                     }
                  });
              } else {
