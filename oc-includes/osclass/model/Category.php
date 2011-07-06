@@ -154,7 +154,7 @@
             return $tree;
         }
 
-        public function toTree() {
+        public function toTree($empty = true) {
             if($this->tree!=null) {
                 return $this->tree;
             }
@@ -162,12 +162,14 @@
             $this->categories = array();
             $this->relation = array();
             foreach($categories as $c) {
-                $this->categories[$c['pk_i_id']] = $c;
-                if($c['fk_i_parent_id']==null) {
-                    $this->tree[] = $c;
-                    $this->relation[0][] = $c['pk_i_id'];
-                } else {
-                    $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                if($empty || (!$empty && $c['i_num_items']>0)) {
+                    $this->categories[$c['pk_i_id']] = $c;
+                    if($c['fk_i_parent_id']==null) {
+                        $this->tree[] = $c;
+                        $this->relation[0][] = $c['pk_i_id'];
+                    } else {
+                        $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                    }
                 }
             }
 
@@ -310,7 +312,7 @@
                     break;
             }
 
-            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'en_US\', \''.$this->language.'\') as sorter FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), $this->getTableDescriptionName(), $sql);
+            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'en_US\', \''.$this->language.'\') as sorter FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable INNER JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), $this->getTableDescriptionName(), $sql, DB_TABLE_PREFIX);
         }
 
         public function deleteByPrimaryKey($pk) {
