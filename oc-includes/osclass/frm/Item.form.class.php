@@ -196,19 +196,19 @@
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
-            if( count($countries) > 1 ) {
+            if( count($countries) >= 1 ) {
                 if( Session::newInstance()->_getForm('countryId') != "" ) {
                     $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
                 }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
-            } else if ( count($countries) == 1 ) {
-                if( Session::newInstance()->_getForm('countryId') != "" ) {
-                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
-                }
-                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-                echo '</span>' .$countries[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($countries) == 1 ) {
+//                if( Session::newInstance()->_getForm('countryId') != "" ) {
+//                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
+//                }
+//                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
+//                echo '<span>' .$countries[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_getForm('country');
@@ -237,7 +237,7 @@
             
             if($item==null) { $item = osc_item(); };
             
-            if( count($regions) > 1 ) {
+            if( count($regions) >= 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
@@ -246,13 +246,13 @@
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
-            } else if ( count($regions) == 1 ) {
-                if( Session::newInstance()->_getForm('regionId') != "" ) {
-                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-                }
-                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-                echo '</span>' .$regions[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($regions) == 1 ) {
+//                if( Session::newInstance()->_getForm('regionId') != "" ) {
+//                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
+//                }
+//                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+//                echo '<span>' .$regions[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('region') != "" ) {
                     $item['s_region'] = Session::newInstance()->_getForm('region');
@@ -270,7 +270,7 @@
                 if($cities==null) { $cities = osc_get_cities(); };
             }
             if($item==null) { $item = osc_item(); };
-            if( count($cities) > 1 ) {
+            if( count($cities) >= 1 ) {
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
                     if( Session::newInstance()->_getForm('regionId') != "" ) {
@@ -279,13 +279,13 @@
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
-            } else if ( count($cities) == 1 ) {
-                if( Session::newInstance()->_getForm('cityId') != "" ) {
-                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
-                }
-                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
-                echo '</span>' .$cities[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($cities) == 1 ) {
+//                if( Session::newInstance()->_getForm('cityId') != "" ) {
+//                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
+//                }
+//                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
+//                echo '<span>' .$cities[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('city') != "" ) {
                     $item['s_city'] = Session::newInstance()->_getForm('city');
@@ -390,7 +390,13 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
-                            
+                            // existe input hidden + span  ?
+                            if( $('input#regionId').length == 1 ){
+                                $("input#regionId").before('<select name="regionId" id="regionId" ></select>');
+                                $('input#regionId').next().remove();
+                                $('input#regionId').remove();
+                            }
+
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
 
@@ -491,6 +497,16 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+
+
+                            // existe input hidden + span  ?
+                            if( $('input#cityId').length == 1 ){
+                                $("input#cityId").before('<select name="cityId" id="cityId" ></select>');
+                                $('input#cityId').next().remove();
+                                $('input#cityId').remove();
+                            }
+
+
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
                         } else {

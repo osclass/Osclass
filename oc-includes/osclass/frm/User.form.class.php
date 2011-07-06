@@ -110,13 +110,13 @@
         }
 
         static public function country_select($countries, $user = null) {
-            if( count($countries) > 1 ) {
+            if( count($countries) >= 1 ) {
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : null) ;
                 return true ;
-            } else if ( count($countries) == 1 ) {
-                parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-                echo '<span>' .$countries[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($countries) == 1 ) {
+//                parent::generic_input_hidden('countryId', (isset($user['fk_c_country_code'])) ? $user['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
+//                echo '<span>' .$countries[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 parent::generic_input_text('country', (isset($user['s_country'])) ? $user['s_country'] : null) ;
                 return true ;
@@ -129,13 +129,13 @@
         }
 
         static public function region_select($regions, $user = null) {
-            if( count($regions) > 1 ) {
+            if( count($regions) >= 1 ) {
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : null) ;
                 return true ;
-            } else if ( count($regions) == 1 ) {
-                parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-                echo '<span>' .$regions[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($regions) == 1 ) {
+//                parent::generic_input_hidden('countryId', (isset($user['fk_i_region_id'])) ? $user['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+//                echo '<span>' .$regions[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 parent::generic_input_text('region', (isset($user['s_region'])) ? $user['s_region'] : null) ;
                 return true ;
@@ -147,13 +147,13 @@
         }
 
         static public function city_select($cities, $user = null) {
-            if( count($cities) > 1 ) {
+            if( count($cities) >= 1 ) {
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
                 return true ;
-            } else if ( count($cities) == 1 ) {
-                parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
-                echo '<span>' .$cities[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($cities) == 1 ) {
+//                parent::generic_input_hidden('cityId', (isset($user['fk_i_city_id'])) ? $user['fk_i_city_id'] : null) ;
+//                echo '<span>' .$cities[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 parent::generic_input_text('city', (isset($user['s_city'])) ? $user['s_city'] : null) ;
                 return true ;
@@ -354,7 +354,7 @@ function checkForm() {
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        $("#countryId").change(function(){
+        $("#countryId").live("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=regions&countryId="; ?>' + pk_c_code;
@@ -379,12 +379,19 @@ function checkForm() {
                             }
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
+
+                            $("#city").before('<select name="cityId" id="cityId" ></select>');
+                            $("#city").remove();
                         } else {
                             result += '<option value=""><?php _e('No results') ?></option>';
                             $("#regionId").before('<input type="text" name="region" id="region" />');
                             $("#regionId").remove();
+
+                            $("#cityId").before('<input type="text" name="city" id="city" />');
+                            $("#cityId").remove();
                         }
                         $("#regionId").html(result);
+                        $("#cityId").html('<option selected value=""><?php _e("Select a city..."); ?></option>');
                     }
                  });
              } else {
@@ -394,7 +401,7 @@ function checkForm() {
         });
 
 
-        $("#regionId").change(function(){
+        $("#regionId").live("change",function(){
             var pk_c_code = $(this).val();
             <?php if($path=="admin") { ?>
                 var url = '<?php echo osc_admin_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
