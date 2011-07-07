@@ -156,7 +156,7 @@
         }
 
         public function toTree($empty = true) {
-            if($this->tree!=null) {
+            if($empty && $this->tree!=null) {
                 return $this->tree;
             }
             $categories = $this->listEnabled();
