@@ -286,12 +286,14 @@
                                     $error = 1;
                                     $message = __("All titles are required");
                                 }
+                            } else {
+                                $aFieldsDescription[$m[1]][$m[2]] = $v;
                             }
                             
                         }
                     }
 
-                    $l = osc_current_admin_locale();
+                    $l = osc_language();
                     if( !$error ){
                         try {
                             $categoryManager = Category::newInstance() ;
