@@ -90,7 +90,7 @@
             $new_map = array();
             foreach($roots as $root ){
                 $root_description = Category::newInstance()->findByPrimaryKey($root['pk_i_id']);
-                $new_map['parent'][ $root['pk_i_id'] ] =  array('numItems' => $map[ $root['pk_i_id'] ], 's_name' => $root_description['s_name'] );
+                $new_map['parent'][ $root['pk_i_id'] ] =  array('numItems' => @$map[ $root['pk_i_id'] ], 's_name' => @$root_description['s_name'] );
                 $subcategories = Category::newInstance()->findSubcategories($root['pk_i_id']);
                 $aux = array();
                 foreach($subcategories as $sub) {
