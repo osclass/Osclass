@@ -194,7 +194,10 @@
      */
     function osc_item_category($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+        if ( !View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+        }
+        $category = View::newInstance()->_get('item_category') ;
         return (string) osc_field($category, "s_name", $locale) ;
     }
 
@@ -206,7 +209,10 @@
      */
     function osc_item_category_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+        if ( !View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+        }
+        $category = View::newInstance()->_get('item_category') ;
         return osc_field($category, "s_description", $locale) ;
     }
 
@@ -762,6 +768,9 @@
     function osc_has_items() {
         if ( View::newInstance()->_exists('resources') ) {
             View::newInstance()->_erase('resources') ;
+        }
+        if ( View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_erase('item_category') ;
         }
         if ( View::newInstance()->_exists('metafields') ) {
             View::newInstance()->_erase('metafields') ;

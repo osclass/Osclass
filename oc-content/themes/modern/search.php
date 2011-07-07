@@ -158,7 +158,7 @@
                     });
                     
                     function checkEmptyCategories() {
-                        var n = $("#sCategory:checked").length;
+                        var n = $("input[id*=cat]:checked").length;
                         if(n>0) {
                             return true;
                         } else {
