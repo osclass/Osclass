@@ -27,6 +27,7 @@
         private $tree;
         private $categories;
         private $relation;
+        private $empty_tree;
 
         public function __construct($l = "") {
             if($l == "") {
@@ -38,6 +39,7 @@
             $this->relation = null;
             $this->categories = null;
             parent::__construct() ;
+            $this->empty_tree = true;
             $this->toTree();
         }
 
@@ -156,9 +158,10 @@
         }
 
         public function toTree($empty = true) {
-            if($empty && $this->tree!=null) {
+            if($empty==$this->empty_tree && $this->tree!=null) {
                 return $this->tree;
             }
+            $this->empty_tree = $empty;
             $categories = $this->listEnabled();
             $this->categories = array();
             $this->relation = array();
