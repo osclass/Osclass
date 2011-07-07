@@ -24,7 +24,7 @@
     define('LOG_NONE', 0) ;
     define('LOG_WEB', 1) ;
     define('LOG_COMMENT', 2) ;
-    define('DEBUG_LEVEL', LOG_WEB) ;
+    define('DEBUG_LEVEL', LOG_NONE) ;
 
     class DB
     {
