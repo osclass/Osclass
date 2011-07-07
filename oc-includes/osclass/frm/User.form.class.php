@@ -458,7 +458,7 @@ function checkForm() {
             <?php } else { ?>
                 var url = '<?php echo osc_base_url(true)."?page=ajax&action=cities&regionId="; ?>' + pk_c_code;
             <?php }; ?>
-                
+
             var result = '';
 
             if(pk_c_code != '') {
