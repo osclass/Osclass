@@ -390,7 +390,8 @@
         }
 
         public function count() {
-            $this->conn->osc_dbFetchResults($this->makeSQL(false));
+            // If we always use count() after doSearch this line could be removed
+            //$this->conn->osc_dbFetchResults($this->makeSQL(false));
             $sql = "SELECT FOUND_ROWS() as totalItems";
             $data = $this->conn->osc_dbFetchResult($sql);
             if(isset($data['totalItems'])) {
