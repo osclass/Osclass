@@ -52,7 +52,8 @@
                         $this->manager->updateDescription($userId, $key, $value) ;
                     }
                 }
-                
+                Log::newInstance()->insertLog('user', 'add', $userId, $input['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():$userId);
+
                 osc_run_hook('user_register_completed') ;
 
                 if( osc_user_validation_enabled() && !$this->is_admin ) {
@@ -112,10 +113,13 @@
                 Item::newInstance()->update(array('s_contact_name' => $input['s_name'], 's_contact_email' => $input['s_email']), array('fk_i_user_id' => $userId));
                 ItemComment::newInstance()->update(array('s_author_name' => $input['s_name'], 's_author_email' => $input['s_email']), array('fk_i_user_id' => $userId));
                 Alerts::newInstance()->update(array('s_email' => $input['s_email']), array('fk_i_user_id' => $userId));
+                Log::newInstance()->insertLog('user', 'edit', $userId, $input['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
             } else { 
                 Item::newInstance()->update(array('s_contact_name' => $input['s_name']), array('fk_i_user_id' => $userId));
                 ItemComment::newInstance()->update(array('s_author_name' => $input['s_name']), array('fk_i_user_id' => $userId));
-            }
+                $user = $this->manager->findByPrimaryKey($userId);
+                Log::newInstance()->insertLog('user', 'edit', $userId, $user['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+        }
 
             Session::newInstance()->_set('userName', $input['s_name']);
             $phone = ($input['s_phone_mobile'])? $input['s_phone_mobile'] : $input['s_phone_land'];
@@ -126,7 +130,7 @@
                     $this->manager->updateDescription($userId, $key, $value) ;
                 }
             }
-
+            
             if ($this->is_admin) {
                 $iUpdated = 0;
                 if(Params::getParam("b_enabled") != '' && Params::getParam("b_enabled")==1) {
@@ -172,9 +176,8 @@
             );
 
             $password_url = osc_forgot_user_password_confirm_url($user['pk_i_id'], $code);
-
             $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
-
+            
             $content = array();
             $locale = osc_current_user_locale() ;
             if(isset($aPage['locale'][$locale]['s_title'])) {
@@ -300,6 +303,7 @@
             $user = $this->manager->findByPrimaryKey($user_id);
             if($user) {
                 $this->manager->update(array('b_active' => 1), array('pk_i_id' => $user_id));
+                Log::newInstance()->insertLog('user', 'activate', $user_id, $user['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
                 if($user['b_enabled']==1) {
                      $mItem = new ItemActions(true);
                      $items = Item::newInstance()->findByUserID($user_id);
@@ -317,6 +321,7 @@
             $user = $this->manager->findByPrimaryKey($user_id);
             if($user) {
                 $this->manager->update(array('b_active' => 0), array('pk_i_id' => $user_id));
+                Log::newInstance()->insertLog('user', 'deactivate', $user_id, $user['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
                 if($user['b_enabled']==1) {
                      $mItem = new ItemActions(true);
                      $items = Item::newInstance()->findByUserID($user_id);
@@ -334,6 +339,7 @@
             $user = $this->manager->findByPrimaryKey($user_id);
             if($user) {
                 $this->manager->update(array('b_enabled' => 1), array('pk_i_id' => $user_id));
+                Log::newInstance()->insertLog('user', 'enable', $user_id, $user['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
                 if($user['b_active']==1) {
                      $mItem = new ItemActions(true);
                      $items = Item::newInstance()->findByUserID($user_id);
@@ -351,6 +357,7 @@
             $user = $this->manager->findByPrimaryKey($user_id);
             if($user) {
                 $this->manager->update(array('b_enabled' => 0), array('pk_i_id' => $user_id));
+                Log::newInstance()->insertLog('user', 'disable', $user_id, $user['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
                 if($user['b_active']==1) {
                      $mItem = new ItemActions(true);
                      $items = Item::newInstance()->findByUserID($user_id);
