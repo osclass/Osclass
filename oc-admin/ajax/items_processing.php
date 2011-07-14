@@ -59,6 +59,9 @@
                 ,'fCol_countryId'   => '%st_item_location.fk_c_country_code'
                 ,'fCol_regionId'    => '%st_item_location.fk_i_region_id'
                 ,'fCol_cityId'      => '%st_item_location.fk_i_city_id'
+                ,'fCol_country'     => '%st_item_location.s_country'
+                ,'fCol_region'      => '%st_item_location.s_region'
+                ,'fCol_city'        => '%st_item_location.s_city'
                 ,'fCol_catId'       => '%st_item.fk_i_category_id'
                 ,'fCol_bPremium'    => '%st_item.b_premium'
                 ,'fCol_bActive'     => '%st_item.b_active'
@@ -185,8 +188,11 @@
                 // user filter
                 if($k == 'fCol_userIdValue')    array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_countryId')      array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_country')        array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_regionId')       array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_region')         array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_cityId')         array_push($this->filters, array($this->tables_filters[$k], $v ));
+                if($k == 'fCol_city')           array_push($this->filters, array($this->tables_filters[$k], $v ));
                 if($k == 'fCol_catId')          array_push($this->filters, array($this->tables_filters[$k], $v ));
 
                 if($k == 'fCol_bPremium')       array_push($this->filters, array($this->tables_filters[$k], $v ));

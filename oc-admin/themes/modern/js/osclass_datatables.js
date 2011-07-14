@@ -80,8 +80,14 @@ var osc_datatable = function()
      */
     this._fUserId           = undefined;
     this._fCountryId        = undefined;
+    this._fCountry          = undefined;
+    
     this._fRegionId         = undefined;
+    this._fRegion           = undefined;
+
     this._fCityId           = undefined;
+    this._fCity             = undefined;
+
     this._fCatId            = undefined;
     this._b_premium         = undefined;
     this._b_active          = undefined;
@@ -599,10 +605,16 @@ function _fnUpdateData()
      */
     // &catId=integer_id like from admin panel dashboard
     if(this._fCatId  != undefined )        url += "&catId="+this._fCatId;
-    if(this._fUserId != undefined)         url += "&fCol_userIdValue="+this._fUserId;  
-    if(this._fCountryId != undefined )     url += "&fCol_countryId="+this._fCountryId; 
-    if(this._fRegionId != undefined )      url += "&fCol_regionId="+this._fRegionId; 
-    if(this._fCityId != undefined )        url += "&fCol_cityId="+this._fCityId;  
+    if(this._fUserId != undefined)         url += "&fCol_userIdValue="+this._fUserId;
+
+    if(this._fCountryId != undefined )     url += "&fCol_countryId="+this._fCountryId;
+    if(this._fCountry != undefined )       url += "&fCol_country="+this._fCountry;
+
+    if(this._fRegionId != undefined )      url += "&fCol_regionId="+this._fRegionId;
+    if(this._fRegion != undefined )        url += "&fCol_region="+this._fRegion;
+
+    if(this._fCityId != undefined )        url += "&fCol_cityId="+this._fCityId;
+    if(this._fCity != undefined )          url += "&fCol_city="+this._fCity;
     // search
     if(this._sSearch != undefined)         url += "&sSearch="+this._sSearch;
     // filters item table
@@ -815,9 +827,13 @@ function applyFilters(){
     this._fUserId       = ( $('#userId').val() == '' ) ? undefined : $('#userId').val() ;
     
     this._fCountryId    = ( $('#countryId').val() == '' ) ? undefined : $('#countryId').val() ;
+    this._fCountry      = ( $('#country').val() == '' ) ? undefined : $('#country').val() ;
 
     this._fRegionId     = ( $('#regionId').val() == '' ) ? undefined : $('#regionId').val();
+    this._fRegion       = ( $('#region').val() == '' ) ? undefined : $('#region').val();
+
     this._fCityId       = ( $('#cityId').val() == '' ) ? undefined : $('#cityId').val();
+    this._fCity         = ( $('#city').val() == '' ) ? undefined : $('#city').val();
     
     this._fCatId        = $('#catId').val();
     
