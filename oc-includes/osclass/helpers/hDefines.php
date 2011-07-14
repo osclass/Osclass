@@ -835,7 +835,7 @@
      *
      * @return boolean
      */
-    function osc_is_home_page() {
+    function osc_is_user_dashboard() {
         $location = Rewrite::newInstance()->get_location();
         $section = Rewrite::newInstance()->get_section();
         if($location=='user' && $section=='dashboard') {
