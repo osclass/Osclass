@@ -35,6 +35,7 @@
         private $countries;
         private $categories;
         private $fields;
+        private $total_results;
         private static $instance ;
 
 
@@ -61,6 +62,7 @@
                 //AND (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < %st_category.i_expiration_days) AND %st_category.b_enabled = 1 AND %st_category.pk_i_id = %st_item.fk_i_category_id
 
             }
+            $this->total_results = null;
             parent::__construct();
         }
 
@@ -390,19 +392,24 @@
         }
 
         public function count() {
-            // If we always use count() after doSearch this line could be removed
-            //$this->conn->osc_dbFetchResults($this->makeSQL(false));
-            $sql = "SELECT FOUND_ROWS() as totalItems";
-            $data = $this->conn->osc_dbFetchResult($sql);
-            if(isset($data['totalItems'])) {
-                return $data['totalItems'];
-            } else {
-                return 0;
+            if( is_null($this->total_results) ) {
+                $this->doSearch();
             }
+
+            return $this->total_results;
         }
 
         public function doSearch($extended = true) {
             $items = $this->conn->osc_dbFetchResults($this->makeSQL(false));
+
+            // get total items
+            $data  = $this->conn->osc_dbFetchResult('SELECT FOUND_ROWS() as totalItems');
+            if(isset($data['totalItems'])) {
+                $this->total_results = $data['totalItems'];
+            } else {
+                $this->total_results = 0;
+            }
+
             if($extended) {
                 return Item::newInstance()->extendData($items);
             } else {
