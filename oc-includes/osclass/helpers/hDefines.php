@@ -831,7 +831,7 @@
     }
 
     /**
-     * Get if user is on homepage
+     * Get if user is on user dashboard
      *
      * @return boolean
      */
@@ -843,6 +843,35 @@
         }
         return false;
     }
+    
+    /**
+     * Get if user is on publish page
+     *
+     * @return boolean
+     */
+    function osc_is_publish_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='item' && $section=='item_add') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Get if user is on login form
+     *
+     * @return boolean
+     */
+    function osc_is_login_form() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='login' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * Get location
      *
