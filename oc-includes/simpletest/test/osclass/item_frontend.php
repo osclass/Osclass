@@ -38,6 +38,15 @@ class ItemFrontend {
 
         $this->selenium->select("currency", "label=Euro €");
 
+
+
+
+
+
+
+
+
+        $this->selenium->select("countryId", "label=Spain");
         $this->selenium->select("regionId", "label=$regionId");
         $this->selenium->select("cityId", "label=$cityId");
         $this->selenium->type("cityArea", "my area");

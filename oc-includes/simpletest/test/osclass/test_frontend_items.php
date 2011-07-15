@@ -239,6 +239,7 @@ class TestOfItems extends WebTestCase {
 
             $this->selenium->select("currency", "label=Euro €");
 
+            $this->selenium->select("countryId", "label=Spain");
             $this->selenium->select("regionId", "label=Barcelona");
             $this->selenium->select("cityId", "label=Sabadell");
             $this->selenium->type("cityArea", "my area");

@@ -237,6 +237,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "11");
         $this->selenium->select("currency", "label=Euro €");
+        $this->selenium->select("countryId", "label=Spain");
         $this->selenium->select("regionId", "label=A Coruña");
         $this->selenium->select("cityId", "label=A Capela");
         $this->selenium->type("address", "address item");
