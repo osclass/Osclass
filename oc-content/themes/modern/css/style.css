@@ -495,6 +495,10 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
 }
 
 
-.premium {
+.premium_odd {
     background-color: #E9F5F9;
+}
+
+.premium_even {
+    background-color: #d7eaf0;
 }

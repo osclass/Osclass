@@ -25,7 +25,7 @@ if(osc_count_premiums()>0) { ?>
      <tbody>
         <?php $class = "even" ; ?>
         <?php while(osc_has_premiums()) { ?>
-            <tr class="premium <?php echo $class; ?>">
+            <tr class="premium_<?php echo $class; ?>">
                 <?php if( osc_images_enabled_at_items() ) { ?>
                  <td class="photo">
                      <?php if(osc_count_premium_resources()) { ?>

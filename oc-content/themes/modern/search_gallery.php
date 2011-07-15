@@ -19,13 +19,13 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
  ?>
-
+<?php osc_get_premiums();
+if(osc_count_premiums()>0) { ?>
 <table border="0" cellspacing="0">
      <tbody>
         <?php $class = "even" ; ?>
-        <?php $p = osc_get_premiums();
-        while(osc_has_premiums()) { ?>
-            <tr class="premium <?php echo $class; ?>">
+        <?php while(osc_has_premiums()) { ?>
+            <tr class="premium_<?php echo $class; ?>">
                 <?php if( osc_images_enabled_at_items() ) { ?>
                  <td class="photo">
                      <?php if(osc_count_premium_resources()) { ?>
@@ -49,6 +49,7 @@
         <?php } ?>
     </tbody>
 </table>
+<?php }; ?>
 
  <table border="0" cellspacing="0">
      <tbody>
