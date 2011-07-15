@@ -28,15 +28,15 @@
 
         static public function category_select($categories, $category, $default_item = null, $name = "sCategory") {
             echo '<select name="' . $name . '" id="' . $name . '">' ;
-                if(isset($default_item)) {
-                    echo '<option value="">' . $default_item . '</option>' ;
+            if(isset($default_item)) {
+                echo '<option value="">' . $default_item . '</option>' ;
+            }
+            foreach($categories as $c) {
+                echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
+                if(isset($c['categories']) && is_array($c['categories'])) {
+                    CategoryForm::subcategory_select($c['categories'], $category, $default_item, 1);
                 }
-                foreach($categories as $c) {
-                    echo '<option value="' . $c['pk_i_id'] . '"' . ( ($category['pk_i_id'] == $c['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $c['s_name'] . '</option>' ;
-                    if(isset($c['categories']) && is_array($c['categories'])) {
-                        CategoryForm::subcategory_select($c['categories'], $category, $default_item, 1);
-                    }
-                }
+            }
             echo '</select>' ;
             return true ;
         }
@@ -56,7 +56,8 @@
         }
 
 
-        static public function plugin_categories($categories = null, $selected = null, $depth = 0) {
+        // XXX: marked to delete
+        /*static public function plugin_categories($categories = null, $selected = null, $depth = 0) {
 
             if($categories!=null && is_array($categories)) {
 
@@ -71,6 +72,27 @@
                     CategoryForm::plugin_categories($c['categories'], $selected, $depth+1);
                 }
                 echo '</div>';
+            }
+        }*/
+
+        static public function categories_tree($categories = null, $selected = null, $depth = 0) {
+
+            if($categories!=null && is_array($categories)) {
+
+                echo '<ul id="cat'.$categories[0]['fk_i_parent_id'].'">';
+                
+                $d_string = '';
+                for($var_d=0;$var_d<$depth;$var_d++) {
+                    $d_string .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+                }
+
+                foreach($categories as $c) {
+                    echo '<li>';
+                    echo $d_string.'<input type="checkbox" name="categories[]" value="'.$c['pk_i_id'].'" onclick="javascript:checkCat(\''.$c['pk_i_id'].'\', this.checked);" '.(in_array($c['pk_i_id'], $selected)?'checked':'').'>'.(($depth==0)?'<span style="font-size:25px">':'').$c['s_name'].(($depth==0)?'</span>':'').'</input><br />';
+                    CategoryForm::categories_tree($c['categories'], $selected, $depth+1);
+                    echo '</li>';
+                }
+                echo '</ul>';
             }
         }
 

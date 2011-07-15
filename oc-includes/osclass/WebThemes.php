@@ -20,6 +20,7 @@
      class WebThemes {
 
         private static $instance ;
+        private $path ;
         private $theme ;
         private $theme_url ;
         private $theme_path ;
@@ -33,11 +34,11 @@
         }
 
         public function __construct() {
-            //#dev.conquer this fix is needed for the preview of appearance in oc-admin
+            $this->path = osc_themes_path();
+
             if (Params::getParam('theme') != '' && Session::newInstance()->_get('adminId') != '') $this->setCurrentTheme( Params::getParam('theme') ) ;
             else $this->setCurrentTheme( osc_theme() ) ;
 
-            //#juanramon: check if exists functions.php
             $functions_path = $this->getCurrentThemePath() . 'functions.php';
             if(file_exists($functions_path)) {
                 require_once $functions_path;
@@ -46,22 +47,31 @@
 
         /* PRIVATE */
         private function setCurrentThemePath() {
-            if ( file_exists( osc_themes_path() . $this->theme . '/' ) ) {
+            if ( file_exists( $this->path . $this->theme . '/' ) ) {
                 $this->theme_exists = true ;
-                $this->theme_path = osc_themes_path() . $this->theme . '/' ;
+                $this->theme_path   = $this->path . $this->theme . '/' ;
             } else {
                 $this->theme_exists = false ;
-                $this->theme_path = osc_lib_path() . 'osclass/gui/' ;
+                $this->theme_path   = osc_lib_path() . 'osclass/gui/' ;
+            }
+        }
+
+        private function setCurrentThemeUrl() {
+            if ( $this->theme_exists ) {
+                $this->theme_url = osc_base_url() . str_replace(osc_base_path(), '', $this->theme_path) ;
+            } else {
+                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/' ;
             }
         }
 
         /* PUBLIC */
-        private function setCurrentThemeUrl() {
-            if ( $this->theme_exists ) {
-                $this->theme_url = osc_base_url() . 'oc-content/themes/' . $this->theme . '/' ;
-            } else {
-                $this->theme_url = osc_base_url() . 'oc-includes/osclass/gui/' ;
+        public function setPath($path) {
+            if( file_exists($path) ) {
+                $this->path = $path;
+                return true;
             }
+
+            return false;
         }
 
         public function setCurrentTheme($theme) {
@@ -96,7 +106,7 @@
          */
         public function getListThemes() {
             $themes = array();
-            $dir = opendir( osc_themes_path() );
+            $dir    = opendir( $this->path );
             while ($file = readdir($dir)) {
                 if (preg_match('/^[a-z0-9_]+$/i', $file)) {
                     $themes[] = $file;
@@ -111,7 +121,7 @@
          * @return <type> 
          */
         function loadThemeInfo($theme) {
-            $path = osc_themes_path() . $theme . '/index.php';
+            $path = $this->path . $theme . '/index.php';
             if (!file_exists($path))
                 return false;
             require_once $path;

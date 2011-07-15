@@ -202,7 +202,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
-    b_premium BOOLEAN NULL,
+    b_premium BOOLEAN NOT NULL DEFAULT FALSE,
     b_enabled BOOLEAN NOT NULL DEFAULT TRUE,
     b_active BOOLEAN NOT NULL DEFAULT FALSE,
     b_spam BOOLEAN NOT NULL DEFAULT FALSE,
@@ -379,3 +379,40 @@ CREATE TABLE /*TABLE_PREFIX*/t_latest_searches (
   s_search VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
+CREATE TABLE /*TABLE_PREFIX*/t_meta_fields (
+    pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    s_name VARCHAR(255) NOT NULL,
+    e_type ENUM(  'TEXT',  'TEXTAREA' ) NOT NULL DEFAULT  'TEXT',
+
+        PRIMARY KEY (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_meta_categories (
+    fk_i_category_id INT UNSIGNED NOT NULL,
+    fk_i_field_id INT UNSIGNED NOT NULL,
+
+        PRIMARY KEY (fk_i_category_id, fk_i_field_id),
+        FOREIGN KEY (fk_i_category_id) REFERENCES /*TABLE_PREFIX*/t_category (pk_i_id),
+        FOREIGN KEY (fk_i_field_id) REFERENCES /*TABLE_PREFIX*/t_meta_fields (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_item_meta (
+    fk_i_item_id INT UNSIGNED NOT NULL,
+    fk_i_field_id INT UNSIGNED NOT NULL,
+    s_value TEXT NULL,
+
+        PRIMARY KEY (fk_i_item_id, fk_i_field_id),
+        FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id),
+        FOREIGN KEY (fk_i_field_id) REFERENCES /*TABLE_PREFIX*/t_meta_fields (pk_i_id)
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+
+CREATE TABLE /*TABLE_PREFIX*/t_log (
+    dt_date DATETIME NOT NULL,
+    s_section VARCHAR(50) NOT NULL,
+    s_action VARCHAR(50) NOT NULL,
+    fk_i_id INT UNSIGNED NOT NULL,
+    s_data VARCHAR(250) NOT NULL,
+    s_ip VARCHAR(50) NOT NULL,
+    s_who VARCHAR(50) NOT NULL,
+    fk_i_who_id INT UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';

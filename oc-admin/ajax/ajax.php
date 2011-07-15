@@ -143,6 +143,56 @@
                     $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
                     $this->doView("categories/iframe.php");
                     break;
+                case 'field_categories_iframe':
+                    $selected = Field::newInstance()->categories(Params::getParam("id"));
+                    if($selected==null) { $selected = array(); };
+                    $this->_exportVariableToView("selected", $selected);
+                    $this->_exportVariableToView("field", Field::newInstance()->findByPrimaryKey(Params::getParam("id")));
+                    $this->_exportVariableToView("categories", Category::newInstance()->toTreeAll());
+                    $this->doView("fields/iframe.php");
+                    break;
+                case 'field_categories_post':
+                    $error = 0;
+                    if( !$error ){
+                        try {
+                            Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
+                            Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type")), array('pk_i_id' => Params::getParam("id")));
+                            Field::newInstance()->insertCategories(Params::getParam("id"), Params::getParam("categories"));
+                        } catch (Exception $e) {
+                            $error = 1;
+                            $message = __("Error while updating.");
+                        }
+                    }
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "'.__("Saved").'", "text" : "'.Params::getParam("s_name").'"'; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    break;
+                case 'delete_field':
+                    $id = Params::getParam("id");
+                    $error = 0;
+                    
+                    try {
+                        $fieldManager = Field::newInstance() ;
+                        $fieldManager->deleteByPrimaryKey($id) ;
+                      
+                        $message = __('The custom field have been deleted');
+                    } catch (Exception $e) {
+                        $error = 1;
+                        $message = __('Error while deleting');
+                    }
+                    
+                    $result = "{";
+                    if($error) { $result .= '"error" : "'; $result .= $message; $result .= '"'; }
+                    else {       $result .= '"ok" : "Saved." '; }
+                    $result .= "}";
+                    
+                    echo $result;
+                    
+                    break;
                 case 'enable_category':
                     $id = Params::getParam("id");
                     $enabled = (Params::getParam("enabled")!='')?Params::getParam("enabled"):0;
@@ -236,12 +286,14 @@
                                     $error = 1;
                                     $message = __("All titles are required");
                                 }
+                            } else {
+                                $aFieldsDescription[$m[1]][$m[2]] = $v;
                             }
                             
                         }
                     }
 
-                    $l = osc_current_admin_locale();
+                    $l = osc_language();
                     if( !$error ){
                         try {
                             $categoryManager = Category::newInstance() ;

@@ -133,7 +133,7 @@
                         $PcontactName   = Params::getParam('contactName');
                         $PcontactEmail  = Params::getParam('contactEmail');
                         $itemId         = Params::getParam('itemId');
-                        $item           = array();
+                        $item           = $this->itemManager->findByPrimaryKey($itemId);
 
                         if( Session::newInstance()->_get('userId') == '' ){
                             $mPages = new Page() ;
@@ -146,7 +146,7 @@
                             } else {
                                 $content = current($aPage['locale']);
                             }
-                            $item =  $this->itemManager->findByPrimaryKey($itemId);
+                            //$item =  $this->itemManager->findByPrimaryKey($itemId);
 
                             $item_url = osc_item_url( ) ;
                             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
@@ -203,9 +203,13 @@
 
                         $currencies = Currency::newInstance()->listAll();
 
-                        $this->_exportVariableToView('item', $item) ;
-                        //$this->_exportVariableToView('user', $this->user) ;
+                        $this->_exportVariableToView('item', $item);
+                        /*$this->_exportVariableToView('categories', $categories);
+                        $this->_exportVariableToView('countries', $countries);
+                        $this->_exportVariableToView('regions', $regions);
+                        $this->_exportVariableToView('cities', $cities);*/
 
+                        osc_run_hook("before_item_edit", $item);
                         $this->doView('item-edit.php');
                     }else{
                         // add a flash message [ITEM NO EXISTE]
@@ -246,6 +250,8 @@
                         
                         $success = $mItems->edit();
 
+                        osc_run_hook('edited_item', Item::newInstance()->findByPrimaryKey($id));
+                        
                         if($success==1){
                             osc_add_flash_ok_message( _m('Great! We\'ve just updated your item')) ;
                             $this->redirectTo( osc_base_url(true) . "?page=item&id=$id" ) ;

@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.1') ;
+define('OSCLASS_VERSION', '2.1.1') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -112,11 +112,14 @@ require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
 require_once LIB_PATH . 'osclass/model/Stats.php';
+require_once LIB_PATH . 'osclass/model/Field.php';
+require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
+require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -129,6 +132,9 @@ require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
+
+require_once LIB_PATH . 'osclass/functions.php';
 
 define('__OSC_LOADED__', true);
 if(!defined('__FROM_CRON__')) {
@@ -148,7 +154,7 @@ Session::newInstance()->session_start() ;
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
-             <?php _e("Your website is currently under maintenance mode"); ?>
+             <?php _e("The website is currently under maintenance mode"); ?>
         </div>
     <?php };
 }

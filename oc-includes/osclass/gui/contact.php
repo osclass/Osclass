@@ -33,7 +33,7 @@
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_forms">
                 <div class="inner">
-                    <h1><?php _e('Contact with us', 'modern') ; ?></h1>
+                    <h1><?php _e('Contact us', 'modern') ; ?></h1>
                     <ul id="error_list"></ul>
                     <form action="<?php echo osc_base_url(true) ; ?>" method="post" name="contact" id="contact">
                         <input type="hidden" name="page" value="contact" />

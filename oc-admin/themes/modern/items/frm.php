@@ -74,7 +74,7 @@
                 </div>
 
                 <div id="add_item_form" class="item-form">
-                    <h1><?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?></h1>
+                    <h1 style="display: none;"><?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?></h1>
                     <ul id="error_list"></ul>
                     <form name="item" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data" >
                         <input type="hidden" name="page" value="items" />

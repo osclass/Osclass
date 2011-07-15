@@ -50,6 +50,14 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
+        <script type="text/javascript">
+            document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+            $(document).ready(function(){
+                if (typeof $.uniform != 'undefined') {
+                    $('textarea, button,select, input:file').uniform();
+                }
+            });
+        </script>
         <div id="content">
             <div id="separator"></div>
             <?php UserForm::location_javascript("admin") ; ?>

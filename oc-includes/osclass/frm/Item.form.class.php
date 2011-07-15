@@ -28,16 +28,24 @@
             parent::generic_input_hidden("id", $item["pk_i_id"]) ;
         }
         // OK
-        static public function category_select($categories = null, $item = null, $default_item = null)
+        static public function category_select($categories = null, $item = null, $default_item = null, $parent_selectable = false)
         {
             // Did user select a specific category to post in?
-            $catId = Params::getParam('catId');
+            $catId = Params::getParam('catId') ;
             if(Session::newInstance()->_getForm('catId') != ""){
-                $catId = Session::newInstance()->_getForm('catId');
+                $catId = Session::newInstance()->_getForm('catId') ;
             }
 
-            if($categories==null) { $categories = osc_get_categories(); };
-            if($item==null) { $item = osc_item(); };
+            if($categories == null) {
+                if(View::newInstance()->_exists('categories')) {
+                    $categories = View::newInstance()->_get('categories') ;
+                } else {
+                    $categories = osc_get_categories() ;
+                }
+            }
+            
+            if ($item == null) { $item = osc_item() ; }
+            
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -46,7 +54,7 @@
             }
 
             foreach($categories as $c) {
-                if(!osc_selectable_parent_categories()){
+                if ( !osc_selectable_parent_categories() && !$parent_selectable ) {
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
@@ -71,7 +79,6 @@
             if(Session::newInstance()->_getForm('catId') != ""){
                 $catId = Session::newInstance()->_getForm('catId');
             }
-            
             // How many indents to add?
             $deep_string = "";
             for($var = 0;$var<$deep;$var++) {
@@ -81,7 +88,8 @@
 
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
+
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
@@ -188,19 +196,19 @@
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
-            if( count($countries) > 1 ) {
+            if( count($countries) >= 1 ) {
                 if( Session::newInstance()->_getForm('countryId') != "" ) {
                     $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
                 }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
-            } else if ( count($countries) == 1 ) {
-                if( Session::newInstance()->_getForm('countryId') != "" ) {
-                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
-                }
-                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-                echo '</span>' .$countries[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($countries) == 1 ) {
+//                if( Session::newInstance()->_getForm('countryId') != "" ) {
+//                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
+//                }
+//                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
+//                echo '<span>' .$countries[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_getForm('country');
@@ -226,9 +234,10 @@
             } else {
                 if($regions==null) { $regions = osc_get_regions(); };
             }
+            
             if($item==null) { $item = osc_item(); };
             
-            if( count($regions) > 1 ) {
+            if( count($regions) >= 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
@@ -237,13 +246,13 @@
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
-            } else if ( count($regions) == 1 ) {
-                if( Session::newInstance()->_getForm('regionId') != "" ) {
-                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-                }
-                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-                echo '</span>' .$regions[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($regions) == 1 ) {
+//                if( Session::newInstance()->_getForm('regionId') != "" ) {
+//                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
+//                }
+//                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+//                echo '<span>' .$regions[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('region') != "" ) {
                     $item['s_region'] = Session::newInstance()->_getForm('region');
@@ -261,7 +270,7 @@
                 if($cities==null) { $cities = osc_get_cities(); };
             }
             if($item==null) { $item = osc_item(); };
-            if( count($cities) > 1 ) {
+            if( count($cities) >= 1 ) {
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
                     if( Session::newInstance()->_getForm('regionId') != "" ) {
@@ -270,13 +279,13 @@
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
-            } else if ( count($cities) == 1 ) {
-                if( Session::newInstance()->_getForm('cityId') != "" ) {
-                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
-                }
-                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
-                echo '</span>' .$cities[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($cities) == 1 ) {
+//                if( Session::newInstance()->_getForm('cityId') != "" ) {
+//                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
+//                }
+//                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
+//                echo '<span>' .$cities[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('city') != "" ) {
                     $item['s_city'] = Session::newInstance()->_getForm('city');
@@ -381,7 +390,7 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
-                            
+
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
 
@@ -482,6 +491,7 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
                         } else {
@@ -502,14 +512,15 @@
              }
         });
 
-
         if( $("#regionId").attr('value') == "")  {
             $("#cityId").attr('disabled',true);
         }
 
-        if( $("#countryId").attr('type').match(/select-one/) ) {
-            if( $("#countryId").attr('value') == "")  {
-                $("#regionId").attr('disabled',true);
+        if($("#countryId").length != 0) {
+            if( $("#countryId").attr('type').match(/select-one/) ) {
+                if( $("#countryId").attr('value') == "")  {
+                    $("#regionId").attr('disabled',true);
+                }
             }
         }
 
@@ -522,7 +533,7 @@
             "minstriptags",
             function(value, element) {
                 altered_input = strip_tags(value);
-                if (altered_input.length < 10) {
+                if (altered_input.length < 3) {
                     return false;
                 } else {
                     return true;
@@ -530,46 +541,6 @@
             },
             "<?php _e("Description: needs to be longer"); ?>."
         );
-
-        // Validate fields in each locale.
-        $("form[name=item] button").click(function() {
-            lang_count = $(".title input").length;
-            // Title
-            $(".title input").each(function(){
-                lang_name   = $(this).parent().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
-                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
-
-                str = ((lang_count > 1) ? lang_name + ' ' : '');
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 9,
-                    maxlength: 80,
-                    messages: {
-                        required: str + "<?php _e("Title: this field is required"); ?>.",
-                        minlength: str + "<?php _e("Title: enter at least 9 characters"); ?>.",
-                        maxlength: str + "<?php _e("Title: no more than 80 characters"); ?>."
-                    }
-                });
-            });
-             //Description
-            $(".description textarea").each(function(){
-                lang_name   = $(this).parent().prev().prev('h2').text().replace(/^(.+) \((.+)\)$/, '$1');
-                lang_locale = $(this).attr('name').replace(/^title\[(.+)\]$/,'$1');
-
-                str = ((lang_count > 1) ? lang_name + ' ' : '');
-                $(this).rules("add", {
-                    required: true,
-                    minlength: 25,
-                    maxlength: 5000,
-                    'minstriptags': true,
-                    messages: {
-                        required: str + "<?php _e("Description: this field is required"); ?>.",
-                        minlength: str + "<?php _e("Description: needs to be longer"); ?>.",
-                        maxlength: str + "<?php _e("Description: no more than 5000 characters"); ?>."
-                    }
-                });
-            });
-        });
 
         // Code for form validation
         $("form[name=item]").validate({
@@ -731,7 +702,7 @@
     }
     function addNewPhoto() {
         var max = <?php echo osc_max_images_per_item(); ?>;
-        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        var num_img = $('input[name="photos[]"]').size() + $("a.delete").size();
         if((max!=0 && num_img<max) || max==0) {
             var id = 'p-' + photoIndex++;
 
@@ -768,13 +739,13 @@
      */
     function add_file_field() {
         var count = 0;
-        $("input[name='photos[]']").each(function(index) {
+        $('input[name="photos[]"]').each(function(index) {
             if ( $(this).val() == '' ) {
                 count++;
             }
         });
         var max = <?php echo osc_max_images_per_item(); ?>;
-        var num_img = $("input[name=photos[]]").size()+$("a.delete").size();
+        var num_img = $('input[name="photos[]"]').size() + $("a.delete").size();
         if (count == 0 && (max==0 || (max!=0 && num_img<max))) {
             addNewPhoto();
         }

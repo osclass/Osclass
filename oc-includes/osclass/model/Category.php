@@ -27,6 +27,7 @@
         private $tree;
         private $categories;
         private $relation;
+        private $empty_tree;
 
         public function __construct($l = "") {
             if($l == "") {
@@ -38,6 +39,8 @@
             $this->relation = null;
             $this->categories = null;
             parent::__construct() ;
+            $this->empty_tree = true;
+            $this->toTree();
         }
 
         public static function newInstance() {
@@ -154,36 +157,46 @@
             return $tree;
         }
 
-        public function toTree() {
-            if($this->tree!=null) {
+        public function toTree($empty = true) {
+            if($empty==$this->empty_tree && $this->tree!=null) {
                 return $this->tree;
             }
+            $this->empty_tree = $empty;
             $categories = $this->listEnabled();
             $this->categories = array();
             $this->relation = array();
             foreach($categories as $c) {
-                $this->categories[$c['pk_i_id']] = $c;
-                if($c['fk_i_parent_id']==null) {
-                    $this->tree[] = $c;
-                    $this->relation[0][] = $c['pk_i_id'];
-                } else {
-                    $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                if($empty || (!$empty && $c['i_num_items']>0)) {
+                    $this->categories[$c['pk_i_id']] = $c;
+                    if($c['fk_i_parent_id']==null) {
+                        $this->tree[] = $c;
+                        $this->relation[0][] = $c['pk_i_id'];
+                    } else {
+                        $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                    }
                 }
             }
+
+            if(count($this->relation) == 0) {
+                return null;
+            }
+
             $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
             return $this->tree;
         }
 
         private function sideTree($branch, $categories, $relation) {
             $tree = array();
-            foreach($branch as $b) {
-                $aux = $categories[$b];
-                if(isset($relation[$b]) && is_array($relation[$b])) {
-                    $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
-                } else {
-                    $aux['categories'] = array();
+            if( !empty($branch) ) {
+                foreach($branch as $b) {
+                    $aux = $categories[$b];
+                    if(isset($relation[$b]) && is_array($relation[$b])) {
+                        $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
+                    } else {
+                        $aux['categories'] = array();
+                    }
+                    $tree[] = $aux;
                 }
-                $tree[] = $aux;
             }
             return $tree;
         }
@@ -270,9 +283,8 @@
 
         public function findByPrimaryKey($pk, $lang = true) {
             if($pk!=null) {
-                $data = $this->listWhere('a.pk_i_id = '.$pk);
-                if(isset($data[0])) {
-                    $data = $data[0];
+                $data = $this->categories[$pk];
+                if(isset($data)) {
                     $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
                     $row = array();
                     foreach ($sub_rows as $sub_row) {
@@ -303,7 +315,7 @@
                     break;
             }
 
-            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'en_US\', \''.$this->language.'\') as sorter FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), $this->getTableDescriptionName(), $sql);
+            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'en_US\', \''.$this->language.'\') as sorter FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), $this->getTableDescriptionName(), $sql, DB_TABLE_PREFIX);
         }
 
         public function deleteByPrimaryKey($pk) {
@@ -325,7 +337,7 @@
 
             osc_run_hook("delete_category", $pk);
             
-            $this->conn->osc_dbExec("DELETE FROM %st_plugin_category WHERE fk_i_category_id = '" . $pk . "'");
+            $this->conn->osc_dbExec("DELETE FROM %st_plugin_category WHERE fk_i_category_id = '" . $pk . "'", DB_TABLE_PREFIX);
             $this->conn->osc_dbExec("DELETE FROM %s WHERE fk_i_category_id = '" . $pk . "'", $this->getTableDescriptionName());
             $this->conn->osc_dbExec("DELETE FROM %s WHERE fk_i_category_id = '" . $pk . "'", $this->getTableStats());
             $this->conn->osc_dbExec("DELETE FROM %s WHERE pk_i_id = '" . $pk . "'", $this->getTableName());

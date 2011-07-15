@@ -1,3 +1,46 @@
+OSClass 2.1.1 2011-06-22
+----------------------
+- Filter of title and description is not too restrictive now
+- Fixed a warning message when there aren't categories
+- Fixed error checkdnsrr in windows
+- We don't show price filters or any field related with prices when it is disabled
+
+OSClass 2.1 2011-06-14
+----------------------
+- Help messages if you don't pass the requirements in the installer
+- Ping search engines in the installation
+- Change password at the end of the installation
+- Limit amount of items per user in a set time
+- Limit the number of photos that the user can add in an item
+- Statistics module: new users, new items...
+- Skip admin validation if the user has more than a defined number of items/comments
+- Improved category management: you can reorder, edit, delete, disable in the same page
+- Upload a logo to the header
+- Disable adding new items in root categories
+- Fill automatically the fields in case that something goes wrong
+- Delete photos of items via ajax
+- Improved pagination in search page
+- Added maintenance mode (in case you want to disable the website to the users)
+- Email verification on alerts
+- Disable contact item for non-registered users
+- Fancybox in modern theme
+- Improved expiration features
+- Some bugs fixed
+
+OSClass 2.0.3 2011-05-05
+------------------------
+- Price is showed fine when there're more than one language enabled
+- Locale Class renamed
+- STRICT Standars error in Category Class fixed
+- STRICT Standars error in Search Class fixed
+- Configure in Manage plugins appears even if the folder is a soft-link
+- [Modern theme] Input select in user dashboard has jquery.uniform style
+- Create mb_substr function if not exists
+- NOTICE error when users send an item to a friend
+- Upload images in IIS Servers
+- [Modern theme] Sidebar in main page shows now only regions fo the active items
+- [Modern theme] CSS category drop down improvements so the hierarchy of subcategories are visible.
+
 OSClass 2.0.2 2011-04-20
 ------------------------
 - RSS fixed, now works fine if you write sFeed=rss or sFedD= in the search url.

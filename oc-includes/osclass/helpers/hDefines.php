@@ -789,4 +789,78 @@
         }
     }
 
+    /**
+     * Get if user is on ad page
+     *
+     * @return boolean
+     */
+    function osc_is_ad_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='item' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on a static page
+     *
+     * @return boolean
+     */
+    function osc_is_static_page() {
+        $location = Rewrite::newInstance()->get_location();
+        if($location=='page') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on homepage
+     *
+     * @return boolean
+     */
+    function osc_is_home_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on homepage
+     *
+     * @return boolean
+     */
+    function osc_is_user_dashboard() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='user' && $section=='dashboard') {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    function osc_get_osclass_location() {
+        return Rewrite::newInstance()->get_location();
+    }
+
+    /**
+     * Get section
+     *
+     * @return string
+     */
+    function osc_get_osclass_section() {
+        return Rewrite::newInstance()->get_section();
+    }
+
+
+
 ?>
