@@ -432,6 +432,32 @@
     }
 
     /**
+     * Create automatically the url of the item details page
+     *
+     * @param string $locale
+     * @return string
+     */
+    function osc_premium_url($locale = '') {
+        if ( osc_rewrite_enabled() ) {
+            $sanitized_title = osc_sanitizeString(osc_premium_title()) ;
+            $sanitized_category = '';
+            $cat = Category::newInstance()->hierarchy(osc_premium_category_id()) ;
+            for ($i = (count($cat)); $i > 0; $i--) {
+                $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
+            }
+            if($locale!='') {
+                $path = osc_base_url() . sprintf('%s_%s%s_%d', $locale, $sanitized_category, $sanitized_title, osc_premium_id()) ;
+            } else {
+                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_premium_id()) ;
+            }
+        } else {
+            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            $path = osc_item_url_ns( osc_premium_id(), $locale ) ;
+        }
+        return $path ;
+    }
+
+    /**
      * Create the no friendly url of the item using the id of the item
      * 
      * @param int $id the primary key of the item

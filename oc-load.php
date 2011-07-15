@@ -66,6 +66,7 @@ require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
 require_once LIB_PATH . 'osclass/helpers/hValidate.php';
 require_once LIB_PATH . 'osclass/helpers/hPage.php';
 require_once LIB_PATH . 'osclass/helpers/hPagination.php';
+require_once LIB_PATH . 'osclass/helpers/hPremium.php';
 require_once LIB_PATH . 'osclass/helpers/hTheme.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/core/Cookie.php';
