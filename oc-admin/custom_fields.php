@@ -42,7 +42,7 @@
 
                 case 'add_post':
                     if(Params::getParam('field_name')!='') {
-                        $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type"), Params::getParam('categories'));
+                        $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type"), Params::getParam("field_required")=="1"?1:0, Params::getParam('categories'));
                     }
                     osc_add_flash_ok_message(_m("New custom field added"), "admin");
                     $this->redirectTo(osc_admin_base_url(true)."?page=cfields");

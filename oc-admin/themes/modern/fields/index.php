@@ -173,6 +173,10 @@
                                         </select>
                                     </div>
                                     <div class="FormElement">
+                                        <input type="checkbox" id="field_required" name="field_required" value="1"/>
+                                        <label><?php _e('This field is required'); ?></label>
+                                    </div>
+                                    <div class="FormElement">
                                         <p>
                                             <?php _e('Select the categories where you want to apply these attribute'); ?>:
                                         </p>
