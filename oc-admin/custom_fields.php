@@ -42,7 +42,7 @@
 
                 case 'add_post':
                     if(Params::getParam('field_name')!='') {
-                        $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type"));
+                        $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type"), Params::getParam("field_required")=="1"?1:0, Params::getParam('categories'));
                     }
                     osc_add_flash_ok_message(_m("New custom field added"), "admin");
                     $this->redirectTo(osc_admin_base_url(true)."?page=cfields");
@@ -50,6 +50,16 @@
                 
                 default:
 
+                    $categories = Category::newInstance()->toTreeAll();
+                    $selected = array();
+                    foreach($categories as $c) {
+                        $selected[] = $c['pk_i_id'];
+                        foreach($c['categories'] as $cc) {
+                            $selected[] = $cc['pk_i_id'];
+                        }
+                    }
+                    $this->_exportVariableToView("categories", $categories);
+                    $this->_exportVariableToView("default_selected", $selected);
                     $this->_exportVariableToView("fields", $this->fieldManager->listAll());
                     $this->doView("fields/index.php");
 
