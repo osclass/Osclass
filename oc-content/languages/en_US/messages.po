@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OSClass 2.1\n"
+"Project-Id-Version: OSClass 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-14 11:07+0100\n"
+"POT-Creation-Date: 2011-07-18 10:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -13,6 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-KeywordsList: _m\n"
 "X-Poedit-Basepath: .\n"
+"X-Poedit-Country: UNITED STATES\n"
 "X-Poedit-SearchPath-0: /Users/juanramon/htdocs/osclass-git\n"
 
 #: /Users/juanramon/htdocs/osclass-git/ajax.php:70
@@ -38,9 +39,9 @@ msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/contact.php:38
 #: /Users/juanramon/htdocs/osclass-git/item.php:114
-#: /Users/juanramon/htdocs/osclass-git/item.php:241
-#: /Users/juanramon/htdocs/osclass-git/item.php:334
-#: /Users/juanramon/htdocs/osclass-git/item.php:377
+#: /Users/juanramon/htdocs/osclass-git/item.php:245
+#: /Users/juanramon/htdocs/osclass-git/item.php:340
+#: /Users/juanramon/htdocs/osclass-git/item.php:383
 msgid "The Recaptcha code is wrong"
 msgstr ""
 
@@ -77,111 +78,111 @@ msgstr ""
 msgid "Your item has been published"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:212
+#: /Users/juanramon/htdocs/osclass-git/item.php:216
 msgid "Sorry, we don't have any items with that ID"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:250
+#: /Users/juanramon/htdocs/osclass-git/item.php:256
 msgid "Great! We've just updated your item"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:269
+#: /Users/juanramon/htdocs/osclass-git/item.php:275
 msgid "The item has been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:271
+#: /Users/juanramon/htdocs/osclass-git/item.php:277
 msgid "The item can't be validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:274
+#: /Users/juanramon/htdocs/osclass-git/item.php:280
 msgid "The item has already been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:287
+#: /Users/juanramon/htdocs/osclass-git/item.php:293
 msgid "Your item has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:289
-#: /Users/juanramon/htdocs/osclass-git/item.php:297
+#: /Users/juanramon/htdocs/osclass-git/item.php:295
+#: /Users/juanramon/htdocs/osclass-git/item.php:303
 msgid "The item you are trying to delete couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:311
+#: /Users/juanramon/htdocs/osclass-git/item.php:317
 msgid "Thanks! That's very helpful"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:353
-#: /Users/juanramon/htdocs/osclass-git/item.php:442
-#: /Users/juanramon/htdocs/osclass-git/item.php:487
+#: /Users/juanramon/htdocs/osclass-git/item.php:359
+#: /Users/juanramon/htdocs/osclass-git/item.php:448
+#: /Users/juanramon/htdocs/osclass-git/item.php:493
 msgid "This item doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:359
-#: /Users/juanramon/htdocs/osclass-git/item.php:394
+#: /Users/juanramon/htdocs/osclass-git/item.php:365
+#: /Users/juanramon/htdocs/osclass-git/item.php:400
 msgid "We're sorry, but the item has expired. You can't contact the seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:366
+#: /Users/juanramon/htdocs/osclass-git/item.php:372
 msgid "You can't contact the seller, only registered users can"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:402
+#: /Users/juanramon/htdocs/osclass-git/item.php:408
 msgid "We've just sent an e-mail to the seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:410
+#: /Users/juanramon/htdocs/osclass-git/item.php:416
 msgid "Sorry, we could not save your comment. Try again later"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:413
+#: /Users/juanramon/htdocs/osclass-git/item.php:419
 msgid "Your comment is awaiting moderation"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:416
+#: /Users/juanramon/htdocs/osclass-git/item.php:422
 msgid "Your comment has been approved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:419
+#: /Users/juanramon/htdocs/osclass-git/item.php:425
 msgid "Please fill the required fields (name, email)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:422
+#: /Users/juanramon/htdocs/osclass-git/item.php:428
 msgid "Please type a comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:425
+#: /Users/juanramon/htdocs/osclass-git/item.php:431
 msgid "Your comment has been marked as spam"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:449
+#: /Users/juanramon/htdocs/osclass-git/item.php:455
 msgid "You must be logged in to delete a comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:457
+#: /Users/juanramon/htdocs/osclass-git/item.php:463
 msgid "The comment doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:462
+#: /Users/juanramon/htdocs/osclass-git/item.php:468
 msgid "The comment is not active, you cannot delete it"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:467
+#: /Users/juanramon/htdocs/osclass-git/item.php:473
 msgid "The comment was not added by you, you cannot delete it"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:472
+#: /Users/juanramon/htdocs/osclass-git/item.php:478
 msgid "The comment has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:492
+#: /Users/juanramon/htdocs/osclass-git/item.php:498
 msgid "The item hasn't been validated. Please validate it in order to show it to the rest of users"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:494
+#: /Users/juanramon/htdocs/osclass-git/item.php:500
 msgid "This item hasn't been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:498
+#: /Users/juanramon/htdocs/osclass-git/item.php:504
 msgid "The item has been suspended"
 msgstr ""
 
@@ -246,7 +247,6 @@ msgid "Your account has been created successfully"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/register.php:44
-#: /Users/juanramon/htdocs/osclass-git/user.php:141
 msgid "The specified e-mail is already in use"
 msgstr ""
 
@@ -275,22 +275,18 @@ msgid "Your email has been changed successfully"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:69
-#: /Users/juanramon/htdocs/osclass-git/user.php:195
 msgid "Alert activated"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:71
-#: /Users/juanramon/htdocs/osclass-git/user.php:197
 msgid "Ops! There was a problem trying to activate alert. Please contact the administrator"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:81
-#: /Users/juanramon/htdocs/osclass-git/user.php:207
 msgid "Unsubscribed correctly"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:83
-#: /Users/juanramon/htdocs/osclass-git/user.php:209
 msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator"
 msgstr ""
 
@@ -474,6 +470,10 @@ msgstr ""
 msgid "The comment have been deleted"
 msgstr ""
 
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/custom_fields.php:47
+msgid "New custom field added"
+msgstr ""
+
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/emails.php:72
 msgid "The email/alert has been updated"
 msgstr ""
@@ -495,10 +495,13 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:80
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:99
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:118
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:135
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:152
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:286
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:312
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:133
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:148
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:165
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:182
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:316
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:344
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:370
 #, php-format
 msgid "Error: %s"
 msgstr ""
@@ -515,66 +518,72 @@ msgstr ""
 msgid "The items have been deactivated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:133
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:131
 msgid "The items have been marked as premium"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:150
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:146
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:180
 msgid "The changes have been made"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:168
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:190
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:163
+msgid "The items have been marked as spam"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:198
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:220
 msgid "The item has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:170
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:192
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:200
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:222
 msgid "The item couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:219
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:249
 msgid "The item has been activated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:236
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:266
 msgid "The item has been deactivated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:253
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:283
 msgid "The item has been enabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:270
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:300
 msgid "The item has been disabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:310
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:342
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:368
 msgid "Changes have been applied"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:334
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:392
 msgid "The item has been unmarked as"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:336
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:394
 msgid "The item hasn't been unmarked as"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:403
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:461
 msgid "Changes saved correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:419
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:477
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/media.php:50
 msgid "Resource deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:457
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:515
 msgid "A new item has been added"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:526
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/items.php:584
 msgid "Items' settings have been updated"
 msgstr ""
 
@@ -656,7 +665,7 @@ msgid "Selected languages have been disabled for the website"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:190
-msgid "Some language can't be disabled because it's the default language. You can change the default language under General Settings in order to disable it"
+msgid "The language can't be disabled because it's the default language. You can change the default language under General Settings in order to disable it"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/languages.php:202
@@ -788,14 +797,14 @@ msgstr ""
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:243
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:280
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:298
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:743
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:822
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:787
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:866
 #, php-format
 msgid "%s already was in the database"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:162
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:787
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:831
 #, php-format
 msgid "%s has been added as a new country"
 msgstr ""
@@ -889,33 +898,33 @@ msgstr ""
 msgid "Mail server configuration has changed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:600
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:644
 msgid "Media config has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:618
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:662
 msgid "Contact configuration has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:635
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:679
 msgid "Cron config has been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:687
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:731
 msgid "General settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:705
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:749
 msgid "Settings have been updated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:736
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:815
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:780
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:859
 #, php-format
 msgid "%s cannot be added"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:853
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/settings.php:897
 #, php-format
 msgid "%s has been added as a region of %s"
 msgstr ""
@@ -928,58 +937,58 @@ msgstr ""
 msgid "There was a problem importing data to the database"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:90
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:123
 msgid "Re-generation complete"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:111
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:144
 msgid "Path is empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:114
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:147
 #, php-format
 msgid "Could not connect with the database. Error: %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:117
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:150
 #, php-format
 msgid "Could not select the database. Error: %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:120
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:153
 msgid "There are no tables to back up"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:123
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:156
 msgid "The folder is not writable"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:126
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:159
 msgid "Backup has been done properly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:145
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:178
 msgid "Archiving successful!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:148
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:181
 msgid "Error, the zip file was not created at the specified directory"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:162
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:195
 msgid "Maintenance mode is ON"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:164
-msgid "There were an error creating .maintenance file, please create it manually at the root folder"
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:197
+msgid "There was an error creating .maintenance file, please create it manually at the root folder"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:171
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:204
 msgid "Maintenance mode is OFF"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:173
-msgid "There were an error removing .maintenance file, please remove it manually from the root folder"
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/tools.php:206
+msgid "There was an error removing .maintenance file, please remove it manually from the root folder"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:68
@@ -1062,15 +1071,15 @@ msgstr ""
 msgid "%s users have been disabled"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:236
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:238
 msgid "No user has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:238
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:240
 msgid "One user has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:240
+#: /Users/juanramon/htdocs/osclass-git/oc-admin/users.php:242
 #, php-format
 msgid "%s users have been deleted"
 msgstr ""
@@ -1083,102 +1092,102 @@ msgstr ""
 msgid "DISABLED"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:75
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:214
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:76
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:240
 msgid "Image with incorrect extension."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:78
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:217
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:79
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:243
 msgid "Images too big. Max. size "
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:82
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:221
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:90
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:254
 msgid "Title too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:83
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:222
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:91
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:255
 msgid "Title too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:87
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:226
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:103
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:267
 msgid "Description too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:88
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:227
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:104
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:268
 msgid "Description too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:91
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:230
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:109
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:273
 msgid "Category invalid."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:92
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:231
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:110
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:274
 msgid "Price must be number."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:93
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:232
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:111
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:275
 msgid "Price too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:94
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:112
 msgid "Name too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:95
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:113
 msgid "Email invalid."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:96
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:233
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:114
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:276
 msgid "Location not selected."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:97
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:234
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:115
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:277
 msgid "Municipality too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:98
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:235
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:116
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:278
 msgid "Municipality too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:99
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:236
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:117
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:279
 msgid "Address too short."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:100
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:237
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:118
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:280
 msgid "Address too long."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:101
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:119
 msgid "Too fast. You should wait a little to publish your ad."
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:490
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:561
 #, php-format
 msgid "We just send your message to %s"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:493
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:564
 msgid "We are very sorry but we could not deliver your message to your friend. Try again later"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:973
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:1044
 msgid "One of the files you tried to upload exceeds the maximum size"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:1016
+#: /Users/juanramon/htdocs/osclass-git/oc-includes/osclass/ItemActions.php:1087
 msgid "The file you tried to upload does not have an allowed extension"
 msgstr ""
 
