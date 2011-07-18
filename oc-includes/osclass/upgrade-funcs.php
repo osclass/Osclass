@@ -111,12 +111,12 @@
     if(osc_version() < 211) {
         osc_changeVersionTo(211) ;
     }
-    // UNCOMMENT THEESE LINES IF YOU'RE A DEVELOPER
-    //osc_changeVersionTo(202) ;
+
     if(osc_version() < 220) {
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_text', '', 'STRING')", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_text_color', '', 'STRING')", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_image','', 'STRING')", DB_TABLE_PREFIX));
+        osc_changeVersionTo(220) ;
     }
 
 
