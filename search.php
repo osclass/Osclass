@@ -195,7 +195,7 @@
                 // RETRIEVE ITEMS AND TOTAL
                 $aItems = $this->mSearch->doSearch();
                 $iTotalItems = $this->mSearch->count();
-
+                
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;

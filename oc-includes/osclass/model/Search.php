@@ -417,6 +417,23 @@
             }
         }
 
+        public function getPremiums($max = 2) {
+            $this->order(sprintf('total_premium_views', DB_TABLE_PREFIX), 'ASC') ;
+            $this->page(0, $max);
+            $this->addField(sprintf('sum(%st_item_stats.i_num_premium_views) as total_premium_views', DB_TABLE_PREFIX));
+            $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
+            $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+            $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
+            
+            $items = $this->doSearch(false);
+            
+            $mStat = ItemStats::newInstance();
+            foreach($items as $item) {
+                $mStat->increase('i_num_premium_views', $item['pk_i_id']);
+            }
+            return Item::newInstance()->extendData($items);
+        }
+        
         public function listCountries($zero = ">", $order = "items DESC") {
 
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));

@@ -265,6 +265,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_stats (
     i_num_bad_classified INT UNSIGNED NOT NULL DEFAULT 0,
     i_num_offensive INT UNSIGNED NOT NULL DEFAULT 0,
     i_num_expired INT UNSIGNED NOT NULL DEFAULT 0,
+    i_num_premium_views INT UNSIGNED NOT NULL DEFAULT 0,
     dt_date DATE NOT NULL,
 
         PRIMARY KEY (fk_i_item_id, dt_date),
