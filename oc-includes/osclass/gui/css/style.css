@@ -493,3 +493,45 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
     text-align: center;
     color: #fefefe;
 }
+
+
+.premium_odd {
+    background-color: #E9F5F9;
+}
+
+.premium_even {
+    background-color: #d7eaf0;
+}
+
+.ui-menu {
+	list-style:none;
+	padding: 2px;
+	margin: 0;
+	display:block;
+	float: left;
+    
+    background-color: #fefefe;
+}
+.ui-menu .ui-menu {
+	margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+	margin:0;
+	padding: 0;
+	zoom: 1;
+	float: left;
+	clear: left;
+	width: 100%;
+}
+.ui-menu .ui-menu-item a {
+	text-decoration:none;
+	display:block;
+	padding:.2em .4em;
+	line-height:1.5;
+	zoom:1;
+}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {
+	font-weight: normal;
+	margin: -1px;
+}
