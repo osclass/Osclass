@@ -20,9 +20,7 @@
     $field        = __get("field");
     $categories = __get("categories");
     $selected = __get("selected");
-    $plugin_data = __get("plugin_data");
     $numCols = 1;
-    $catsPerCol = round(count($categories)/$numCols);
 ?>
 
 <link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
