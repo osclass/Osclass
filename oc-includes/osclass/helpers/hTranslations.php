@@ -70,4 +70,23 @@
         return __($key, 'messages');
     }
 
+    /**
+     * Retrieve the singular or plural translation of the string.
+     *
+     * @since 2.2
+     *
+     * @param string $single_key
+     * @param string $plural_key
+     * @param int $count
+     * @param string $domain
+     * @return string
+     */
+    function _n($single_key, $plural_key, $count, $domain = 'core') {
+        $gt = Translation::newInstance()->_get($domain);
+
+        if(!$gt) {
+            return $key;
+        }
+        return $gt->ngettext($single_key, $plural_key, $count);
+    }
 ?>
