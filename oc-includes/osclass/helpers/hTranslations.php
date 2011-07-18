@@ -89,4 +89,19 @@
         }
         return $gt->ngettext($single_key, $plural_key, $count);
     }
+
+    /**
+     * Retrieve the singular or plural translation of the string.
+     *
+     * @since 2.2
+     *
+     * @param string $single_key
+     * @param string $plural_key
+     * @param int $count
+     * @return string
+     */
+    function _mn($single_key, $plural_key, $count) {
+        return _n($single_key, $plural_key, $count, 'messages');
+    }
+
 ?>
