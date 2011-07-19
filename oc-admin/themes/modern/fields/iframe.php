@@ -20,9 +20,7 @@
     $field        = __get("field");
     $categories = __get("categories");
     $selected = __get("selected");
-    $plugin_data = __get("plugin_data");
     $numCols = 1;
-    $catsPerCol = round(count($categories)/$numCols);
 ?>
 
 <link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
@@ -39,7 +37,10 @@
                     <?php FieldForm::type_select($field); ?>
                 </div>
             </div>
-
+            <div class="FormElement">
+                <input type="checkbox" id="field_required" name="field_required" value="1" <?php if($field['b_required']==1) { echo 'checked="checked"'; } ?>/>
+                <label><?php _e('This field is required'); ?></label>
+            </div>
             <div class="FormElement">
                 <p>
                     <?php _e('Select the categories where you want to apply these attribute'); ?>:

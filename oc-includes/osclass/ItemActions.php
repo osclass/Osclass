@@ -118,6 +118,20 @@
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
                 ((((time() - Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
 
+            
+            $meta = Params::getParam("meta");
+            if($meta!='' && count($meta)>0) {
+                $mField = Field::newInstance();
+                foreach($meta as $k => $v) {
+                    if($v=='') {
+                        $field = $mField->findByPrimaryKey($k);
+                        if($field['b_required']==1) {
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                        }
+                    }
+                }
+            };
+            
             // Handle error
             if ($flash_error) {
                 return $flash_error;
@@ -173,7 +187,6 @@
                 /**
                  * META FIELDS
                  */
-                $meta = Params::getParam("meta");
                 if($meta!='' && count($meta)>0) {
                     $mField = Field::newInstance();
                     foreach($meta as $k => $v) {
@@ -279,6 +292,22 @@
                 ((!osc_validate_text($aItem['address'], 3, false))? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' );
 
+            
+            $meta = Params::getParam("meta");
+            if($meta!='' && count($meta)>0) {
+                $mField = Field::newInstance();
+                foreach($meta as $k => $v) {
+                    if($v=='') {
+                        $field = $mField->findByPrimaryKey($k);
+                        if($field['b_required']==1) {
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                        }
+                    }
+                }
+            };
+
+            
+            
             // Handle error
             if ($flash_error) {
                 return $flash_error ;

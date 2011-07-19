@@ -97,7 +97,7 @@
          */
         public function findByName($name)
         {
-            return  $this->conn->osc_dbFetchResult("SELECT * FROM %st_meta_fields WHERE s_name = %s", DB_TABLE_PREFIX, $name);
+            return  $this->conn->osc_dbFetchResult("SELECT * FROM %st_meta_fields WHERE s_name = '%s'", DB_TABLE_PREFIX, $name);
         }
 
         /**
@@ -134,16 +134,9 @@
          * @param type $type
          * @param type $categories 
          */
-        public function insertField($name, $type, $categories = null) {
-            $this->insert(array("s_name" => $name, "e_type" =>$type));
+        public function insertField($name, $type, $required, $categories = null) {
+            $this->insert(array("s_name" => $name, "e_type" =>$type, "b_required" => $required));
             $id = $this->conn->get_last_id();
-            if($categories==null) {
-                $categories = array();
-                $cats = Category::newInstance()->listAll();
-                foreach($cats as $c) {
-                    $categories[] = $c['pk_i_id'];
-                }
-            }
             foreach($categories as $c) {
                 $this->conn->osc_dbExec("INSERT INTO %st_meta_categories ( `fk_i_category_id`, `fk_i_field_id` ) VALUES ('%d', '%d')", DB_TABLE_PREFIX, $c, $id);
             }
