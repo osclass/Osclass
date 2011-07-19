@@ -218,13 +218,9 @@
                                         <?php echo $field['s_name'];?> 
                                     </div>
                                     <div style="float:right;">
-                                        <a onclick="show_iframe('content_list_<?php echo $field['pk_i_id'];?>','<?php echo $field['pk_i_id'];?>');">
-                                        <?php _e('Edit'); ?>
-                                        </a>
+                                        <a onclick="show_iframe('content_list_<?php echo $field['pk_i_id'];?>','<?php echo $field['pk_i_id'];?>');"><?php _e('Edit'); ?></a>
                                         <span> | </span>
-                                        <a onclick="delete_field('<?php echo $field['pk_i_id'];?>');">
-                                        <?php _e('Delete'); ?>
-                                        </a>
+                                        <a onclick="delete_field('<?php echo $field['pk_i_id'];?>');"><?php _e('Delete'); ?></a>
                                     </div>
                                     <div class="edit content_list_<?php echo $field['pk_i_id']; ?>"></div>
                                     <div style="clear: both;"></div>
