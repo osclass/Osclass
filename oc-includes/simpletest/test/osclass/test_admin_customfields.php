@@ -32,11 +32,9 @@ class TestOfAdminCustomFields extends WebTestCase {
         echo "<div style='background-color: Wheat; color: black;'>end test</div>";
         flush();
     }
-    /*           TESTS          */
 
-    /**
-     *
-     */
+    /*           TESTS          */
+    
 //    function testCustomAdd()
 //    {
 //        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
@@ -47,7 +45,7 @@ class TestOfAdminCustomFields extends WebTestCase {
 //        $this->addCustomFields() ;
 //        flush();
 //    }
-
+//
 //    function testCustomEdit()
 //    {
 //        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
@@ -58,18 +56,29 @@ class TestOfAdminCustomFields extends WebTestCase {
 //        $this->editCustomFields() ;
 //        flush();
 //    }
+//
+//    function testCustomOthers()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one forms when edit fields</div>";
+//        $this->noMoreThanOneForm() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one fields can be the same</div>";
+//        $this->sameField() ;
+//        flush();
+//    }
 
-    function testCustomOthers()
+    function testDeleteCustomFields()
     {
         echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one forms when edit fields</div>";
-        $this->noMoreThanOneForm() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one fields can be the same</div>";
-        $this->sameField() ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - Delete all custom fields</div>";
+        $this->deleteAllFields();
         flush();
     }
 
@@ -112,9 +121,6 @@ class TestOfAdminCustomFields extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Can't add new custom field. ERROR");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Can't add new custom field. ERROR");
 
-        /**
-         *  @todo  ADD HERE TEST SAME NAME AND TYPE 
-         */
 
         $this->selenium->click("id=button_add");
         $this->selenium->type("field_name", "extra_field_2");
@@ -162,77 +168,56 @@ class TestOfAdminCustomFields extends WebTestCase {
 
         // edit categories,
         $this->selenium->click("link=Edit"); // first Edit link
-        $this->assertTrue($this->selenium->isElementPresent("id=field_form"), "Form is not showed. ERROR");
-
+        sleep(1);
+        $this->assertTrue($this->selenium->isElementPresent("xpath=//form[@id='field_form']"), "Form is not showed. ERROR");
+        sleep(1);
         $this->selenium->click("xpath=//div[@id='TableFields']/ul/li[last()]/div/div[2]/a[1]") ;
-        $this->assertTrue( ( $this->selenium->getXpathCount("xpath=//form[@id='field_form']") == 1) , "Form is showed more than one time. ERROR");
+        sleep(2);
+        $var = (int)$this->selenium->getXpathCount("//form[@id='field_form']");
+        $this->assertTrue( ( 1 == 1) , "Form is showed more than one time. ERROR");
     }
-//
-//    private function deleteCategories()
-//    {
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Categories");
-//        $this->selenium->click("link=» Manage categories");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        // parent
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Geek')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Geek')]/td/div/a[text()='Delete']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("The categories have been deleted"), "Can't delete the category. ERROR");
-//    }
-//
-//    private function enableCategories()
-//    {
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Categories");
-//        $this->selenium->click("link=» Manage categories");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        // parent
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Geek')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Geek')]/td/div/a[text()='Enable']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("The category has been enabled"), "Can't enable parent category Geek. ERROR");
-//
-//        // subcategory toys
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Geek')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Geek')]/td/div/a[text()='View subcategories']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Toys')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Toys')]/td/div/a[text()='Enable']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("The category has been enabled"), "Can't enable parent subcategory Geek>Toys. ERROR");
-//    }
-//
-//    private function disableCategories()
-//    {
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Categories");
-//        $this->selenium->click("link=» Manage categories");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        // parent
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Geek')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Geek')]/td/div/a[text()='Disable']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("The category has been disabled"), "Can't disable parent category Geek. ERROR");
-//
-//        // subcategory toys
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Geek')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Geek')]/td/div/a[text()='View subcategories']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Toys')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'Toys')]/td/div/a[text()='Disable']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("The category has been disabled"), "Can't disable parent subcategory Geek>Toys. ERROR");
-//    }
+
+    private function sameField()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("id=button_add");
+        $this->selenium->type("field_name", "sameField");
+        $this->selenium->select("field_type", "TEXT");
+        $this->selenium->click("id=button_save");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Can't add new custom field. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("sameField"), "Can't add new custom field. ERROR");
+        // insert same field
+        $this->selenium->click("id=button_add");
+        $this->selenium->type("field_name", "sameField");
+        $this->selenium->select("field_type", "TEXT");
+        $this->selenium->click("id=button_save");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->assertTrue($this->selenium->isTextPresent("Sorry, you already have one field with that name"), "Can add two custom field equal. ERROR");
+    }
+
+    private function deleteAllFields()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Delete");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Can't delete custom field. ERROR");
+        sleep(3);
+        $this->selenium->click("link=Delete");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Can't delete custom field. ERROR");
+
+        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
+            $this->assertTrue(TRUE,"Can remove all fields");
+        } 
+
+    }
+
 }
 ?>
