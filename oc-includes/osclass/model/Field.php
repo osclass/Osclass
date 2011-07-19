@@ -97,7 +97,7 @@
          */
         public function findByName($name)
         {
-            return  $this->conn->osc_dbFetchResult("SELECT * FROM %st_meta_fields WHERE s_name = %s", DB_TABLE_PREFIX, $name);
+            return  $this->conn->osc_dbFetchResult("SELECT * FROM %st_meta_fields WHERE s_name = '%s'", DB_TABLE_PREFIX, $name);
         }
 
         /**
