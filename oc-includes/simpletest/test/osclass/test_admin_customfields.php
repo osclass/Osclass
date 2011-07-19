@@ -3,6 +3,8 @@ require_once('../../autorun.php');
 require_once('../../web_tester.php');
 require_once('../../reporter.php');
 
+require_once('util_settings.php');
+
 // LOAD OSCLASS
 require_once '../../../../oc-load.php';
 require_once LIB_PATH . 'Selenium.php';
@@ -34,53 +36,68 @@ class TestOfAdminCustomFields extends WebTestCase {
     }
 
     /*           TESTS          */
-    
-//    function testCustomAdd()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - ADD NEW CUSTOM FIELD</div>";
-//        $this->addCustomFields() ;
-//        flush();
-//    }
-//
-//    function testCustomEdit()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - EDIT CUSTOM FIELD</div>";
-//        $this->editCustomFields() ;
-//        flush();
-//    }
-//
-//    function testCustomOthers()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one forms when edit fields</div>";
-//        $this->noMoreThanOneForm() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one fields can be the same</div>";
-//        $this->sameField() ;
-//        flush();
-//    }
 
-    function testDeleteCustomFields()
+    function testCustomAdd()
     {
         echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
         echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - Delete all custom fields</div>";
-        $this->deleteAllFields();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - ADD NEW CUSTOM FIELD</div>";
+        $this->addCustomFields() ;
         flush();
     }
+
+    function testCustomEdit()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - EDIT CUSTOM FIELD</div>";
+        $this->editCustomFields() ;
+        flush();
+    }
+
+    function testCustomOthers()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one forms when edit fields</div>";
+        $this->noMoreThanOneForm() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - No more than one fields can be the same</div>";
+        $this->sameField() ;
+        flush();
+    }
+
+    function testCustomOnWebsite()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - Check if custom fields are show at website</div>";
+        $this->customOnFrontEnd();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - Check if custom fields are show at admin panel</div>";
+        $this->customOnAdminPanel();
+        flush();
+
+    }
+
+//    function testDeleteCustomFields()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>TestOfAdminCustomFields</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>TestOfAdminCustomFields - Delete all custom fields</div>";
+//        $this->deleteAllFields();
+//        flush();
+//    }
 
     /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -141,9 +158,10 @@ class TestOfAdminCustomFields extends WebTestCase {
 
         // edit categories,
         $this->selenium->click("link=Edit");
-        
+        $this->selenium->waitForPageToLoad("10000");
+
         // modificar s_name & type
-        $this->selenium->type('s_name', "NEW FIELD");
+        $this->selenium->type("xpath=//input[@id='s_name']", "NEW FIELD");
         $this->selenium->select("xpath=//form[@id='field_form']/div/div[2]/select", "TEXTAREA");
         // uncheck all
         $this->selenium->click("link=Uncheck all");
@@ -200,19 +218,69 @@ class TestOfAdminCustomFields extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("Sorry, you already have one field with that name"), "Can add two custom field equal. ERROR");
     }
 
+    private function customOnFrontEnd()
+    {
+        $uSettings = new utilSettings();
+        $bool_reg_user_post = $uSettings->set_reg_user_post(0);
+        // check if custom fields appears at website
+        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->click("link=Publish your ad for free");
+        $this->selenium->select("id=catId", "label=regexp:\\s+Animals");
+        usleep(500000);
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields aren't show at frontend (item_post). ERROR");
+        // volver a dejar reg_user_post flag en su estado original
+        $bool_reg_user_post = $uSettings->set_reg_user_post($bool_reg_user_post);
+    }
+
+    private function customOnAdminPanel()
+    {
+        // check if custom fields appears at website
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Items");
+        $this->selenium->click("link=» Add new item");
+        $this->selenium->waitForPageToLoad("10000");
+        sleep(5);
+        $this->selenium->select("id=catId", "label=regexp:\\s+Animals");
+        usleep(500000);
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields aren't show at admin panel (item_post). ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("NEW FIELD"), "Custom fields aren't show at admin panel (item_post). ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("sameField"), "Custom fields aren't show at admin panel (item_post). ERROR");
+    }
+
     private function deleteAllFields()
     {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+        $this->selenium->waitForPageToLoad("1000");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Can't delete custom field. ERROR");
+        
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+        $this->selenium->waitForPageToLoad("1000");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Can't delete custom field. ERROR");
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->click("link=» Manage custom fields");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->click("link=Delete");
+        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+        $this->selenium->waitForPageToLoad("1000");
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Can't delete custom field. ERROR");
-        sleep(3);
-        $this->selenium->click("link=Delete");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Can't delete custom field. ERROR");
-
+        
+        
         if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
             $this->assertTrue(TRUE,"Can remove all fields");
         } 
