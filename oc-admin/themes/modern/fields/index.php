@@ -39,6 +39,7 @@
             function show_iframe(class_name, id) {
 
                 //$('.edit #settings_form').remove();
+                $("div[class^=edit content_list_]").html('');
 
                 var name = 'frame_'+ id ; 
                 var id_  = 'frame_'+ id ;
