@@ -124,7 +124,7 @@
                 $mField = Field::newInstance();
                 foreach($meta as $k => $v) {
                     if($v=='') {
-                        $field = $mField->findByPrimaryPrimaryKey($k);
+                        $field = $mField->findByPrimaryKey($k);
                         if($field['b_required']==1) {
                             $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
                         }
@@ -298,7 +298,7 @@
                 $mField = Field::newInstance();
                 foreach($meta as $k => $v) {
                     if($v=='') {
-                        $field = $mField->findByPrimaryPrimaryKey($k);
+                        $field = $mField->findByPrimaryKey($k);
                         if($field['b_required']==1) {
                             $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
                         }
