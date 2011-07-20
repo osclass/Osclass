@@ -66,6 +66,14 @@
                 case 'add_widget':
                     $this->doView('appearance/add_widget.php');
                 break;
+                case 'edit_widget':
+                    $id = Params::getParam('id');
+                    
+                    $widget = Widget::newInstance()->findByPrimaryKey($id);
+                    $this->_exportVariableToView("widget", $widget);
+
+                    $this->doView('appearance/add_widget.php');
+                break;
                 case 'delete_widget':
                     Widget::newInstance()->delete(
                         array('pk_i_id' => Params::getParam('id') )
@@ -73,6 +81,22 @@
                     osc_add_flash_ok_message( _m('Widget removed correctly'), 'admin');
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
                 break;
+                case 'edit_widget_post':
+                    $res = Widget::newInstance()->update(
+                        array(
+                            's_description' => Params::getParam('description')
+                            ,'s_content' => Params::getParam('content')
+                        ),
+                        array('pk_i_id' => Params::getParam('id') )
+                    );
+
+                    if( $res ) {
+                        osc_add_flash_ok_message( _m('Widget updated correctly'), 'admin');
+                    } else {
+                        osc_add_flash_ok_message( _m('Widget cannot be updated correctly'), 'admin');
+                    }
+                    $this->redirectTo( osc_admin_base_url(true) . "?page=appearance&action=widgets" );
+                    break;
                 case 'add_widget_post':
                     Widget::newInstance()->insert(
                         array(
