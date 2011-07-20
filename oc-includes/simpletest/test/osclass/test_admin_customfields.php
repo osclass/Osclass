@@ -205,6 +205,7 @@ class TestOfAdminCustomFields extends WebTestCase {
         $this->selenium->click("id=button_add");
         $this->selenium->type("field_name", "sameField");
         $this->selenium->select("field_type", "TEXT");
+        $this->selenium->click("id=field_required");
         $this->selenium->click("id=button_save");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Can't add new custom field. ERROR");

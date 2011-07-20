@@ -150,12 +150,12 @@ class TestOfAdminAppearance extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsHeader</div>";
         $this->widgetsHeader() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsCategories</div>";
-        $this->widgetsCategories() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsFooter</div>";
-        $this->widgetsFooter() ;
-        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsCategories</div>";
+//        $this->widgetsCategories() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsFooter</div>";
+//        $this->widgetsFooter() ;
+//        flush();
     }
 
     /*      PRIVATE FUNCTIONS       */
@@ -207,9 +207,13 @@ class TestOfAdminAppearance extends WebTestCase {
 
         // check if appear at frontend
         $this->selenium->open( osc_base_url(true) );
-//        New Widget Header
+        $this->assertTrue($this->selenium->isTextPresent('New Widget Header') , "Header widget is not visible at website. ERROR");
 
-
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->waitForPageToLoad("10000");
+        
         // remove widget
         $this->selenium->click("link=Delete");
         $this->selenium->waitForPageToLoad("30000");
