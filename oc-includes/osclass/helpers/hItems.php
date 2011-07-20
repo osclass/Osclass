@@ -981,7 +981,7 @@
     /**
      * Gets item meta value
      *
-     * @return array
+     * @return string
      */    
     function osc_item_meta_value() {
         return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
@@ -990,7 +990,7 @@
     /**
      * Gets item meta name
      *
-     * @return array
+     * @return string
      */    
     function osc_item_meta_name() {
         return osc_field(osc_item_meta(), 's_name', '') ;
@@ -999,10 +999,19 @@
     /**
      * Gets item meta id
      *
-     * @return array
+     * @return integer
      */    
     function osc_item_meta_id() {
         return osc_field(osc_item_meta(), 'pk_i_id', '') ;
+    }
+   
+    /**
+     * Gets item meta slug
+     *
+     * @return string
+     */    
+    function osc_item_meta_slug() {
+        return osc_field(osc_item_meta(), 'slug', '') ;
     }
    
  ?>

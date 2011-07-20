@@ -45,11 +45,12 @@
         
         static public function meta($field = null) {
             if($field!=null) {
-                echo '<label for="'.$field['s_name'].'">'.$field['s_name'].': </label>';
+                echo '<label for="'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 if($field['e_type']=="TEXTAREA") {
-                    parent::generic_textarea("meta[".$field['pk_i_id']."]",(isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") ;
+                    echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;
                 } else {
-                    parent::generic_input_text("meta[".$field['pk_i_id']."]", (isset($field) && isset($field["s_value"])) ? $field["s_value"] : "", null, false) ;
+                    echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . htmlentities((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "", ENT_COMPAT, "UTF-8") . '" ' ;
+                    echo '/>' ;
                 }
             }
         }

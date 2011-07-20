@@ -197,6 +197,31 @@
                                             </table>
                                         </p>
                                     </div>
+                                    <div id="advanced_fields" class="shrink">
+                                        <div class="text">
+                                            <span><?php _e('Advanced options'); ?></span>
+                                        </div>
+                                    </div>
+                                    <hr></hr>
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+                                            $('#advanced_fields').click(function() {
+                                                $('#more-options').toggle();
+                                                if( $('#advanced_fields').attr('class') == 'shrink' ) {
+                                                    $('#advanced_fields').removeClass('shrink');
+                                                    $('#advanced_fields').addClass('expanded');
+                                                } else {
+                                                    $('#advanced_fields').addClass('shrink');
+                                                    $('#advanced_fields').removeClass('expanded');
+                                                }
+                                            });
+                                            $('#more-options').hide();
+                                        });
+                                    </script>
+                                    <div id="more-options" class="FormElement">
+                                        <label for="slug"><?php _e('Identifier name (only alphanumeric characters are allowed (a-z0-9_-)'); ?></label>
+                                        <input type="text" name="field_slug" id="field_slug" value="" />
+                                    </div>
                                     <span style="float:right;"><input id="button_save" type="submit" value="<?php _e('Add') ; ?>" /></span>
                                 </fieldset>
                             </div>
