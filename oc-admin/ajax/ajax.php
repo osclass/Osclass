@@ -158,7 +158,9 @@
                             $field = Field::newInstance()->findByName(Params::getParam("s_name"));
                             if(!isset($field['pk_i_id']) || (isset($field['pk_i_id']) && $field['pk_i_id']==Params::getParam("id"))) {
                                 Field::newInstance()->cleanCategoriesFromField(Params::getParam("id"));
-                                Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 'b_required' => Params::getParam("field_required")=="1"?1:0), array('pk_i_id' => Params::getParam("id")));
+                                $slug = Params::getParam("field_slug")!=''?Params::getParam("field_slug"):Params::getParam("id");
+                                $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower($slug)));
+                                Field::newInstance()->update(array('s_name' => Params::getParam("s_name"), 'e_type' => Params::getParam("field_type"), 's_slug' => $slug, 'b_required' => Params::getParam("field_required")=="1"?1:0), array('pk_i_id' => Params::getParam("id")));
                                 Field::newInstance()->insertCategories(Params::getParam("id"), Params::getParam("categories"));
                             } else {
                                 $error = 1;

@@ -101,6 +101,17 @@
         }
 
         /**
+         * Find a field by its name
+         *
+         * @param string $slug
+         * @return array Field information. If there's no information, return an empty array.
+         */
+        public function findBySlug($slug)
+        {
+            return  $this->conn->osc_dbFetchResult("SELECT * FROM %st_meta_fields WHERE s_slug = '%s'", DB_TABLE_PREFIX, $slug);
+        }
+
+        /**
          * Gets which categories are associated with that field
          *
          * @param string $id
@@ -134,9 +145,12 @@
          * @param type $type
          * @param type $categories 
          */
-        public function insertField($name, $type, $required, $categories = null) {
-            $this->insert(array("s_name" => $name, "e_type" =>$type, "b_required" => $required));
+        public function insertField($name, $type, $slug, $required, $categories = null) {
+            $this->insert(array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug));
             $id = $this->conn->get_last_id();
+            if($slug=='') {
+                $this->conn->update(array('s_slug' => $id), array('pk_i_id' => $id));
+            }
             foreach($categories as $c) {
                 $this->conn->osc_dbExec("INSERT INTO %st_meta_categories ( `fk_i_category_id`, `fk_i_field_id` ) VALUES ('%d', '%d')", DB_TABLE_PREFIX, $c, $id);
             }

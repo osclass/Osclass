@@ -600,3 +600,27 @@ tr.even td{
     background-color: #FFFFFF;
 }
 
+
+#advanced_fields {
+    padding-left: 20px;
+}
+
+#advanced_fields.expanded {
+background: url('../images/arrow_expanded.png') no-repeat;
+}
+
+#advanced_fields.shrink {
+    background: url('../images/arrow_noexpanded.png') no-repeat;
+}
+
+#advanced_fields_iframe {
+    padding-left: 20px;
+}
+
+#advanced_fields_iframe.expanded {
+background: url('../images/arrow_expanded.png') no-repeat;
+}
+
+#advanced_fields_iframe.shrink {
+    background: url('../images/arrow_noexpanded.png') no-repeat;
+}
