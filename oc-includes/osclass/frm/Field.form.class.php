@@ -45,7 +45,7 @@
         
         static public function meta($field = null) {
             if($field!=null) {
-                echo '<label for="'.$field['s_slug'].'">'.$field['s_name'].': </label>';
+                echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 if($field['e_type']=="TEXTAREA") {
                     echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;
                 } else {
