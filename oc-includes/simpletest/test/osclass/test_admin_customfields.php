@@ -226,6 +226,18 @@ class TestOfAdminCustomFields extends WebTestCase {
         $this->selenium->open( osc_base_url(true) );
         $this->selenium->click("link=Publish your ad for free");
         $this->selenium->select("id=catId", "label=regexp:\\s+Animals");
+        $this->selenium->type("id=title[en_US]", "foo title");
+        $this->selenium->type("id=description[en_US]","description foo title");
+        $this->selenium->select("countryId", "label=Spain");
+        $this->selenium->select("regionId", "label=Albacete");
+        $this->selenium->select("cityId", "label=Albacete");
+        $this->selenium->type("cityArea", "my area");
+        $this->selenium->type("address", "my address");
+        // fill custom fields
+        // HERE !!! OJO
+        $this->selenium->type("address", "my address");
+        $this->selenium->type("address", "my address");
+        $this->selenium->type("address", "my address");
         usleep(500000);
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields aren't show at frontend (item_post). ERROR");
         // volver a dejar reg_user_post flag en su estado original
