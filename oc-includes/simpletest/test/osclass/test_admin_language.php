@@ -90,19 +90,36 @@ class TestOfAdminLanguage extends WebTestCase {
             echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - LOGIN </div>";
             $this->loginCorrect() ;
             flush();
+
             if( $this->isDisabledWebsite("Spanish") ){
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
                 $this->enableWebsite("Spanish");
                 flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Enable website LANGUAGE at WEBSITE</div>";
+                $this->checkWebsiteEnabled("Spanish");
+                flush();
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
                 $this->disableWebsite("Spanish");
+                flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Disabled website LANGUAGE at WEBSITE</div>";
+                $this->checkWebsiteDisabled("Spanish");
                 flush();
             } else {
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable website LANGUAGE</div>";
                 $this->disableWebsite("Spanish");
                 flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Disabled website LANGUAGE at WEBSITE</div>";
+                $this->checkWebsiteDisabled("Spanish");
+                flush();
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable website LANGUAGE</div>";
                 $this->enableWebsite("Spanish");
+                flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Enable website LANGUAGE at WEBSITE</div>";
+                $this->checkWebsiteEnabled("Spanish");
                 flush();
             }
 
@@ -110,15 +127,39 @@ class TestOfAdminLanguage extends WebTestCase {
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
                 $this->enableOCAdmin("Spanish");
                 flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Enable OCAdmin LANGUAGE at OCAdmin</div>";
+                $this->logout();
+                $this->checkOCAdminEnabled("Spanish");
+                $this->loginCorrect() ;
+                flush();
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
                 $this->disableOCAdmin("Spanish");
+                flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Disabled OCAdmin LANGUAGE at OCAdmin</div>";
+                $this->logout();
+                $this->checkOCAdminDisabled("Spanish");
+                $this->loginCorrect() ;
                 flush();
             } else {
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Disable oc-admin LANGUAGE</div>";
                 $this->disableOCAdmin("Spanish");
                 flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Disabled OCAdmin LANGUAGE at OCAdmin</div>";
+                $this->logout();
+                $this->checkOCAdminDisabled("Spanish");
+                $this->loginCorrect() ;
+                flush();
                 echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Enable oc-admin LANGUAGE</div>";
                 $this->enableOCAdmin("Spanish");
+                flush();
+                // check
+                echo "<div style='background-color: green; color: white;padding-left:15px;'>testEnableDisable - Check Enable OCAdmin LANGUAGE at OCAdmin</div>";
+                $this->logout();
+                $this->checkOCAdminEnabled("Spanish");
+                $this->loginCorrect() ;
                 flush();
             }
         }
@@ -149,7 +190,6 @@ class TestOfAdminLanguage extends WebTestCase {
             flush();
         }
     }
-
     
     /*
      * PRIVATE FUNCTIONS
@@ -214,6 +254,20 @@ class TestOfAdminLanguage extends WebTestCase {
         
         $this->assertTrue($this->selenium->isTextPresent("Selected languages have been enabled for the website"),"Can't enable (website) language $lang");
     }
+
+    private function checkWebsiteEnabled($lang)
+    {
+        $this->selenium->open( osc_base_url(true) ) ;
+        // position cursor on language
+        $this->selenium->mouseMove("xpath=//strong[text()='Language']");
+        $this->assertTrue($this->selenium->isTextPresent("$lang"),"The language has not been activated correctly (website language $lang)");
+
+        $this->selenium->click("link=$lang");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Idioma"),"Can't find $lang strings (website language $lang)");
+    }
+
     private function disableWebsite($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -227,6 +281,12 @@ class TestOfAdminLanguage extends WebTestCase {
 
         $this->assertTrue($this->selenium->isTextPresent("Selected languages have been disabled for the website"),"Can't disable (website) language $lang");
     }
+
+    private function checkWebsiteDisabled($lang)
+    {
+        $this->assertTrue($this->selenium->isTextPresent("Language"),"There are more than en_US language at website");
+    }
+
     private function enableOCAdmin($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -240,6 +300,31 @@ class TestOfAdminLanguage extends WebTestCase {
 
         $this->assertTrue($this->selenium->isTextPresent("Selected languages have been enabled for the backoffice (oc-admin)"),"Can't enable (backoffice) language $lang");
     }
+
+    private function checkOCAdminEnabled($lang)
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $language = $this->selenium->isTextPresent('Language') ;
+        if( $language ){
+            $this->selenium->select('id=user_language', "$lang") ;
+            $this->selenium->type('user', 'testadmin');
+            $this->selenium->type('password', 'password');
+            $this->selenium->click('submit');
+            $this->selenium->waitForPageToLoad(1000);
+
+            if( $this->selenium->isTextPresent('Desconectar') ) {
+                $this->selenium->click('Desconectar');
+                $this->assertTrue(TRUE);
+            } else {
+                $this->selenium->click('Log Out');
+                $this->assertTrue(FALSE, "The language has not been activated correctly OCAdmin $lang");
+            }
+            $this->selenium->waitForPageToLoad(1000);
+        } else {
+            $this->assertTrue(TRUE,'There aren\'t selector of language at OCAdmin' );
+        }
+    }
+
     private function disableOCAdmin($lang)
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -252,6 +337,12 @@ class TestOfAdminLanguage extends WebTestCase {
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Selected languages have been disabled for the backoffice (oc-admin)"),"Can't disable (backoffice) language $lang");
+    }
+
+    private function checkOCAdminDisabled($lang)
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->assertTrue(!$this->selenium->isTextPresent('Language'), "There are more than en_US language at OCAdmin");
     }
     
     private function loginCorrect()
@@ -275,6 +366,14 @@ class TestOfAdminLanguage extends WebTestCase {
         } else {
             $this->assertFalse("can't loggin");
         }
+    }
+
+    private function logout()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad(10000);
+        $this->selenium->click('link=Log Out');
+        $this->selenium->waitForPageToLoad(10000);
     }
 
     /**

@@ -234,12 +234,16 @@ class TestOfAdminCustomFields extends WebTestCase {
         $this->selenium->select("cityId", "label=Albacete");
         $this->selenium->type("cityArea", "my area");
         $this->selenium->type("address", "my address");
-        // fill custom fields
-        // HERE !!! OJO
-        $this->selenium->type("address", "my address");
-        $this->selenium->type("address", "my address");
-        $this->selenium->type("address", "my address");
-        usleep(500000);
+
+        $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields aren't show at frontend (item_post). ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("sameField")    , "Custom fields aren't show at frontend (item_post). ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("NEW FIELD")    , "Custom fields aren't show at frontend (item_post). ERROR");
+
+        $this->selenium->type("sameField"    , "custom1");
+        $this->selenium->type("NEW FIELD"    , "custom2");
+        $this->selenium->type("extra_field_2", "custom3");
+
+        
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Custom fields aren't show at frontend (item_post). ERROR");
         // volver a dejar reg_user_post flag en su estado original
         $bool_reg_user_post = $uSettings->set_reg_user_post($bool_reg_user_post);
