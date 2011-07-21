@@ -34,112 +34,112 @@ class TestOfAdminAppearance extends WebTestCase {
     }
     /*           TESTS          */
 
-//    function testAddTheme()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testAddTheme</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddTheme - LOGIN </div>";
-//        flush();
-//        $this->loginCorrect();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddTheme - ADD THEME</div>";
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Appearance");
-//        $this->selenium->click("link=» Add a new theme");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        if($this->selenium->isTextPresent("chmod a+w ") ){
-//            $this->assertTrue(FALSE, "You need give permissions to the folder");
-//        } else {
-//            $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/newcorp.zip");
-//            $this->selenium->click("button_save");
-//            $this->selenium->waitForPageToLoad("30000");
-//
-//            $this->assertTrue($this->selenium->isTextPresent("The theme has been installed correctly"), "Can't upload themes");
-//        }
-//    }
-//
-//    function testAddThemeCorrupt()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testAddThemeCorrupt</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddThemeCorrupt - LOGIN </div>";
-//        flush();
-//        $this->loginCorrect();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddThemeCorrupt - ADD THEME</div>";
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Appearance");
-//        $this->selenium->click("link=» Add a new theme");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        if($this->selenium->isTextPresent("chmod a+w ") ){
-//            $this->assertTrue(FALSE, "You need give permissions to the folder");
-//        } else {
-//            $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/corrupt.zip");
-//            $this->selenium->click("button_save");
-//            $this->selenium->waitForPageToLoad("30000");
-//
-//            $this->assertTrue($this->selenium->isTextPresent("The zip file is not valid"), "Can upload corrupt theme");
-//        }
-//    }
-//
-//    function testActivateTheme()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testActivateTheme</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testActivateTheme - LOGIN </div>";
-//        $this->loginCorrect();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testActivateTheme - ACTIVATE THEME</div>";
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Appearance");
-//        $this->selenium->click("link=» Manage themes");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        if($this->selenium->isTextPresent("chmod a+w ") ){
-//            $this->assertTrue(FALSE, "You need give permissions to the folder");
-//        } else {
-//
-//            $this->selenium->click("link=Activate");
-//            $this->selenium->waitForPageToLoad("30000");
-//
-//            $text_element = $this->selenium->getText("xpath=//div[@id='current_theme_info']" );
-//            if(preg_match('/NewCorp Theme/', $text_element) ) {
-//                $this->assertTrue(TRUE);
-//            } else {
-//                $this->assertTrue(FALSE, "Can't activate the theme");
-//            }
-//        }
-//    }
-//
-//    function testDeleteTheme()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testDeleteTheme</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteTheme - LOGIN </div>";
-//        $this->loginCorrect();
-//        flush();
-//
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Appearance");
-//        $this->selenium->click("link=» Manage themes");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        if($this->selenium->isTextPresent("chmod a+w ") ){
-//            $this->assertTrue(FALSE, "You need give permissions to the folder");
-//        } else {
-//
-//            $this->selenium->click("link=Activate");
-//            $this->selenium->waitForPageToLoad("30000");
-//
-//            $text_element = $this->selenium->getText("xpath=//div[@id='current_theme_info']" );
-//            if(preg_match('/Modern Theme/', $text_element) ) {
-//                $this->assertTrue(TRUE);
-//            } else {
-//                $this->assertTrue(FALSE, "Can't activate the theme");
-//            }
-//        }
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteTheme - <h2>YOU NEED TO DELETE THE PLUGIN DIRECTORY MANUALY ( /oc-content/themes/newcorp/)</h2></div>";
-//    }
+    function testAddTheme()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testAddTheme</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddTheme - LOGIN </div>";
+        flush();
+        $this->loginCorrect();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddTheme - ADD THEME</div>";
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add a new theme");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if($this->selenium->isTextPresent("chmod a+w ") ){
+            $this->assertTrue(FALSE, "You need give permissions to the folder");
+        } else {
+            $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/newcorp.zip");
+            $this->selenium->click("button_save");
+            $this->selenium->waitForPageToLoad("30000");
+
+            $this->assertTrue($this->selenium->isTextPresent("The theme has been installed correctly"), "Can't upload themes");
+        }
+    }
+
+    function testAddThemeCorrupt()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testAddThemeCorrupt</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddThemeCorrupt - LOGIN </div>";
+        flush();
+        $this->loginCorrect();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testAddThemeCorrupt - ADD THEME</div>";
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add a new theme");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if($this->selenium->isTextPresent("chmod a+w ") ){
+            $this->assertTrue(FALSE, "You need give permissions to the folder");
+        } else {
+            $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/corrupt.zip");
+            $this->selenium->click("button_save");
+            $this->selenium->waitForPageToLoad("30000");
+
+            $this->assertTrue($this->selenium->isTextPresent("The zip file is not valid"), "Can upload corrupt theme");
+        }
+    }
+
+    function testActivateTheme()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testActivateTheme</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testActivateTheme - LOGIN </div>";
+        $this->loginCorrect();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testActivateTheme - ACTIVATE THEME</div>";
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Manage themes");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if($this->selenium->isTextPresent("chmod a+w ") ){
+            $this->assertTrue(FALSE, "You need give permissions to the folder");
+        } else {
+
+            $this->selenium->click("link=Activate");
+            $this->selenium->waitForPageToLoad("30000");
+
+            $text_element = $this->selenium->getText("xpath=//div[@id='current_theme_info']" );
+            if(preg_match('/NewCorp Theme/', $text_element) ) {
+                $this->assertTrue(TRUE);
+            } else {
+                $this->assertTrue(FALSE, "Can't activate the theme");
+            }
+        }
+    }
+
+    function testDeleteTheme()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testDeleteTheme</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteTheme - LOGIN </div>";
+        $this->loginCorrect();
+        flush();
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Manage themes");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if($this->selenium->isTextPresent("chmod a+w ") ){
+            $this->assertTrue(FALSE, "You need give permissions to the folder");
+        } else {
+
+            $this->selenium->click("link=Activate");
+            $this->selenium->waitForPageToLoad("30000");
+
+            $text_element = $this->selenium->getText("xpath=//div[@id='current_theme_info']" );
+            if(preg_match('/Modern Theme/', $text_element) ) {
+                $this->assertTrue(TRUE);
+            } else {
+                $this->assertTrue(FALSE, "Can't activate the theme");
+            }
+        }
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteTheme - <h2>YOU NEED TO DELETE THE PLUGIN DIRECTORY MANUALY ( /oc-content/themes/newcorp/)</h2></div>";
+    }
 
     function testWidgets()
     {
@@ -150,12 +150,15 @@ class TestOfAdminAppearance extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsHeader</div>";
         $this->widgetsHeader() ;
         flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsCategories</div>";
-//        $this->widgetsCategories() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsFooter</div>";
-//        $this->widgetsFooter() ;
-//        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsCategories</div>";
+        $this->widgetsCategories() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - widgetsFooter</div>";
+        $this->widgetsFooter() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testWidgets - edit widgets</div>";
+        $this->editWidgetsHeader() ;
+        flush();
     }
 
     /*      PRIVATE FUNCTIONS       */
@@ -274,11 +277,74 @@ class TestOfAdminAppearance extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget footer. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("footer1"), "Can't add widget footer. ERROR");
 
+        // check if appear at frontend
+        $this->selenium->open( osc_base_url(true) );
+        $this->assertTrue($this->selenium->isTextPresent('New Widget Footer') , "Footer widget is not visible at website. ERROR");
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->waitForPageToLoad("10000");
+
         //remove widget
         $this->selenium->click("link=Delete");
         $this->selenium->waitForPageToLoad("30000");
         $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget footer. ERROR" );
         $this->assertTrue( ! $this->selenium->isTextPresent("footer1"), "Can't delete widget footer. ERROR");
+    }
+
+    private function editWidgetsHeader()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // add header widget
+        $this->selenium->click("xpath=//div[@id='settings_form']/div/div[1]/div/a");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->type("description", "header1");
+        $this->selenium->selectFrame("index=0");
+        $this->selenium->type("xpath=//html/body[@id='tinymce']", "New Widget Header");
+        $this->selenium->selectFrame("relative=top");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Widget added correctly"), "Can't add widget header. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("header1"), "Can't add widget header. header1 not present. ERROR");
+
+        // edit html
+        // add header widget
+        $this->selenium->click("link=Edit");
+        $this->selenium->waitForPageToLoad("10000");
+
+        
+        $this->selenium->selectFrame("index=0");
+        $this->selenium->type("xpath=//html/body[@id='tinymce']", "New Widget Header - NEW CONTENT");
+        $this->selenium->selectFrame("relative=top");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+
+        $this->assertTrue($this->selenium->isTextPresent("Widget updated correctly"), "Can't add widget header. ERROR" );
+
+        // check if appear at frontend
+        $this->selenium->open( osc_base_url(true) );
+        $this->assertTrue($this->selenium->isTextPresent('New Widget Header - NEW CONTENT') , "Header widget is not visible at website. ERROR");
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Appearance");
+        $this->selenium->click("link=» Add or remove widgets");
+        $this->selenium->waitForPageToLoad("10000");
+
+        // remove widget
+        $this->selenium->click("link=Delete");
+        $this->selenium->waitForPageToLoad("30000");
+        $this->assertTrue($this->selenium->isTextPresent("Widget removed correctly"), "Can't delete widget header. ERROR" );
+        $this->assertTrue( ! $this->selenium->isTextPresent("header1"), "Can't delete widget header. header1 still present. ERROR");
     }
 }
 ?>
