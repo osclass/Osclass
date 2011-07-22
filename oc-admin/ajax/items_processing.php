@@ -94,7 +94,7 @@
             }
             if($this->search) {
                 //$mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $this->search, $this->search));
-                $mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s')", $this->search));
+                $mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $this->search));
             }
             
             if(@$this->stat['spam']) {
