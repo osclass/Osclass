@@ -28,16 +28,16 @@
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql  = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
             $conn = getConnection();
-            $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+            //$error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
         }
-        if(!$error_queries[0]) {
+        /*if(!$error_queries[0]) {
             $skip_db_link = osc_base_url() . "oc-includes/osclass/upgrade-funcs.php?skipdb=true";
             $title    = __('OSClass &raquo; Has some errors') ;
             $message  = __('We encountered some problems updating the database structure. The following queries failed:');
             $message .= "<br/><br/>" . implode("<br>", $error_queries[2]);
             $message .= "<br/><br/>" . sprintf(__('These errors could be false-positive errors. If you\'re sure that is the case, you could <a href="%s">continue with the upgrade</a>, or <a href="http://forums.osclass.org/">ask in our forums</a>.'), $skip_db_link);
             osc_die($title, $message) ;
-        }
+        }*/
     }
 
     // UPDATE DATABASE
@@ -45,7 +45,7 @@
         if(file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
             $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
             $conn = getConnection();
-            $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+            //$conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
         }
     }
 
@@ -119,6 +119,31 @@
         osc_changeVersionTo(220) ;
     }
 
+        osc_changeVersionTo(229) ;
+    if(osc_version() < 230) {
+        /*$conn->osc_dbExec(sprintf("CREATE TABLE %st_item_description_tmp (
+    fk_i_item_id INT UNSIGNED NOT NULL,
+    fk_c_locale_code CHAR(5) NOT NULL,
+    s_title VARCHAR(100) NOT NULL,
+    s_description MEDIUMTEXT NOT NULL,
+    s_what VARCHAR(100) NULL,
+
+        PRIMARY KEY (fk_i_item_id, fk_c_locale_code),
+        INDEX (fk_i_item_id),
+        FOREIGN KEY (fk_i_item_id) REFERENCES %st_item (pk_i_id),
+        FOREIGN KEY (fk_c_locale_code) REFERENCES %st_locale (pk_c_code)
+) ENGINE=MyISAM DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        
+        $descriptions = $conn->osc_dbFetchResults("SELECT * FROM %st_item_description", DB_TABLE_PREFIX);
+        foreach($descriptions as $d) {
+            $conn->osc_dbExec(sprintf("INSERT INTO %st_item_description_tmp (`fk_i_item_id` ,`fk_c_locale_code` ,`s_title` ,`s_description` ,`s_what`) VALUES ('%d',  '%s',  '%s',  '%s',  '%s')", DB_TABLE_PREFIX, $d['fk_i_item_id'], $d['fk_c_locale_code'], $d['s_title'], $d['s_description'], $d['s_what']));
+        }
+        $conn->osc_dbExec(sprintf("RENAME TABLE `%st_item_description` TO `%st_item_description_old`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("RENAME TABLE `%st_item_description_tmp` TO `%st_item_description`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));*/
+        $conn->osc_dbExec(sprintf("ALTER TABLE %st_item_description ADD FULLTEXT(s_description, s_title);", DB_TABLE_PREFIX));
+        osc_changeVersionTo(230) ;
+    }    
+    
 
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

@@ -225,13 +225,13 @@ CREATE TABLE /*TABLE_PREFIX*/t_item_description (
     fk_c_locale_code CHAR(5) NOT NULL,
     s_title VARCHAR(100) NOT NULL,
     s_description MEDIUMTEXT NOT NULL,
-    s_what LONGTEXT NULL,
+    s_what VARCHAR(100) NULL,
 
         PRIMARY KEY (fk_i_item_id, fk_c_locale_code),
         INDEX (fk_i_item_id),
         FOREIGN KEY (fk_i_item_id) REFERENCES /*TABLE_PREFIX*/t_item (pk_i_id),
         FOREIGN KEY (fk_c_locale_code) REFERENCES /*TABLE_PREFIX*/t_locale (pk_c_code)
-) ENGINE=InnoDB DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
+) ENGINE=MyISAM DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';
 
 
 CREATE TABLE /*TABLE_PREFIX*/t_item_location (
