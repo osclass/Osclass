@@ -85,13 +85,13 @@
                         <div id="custom_fields">
                             <?php if( osc_count_item_meta() >= 1 ) { ?>
                                 <br/>
-                                <ul class="meta_list">
+                                <div class="meta_list">
                                     <?php while ( osc_has_item_meta() ) { ?>
-                                        <li class="meta">
+                                        <div class="meta">
                                             <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
-                                        </li>
+                                        </div>
                                     <?php } ?>
-                                </ul>
+                                </div>
                             <?php } ?>
                         </div>
                         <?php osc_run_hook('item_detail', osc_item() ) ; ?>

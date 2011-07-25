@@ -58,12 +58,13 @@
         static public function meta_fields_input($catId = null, $itemId = null) {
             $fields = Field::newInstance()->findByCategoryItem($catId, $itemId);
             if(count($fields)>0) {
-                echo '<ul class="meta_list">';
+                echo '<div class="meta_list">';
                 foreach($fields as $field) {
-                    echo '<li class="meta">';
+                    echo '<div class="meta">';
                         FieldForm::meta($field);
-                    echo '</li>';
+                    echo '</div>';
                 }
+                echo '</div>';
             }
         }
         
