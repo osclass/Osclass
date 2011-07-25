@@ -26,7 +26,7 @@
             ,'description' => 'This is the OSClass modern theme'
             ,'author_name' => 'OSClass Team'
             ,'author_url'  => 'http://osclass.org'
-            ,'locations'   => array('header', 'categories', 'footer')
+            ,'locations'   => array('header', 'footer')
         );
     }
 ?>
