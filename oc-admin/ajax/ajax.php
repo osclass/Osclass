@@ -478,7 +478,7 @@
 		            echo $message;
 
                     foreach($perms as $k => $v) {
-                        chmod($k, $v);
+                        @chmod($k, $v);
                     }
 		            break;
                     
