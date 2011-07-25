@@ -262,18 +262,18 @@ class TestOfItems extends WebTestCase {
             if( $this->logged == 0 ){
                 if($moderate_items > 0){
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>No user and need validation item - Great! You'll receive an e-mail to activate your item</div>";
-                    $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
+                    $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear") ;
                 } else {
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>Great! We've just published your item</div>";
-                    $this->assertTrue($this->selenium->isTextPresent("Your item has been published","no logged in error inserting ad.") );
+                    $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"no logged in error inserting ad.") ;
                 }
             } else {
                 if($logged_user_item_validation){
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>without validation. Great! We've just published your item</div>";
-                    $this->assertTrue($this->selenium->isTextPresent("Your item has been published","insert ad error ") );
+                    $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"insert ad error ") ;
                 } else {
 //                    echo "<div style='background-color: green; color: white;padding-left:15px;'>Registered user and need validation item - Great! You'll receive an e-mail to activate your item</div>";
-                    $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address","Need validation but message don't appear") );
+                    $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear")   ;
                 }
             }
             return 1;
