@@ -46,13 +46,13 @@
                 var steps = document.getElementById('steps');
                 var version = <?php echo osc_version() ; ?> ;
                 var fileToUnzip = '';
-                steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (" + version + "): " ;
+                steps.innerHTML += "<?php _e('Checking for updates', 'admin'); ?>" + " (Current version " + version + "): " ;
 
                 $.getJSON("http://www.osclass.org/latest_version.php?callback=?", function(data) {
                     if(data.version <= version) {
                         steps.innerHTML += "<?php _e('Congratulations! Your OSClass installation is up to date!', 'admin'); ?>";
                     } else {
-                        steps.innerHTML += "<?php _e('current version:', 'admin'); ?> " + data.version + "<br/>" ;
+                        steps.innerHTML += "<?php _e('New version to update:', 'admin'); ?> " + data.version + "<br/>" ;
                         <?php if(Params::getParam('confirm')=='true') {?>
                             steps.innerHTML += "<img id=\"loading_image\" src=\"<?php echo osc_current_admin_theme_url('images/loading.gif') ; ?>\" title=\"\" alt=\"\" /><?php _e('Upgrading your OSClass installation (this could take a while): ', 'admin') ; ?>" ;
 
@@ -90,9 +90,9 @@
                             <fieldset>
                                 <legend><?php _e('Upgrade', 'admin'); ?></legend>
                                 <?php if($ok) {?>
-                                    <label><?php _e('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
+                                    <label><?php echo sprintf(__('Your OSClass installation can be auto-upgraded. Please, backup your database and the folder oc-content before attempting to upgrade your OSClass installation. You can also upgrade OSClass manaully, more information in the %s', '<a href="http://wiki.osclas.org/" >Wiki</a>'), 'admin'); ?></label>
                                 <?php } else { ?>
-                                    <label><?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply 644 permissions via SSH with the command "chmod -R 666 *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
+                                    <label><?php _e('Your OSClass installation can not be auto-upgraded. Files and folders need to be writable. You could apply 644 permissions via SSH with the command "chmod -R 644 *" (without quotes) or via a FTP client, it depends on the program so we can not provide more information. You could also upgrade OSClass downloading the upgrade package, unzip it and replace the files on your server with the ones on the package.', 'admin'); ?></label>
                                 <?php }; ?>
                             </fieldset>
                         </div>
