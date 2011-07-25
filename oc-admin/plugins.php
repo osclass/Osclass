@@ -44,10 +44,12 @@
                     break;
                 case 'add_post':
                     $package = Params::getFiles("package");
-                    $path = osc_plugins_path() ;
-
-                    (int) $status = osc_unzip_file($package['tmp_name'], $path);
-
+                    if(isset($package['size']) && $package['size']!=0) {
+                        $path = osc_plugins_path() ;
+                        (int) $status = osc_unzip_file($package['tmp_name'], $path);
+                    } else {
+                        $status = 2;
+                    }
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
                                     osc_add_flash_error_message($msg, 'admin');
