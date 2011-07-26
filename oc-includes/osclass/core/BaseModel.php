@@ -25,20 +25,22 @@
         //action to execute
         protected $action ;
 
-
-        function  __construct() {
+        function  __construct()
+        {
             // Moved Session start to oc-load to be able to use it on index.php
-            //Session::newInstance()->session_start() ;
+            // Session::newInstance()->session_start() ;
             $this->action = Params::getParam('action') ;
         }
 
         //to export variables at the business layer
-        function _exportVariableToView($key, $value) {
+        function _exportVariableToView($key, $value)
+        {
             View::newInstance()->_exportVariableToView($key, $value) ;
         }
 
         //only for debug (deprecated, all inside View.php)
-        function _view($key = null) {
+        function _view($key = null)
+        {
             View::newInstance()->_view($key) ;
         }
 
@@ -46,12 +48,15 @@
         protected abstract function doModel() ;
         protected abstract function doView($file) ;
 
-        function do404() {
+        function do404()
+        {
+            Rewrite::newInstance()->set_location('error');
             header('HTTP/1.1 404 Not Found') ;
             osc_current_web_theme_path('404.php') ;
         }
-        
-        function redirectTo($url) {
+
+        function redirectTo($url)
+        {
             header('Location: ' . $url) ;
             exit ;
         }

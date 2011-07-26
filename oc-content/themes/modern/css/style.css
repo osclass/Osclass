@@ -345,7 +345,6 @@ option.pad { margin-left:10px;}
 .add_item .location label { float:left; margin-right:10px; width:120px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
 
-
 #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
 #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
 #error_list label { float:none; width:auto; line-height:1.35em; }
@@ -360,6 +359,9 @@ label.recaptcha_input_area_text { float:none; }
 .page { margin: 10px 0; padding: 10px 0 0; clear: both; }
 .page h1 { font-size: 2em; margin: 0 0 10px; }
 
+/* -- ERROR PAGES --------------------------------------- */
+.error { margin: 10px 0; padding: 20px 0; clear: both; }
+.error h1 { font-size: 2.5em; text-align: center; }
 /*
 Uniform Theme: Uniform Default
 Version: 1.6
