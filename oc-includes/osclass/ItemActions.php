@@ -1139,19 +1139,8 @@
                             )) ;
                             $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
-                            // Create thumbnail
-                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
-                            $size = explode('x', osc_thumbnail_dimensions()) ;
-                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
-
-                            if( osc_is_watermark_text() ) {
-                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg');
-                            } elseif ( osc_is_watermark_image() ){
-                                $wat->doWatermarkImage( $path, 'image/jpeg');
-                            }
-
                             // Create normal size
-                            $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
+                            $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
                             $size = explode('x', osc_normal_dimensions()) ;
                             ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
@@ -1160,6 +1149,16 @@
                             } elseif ( osc_is_watermark_image() ){
                                 $wat->doWatermarkImage( $path, 'image/jpeg');
                             }
+
+                            // Create preview
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_preview.jpg' ;
+                            $size = explode('x', osc_preview_dimensions()) ;
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                            // Create thumbnail
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
+                            $size = explode('x', osc_thumbnail_dimensions()) ;
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                             if( osc_keep_original_image() ) {
                                 $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg' ;

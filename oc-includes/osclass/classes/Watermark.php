@@ -27,7 +27,8 @@ class Watermark{
 
     public function doWatermarkImage($filepath, $mime = 'image/png')
     {
-        $path_watermark = osc_lib_path() . 'osclass/classes/watermark.png';
+        //$path_watermark = osc_lib_path() . 'osclass/classes/watermark.png';
+        $path_watermark = osc_content_path() . 'uploads/watermark.png' ;
         $watermark = imagecreatefrompng( $path_watermark );
         
         $watermark_width  = imagesx($watermark);
@@ -37,8 +38,28 @@ class Watermark{
         $image = $this->getImageResource($filepath, $mime );
         $size = getimagesize( $filepath );
 
-        $dest_x = ($size[0]/2) - ($watermark_width /2);
-        $dest_y = ($size[1]/2) - ($watermark_height/2);
+        switch(osc_watermark_place()) {
+            case 'tl':
+                $dest_x = 0;
+                $dest_y = 0;
+                break;
+            case 'tr':
+                $dest_x = $size[0] - $watermark_width;
+                $dest_y = 0;
+                break;
+            case 'bl':
+                $dest_x = 0;
+                $dest_y = $size[1] - $watermark_height;
+                break;
+            case 'br':
+                $dest_x = $size[0] - $watermark_width;
+                $dest_y = $size[1] - $watermark_height;
+                break;
+            default:
+                $dest_x = ($size[0]/2) - ($watermark_width /2);
+                $dest_y = ($size[1]/2) - ($watermark_height/2);
+                break;
+        }
 
         $this->imagecopymerge_alpha($image, $watermark, $dest_x, $dest_y, 0, 0, $watermark_width, $watermark_height, 100);
 
@@ -62,7 +83,6 @@ class Watermark{
 
         // Add the text to image
         imagettftext($image, 20, 0, $offset['x'], $offset['y'], $color, $this->font , $text);
-
         return $image;
     }
     /**
@@ -95,8 +115,28 @@ class Watermark{
         $isize  = $this->getImageSize($image);
         $bbox   = $this->calculateBBox($text);
 
-        $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2) ;
-        $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2) ;
+        switch(osc_watermark_place()) {
+            case 'tl':
+                $offset['x'] = 1;
+                $offset['y'] = $bbox['height']+1;
+                break;
+            case 'tr':
+                $offset['x'] = $isize['x'] - $bbox['top_right']['x']-1;
+                $offset['y'] = $bbox['height']+1;
+                break;
+            case 'bl':
+                $offset['x'] = 1;
+                $offset['y'] = $isize['y']-1;
+                break;
+            case 'br':
+                $offset['x'] = $isize['x'] - $bbox['top_right']['x']-1;
+                $offset['y'] = $isize['y']-1;
+                break;
+            default:
+                $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2) ;
+                $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2) ;
+                break;
+        }
 
         return $offset;
     }
