@@ -95,17 +95,23 @@
                 }
             }
         }
-        // TODO OC-ADMIN TEST
+        // OK
         static public function user_select($users = null, $item = null, $default_item = null)
         {
             if($users==null) { $users = User::newInstance()->listAll(); };
             if($item==null) { $item = osc_item(); };
+            if(Session::newInstance()->_getForm('userId') != ""){
+                $userId = Session::newInstance()->_getForm('userId');
+            }
             echo '<select name="userId" id="userId">' ;
                 if(isset($default_item)) {
                     echo '<option value="">' . $default_item . '</option>' ;
                 }
                 foreach($users as $user) {
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( (isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
+                    $bool = false;
+                    if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
+                    if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
                 }
             echo '</select>' ;
             return true ;

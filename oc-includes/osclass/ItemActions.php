@@ -256,7 +256,8 @@
                 $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() . " Kb" . PHP_EOL;
             }
 
-            $title_message = '';
+            $title_message  = '';
+            $td_message     = '';
             foreach(@$aItem['title'] as $key => $value) {
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $td_message = '';
