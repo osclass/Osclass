@@ -61,14 +61,17 @@
                 case('page'):
                     $text = osc_static_page_title() . ' - ' . osc_page_title();
                 break;
+                case('error'):
+                    $text = __('Error', 'modern') . ' - ' . osc_page_title();
+                break;
                 case('search'):
                     $region   = Params::getParam('sRegion');
                     $city     = Params::getParam('sCity');
                     $pattern  = Params::getParam('sPattern');
                     $category = osc_search_category_id();
                     $category = ((count($category) == 1) ? $category[0] : '');
-                    $s_page = '';
-                    $i_page = Params::getParam('iPage');
+                    $s_page   = '';
+                    $i_page   = Params::getParam('iPage');
 
                     if($i_page != '' && $i_page > 0) {
                         $s_page = __('page', 'modern') . ' ' . ($i_page + 1) . ' - ';
