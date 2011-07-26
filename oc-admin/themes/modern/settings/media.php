@@ -106,13 +106,33 @@
                                         <label for="watermark_text"><?php _e('Watermark text'); ?></label><br />
                                         <input type="text" name="watermark_text" value="<?php echo htmlentities(osc_watermark_text() ); ?>"/>
                                     </p>
+                                    <p>
+                                        <label><?php _e('Watermark place'); ?></label>
+                                        <select name="watermark_text_place" id="watermark_text_place" >
+                                            <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
+                                            <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
+                                            <option value="tr" <?php echo (osc_watermark_place() == 'tr') ? 'selected="true"' : '' ; ?>><?php _e('Top Right') ; ?></option>
+                                            <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
+                                            <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
+                                        </select>
+                                    </p>
                                 </div>
 
                                 <div class="watermark_image" style="<?php if(!osc_is_watermark_image()){echo "display:none;";}?>">
                                     <p>
                                         <label for="watermark_image"><?php _e('Watermark image'); ?></label><br />
                                         <input type="file" name="watermark_image"/>
-                                        *<?php _e("Notice that OSClass don't have take care about size of watermark image");?>.
+                                        *<?php _e("Notice that OSClass don't take care about size of watermark image");?>.
+                                    </p>
+                                    <p>
+                                        <label><?php _e('Watermark place'); ?></label>
+                                        <select name="watermark_image_place" id="watermark_image_place" >
+                                            <option value="centre" <?php echo (osc_watermark_place() == 'centre') ? 'selected="true"' : '' ; ?>><?php _e('Centre') ; ?></option>
+                                            <option value="tl" <?php echo (osc_watermark_place() == 'tl') ? 'selected="true"' : '' ; ?>><?php _e('Top Left') ; ?></option>
+                                            <option value="tr" <?php echo (osc_watermark_place() == 'tr') ? 'selected="true"' : '' ; ?>><?php _e('Top Right') ; ?></option>
+                                            <option value="bl" <?php echo (osc_watermark_place() == 'bl') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Left') ; ?></option>
+                                            <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
+                                        </select>
                                     </p>
                                 </div>
 

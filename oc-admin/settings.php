@@ -595,6 +595,8 @@
                                                                                               ,array('s_name'  => 'watermark_text'));
                                                 $iUpdated += Preference::newInstance()->update(array('s_value' => '')
                                                                                               ,array('s_name'  => 'watermark_image'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_text_place'))
+                                                                                              ,array('s_name'  => 'watermark_place'));
                                             break;
                                             case 'image':
                                                 // upload image & move to path
@@ -613,6 +615,8 @@
                                                                                               ,array('s_name'  => 'watermark_text_color'));
                                                 $iUpdated += Preference::newInstance()->update(array('s_value' => '')
                                                                                               ,array('s_name'  => 'watermark_text'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_image_place'))
+                                                                                              ,array('s_name'  => 'watermark_place'));
                                             break;
 
                                             default:
