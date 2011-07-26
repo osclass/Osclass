@@ -37,7 +37,7 @@
                                         $sql = Params::getFiles('sql') ;
                                         if(isset($sql['size']) && $sql['size']!=0) {
                                             //dev.conquer: if the file es too big, we can have problems with the upload or with memory
-                                            $content_file = file_get_contents($sql['tmp_name']) ;
+                                            $content_file = utf8_decode(file_get_contents($sql['tmp_name'])) ;
 
                                             $conn = getConnection() ;
                                             if ( $conn->osc_dbImportSQL($content_file) ) {

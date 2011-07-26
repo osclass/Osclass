@@ -400,7 +400,6 @@ function osc_dbdump($path, $file)
     if (!$db) return -3 ;
 
     $path .= $file ;
-    
     $sql = 'show tables;' ;
     $result = mysql_query($sql) ;
     
@@ -411,7 +410,7 @@ function osc_dbdump($path, $file)
 
         $f = fopen($path, "a") ;
         fwrite($f, $_str) ;
-        fclose() ;
+        fclose($f) ;
 
         return -4 ;
     }
