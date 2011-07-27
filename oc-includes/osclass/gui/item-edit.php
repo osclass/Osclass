@@ -30,7 +30,7 @@
         <!-- only item-edit.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
-        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript_new(); ?>
         <!-- end only item-edit.php -->
     </head>
     <body>
