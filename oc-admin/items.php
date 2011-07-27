@@ -435,6 +435,8 @@
                                         $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
 
+                                        osc_run_hook('save_input_values');
+
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'item_edit_post':
@@ -516,6 +518,9 @@
                                         $this->_exportVariableToView("item", array());
                                         $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
+
+                                        osc_run_hook('save_input_values');
+
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'post_item':       //post item
@@ -528,9 +533,11 @@
                                         }
                                         
                                         $meta = Params::getParam('meta');
-                                        foreach( $meta as $key => $value ) {
-                                            Session::newInstance()->_setForm('meta_'.$key, $value);
-                                            Session::newInstance()->_keepForm('meta_'.$key);
+                                        if(is_array($meta)){
+                                            foreach( $meta as $key => $value ) {
+                                                Session::newInstance()->_setForm('meta_'.$key, $value);
+                                                Session::newInstance()->_keepForm('meta_'.$key);
+                                            }
                                         }
                     
                                         $success = $mItem->add();

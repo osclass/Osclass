@@ -94,7 +94,9 @@
                     
                     $this->_exportVariableToView('user', $this->user) ;
 
+                    osc_run_hook('save_input_values');
                     osc_run_hook('post_item');
+
                     $this->doView('item-post.php');
                     break;
 
@@ -231,6 +233,7 @@
                         $this->_exportVariableToView('regions', $regions);
                         $this->_exportVariableToView('cities', $cities);*/
 
+                        osc_run_hook('save_input_values');
                         osc_run_hook("before_item_edit", $item);
                         $this->doView('item-edit.php');
                     }else{
