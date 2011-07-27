@@ -30,7 +30,7 @@
         <!-- only item-edit.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript(); ?>
-        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript_new(); ?>
         <!-- end only item-edit.php -->
     </head>
     <body>
@@ -81,15 +81,15 @@
                                 <h2><?php _e('Location', 'modern'); ?></h2>
                                 <div class="row">
                                     <label><?php _e('Country', 'modern'); ?> *</label>
-                                    <?php ItemForm::country_select() ; ?>
+                                    <?php ItemForm::country_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Region', 'modern'); ?> *</label>
-                                    <?php ItemForm::region_select() ; ?>
+                                    <?php ItemForm::region_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City', 'modern'); ?> *</label>
-                                    <?php ItemForm::city_select() ; ?>
+                                    <?php ItemForm::city_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City area', 'modern'); ?></label>

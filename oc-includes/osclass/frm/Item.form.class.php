@@ -229,7 +229,17 @@
             if( Session::newInstance()->_getForm('country') != "" ) {
                 $item['s_country'] = Session::newInstance()->_getForm('country');
             }
-            parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
+            $only_one = false;
+            if(!isset($item['s_country'])) {
+                $countries = osc_get_countries();
+                if(count($countries)==1) {
+                    $item['s_country'] = $countries[0]['s_name'];
+                    $item['fk_c_country_code'] = $countries[0]['pk_c_code'];
+                    $only_one = true;
+                }
+            }
+            parent::generic_input_text('countryName', (isset($item['s_country'])) ? $item['s_country'] : null, null, $only_one) ;
+            parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true ;
         }
         // OK
@@ -301,6 +311,25 @@
             }
         }
        
+        static public function region_text($item = null) {
+            if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_getForm('regionName') != "" ) {
+                $item['s_region'] = Session::newInstance()->_getForm('regionName');
+            }
+            parent::generic_input_text('regionName', (isset($item['s_region'])) ? $item['s_region'] : null) ;
+            parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id']) && $item['fk_i_region_id']!=null)?$item['fk_i_region_id']:'');
+            return true ;
+        }
+
+        static public function city_text($item = null) {
+            if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_getForm('cityName') != "" ) {
+                $item['s_city'] = Session::newInstance()->_getForm('cityName');
+            }
+            parent::generic_input_text('cityName', (isset($item['s_city'])) ? $item['s_city'] : null) ;
+            parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
+            return true ;
+        }
         // OK
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
@@ -308,6 +337,7 @@
                 $item['s_city_area'] = Session::newInstance()->_getForm('cityArea');
             }
             parent::generic_input_text('cityArea', (isset($item['s_city_area'])) ? $item['s_city_area'] : null) ;
+            parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true ;
         }
         // OK 
@@ -358,6 +388,204 @@
             return true ;
         }
 
+        static public function location_javascript_new($path = "front") {
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#countryName").live('focus', function() {
+            $( "#countryName" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#countryId').val(ui.item.id);
+                }
+            });
+        });
+
+        $("#regionName").live('focus', function() {
+            $( "#regionName" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#regionId').val(ui.item.id);
+                }
+            });
+        });
+
+        $("#cityName").live('focus', function() {
+            $( "#cityName" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#cityId').val(ui.item.id);
+                }
+            });
+        });
+
+
+        /**
+         * Validate form
+         */
+
+        // Validate description without HTML.
+        $.validator.addMethod(
+            "minstriptags",
+            function(value, element) {
+                altered_input = strip_tags(value);
+                if (altered_input.length < 3) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            "<?php _e("Description: needs to be longer"); ?>."
+        );
+
+        // Code for form validation
+        $("form[name=item]").validate({
+            rules: {
+                catId: {
+                    required: true,
+                    digits: true
+                },
+                <?php if(osc_price_enabled_at_items()) { ?>
+                price: {
+                    number: true,
+                    maxlength: 15
+                },
+                currency: "required",
+                <?php } ?>
+                <?php if(osc_images_enabled_at_items()) { ?>
+                "photos[]": {
+                    accept: "<?php echo osc_allowed_extension(); ?>"
+                },
+                <?php } ?>
+                <?php if($path == 'front') { ?>
+                contactName: {
+                    minlength: 3,
+                    maxlength: 35
+                },
+                contactEmail: {
+                    required: true,
+                    email: true
+                },
+                <?php } ?>
+                regionName: {
+                    minlength: 3,
+                    maxlength: 50
+                },
+                cityName: {
+                    minlength: 3,
+                    maxlength: 50
+                },
+                cityArea: {
+                    minlength: 3,
+                    maxlength: 50
+                },
+                address: {
+                    minlength: 3,
+                    maxlength: 100
+                }
+            },
+            messages: {
+                catId: "<?php _e('Choose one category'); ?>.",
+                <?php if(osc_price_enabled_at_items()) { ?>
+                price: {
+                    number: "<?php _e('Price: enter a valid number'); ?>.",
+                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                },
+                currency: "<?php _e("Currency: make your selection"); ?>.",
+                <?php } ?>
+                <?php if(osc_images_enabled_at_items()) { ?>
+                "photos[]": {
+                    accept: "<?php printf(__("Photo: must be %s"), osc_allowed_extension()); ?>."
+                },
+                <?php } ?>
+                <?php if($path == 'front') { ?>
+                contactName: {
+                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Name: no more than 35 characters"); ?>."
+                },
+                contactEmail: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
+                },
+                <?php } ?>
+                regionName: {
+                    minlength: "<?php _e("Region: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Region: no more than 50 characters"); ?>."
+                },
+                cityName: {
+                    minlength: "<?php _e("City: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("City: no more than 50 characters"); ?>."
+                },
+                cityArea: {
+                    minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("City area: no more than 50 characters"); ?>."
+                },
+                address: {
+                    minlength: "<?php _e("Address: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Address: no more than 100 characters"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
+    });
+
+    /**
+     * Strip HTML tags to count number of visible characters.
+     */
+    function strip_tags(html) {
+        if (arguments.length < 3) {
+            html=html.replace(/<\/?(?!\!)[^>]*>/gi, '');
+        } else {
+            var allowed = arguments[1];
+            var specified = eval("["+arguments[2]+"]");
+            if (allowed){
+                var regex='</?(?!(' + specified.join('|') + '))\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
+            } else{
+                var regex='</?(' + specified.join('|') + ')\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
+            }
+        }
+        return html;
+    }
+    
+    function delete_image(id, item_id,name, secret) {
+        //alert(id + " - "+ item_id + " - "+name+" - "+secret);
+        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        if(result) {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo osc_base_url(true); ?>?page=ajax&action=delete_image&id='+id+'&item='+item_id+'&code='+name+'&secret='+secret,
+                dataType: 'json',
+                success: function(data){
+                    var class_type = "error";
+                    if(data.success) {
+                        $("div[name="+name+"]").remove();
+                        class_type = "ok";
+                    }
+                    var flash = $("#flash_js");
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    flash.html(message);
+                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                }
+            });
+        }
+    }
+    
+    
+</script>
+<?php
+        }
+        
+        
         static public function location_javascript($path = "front") {
 ?>
 <script type="text/javascript">
@@ -684,6 +912,7 @@
 </script>
 <?php
         }
+        
 
         static public function photos($resources = null) {
             if($resources==null) { $resources = osc_get_item_resources(); };
