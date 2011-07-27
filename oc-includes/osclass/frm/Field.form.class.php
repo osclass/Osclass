@@ -45,6 +45,10 @@
         
         static public function meta($field = null) {
             if($field!=null) {
+                if(Session::newInstance()->_getForm('meta_'.$field['pk_i_id']) != ""){
+                    $field['s_value'] = Session::newInstance()->_getForm('meta_'.$field['pk_i_id']);
+                }
+
                 echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 if($field['e_type']=="TEXTAREA") {
                     echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;

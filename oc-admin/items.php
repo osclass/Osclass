@@ -416,6 +416,12 @@
                                             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$item['fk_i_region_id']) ;
                                         }
 
+                                        $form = count(Session::newInstance()->_getForm());
+                                        $keepForm = count(Session::newInstance()->_getKeepForm());
+                                        if($form==$keepForm) {
+                                            Session::newInstance()->_dropKeepForm();
+                                        }
+                                        
                                         $resources = Item::newInstance()->findResourcesByID($id);
 
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
@@ -439,7 +445,13 @@
                                         foreach( $mItems->data as $key => $value ) {
                                             Session::newInstance()->_setForm($key,$value);
                                         }
-                                        
+
+                                        $meta = Params::getParam('meta');
+                                        foreach( $meta as $key => $value ) {
+                                            Session::newInstance()->_setForm('meta_'.$key, $value);
+                                            Session::newInstance()->_keepForm('meta_'.$key);
+                                        }
+                    
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
@@ -487,6 +499,12 @@
                                         if( count($regions) > 0 ) {
                                             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                                         }
+                                        
+                                        $form = count(Session::newInstance()->_getForm());
+                                        $keepForm = count(Session::newInstance()->_getKeepForm());
+                                        if($form==$keepForm) {
+                                            Session::newInstance()->_dropKeepForm();
+                                        }
 
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("categories", Category::newInstance()->toTree());
@@ -509,6 +527,12 @@
                                             Session::newInstance()->_setForm($key,$value);
                                         }
                                         
+                                        $meta = Params::getParam('meta');
+                                        foreach( $meta as $key => $value ) {
+                                            Session::newInstance()->_setForm('meta_'.$key, $value);
+                                            Session::newInstance()->_keepForm('meta_'.$key);
+                                        }
+                    
                                         $success = $mItem->add();
                                         
                                         if( $success==1 || $success==2 ) {

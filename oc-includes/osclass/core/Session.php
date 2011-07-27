@@ -104,10 +104,14 @@
             $this->_set('keepForm',$aKeep);
         }
 
-        function _dropKeepForm($key) {
+        function _dropKeepForm($key = '') {
             $aKeep = $this->_get('keepForm');
-            unset( $aKeep[$key] );
-            $this->_set('keepForm',$aKeep);
+            if($key!='') {
+                unset( $aKeep[$key] );
+                $this->_set('keepForm', $aKeep);
+            } else {
+                $this->_set('keepForm', array());
+            }
         }
 
         function _setForm($key, $value) {
@@ -116,13 +120,21 @@
             $this->_set('form', $form) ;
         }
 
-        function _getForm($key) {
+        function _getForm($key = '') {
             $form = $this->_get('form') ;
-            if ( isset($form[$key]) ) {
-                return ( $form[$key] ) ;
+            if($key!='') {
+                if ( isset($form[$key]) ) {
+                    return ( $form[$key] ) ;
+                } else {
+                    return ( '' ) ;
+                }
             } else {
-                return ( '' ) ;
+                return $form;
             }
+        }
+        
+        function _getKeepForm() {
+            return $this->_get('keepForm');
         }
 
         function _viewMessage() {

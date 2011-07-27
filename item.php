@@ -74,6 +74,13 @@
                     $this->_exportVariableToView('regions', $regions) ;
                     $this->_exportVariableToView('cities', $cities) ;
 
+                    $form = count(Session::newInstance()->_getForm());
+                    $keepForm = count(Session::newInstance()->_getKeepForm());
+                    if($form==$keepForm) {
+                        Session::newInstance()->_dropKeepForm();
+                    }
+                    
+                    
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
                         $countryId  = Session::newInstance()->_getForm('countryId') ;
                         $regions    = Region::newInstance()->getByCountry($countryId) ; 
@@ -109,6 +116,12 @@
                         Session::newInstance()->_setForm($key,$value);
                     }
                     
+                    $meta = Params::getParam('meta');
+                    foreach( $meta as $key => $value ) {
+                        Session::newInstance()->_setForm('meta_'.$key, $value);
+                        Session::newInstance()->_keepForm('meta_'.$key);
+                    }
+                    
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                         if(!osc_check_recaptcha()) {
                             osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
@@ -124,6 +137,8 @@
                         $this->redirectTo( osc_item_post_url() );
                     } else {
 
+                        Session::newInstance()->_dropkeepForm('meta_'.$key);
+                        
                         if($success==1) {
                             osc_add_flash_ok_message( _m('Check your inbox to verify your email address')) ;
                         } else {
@@ -201,6 +216,13 @@
                             $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
                         }
 
+                        $form = count(Session::newInstance()->_getForm());
+                        $keepForm = count(Session::newInstance()->_getKeepForm());
+                        if($form==$keepForm) {
+                            Session::newInstance()->_dropKeepForm();
+                        }
+                        
+                        
                         $currencies = Currency::newInstance()->listAll();
 
                         $this->_exportVariableToView('item', $item);
@@ -240,6 +262,12 @@
                             Session::newInstance()->_setForm($key,$value);
                         }
 
+                        $meta = Params::getParam('meta');
+                        foreach( $meta as $key => $value ) {
+                            Session::newInstance()->_setForm('meta_'.$key, $value);
+                            Session::newInstance()->_keepForm('meta_'.$key);
+                        }
+                    
                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
                             if(!osc_check_recaptcha()) {
                                 osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;
