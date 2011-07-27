@@ -523,6 +523,9 @@
 
                                         osc_run_hook('save_input_session');
 
+                                        echo "aKeep ";Session::newInstance()->_viewKeep();
+                                        echo "aForm ";Session::newInstance()->_viewForm();
+
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'post_item':       //post item
