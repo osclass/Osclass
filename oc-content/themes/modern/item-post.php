@@ -76,7 +76,7 @@
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
                                 <label for="countryId"><?php _e('Country', 'modern'); ?> *</label>
-                                <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
+                                <?php ItemForm::country_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="regionId"><?php _e('Region', 'modern'); ?> *</label>

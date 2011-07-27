@@ -202,7 +202,7 @@
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
-            if( count($countries) > 1 ) {
+            if( count($countries) >= 1 ) {
                 if( Session::newInstance()->_getForm('countryId') != "" ) {
                     $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
                 }
@@ -215,8 +215,6 @@
 //                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
 //                echo '<span>' .$countries[0]['s_name'] . '</span>';
 //                return false ;
-            } else if( count($countries) == 1 ) {
-                parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null, null, true) ;
             } else {
                 if( Session::newInstance()->_getForm('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_getForm('country');
@@ -231,7 +229,17 @@
             if( Session::newInstance()->_getForm('country') != "" ) {
                 $item['s_country'] = Session::newInstance()->_getForm('country');
             }
-            parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
+            $only_one = false;
+            if(!isset($item['s_country'])) {
+                $countries = osc_get_countries();
+                if(count($countries)==1) {
+                    $item['s_country'] = $countries[0]['s_name'];
+                    $item['fk_c_country_code'] = $countries[0]['pk_c_code'];
+                    $only_one = true;
+                }
+            }
+            parent::generic_input_text('countryName', (isset($item['s_country'])) ? $item['s_country'] : null, null, $only_one) ;
+            parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true ;
         }
         // OK
@@ -309,9 +317,7 @@
                 $item['s_region'] = Session::newInstance()->_getForm('regionName');
             }
             parent::generic_input_text('regionName', (isset($item['s_region'])) ? $item['s_region'] : null) ;
-            if($item['fk_i_region_id']!=null) {
-                parent::generic_input_hidden('regionId', $item['fk_i_region_id']);
-            }
+            parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id']) && $item['fk_i_region_id']!=null)?$item['fk_i_region_id']:'');
             return true ;
         }
 
@@ -321,9 +327,7 @@
                 $item['s_city'] = Session::newInstance()->_getForm('cityName');
             }
             parent::generic_input_text('cityName', (isset($item['s_city'])) ? $item['s_city'] : null) ;
-            if($item['fk_i_city_id']!=null) {
-                parent::generic_input_hidden('cityId', $item['fk_i_city_id']);
-            }
+            parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
             return true ;
         }
         // OK
@@ -333,9 +337,7 @@
                 $item['s_city_area'] = Session::newInstance()->_getForm('cityArea');
             }
             parent::generic_input_text('cityArea', (isset($item['s_city_area'])) ? $item['s_city_area'] : null) ;
-            if($item['fk_i_city_area_id']!=null) {
-                parent::generic_input_hidden('cityAreaId', $item['fk_i_city_area_id']);
-            }
+            parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true ;
         }
         // OK 
@@ -390,6 +392,37 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
+
+        $("#countryName").live('focus', function() {
+            $( "#countryName" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#countryId').val(ui.item.id);
+                }
+            });
+        });
+
+        $("#regionName").live('focus', function() {
+            $( "#regionName" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#regionId').val(ui.item.id);
+                }
+            });
+        });
+
+        $("#cityName").live('focus', function() {
+            $( "#cityName" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#cityId').val(ui.item.id);
+                }
+            });
+        });
+
 
         /**
          * Validate form

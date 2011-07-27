@@ -137,15 +137,15 @@
                             <h2><?php _e('Location'); ?></h2>
                             <div class="row">
                                 <label><?php _e('Country'); ?></label>
-                                <?php ItemForm::country_select($countries, $item) ; ?>
+                                <?php ItemForm::country_text($item) ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Region'); ?></label>
-                                <?php ItemForm::region_select($regions, $item) ; ?>
+                                <?php ItemForm::region_text($item) ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City'); ?></label>
-                                <?php ItemForm::city_select($cities, $item) ; ?>
+                                <?php ItemForm::city_text($item) ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City area'); ?></label>

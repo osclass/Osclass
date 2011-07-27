@@ -81,15 +81,15 @@
                                 <h2><?php _e('Location', 'modern'); ?></h2>
                                 <div class="row">
                                     <label><?php _e('Country', 'modern'); ?> *</label>
-                                    <?php ItemForm::country_select() ; ?>
+                                    <?php ItemForm::country_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Region', 'modern'); ?> *</label>
-                                    <?php ItemForm::region_select() ; ?>
+                                    <?php ItemForm::region_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City', 'modern'); ?> *</label>
-                                    <?php ItemForm::city_select() ; ?>
+                                    <?php ItemForm::city_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City area', 'modern'); ?></label>

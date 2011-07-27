@@ -76,15 +76,15 @@
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
                                 <label for="countryId"><?php _e('Country', 'modern'); ?> *</label>
-                                <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
+                                <?php ItemForm::country_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="regionId"><?php _e('Region', 'modern'); ?> *</label>
-                                <?php ItemForm::region_select(osc_get_regions(), osc_user()) ; ?>
+                                <?php ItemForm::region_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="city"><?php _e('City', 'modern'); ?> *</label>
-                                <?php ItemForm::city_select(osc_get_cities(), osc_user()) ; ?>
+                                <?php ItemForm::city_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="city"><?php _e('City Area', 'modern'); ?></label>
