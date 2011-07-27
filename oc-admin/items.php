@@ -447,9 +447,11 @@
                                         }
 
                                         $meta = Params::getParam('meta');
-                                        foreach( $meta as $key => $value ) {
-                                            Session::newInstance()->_setForm('meta_'.$key, $value);
-                                            Session::newInstance()->_keepForm('meta_'.$key);
+                                        if(is_array($meta)) {
+                                            foreach( $meta as $key => $value ) {
+                                                Session::newInstance()->_setForm('meta_'.$key, $value);
+                                                Session::newInstance()->_keepForm('meta_'.$key);
+                                            }
                                         }
                     
                                         $success = $mItems->edit();
@@ -528,9 +530,11 @@
                                         }
                                         
                                         $meta = Params::getParam('meta');
-                                        foreach( $meta as $key => $value ) {
-                                            Session::newInstance()->_setForm('meta_'.$key, $value);
-                                            Session::newInstance()->_keepForm('meta_'.$key);
+                                        if(is_array($meta)) {
+                                            foreach( $meta as $key => $value ) {
+                                                Session::newInstance()->_setForm('meta_'.$key, $value);
+                                                Session::newInstance()->_keepForm('meta_'.$key);
+                                            }
                                         }
                     
                                         $success = $mItem->add();
