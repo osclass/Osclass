@@ -119,9 +119,11 @@
                     }
                     
                     $meta = Params::getParam('meta');
-                    foreach( $meta as $key => $value ) {
-                        Session::newInstance()->_setForm('meta_'.$key, $value);
-                        Session::newInstance()->_keepForm('meta_'.$key);
+                    if(is_array($meta)) {
+                        foreach( $meta as $key => $value ) {
+                            Session::newInstance()->_setForm('meta_'.$key, $value);
+                            Session::newInstance()->_keepForm('meta_'.$key);
+                        }
                     }
                     
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
@@ -266,9 +268,11 @@
                         }
 
                         $meta = Params::getParam('meta');
-                        foreach( $meta as $key => $value ) {
-                            Session::newInstance()->_setForm('meta_'.$key, $value);
-                            Session::newInstance()->_keepForm('meta_'.$key);
+                        if(is_array($meta)) {
+                            foreach( $meta as $key => $value ) {
+                                Session::newInstance()->_setForm('meta_'.$key, $value);
+                                Session::newInstance()->_keepForm('meta_'.$key);
+                            }
                         }
                     
                         if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
