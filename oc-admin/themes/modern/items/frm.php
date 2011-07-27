@@ -56,8 +56,8 @@
                 }
             });
         </script>
-        <?php ItemForm::location_javascript('admin'); ?>
-        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript_new(); ?>
+        <?php ItemForm::location_javascript_new('admin'); ?>
+        <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <div id="content">
             <div id="separator"></div>
 
