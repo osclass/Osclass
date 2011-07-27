@@ -435,7 +435,7 @@
                                         $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
 
-                                        osc_run_hook('save_input_values');
+                                        osc_run_hook('save_input_session');
 
                                         $this->doView('items/frm.php') ;
                 break;
@@ -521,7 +521,7 @@
                                         $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
 
-                                        osc_run_hook('save_input_values');
+                                        osc_run_hook('save_input_session');
 
                                         $this->doView('items/frm.php') ;
                 break;
