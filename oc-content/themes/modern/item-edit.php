@@ -85,11 +85,11 @@
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Region', 'modern'); ?> *</label>
-                                    <?php ItemForm::region_select() ; ?>
+                                    <?php ItemForm::region_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City', 'modern'); ?> *</label>
-                                    <?php ItemForm::city_select() ; ?>
+                                    <?php ItemForm::city_text() ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City area', 'modern'); ?></label>
