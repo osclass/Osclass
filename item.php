@@ -76,7 +76,7 @@
 
                     $form = count(Session::newInstance()->_getForm());
                     $keepForm = count(Session::newInstance()->_getKeepForm());
-                    if($form==$keepForm) {
+                    if($form==0 || $form==$keepForm) {
                         Session::newInstance()->_dropKeepForm();
                     }
                     
@@ -218,7 +218,7 @@
 
                         $form = count(Session::newInstance()->_getForm());
                         $keepForm = count(Session::newInstance()->_getKeepForm());
-                        if($form==$keepForm) {
+                        if($form==0 || $form==$keepForm) {
                             Session::newInstance()->_dropKeepForm();
                         }
                         
