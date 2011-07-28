@@ -137,7 +137,10 @@
                     }
                 }
             };
-            
+
+            // hook pre add or edit
+            osc_run_hook('pre_item_post') ;
+
             // Handle error
             if ($flash_error) {
                 return $flash_error;
@@ -319,7 +322,8 @@
                 }
             };
 
-            
+            // hook pre add or edit
+            osc_run_hook('pre_item_post') ;
             
             // Handle error
             if ($flash_error) {
