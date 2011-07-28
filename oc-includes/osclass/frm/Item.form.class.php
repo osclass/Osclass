@@ -393,16 +393,6 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        $("#countryName").live('focus', function() {
-            $( "#countryName" ).autocomplete({
-                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_countries",
-                minLength: 2,
-                select: function( event, ui ) {
-                    $('#countryId').val(ui.item.id);
-                }
-            });
-        });
-
         $("#regionName").live('focus', function() {
             $( "#regionName" ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),

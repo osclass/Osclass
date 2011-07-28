@@ -137,7 +137,7 @@
                             <h2><?php _e('Location'); ?></h2>
                             <div class="row">
                                 <label><?php _e('Country'); ?></label>
-                                <?php ItemForm::country_text($item) ; ?>
+                                <?php ItemForm::country_select($item) ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Region'); ?></label>
