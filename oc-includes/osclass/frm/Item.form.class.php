@@ -969,7 +969,7 @@
                 type: "POST",
                 url: url,
                 data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
-                dataType: 'text/html',
+                dataType: 'html',
                 success: function(data){
                     $("#plugin-hook").html(data);
                 }
@@ -986,7 +986,7 @@
                 type: "POST",
                 url: url,
                 data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
-                dataType: 'text/html',
+                dataType: 'html',
                 success: function(data){
                     $("#plugin-hook").html(data);
                 }
