@@ -68,6 +68,12 @@
                 return $this->conn->osc_dbExec("INSERT INTO %s (pk_c_code, fk_c_locale_code, s_name) VALUES ('%s', '%s', '%s')", $this->getTableName(), $code, $locale, $name );
             }
         }
+        
+        public function ajax($query) {
+            return $this->conn->osc_dbFetchResults("SELECT pk_c_code as id, s_name as label, s_name as value FROM %s WHERE `s_name` LIKE '%s%%' LIMIT 5", $this->getTableName(), $query);
+        }
+
+        
     }
 
 ?>
