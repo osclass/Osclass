@@ -80,15 +80,15 @@
                             <div class="box location">
                                 <h2><?php _e('Location', 'modern'); ?></h2>
                                 <div class="row">
-                                    <label><?php _e('Country', 'modern'); ?> *</label>
+                                    <label><?php _e('Country', 'modern'); ?></label>
                                     <?php ItemForm::country_select() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('Region', 'modern'); ?> *</label>
+                                    <label><?php _e('Region', 'modern'); ?></label>
                                     <?php ItemForm::region_text() ; ?>
                                 </div>
                                 <div class="row">
-                                    <label><?php _e('City', 'modern'); ?> *</label>
+                                    <label><?php _e('City', 'modern'); ?></label>
                                     <?php ItemForm::city_text() ; ?>
                                 </div>
                                 <div class="row">

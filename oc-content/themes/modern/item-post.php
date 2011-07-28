@@ -75,15 +75,15 @@
                         <div class="box location">
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
-                                <label for="countryId"><?php _e('Country', 'modern'); ?> *</label>
+                                <label for="countryId"><?php _e('Country', 'modern'); ?></label>
                                 <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="regionId"><?php _e('Region', 'modern'); ?> *</label>
+                                <label for="regionId"><?php _e('Region', 'modern'); ?></label>
                                 <?php ItemForm::region_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="city"><?php _e('City', 'modern'); ?> *</label>
+                                <label for="city"><?php _e('City', 'modern'); ?></label>
                                 <?php ItemForm::city_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
