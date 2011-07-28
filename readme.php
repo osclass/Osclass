@@ -129,7 +129,7 @@
                 </div>
                 <div id="footer">
                     <ul>
-                        <li><a href="http://osclass.org/contact/" target="_blank">Feedback</a></li>
+                        <li><a href="http://admin.osclass.org/feedback.php" target="_blank">Feedback</a></li>
                         <li><a href="http://forums.osclass.org/index.php" target="_blank">Forums</a></li>
                     </ul>
                 </div>

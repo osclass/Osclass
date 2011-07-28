@@ -204,7 +204,7 @@ switch ($step) {
                             <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank">Readme</a>
                         </li>
                         <li>
-                            <a href="http://osclass.org/contact/" target="_blank">Feedback</a>
+                            <a href="http://admin.osclass.org/feedback.php" target="_blank">Feedback</a>
                         </li>
                         <li>
                             <a href="http://forums.osclass.org/index.php" target="_blank">Forums</a>
