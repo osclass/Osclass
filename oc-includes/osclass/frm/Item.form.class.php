@@ -424,6 +424,7 @@
         });
 
 
+
         /**
          * Validate form
          */
@@ -471,18 +472,6 @@
                     email: true
                 },
                 <?php } ?>
-                regionName: {
-                    minlength: 3,
-                    maxlength: 50
-                },
-                cityName: {
-                    minlength: 3,
-                    maxlength: 50
-                },
-                cityArea: {
-                    minlength: 3,
-                    maxlength: 50
-                },
                 address: {
                     minlength: 3,
                     maxlength: 100
@@ -512,18 +501,6 @@
                     email: "<?php _e("Invalid email address"); ?>."
                 },
                 <?php } ?>
-                regionName: {
-                    minlength: "<?php _e("Region: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("Region: no more than 50 characters"); ?>."
-                },
-                cityName: {
-                    minlength: "<?php _e("City: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("City: no more than 50 characters"); ?>."
-                },
-                cityArea: {
-                    minlength: "<?php _e("City area: enter at least 3 characters"); ?>.",
-                    maxlength: "<?php _e("City area: no more than 50 characters"); ?>."
-                },
                 address: {
                     minlength: "<?php _e("Address: enter at least 3 characters"); ?>.",
                     maxlength: "<?php _e("Address: no more than 100 characters"); ?>."
