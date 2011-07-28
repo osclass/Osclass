@@ -239,7 +239,7 @@
             }
             // clear all keep variables into session
             Session::newInstance()->_dropKeepForm();
-            Session::newInstance()->_dropForm();
+            Session::newInstance()->_clearVariables();
 
         }
         
