@@ -111,7 +111,13 @@
                 ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['regionName'], 50)) ? _m("Region too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityName'], 3, false)) ? _m("City too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityName'], 50)) ? _m("City too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
@@ -131,7 +137,10 @@
                     }
                 }
             };
-            
+
+            // hook pre add or edit
+            osc_run_hook('pre_item_post') ;
+
             // Handle error
             if ($flash_error) {
                 return $flash_error;
@@ -256,7 +265,8 @@
                 $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() . " Kb" . PHP_EOL;
             }
 
-            $title_message = '';
+            $title_message  = '';
+            $td_message     = '';
             foreach(@$aItem['title'] as $key => $value) {
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $td_message = '';
@@ -286,7 +296,13 @@
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['regionName'], 50)) ? _m("Region too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityName'], 3, false)) ? _m("City too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityName'], 50)) ? _m("City too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false))? _m("Address too short.") . PHP_EOL : '' ) .
@@ -306,7 +322,8 @@
                 }
             };
 
-            
+            // hook pre add or edit
+            osc_run_hook('pre_item_post') ;
             
             // Handle error
             if ($flash_error) {
@@ -1139,19 +1156,8 @@
                             )) ;
                             $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
-                            // Create thumbnail
-                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
-                            $size = explode('x', osc_thumbnail_dimensions()) ;
-                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
-
-                            if( osc_is_watermark_text() ) {
-                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg');
-                            } elseif ( osc_is_watermark_image() ){
-                                $wat->doWatermarkImage( $path, 'image/jpeg');
-                            }
-
                             // Create normal size
-                            $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
+                            $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
                             $size = explode('x', osc_normal_dimensions()) ;
                             ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
@@ -1160,6 +1166,16 @@
                             } elseif ( osc_is_watermark_image() ){
                                 $wat->doWatermarkImage( $path, 'image/jpeg');
                             }
+
+                            // Create preview
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_preview.jpg' ;
+                            $size = explode('x', osc_preview_dimensions()) ;
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                            // Create thumbnail
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
+                            $size = explode('x', osc_thumbnail_dimensions()) ;
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                             if( osc_keep_original_image() ) {
                                 $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg' ;

@@ -82,6 +82,18 @@
                     </ul>
                     <div id="description">
                         <p><?php echo osc_item_description() ; ?></p>
+                        <div id="custom_fields">
+                            <?php if( osc_count_item_meta() >= 1 ) { ?>
+                                <br/>
+                                <div class="meta_list">
+                                    <?php while ( osc_has_item_meta() ) { ?>
+                                        <div class="meta">
+                                            <strong><?php echo osc_item_meta_name(); ?>:</strong> <?php echo osc_item_meta_value(); ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                        </div>
                         <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                         <p class="contact_button">
                             <?php if( !osc_item_is_expired () ) { ?>

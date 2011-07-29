@@ -34,9 +34,12 @@
                 break;
                 case 'add_post':
                     $filePackage = Params::getFiles('package');
-                    $path = osc_themes_path() ;
-
-                    (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                    if(isset($filePackage['size']) && $filePackage['size']!=0) {
+                        $path = osc_themes_path() ;
+                        (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                    } else {
+                        $status = 3;
+                    }
 
                     switch ($status) {
                         case(0):   $msg = _m('The theme folder is not writable');
@@ -47,6 +50,10 @@
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
                                    osc_add_flash_error_message($msg, 'admin');
+                        break;
+                        case(3):   $msg = _m('No file was uploaded');
+                                   osc_add_flash_error_message($msg, 'admin');
+                                   $this->redirectTo(osc_admin_base_url(true)."?page=appearance&action=add");
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the theme');

@@ -69,6 +69,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'reg_user_can_contact', '0', 'BOOLEAN')
     ,('osclass', 'watermark_text', '', 'STRING')
     ,('osclass', 'watermark_text_color', '', 'STRING')
+    ,('osclass', 'watermark_place', 'centre', 'STRING')
     ,('osclass', 'watermark_image', '', 'STRING');
 
 INSERT INTO /*TABLE_PREFIX*/t_cron (e_type, d_last_exec, d_next_exec) VALUES

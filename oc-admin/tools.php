@@ -35,14 +35,18 @@
                 break;
                 case 'import_post':     // calling
                                         $sql = Params::getFiles('sql') ;
-                                        //dev.conquer: if the file es too big, we can have problems with the upload or with memory
-                                        $content_file = file_get_contents($sql['tmp_name']) ;
+                                        if(isset($sql['size']) && $sql['size']!=0) {
+                                            //dev.conquer: if the file es too big, we can have problems with the upload or with memory
+                                            $content_file = utf8_decode(file_get_contents($sql['tmp_name'])) ;
 
-                                        $conn = getConnection() ;
-                                        if ( $conn->osc_dbImportSQL($content_file) ) {
-                                            osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
+                                            $conn = getConnection() ;
+                                            if ( $conn->osc_dbImportSQL($content_file) ) {
+                                                osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
+                                            } else {
+                                                osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
+                                            }
                                         } else {
-                                            osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
+                                                osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                 break;
@@ -73,19 +77,8 @@
                                             if( isset($matches[1]) ) {
                                                 $extension = $matches[1] ;
 
-                                                // Create thumbnail
-                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_thumbnail.jpg' ;
-                                                $size = explode('x', osc_thumbnail_dimensions()) ;
-                                                ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path) ;
-
-                                                if( osc_is_watermark_text() ) {
-                                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg');
-                                                } elseif ( osc_is_watermark_image() ){
-                                                    $wat->doWatermarkImage( $path, 'image/jpeg');
-                                                }
-
                                                 // Create normal size
-                                                $path = osc_content_path() . 'uploads/' . $resource['pk_i_id'] . '.jpg' ;
+                                                $path_normal = $path = osc_content_path() . 'uploads/' . $resource['pk_i_id'] . '.jpg' ;
                                                 $size = explode('x', osc_normal_dimensions()) ;
                                                 ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
@@ -94,6 +87,16 @@
                                                 } elseif ( osc_is_watermark_image() ){
                                                     $wat->doWatermarkImage( $path, 'image/jpeg');
                                                 }
+
+                                                // Create preview
+                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_preview.jpg' ;
+                                                $size = explode('x', osc_preview_dimensions()) ;
+                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                                                // Create thumbnail
+                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_thumbnail.jpg' ;
+                                                $size = explode('x', osc_thumbnail_dimensions()) ;
+                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
                                                 // update resource info
                                                 ItemResource::newInstance()->update(

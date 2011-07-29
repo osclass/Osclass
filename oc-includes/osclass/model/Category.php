@@ -177,7 +177,7 @@
                 }
             }
 
-            if(count($this->relation) == 0) {
+            if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
                 return null;
             }
 

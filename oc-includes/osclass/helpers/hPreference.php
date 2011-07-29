@@ -744,6 +744,15 @@
         return getPreference('watermark_text');
     }
 
+    /**
+     * Return watermark place
+     * 
+     * @return string
+     */
+    function osc_watermark_place() {
+        return getPreference('watermark_place');
+    }
+
     //PRIVATE FUNCTION (if there was a class :P)
     /**
      * Gets preference

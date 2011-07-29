@@ -9,6 +9,9 @@ del {text-decoration: line-through;}
 table {border-collapse: collapse;border-spacing: 0;}
 input:focus { outline:none; }
 
+/* -- ERROR PAGES --------------------------------------- */
+.error { margin: 10px 0; padding: 20px 0; clear: both; }
+.error h1 { font-size: 2.5em; text-align: center; }
 
 /* -- GLOBAL STYLES --------------------------------------- */
 body { line-height:1; color:#333; font: 12px Arial, Helvetica, Verdana, sans-serif; }
@@ -16,7 +19,7 @@ a { color:#069; text-decoration:underline; }
 a:hover { color:#F80; }
 option.pad { margin-left:10px;}
 .empty { clear:both; color:#993300; float:left; padding:15px; width:100%; }
-#FlashMessage { background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:fixed; text-align: center; top:0; width:100%; }
+#FlashMessage { margin: 0;background:#F90; border-bottom:2px solid #F60; color:#FFF; display:none; font-size:18px; left:0; padding:20px 0; position:fixed; text-align: center; top:0; width:100%; }
 .FlashMessage.ok { background:#9CDA9B; }
 .FlashMessage.info { background:#FFF78D; }
 .FlashMessage.error { background:#F90; }
@@ -182,10 +185,10 @@ option.pad { margin-left:10px;}
 .list .filters .slider { margin-bottom:10px; }
 .list .filters .slider h6 { margin-bottom:0px;}
 .list .filters .slider input { background:transparent; border:none; color:#999; margin-bottom:3px; text-align: center; width:90%; }
-.list .filters .slider .ui-slider { margin:0 15px 0 8px; }
+.list .filters .slider .ui-slider { margin:0 15px 0 8px; position: relative;}
 .list .filters .slider .ui-widget-content { background:#bdd7df; border-color:#bdd7df; height:5px; }
 .list .filters .slider .ui-widget-header { background:#FFF; }
-.list .filters .slider .ui-slider-horizontal .ui-slider-handle { background:#bac8cd; border-color:#9aafb6; height:15px; top: -0.5em; width:6px; }
+.list .filters .slider .ui-slider-horizontal .ui-slider-handle { background:#bac8cd; border-color:#9aafb6; height:15px; top: -0.5em; width:6px; position: absolute;}
 .list .filters .salary_range input { margin-right:3px; width: 42px; }
 .list .filters .salary_range span.range { margin-right:3px; }
 .list .filters .salary_range .selector { position:relative; top:-2px; width:60px; }
@@ -345,7 +348,6 @@ option.pad { margin-left:10px;}
 .add_item .location label { float:left; margin-right:10px; width:120px; }
 .add_item .go_back { float:left; margin:20px 0 0 20px; }
 
-
 #error_list { display:none; border: 1px solid #f7f7f7; background:#fefbea; padding:5px 5px; margin-bottom:15px; }
 #error_list li { background:url(../images/icon-remove.png) left center no-repeat; list-style:none; padding:2px 0 2px 18px; }
 #error_list label { float:none; width:auto; line-height:1.35em; }
@@ -359,6 +361,7 @@ label.recaptcha_input_area_text { float:none; }
 /* -- STATIC PAGES --------------------------------------- */
 .page { margin: 10px 0; padding: 10px 0 0; clear: both; }
 .page h1 { font-size: 2em; margin: 0 0 10px; }
+
 
 /*
 Uniform Theme: Uniform Default
