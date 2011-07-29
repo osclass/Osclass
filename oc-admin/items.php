@@ -518,6 +518,7 @@
                                         $this->_exportVariableToView("item", array());
                                         $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
+
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'post_item':       //post item
@@ -530,6 +531,7 @@
                                         }
                                         
                                         $meta = Params::getParam('meta');
+
                                         if(is_array($meta)) {
                                             foreach( $meta as $key => $value ) {
                                                 Session::newInstance()->_setForm('meta_'.$key, $value);
