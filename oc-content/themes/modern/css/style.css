@@ -185,10 +185,10 @@ option.pad { margin-left:10px;}
 .list .filters .slider { margin-bottom:10px; }
 .list .filters .slider h6 { margin-bottom:0px;}
 .list .filters .slider input { background:transparent; border:none; color:#999; margin-bottom:3px; text-align: center; width:90%; }
-.list .filters .slider .ui-slider { margin:0 15px 0 8px; }
+.list .filters .slider .ui-slider { margin:0 15px 0 8px; position: relative;}
 .list .filters .slider .ui-widget-content { background:#bdd7df; border-color:#bdd7df; height:5px; }
 .list .filters .slider .ui-widget-header { background:#FFF; }
-.list .filters .slider .ui-slider-horizontal .ui-slider-handle { background:#bac8cd; border-color:#9aafb6; height:15px; top: -0.5em; width:6px; }
+.list .filters .slider .ui-slider-horizontal .ui-slider-handle { background:#bac8cd; border-color:#9aafb6; height:15px; top: -0.5em; width:6px; position: absolute;}
 .list .filters .salary_range input { margin-right:3px; width: 42px; }
 .list .filters .salary_range span.range { margin-right:3px; }
 .list .filters .salary_range .selector { position:relative; top:-2px; width:60px; }
