@@ -418,9 +418,10 @@
         }
 
         public function getPremiums($max = 2) {
-            $this->order(sprintf('total_premium_views', DB_TABLE_PREFIX), 'ASC') ;
+            $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC') ;
             $this->page(0, $max);
             $this->addField(sprintf('sum(%st_item_stats.i_num_premium_views) as total_premium_views', DB_TABLE_PREFIX));
+            $this->addField(sprintf('(sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views)*RAND()*0.7 + TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW())*0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
