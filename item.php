@@ -196,55 +196,32 @@
                         $this->redirectTo(osc_search_category_url());
                     }
                 break;
-                case 'item_edit':
+                case 'item_edit':   // edit item
+                                    $secret = Params::getParam('secret');
+                                    $id     = Params::getParam('id');
+                                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                                    if (count($item) == 1) {
+                                        $item     = Item::newInstance()->findByPrimaryKey($id);
 
-                    $secret = Params::getParam('secret');
-                    $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
-                    if (count($item) == 1) {
-                        $item = Item::newInstance()->findByPrimaryKey($id);
+                                        $form     = count(Session::newInstance()->_getForm());
+                                        $keepForm = count(Session::newInstance()->_getKeepForm());
+                                        if($form == 0 || $form == $keepForm) {
+                                            Session::newInstance()->_dropKeepForm();
+                                        }
 
-                        $categories = Category::newInstance()->toTree();
-                        $countries = Country::newInstance()->listAll();
-                        $regions = array();
-                        if( isset($this->user['fk_c_country_code']) && $this->user['fk_c_country_code']!='' ) {
-                            $regions = Region::newInstance()->getByCountry($this->user['fk_c_country_code']);
-                        } else if( count($countries) > 0 ) {
-                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
-                        }
-                        $cities = array();
-                        if( isset($this->user['fk_i_region_id']) && $this->user['fk_i_region_id']!='' ) {
-                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$this->user['fk_i_region_id']) ;
-                        } else if( count($regions) > 0 ) {
-                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
-                        }
+                                        $this->_exportVariableToView('item', $item);
 
-                        $form = count(Session::newInstance()->_getForm());
-                        $keepForm = count(Session::newInstance()->_getKeepForm());
-                        if($form==0 || $form==$keepForm) {
-                            Session::newInstance()->_dropKeepForm();
-                        }
-                        
-                        
-                        $currencies = Currency::newInstance()->listAll();
-
-                        $this->_exportVariableToView('item', $item);
-                        /*$this->_exportVariableToView('categories', $categories);
-                        $this->_exportVariableToView('countries', $countries);
-                        $this->_exportVariableToView('regions', $regions);
-                        $this->_exportVariableToView('cities', $cities);*/
-                        
-                        osc_run_hook("before_item_edit", $item);
-                        $this->doView('item-edit.php');
-                    }else{
-                        // add a flash message [ITEM NO EXISTE]
-                        osc_add_flash_error_message( _m('Sorry, we don\'t have any items with that ID')) ;
-                        if($this->user!=null) {
-                            $this->redirectTo(osc_user_list_items_url());
-                        } else {
-                            $this->redirectTo( osc_base_url() ) ;
-                        }
-                    }
+                                        osc_run_hook("before_item_edit", $item);
+                                        $this->doView('item-edit.php');
+                                    } else {
+                                        // add a flash message [ITEM NO EXISTE]
+                                        osc_add_flash_error_message( _m('Sorry, we don\'t have any items with that ID')) ;
+                                        if($this->user != null) {
+                                            $this->redirectTo( osc_user_list_items_url() );
+                                        } else {
+                                            $this->redirectTo( osc_base_url() ) ;
+                                        }
+                                    }
                 break;
                 case 'item_edit_post':
 

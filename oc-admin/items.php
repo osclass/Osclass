@@ -397,8 +397,7 @@
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
 
                 break;
-                case 'item_edit':
-                                        //require_once LIB_PATH . 'osclass/itemActions.php';
+                case 'item_edit':       // edit item
                                         $id = Params::getParam('id') ;
 
                                         $item = Item::newInstance()->findByPrimaryKey($id);
@@ -406,33 +405,13 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
 
-                                        $countries = Country::newInstance()->listAll();
-                                        $regions = array();
-                                        if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->getByCountry($item['fk_c_country_code']);
-                                        }
-                                        $cities = array();
-                                        if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$item['fk_i_region_id']) ;
-                                        }
-
-                                        $form = count(Session::newInstance()->_getForm());
+                                        $form     = count(Session::newInstance()->_getForm());
                                         $keepForm = count(Session::newInstance()->_getKeepForm());
                                         if($form==0 || $form==$keepForm) {
                                             Session::newInstance()->_dropKeepForm();
                                         }
-                                        
-                                        $resources = Item::newInstance()->findResourcesByID($id);
 
-                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("categories", Category::newInstance()->toTree());
-                                        $this->_exportVariableToView("countries", $countries);
-                                        $this->_exportVariableToView("regions", $regions);
-                                        $this->_exportVariableToView("cities", $cities);
-                                        $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", $item);
-                                        $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
 
                                         $this->doView('items/frm.php') ;
@@ -491,34 +470,14 @@
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
-                case 'post':            //post
-                                        $countries = Country::newInstance()->listAll() ;
-                                        $regions = array() ;
-                                        if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
-                                        }
-                                        $cities = array() ;
-                                        if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
-                                        }
-                                        
-                                        $form = count(Session::newInstance()->_getForm());
+                case 'post':            // add item
+                                        $form     = count(Session::newInstance()->_getForm());
                                         $keepForm = count(Session::newInstance()->_getKeepForm());
-                                        if($form==0 || $form==$keepForm) {
+                                        if($form == 0 || $form == $keepForm) {
                                             Session::newInstance()->_dropKeepForm();
                                         }
 
-                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("categories", Category::newInstance()->toTree());
-                                        $this->_exportVariableToView("countries", $countries);
-                                        $this->_exportVariableToView("regions", $regions);
-                                        $this->_exportVariableToView("cities", $cities);
-                                        $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
-                                        $this->_exportVariableToView("item", array());
-                                        $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
-
                                         $this->doView('items/frm.php') ;
                 break;
                 case 'post_item':       //post item
@@ -549,7 +508,6 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=post" ) ;
                                         }
                 break;
-
                 case('settings'):          // calling the items settings view
                                         $this->doView('items/settings.php');
                 break;
