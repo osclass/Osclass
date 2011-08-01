@@ -211,8 +211,10 @@ class TestOfAdminUsers extends WebTestCase {
         // check autofill locations when user add nen advert
         $this->selenium->open(osc_base_url(true) . '?page=item&action=item_add');
         $this->assertTrue( ($this->selenium->getSelectedLabel('id=countryId') == 'Spain'), 'Country not auto filled ERROR');
-        $this->assertTrue( ($this->selenium->getSelectedLabel('id=regionId')  == 'Barcelona'), 'Region not auto filled ERROR');
-        $this->assertTrue( ($this->selenium->getSelectedLabel('id=cityId')  == 'Sabadell'), 'City not auto filled ERROR');
+        $this->assertTrue( ($this->selenium->getValue('id=region')  == 'Barcelona'), 'Region not auto filled ERROR');
+//        $this->assertTrue( ($this->selenium->getSelectedLabel('id=regionId')  == 'Barcelona'), 'Region not auto filled ERROR');
+        $this->assertTrue( ($this->selenium->getValue('id=city')  == 'Sabadell'), 'City not auto filled ERROR');
+//        $this->assertTrue( ($this->selenium->getSelectedLabel('id=cityId')  == 'Sabadell'), 'City not auto filled ERROR');
         $this->assertTrue( ($this->selenium->getValue('id=cityArea') == 'city area'), 'City area not auto filled ERROR');
         $this->assertTrue( ($this->selenium->getValue('id=address') == 'address user'), 'Address not auto filled ERROR');
         // alerts

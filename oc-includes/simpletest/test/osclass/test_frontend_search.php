@@ -214,7 +214,7 @@ class TestOfSearch extends WebTestCase {
      */
     public function testExpiredItems()
     {
-        echo "<div style='background-color: green; color: white;padding-left:15px;'> - TestOfSearch - testExpiredItems </div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'><h2> TestOfSearch - testExpiredItems </h2></div>";
         // expire one category (Language Classes)
         $mCategory = new Category();
         $mCategory->update(array('i_expiration_days' => '1') , array('pk_i_id' => '39') );
@@ -226,7 +226,11 @@ class TestOfSearch extends WebTestCase {
             $mItems->update( array('dt_pub_date' => '2010-05-05 10:00:00') , array('pk_i_id' => $actual_item['pk_i_id']) );
         }
 
-        $this->selenium->open( osc_base_url() . "oc-includes/osclass/cron.hourly.php" );
+        $conn = getConnection();
+        $conn->osc_dbExec("UPDATE oc_t_cron set d_last_exec = '0000-00-00 00:00:00', d_next_exec = '0000-00-00 00:00:00' WHERE e_type = 'HOURLY'");
+        unset($conn);
+        
+        $this->selenium->open( osc_base_url(true) . "?page=cron" );
         $this->selenium->waitForPageToLoad("30000");
 
         // tests

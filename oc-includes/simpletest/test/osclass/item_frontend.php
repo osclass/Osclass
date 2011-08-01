@@ -40,15 +40,17 @@ class ItemFrontend {
 
 
 
-
-
-
-
-
-
         $this->selenium->select("countryId", "label=Spain");
-        $this->selenium->select("regionId", "label=$regionId");
-        $this->selenium->select("cityId", "label=$cityId");
+
+
+//        $this->selenium->select("regionId", "label=$regionId");
+        $this->selenium->type('id=region', $regionId);
+        $this->selenium->click('id=ui-active-menuitem');
+
+//        $this->selenium->select("cityId", "label=$cityId");
+        $this->selenium->type('id=city', $cityId);
+        $this->selenium->click('id=ui-active-menuitem');
+
         $this->selenium->type("cityArea", "my area");
         $this->selenium->type("address", "my address");
 
