@@ -313,20 +313,20 @@
        
         static public function region_text($item = null) {
             if($item==null) { $item = osc_item(); };
-            if( Session::newInstance()->_getForm('regionName') != "" ) {
-                $item['s_region'] = Session::newInstance()->_getForm('regionName');
+            if( Session::newInstance()->_getForm('region') != "" ) {
+                $item['s_region'] = Session::newInstance()->_getForm('region');
             }
-            parent::generic_input_text('regionName', (isset($item['s_region'])) ? $item['s_region'] : null) ;
+            parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
             parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id']) && $item['fk_i_region_id']!=null)?$item['fk_i_region_id']:'');
             return true ;
         }
 
         static public function city_text($item = null) {
             if($item==null) { $item = osc_item(); };
-            if( Session::newInstance()->_getForm('cityName') != "" ) {
-                $item['s_city'] = Session::newInstance()->_getForm('cityName');
+            if( Session::newInstance()->_getForm('city') != "" ) {
+                $item['s_city'] = Session::newInstance()->_getForm('city');
             }
-            parent::generic_input_text('cityName', (isset($item['s_city'])) ? $item['s_city'] : null) ;
+            parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
             parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
             return true ;
         }
@@ -393,8 +393,9 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        $("#regionName").live('focus', function() {
-            $( "#regionName" ).autocomplete({
+        $("#region").live('focus', function() {
+            $('#regionId').val(null);
+            $( "#region" ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
                 minLength: 2,
                 select: function( event, ui ) {
@@ -403,8 +404,9 @@
             });
         });
 
-        $("#cityName").live('focus', function() {
-            $( "#cityName" ).autocomplete({
+        $("#city").live('focus', function() {
+            $('#cityId').val(null);
+            $( "#city" ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
                 minLength: 2,
                 select: function( event, ui ) {

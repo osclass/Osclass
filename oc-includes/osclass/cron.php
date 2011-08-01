@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -18,12 +18,6 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
-
-    define('__FROM_CRON__', true);
-    if( !defined('__OSC_LOADED__') ) {
-        define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
-        require_once ABS_PATH . 'oc-load.php';
-    }
 
     $d_now = date('Y-m-d H:i:s');
     $i_now = strtotime($d_now);
