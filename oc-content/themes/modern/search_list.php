@@ -37,7 +37,7 @@ if(osc_count_premiums()>0) { ?>
                  <?php } ?>
                  <td class="text">
                      <h3>
-                         <span style=""float:left";><a href="<?php echo osc_premium_url() ; ?>"><?php echo osc_premium_title() ; ?></a></span><span style="float:right;"><?php _e("Sponsored ad", "modern"); ?></span>
+                         <span style="float:left;"><a href="<?php echo osc_premium_url() ; ?>"><?php echo osc_premium_title() ; ?></a></span><span style="float:right;"><?php _e("Sponsored ad", "modern"); ?></span>
                      </h3>
                      <p>
                          <strong><?php if( osc_price_enabled_at_items() ) { echo osc_premium_formated_price() ; ?> - <?php } echo osc_premium_city(); ?> (<?php echo osc_premium_region(); ?>) - <?php echo osc_format_date(osc_premium_pub_date()); ?></strong>
@@ -49,10 +49,10 @@ if(osc_count_premiums()>0) { ?>
         <?php } ?>
     </tbody>
 </table>
-<?php }; ?>
+<?php } ?>
 
- <table border="0" cellspacing="0">
-     <tbody>
+<table border="0" cellspacing="0">
+    <tbody>
         <?php $class = "even" ; ?>
         <?php while(osc_has_items()) { ?>
             <tr class="<?php echo $class; ?>">

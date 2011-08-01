@@ -18,10 +18,12 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
+
+     $sQuery = __("ie. PHP Programmer", 'modern');
 ?>
 
 <script type="text/javascript">
-    var sQuery = '<?php _e("ie. PHP Programmer", 'modern') ; ?>' ;
+    var sQuery = '<?php echo $sQuery; ?>' ;
 
     $(document).ready(function(){
         if($('input[name=sPattern]').val() == sQuery) {
@@ -58,12 +60,10 @@
 <form action="<?php echo osc_base_url(true) ; ?>" method="get" class="search" onsubmit="javascript:return doSearch();">
     <input type="hidden" name="page" value="search" />
     <fieldset class="main">
-        <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : __("ie. PHP Programmer", 'modern') ; ?>" />
-
+        <input type="text" name="sPattern"  id="query" value="<?php echo ( osc_search_pattern() != '' ) ? osc_search_pattern() : $sQuery; ?>" />
         <?php  if ( osc_count_categories() ) { ?>
-            <?php osc_categories_select() ; ?>
+            <?php osc_categories_select('sCategory', null, __('Select a category', 'modern')) ; ?>
         <?php  } ?>
-
         <button type="submit"><?php _e('Search', 'modern') ; ?></button>
     </fieldset>
 </form>
