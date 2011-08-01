@@ -36,82 +36,82 @@ class TestOfAdminItems extends WebTestCase {
     }
     /*           TESTS          */
 
-    function testInsertItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testInsertItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ADD ITEM</div>";
-        $this->insertItem() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - NO MEDIA/ NO COMMENTS</div>";
-        $this->viewMedia_NoMedia();
-        $this->viewComments_NoComments();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ACTIVATE/DEACTIVATE</div>";
-        $this->deactivate();
-        $this->activate();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - MARK/UNMARK AS PREMIUM</div>";
-        $this->markAsPremium();
-        $this->unmarkAsPremium();
-        flush();
-    }
-
-    function testEditItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - EDIT ITEM</div>";
-        $this->editItem() ;
-        flush();
-    }
-
-    function testDeleteItem()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - DELETE ITEM</div>";
-        $this->deleteItem() ;
-        flush();
-    }
-
-    function testComments()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
-        $this->insertItemAndComments() ;
-        flush();
-    }
-
-    function testMedia()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
-        $this->insertItemAndMedia() ;
-        flush();
-    }
-
-//    function testSettings()
+//    function testInsertItem()
 //    {
-//        echo "<div style='background-color: green; color: white;'><h2>testSettings</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - LOGIN </div>";
+//        echo "<div style='background-color: green; color: white;'><h2>testInsertItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - LOGIN </div>";
 //        $this->loginCorrect() ;
 //        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - ITEMS SETTINGS</div>";
-//        $this->settings() ;
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ADD ITEM</div>";
+//        $this->insertItem() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - NO MEDIA/ NO COMMENTS</div>";
+//        $this->viewMedia_NoMedia();
+//        $this->viewComments_NoComments();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ACTIVATE/DEACTIVATE</div>";
+//        $this->deactivate();
+//        $this->activate();
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - MARK/UNMARK AS PREMIUM</div>";
+//        $this->markAsPremium();
+//        $this->unmarkAsPremium();
 //        flush();
 //    }
+//
+//    function testEditItem()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - EDIT ITEM</div>";
+//        $this->editItem() ;
+//        flush();
+//    }
+//
+//    function testDeleteItem()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - DELETE ITEM</div>";
+//        $this->deleteItem() ;
+//        flush();
+//    }
+//
+//    function testComments()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
+//        $this->insertItemAndComments() ;
+//        flush();
+//    }
+//
+//    function testMedia()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
+//        $this->insertItemAndMedia() ;
+//        flush();
+//    }
+
+    function testSettings()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testSettings</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - ITEMS SETTINGS</div>";
+        $this->settings() ;
+        flush();
+    }
     
      /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -491,16 +491,16 @@ class TestOfAdminItems extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         // only can delete resources
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'image/png')]/td/div/span/a[text()='Delete']");
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/jpeg')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'image/jpeg')]/td/div/span/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/png')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'image/png')]/td/div/span/a[text()='Delete']");
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/jpeg')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'image/jpeg')]/td/div/span/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );

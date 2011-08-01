@@ -51,7 +51,7 @@ class TestOfAdminAppearance extends WebTestCase {
         if($this->selenium->isTextPresent("chmod a+w ") ){
             $this->assertTrue(FALSE, "You need give permissions to the folder");
         } else {
-            $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/newcorp.zip");
+            $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/newcorp.zip") );
             $this->selenium->click("button_save");
             $this->selenium->waitForPageToLoad("30000");
 

@@ -135,7 +135,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->click("link=» Import data");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->type("sql", LIB_PATH."simpletest/test/osclass/test.sql");
+        $this->selenium->type("sql", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/test.sql") );
 
         $this->selenium->click("xpath=//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -150,7 +150,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->click("link=» Import data");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->type("sql", LIB_PATH."simpletest/test/osclass/img_test1.gif");
+        $this->selenium->type("sql", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/img_test1.gif") );
 
         $this->selenium->click("xpath=//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -165,7 +165,7 @@ class TestOfAdminTools extends WebTestCase {
         $this->selenium->click("link=» Import data");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->type("sql", LIB_PATH."simpletest/test/osclass/test_restore.sql");
+        $this->selenium->type("sql", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/test_restore.sql") );
 
         $this->selenium->click("xpath=//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");

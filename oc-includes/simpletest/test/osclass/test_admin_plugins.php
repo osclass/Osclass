@@ -84,7 +84,7 @@ class TestOfAdminPlugins extends WebTestCase {
 
         $plugin = "plugins_breadcrumbs_2.0.zip" ;
 
-        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_2.0.zip");
+        $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/plugins_breadcrumbs_2.0.zip") );
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
 
