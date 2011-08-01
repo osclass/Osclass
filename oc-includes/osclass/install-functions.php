@@ -613,13 +613,16 @@ function display_target() {
         </table>
         <h2 class="title">Location</h2>
         <p class="space-left-25 left no-bottom">Choose countries/cities where your target users are located</p>
-        <div id="location-question" class="left question">
+        <!--<div id="location-question" class="left question">
             <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="Worldwide install all the countries. However, if you choose 'Country' and you write one specific country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific." alt=""/>
+        </div>-->
+        <div id="location-question" class="left question">
+            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="Once you write a country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific." alt=""/>
         </div>
         <div class="clear"></div>
         <div id="location">
             <div id="country-box">
-                <div id="radio-target">
+                <div id="radio-target" style="display: none;">
                     <input id="icountry" type="radio" name="c_country" value="Country" checked onclick="change_to_country(this);"/>
                     <label for="icountry">Country</label>
                     <input id="worlwide" type="radio" name="c_country" value="International" onclick="change_to_international(this);" />
@@ -811,7 +814,7 @@ function display_finish() {
                         </div>
                     </div>
                     <div class="s_name_input" style=" display:none;">
-                        <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>" style="float:left;" /> 
+                        <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>" style="float:left; width: 120px;" /> 
                         <button>Update</button>
                     </div>
                 </td>
@@ -828,7 +831,7 @@ function display_finish() {
                         </div>
                     </div>
                     <div class="s_passwd_input" style=" display:none;">
-                        <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left;"/>
+                        <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left; width: 120px;" />
                         <button>Update</button>
                     </div>
                 </td>
