@@ -46,11 +46,7 @@
 
             switch( $this->action ){
                 case 'item_add': // post
-                    if( !osc_users_enabled () ){
-                        osc_add_flash_error_message( _m('Users not enabled') ) ;
-                        $this->redirectTo(osc_base_url(true));
-                    }
-                    if( osc_reg_user_post() && $this->user==null) {
+                    if( osc_reg_user_post() && $this->user==null ) {
                         // CHANGEME: This text
                         osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                         $this->redirectTo(osc_user_login_url());
@@ -100,10 +96,6 @@
                     break;
 
                 case 'item_add_post': //post_item
-                    if( !osc_users_enabled () ){
-                        osc_add_flash_error_message( _m('Users not allowed')) ;
-                        $this->redirectTo(osc_base_url(true));
-                    }
                     if( osc_reg_user_post() && $this->user==null) {
                         osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
                         $this->redirectTo(osc_base_url(true));
@@ -139,7 +131,6 @@
                         osc_add_flash_error_message( $success) ;
                         $this->redirectTo( osc_item_post_url() );
                     } else {
-
                         Session::newInstance()->_dropkeepForm('meta_'.$key);
                         
                         if($success==1) {
@@ -224,7 +215,6 @@
                                     }
                 break;
                 case 'item_edit_post':
-
                     // recoger el secret y el
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
@@ -326,7 +316,6 @@
 
                     osc_add_flash_ok_message( _m('Thanks! That\'s very helpful') ) ;
                     $this->redirectTo( osc_item_url( ) );
-
                 break;
                 case 'send_friend':
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') );
@@ -363,7 +352,6 @@
                     }
                 break;
                 case 'contact':
-
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                     if( empty($item) ){
                         osc_add_flash_error_message( _m('This item doesn\'t exist') );
@@ -385,7 +373,6 @@
                     }
                 break;
                 case 'contact_post':
-
                     $item = $this->itemManager->findByPrimaryKey( Params::getParam('id') ) ;
                     $this->_exportVariableToView('item', $item) ;
                     if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
