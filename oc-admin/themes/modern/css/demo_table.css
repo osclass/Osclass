@@ -113,7 +113,7 @@ table.display {
 }
 
 table.display thead th {
-	padding: 6px 18px 6px 10px;
+	padding: 6px 18px 6px 20px;
 	border-top: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
 	font-weight: bold;
@@ -151,23 +151,23 @@ table.display td.center {
  */
 
 .sorting_asc {
-	background: url('../images/sort_asc.png') no-repeat center right;
+	background: url('../images/sort_asc.png') no-repeat center left;
 }
 
 .sorting_desc {
-	background: url('../images/sort_desc.png') no-repeat center right;
+	background: url('../images/sort_desc.png') no-repeat center left;
 }
 
 .sorting {
-	background: url('../images/sort_both.png') no-repeat center right;
+	background: url('../images/sort_both.png') no-repeat center left;
 }
 
 .sorting_asc_disabled {
-	background: url('../images/sort_asc_disabled.png') no-repeat center right;
+	background: url('../images/sort_asc_disabled.png') no-repeat center left;
 }
 
 .sorting_desc_disabled {
-	background: url('../images/sort_desc_disabled.png') no-repeat center right;
+	background: url('../images/sort_desc_disabled.png') no-repeat center left;
 }
 
 

@@ -35,14 +35,18 @@
                 break;
                 case 'import_post':     // calling
                                         $sql = Params::getFiles('sql') ;
-                                        //dev.conquer: if the file es too big, we can have problems with the upload or with memory
-                                        $content_file = file_get_contents($sql['tmp_name']) ;
+                                        if(isset($sql['size']) && $sql['size']!=0) {
+                                            //dev.conquer: if the file es too big, we can have problems with the upload or with memory
+                                            $content_file = utf8_decode(file_get_contents($sql['tmp_name'])) ;
 
-                                        $conn = getConnection() ;
-                                        if ( $conn->osc_dbImportSQL($content_file) ) {
-                                            osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
+                                            $conn = getConnection() ;
+                                            if ( $conn->osc_dbImportSQL($content_file) ) {
+                                                osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
+                                            } else {
+                                                osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
+                                            }
                                         } else {
-                                            osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
+                                                osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                 break;
@@ -52,41 +56,73 @@
                 case 'images_post':
                                         $preferences = Preference::newInstance()->toArray() ;
 
-                                        $path = osc_content_path() . 'uploads/' ;
-                                        $dir = opendir($path) ;
-                                        while($file = readdir($dir)) {
-
-                                            if(preg_match('|([0-9]+)_thumbnail\.png|i', $file, $matches)) {
-
-                                                $orig_file = str_replace('_thumbnail.', '_original.', $file) ;
-                                                $tmpName = osc_content_path() . 'uploads/' . $orig_file ;
-                                                if(!file_exists($orig_file)) {
-                                                    copy(str_replace('_original.', '.', $tmpName), $tmpName) ;
-                                                }
-
-                                                // Create thumbnail
-                                                $thumbnailPath = osc_content_path() . 'uploads/' . $file ;
-                                                $size = explode('x', osc_thumbnail_dimensions()) ;
-                                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
-
-                                                // Create preview
-                                                $thumbnailPath = osc_content_path() . 'uploads/'.str_replace('_thumbnail.', '_preview.', $file) ;
-                                                $size = explode('x', osc_preview_dimensions()) ;
-                                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+                                        $wat = new Watermark();
+                                        $aResources = ItemResource::newInstance()->getAllResources();
+                                        foreach($aResources as $resource) {
+                                            $path = osc_content_path() . 'uploads/' ;
+                                            // comprobar que no haya original
+                                            $img_original = $path . $resource['pk_i_id']. "_original*";
+                                            $aImages = glob($img_original);
+                                            // there is original image
+                                            if( count($aImages) == 1 ) {
+                                                $image_tmp = $aImages[0] ;
+                                            } else {
+                                                $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*" ;
+                                                $aImages = glob( $img_thumbnail );
+                                                $image_tmp = $aImages[0] ;
+                                            }
+                                            
+                                            // extension
+                                            preg_match('/\.(.*)$/', $image_tmp, $matches) ;
+                                            if( isset($matches[1]) ) {
+                                                $extension = $matches[1] ;
 
                                                 // Create normal size
-                                                $thumbnailPath = osc_content_path() . 'uploads/'.str_replace('_thumbnail.', '.', $file) ;
+                                                $path_normal = $path = osc_content_path() . 'uploads/' . $resource['pk_i_id'] . '.jpg' ;
                                                 $size = explode('x', osc_normal_dimensions()) ;
-                                                ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($thumbnailPath) ;
+                                                ImageResizer::fromFile($image_tmp)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
-                                                if(!osc_keep_original_image()) {
-                                                    @unlink($tmpName) ;
+                                                if( osc_is_watermark_text() ) {
+                                                    $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
+                                                } elseif ( osc_is_watermark_image() ){
+                                                    $wat->doWatermarkImage( $path, 'image/jpeg');
                                                 }
 
-                                            }
+                                                // Create preview
+                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_preview.jpg' ;
+                                                $size = explode('x', osc_preview_dimensions()) ;
+                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
+                                                // Create thumbnail
+                                                $path = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . '_thumbnail.jpg' ;
+                                                $size = explode('x', osc_thumbnail_dimensions()) ;
+                                                ImageResizer::fromFile($path_normal)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                                                // update resource info
+                                                ItemResource::newInstance()->update(
+                                                                        array(
+                                                                            's_path'            => 'oc-content/uploads/'
+                                                                            ,'s_name'           => osc_genRandomPassword()
+                                                                            ,'s_extension'      => 'jpg'
+                                                                            ,'s_content_type'   => 'image/jpeg'
+                                                                        )
+                                                                        ,array(
+                                                                            'pk_i_id'       => $resource['pk_i_id']
+                                                                        )
+                                                ) ;
+
+                                                // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
+                                                if( $extension != 'jpg' ) {
+                                                    $files_to_remove = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "*" . $extension;
+                                                    array_map( "unlink", glob( $files_to_remove ) );
+                                                }
+                                                // ....
+                                            } else {
+                                                // no es imagen o imagen sin extesión
+                                            }
+                                            
                                         }
-                                        closedir($dir) ;
+
                                         osc_add_flash_ok_message( _m('Re-generation complete'), 'admin') ;
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images') ;
                 break;
@@ -161,7 +197,7 @@
                                             if($fileHandler) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is ON'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There were an error creating .maintenance file, please create it manually at the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error creating .maintenance file, please create it manually at the root folder'), 'admin') ;
                                             }
                                             fclose($fileHandler);
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
@@ -170,7 +206,7 @@
                                             if($deleted) {
                                                 osc_add_flash_ok_message( _m('Maintenance mode is OFF'), 'admin') ;
                                             } else {
-                                                osc_add_flash_error_message( _m('There were an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
+                                                osc_add_flash_error_message( _m('There was an error removing .maintenance file, please remove it manually from the root folder'), 'admin') ;
                                             }
                                             $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=maintenance' ) ;
                                         }

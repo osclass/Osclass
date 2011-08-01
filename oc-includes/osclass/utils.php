@@ -228,7 +228,8 @@ function osc_doRequest($url, $_data) {
         $path = $url['path'];
 
         // open a socket connection on port 80
-        $fp = @fsockopen($host, 80);
+        // using localhost due to some issues with NATs (hairpinning)
+        $fp = @fsockopen('localhost', 80);
         
         if($fp!==false) {
             // send the request headers:
@@ -400,7 +401,6 @@ function osc_dbdump($path, $file)
     if (!$db) return -3 ;
 
     $path .= $file ;
-    
     $sql = 'show tables;' ;
     $result = mysql_query($sql) ;
     
@@ -411,7 +411,7 @@ function osc_dbdump($path, $file)
 
         $f = fopen($path, "a") ;
         fwrite($f, $_str) ;
-        fclose() ;
+        fclose($f) ;
 
         return -4 ;
     }

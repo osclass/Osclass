@@ -404,7 +404,7 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 #datatables_list_info,
 #datatables_list {
 	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	font-size: 14px; 
+	font-size: 12px;
 }
 
 #datatables_list {
@@ -419,8 +419,7 @@ ul.ui-accordion-content-active li a.ui-accordion-content-active {
 
 #datatable_wrapper {
     	display: none;
-        padding-top: 10px;
-        height: 25px;
+        height: 15px;
 }
 
 #datatables_quick_edit a {
@@ -583,4 +582,45 @@ tr.even td{
     border: 1px solid #AAAAAA;
     margin: 9px 10px 0 0;
     padding: 6px 10px 7px;
+}
+
+
+.field_li {
+    list-style: none;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.field_li.odd {
+    background-color: #E6E6E6;
+}
+
+.field_li.even {
+    background-color: #FFFFFF;
+}
+
+
+#advanced_fields {
+    padding-left: 20px;
+}
+
+#advanced_fields.expanded {
+background: url('../images/arrow_expanded.png') no-repeat;
+}
+
+#advanced_fields.shrink {
+    background: url('../images/arrow_noexpanded.png') no-repeat;
+}
+
+#advanced_fields_iframe {
+    padding-left: 20px;
+}
+
+#advanced_fields_iframe.expanded {
+background: url('../images/arrow_expanded.png') no-repeat;
+}
+
+#advanced_fields_iframe.shrink {
+    background: url('../images/arrow_noexpanded.png') no-repeat;
 }

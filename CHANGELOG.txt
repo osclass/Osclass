@@ -1,3 +1,17 @@
+OSClass 2.2 2011-08-01
+----------------------
+- New layout and more filters in manage items
+- Added custom fields (for items)
+- Watermark on pictures
+- Helpers for Rewrite::get_location and Rewrite::get_section
+- Premium ads (see paypal plugin)
+- Plurals in translations
+- Improved inputs related to locations
+- Improved error page in the front theme
+- Worlwide option is disabled in the installation
+- Permalinks with Chinese an Arabic characters works
+- All known bugs have been fixed fixed
+
 OSClass 2.1.1 2011-06-22
 ----------------------
 - Filter of title and description is not too restrictive now

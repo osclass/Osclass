@@ -194,7 +194,10 @@
      */
     function osc_item_category($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+        if ( !View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+        }
+        $category = View::newInstance()->_get('item_category') ;
         return (string) osc_field($category, "s_name", $locale) ;
     }
 
@@ -206,7 +209,10 @@
      */
     function osc_item_category_description($locale = "") {
         if ($locale == "") $locale = osc_current_user_locale() ;
-        $category = Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) ;
+        if ( !View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_exportVariableToView('item_category', Category::newInstance()->findByPrimaryKey( osc_item_category_id() ) );
+        }
+        $category = View::newInstance()->_get('item_category') ;
         return osc_field($category, "s_description", $locale) ;
     }
 
@@ -763,6 +769,12 @@
         if ( View::newInstance()->_exists('resources') ) {
             View::newInstance()->_erase('resources') ;
         }
+        if ( View::newInstance()->_exists('item_category') ) {
+            View::newInstance()->_erase('item_category') ;
+        }
+        if ( View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_erase('metafields') ;
+        }
         return View::newInstance()->_next('items') ;
     }
 
@@ -916,4 +928,90 @@
     function osc_priv_count_item_resources() {
         return (int) View::newInstance()->_count('resources') ;
     }
-?>
+    
+    /***************
+     * META FIELDS *
+     ***************/
+    
+    /**
+     * Gets number of item meta field
+     *
+     * @return integer
+     */    
+    function osc_count_item_meta() {
+        if ( !View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+        }
+        return View::newInstance()->_count('metafields') ;
+    }
+    
+    /**
+     * Gets next item meta field if there is, else return null
+     *
+     * @return array
+     */
+    function osc_has_item_meta() {
+        if ( !View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+        }
+        return View::newInstance()->_next('metafields') ;
+    }
+
+    /**
+     * Gets item meta fields
+     *
+     * @return array
+     */
+    function osc_get_item_meta() {
+        if ( !View::newInstance()->_exists('metafields') ) {
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+        }
+        return View::newInstance()->_get('metafields') ;
+    }
+
+    /**
+     * Gets item meta field
+     *
+     * @return array
+     */    
+    function osc_item_meta() {
+        return View::newInstance()->_current('metafields') ;
+    }
+   
+    /**
+     * Gets item meta value
+     *
+     * @return string
+     */    
+    function osc_item_meta_value() {
+        return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
+    }
+   
+    /**
+     * Gets item meta name
+     *
+     * @return string
+     */    
+    function osc_item_meta_name() {
+        return osc_field(osc_item_meta(), 's_name', '') ;
+    }
+   
+    /**
+     * Gets item meta id
+     *
+     * @return integer
+     */    
+    function osc_item_meta_id() {
+        return osc_field(osc_item_meta(), 'pk_i_id', '') ;
+    }
+   
+    /**
+     * Gets item meta slug
+     *
+     * @return string
+     */    
+    function osc_item_meta_slug() {
+        return osc_field(osc_item_meta(), 'slug', '') ;
+    }
+   
+ ?>

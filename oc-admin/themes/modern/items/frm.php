@@ -17,15 +17,6 @@
      */
 
     $new_item = __get("new_item");
-    $users = __get("users");
-    $categories = __get("categories");
-    $countries = __get("countries");
-    $regions = __get("regions");
-    $cities = __get("cities");
-    $currencies = __get("currencies");
-    $locales = __get("locales");
-    $item = __get("item");
-    $resources = __get("resources");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -56,7 +47,7 @@
                 }
             });
         </script>
-        <?php ItemForm::location_javascript('admin'); ?>
+        <?php ItemForm::location_javascript_new('admin'); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <div id="content">
             <div id="separator"></div>
@@ -82,37 +73,36 @@
                             <input type="hidden" name="action" value="post_item" />
                         <?php } else { ?>
                             <input type="hidden" name="action" value="item_edit_post" />
-                            <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
-                            <input type="hidden" name="secret" value="<?php echo $item['s_secret']; ?>" />
+                            <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
+                            <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
                         <?php }; ?>
 
                         <div class="user-post">
                             <h2><?php _e('User'); ?></h2>
                             <label><?php _e('Item posted by'); ?></label>
-                            <?php ItemForm::user_select($users, $item, __('Non-registered user')); ?>
+                            <?php ItemForm::user_select(null, null, __('Non-registered user')); ?>
                             <div  id="contact_info">
                                 <label for="contactName"><?php _e('Name'); ?></label>
-                                <?php ItemForm::contact_name_text($item) ; ?><br/>
+                                <?php ItemForm::contact_name_text() ; ?><br/>
                                 <label for="contactEmail"><?php _e('E-Mail'); ?></label>
-                                <?php ItemForm::contact_email_text($item); ?>
+                                <?php ItemForm::contact_email_text(); ?>
                             </div>
                         </div>
-
                         <h2>
                             <?php _e('General information'); ?>
                         </h2>
                         <label for="catId">
                             <?php _e('Category') ?>:
                         </label>
-                        <?php ItemForm::category_select($categories, $item); ?>
+                        <?php ItemForm::category_select(); ?>
 
-                        <?php ItemForm::multilanguage_title_description($locales, $item); ?>
+                        <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
 
                         <?php if(osc_price_enabled_at_items()) { ?>
                             <div class="_200 auto">
                                 <h2><?php _e('Price'); ?></h2>
-                                <?php ItemForm::price_input_text($item); ?>
-                                <?php ItemForm::currency_select($currencies, $item); ?>
+                                <?php ItemForm::price_input_text(); ?>
+                                <?php ItemForm::currency_select(); ?>
                             </div>
                         <?php } ?>
 
@@ -122,7 +112,7 @@
                                 <?php ItemForm::photos(); ?>
                                 <div id="photos">
                                     
-                                    <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && count($resources)<  osc_max_images_per_item())) { ?>
+                                    <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && osc_count_item_resources() < osc_max_images_per_item())) { ?>
                                     <div>
                                         <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
                                     </div>
@@ -137,23 +127,23 @@
                             <h2><?php _e('Location'); ?></h2>
                             <div class="row">
                                 <label><?php _e('Country'); ?></label>
-                                <?php ItemForm::country_select($countries, $item) ; ?>
+                                <?php ItemForm::country_select() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Region'); ?></label>
-                                <?php ItemForm::region_select($regions, $item) ; ?>
+                                <?php ItemForm::region_text() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City'); ?></label>
-                                <?php ItemForm::city_select($cities, $item) ; ?>
+                                <?php ItemForm::city_text() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City area'); ?></label>
-                                <?php ItemForm::city_area_text($item) ; ?>
+                                <?php ItemForm::city_area_text() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Address'); ?></label>
-                                <?php ItemForm::address_text($item) ; ?>
+                                <?php ItemForm::address_text() ; ?>
                             </div>
                         </div>
 

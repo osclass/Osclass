@@ -111,12 +111,35 @@
                 ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['regionName'], 50)) ? _m("Region too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityName'], 3, false)) ? _m("City too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityName'], 50)) ? _m("City too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false)) ? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' ) .
                 ((((time() - Session::newInstance()->_get('last_submit_item')) < osc_items_wait_time()) && !$this->is_admin) ? _m("Too fast. You should wait a little to publish your ad.") . PHP_EOL : '' );
+
+            
+            $meta = Params::getParam("meta");
+            if($meta!='' && count($meta)>0) {
+                $mField = Field::newInstance();
+                foreach($meta as $k => $v) {
+                    if($v=='') {
+                        $field = $mField->findByPrimaryKey($k);
+                        if($field['b_required']==1) {
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                        }
+                    }
+                }
+            };
+
+            // hook pre add or edit
+            osc_run_hook('pre_item_post') ;
 
             // Handle error
             if ($flash_error) {
@@ -146,6 +169,7 @@
                 }
 
                 $itemId = $this->manager->getConnection()->get_last_id();
+                Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
                 Params::setParam('itemId', $itemId);
 
@@ -169,6 +193,15 @@
 
                 $this->uploadItemResources( $aItem['photos'] , $itemId ) ;
 
+                /**
+                 * META FIELDS
+                 */
+                if($meta!='' && count($meta)>0) {
+                    $mField = Field::newInstance();
+                    foreach($meta as $k => $v) {
+                        $mField->replace($itemId, $k, $v);
+                    }
+                }
                 osc_run_hook('item_form_post', $aItem['catId'], $itemId);
                 
                 // We need at least one record in t_item_stats
@@ -232,7 +265,8 @@
                 $flash_error .= _m("Images too big. Max. size ") . osc_max_size_kb() . " Kb" . PHP_EOL;
             }
 
-            $title_message = '';
+            $title_message  = '';
+            $td_message     = '';
             foreach(@$aItem['title'] as $key => $value) {
                 if( osc_validate_text($value, 1) && osc_validate_max($value, 100) ) {
                     $td_message = '';
@@ -262,12 +296,35 @@
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
-                ((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['regionName'], 50)) ? _m("Region too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_text($aItem['cityName'], 3, false)) ? _m("City too short.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['cityName'], 50)) ? _m("City too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['cityArea'], 3, false)) ? _m("Municipality too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['cityArea'], 50)) ? _m("Municipality too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['address'], 3, false))? _m("Address too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['address'], 100)) ? _m("Address too long.") . PHP_EOL : '' );
 
+            
+            $meta = Params::getParam("meta");
+            if($meta!='' && count($meta)>0) {
+                $mField = Field::newInstance();
+                foreach($meta as $k => $v) {
+                    if($v=='') {
+                        $field = $mField->findByPrimaryKey($k);
+                        if($field['b_required']==1) {
+                            $flash_error .= sprintf(_m("%s field is required."), $field['s_name']);
+                        }
+                    }
+                }
+            };
+
+            // hook pre add or edit
+            osc_run_hook('pre_item_post') ;
+            
             // Handle error
             if ($flash_error) {
                 return $flash_error ;
@@ -311,6 +368,17 @@
                 // UPLOAD item resources
                 $this->uploadItemResources( $aItem['photos'], $aItem['idItem'] ) ;
 
+                Log::newInstance()->insertLog('item', 'edit', $aItem['idItem'], current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
+                
+                /**
+                 * META FIELDS
+                 */
+                if($meta!='' && count($meta)>0) {
+                    $mField = Field::newInstance();
+                    foreach($meta as $k => $v) {
+                        $mField->replace($aItem['idItem'], $k, $v);
+                    }
+                }
                 osc_run_hook('item_edit_post', $aItem['catId'], $aItem['idItem']);
                 return 1;
             }
@@ -394,6 +462,22 @@
             }
             return false;
         }
+        
+        public function premium($id, $on = true) {
+            if($on) {
+                $this->manager->update(
+                    array('b_premium' => '1')
+                    ,array('pk_i_id' => $id)
+                );
+                osc_run_hook("item_premium_on", $id);
+            } else {
+                $this->manager->update(
+                    array('b_premium' => '0')
+                    ,array('pk_i_id' => $id)
+                );
+                osc_run_hook("item_premium_off", $id);
+            }
+        }
 
         /**
          *
@@ -402,9 +486,12 @@
          */
         public function delete( $secret, $itemId )
         {
+
+
             $item = $this->manager->findByPrimaryKey($itemId);
             if($item['s_secret']==$secret) {
                 $this->deleteResourcesFromHD($itemId);
+                Log::newInstance()->insertLog('item', 'delete', $itemId, $item['s_title'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
                 return $this->manager->deleteByPrimaryKey($itemId);
             }
             return false;
@@ -954,7 +1041,7 @@
             }
 
             if( $aItem['price'] != '' ) {
-                $aItem['price'] = (int) $aItem['price'];
+                $aItem['price'] = (float) $aItem['price'];
             }
 
             if( $aItem['catId'] == ''){
@@ -1051,6 +1138,7 @@
         public function uploadItemResources($aResources,$itemId)
         {
             if($aResources != '') {
+                $wat = new Watermark();
 
                 $itemResourceManager = ItemResource::newInstance() ;
 
@@ -1068,28 +1156,39 @@
                             )) ;
                             $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
 
-                            // Create thumbnail
-                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.png' ;
-                            $size = explode('x', osc_thumbnail_dimensions()) ;
-                            ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
-
                             // Create normal size
-                            $path = osc_content_path() . 'uploads/' . $resourceId . '.png' ;
+                            $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;
                             $size = explode('x', osc_normal_dimensions()) ;
                             ImageResizer::fromFile($tmpName)->resizeTo($size[0], $size[1])->saveToFile($path) ;
 
+                            if( osc_is_watermark_text() ) {
+                                $wat->doWatermarkText( $path , osc_watermark_text_color(), osc_watermark_text() , 'image/jpeg' );
+                            } elseif ( osc_is_watermark_image() ){
+                                $wat->doWatermarkImage( $path, 'image/jpeg');
+                            }
+
+                            // Create preview
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_preview.jpg' ;
+                            $size = explode('x', osc_preview_dimensions()) ;
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
+                            // Create thumbnail
+                            $path = osc_content_path(). 'uploads/' . $resourceId . '_thumbnail.jpg' ;
+                            $size = explode('x', osc_thumbnail_dimensions()) ;
+                            ImageResizer::fromFile($normal_path)->resizeTo($size[0], $size[1])->saveToFile($path) ;
+
                             if( osc_keep_original_image() ) {
-                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.png' ;
+                                $path = osc_content_path() . 'uploads/' . $resourceId.'_original.jpg' ;
                                 move_uploaded_file($tmpName, $path) ;
                             }
 
                             $s_path = 'oc-content/uploads/' ;
-                            $resourceType = 'image/png' ;
+                            $resourceType = 'image/jpeg' ;
                             $itemResourceManager->update(
                                                     array(
                                                         's_path'            => $s_path
                                                         ,'s_name'           => osc_genRandomPassword()
-                                                        ,'s_extension'      => 'png'
+                                                        ,'s_extension'      => 'jpg'
                                                         ,'s_content_type'   => $resourceType
                                                     )
                                                     ,array(

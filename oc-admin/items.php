@@ -123,11 +123,9 @@
                                                 $value = 1 ;
                                                 try {
                                                     if ($id) {
+                                                        $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
-                                                            $this->itemManager->update(
-                                                                    array('b_premium' => $value)
-                                                                    ,array('pk_i_id' => $_id)
-                                                            ) ;
+                                                            $mItems->premium($_id);
                                                         }
                                                     }
                                                     osc_add_flash_ok_message( _m('The items have been marked as premium'), 'admin') ;
@@ -140,11 +138,43 @@
                                                 $value = 0 ;
                                                 try {
                                                     if ($id) {
+                                                        $mItems = new ItemActions(true);
+                                                        foreach ($id as $_id) {
+                                                            $mItems->premium($_id,false);
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( _m('The changes have been made'), 'admin') ;
+                                                } catch (Exception $e) {
+                                                    osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
+                                                }
+                                            break;
+                                            case 'spam_all':
+                                                $id = Params::getParam('id') ;
+                                                $value = 1 ;
+                                                try {
+                                                    if ($id) {
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
-                                                                    array('b_premium' => $value)
-                                                                    ,array('pk_i_id' => $_id)
-                                                            ) ;
+                                                                array('b_spam' => $value),
+                                                                array('pk_i_id' => $_id)
+                                                            );
+                                                        }
+                                                    }
+                                                    osc_add_flash_ok_message( _m('The items have been marked as spam'), 'admin') ;
+                                                } catch (Exception $e) {
+                                                    osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
+                                                }
+                                            break;
+                                            case 'despam_all':
+                                                $id = Params::getParam('id') ;
+                                                $value = 0 ;
+                                                try {
+                                                    if ($id) {
+                                                        foreach ($id as $_id) {
+                                                            $this->itemManager->update(
+                                                                array('b_spam' => $value),
+                                                                array('pk_i_id' => $_id)
+                                                            );
                                                         }
                                                     }
                                                     osc_add_flash_ok_message( _m('The changes have been made'), 'admin') ;
@@ -303,8 +333,36 @@
                                             return false;
 
                                         try {
-                                            $this->itemManager->update(
+                                            $mItems = new ItemActions(true);
+                                            $mItems->premium($id, $value==1?true:false);
+                                            /*$this->itemManager->update(
                                                     array('b_premium' => $value),
+                                                    array('pk_i_id' => $id)
+                                            );*/
+                                            osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
+                                        } catch (Exception $e) {
+                                            osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin');
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
+                break;
+                case 'status_spam':  //status spam
+                                        $id = Params::getParam('id') ;
+                                        $value = Params::getParam('value') ;
+
+                                        if (!$id)
+                                            return false;
+
+                                        $id = (int) $id;
+
+                                        if (!is_numeric($id))
+                                            return false;
+
+                                        if (!in_array($value, array(0, 1)))
+                                            return false;
+
+                                        try {
+                                            $this->itemManager->update(
+                                                    array('b_spam' => $value),
                                                     array('pk_i_id' => $id)
                                             );
                                             osc_add_flash_ok_message( _m('Changes have been applied'), 'admin');
@@ -339,8 +397,7 @@
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items&stat=".$stat ) ;
 
                 break;
-                case 'item_edit':
-                                        //require_once LIB_PATH . 'osclass/itemActions.php';
+                case 'item_edit':       // edit item
                                         $id = Params::getParam('id') ;
 
                                         $item = Item::newInstance()->findByPrimaryKey($id);
@@ -348,27 +405,13 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                                         }
 
-                                        $countries = Country::newInstance()->listAll();
-                                        $regions = array();
-                                        if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->getByCountry($item['fk_c_country_code']);
-                                        }
-                                        $cities = array();
-                                        if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$item['fk_i_region_id']) ;
+                                        $form     = count(Session::newInstance()->_getForm());
+                                        $keepForm = count(Session::newInstance()->_getKeepForm());
+                                        if($form==0 || $form==$keepForm) {
+                                            Session::newInstance()->_dropKeepForm();
                                         }
 
-                                        $resources = Item::newInstance()->findResourcesByID($id);
-
-                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("categories", Category::newInstance()->toTree());
-                                        $this->_exportVariableToView("countries", $countries);
-                                        $this->_exportVariableToView("regions", $regions);
-                                        $this->_exportVariableToView("cities", $cities);
-                                        $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
                                         $this->_exportVariableToView("item", $item);
-                                        $this->_exportVariableToView("resources", $resources);
                                         $this->_exportVariableToView("new_item", FALSE);
 
                                         $this->doView('items/frm.php') ;
@@ -381,7 +424,15 @@
                                         foreach( $mItems->data as $key => $value ) {
                                             Session::newInstance()->_setForm($key,$value);
                                         }
-                                        
+
+                                        $meta = Params::getParam('meta');
+                                        if(is_array($meta)) {
+                                            foreach( $meta as $key => $value ) {
+                                                Session::newInstance()->_setForm('meta_'.$key, $value);
+                                                Session::newInstance()->_keepForm('meta_'.$key);
+                                            }
+                                        }
+                    
                                         $success = $mItems->edit();
                                         
                                         if($success==1){
@@ -419,26 +470,13 @@
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=items" ) ;
                 break;
-                case 'post':            //post
-                                        $countries = Country::newInstance()->listAll() ;
-                                        $regions = array() ;
-                                        if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
-                                        }
-                                        $cities = array() ;
-                                        if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                case 'post':            // add item
+                                        $form     = count(Session::newInstance()->_getForm());
+                                        $keepForm = count(Session::newInstance()->_getKeepForm());
+                                        if($form == 0 || $form == $keepForm) {
+                                            Session::newInstance()->_dropKeepForm();
                                         }
 
-                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
-                                        $this->_exportVariableToView("categories", Category::newInstance()->toTree());
-                                        $this->_exportVariableToView("countries", $countries);
-                                        $this->_exportVariableToView("regions", $regions);
-                                        $this->_exportVariableToView("cities", $cities);
-                                        $this->_exportVariableToView("currencies", Currency::newInstance()->listAll());
-                                        $this->_exportVariableToView("locales", OSCLocale::newInstance()->listAllEnabled());
-                                        $this->_exportVariableToView("item", array());
-                                        $this->_exportVariableToView("resources", array());
                                         $this->_exportVariableToView("new_item", TRUE);
                                         $this->doView('items/frm.php') ;
                 break;
@@ -451,6 +489,15 @@
                                             Session::newInstance()->_setForm($key,$value);
                                         }
                                         
+                                        $meta = Params::getParam('meta');
+
+                                        if(is_array($meta)) {
+                                            foreach( $meta as $key => $value ) {
+                                                Session::newInstance()->_setForm('meta_'.$key, $value);
+                                                Session::newInstance()->_keepForm('meta_'.$key);
+                                            }
+                                        }
+                    
                                         $success = $mItem->add();
                                         
                                         if( $success==1 || $success==2 ) {
@@ -461,7 +508,6 @@
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=items&action=post" ) ;
                                         }
                 break;
-
                 case('settings'):          // calling the items settings view
                                         $this->doView('items/settings.php');
                 break;
@@ -530,12 +576,24 @@
 
                 default:                //default
                                         $catId = Params::getParam('catId') ;
-
+                    
+                                        $countries = Country::newInstance()->listAll() ;
+                                        $regions = array() ;
+                                        if( count($countries) > 0 ) {
+                                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
+                                        }
+                                        $cities = array() ;
+                                        if( count($regions) > 0 ) {
+                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                                        }
                                         //preparing variables for the view
-                                        $this->_exportVariableToView("items", ( ($catId) ? $this->itemManager->findByCategoryID($catId) : $this->itemManager->listAllWithCategories() ) ) ;
+                                        $this->_exportVariableToView("users", User::newInstance()->listAll());
                                         $this->_exportVariableToView("catId", $catId) ;
                                         $this->_exportVariableToView("stat", Params::getParam('stat')) ;
 
+                                        $this->_exportVariableToView("countries", $countries);
+                                        $this->_exportVariableToView("regions", $regions);
+                                        $this->_exportVariableToView("cities", $cities);
                                         //calling the view...
                                         $this->doView('items/index.php') ;
             }

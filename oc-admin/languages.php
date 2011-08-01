@@ -41,9 +41,12 @@
                 break;
                 case 'add_post':            // adding a new language
                                             $filePackage = Params::getFiles('package');
-                                            $path        = osc_translations_path();
-
-                                            (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                                            if(isset($filePackage['size']) && $filePackage['size']!=0) {
+                                                $path        = osc_translations_path();
+                                                (int) $status = osc_unzip_file($filePackage['tmp_name'], $path);
+                                            } else {
+                                                $status = 3;
+                                            }
 
                                             switch ($status) {
                                                 case(0):   $msg = _m('The translation folder is not writable');
@@ -55,6 +58,10 @@
                                                 break;
                                                 case(2):   $msg = _m('The zip file is not valid');
                                                            osc_add_flash_error_message($msg, 'admin');
+                                                break;
+                                                case(3):   $msg = _m('No file was uploaded');
+                                                           osc_add_flash_error_message($msg, 'admin');
+                                                           $this->redirectTo(osc_admin_base_url(true)."?page=languages&action=add");
                                                 break;
                                                 case(-1):
                                                 default:   $msg = _m('There was a problem adding the language');
@@ -187,7 +194,7 @@
                                                 $default_lang = osc_language() ;
                                                 foreach ($id as $i) {                                                    
                                                     if($default_lang == $i) {
-                                                        $msg = _m('Some language can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it');
+                                                        $msg = _m('The language can\'t be disabled because it\'s the default language. You can change the default language under General Settings in order to disable it');
                                                     } else {
                                                         $this->localeManager->update($aValues, array('pk_c_code' => $i)) ;
                                                     }

@@ -227,6 +227,8 @@
                                         }
 
                                         foreach($userId as $id) {
+                                            $user = $this->userManager->findByPrimaryKey($id);
+                                            Log::newInstance()->insertLog('user', 'delete', $id, $user['s_email'], 'admin', osc_logged_admin_id());
                                             if($this->userManager->deleteUser($id)) {
                                                 $iDeleted++;
                                             }

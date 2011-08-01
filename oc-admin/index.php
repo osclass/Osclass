@@ -96,6 +96,10 @@
                             $do = new CAdminStats() ;
                             $do->doModel() ;
         break;
+        case('cfields'):    require_once(osc_admin_base_path() . 'custom_fields.php') ;
+                            $do = new CAdminCFields() ;
+                            $do->doModel() ;
+        break;
         default:            //login of oc-admin
                             require_once(osc_admin_base_path() . 'main.php') ;
                             $do = new CAdminMain() ;
