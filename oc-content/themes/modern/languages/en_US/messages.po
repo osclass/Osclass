@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OSClass 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-01 12:51+0100\n"
+"POT-Creation-Date: 2011-08-01 17:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Juan Ramón <juanramon@osclass.org>\n"
 "Language-Team: OSClass <info@osclass.org>\n"
@@ -38,10 +38,10 @@ msgid "The selected photo couldn't be deleted"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/contact.php:38
-#: /Users/juanramon/htdocs/osclass-git/item.php:130
-#: /Users/juanramon/htdocs/osclass-git/item.php:255
-#: /Users/juanramon/htdocs/osclass-git/item.php:350
-#: /Users/juanramon/htdocs/osclass-git/item.php:393
+#: /Users/juanramon/htdocs/osclass-git/item.php:122
+#: /Users/juanramon/htdocs/osclass-git/item.php:245
+#: /Users/juanramon/htdocs/osclass-git/item.php:339
+#: /Users/juanramon/htdocs/osclass-git/item.php:380
 msgid "The Recaptcha code is wrong"
 msgstr ""
 
@@ -57,268 +57,270 @@ msgstr ""
 msgid "Your e-mail has been sent properly. Thank your for contacting us!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:50
-msgid "Users not enabled"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/item.php:55
-#: /Users/juanramon/htdocs/osclass-git/item.php:108
+#: /Users/juanramon/htdocs/osclass-git/item.php:51
+#: /Users/juanramon/htdocs/osclass-git/item.php:100
 msgid "Only registered users are allowed to post items"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:104
-msgid "Users not allowed"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/item.php:146
+#: /Users/juanramon/htdocs/osclass-git/item.php:137
 msgid "Check your inbox to verify your email address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:148
+#: /Users/juanramon/htdocs/osclass-git/item.php:139
 msgid "Your item has been published"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:218
+#: /Users/juanramon/htdocs/osclass-git/item.php:209
 msgid "Sorry, we don't have any items with that ID"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:266
+#: /Users/juanramon/htdocs/osclass-git/item.php:256
 msgid "Great! We've just updated your item"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:285
+#: /Users/juanramon/htdocs/osclass-git/item.php:275
 msgid "The item has been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:287
+#: /Users/juanramon/htdocs/osclass-git/item.php:277
 msgid "The item can't be validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:290
+#: /Users/juanramon/htdocs/osclass-git/item.php:280
 msgid "The item has already been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:303
+#: /Users/juanramon/htdocs/osclass-git/item.php:293
 msgid "Your item has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:305
-#: /Users/juanramon/htdocs/osclass-git/item.php:313
+#: /Users/juanramon/htdocs/osclass-git/item.php:295
+#: /Users/juanramon/htdocs/osclass-git/item.php:303
 msgid "The item you are trying to delete couldn't be deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:327
+#: /Users/juanramon/htdocs/osclass-git/item.php:317
 msgid "Thanks! That's very helpful"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:369
-#: /Users/juanramon/htdocs/osclass-git/item.php:458
-#: /Users/juanramon/htdocs/osclass-git/item.php:503
+#: /Users/juanramon/htdocs/osclass-git/item.php:357
+#: /Users/juanramon/htdocs/osclass-git/item.php:445
+#: /Users/juanramon/htdocs/osclass-git/item.php:490
 msgid "This item doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:375
-#: /Users/juanramon/htdocs/osclass-git/item.php:410
+#: /Users/juanramon/htdocs/osclass-git/item.php:363
+#: /Users/juanramon/htdocs/osclass-git/item.php:397
 msgid "We're sorry, but the item has expired. You can't contact the seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:382
+#: /Users/juanramon/htdocs/osclass-git/item.php:370
 msgid "You can't contact the seller, only registered users can"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:418
+#: /Users/juanramon/htdocs/osclass-git/item.php:405
 msgid "We've just sent an e-mail to the seller"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:426
+#: /Users/juanramon/htdocs/osclass-git/item.php:413
 msgid "Sorry, we could not save your comment. Try again later"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:429
+#: /Users/juanramon/htdocs/osclass-git/item.php:416
 msgid "Your comment is awaiting moderation"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:432
+#: /Users/juanramon/htdocs/osclass-git/item.php:419
 msgid "Your comment has been approved"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:435
+#: /Users/juanramon/htdocs/osclass-git/item.php:422
 msgid "Please fill the required fields (name, email)"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:438
+#: /Users/juanramon/htdocs/osclass-git/item.php:425
 msgid "Please type a comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:441
+#: /Users/juanramon/htdocs/osclass-git/item.php:428
 msgid "Your comment has been marked as spam"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:465
+#: /Users/juanramon/htdocs/osclass-git/item.php:452
 msgid "You must be logged in to delete a comment"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:473
+#: /Users/juanramon/htdocs/osclass-git/item.php:460
 msgid "The comment doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:478
+#: /Users/juanramon/htdocs/osclass-git/item.php:465
 msgid "The comment is not active, you cannot delete it"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:483
+#: /Users/juanramon/htdocs/osclass-git/item.php:470
 msgid "The comment was not added by you, you cannot delete it"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:488
+#: /Users/juanramon/htdocs/osclass-git/item.php:475
 msgid "The comment has been deleted"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:508
+#: /Users/juanramon/htdocs/osclass-git/item.php:495
 msgid "The item hasn't been validated. Please validate it in order to show it to the rest of users"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:510
+#: /Users/juanramon/htdocs/osclass-git/item.php:497
 msgid "This item hasn't been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/item.php:514
+#: /Users/juanramon/htdocs/osclass-git/item.php:501
 msgid "The item has been suspended"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:35
-#: /Users/juanramon/htdocs/osclass-git/login.php:48
+#: /Users/juanramon/htdocs/osclass-git/login.php:26
+#: /Users/juanramon/htdocs/osclass-git/register.php:26
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:26
+msgid "Users not enabled"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/login.php:39
+#: /Users/juanramon/htdocs/osclass-git/login.php:52
 msgid "The username doesn't exist"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:40
+#: /Users/juanramon/htdocs/osclass-git/login.php:44
 msgid "The password is incorrect"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:50
+#: /Users/juanramon/htdocs/osclass-git/login.php:54
 msgid "The user has not been validated yet"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:52
+#: /Users/juanramon/htdocs/osclass-git/login.php:56
 msgid "The user has been suspended"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:72
+#: /Users/juanramon/htdocs/osclass-git/login.php:76
 msgid "This should never happens"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:89
+#: /Users/juanramon/htdocs/osclass-git/login.php:93
 msgid "Invalid email address"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:98
+#: /Users/juanramon/htdocs/osclass-git/login.php:102
 msgid "We have sent you an email with the instructions to reset your password"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:102
+#: /Users/juanramon/htdocs/osclass-git/login.php:106
 msgid "We were not able to identify you given the information provided"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:106
+#: /Users/juanramon/htdocs/osclass-git/login.php:110
 msgid "The recaptcha code is wrong"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:117
-#: /Users/juanramon/htdocs/osclass-git/login.php:139
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:51
+#: /Users/juanramon/htdocs/osclass-git/login.php:121
+#: /Users/juanramon/htdocs/osclass-git/login.php:143
 #: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:55
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:59
 msgid "Sorry, the link is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:132
+#: /Users/juanramon/htdocs/osclass-git/login.php:136
 msgid "The password has been changed"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/login.php:135
+#: /Users/juanramon/htdocs/osclass-git/login.php:139
 msgid "Error, the password don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:38
-msgid "The user has been created. An activation email has been sent"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/register.php:41
-msgid "Your account has been created successfully"
-msgstr ""
-
-#: /Users/juanramon/htdocs/osclass-git/register.php:44
-msgid "The specified e-mail is already in use"
+#: /Users/juanramon/htdocs/osclass-git/register.php:31
+msgid "User registration is not enabled"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/register.php:47
-msgid "The reCAPTCHA was not introduced correctly"
+msgid "The user has been created. An activation email has been sent"
 msgstr ""
 
 #: /Users/juanramon/htdocs/osclass-git/register.php:50
+msgid "Your account has been created successfully"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/register.php:53
+msgid "The specified e-mail is already in use"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/register.php:56
+msgid "The reCAPTCHA was not introduced correctly"
+msgstr ""
+
+#: /Users/juanramon/htdocs/osclass-git/register.php:59
 msgid "The email is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:96
+#: /Users/juanramon/htdocs/osclass-git/register.php:105
 msgid "Your account has been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:104
+#: /Users/juanramon/htdocs/osclass-git/register.php:113
 msgid "Your account has already been validated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/register.php:107
+#: /Users/juanramon/htdocs/osclass-git/register.php:116
 msgid "The link is not valid anymore. Sorry for the inconvenience!"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:48
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:52
 msgid "Your email has been changed successfully"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:69
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:73
 msgid "Alert activated"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:71
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:75
 msgid "Ops! There was a problem trying to activate alert. Please contact the administrator"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:81
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:85
 msgid "Unsubscribed correctly"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:83
+#: /Users/juanramon/htdocs/osclass-git/user-non-secure.php:87
 msgid "Ops! There was a problem trying to unsubscribe you. Please contact the administrator"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:68
+#: /Users/juanramon/htdocs/osclass-git/user.php:72
 msgid "Your profile has been updated successfully"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:90
+#: /Users/juanramon/htdocs/osclass-git/user.php:94
 msgid "The specified e-mail is not valid"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:135
+#: /Users/juanramon/htdocs/osclass-git/user.php:139
 msgid "We have sent you an e-mail. Follow the instructions to validate the changes"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:137
+#: /Users/juanramon/htdocs/osclass-git/user.php:141
 msgid "We tried to sent you an e-mail, but it failed. Please, contact the administrator"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:153
+#: /Users/juanramon/htdocs/osclass-git/user.php:157
 msgid "Current password doesn't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:156
+#: /Users/juanramon/htdocs/osclass-git/user.php:160
 msgid "Passwords can't be empty"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:159
+#: /Users/juanramon/htdocs/osclass-git/user.php:163
 msgid "Passwords don't match"
 msgstr ""
 
-#: /Users/juanramon/htdocs/osclass-git/user.php:166
+#: /Users/juanramon/htdocs/osclass-git/user.php:170
 msgid "Password has been changed"
 msgstr ""
 
