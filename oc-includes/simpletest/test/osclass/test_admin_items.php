@@ -36,71 +36,71 @@ class TestOfAdminItems extends WebTestCase {
     }
     /*           TESTS          */
 
-//    function testInsertItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testInsertItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ADD ITEM</div>";
-//        $this->insertItem() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - NO MEDIA/ NO COMMENTS</div>";
-//        $this->viewMedia_NoMedia();
-//        $this->viewComments_NoComments();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ACTIVATE/DEACTIVATE</div>";
-//        $this->deactivate();
-//        $this->activate();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - MARK/UNMARK AS PREMIUM</div>";
-//        $this->markAsPremium();
-//        $this->unmarkAsPremium();
-//        flush();
-//    }
-//
-//    function testEditItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - EDIT ITEM</div>";
-//        $this->editItem() ;
-//        flush();
-//    }
-//
-//    function testDeleteItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - DELETE ITEM</div>";
-//        $this->deleteItem() ;
-//        flush();
-//    }
-//
-//    function testComments()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
-//        $this->insertItemAndComments() ;
-//        flush();
-//    }
-//
-//    function testMedia()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
-//        $this->insertItemAndMedia() ;
-//        flush();
-//    }
+    function testInsertItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testInsertItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ADD ITEM</div>";
+        $this->insertItem() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - NO MEDIA/ NO COMMENTS</div>";
+        $this->viewMedia_NoMedia();
+        $this->viewComments_NoComments();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ACTIVATE/DEACTIVATE</div>";
+        $this->deactivate();
+        $this->activate();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - MARK/UNMARK AS PREMIUM</div>";
+        $this->markAsPremium();
+        $this->unmarkAsPremium();
+        flush();
+    }
+
+    function testEditItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - EDIT ITEM</div>";
+        $this->editItem() ;
+        flush();
+    }
+
+    function testDeleteItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - DELETE ITEM</div>";
+        $this->deleteItem() ;
+        flush();
+    }
+
+    function testComments()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
+        $this->insertItemAndComments() ;
+        flush();
+    }
+
+    function testMedia()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
+        $this->insertItemAndMedia() ;
+        flush();
+    }
 
     function testSettings()
     {
@@ -522,11 +522,13 @@ class TestOfAdminItems extends WebTestCase {
     private function settings()
     {
 // enabled_recaptcha_items
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>RECAPTCHA 1</div>";
         Preference::newInstance()->replace('enabled_recaptcha_items', 1,"osclass", 'BOOLEAN') ;
         $this->checkWebsite_recaptcha(1);
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>RECAPTCHA 0</div>";
         Preference::newInstance()->replace('enabled_recaptcha_items', 0,"osclass", 'BOOLEAN') ;
         $this->checkWebsite_recaptcha(0);
-
+        flush();
 // moderate_items
         // moderate only one item.
         Preference::newInstance()->replace('logged_user_item_validation', '0',"osclass", 'INTEGER') ;
@@ -541,7 +543,7 @@ class TestOfAdminItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>MODERATE 0</div>";
         Preference::newInstance()->replace('moderate_items', '0',"osclass", 'INTEGER') ;
         $this->checkWebsite_moderate_items('0');
-
+        flush();
 // logged_user_item_validation
         echo "<div style='background-color: green; color: white;padding-left:15px;'>logged_user_item_validation 0 </div>";
         Preference::newInstance()->replace('logged_user_item_validation', '0',"osclass", 'INTEGER') ;
@@ -549,7 +551,7 @@ class TestOfAdminItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>logged_user_item_validation 1 </div>";
         Preference::newInstance()->replace('logged_user_item_validation', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_logged_user_item_validation('1');
-
+        flush();
 // items_wait_time
         echo "<div style='background-color: green; color: white;padding-left:15px;'>items_wait_time 0s </div>";
         Preference::newInstance()->replace('items_wait_time', '0',"osclass", 'INTEGER') ;
@@ -558,7 +560,7 @@ class TestOfAdminItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>items_wait_time 5s </div>";
         Preference::newInstance()->replace('items_wait_time', '30',"osclass", 'INTEGER') ;
         $this->checkWebsite_items_wait_time('30');
-
+        flush();
 // reg_user_can_contact
         Preference::newInstance()->replace('items_wait_time', '0',"osclass", 'INTEGER') ;
         echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_can_contact 0</div>";
@@ -567,15 +569,16 @@ class TestOfAdminItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_can_contact 1</div>";
         Preference::newInstance()->replace('reg_user_can_contact', '1',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_reg_user_can_contact('1');
-
+        flush();
 // enableField#f_price@items
         echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items 0</div>";
         Preference::newInstance()->replace('enableField#f_price@items', '0',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_enableField_f_price_items('0');
         echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items 1</div>";
+        usleep(25000);
         Preference::newInstance()->replace('enableField#f_price@items', '1',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_enableField_f_price_items('1');
-
+        flush();
 // enableField#images@items  //  numImages@items
         echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items = 0</div>";
         Preference::newInstance()->replace('enableField#images@items', '0',"osclass", 'BOOLEAN') ;
@@ -585,6 +588,7 @@ class TestOfAdminItems extends WebTestCase {
         Preference::newInstance()->replace('numImages@items', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_enableField_images_items('1','1');
         Preference::newInstance()->replace('numImages@items', '4',"osclass", 'INTEGER') ;
+        flush();
     }
 
     private function post_item_website(){
