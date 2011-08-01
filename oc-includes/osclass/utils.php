@@ -228,7 +228,8 @@ function osc_doRequest($url, $_data) {
         $path = $url['path'];
 
         // open a socket connection on port 80
-        $fp = @fsockopen($host, 80);
+        // using localhost due to some issues with NATs (hairpinning)
+        $fp = @fsockopen('localhost', 80);
         
         if($fp!==false) {
             // send the request headers:

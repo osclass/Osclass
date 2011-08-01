@@ -138,12 +138,6 @@ require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 require_once LIB_PATH . 'osclass/functions.php';
 
 define('__OSC_LOADED__', true);
-if(!defined('__FROM_CRON__')) {
-    if(osc_auto_cron()) {
-        osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
-
-    }
-}
 
 Plugins::init() ;
 
@@ -151,13 +145,12 @@ Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
-
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
              <?php _e("The website is currently under maintenance mode"); ?>
         </div>
-    <?php };
+    <?php }
 }
 
 function osc_meta_generator() {

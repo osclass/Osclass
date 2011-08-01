@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -21,11 +21,6 @@
 
     if( !defined('__FROM_CRON__') ) {
         define('__FROM_CRON__', true);
-    }
-
-    if( !defined('__OSC_LOADED__') ) {
-        define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
-        require_once ABS_PATH . 'oc-load.php';
     }
 
     function purge_latest_searches_daily() {
