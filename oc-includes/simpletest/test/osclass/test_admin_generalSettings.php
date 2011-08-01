@@ -555,16 +555,20 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         
         $pref['notify_new_comment'] = Preference::newInstance()->findValueByName('notify_new_comment') ;
         if($pref['notify_new_comment'] == 1){ $pref['notify_new_comment'] = 'on';} else { $pref['notify_new_comment'] = 'off'; }
+
+        $pref['reg_user_post_comments'] = Preference::newInstance()->findValueByName('reg_user_post_comments') ;
+        if($pref['reg_user_post_comments'] == 1){ $pref['reg_user_post_comments'] = 'on';} else { $pref['reg_user_post_comments'] = 'off'; }
         
         $pref['num_moderate_comments'] = Preference::newInstance()->findValueByName('moderate_comments');
         $pref['comments_per_page']     = Preference::newInstance()->findValueByName('comments_per_page');
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
-        $this->selenium->click("xpath=//div[@id='menu']/ul[8]/li[2]/a");
+        $this->selenium->click("xpath=(//a[text()='» Comments'])[position()=2]");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->selenium->click("enabled_comments");
+        $this->selenium->click("reg_user_post_comments");
         
         if( !$pref['moderate_comments'] == 'on' ) {
             $this->selenium->click("moderate_comments");
@@ -583,6 +587,12 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         } else {
             $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'on' ) ;
         }
+
+        if( $pref['reg_user_post_comments'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue('reg_user_post_comments'), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue('reg_user_post_comments'), 'on' ) ;
+        }
         
         if(! $pref['moderate_comments'] == 'on' ){
             $this->assertEqual( $this->selenium->getValue('moderate_comments'), 'on' ) ;
@@ -598,6 +608,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Not saved ok, num comments are 10." );
 
         $this->selenium->click("enabled_comments");
+        $this->selenium->click("reg_user_post_comments");
         $this->selenium->click("notify_new_comment");
         $this->selenium->type("num_moderate_comments",$pref['num_moderate_comments'] );
         $this->selenium->type("comments_per_page",$pref['comments_per_page'] );
@@ -608,6 +619,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Can't update comments settings. ERROR");
         
         $this->assertEqual( $this->selenium->getValue('enabled_comments')    ,  $pref['enabled_comments'] ) ;
+        $this->assertEqual( $this->selenium->getValue('reg_user_post_comments')    ,  $pref['reg_user_post_comments'] ) ;
         $this->assertEqual( $this->selenium->getValue('notify_new_comment')  ,  $pref['notify_new_comment'] ) ;
         $this->assertEqual( $this->selenium->getValue('num_moderate_comments')  ,  $pref['num_moderate_comments'] ) ;
         $this->assertEqual( $this->selenium->getValue('comments_per_page')  ,  $pref['comments_per_page'] ) ;
