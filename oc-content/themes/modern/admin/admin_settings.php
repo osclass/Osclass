@@ -33,7 +33,7 @@
                 <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
                 <?php _e('The preferred size of the logo is 600x100','modern'); ?>.
                 <?php if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
-                <strong><?php _e('Note: There is a logo if you upload a logo image will be replaced','modern'); ?>.</strong>
+                <strong><?php _e('Note: Uploading another logo will overwrite current logo','modern'); ?>.</strong>
                 <?php } ?>
             </p>
 
@@ -83,5 +83,3 @@
             <?php } ?>
         </div>
     </div>
-
-

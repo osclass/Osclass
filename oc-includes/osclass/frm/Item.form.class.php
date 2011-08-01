@@ -28,16 +28,24 @@
             parent::generic_input_hidden("id", $item["pk_i_id"]) ;
         }
         // OK
-        static public function category_select($categories = null, $item = null, $default_item = null)
+        static public function category_select($categories = null, $item = null, $default_item = null, $parent_selectable = false)
         {
             // Did user select a specific category to post in?
-            $catId = Params::getParam('catId');
+            $catId = Params::getParam('catId') ;
             if(Session::newInstance()->_getForm('catId') != ""){
-                $catId = Session::newInstance()->_getForm('catId');
+                $catId = Session::newInstance()->_getForm('catId') ;
             }
 
-            if($categories==null) { $categories = osc_get_categories(); };
-            if($item==null) { $item = osc_item(); };
+            if($categories == null) {
+                if(View::newInstance()->_exists('categories')) {
+                    $categories = View::newInstance()->_get('categories') ;
+                } else {
+                    $categories = osc_get_categories() ;
+                }
+            }
+            
+            if ($item == null) { $item = osc_item() ; }
+            
             echo '<select name="catId" id="catId">' ;
             if(isset($default_item)) {
                 echo '<option value="">' . $default_item . '</option>' ;
@@ -46,7 +54,7 @@
             }
 
             foreach($categories as $c) {
-                if(!osc_selectable_parent_categories()){
+                if ( !osc_selectable_parent_categories() && !$parent_selectable ) {
                     echo '<optgroup label="' . $c['s_name'] . '">' ;
                     if(isset($c['categories']) && is_array($c['categories'])) {
                         ItemForm::subcategory_select($c['categories'], $item, $default_item, 1);
@@ -71,7 +79,6 @@
             if(Session::newInstance()->_getForm('catId') != ""){
                 $catId = Session::newInstance()->_getForm('catId');
             }
-            
             // How many indents to add?
             $deep_string = "";
             for($var = 0;$var<$deep;$var++) {
@@ -81,23 +88,30 @@
 
             foreach($categories as $c) {
                 $selected = ( (isset($item["fk_i_category_id"]) && $item["fk_i_category_id"] == $c['pk_i_id']) || (isset($catId) && $catId == $c['pk_i_id']) );
-                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
+
+                echo '<option value="' . $c['pk_i_id'] . '"' . ($selected ? 'selected="selected'.$item["fk_i_category_id"].'"' : '') . '>' . $deep_string . $c['s_name'] . '</option>' ;
                 if(isset($c['categories']) && is_array($c['categories'])) {
                     ItemForm::subcategory_select($c['categories'], $item, $default_item, $deep);
                 }
             }
         }
-        // TODO OC-ADMIN TEST
+        // OK
         static public function user_select($users = null, $item = null, $default_item = null)
         {
             if($users==null) { $users = User::newInstance()->listAll(); };
             if($item==null) { $item = osc_item(); };
+            if(Session::newInstance()->_getForm('userId') != ""){
+                $userId = Session::newInstance()->_getForm('userId');
+            } else { $userId = ''; };
             echo '<select name="userId" id="userId">' ;
                 if(isset($default_item)) {
                     echo '<option value="">' . $default_item . '</option>' ;
                 }
                 foreach($users as $user) {
-                    echo '<option value="' . $user['pk_i_id'] . '"' . ( (isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id']) ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
+                    $bool = false;
+                    if($userId != '' && $userId == $user['pk_i_id']){$bool = true;}
+                    if((isset($item["fk_i_user_id"]) && $item["fk_i_user_id"] == $user['pk_i_id'])){$bool = true;}
+                    echo '<option value="' . $user['pk_i_id'] . '"' . ( $bool ? 'selected="selected"' : '' ) . '>' . $user['s_name'] . '</option>' ;
                 }
             echo '</select>' ;
             return true ;
@@ -188,19 +202,19 @@
         static public function country_select($countries = null, $item = null) {
             if($countries==null) { $countries = osc_get_countries(); };
             if($item==null) { $item = osc_item(); };
-            if( count($countries) > 1 ) {
+            if( count($countries) >= 1 ) {
                 if( Session::newInstance()->_getForm('countryId') != "" ) {
                     $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
                 }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
-            } else if ( count($countries) == 1 ) {
-                if( Session::newInstance()->_getForm('countryId') != "" ) {
-                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
-                }
-                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-                echo '</span>' .$countries[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($countries) == 1 ) {
+//                if( Session::newInstance()->_getForm('countryId') != "" ) {
+//                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
+//                }
+//                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
+//                echo '<span>' .$countries[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_getForm('country');
@@ -215,7 +229,17 @@
             if( Session::newInstance()->_getForm('country') != "" ) {
                 $item['s_country'] = Session::newInstance()->_getForm('country');
             }
-            parent::generic_input_text('country', (isset($item['s_country'])) ? $item['s_country'] : null) ;
+            $only_one = false;
+            if(!isset($item['s_country'])) {
+                $countries = osc_get_countries();
+                if(count($countries)==1) {
+                    $item['s_country'] = $countries[0]['s_name'];
+                    $item['fk_c_country_code'] = $countries[0]['pk_c_code'];
+                    $only_one = true;
+                }
+            }
+            parent::generic_input_text('countryName', (isset($item['s_country'])) ? $item['s_country'] : null, null, $only_one) ;
+            parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code']) && $item['fk_c_country_code']!=null)?$item['fk_c_country_code']:'');
             return true ;
         }
         // OK
@@ -226,9 +250,10 @@
             } else {
                 if($regions==null) { $regions = osc_get_regions(); };
             }
+            
             if($item==null) { $item = osc_item(); };
             
-            if( count($regions) > 1 ) {
+            if( count($regions) >= 1 ) {
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
@@ -237,13 +262,13 @@
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
-            } else if ( count($regions) == 1 ) {
-                if( Session::newInstance()->_getForm('regionId') != "" ) {
-                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-                }
-                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-                echo '</span>' .$regions[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($regions) == 1 ) {
+//                if( Session::newInstance()->_getForm('regionId') != "" ) {
+//                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
+//                }
+//                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
+//                echo '<span>' .$regions[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('region') != "" ) {
                     $item['s_region'] = Session::newInstance()->_getForm('region');
@@ -261,7 +286,7 @@
                 if($cities==null) { $cities = osc_get_cities(); };
             }
             if($item==null) { $item = osc_item(); };
-            if( count($cities) > 1 ) {
+            if( count($cities) >= 1 ) {
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
                     if( Session::newInstance()->_getForm('regionId') != "" ) {
@@ -270,13 +295,13 @@
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;
                 return true ;
-            } else if ( count($cities) == 1 ) {
-                if( Session::newInstance()->_getForm('cityId') != "" ) {
-                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
-                }
-                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
-                echo '</span>' .$cities[0]['s_name'] . '</span>';
-                return false ;
+//            } else if ( count($cities) == 1 ) {
+//                if( Session::newInstance()->_getForm('cityId') != "" ) {
+//                    $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
+//                }
+//                parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : $cities[0]['pk_i_id']) ;
+//                echo '<span>' .$cities[0]['s_name'] . '</span>';
+//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('city') != "" ) {
                     $item['s_city'] = Session::newInstance()->_getForm('city');
@@ -286,6 +311,25 @@
             }
         }
        
+        static public function region_text($item = null) {
+            if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_getForm('region') != "" ) {
+                $item['s_region'] = Session::newInstance()->_getForm('region');
+            }
+            parent::generic_input_text('region', (isset($item['s_region'])) ? $item['s_region'] : null) ;
+            parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id']) && $item['fk_i_region_id']!=null)?$item['fk_i_region_id']:'');
+            return true ;
+        }
+
+        static public function city_text($item = null) {
+            if($item==null) { $item = osc_item(); };
+            if( Session::newInstance()->_getForm('city') != "" ) {
+                $item['s_city'] = Session::newInstance()->_getForm('city');
+            }
+            parent::generic_input_text('city', (isset($item['s_city'])) ? $item['s_city'] : null) ;
+            parent::generic_input_hidden('cityId', (isset($item['fk_i_city_id']) && $item['fk_i_city_id']!=null)?$item['fk_i_city_id']:'');
+            return true ;
+        }
         // OK
         static public function city_area_text($item = null) {
             if($item==null) { $item = osc_item(); };
@@ -293,6 +337,7 @@
                 $item['s_city_area'] = Session::newInstance()->_getForm('cityArea');
             }
             parent::generic_input_text('cityArea', (isset($item['s_city_area'])) ? $item['s_city_area'] : null) ;
+            parent::generic_input_hidden('cityAreaId', (isset($item['fk_i_city_area_id']) && $item['fk_i_city_area_id']!=null)?$item['fk_i_city_area_id']:'');
             return true ;
         }
         // OK 
@@ -343,6 +388,173 @@
             return true ;
         }
 
+        static public function location_javascript_new($path = "front") {
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#region").live('focus', function() {
+            $('#regionId').val(null);
+            $( "#region" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#regionId').val(ui.item.id);
+                }
+            });
+        });
+
+        $("#city").live('focus', function() {
+            $('#cityId').val(null);
+            $( "#city" ).autocomplete({
+                source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
+                minLength: 2,
+                select: function( event, ui ) {
+                    $('#cityId').val(ui.item.id);
+                }
+            });
+        });
+
+
+
+        /**
+         * Validate form
+         */
+
+        // Validate description without HTML.
+        $.validator.addMethod(
+            "minstriptags",
+            function(value, element) {
+                altered_input = strip_tags(value);
+                if (altered_input.length < 3) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            "<?php _e("Description: needs to be longer"); ?>."
+        );
+
+        // Code for form validation
+        $("form[name=item]").validate({
+            rules: {
+                catId: {
+                    required: true,
+                    digits: true
+                },
+                <?php if(osc_price_enabled_at_items()) { ?>
+                price: {
+                    number: true,
+                    maxlength: 15
+                },
+                currency: "required",
+                <?php } ?>
+                <?php if(osc_images_enabled_at_items()) { ?>
+                "photos[]": {
+                    accept: "<?php echo osc_allowed_extension(); ?>"
+                },
+                <?php } ?>
+                <?php if($path == 'front') { ?>
+                contactName: {
+                    minlength: 3,
+                    maxlength: 35
+                },
+                contactEmail: {
+                    required: true,
+                    email: true
+                },
+                <?php } ?>
+                address: {
+                    minlength: 3,
+                    maxlength: 100
+                }
+            },
+            messages: {
+                catId: "<?php _e('Choose one category'); ?>.",
+                <?php if(osc_price_enabled_at_items()) { ?>
+                price: {
+                    number: "<?php _e('Price: enter a valid number'); ?>.",
+                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                },
+                currency: "<?php _e("Currency: make your selection"); ?>.",
+                <?php } ?>
+                <?php if(osc_images_enabled_at_items()) { ?>
+                "photos[]": {
+                    accept: "<?php printf(__("Photo: must be %s"), osc_allowed_extension()); ?>."
+                },
+                <?php } ?>
+                <?php if($path == 'front') { ?>
+                contactName: {
+                    minlength: "<?php _e("Name: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Name: no more than 35 characters"); ?>."
+                },
+                contactEmail: {
+                    required: "<?php _e("Email: this field is required"); ?>.",
+                    email: "<?php _e("Invalid email address"); ?>."
+                },
+                <?php } ?>
+                address: {
+                    minlength: "<?php _e("Address: enter at least 3 characters"); ?>.",
+                    maxlength: "<?php _e("Address: no more than 100 characters"); ?>."
+                }
+            },
+            errorLabelContainer: "#error_list",
+            wrapper: "li",
+            invalidHandler: function(form, validator) {
+                $('html,body').animate({ scrollTop: $('h1').offset().top }, { duration: 250, easing: 'swing'});
+            }
+        });
+    });
+
+    /**
+     * Strip HTML tags to count number of visible characters.
+     */
+    function strip_tags(html) {
+        if (arguments.length < 3) {
+            html=html.replace(/<\/?(?!\!)[^>]*>/gi, '');
+        } else {
+            var allowed = arguments[1];
+            var specified = eval("["+arguments[2]+"]");
+            if (allowed){
+                var regex='</?(?!(' + specified.join('|') + '))\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
+            } else{
+                var regex='</?(' + specified.join('|') + ')\b[^>]*>';
+                html=html.replace(new RegExp(regex, 'gi'), '');
+            }
+        }
+        return html;
+    }
+    
+    function delete_image(id, item_id,name, secret) {
+        //alert(id + " - "+ item_id + " - "+name+" - "+secret);
+        var result = confirm('<?php _e('This action can\\\'t be undone. Are you sure you want to continue?'); ?>');
+        if(result) {
+            $.ajax({
+                type: "POST",
+                url: '<?php echo osc_base_url(true); ?>?page=ajax&action=delete_image&id='+id+'&item='+item_id+'&code='+name+'&secret='+secret,
+                dataType: 'json',
+                success: function(data){
+                    var class_type = "error";
+                    if(data.success) {
+                        $("div[name="+name+"]").remove();
+                        class_type = "ok";
+                    }
+                    var flash = $("#flash_js");
+                    var message = $('<div>').addClass('pubMessages').addClass(class_type).attr('id', 'FlashMessage').html(data.msg);
+                    flash.html(message);
+                    $("#FlashMessage").slideDown('slow').delay(3000).slideUp('slow');
+                }
+            });
+        }
+    }
+    
+    
+</script>
+<?php
+        }
+        
+        
         static public function location_javascript($path = "front") {
 ?>
 <script type="text/javascript">
@@ -381,7 +593,7 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
-                            
+
                             $("#region").before('<select name="regionId" id="regionId" ></select>');
                             $("#region").remove();
 
@@ -482,6 +694,7 @@
                             for(key in data) {
                                 result += '<option value="' + data[key].pk_i_id + '">' + data[key].s_name + '</option>';
                             }
+
                             $("#city").before('<select name="cityId" id="cityId" ></select>');
                             $("#city").remove();
                         } else {
@@ -506,9 +719,11 @@
             $("#cityId").attr('disabled',true);
         }
 
-        if( $("#countryId").attr('type').match(/select-one/) ) {
-            if( $("#countryId").attr('value') == "")  {
-                $("#regionId").attr('disabled',true);
+        if($("#countryId").length != 0) {
+            if( $("#countryId").attr('type').match(/select-one/) ) {
+                if( $("#countryId").attr('value') == "")  {
+                    $("#regionId").attr('disabled',true);
+                }
             }
         }
 
@@ -666,6 +881,7 @@
 </script>
 <?php
         }
+        
 
         static public function photos($resources = null) {
             if($resources==null) { $resources = osc_get_item_resources(); };
@@ -755,7 +971,7 @@
                 type: "POST",
                 url: url,
                 data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
-                dataType: 'text/html',
+                dataType: 'html',
                 success: function(data){
                     $("#plugin-hook").html(data);
                 }
@@ -772,7 +988,7 @@
                 type: "POST",
                 url: url,
                 data: 'page=ajax&action=runhook&hook=item_<?php echo $case;?>&catId=' + cat_id,
-                dataType: 'text/html',
+                dataType: 'html',
                 success: function(data){
                     $("#plugin-hook").html(data);
                 }

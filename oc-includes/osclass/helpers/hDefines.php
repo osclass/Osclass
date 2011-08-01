@@ -432,6 +432,32 @@
     }
 
     /**
+     * Create automatically the url of the item details page
+     *
+     * @param string $locale
+     * @return string
+     */
+    function osc_premium_url($locale = '') {
+        if ( osc_rewrite_enabled() ) {
+            $sanitized_title = osc_sanitizeString(osc_premium_title()) ;
+            $sanitized_category = '';
+            $cat = Category::newInstance()->hierarchy(osc_premium_category_id()) ;
+            for ($i = (count($cat)); $i > 0; $i--) {
+                $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
+            }
+            if($locale!='') {
+                $path = osc_base_url() . sprintf('%s_%s%s_%d', $locale, $sanitized_category, $sanitized_title, osc_premium_id()) ;
+            } else {
+                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_premium_id()) ;
+            }
+        } else {
+            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            $path = osc_item_url_ns( osc_premium_id(), $locale ) ;
+        }
+        return $path ;
+    }
+
+    /**
      * Create the no friendly url of the item using the id of the item
      * 
      * @param int $id the primary key of the item
@@ -788,5 +814,108 @@
             echo '<li><a href="' . $option['url'] . '" >' . $option['name'] . '</a></li>' ;
         }
     }
+
+    /**
+     * Get if user is on ad page
+     *
+     * @return boolean
+     */
+    function osc_is_ad_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='item' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on a static page
+     *
+     * @return boolean
+     */
+    function osc_is_static_page() {
+        $location = Rewrite::newInstance()->get_location();
+        if($location=='page') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on homepage
+     *
+     * @return boolean
+     */
+    function osc_is_home_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on user dashboard
+     *
+     * @return boolean
+     */
+    function osc_is_user_dashboard() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='user' && $section=='dashboard') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Get if user is on publish page
+     *
+     * @return boolean
+     */
+    function osc_is_publish_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='item' && $section=='item_add') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Get if user is on login form
+     *
+     * @return boolean
+     */
+    function osc_is_login_form() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='login' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    function osc_get_osclass_location() {
+        return Rewrite::newInstance()->get_location();
+    }
+
+    /**
+     * Get section
+     *
+     * @return string
+     */
+    function osc_get_osclass_section() {
+        return Rewrite::newInstance()->get_section();
+    }
+
+
 
 ?>

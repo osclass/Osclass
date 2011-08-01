@@ -1,5 +1,4 @@
 <?php
-
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -39,8 +38,11 @@
 
     switch( Params::getParam('page') )
     {
+        case ('cron'):      // cron system
+                            define('__FROM_CRON__', true);
+                            require_once(osc_lib_path() . 'osclass/cron.php');
+        break;
         case ('user'):      // user pages (with security)
-
                             if(Params::getParam('action')=='change_email_confirm' || Params::getParam('action')=='activate_alert'
                             || (Params::getParam('action')=='unsub_alert' && !osc_is_web_user_logged_in())) {
                                 require_once(osc_base_path() . 'user-non-secure.php') ;
@@ -92,11 +94,22 @@
                             $do = new CWebContact() ;
                             $do->doModel() ;
         break;
+        case ('custom'):   //contact
+                            require_once(osc_base_path() . 'custom.php') ;
+                            $do = new CWebCustom() ;
+                            $do->doModel() ;
+        break;
         default:            // home and static pages that are mandatory...
                             require_once(osc_base_path() . 'main.php') ;
                             $do = new CWebMain() ;
                             $do->doModel() ;
         break;
+    }
+
+    if(!defined('__FROM_CRON__')) {
+        if( osc_auto_cron() ) {
+            osc_doRequest(osc_base_url(), array('page' => 'cron')) ;
+        }
     }
 
 ?>

@@ -210,8 +210,9 @@
      * @return int
      */
     function osc_category_total_items() {
-        $category = osc_category() ;
-        return CategoryStats::newInstance()->getNumItems($category) ;
+        return osc_category_field("i_num_items", "") ;
+        //$category = osc_category() ;
+        //return CategoryStats::newInstance()->getNumItems($category) ;
     }
 
     /**
@@ -229,15 +230,7 @@
      * @return void
      */
     function osc_get_non_empty_categories() {
-        $aCategories = Category::newInstance()->toTree();
-        foreach($aCategories as $k => $v) {
-            $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);
-            if($iCategoryNumItems > 0) {
-                $aCategories[$k]['total'] = $iCategoryNumItems;
-            } else {
-                unset($aCategories[$k]);
-            }
-        }
+        $aCategories = Category::newInstance()->toTree(false);
         View::newInstance()->_exportVariableToView('categories', $aCategories );
         return  View::newInstance()->_get('categories') ;
     }
@@ -247,8 +240,9 @@
      * 
      * @return void
      */
-    function osc_categories_select($name = 'sCategory', $category = null) {
-        CategoryForm::category_select(Category::newInstance()->toTree(), $category, __('Select a category'), $name) ;
+    function osc_categories_select($name = 'sCategory', $category = null, $default_str = null) {
+        if($default_str == null) $default_str = __('Select a category');
+        CategoryForm::category_select(Category::newInstance()->toTree(), $category, $default_str, $name) ;
     }
 
 

@@ -17,7 +17,8 @@
      */
 
     // getting variables for this view
-    $info = __get("info") ;
+    $info   = __get("info") ;
+    $widget = __get("widget") ;
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -37,7 +38,8 @@
                 theme_advanced_buttons3 : "",
                 theme_advanced_toolbar_location : "top",
                 theme_advanced_toolbar_align : "left",
-                theme_advanced_statusbar_location : "bottom"
+                theme_advanced_statusbar_location : "bottom",
+                extended_valid_elements : "script"
             });
         </script>
         <?php if(isset($action) && $action === "add_widget") { ?>
@@ -79,19 +81,19 @@
                 <div id="content_separator"></div>
                 
                 <?php osc_show_flash_message('admin') ; ?>
-
                 <!-- add new theme form -->
                 <div id="main_div" style="border: 1px solid #ccc; background: #eee; display:block;">
                     <div style="padding: 20px; padding-top: 10px;">
 
                         <form action="<?php echo osc_admin_base_url(true); ?>" method="post">
-                            <input type="hidden" name="action" value="add_widget_post" />
+                            <input type="hidden" name="action" value="<?php echo (Params::getParam('action') == 'edit_widget') ? 'edit_widget_post' : 'add_widget_post';?>" />
                             <input type="hidden" name="page" value="appearance" />
+                            <?php if (Params::getParam('action') == 'edit_widget') echo '<input type="hidden" name="id" value="'.Params::getParam('id').'" />'; ?>
                             <input type="hidden" name="location" value="<?php echo $_GET['location'] ; ?>" />
 
                             <fieldset>
                                 <legend><?php _e('Description (only for internal purposes)'); ?></legend>
-                                <input type="text" name="description" id="description" />
+                                <input type="text" name="description" id="description" value="<?php if(isset($widget['s_description'])) echo htmlentities($widget['s_description']);?>"/>
                             </fieldset>
 
                             <fieldset>
@@ -103,8 +105,17 @@
                         </form>
                     </div>
                 </div>
+               
             </div>
         </div>
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
+    <script type="text/javascript" >
+        $(window).load(function() {
+            <?php  $str = htmlentities(str_replace(array("\r", "\n"), array("\\r", "\\n"), $widget['s_content']) );?>
+            var aux = ('<?php echo (addcslashes($str, '\'') );?>');
+            var str = $("<div/>").html(aux).text();
+            tinyMCE.activeEditor.setContent( str.replace("\\n", '\n' ) );
+        });
+     </script>
 </html>

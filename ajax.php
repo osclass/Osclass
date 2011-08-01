@@ -49,6 +49,21 @@
                     echo json_encode($cities);
                     break;
                     
+                case 'location_countries': // This is the autocomplete AJAX
+                    $countries = Country::newInstance()->ajax(Params::getParam("term"));
+                    echo json_encode($countries);
+                    break;
+                    
+                case 'location_regions': // This is the autocomplete AJAX
+                    $regions = Region::newInstance()->ajax(Params::getParam("term"), Params::getParam("country"));
+                    echo json_encode($regions);
+                    break;
+                    
+                case 'location_cities': // This is the autocomplete AJAX
+                    $cities = City::newInstance()->ajax(Params::getParam("term"), Params::getParam("region"));
+                    echo json_encode($cities);
+                    break;
+                    
                 case 'delete_image': // Delete images via AJAX
                     $id     = Params::getParam('id') ;
                     $item   = Params::getParam('item') ;
@@ -222,6 +237,10 @@
                     echo json_encode(array('error' => __('no action defined')));
                     break;
             }
+            // clear all keep variables into session
+            Session::newInstance()->_dropKeepForm();
+            Session::newInstance()->_clearVariables();
+
         }
         
         //hopefully generic...

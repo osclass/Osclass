@@ -81,6 +81,14 @@
                 <a href="<?php echo osc_admin_base_url(true); ?>?page=emails">&raquo; <?php _e('Manage emails & alerts'); ?></a>
             </li>
         </ul>
+        <h3>
+            <a href="#"><?php _e('Custom Fields'); ?></a>
+        </h3>
+        <ul>
+            <li>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=cfields">&raquo; <?php _e('Manage custom fields'); ?></a>
+            </li>
+        </ul>
 
         &nbsp;
 

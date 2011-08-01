@@ -95,6 +95,7 @@ switch ($step) {
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
+        <script src="<?php echo get_absolute_url(); ?>oc-admin/themes/modern/js/location.js" type="text/javascript"></script>
         <?php if($step == 5) { ?>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/password_strength_plugin.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/style.css" />
@@ -158,7 +159,7 @@ switch ($step) {
                             <div class="more-stats">
                                 <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
                                 <label for="ping_engines">
-                                    Allow my site to appear in search engines like Gooogle.
+                                    Allow my site to appear in search engines like Google.
                                 </label>
                                 <br/>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
@@ -203,7 +204,7 @@ switch ($step) {
                             <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank">Readme</a>
                         </li>
                         <li>
-                            <a href="http://osclass.org/contact/" target="_blank">Feedback</a>
+                            <a href="http://admin.osclass.org/feedback.php" target="_blank">Feedback</a>
                         </li>
                         <li>
                             <a href="http://forums.osclass.org/index.php" target="_blank">Forums</a>
