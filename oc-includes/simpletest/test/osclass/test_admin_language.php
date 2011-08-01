@@ -385,9 +385,8 @@ class TestOfAdminLanguage extends WebTestCase {
         $this->selenium->click("link=Languages");
         $this->selenium->click("link=» Add a language");
         $this->selenium->waitForPageToLoad("10000");
-        echo  "Path: ". LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip<br>";
         flush();
-        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip");
+        $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip"));
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("The language has been installed correctly"),"Can't upload language lang_es_ES_2.0.zip");
@@ -401,7 +400,7 @@ class TestOfAdminLanguage extends WebTestCase {
         $this->selenium->click("link=Add");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->selenium->type("package", LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip");
+        $this->selenium->type("package", $this->selenium->_path(LIB_PATH."simpletest/test/osclass/lang_es_ES_2.0.zip"));
         $this->selenium->click("//form/input[@id='button_save']");
         $this->selenium->waitForPageToLoad("10000");
 

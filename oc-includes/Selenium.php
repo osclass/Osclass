@@ -2624,7 +2624,7 @@ class Testing_Selenium
 
     public function _path($file){
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            return str_replace('/\//', '\\', $path);
+            return str_replace('/', "\\\\", $file);
         } else {
             return $path;
         }
