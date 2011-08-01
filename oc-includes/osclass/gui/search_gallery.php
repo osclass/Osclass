@@ -19,9 +19,40 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
  ?>
-
- <table border="0" cellspacing="0">
+<?php osc_get_premiums();
+if(osc_count_premiums() > 0) { ?>
+<table border="0" cellspacing="0">
      <tbody>
+        <?php $class = "even" ; ?>
+        <?php while(osc_has_premiums()) { ?>
+            <tr class="premium_<?php echo $class; ?>">
+                <?php if( osc_images_enabled_at_items() ) { ?>
+                 <td class="photo">
+                     <?php if(osc_count_premium_resources()) { ?>
+                        <a href="<?php echo osc_item_url() ; ?>"><img src="<?php echo osc_resource_thumbnail_url() ; ?>" width="75px" height="56px" title="" alt="" /></a>
+                    <?php } else { ?>
+                        <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" title="" alt="" />
+                    <?php } ?>
+                 </td>
+                 <?php } ?>
+                 <td class="text">
+                     <h3>
+                         <span style="float:left;"><a href="<?php echo osc_premium_url() ; ?>"><?php echo osc_premium_title() ; ?></a></span><span style="float:right;"><?php _e("Sponsored ad", "modern"); ?></span>
+                     </h3>
+                     <p>
+                         <strong><?php if( osc_price_enabled_at_items() ) { echo osc_premium_formated_price() ; ?> - <?php } echo osc_premium_city(); ?> (<?php echo osc_premium_region(); ?>) - <?php echo osc_format_date(osc_premium_pub_date()); ?></strong>
+                     </p>
+                     <p><?php echo osc_highlight( strip_tags( osc_premium_description() ) ) ; ?></p>
+                 </td>
+             </tr>
+            <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
+        <?php } ?>
+    </tbody>
+</table>
+<?php } ?>
+
+<table border="0" cellspacing="0">
+    <tbody>
         <?php $class = "even" ; ?>
         <?php while(osc_has_items()) { ?>
             <tr class="<?php echo $class; ?>">
