@@ -44,59 +44,59 @@ class TestOfRegister extends WebTestCase {
         User::newInstance()->deleteUser($user['pk_i_id']);
         flush();
     }
-//
-//    /**
-//     * insert new user, but modifying the value of enabled_user_validation
-//     */
-//    function testRegisterNewUser2()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterNewUser2</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - modifying the value of enabled_user_validation ... </div>";
-//
-//        if(osc_user_validation_enabled() ) {
-//            Preference::newInstance()->update(array('s_value' => 0)
-//                                             ,array('s_name'  => 'enabled_user_validation'));
-//            $next = 1;
-//        } else {
-//            Preference::newInstance()->update(array('s_value' => 1)
-//                                             ,array('s_name'  => 'enabled_user_validation'));
-//            $next = 0;
-//        }
-//
-//        $this->registerUser() ;
-//
-//        $user = User::newInstance()->findByEmail($this->email);
-//        User::newInstance()->deleteUser($user['pk_i_id']);
-//
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - restoring the value of enabled_user_validation ... </div>";
-//        Preference::newInstance()->update(array('s_value' => $next)
-//                                         ,array('s_name'  => 'enabled_user_validation'));
-//    }
-//
-//    /**
-//     * Insert user twice
-//     */
-//    public function testRegisterSameUserTwice()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterSameUserTwice</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert twice- </div>";
-//        $this->registerUserTwice() ;
-//        flush();
-//        $user = User::newInstance()->findByEmail($this->email);
-//        User::newInstance()->deleteUser($user['pk_i_id']);
-//    }
-//
-//    /**
-//     * Insert User - test passwords don't match
-//     */
-//     public function testRegisterUserIncorrectPasswords()
-//     {
-//        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterUserIncorrectPasswords</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - passwords incorrect</div>";
-//        $this->registerUserIncorrectPassword() ;
-//        flush();
-//     }
+
+    /**
+     * insert new user, but modifying the value of enabled_user_validation
+     */
+    function testRegisterNewUser2()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterNewUser2</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - modifying the value of enabled_user_validation ... </div>";
+
+        if(osc_user_validation_enabled() ) {
+            Preference::newInstance()->update(array('s_value' => 0)
+                                             ,array('s_name'  => 'enabled_user_validation'));
+            $next = 1;
+        } else {
+            Preference::newInstance()->update(array('s_value' => 1)
+                                             ,array('s_name'  => 'enabled_user_validation'));
+            $next = 0;
+        }
+
+        $this->registerUser() ;
+
+        $user = User::newInstance()->findByEmail($this->email);
+        User::newInstance()->deleteUser($user['pk_i_id']);
+
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - restoring the value of enabled_user_validation ... </div>";
+        Preference::newInstance()->update(array('s_value' => $next)
+                                         ,array('s_name'  => 'enabled_user_validation'));
+    }
+
+    /**
+     * Insert user twice
+     */
+    public function testRegisterSameUserTwice()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterSameUserTwice</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert twice- </div>";
+        $this->registerUserTwice() ;
+        flush();
+        $user = User::newInstance()->findByEmail($this->email);
+        User::newInstance()->deleteUser($user['pk_i_id']);
+    }
+
+    /**
+     * Insert User - test passwords don't match
+     */
+     public function testRegisterUserIncorrectPasswords()
+     {
+        echo "<div style='background-color: green; color: white;'><h2>test_frontend_register >> testRegisterUserIncorrectPasswords</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'> - User insert - passwords incorrect</div>";
+        $this->registerUserIncorrectPassword() ;
+        flush();
+     }
 
      /**
       * test validation url

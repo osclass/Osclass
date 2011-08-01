@@ -2621,5 +2621,13 @@ class Testing_Selenium
             throw new Testing_Selenium_Exception('result is neither "true" or "false": ' . $result);
         }
     }
+
+    public function _path($file){
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            return str_replace('/\//', '\\', $path);
+        } else {
+            return $path;
+        }
+    }
 }
 ?>

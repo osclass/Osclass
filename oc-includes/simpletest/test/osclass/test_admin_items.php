@@ -36,82 +36,82 @@ class TestOfAdminItems extends WebTestCase {
     }
     /*           TESTS          */
 
-//    function testInsertItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testInsertItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ADD ITEM</div>";
-//        $this->insertItem() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - NO MEDIA/ NO COMMENTS</div>";
-//        $this->viewMedia_NoMedia();
-//        $this->viewComments_NoComments();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ACTIVATE/DEACTIVATE</div>";
-//        $this->deactivate();
-//        $this->activate();
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - MARK/UNMARK AS PREMIUM</div>";
-//        $this->markAsPremium();
-//        $this->unmarkAsPremium();
-//        flush();
-//    }
-//
-//    function testEditItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - EDIT ITEM</div>";
-//        $this->editItem() ;
-//        flush();
-//    }
-//
-//    function testDeleteItem()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - DELETE ITEM</div>";
-//        $this->deleteItem() ;
-//        flush();
-//    }
-//
-//    function testComments()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
-//        $this->insertItemAndComments() ;
-//        flush();
-//    }
-//
-//    function testMedia()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
-//        $this->insertItemAndMedia() ;
-//        flush();
-//    }
-
-    function testSettings()
+    function testInsertItem()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testSettings</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - LOGIN </div>";
+        echo "<div style='background-color: green; color: white;'><h2>testInsertItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - LOGIN </div>";
         $this->loginCorrect() ;
         flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - ITEMS SETTINGS</div>";
-        $this->settings() ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ADD ITEM</div>";
+        $this->insertItem() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - NO MEDIA/ NO COMMENTS</div>";
+        $this->viewMedia_NoMedia();
+        $this->viewComments_NoComments();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - ACTIVATE/DEACTIVATE</div>";
+        $this->deactivate();
+        $this->activate();
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testInsertItem - MARK/UNMARK AS PREMIUM</div>";
+        $this->markAsPremium();
+        $this->unmarkAsPremium();
         flush();
     }
+
+    function testEditItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testEditItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testEditItem - EDIT ITEM</div>";
+        $this->editItem() ;
+        flush();
+    }
+
+    function testDeleteItem()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testDeleteItem</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testDeleteItem - DELETE ITEM</div>";
+        $this->deleteItem() ;
+        flush();
+    }
+
+    function testComments()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testComments</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - INSERT ITEM AND COMMENTS TESTS</div>";
+        $this->insertItemAndComments() ;
+        flush();
+    }
+
+    function testMedia()
+    {
+        echo "<div style='background-color: green; color: white;'><h2>testMedia</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - LOGIN </div>";
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA ITEM</div>";
+        $this->insertItemAndMedia() ;
+        flush();
+    }
+
+//    function testSettings()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testSettings</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSettings - ITEMS SETTINGS</div>";
+//        $this->settings() ;
+//        flush();
+//    }
     
      /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -210,9 +210,15 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->type("description[en_US]", "description test description test description test");
         $this->selenium->type("price", "11");
         $this->selenium->select("currency", "label=Euro €");
+
         $this->selenium->select("countryId", "label=Spain");
-        $this->selenium->select("regionId", "label=A Coruña");
-        $this->selenium->select("cityId", "label=A Capela");
+
+        $this->selenium->type('id=region', 'A Coruña');
+        $this->selenium->click('id=ui-active-menuitem');
+
+        $this->selenium->type('id=city', 'A Capela');
+        $this->selenium->click('id=ui-active-menuitem');
+
         $this->selenium->type("address", "address item");
 
         if( $bPhotos ){
