@@ -522,6 +522,7 @@ class TestOfAdminItems extends WebTestCase {
     private function settings()
     {
 // enabled_recaptcha_items
+        Preference::newInstance()->replace('reg_user_post', '0',"osclass", 'INTEGER') ;
         echo "<div style='background-color: green; color: white;padding-left:15px;'>RECAPTCHA 1</div>";
         Preference::newInstance()->replace('enabled_recaptcha_items', 1,"osclass", 'BOOLEAN') ;
         $this->checkWebsite_recaptcha(1);
@@ -566,6 +567,7 @@ class TestOfAdminItems extends WebTestCase {
         echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_can_contact 0</div>";
         Preference::newInstance()->replace('reg_user_can_contact', '0',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_reg_user_can_contact('0');
+        usleep(25000);
         echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_can_contact 1</div>";
         Preference::newInstance()->replace('reg_user_can_contact', '1',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_reg_user_can_contact('1');
@@ -624,12 +626,19 @@ class TestOfAdminItems extends WebTestCase {
         $exist_recaptcha = $this->selenium->isElementPresent("xpath=//table[@id='recaptcha_table']");
         
         // recaptcha enabled
-        if($bool){
+        if($bool == 1){
             $this->assertTrue($exist_recaptcha, "Recaptcha is not present ! ERROR") ;
         // recaptcha disabled
         } else {
             $this->assertTrue(!$exist_recaptcha, "Recaptcha is present ! ERROR") ;
         }
+
+        $this->loginCorrect();
+        $this->selenium->open( osc_admin_base_url(true) .'?page=settings&action=spamNbots' );
+        $this->selenium->type('recaptchaPubKey', '') ;
+        $this->selenium->type('recaptchaPrivKey' , '');
+        $this->selenium->click("xpath=//input[@id='button_save']");
+        $this->selenium->waitForPageToLoad("10000");
     }
 
     private function checkWebsite_moderate_items($moderation, $user = 1)
@@ -719,15 +728,17 @@ class TestOfAdminItems extends WebTestCase {
 
         $this->selenium->open( osc_base_url(true) );
         $this->selenium->click('link=Logout');
+        $this->selenium->waitForPageToLoad("10000");
         $this->selenium->open( osc_search_url() );
         // visit fisrt item
         $this->selenium->click('link=foo title');
+        $this->selenium->waitForPageToLoad("10000");
         
+        $div_present = $this->selenium->isElementPresent("xpath=//div[@id='contact']");
+
         if($bool == 1){
-            $div_present = $this->selenium->isElementPresent("xpath=//div[@id='contact']");
             $this->assertFalse($div_present, "There are div contact form. ERROR");
         } else if($bool == 0) {
-            $div_present = $this->selenium->isElementPresent("xpath=//div[@id='contact']");
             $this->assertTrue($div_present, "There aren't div contact form. ERROR");
         }
 
@@ -756,6 +767,7 @@ class TestOfAdminItems extends WebTestCase {
         $this->selenium->open( osc_search_url() );
         // visit fisrt item
         $this->selenium->click('link=foo title');
+        $this->selenium->waitForPageToLoad("10000");
 
         $exist_span_price = $this->selenium->isElementPresent("xpath=//span[@class='price']") ;
 
