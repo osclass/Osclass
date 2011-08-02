@@ -101,11 +101,13 @@
                                 </div>
                             </div>
                             <?php ItemForm::plugin_edit_item(); ?>
-                        <div class="box">
-                            <div class="row">
-                                <?php osc_show_recaptcha(); ?>
+                            <?php if( osc_recaptcha_items_enabled() ) {?>
+                            <div class="box">
+                                <div class="row">
+                                    <?php osc_show_recaptcha(); ?>
+                                </div>
                             </div>
-                        </div>
+                            <?php }?>
                         <button class="itemFormButton" type="submit"><?php _e('Update', 'modern'); ?></button>
                         <a href="javascript:history.back(-1)" class="go_back"><?php _e('Cancel', 'modern'); ?></a>
                     </fieldset>
