@@ -240,8 +240,9 @@
      * 
      * @return void
      */
-    function osc_categories_select($name = 'sCategory', $category = null) {
-        CategoryForm::category_select(Category::newInstance()->toTree(), $category, __('Select a category'), $name) ;
+    function osc_categories_select($name = 'sCategory', $category = null, $default_str = null) {
+        if($default_str == null) $default_str = __('Select a category');
+        CategoryForm::category_select(Category::newInstance()->toTree(), $category, $default_str, $name) ;
     }
 
 

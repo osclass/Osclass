@@ -33,11 +33,11 @@
                 <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
                 <?php _e('The preferred size of the logo is 600x100','modern'); ?>.
                 <?php if(file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) { ?>
-                <strong><?php _e('Note: There is a logo if you upload a logo image will be replaced','modern'); ?>.</strong>
+                <strong><?php _e('Note: Uploading another logo will overwrite current logo','modern'); ?>.</strong>
                 <?php } ?>
             </p>
 
-            <form action="<?php echo osc_admin_render_theme_url('oc-includes/osclass/gui/admin/admin_settings.php');?>" method="post" enctype="multipart/form-data">
+            <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php');?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="action_specific" value="upload_logo" />
                 <p>
                     <label for="package"><?php _e('Logo image','modern'); ?> (png,gif,jpg)</label>
@@ -50,7 +50,7 @@
                 <p>
                     Preview:<br>
                     <img border="0" alt="<?php echo osc_page_title(); ?>" src="<?php echo osc_current_web_theme_url('images/logo.jpg');?>"/>
-                    <form action="<?php echo osc_admin_render_theme_url('oc-includes/osclass/gui/admin/admin_settings.php');?>" method="post" enctype="multipart/form-data">
+                    <form action="<?php echo osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php');?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="action_specific" value="remove" />
                         <input id="button_remove" type="submit" value="<?php _e('Remove logo','modern'); ?>" />
                     </form>
@@ -83,5 +83,3 @@
             <?php } ?>
         </div>
     </div>
-
-

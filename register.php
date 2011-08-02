@@ -22,6 +22,15 @@
 
         function __construct() {
             parent::__construct() ;
+            if( !osc_users_enabled() ) {
+                osc_add_flash_error_message( _m('Users not enabled') ) ;
+                $this->redirectTo(osc_base_url(true));
+            }
+
+            if( !osc_user_registration_enabled() ) {
+                osc_add_flash_error_message( _m('User registration is not enabled') ) ;
+                $this->redirectTo(osc_base_url(true));
+            }
         }
 
         //Business Layer...

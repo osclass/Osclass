@@ -22,6 +22,10 @@
 
         function __construct() {
             parent::__construct() ;
+            if( !osc_users_enabled() && ($this->action != 'activate_alert' && $this->action != 'unsub_alert') ) {
+                osc_add_flash_error_message( _m('Users not enabled') ) ;
+                $this->redirectTo(osc_base_url(true));
+            }
         }
 
         //Business Layer...
