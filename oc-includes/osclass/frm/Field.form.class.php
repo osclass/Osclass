@@ -33,11 +33,18 @@
             return true ;
         }
 
+        static public function options_input_text($field = null) {
+            parent::generic_input_text("s_options", (isset($field) && isset($field["s_options"])) ? $field["s_options"] : "", null, false) ;
+            return true ;
+        }
+
         static public function type_select($field = null) {
             ?>
             <select name="field_type" id="field_type">
                 <option value="TEXT" <?php if($field['e_type']=="TEXT") { echo 'selected="selected"';};?>>TEXT</option>
                 <option value="TEXTAREA" <?php if($field['e_type']=="TEXTAREA") { echo 'selected="selected"';};?>>TEXTAREA</option>
+                <option value="DROPDOWN" <?php if($field['e_type']=="DROPDOWN") { echo 'selected="selected"';};?>>DROPDOWN</option>
+                <option value="RADIO" <?php if($field['e_type']=="RADIO") { echo 'selected="selected"';};?>>RADIO</option>
             </select>
             <?php
             return true;
@@ -52,6 +59,28 @@
                 echo '<label for="meta_'.$field['s_slug'].'">'.$field['s_name'].': </label>';
                 if($field['e_type']=="TEXTAREA") {
                     echo '<textarea id="meta_' . $field['s_slug'] . '" name="meta['.$field['pk_i_id'].']" rows="10">' . ((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "") . '</textarea>' ;
+                } else if($field['e_type']=="DROPDOWN") {
+                    if(isset($field) && isset($field['s_options'])) {
+                        $options = explode(",", $field['s_options']);
+                        if(count($options)>0) {
+                            echo '<select name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '">';
+                            foreach($options as $option) {
+                                echo '<option value="'.$option.'" '.($field['s_value']==$option?'selected="selected"':'').'>'.$option.'</option>';
+                            }
+                            echo '</select>';
+                        }
+                    }
+                } else if($field['e_type']=="RADIO") {
+                    if(isset($field) && isset($field['s_options'])) {
+                        $options = explode(",", $field['s_options']);
+                        if(count($options)>0) {
+                            echo '<ul style="display:block;" >';
+                            foreach($options as $option) {
+                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '" value="'.$option.'" '.($field['s_value']==$option?'checked':'').'/>'.$option.'</li>';
+                            }
+                            echo '</ul>';
+                        }
+                    }
                 } else {
                     echo '<input id="meta_'.$field['s_slug'].'" type="text" name="meta['.$field['pk_i_id'].']" value="' . htmlentities((isset($field) && isset($field["s_value"])) ? $field["s_value"] : "", ENT_COMPAT, "UTF-8") . '" ' ;
                     echo '/>' ;
