@@ -240,8 +240,19 @@ class TestOfItems extends WebTestCase {
             $this->selenium->select("currency", "label=Euro €");
 
             $this->selenium->select("countryId", "label=Spain");
-            $this->selenium->select("regionId", "label=Barcelona");
-            $this->selenium->select("cityId", "label=Sabadell");
+
+//            $this->selenium->select("regionId", "label=Barcelona");
+            $this->selenium->type('id=region', 'Barcelona');
+            $this->selenium->click('id=ui-active-menuitem');
+            
+//            $this->selenium->select("cityId", "label=Sabadell");
+            $this->selenium->type('id=city', 'Sabadell');
+            $this->selenium->click('id=ui-active-menuitem');
+
+
+
+
+
             $this->selenium->type("cityArea", "my area");
             $this->selenium->type("address", "my address");
 
@@ -312,9 +323,14 @@ class TestOfItems extends WebTestCase {
         $this->selenium->type("price", "222");
 
         $this->selenium->select("currency", "label=Euro €");
+//        $this->selenium->select("regionId", "label=Barcelona");
+        $this->selenium->type('id=region', 'Barcelona');
+        $this->selenium->click('id=ui-active-menuitem');
 
-        $this->selenium->select("regionId", "label=Barcelona");
-        $this->selenium->select("cityId", "label=Sabadell");
+//        $this->selenium->select("cityId", "label=Sabadell");
+        $this->selenium->type('id=city', 'Sabadell');
+        $this->selenium->click('id=ui-active-menuitem');
+        
         $this->selenium->type("cityArea", "New my area");
         $this->selenium->type("address", "New my address");
 
@@ -324,7 +340,7 @@ class TestOfItems extends WebTestCase {
         // if validation required or not -> update ok
         echo "<div style='background-color: green; color: white;padding-left:15px;'>Great! We've just updated your item</div>";
         $this->assertTrue(  $this->selenium->isTextPresent("Great! We've just updated your item") ||
-                            $this->selenium->isTextPresent("The item hasn't been validated. Please validate it in order to show it to the rest of users") ,
+                            $this->selenium->isTextPresent("Check your inbox to verify your email address") ,
                         "Can't edit item user. ERROR!");
        
     }
