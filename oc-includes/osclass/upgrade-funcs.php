@@ -121,6 +121,30 @@
         osc_changeVersionTo(220) ;
     }
 
+    if(osc_version() < 230) {
+        $conn->osc_dbExec(sprintf("CREATE TABLE %st_item_description_tmp (
+    fk_i_item_id INT UNSIGNED NOT NULL,
+    fk_c_locale_code CHAR(5) NOT NULL,
+    s_title VARCHAR(100) NOT NULL,
+    s_description MEDIUMTEXT NOT NULL,
+    s_what VARCHAR(100) NULL,
+
+        PRIMARY KEY (fk_i_item_id, fk_c_locale_code),
+        INDEX (fk_i_item_id),
+        FOREIGN KEY (fk_i_item_id) REFERENCES %st_item (pk_i_id),
+        FOREIGN KEY (fk_c_locale_code) REFERENCES %st_locale (pk_c_code)
+) ENGINE=MyISAM DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI';", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        
+        $descriptions = $conn->osc_dbFetchResults("SELECT * FROM %st_item_description", DB_TABLE_PREFIX);
+        foreach($descriptions as $d) {
+            $conn->osc_dbExec(sprintf("INSERT INTO %st_item_description_tmp (`fk_i_item_id` ,`fk_c_locale_code` ,`s_title` ,`s_description` ,`s_what`) VALUES ('%d',  '%s',  '%s',  '%s',  '%s')", DB_TABLE_PREFIX, $d['fk_i_item_id'], $d['fk_c_locale_code'], $d['s_title'], $d['s_description'], $d['s_what']));
+        }
+        $conn->osc_dbExec(sprintf("RENAME TABLE `%st_item_description` TO `%st_item_description_old`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("RENAME TABLE `%st_item_description_tmp` TO `%st_item_description`", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("ALTER TABLE %st_item_description ADD FULLTEXT(s_description, s_title);", DB_TABLE_PREFIX));
+        osc_changeVersionTo(230) ;
+    }    
+    
 
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;

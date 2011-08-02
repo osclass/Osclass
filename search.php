@@ -171,7 +171,8 @@
 
             // FILTERING PATTERN
             if($p_sPattern != '') {
-                $this->mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $p_sPattern, $p_sPattern));
+                //$this->mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $p_sPattern, $p_sPattern));
+                $this->mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $p_sPattern));
                 $osc_request['sPattern'] = $p_sPattern;
             }
 
