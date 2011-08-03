@@ -1014,4 +1014,46 @@
         return osc_field(osc_item_meta(), 'slug', '') ;
     }
    
+    /**
+     * Gets total number of active items
+     *
+     * @return string
+     */    
+    function osc_total_active_items() {
+        $search = new Search(false);
+        return $search->count();
+    }
+   
+    /**
+     * Gets total number of all items
+     *
+     * @return string
+     */    
+    function osc_total_items() {
+        $search = new Search(true);
+        return $search->count();
+    }
+   
+    /**
+     * Gets total number of active items today
+     *
+     * @return string
+     */    
+    function osc_total_active_items_today() {
+        $search = new Search(false);
+        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < 1', DB_TABLE_PREFIX));
+        return $search->count();
+    }
+   
+    /**
+     * Gets total number of all items today
+     *
+     * @return string
+     */    
+    function osc_total_items_today() {
+        $search = new Search(true);
+        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < 1', DB_TABLE_PREFIX));
+        return $search->count();
+    }
+   
  ?>

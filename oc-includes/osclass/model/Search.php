@@ -56,7 +56,7 @@
                 $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
+                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 || TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.b_enabled = 1", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.pk_i_id = %st_item.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 //AND (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < %st_category.i_expiration_days) AND %st_category.b_enabled = 1 AND %st_category.pk_i_id = %st_item.fk_i_category_id
