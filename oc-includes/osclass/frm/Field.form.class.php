@@ -74,7 +74,7 @@
                     if(isset($field) && isset($field['s_options'])) {
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
-                            echo '<ul style="display:block;" >';
+                            echo '<ul style="float:left;" >';
                             foreach($options as $option) {
                                 echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '" value="'.$option.'" '.($field['s_value']==$option?'checked':'').'/>'.$option.'</li>';
                             }
