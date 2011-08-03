@@ -45,7 +45,9 @@
             if( $this->_get('keepForm') == '' ){
                 $this->_set( 'keepForm', array() ) ;
             }
-
+            if( $this->_get('form') == '' ){
+                $this->_set( 'form', array() ) ;
+            }
         }
 
         function session_destroy() {
