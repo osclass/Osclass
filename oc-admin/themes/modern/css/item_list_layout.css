@@ -116,6 +116,10 @@
     width: 500px;
 }
 
+.item-form input[type="radio"] {
+    width: 30px;
+}
+
 .item-form textarea {
     width: 700px;
 }

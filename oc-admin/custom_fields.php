@@ -45,7 +45,7 @@
                         $field = $this->fieldManager->findByName(Params::getParam('field_name'));
                         if(!isset($field['pk_i_id'])) {
                             $slug = preg_replace('|([-]+)|', '-', preg_replace('|[^a-z0-9_-]|', '-', strtolower(Params::getParam("field_slug"))));
-                            $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type"), $slug, Params::getParam("field_required")=="1"?1:0, Params::getParam('categories'));
+                            $this->fieldManager->insertField(Params::getParam("field_name"), Params::getParam("field_type_new"), $slug, Params::getParam("field_required")=="1"?1:0, Params::getParam('field_options'), Params::getParam('categories'));
                             osc_add_flash_ok_message(_m("New custom field added"), "admin");
                         } else {
                             osc_add_flash_error_message(_m("Sorry, you already have one field with that name"), "admin");
