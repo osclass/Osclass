@@ -75,8 +75,8 @@
                         $options = explode(",", $field['s_options']);
                         if(count($options)>0) {
                             echo '<ul style="float:left;" >';
-                            foreach($options as $option) {
-                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '" value="'.$option.'" '.($field['s_value']==$option?'checked':'').'/>'.$option.'</li>';
+                            foreach($options as $key => $option) {
+                                echo '<li><input type="radio" name="meta['.$field['pk_i_id'].']" id="meta_' . $field['s_slug'] . '_'.$key.'" value="'.$option.'" '.($field['s_value']==$option?'checked':'').'/><label style="float:none;" for="meta_' . $field['s_slug'] . '_'.$key.'">'.$option.'</label></li>';
                             }
                             echo '</ul>';
                         }
