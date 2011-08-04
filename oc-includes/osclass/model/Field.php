@@ -145,8 +145,8 @@
          * @param type $type
          * @param type $categories 
          */
-        public function insertField($name, $type, $slug, $required, $categories = null) {
-            $this->insert(array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug));
+        public function insertField($name, $type, $slug, $required, $options, $categories = null) {
+            $this->insert(array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug, 's_options' => $options));
             $id = $this->conn->get_last_id();
             if($slug=='') {
                 $this->update(array('s_slug' => $id), array('pk_i_id' => $id));

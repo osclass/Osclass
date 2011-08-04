@@ -34,13 +34,24 @@
                 <div class="FormElementName"><?php _e('Field\'s name'); ?></div>
                 <div class="FormElementInput">
                     <?php FieldForm::name_input_text($field); ?>
+                </div>
+                <div style="clear:both;" ></div>
+                <div class="FormElementName"><?php _e('Field\'s type'); ?></div>
+                <div class="FormElementInput">
                     <?php FieldForm::type_select($field); ?>
                 </div>
-            </div>
-            <div class="FormElement">
-                <input type="checkbox" id="field_required" name="field_required" value="1" <?php if($field['b_required']==1) { echo 'checked="checked"'; } ?>/>
-                <label><?php _e('This field is required'); ?></label>
-            </div>
+                <div style="clear:both;" ></div>
+                <div id="div_field_options_iframe">
+                    <div class="FormElementName"><?php _e('Field\'s options (separated by commas)'); ?></div>
+                    <div class="FormElementInput">
+                        <?php FieldForm::options_input_text($field); ?>
+                    </div>
+                </div>
+                <div class="FormElement">
+                    <input type="checkbox" id="field_required" name="field_required" value="1" <?php if($field['b_required']==1) { echo 'checked="checked"'; } ?>/>
+                    <label><?php _e('This field is required'); ?></label>
+                </div>
+                <div style="clear:both;" ></div>
             <div class="FormElement">
                 <p>
                     <?php _e('Select the categories where you want to apply these attribute'); ?>:
@@ -104,6 +115,17 @@
             animated: "fast",
             collapsed: true
         });
+        
+        $("select[name='field_type']").change(function() {
+            if($(this).attr('value')=='DROPDOWN' || $(this).attr('value')=='RADIO') {
+                $('#div_field_options_iframe').show();
+            } else {
+                $('#div_field_options_iframe').hide();
+            }
+        });
+        if($("select[name='field_type']").attr('value')=='TEXT' || $("select[name='field_type']").attr('value')=='TEXTAREA') {
+            $('#div_field_options_iframe').hide();
+        }
     });
     
     function checkAll (frm, check) {

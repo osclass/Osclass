@@ -39,7 +39,7 @@
             function show_iframe(class_name, id) {
 
                 //$('.edit #settings_form').remove();
-                $("div[class^=edit content_list_]").html('');
+                $("div[class^=content_list_]").html('');
 
                 var name = 'frame_'+ id ; 
                 var id_  = 'frame_'+ id ;
@@ -114,6 +114,20 @@
                     animated: "fast",
                     collapsed: true
                 });
+                
+                
+                $("select[name='field_type_new']").change(function() {
+                    if($(this).attr('value')=='DROPDOWN' || $(this).attr('value')=='RADIO') {
+                        $('#div_field_options').show();
+                    } else {
+                        $('#div_field_options').hide();
+                    }
+                });
+                if($("select[name='field_type_new']").attr('value')=='TEXT' || $("select[name='field_type_new']").attr('value')=='TEXTAREA') {
+                    $('#div_field_options').hide();
+                }
+
+                
             });
 
             function checkAll (frm, check) {
@@ -168,10 +182,16 @@
                                     <br/>
                                     <div class="FormElement">
                                         <label><?php _e('Type'); ?></label>
-                                        <select name="field_type" id="field_type">
+                                        <select name="field_type_new" id="field_type">
                                             <option value="TEXT">TEXT</option>
                                             <option value="TEXTAREA">TEXTAREA</option>
+                                            <option value="DROPDOWN">DROPDOWN</option>
+                                            <option value="RADIO">RADIO</option>
                                         </select>
+                                    </div>
+                                    <div class="FormElement" id="div_field_options">
+                                        <label for="name"><?php _e('Options (separeted by commas)'); ?></label>
+                                        <input type="text" name="field_options" id="field_options" value="" />
                                     </div>
                                     <div class="FormElement">
                                         <input type="checkbox" id="field_required" name="field_required" value="1"/>

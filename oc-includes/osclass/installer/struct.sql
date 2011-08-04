@@ -384,7 +384,8 @@ CREATE TABLE /*TABLE_PREFIX*/t_meta_fields (
     pk_i_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     s_name VARCHAR(255) NOT NULL,
     s_slug VARCHAR(255) NOT NULL,
-    e_type ENUM(  'TEXT',  'TEXTAREA' ) NOT NULL DEFAULT  'TEXT',
+    e_type ENUM(  'TEXT',  'TEXTAREA', 'DROPDOWN', 'RADIO' ) NOT NULL DEFAULT  'TEXT',
+    s_options VARCHAR(255) NULL,
     b_required BOOLEAN NOT NULL DEFAULT FALSE,
 
         PRIMARY KEY (pk_i_id)
