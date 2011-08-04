@@ -1,3 +1,8 @@
+OSClass 2.2.1 2011-08-04
+------------------------
+- Fixed: show recaptcha in edit item if it's configured
+- Fixed: if you have another table_prefix, it show the latest items + items in the search list
+
 OSClass 2.2 2011-08-01
 ----------------------
 - New layout and more filters in manage items
