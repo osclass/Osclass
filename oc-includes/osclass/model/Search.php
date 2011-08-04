@@ -47,7 +47,7 @@
             $this->categories = array();
             $this->conditions = array();
             $this->fields = array();
-            $this->tables[] = sprintf('%st_item_description as d, oc_t_category_description as cd', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+            $this->tables[] = sprintf('%st_item_description as d, %st_category_description as cd', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             $this->order();
             $this->limit();
             $this->results_per_page = 10;
