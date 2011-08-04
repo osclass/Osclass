@@ -108,11 +108,6 @@
         osc_changeVersionTo(210) ;
     }
 
-    // No need to do this
-    /*if(osc_version() < 211) {
-        osc_changeVersionTo(211) ;
-    }*/
-
     if(osc_version() < 220) {
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_text', '', 'STRING')", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_text_color', '', 'STRING')", DB_TABLE_PREFIX));
@@ -144,7 +139,6 @@
         $conn->osc_dbExec(sprintf("ALTER TABLE %st_item_description ADD FULLTEXT(s_description, s_title);", DB_TABLE_PREFIX));
         osc_changeVersionTo(230) ;
     }    
-    
 
     if(Params::getParam('action') == '') {
         $title   = 'OSClass &raquo; Updated correctly' ;
