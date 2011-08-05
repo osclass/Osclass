@@ -39,7 +39,7 @@
                 theme_advanced_toolbar_location : "top",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_statusbar_location : "bottom",
-                extended_valid_elements : "script"
+                extended_valid_elements : "script[type|src|charset|defer]"
             });
         </script>
         <?php if(isset($action) && $action === "add_widget") { ?>
