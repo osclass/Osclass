@@ -23,6 +23,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'reg_user_post', '1', 'BOOLEAN')
     ,('osclass', 'num_rss_items', '50', 'INTEGER')
     ,('osclass', 'active_plugins', '', 'STRING')
+    ,('osclass', 'installed_plugins', '', 'STRING')
     ,('osclass', 'notify_new_item', '1', 'BOOLEAN')
     ,('osclass', 'auto_cron', '1', 'BOOLEAN')
     ,('osclass', 'item_attachment', '0', 'BOOLEAN')
