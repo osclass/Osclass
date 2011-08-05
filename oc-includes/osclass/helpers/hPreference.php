@@ -552,6 +552,15 @@
     }
 
     /**
+     * Gets list of installed plugins
+     *
+     * @return string
+     */
+    function osc_installed_plugins() {
+        return(getPreference('installed_plugins')) ;
+    }
+
+    /**
      * Gets default order field at search
      *
      * @return string

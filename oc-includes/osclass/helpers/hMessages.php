@@ -73,6 +73,17 @@
     }
 
     /**
+     * Adds an ephemeral message to the session. (warning style)
+     *
+     * @param $msg
+     * @param $section
+     * @return string
+     */
+    function osc_add_flash_warning_message($msg, $section = 'pubMessages') {
+        Session::newInstance()->_setMessage($section, $msg, 'warning') ;
+    }
+
+    /**
      * Shows all the pending flash messages in session and cleans up the array.
      *
      * @param $section
