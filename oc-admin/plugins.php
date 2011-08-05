@@ -78,7 +78,7 @@
                     // CATCH FATAL ERRORS
                     $old_value = error_reporting(0);
                     register_shutdown_function(array($this, 'errorHandler'), $pn);
-                    $installed = Plugins::activate($pn);
+                    $installed = Plugins::install($pn);
                     
                     if($installed) {
                         //run this after installing the plugin
@@ -95,9 +95,36 @@
                     $pn = Params::getParam("plugin");
 
                     Plugins::runHook($pn.'_uninstall') ;
-                    Plugins::deactivate($pn);
+                    Plugins::uninstall($pn);
 
                     osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    break;
+                case 'enable':
+                    $pn = Params::getParam("plugin");
+
+                    // CATCH FATAL ERRORS
+                    $old_value = error_reporting(0);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn);
+                    $enabled = Plugins::activate($pn);
+                    
+                    if($enabled) {
+                        Plugins::runHook($pn.'_enable') ;
+                        osc_add_flash_ok_message( _m('Plugin enabled'), 'admin');
+                    } else {
+                        osc_add_flash_error_message( _m('Error: Plugin already enabled'), 'admin') ;
+                    }
+                    error_reporting($old_value);            
+
+                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    break;
+                case 'disable':
+                    $pn = Params::getParam("plugin");
+
+                    Plugins::runHook($pn.'_disable') ;
+                    Plugins::deactivate($pn);
+
+                    osc_add_flash_ok_message( _m('Plugin disabled'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'admin':
