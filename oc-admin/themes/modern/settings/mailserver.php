@@ -96,7 +96,7 @@
                                     </p>
                                     <p>
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_pop() ? 'checked="true"' : ''); ?> name="mailserver_pop" id="mailserver_pop" />
-                                        <label for="mailserver_pop"><?php _e('Use a POP server'); ?></label>
+                                        <label for="mailserver_pop"><?php _e('Use a POP before SMTP'); ?></label>
                                     </p>
                                 </fieldset>
                             </div>
