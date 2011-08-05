@@ -279,6 +279,15 @@
         return(getBoolPreference('mailserver_auth')) ;
     }
     
+    /**
+     * Gets if the mailserver requires authetification
+     *
+     * @return boolean
+     */
+    function osc_mailserver_pop() {
+        return(getBoolPreference('mailserver_pop')) ;
+    }
+    
 
     //OTHER FUNCTIONS TO GET INFORMATION OF PREFERENCES
     /**

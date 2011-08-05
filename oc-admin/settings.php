@@ -507,6 +507,8 @@
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
                                         $mailserverAuth     = ($mailserverAuth != '' ? true : false);
+                                        $mailserverPop     = Params::getParam('mailserver_pop');
+                                        $mailserverPop     = ($mailserverPop != '' ? true : false);
                                         $mailserverType     = Params::getParam('mailserver_type');
                                         $mailserverHost     = Params::getParam('mailserver_host');
                                         $mailserverPort     = Params::getParam('mailserver_port');
@@ -521,6 +523,8 @@
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverAuth)
                                                                                        ,array('s_name' => 'mailserver_auth'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPop)
+                                                                                       ,array('s_name' => 'mailserver_pop'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverType)
                                                                                        ,array('s_name' => 'mailserver_type'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverHost)
