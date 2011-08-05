@@ -59,17 +59,17 @@
                         {
                             "sTitle": "",
                             "sClass": "center",
-                            "sWidth": "65px",
+                            "sWidth": "65px"
                         },
                         {
                             "sTitle": "",
                             "sClass": "center",
-                            "sWidth": "65px",
+                            "sWidth": "65px"
                         },
                         {
                             "sTitle": "",
                             "sClass": "center",
-                            "sWidth": "65px",
+                            "sWidth": "65px"
                         }
                     ],
                     "aaSorting": [[4,'desc'], [3,'asc']],
