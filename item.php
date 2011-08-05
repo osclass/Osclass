@@ -346,6 +346,7 @@
                     $success = $mItem->send_friend();
 
                     if($success){
+                        Session::newInstance()->_clearVariables();
                         $this->redirectTo( osc_item_url() );
                     } else {
                         $this->redirectTo(osc_item_send_friend_url() );
