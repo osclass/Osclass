@@ -57,6 +57,7 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->click("css=span");
             $this->selenium->click("createdb");
             $this->selenium->type("admin_username", "root");
+            $this->selenium->type("tableprefix", "test_");
             $this->selenium->click("submit");
             $this->selenium->waitForPageToLoad("30000");
 

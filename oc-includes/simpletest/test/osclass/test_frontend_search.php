@@ -114,7 +114,7 @@ class TestOfSearch extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
 
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 6 , "There aren't 6 items filtered by Moto");
+        $this->assertTrue($count == 4 , "There aren't 6 items filtered by Moto");
     }
 
     public function testSPatternCombi1()
@@ -133,7 +133,7 @@ class TestOfSearch extends WebTestCase {
         $this->selenium->waitForPageToLoad("30000");
 
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-        $this->assertTrue($count == 3 , "There aren't 3 items filtered by Moto + pMin - pMax (3000-9000)");
+        $this->assertTrue($count == 2 , "There aren't 3 items filtered by Moto + pMin - pMax (3000-9000)");
     }
 
     public function testSPatternCombi2()
@@ -227,7 +227,7 @@ class TestOfSearch extends WebTestCase {
         }
 
         $conn = getConnection();
-        $conn->osc_dbExec("UPDATE oc_t_cron set d_last_exec = '0000-00-00 00:00:00', d_next_exec = '0000-00-00 00:00:00' WHERE e_type = 'HOURLY'");
+        $conn->osc_dbExec(sprintf("UPDATE %st_cron set d_last_exec = '0000-00-00 00:00:00', d_next_exec = '0000-00-00 00:00:00' WHERE e_type = 'HOURLY'",DB_TABLE_PREFIX) );
         unset($conn);
         
         $this->selenium->open( osc_base_url(true) . "?page=cron" );
