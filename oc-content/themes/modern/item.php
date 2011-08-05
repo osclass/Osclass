@@ -97,8 +97,10 @@
                         <?php osc_run_hook('item_detail', osc_item() ) ; ?>
                         <p class="contact_button">
                             <?php if( !osc_item_is_expired () ) { ?>
-                            <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
-                            <strong><a href="#contact"><?php _e('Contact seller', 'modern') ; ?></a></strong>
+                            <?php if(osc_logged_user_id() != osc_item_user_id()) { ?>
+                                <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
+                                    <strong><a href="#contact"><?php _e('Contact seller', 'modern') ; ?></a></strong>
+                                <?php     } ?>
                             <?php     } ?>
                             <?php } ?>
                             <strong class="share"><a href="<?php echo osc_item_send_friend_url() ; ?>" rel="nofollow"><?php _e('Share', 'modern') ; ?></a></strong>
@@ -178,6 +180,7 @@
                         <?php } ?>
                     <?php } ?>
                     <?php if( !osc_item_is_expired () ) { ?>
+                    <?php if(osc_logged_user_id()!=  osc_item_user_id()) { ?>
                     <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
@@ -220,6 +223,7 @@
                             </fieldset>
                         </form>
                     </div>
+                    <?php     } ?>
                     <?php     } ?>
                     <?php } ?>
                 </div>
