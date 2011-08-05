@@ -94,6 +94,10 @@
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
                                         <label for="mailserver_auth"><?php _e('Enable SMTP authentication'); ?></label>
                                     </p>
+                                    <p>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_pop() ? 'checked="true"' : ''); ?> name="mailserver_pop" id="mailserver_pop" />
+                                        <label for="mailserver_pop"><?php _e('Use a POP server'); ?></label>
+                                    </p>
                                 </fieldset>
                             </div>
 

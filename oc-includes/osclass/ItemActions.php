@@ -214,8 +214,10 @@
                 osc_run_hook('after_item_post') ;
 
                 Session::newInstance()->_set('last_publish_time', time());
-                if($active=='INACTIVE') {
+                if(!$this->is_admin) {
                     $this->sendEmails($aItem);
+                }
+                if($active=='INACTIVE') {
                     return 1;
                 } else {
                     if($aItem['userId']!=null) {    
