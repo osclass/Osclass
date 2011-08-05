@@ -31,6 +31,7 @@
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
             $(function() {
+                sSearchName = "<?php _e('Search'); ?>...";
                 oTable = $('#datatables_list').dataTable({
                     "bAutoWidth": false,
                     "aaData": [
@@ -104,9 +105,7 @@
                     <div style="clear: both;"></div>
                 </div>
                 <?php osc_show_flash_message('admin') ; ?>
-                <div id="content_separator"></div>
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list" style="border-bottom: 1px solid #AAAAAA; border-left: 1px solid #AAAAAA; border-right: 1px solid #AAAAAA;"></table>
-                <br />
                 <div style="clear: both;"></div>
             </div> <!-- end of right column -->
             <div style="clear: both;"></div>
