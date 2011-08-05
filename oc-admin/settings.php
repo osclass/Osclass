@@ -68,30 +68,6 @@
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
                 break;
-                case ('users'):         // calling the users settings view
-                                        $this->doView('settings/users.php');
-                break;
-                case ('users_post'):    // updating users
-                                        $iUpdated                = 0;
-                                        $enabledUserValidation   = Params::getParam('enabled_user_validation');
-                                        $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
-                                        $enabledUserRegistration = Params::getParam('enabled_user_registration');
-                                        $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
-                                        $enabledUsers            = Params::getParam('enabled_users');
-                                        $enabledUsers            = (($enabledUsers != '') ? true : false);
-
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
-                                                                                      ,array('s_name'  => 'enabled_user_validation'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
-                                                                                      ,array('s_name'  => 'enabled_user_registration'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
-                                                                                      ,array('s_name'  => 'enabled_users'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
-                                        }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
-                break;
                 case ('locations'):     // calling the locations settings view
                                         $location_action = Params::getParam('type');
                                         $mCountries = new Country();
