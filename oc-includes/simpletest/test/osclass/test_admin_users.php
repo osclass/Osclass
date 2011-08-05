@@ -101,6 +101,16 @@ class TestOfAdminUsers extends WebTestCase {
         flush();
     }
 
+    public function testSettings()
+    {
+        $this->loginCorrect() ;
+        flush();
+        echo "<div style='background-color: green; color: white;'><h2>testExtraValidations</h2></div>";
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>testExtraValidations - LOGIN </div>";
+        $this->settings();
+        flush();
+    }
+
     /*
      * PRIVATE FUNCTIONS
      */
@@ -319,5 +329,139 @@ class TestOfAdminUsers extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("One user has been deleted"), "Can't delete user ERROR" ) ;
     }
 
+    private function settings()
+    {
+        $pref = array();
+        $pref['enabled_users'] = Preference::newInstance()->findValueByName('enabled_users') ;
+        if($pref['enabled_users'] == 1){ $pref['enabled_users'] = 'on';} else { $pref['enabled_users'] = 'off'; }
+        $pref['enabled_user_validation'] = Preference::newInstance()->findValueByName('enabled_user_validation') ;
+        if($pref['enabled_user_validation'] == 1){ $pref['enabled_user_validation'] = 'on';} else { $pref['enabled_user_validation'] = 'off'; }
+        $pref['enabled_user_registration'] = Preference::newInstance()->findValueByName('enabled_user_registration') ;
+        if($pref['enabled_user_registration'] == 1){ $pref['enabled_user_registration'] = 'on';} else { $pref['enabled_user_registration'] = 'off'; }
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("xpath=//a[text()='Users']");
+        $this->selenium->click("xpath=//li[3]/a[text()='» Settings']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("enabled_users");
+        $this->selenium->click("enabled_user_validation");
+        $this->selenium->click("enabled_user_registration");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
+
+        if( $pref['enabled_users'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue('enabled_users'), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue('enabled_users'), 'on' ) ;
+        }
+        if( $pref['enabled_user_validation'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'on' ) ;
+        }
+        if( $pref['enabled_user_registration'] == 'on' ){
+            $this->assertEqual( $this->selenium->getValue('enabled_user_registration'), 'off' ) ;
+        } else {
+            $this->assertEqual( $this->selenium->getValue('enabled_user_registration'), 'on' ) ;
+        }
+
+        $this->selenium->click("enabled_users");
+        $this->selenium->click("enabled_user_validation");
+        $this->selenium->click("enabled_user_registration");
+
+        $this->selenium->click("//input[@type='submit']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertEqual( $this->selenium->getValue('enabled_users')              ,  $pref['enabled_users'] ) ;
+        $this->assertEqual( $this->selenium->getValue('enabled_user_validation')    ,  $pref['enabled_user_validation'] ) ;
+        $this->assertEqual( $this->selenium->getValue('enabled_user_registration')  ,  $pref['enabled_user_registration'] ) ;
+
+        $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
+
+        /*
+         * Testing deeper
+         */
+        
+    // enabled_users
+        Preference::newInstance()->replace('enabled_users', '0',"osclass", 'INTEGER') ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>enabled_users 0</div>";
+        $this->checkWebsite_enabled_users(0);
+        Preference::newInstance()->replace('enabled_users', '1',"osclass", 'INTEGER') ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>enabled_users 1</div>";
+        $this->checkWebsite_enabled_users(1);
+    // enabled_user_validation
+        Preference::newInstance()->replace('enabled_user_validation', '0',"osclass", 'INTEGER') ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>enabled_user_validation 0</div>";
+        $this->checkWebsite_enabled_user_validation(0);
+        Preference::newInstance()->replace('enabled_user_validation', '1',"osclass", 'INTEGER') ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>enabled_user_validation 1</div>";
+        $this->checkWebsite_enabled_user_validation(1);
+    // enabled_user_registration
+        Preference::newInstance()->replace('enabled_user_registration', '0',"osclass", 'INTEGER') ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>enabled_user_registration 0</div>";
+        $this->checkWebsite_enabled_user_registration(0);
+        Preference::newInstance()->replace('enabled_user_registration', '1',"osclass", 'INTEGER') ;
+        echo "<div style='background-color: green; color: white;padding-left:15px;'>enabled_user_registration 1</div>";
+        $this->checkWebsite_enabled_user_registration(1);
+    }
+
+    private function checkWebsite_enabled_users($bool)
+    {
+        $this->selenium->open( osc_user_login_url() );
+        if($bool == 1) {
+            $is_present_email = $this->selenium->isElementPresent('id=email');
+            $is_present_pass  = $this->selenium->isElementPresent('id=password');
+            $this->assertTrue(( $is_present_email && $is_present_pass), "Cannot login into osclass. ERROR" ) ;
+        } else if ($bool == 0) {
+            $this->assertTrue($this->selenium->isTextPresent('Users not enabled'), "Users can login" );
+        }
+
+        $this->selenium->open( osc_register_account_url() );
+        if($bool == 1) {
+            $is_present_email = $this->selenium->isElementPresent('id=s_name');
+            $is_present_pass  = $this->selenium->isElementPresent('id=s_password');
+            $is_present_pass2 = $this->selenium->isElementPresent('id=s_password2');
+            $this->assertTrue(( $is_present_email && $is_present_pass && $is_present_pass2 ), "Cannot register into osclass. ERROR" ) ;
+        } else if ($bool == 0) {
+            $this->assertTrue($this->selenium->isTextPresent('Users not enabled'), "Can register into osclass. ERROR" );
+        }
+    }
+
+    private function checkWebsite_enabled_user_validation($bool)
+    {
+        $this->selenium->open( osc_register_account_url() );
+        $this->selenium->type('id=s_name', "carlos");
+        $this->selenium->type('id=s_password', "carlos");
+        $this->selenium->type('id=s_password2', "carlos");
+        $this->selenium->type('id=s_email', "carlos+testtest@osclass.org");
+        $this->selenium->click("xpath=//button[text()='Create']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        if($bool == 1) {
+            $this->assertTrue( $this->selenium->isTextPresent('The user has been created. An activation email has been sent'), "No need to validate user. ERROR" ) ;
+        } else if ($bool == 0) {
+            $this->assertTrue($this->selenium->isTextPresent('Your account has been created successfully'), "Need to validate user. ERROR" );
+        }
+
+        $user = User::newInstance()->findByEmail("carlos+testtest@osclass.org");
+        User::newInstance()->deleteUser($user['pk_i_id']);
+    }
+
+    private function checkWebsite_enabled_user_registration($bool)
+    {
+        $this->selenium->open( osc_register_account_url() );
+        if($bool == 1) {
+            $is_present_email = $this->selenium->isElementPresent('id=s_name');
+            $is_present_pass  = $this->selenium->isElementPresent('id=s_password');
+            $is_present_pass2 = $this->selenium->isElementPresent('id=s_password2');
+            $this->assertTrue(( $is_present_email && $is_present_pass && $is_present_pass2 ), "Cannot register into osclass. ERROR" ) ;
+        } else if ($bool == 0) {
+            $this->assertTrue($this->selenium->isTextPresent('User registration is not enabled'), "Can register into osclass. ERROR" );
+        }
+    }
 }
 ?>

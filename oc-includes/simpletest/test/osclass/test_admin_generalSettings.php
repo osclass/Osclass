@@ -100,17 +100,6 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         flush();
     }
 
-    function testUsersTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testUsersTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testUsersTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testUsersTab - USER SETTINGS</div>";
-        $this->users() ;
-        flush();
-    }
-
     function testCommentsTab()
     {
         echo "<div style='background-color: green; color: white;'><h2>testCommentsTab</h2></div>";
@@ -121,28 +110,6 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->comments() ;
         flush();
     }
-
-//    function testItemsTab()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testItemsTab</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testItemsTab - ITEMS SETTINGS</div>";
-//        $this->items() ;
-//        flush();
-//    }
-    
-//    function testCategoriesTab()
-//    {
-//        echo "<div style='background-color: green; color: white;'><h2>testCategoriesTab</h2></div>";
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - LOGIN </div>";
-//        $this->loginCorrect() ;
-//        flush();
-//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCategoriesTab - CATEGORIES SETTINGS</div>";
-//        $this->categories() ;
-//        flush();
-//    }
 
     function testGeneralSettings()
     {
@@ -488,60 +455,6 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") ,"Can't update contact Attachment. ERROR");
 
         $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] ) ;
-    }
-
-    private function users()
-    {
-        $pref = array();
-        $pref['enabled_users'] = Preference::newInstance()->findValueByName('enabled_users') ;
-        if($pref['enabled_users'] == 1){ $pref['enabled_users'] = 'on';} else { $pref['enabled_users'] = 'off'; }
-        $pref['enabled_user_validation'] = Preference::newInstance()->findValueByName('enabled_user_validation') ;
-        if($pref['enabled_user_validation'] == 1){ $pref['enabled_user_validation'] = 'on';} else { $pref['enabled_user_validation'] = 'off'; }
-        $pref['enabled_user_registration'] = Preference::newInstance()->findValueByName('enabled_user_registration') ;
-        if($pref['enabled_user_registration'] == 1){ $pref['enabled_user_registration'] = 'on';} else { $pref['enabled_user_registration'] = 'off'; }
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Users");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->click("enabled_users");
-        $this->selenium->click("enabled_user_validation");
-        $this->selenium->click("enabled_user_registration");
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
-
-        if( $pref['enabled_users'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_users'), 'off' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_users'), 'on' ) ;
-        }
-        if( $pref['enabled_user_validation'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'off' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_user_validation'), 'on' ) ;
-        }
-        if( $pref['enabled_user_registration'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_user_registration'), 'off' ) ;
-        } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_user_registration'), 'on' ) ;
-        }
-
-        $this->selenium->click("enabled_users");
-        $this->selenium->click("enabled_user_validation");
-        $this->selenium->click("enabled_user_registration");
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertEqual( $this->selenium->getValue('enabled_users')              ,  $pref['enabled_users'] ) ;
-        $this->assertEqual( $this->selenium->getValue('enabled_user_validation')    ,  $pref['enabled_user_validation'] ) ;
-        $this->assertEqual( $this->selenium->getValue('enabled_user_registration')  ,  $pref['enabled_user_registration'] ) ;
-
-        $this->assertTrue( $this->selenium->isTextPresent("Users' settings have been updated") , "Can't update user settings. ERROR");
     }
 
     private function comments()
