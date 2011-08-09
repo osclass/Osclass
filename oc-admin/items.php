@@ -47,6 +47,7 @@
                                                 $value = 1 ;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
                                                                     array('b_enabled' => $value)
@@ -55,7 +56,8 @@
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                         }
-                                                        osc_add_flash_ok_message( _m('The items have been enabled'), 'admin') ;
+
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d item has been enabled', '%d items have been enabled',$count), $count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -66,6 +68,7 @@
                                                 $value = 0;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
                                                                     array('b_enabled' => $value)
@@ -74,7 +77,7 @@
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                         }
-                                                        osc_add_flash_ok_message( _m('The items have been disabled'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d item has been disabled', '%d items have been disabled',$count),$count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -85,6 +88,7 @@
                                                 $value = 1 ;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
                                                                     array('b_active' => $value)
@@ -93,7 +97,7 @@
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']) ;
                                                         }
-                                                        osc_add_flash_ok_message( _m('The items have been activated'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d item has been activated','%d items have been activated',$count), $count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -104,6 +108,7 @@
                                                 $value = 0;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
                                                                     array('b_active' => $value)
@@ -112,7 +117,7 @@
                                                             $item = $this->itemManager->findByPrimaryKey($_id) ;
                                                             CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']) ;
                                                         }
-                                                        osc_add_flash_ok_message( _m('The items have been deactivated'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_m('%d item has been deactivated', '%d items have been deactivated',$count), $count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -123,11 +128,12 @@
                                                 $value = 1 ;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
                                                             $mItems->premium($_id);
                                                         }
-                                                        osc_add_flash_ok_message( _m('The items have been marked as premium'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d item has been marked as premium','%d items have been marked as premium', $count), $count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -138,11 +144,12 @@
                                                 $value = 0 ;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         $mItems = new ItemActions(true);
                                                         foreach ($id as $_id) {
                                                             $mItems->premium($_id,false);
                                                         }
-                                                        osc_add_flash_ok_message( _m('The changes have been made'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d change has been made', '%d changes have been made',$count) ,$count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -153,13 +160,14 @@
                                                 $value = 1 ;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
                                                                 array('b_spam' => $value),
                                                                 array('pk_i_id' => $_id)
                                                             );
                                                         }
-                                                        osc_add_flash_ok_message( _m('The items have been marked as spam'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d item has been marked as spam', '%d items have been marked as spam',$count),$count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -170,13 +178,14 @@
                                                 $value = 0 ;
                                                 try {
                                                     if ($id) {
+                                                        $count = count($id);
                                                         foreach ($id as $_id) {
                                                             $this->itemManager->update(
                                                                 array('b_spam' => $value),
                                                                 array('pk_i_id' => $_id)
                                                             );
                                                         }
-                                                        osc_add_flash_ok_message( _m('The changes have been made'), 'admin') ;
+                                                        osc_add_flash_ok_message( sprintf(_mn('%d change have been made', '%d changes have been made', $count), $count), 'admin') ;
                                                     }
                                                 } catch (Exception $e) {
                                                     osc_add_flash_error_message( sprintf(_m('Error: %s'), $e->getMessage()), 'admin') ;
@@ -187,6 +196,7 @@
                                                 $success = false;
 
                                                 if( $id != '' ) {
+                                                    $count = count($id);
                                                     foreach($id as $i) {
                                                         if ($i) {
                                                             $item = $this->itemManager->findByPrimaryKey($i) ;
@@ -196,7 +206,7 @@
                                                     }
                                                 }
                                                 if($success) {
-                                                    osc_add_flash_ok_message( _m('The item has been deleted'), 'admin') ;
+                                                    osc_add_flash_ok_message( sprintf(_mn('%d item has been deleted', '%d items have been deleted', $count), $count), 'admin') ;
                                                 } else {
                                                     osc_add_flash_error_message( _m('The item couldn\'t be deleted'), 'admin') ;
                                                 }
