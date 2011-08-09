@@ -341,7 +341,80 @@
                         echo json_encode(array('error' => __('no action defined')));
                     }
                     break;
+                case 'order_pages':
+                    $order = Params::getParam("order");
+                    $id    = Params::getParam("id");
+                    $count = osc_count_static_pages();
+                    if($order != '' && $id != '') {
+                        $mPages = Page::newInstance();
+                        $actual_page  = $mPages->findByPrimaryKey($id);
+                        $actual_order = $actual_page['i_order'];
 
+                        $array     = array();
+                        $condition = array();
+                        $new_order = $actual_order;
+
+                        if($order == 'up') {
+                            if($actual_order > 0) {
+                                $new_order = $actual_order-1;
+                            }
+                        } else if($order == 'down') {
+                            if($actual_order != ($count-1)) {
+                                $new_order = $actual_order+1;
+                            }
+                        }
+                        if($new_order != $actual_order) {
+                            $auxpage = $mPages->findByOrder($new_order);
+
+                            $array      = array('i_order' => $actual_order );
+                            $conditions = array('pk_i_id' => $auxpage['pk_i_id']);
+                            $mPages->update($array, $conditions);
+
+                            $array      = array('i_order' => $new_order );
+                            $conditions = array('pk_i_id' => $id);
+                            $mPages->update($array, $conditions);
+
+                        } else {
+                            
+                        }
+                        
+                        // json for datatables
+                        $prefLocale = osc_current_admin_locale();
+                        $aPages = $mPages->listAll(0);
+                        $json = "[";
+                        foreach($aPages as $key => $page) {
+
+                            $body = array();
+                            
+                            if(isset($page['locale'][$prefLocale]) && !empty($page['locale'][$prefLocale]['s_title'])) {
+                                $body = $page['locale'][$prefLocale];
+                            } else {
+                                $body = current($page['locale']);
+                            }
+                            $p_body =  str_replace("'", "\'", trim(strip_tags($body['s_title']), "\x22\x27"));
+
+                            $json .= "[\"<input type='checkbox' name='id[]' value='". $page['pk_i_id'] ."' />\",";
+                            $json .= "\"".$page['s_internal_name']."<div id='datatables_quick_edit'>";
+                            $json .= "<a href='". osc_static_page_url() ."'>". __('View page') ."</a> | ";
+                            $json .= "<a href='". osc_admin_base_url(true) ."?page=pages&action=edit&id=". $page['pk_i_id'] ."'>";
+                            $json .= __('Edit') ."</a>";
+                            if(!$page['b_indelible']) {
+                                $json .= " | ";
+                                $json .= "<a onclick=\\\"javascript:return confirm('";
+                                $json .= __('This action can\\\\\'t be undone. Are you sure you want to continue?') ."')\\\" ";
+                                $json .= " href='". osc_admin_base_url(true) ."?page=pages&action=delete&id=". $page['pk_i_id'] ."'>";
+                                $json .= __('Delete') ."</a>";
+                            }
+                            $json .= "</div>\",";
+                            $json .= "\"".$p_body."\",";
+                            $json .= "\"<img id='up' onclick='order_up(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_up.png') ."'/> <br/> <img id='down' onclick='order_down(". $page['pk_i_id'] .");' style='cursor:pointer;width:15;height:15px;' src='". osc_current_admin_theme_url('images/arrow_down.png')."'/>\"]";
+
+                            if( $key != count($aPages)-1 ){ $json .= ','; } else { $json .= ''; }
+                        }
+                        $json .= "]";
+                        echo $json;
+                    }
+                    break;
 
                 /******************************
                  ** COMPLETE UPGRADE PROCESS **

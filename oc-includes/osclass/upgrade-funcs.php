@@ -142,6 +142,14 @@
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'installed_plugins', '%s', 'STRING')", DB_TABLE_PREFIX, osc_get_preference('active_plugins')));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'mailserver_pop', '', 'STRING')", DB_TABLE_PREFIX));
 
+        // alert table pages order improvement
+        $conn->osc_dbExec(sprintf("ALTER TABLE %st_pages ADD COLUMN i_order INT(3) NOT NULL DEFAULT 0  AFTER dt_mod_date ;", DB_TABLE_PREFIX));
+        // order pages
+        $aPages = $conn->osc_dbFetchResults("SELECT pk_i_id FROM %st_pages WHERE b_indelible = 0", DB_TABLE_PREFIX);
+        foreach($aPages as $key => $page) {
+            $conn->osc_dbExec(sprintf("UPDATE %st_pages SET i_order = %d WHERE pk_i_id = %d ;", DB_TABLE_PREFIX, $key, $page['pk_i_id']) );
+        }
+
         osc_changeVersionTo(230) ;
     }    
 

@@ -51,3 +51,7 @@ legend {
 #button_save {
 	margin-left: 10px;
 }
+
+td img#up, td img#down{
+    float:right;
+}
