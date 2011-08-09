@@ -104,7 +104,7 @@
                                     </p>
                                     <p>
                                         <label for="watermark_text"><?php _e('Watermark text'); ?></label><br />
-                                        <input type="text" name="watermark_text" value="<?php echo htmlentities(osc_watermark_text() ); ?>"/>
+                                        <input type="text" name="watermark_text" value="<?php echo htmlentities(osc_watermark_text(), null, "UTF-8"); ?>"/>
                                     </p>
                                     <p>
                                         <label><?php _e('Watermark place'); ?></label>

@@ -93,7 +93,7 @@
 
                             <fieldset>
                                 <legend><?php _e('Description (only for internal purposes)'); ?></legend>
-                                <input type="text" name="description" id="description" value="<?php if(isset($widget['s_description'])) echo htmlentities($widget['s_description']);?>"/>
+                                <input type="text" name="description" id="description" value="<?php if(isset($widget['s_description'])) echo htmlentities($widget['s_description'],null, "UTF-8");?>"/>
                             </fieldset>
 
                             <fieldset>
