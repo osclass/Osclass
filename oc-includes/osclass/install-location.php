@@ -28,7 +28,9 @@ if( is_osclass_installed() ) {
 $json_message = array();
 $json_message['status'] = '200';
 
-basic_info();
+$result = basic_info();
+$json_message['email_status']   = $result['email_status'];
+$json_message['password']       = $result['s_password'];
 
 if( $_POST['skip-location-h'] == 0 ) {
     $msg = install_locations() ;
@@ -40,12 +42,21 @@ echo json_encode($json_message);
 function basic_info() {
     require_once LIB_PATH . 'osclass/model/Admin.php' ;
     require_once LIB_PATH . 'osclass/model/Preference.php' ;
+    require_once LIB_PATH . 'osclass/helpers/hSecurity.php' ;
+
+    if($_POST['s_name'] == ''){
+        $admin = 'admin';
+    } else { $admin = $_POST['s_name']; }
+
+    if($_POST['s_passwd'] == ''){
+        $password = osc_genRandomPassword() ;
+    } else { $password = $_POST['s_passwd']; }
 
     Admin::newInstance()->insert(
         array(
             's_name' => 'Administrator'
-            ,'s_username' => 'admin'
-            ,'s_password' => sha1('admin')
+            ,'s_username' => $admin
+            ,'s_password' => sha1($password)
             ,'s_email' => $_POST['email']
         )
     ) ;
@@ -67,6 +78,38 @@ function basic_info() {
             ,'e_type' => 'STRING'
         )
     ) ;
+    
+    $body = 'Welcome ' . $_POST['webtitle'] . ',<br/><br/>' ;
+    $body .= 'Your OSClass installation at ' . WEB_PATH . ' is up and running. You can access to the administration panel with this data access:<br/>' ;
+    $body .= '<ul>' ;
+    $body .= '<li>username: ' . $admin . '</li>' ;
+    $body .= '<li>password: ' . $password . '</li>' ;
+    $body .= '</ul>' ;
+    $body .= 'Regards,<br/>' ;
+    $body .= 'The <a href=\'http://osclass.org/\'>OSClass</a> team' ;
+
+    $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+    if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+        $sitename = substr( $sitename, 4 ) ;
+    }
+    
+    require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
+    $mail = new PHPMailer ;
+    $mail->CharSet="utf-8" ;
+    $mail->Host = "localhost" ;
+    $mail->From = 'osclass@' . $sitename ;
+    $mail->FromName = 'OSClass' ;
+    $mail->Subject = 'OSClass successfully installed!' ;
+    $mail->AddAddress($_POST['email'], 'OSClass administrator') ;
+    $mail->Body = $body ;
+    $mail->AltBody = $body ;
+    if (!$mail->Send()) {
+        return array('email_status' => $_POST['email']."<br>".$mail->ErrorInfo,
+              's_password'   => $password );
+    }else{
+        return array('email_status' => '',
+              's_password'   => $password );
+    }
 }
 
 function location_international() {
