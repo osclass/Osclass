@@ -98,6 +98,10 @@
                                 <div style="clear:both;"></div>
 
                                 <div class="watermark_text" style="<?php if(!osc_is_watermark_text()){echo "display:none;";}?>">
+                                    <?php $gd = @gd_info();
+                                        if(@$gd["FreeType Support"] == true) {
+                                    ?>
+
                                     <p>
                                         <label for="watermark_color"><?php _e('Watermark color'); ?></label><br />
                                         <input type="text" maxlength="6" id="colorpickerField" value="<?php echo osc_watermark_text_color(); ?>" name="watermark_text_color"/>
@@ -116,6 +120,11 @@
                                             <option value="br" <?php echo (osc_watermark_place() == 'br') ? 'selected="true"' : '' ; ?>><?php _e('Bottom Right') ; ?></option>
                                         </select>
                                     </p>
+                                    <?php }else{ ?>
+                                    <div id="flash_message">
+                                        <p><?php _e('Freetype library is required. How to'); ?> <a target="_blank" href="http://www.freetype.org/"><?php _e('install/configure'); ?></a></p>
+                                    </div>
+                                    <?php } ?>
                                 </div>
 
                                 <div class="watermark_image" style="<?php if(!osc_is_watermark_image()){echo "display:none;";}?>">
