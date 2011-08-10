@@ -122,7 +122,7 @@
                                     </p>
                                     <?php }else{ ?>
                                     <div id="flash_message">
-                                        <p><?php _e('Freetype library is required. How to'); ?> <a target="_blank" href="http://www.freetype.org/"><?php _e('install/configure'); ?></a></p>
+                                        <p><?php _e('Freetype library is required. How to'); ?> <a target="_blank" href="http://www.php.net/manual/en/image.installation.php"><?php _e('install/configure'); ?></a></p>
                                     </div>
                                     <?php } ?>
                                 </div>
