@@ -46,7 +46,7 @@ require_once ABS_PATH . 'config.php';
 if( !defined('MULTISITE') ) {
     define('MULTISITE', 0);
 }
-
+require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';

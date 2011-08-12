@@ -93,7 +93,12 @@
          */
         function osc_dbConnect() {
             //echo "#" , $this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName ;
-            $this->db = new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+            $this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+            /* Check  connection */
+            if (mysqli_connect_errno()) {
+                osc_die('Error connecting to \'' . $this->dbName .'\'', '<strong>Error connecting to \'' . $this->dbName . '\'</strong> <br/>(' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')');
+                exit();
+            }
             if ($this->db->connect_error) {
                 $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
             }
@@ -107,7 +112,7 @@
          * Close the database connection.
          */
         function osc_dbClose() {
-            if (!$this->db->close()) {
+            if (!@$this->db->close()) {
                 $this->debug('Error releasing the connection to \'' . $this->dbName . '\'', false) ;
             }
 
