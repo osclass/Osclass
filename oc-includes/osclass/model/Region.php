@@ -51,6 +51,10 @@
             return $this->conn->osc_dbFetchResults("SELECT pk_i_id as id, s_name as label, s_name as value FROM %s WHERE `s_name` LIKE '%s%%' %s LIMIT 5", $this->getTableName(), $query, $country_sql);
         }
 
+        public function findByNameOnCountry($query, $country) {
+            $country_sql = ($country!=null)?' AND fk_c_country_code LIKE \''.strtolower($country).'\' ':'';
+            return $this->conn->osc_dbFetchResult("SELECT pk_i_id, s_name, s_name FROM %s WHERE `s_name` LIKE '%s' %s LIMIT 1", $this->getTableName(), $query, $country_sql);
+        }
     }
 
 ?>
