@@ -1011,8 +1011,16 @@
                 }
             } else {
                 $regionId = null;
-                $regionName = $aItem['region'];   // OJO ¿ DE DONDE VIENE ?
+                $regionName = $aItem['region'];
+                if( $aItem['countryId'] != '' ) {
+                    $auxRegion  = Region::newInstance()->findByNameOnCountry($aItem['region'], $aItem['countryId'] );
+                    if($auxRegion){
+                        $regionId   = $auxRegion['pk_i_id'];
+                        $regionName = $auxRegion['s_name'];
+                    }
+                }
             }
+            
             $aItem['regionId']      = $regionId ;
             $aItem['regionName']    = $regionName;
 
@@ -1027,6 +1035,13 @@
             } else {
                 $cityId = null;
                 $cityName = $aItem['city'];
+                if( $aItem['countryId'] != '' ) {
+                    $auxCity = city::newInstance()->findByNameOnRegion($aItem['city'], $aItem['regionId'] );
+                    if($auxCity){
+                        $cityId   = $auxCity['pk_i_id'];
+                        $cityName = $auxCity['s_name'];
+                    }
+                }
             }
 
             $aItem['cityId']      = $cityId;
