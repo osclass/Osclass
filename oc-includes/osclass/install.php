@@ -25,6 +25,7 @@ define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
 define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
 define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
+define( 'OSC_INSTALLING', 1 );
 
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
