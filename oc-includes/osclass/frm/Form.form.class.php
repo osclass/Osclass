@@ -31,9 +31,10 @@
             echo '</select>' ;
         }
 
-        static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false) {
+        static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false, $autocomplete = true) {
             echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . htmlentities($value, ENT_COMPAT, "UTF-8") . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
+            if (!$autocomplete) echo ' autocomplete="off" ';
             if ($readOnly) echo 'disabled readonly ' ;
             echo '/>' ;
         }

@@ -50,6 +50,11 @@
             return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' LIMIT 1", $this->getTableName(), $name);
         }
 
+        public function findByNameOnRegion($query, $region ) {
+            $region_sql = ($region!=null)?' AND fk_i_region_id = '.$region.' ':'';
+            return $this->conn->osc_dbFetchResult("SELECT pk_i_id, s_name, s_name FROM %s WHERE `s_name` LIKE '%s' %s LIMIT 1", $this->getTableName(), $query, $region_sql);
+        }
+
     }
 
 ?>
