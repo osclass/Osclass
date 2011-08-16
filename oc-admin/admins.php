@@ -25,7 +25,8 @@
         //specific for this class
         private $adminManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,7 +34,8 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             switch ($this->action)
@@ -41,7 +43,8 @@
                 case 'add':         // callin add view
                                     $this->doView('admins/add.php') ;
                 break;
-                case 'add_post':    // adding a new admin
+                case 'add_post':    if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    // adding a new admin
                                     $sPassword = Params::getParam('s_password');
                                     $sName     = Params::getParam('s_name');
                                     $sEmail    = Params::getParam('s_email');
@@ -85,7 +88,6 @@
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
 
-
                                     $array = array('s_password' =>  sha1($sPassword)
                                                   ,'s_name'     =>  $sName
                                                   ,'s_email'    =>  $sEmail
@@ -118,7 +120,8 @@
                                     $this->_exportVariableToView("admin", $adminEdit);
                                     $this->doView('admins/edit.php') ;
                 break;
-                case 'edit_post':   // updating a new admin
+                case 'edit_post':   if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    // updating a new admin
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
 
@@ -208,7 +211,8 @@
 
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                 break;
-                case 'delete':      // deleting and admin
+                case 'delete':      if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    // deleting and admin
                                     $isDeleted = false;
                                     $adminId   = Params::getParam('id');
 
@@ -242,7 +246,8 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
