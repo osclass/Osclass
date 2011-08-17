@@ -126,6 +126,7 @@ function validate_form() {
                 form.submit();
 
             } else {
+                alert("Error:<br/>"+data);
                 window.location = 'install.php?step=4&error_location=1';
             }
         },
