@@ -362,7 +362,7 @@
         public function updateInternalName($id, $intName)
         {
             $fields = array('s_internal_name' => $intName,
-                             'dt_mod_date'    => DB_FUNC_NOW);
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
             $result = $this->update($fields, $where);
