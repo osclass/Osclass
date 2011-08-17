@@ -51,6 +51,11 @@
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
 
+                    if( !WebThemes::newInstance()->isValidPage($s_internal_name) ) {
+                        osc_add_flash_error_message( _m('You have to set a different internal name'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
+                    }
+
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray();
                     $not_empty = false;
@@ -87,6 +92,11 @@
                     $s_internal_name = Params::getParam("s_internal_name");
                     if($s_internal_name=='') {
                         osc_add_flash_error_message( _m('You have to set an internal name'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
+                    }
+
+                    if( !WebThemes::newInstance()->isValidPage($s_internal_name) ) {
+                        osc_add_flash_error_message( _m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
 
@@ -178,5 +188,4 @@
             Session::newInstance()->_clearVariables();
         }
     }
-
 ?>
