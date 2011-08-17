@@ -35,7 +35,7 @@ class Log extends DAO {
     
     public function insertLog($section, $action, $id, $data, $who, $who_id) {
         $sql = 'INSERT INTO ' . $this->getTableName() . ' (dt_date, s_section, s_action, fk_i_id, s_data, s_ip, s_who, fk_i_who_id)';
-        $sql .= ' VALUES (NOW(), \'' . $section . '\', \'' . $action . '\', \'' . $id . '\', \'' . $data . '\', \'' . $_SERVER['REMOTE_ADDR'] . '\', \'' . $who . '\', \'' . $who_id . '\' )';
+        $sql .= ' VALUES (\''.date('Y-m-d H:i:s').'\', \'' . $section . '\', \'' . $action . '\', \'' . $id . '\', \'' . $data . '\', \'' . $_SERVER['REMOTE_ADDR'] . '\', \'' . $who . '\', \'' . $who_id . '\' )';
         return $this->conn->osc_dBExec($sql);
     }
 
