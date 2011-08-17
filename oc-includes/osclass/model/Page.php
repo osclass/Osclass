@@ -308,7 +308,7 @@
 
             $sql = 'INSERT INTO ' . $this->getTableName() . ' (s_internal_name, b_indelible, dt_pub_date, dt_mod_date, i_order)';
             $sql .= ' VALUES (\'' . $aFields['s_internal_name'] . '\', ' . '\'' . $aFields['b_indelible'] . '\'';
-            $sql .= ', NOW(), NOW(), '.($order+1).')';
+            $sql .= ', \''.date('Y-m-d H:i:s').'\', \''.date('Y-m-d H:i:s').'\', '.($order+1).')';
 
             $this->conn->osc_dBExec($sql);
 
