@@ -582,7 +582,7 @@ function display_target() {
             </tbody>
         </table>
         <div class="admin-user">
-            Leaving the password input blank will generate a random password.
+            A password will be automatically generated for you if you leave this blank.
             <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="You can modify username and password if you like, only need change the inputs value." alt=""/>
         </div>
         <h2 class="title">Contact information</h2>

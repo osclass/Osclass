@@ -174,7 +174,7 @@
     function osc_highlight($txt, $len = 300, $start_tag = '<strong>', $end_tag = '</strong>') {
 
         if (strlen($txt) > $len) {
-            $txt = substr($txt, 0, $len) . "..." ;
+            $txt = mb_substr($txt, 0, $len, 'utf-8') . "..." ;
         }
 
         $query = osc_search_pattern() . " " . osc_search_city() ;
