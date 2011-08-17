@@ -395,11 +395,7 @@ function osc_copyemz($file1,$file2){
 	return $status;
 } 
 
-
-
-
-function osc_dbdump($path, $file)
-{
+function osc_dbdump($path, $file) {
     if ( !is_writable($path) ) return -5 ;
 	if($path == '') return -1 ;
 
@@ -408,7 +404,7 @@ function osc_dbdump($path, $file)
     if (!$link) return -2 ;
     
     //selecting database
-    mysql_query("SET NAMES 'utf8'", $link) ;
+    mysql_set_charset('utf8', $link) ;
     $db = mysql_select_db(DB_NAME, $link) ;
     if (!$db) return -3 ;
 
@@ -427,7 +423,6 @@ function osc_dbdump($path, $file)
 
         return -4 ;
     }
-
 
     $_str = '' ;
     $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
