@@ -92,23 +92,27 @@ function basic_info() {
     if ( substr( $sitename, 0, 4 ) == 'www.' ) {
         $sitename = substr( $sitename, 4 ) ;
     }
-    
-    require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
-    $mail = new PHPMailer ;
-    $mail->CharSet="utf-8" ;
-    $mail->Host = "localhost" ;
-    $mail->From = 'osclass@' . $sitename ;
-    $mail->FromName = 'OSClass' ;
-    $mail->Subject = 'OSClass successfully installed!' ;
-    $mail->AddAddress($_POST['email'], 'OSClass administrator') ;
-    $mail->Body = $body ;
-    $mail->AltBody = $body ;
-    if (!$mail->Send()) {
-        return array('email_status' => $_POST['email']."<br>".$mail->ErrorInfo,
-              's_password'   => $password );
-    }else{
-        return array('email_status' => '',
-              's_password'   => $password );
+
+    try{
+        require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
+        $mail = new PHPMailer(true) ;
+        $mail->CharSet="utf-8" ;
+        $mail->Host = "localhost" ;
+        $mail->From = 'osclass@' . $sitename ;
+        $mail->FromName = 'OSClass' ;
+        $mail->Subject = 'OSClass successfully installed!' ;
+        $mail->AddAddress($_POST['email'], 'OSClass administrator') ;
+        $mail->Body = $body ;
+        $mail->AltBody = $body ;
+        if (!$mail->Send()) {
+            return array('email_status' => $_POST['email']."<br>".$mail->ErrorInfo,
+                  's_password'   => $password );
+        }else{
+            return array('email_status' => '',
+                  's_password'   => $password );
+        }
+    }catch(phpmailerException $exception) {
+
     }
 }
 
