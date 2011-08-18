@@ -285,7 +285,10 @@
                     $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=delete&amp;id[]='. $aRow['pk_i_id'] .'\'>'. __('Delete') .'</a>';
 
                     if($this->stat){
-                        $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=clear_stat&amp;stat='.$this->stat.'&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Clear') .' '.$this->stat.'</a></div>",';
+                        foreach($this->stat as $key => $_stat) {
+                            $this->sOutput .= ' | <a '.$var.' href=\''.osc_admin_base_url(true).'?page=items&action=clear_stat&amp;stat='.$key.'&amp;id='. $aRow['pk_i_id'] .'\'>'. __('Clear') .' '.$key.'</a>';
+                        }
+                        $this->sOutput .= '</div>",';
                     } else {
                         $this->sOutput .= '</div></div>",';
                     }
