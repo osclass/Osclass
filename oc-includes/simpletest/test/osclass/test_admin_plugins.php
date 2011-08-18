@@ -95,14 +95,12 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("link=» Manage plugins");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Bread crumbs')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Install']");
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr/td/a[@href[contains(.,'breadcrumbs')]]");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("Plugin installed"),"Can't install plugin $plugin");
 
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Bread crumbs')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Configure']");
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr/td/a[text()='Configure' and @href[contains(.,'breadcrumbs')]]");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Breadcrumbs Help"),"Can't configure plugin $plugin");
@@ -112,8 +110,7 @@ class TestOfAdminPlugins extends WebTestCase {
         $this->selenium->click("link=» Manage plugins");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Bread crumbs')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'Bread crumbs')]/td/div/a[text()='Uninstall']");
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr/td/a[text()='Uninstall' and @href[contains(.,'breadcrumbs')]]");
         $this->selenium->waitForPageToLoad("10000");
         
         $this->assertTrue($this->selenium->isTextPresent("Plugin uninstalled"),"Can't uninstall plugin $plugin");
