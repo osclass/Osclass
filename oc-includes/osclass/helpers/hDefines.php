@@ -208,7 +208,7 @@
         } else {
             WebThemes::newInstance()->setGuiTheme();
             if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ) {
-                require WebThemes::newInstance()->getGuiThemePath() . $file;
+                require WebThemes::newInstance()->getCurrentThemePath() . $file;
             }
         }
     }
