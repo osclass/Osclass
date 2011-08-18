@@ -243,12 +243,26 @@
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {
-                            $feed->addItem(array(
-                                'title' => osc_item_title(),
-                                'link' => htmlentities( osc_item_url() ),
-                                'description' => osc_item_description(),
-                                'dt_pub_date' => osc_item_pub_date()
-                            ));
+                            
+                            if(osc_count_item_resources() > 0){
+                                osc_has_item_resources();
+                                $feed->addItem(array(
+                                    'title' => osc_item_title(),
+                                    'link' => htmlentities( osc_item_url() ),
+                                    'description' => osc_item_description(),
+                                    'dt_pub_date' => osc_item_pub_date(),
+                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url()),
+                                                           'title'  => osc_item_title(),
+                                                           'link'   => htmlentities( osc_item_url() ) )
+                                ));
+                            } else {
+                                $feed->addItem(array(
+                                    'title' => osc_item_title(),
+                                    'link' => htmlentities( osc_item_url() ),
+                                    'description' => osc_item_description(),
+                                    'dt_pub_date' => osc_item_pub_date()
+                                ));
+                            }
                         }
                     }
 

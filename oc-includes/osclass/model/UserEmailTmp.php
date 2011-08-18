@@ -46,18 +46,20 @@
         public function insertOrUpdate($userEmailTmp) {
 
             $status = $this->conn->osc_dbExec(
-                                'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', now())'
+                                'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', \'%s\')'
                                 ,$this->getTableName()
                                 ,$userEmailTmp['fk_i_user_id']
-                                ,  addslashes($userEmailTmp['s_new_email'])
+                                ,  addslashes($userEmailTmp['s_new_email']
+                                , date('Y-m-d H:i:s'))
                         ) ;
 
             if (!$status) {
                 $this->conn->osc_dbExec(
-                                'UPDATE %s SET s_new_email = \'%s\', dt_date = now() WHERE fk_i_user_id = %d'
-                                ,$this->getTableName()
-                                ,  addslashes($userEmailTmp['s_new_email'])
-                                ,$userEmailTmp['fk_i_user_id']
+                                'UPDATE %s SET s_new_email = \'%s\', dt_date = \'%s\' WHERE fk_i_user_id = %d'
+                                , $this->getTableName()
+                                , addslashes($userEmailTmp['s_new_email'])
+                                , date('Y-m-d H:i:s')
+                                , $userEmailTmp['fk_i_user_id']
                         ) ;
 
             }

@@ -249,6 +249,16 @@ function osc_doRequest($url, $_data) {
 
 function osc_sendMail($params) {
     require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
+    if(osc_mailserver_pop()) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
+        $pop = new POP3();
+        $pop->Authorise(( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
+                ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
+                30,
+                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
+                ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
+                0);
+    }
 
     $mail = new PHPMailer(true);
     try {
@@ -257,6 +267,8 @@ function osc_sendMail($params) {
         if (osc_mailserver_auth()) {
             $mail->IsSMTP() ;
             $mail->SMTPAuth = true ;
+        } else if(osc_mailserver_pop()) {
+            $mail->IsSMTP() ;
         }
 
         $mail->SMTPSecure = ( isset($params['ssl']) ) ? $params['ssl'] : osc_mailserver_ssl() ;
@@ -383,11 +395,7 @@ function osc_copyemz($file1,$file2){
 	return $status;
 } 
 
-
-
-
-function osc_dbdump($path, $file)
-{
+function osc_dbdump($path, $file) {
     if ( !is_writable($path) ) return -5 ;
 	if($path == '') return -1 ;
 
@@ -396,7 +404,7 @@ function osc_dbdump($path, $file)
     if (!$link) return -2 ;
     
     //selecting database
-    mysql_query("SET NAMES 'utf8'", $link) ;
+    mysql_set_charset('utf8', $link) ;
     $db = mysql_select_db(DB_NAME, $link) ;
     if (!$db) return -3 ;
 
@@ -415,7 +423,6 @@ function osc_dbdump($path, $file)
 
         return -4 ;
     }
-
 
     $_str = '' ;
     $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;

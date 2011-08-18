@@ -1041,7 +1041,7 @@
      */    
     function osc_total_active_items_today() {
         $search = new Search(false);
-        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < 1', DB_TABLE_PREFIX));
+        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,\'%s\') < 1', DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         return $search->count();
     }
    
@@ -1052,7 +1052,7 @@
      */    
     function osc_total_items_today() {
         $search = new Search(true);
-        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,NOW()) < 1', DB_TABLE_PREFIX));
+        $search->addConditions(sprintf('TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,\'%s\') < 1', DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         return $search->count();
     }
    

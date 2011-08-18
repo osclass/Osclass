@@ -22,23 +22,20 @@
 
     class CAdminPlugins extends AdminSecBaseModel
     {
-        //specific for this class
-        private $pageManager ;
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
-
             //specific things for this class
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
             switch ($this->action)
             {
-
                 case 'add':
                     $this->doView("plugins/add.php");
                     break;
@@ -213,12 +210,14 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
             Session::newInstance()->_clearVariables();
         }
 
-        function errorHandler($pn) {
+        function errorHandler($pn)
+        {
             if( false === is_null($aError = error_get_last()) ) {
                 Plugins::deactivate($pn);
                 osc_add_flash_error_message( sprintf(_m('There was a fatal error and the plugin was not installed.<br />Error: "%s" Line: %s<br/>File: %s'), $aError['message'], $aError['line'], $aError['file']), 'admin');

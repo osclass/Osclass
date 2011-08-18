@@ -295,29 +295,29 @@
         {
             switch($stat) {
                 case 'spam':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_spam = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_spam = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'duplicated':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_repeated = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_repeated = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'bad':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_bad_classified = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_bad_classified = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'offensive':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_offensive = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_offensive = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'expired':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_expired = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_expired = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 default:
                     break;
             }
-
+            $sql = sprintf($sql,DB_TABLE_PREFIX);
             return $this->conn->osc_dbExec($sql);
         }
 

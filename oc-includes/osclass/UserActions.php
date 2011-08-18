@@ -229,9 +229,9 @@
             
             if ($is_add) {
                 $input['s_secret'] = osc_genRandomPassword() ;
-                $input['dt_reg_date'] = DB_FUNC_NOW ;
+                $input['dt_reg_date'] = date('Y-m-d H:i:s') ;
             } else {
-                $input['dt_mod_date'] = DB_FUNC_NOW ;
+                $input['dt_mod_date'] = date('Y-m-d H:i:s') ;
             }
 
             //only for administration, in the public website this two params are edited separately

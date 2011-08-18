@@ -26,6 +26,38 @@
         private $theme_path ;
         private $theme_exists ;
 
+        private $pages = array( '404',
+                                'contact',
+                                'alert-form',
+                                'custom',
+                                'footer',
+                                'functions',
+                                'head',
+                                'header',
+                                'inc.search',
+                                'index',
+                                'item-contact',
+                                'item-edit',
+                                'item-post',
+                                'item-send-friend',
+                                'item',
+                                'main',
+                                'page',
+                                'search',
+                                'search_gallery',
+                                'search_list',
+                                'user-alerts',
+                                'user-change_email',
+                                'user-change_password',
+                                'user-dashboard',
+                                'user-forgot_password',
+                                'user-items',
+                                'user-login',
+                                'user-profile',
+                                'user-recover',
+                                'user-register',
+                                );
+
         public static function newInstance() {
             if(!self::$instance instanceof self) {
                 self::$instance = new self ;
@@ -78,6 +110,19 @@
             $this->theme = $theme ;
             $this->setCurrentThemePath() ;
             $this->setCurrentThemeUrl() ;
+        }
+
+        public function setGuiTheme() {
+            $this->theme = '' ;
+
+            $this->theme_exists = false;
+            $this->theme_path   = osc_lib_path() . 'osclass/gui/' ;
+            $this->theme_url    = osc_base_url() . 'oc-includes/osclass/gui/' ;
+
+            $functions_path = $this->getCurrentThemePath() . 'functions.php';
+            if(file_exists($functions_path)) {
+                require_once $functions_path;
+            }
         }
 
         public function getCurrentTheme() {
@@ -134,6 +179,10 @@
             $result['int_name'] = $theme;
 
             return $result;
+        }
+
+        function isValidPage($internal_name) {
+            return !in_array($internal_name, $this->pages);
         }
     }
 

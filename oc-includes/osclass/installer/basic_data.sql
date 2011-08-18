@@ -44,6 +44,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'mailserver_password', '', 'STRING')
     ,('osclass', 'mailserver_type', 'custom', 'STRING')
     ,('osclass', 'mailserver_auth', '', 'BOOLEAN')
+    ,('osclass', 'mailserver_pop', '', 'BOOLEAN')
     ,('osclass', 'mailserver_ssl', '', 'STRING')
     ,('osclass', 'currency', 'USD','STRING')
     ,('osclass', 'rewriteEnabled', '0', 'BOOLEAN')

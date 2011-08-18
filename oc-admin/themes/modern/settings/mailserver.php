@@ -94,6 +94,10 @@
                                         <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_auth() ? 'checked="true"' : ''); ?> name="mailserver_auth" id="mailserver_auth" />
                                         <label for="mailserver_auth"><?php _e('Enable SMTP authentication'); ?></label>
                                     </p>
+                                    <p>
+                                        <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" <?php echo (osc_mailserver_pop() ? 'checked="true"' : ''); ?> name="mailserver_pop" id="mailserver_pop" />
+                                        <label for="mailserver_pop"><?php _e('Use a POP before SMTP'); ?></label>
+                                    </p>
                                 </fieldset>
                             </div>
 
@@ -101,6 +105,20 @@
                                 <fieldset>
                                     <legend><?php _e('Help'); ?></legend>
                                     <label><?php _e('Enter your e-mail server configuration'); ?></label>
+
+                                    <?php
+                                        $aModules = @apache_get_modules();
+                                        $ssl = false;
+                                        foreach( $aModules as  $mod ){
+                                            if($mod == 'mod_ssl') { $ssl = true; }
+                                        }
+                                    ?>
+                                    <?php if(!$ssl){?>
+                                    <div id="flash_message">
+                                        <p>mod_ssl <?php _e('not found');?></p>
+                                    </div>
+                                    <?php }?>
+                                    
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>

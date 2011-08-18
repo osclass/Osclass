@@ -53,14 +53,14 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Real name'); ?> (<?php _e('required'); ?>)</legend>
-                                    <input type="text" name="s_name" id="s_name" value="<?php echo htmlentities($adminEdit['s_name']); ?>" />
+                                    <input type="text" name="s_name" id="s_name" value="<?php echo htmlentities($adminEdit['s_name'],null, "UTF-8"); ?>" />
                                 </fieldset>
                             </div>
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('E-mail'); ?></legend>
-                                    <input type="text" name="s_email" id="s_email" value="<?php echo htmlentities($adminEdit['s_email']); ?>" />
+                                    <input type="text" name="s_email" id="s_email" value="<?php echo htmlentities($adminEdit['s_email'],null, "UTF-8"); ?>" />
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
@@ -68,7 +68,7 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('User name'); ?> (<?php _e('required'); ?>)</legend>
-                                    <input type="text" name="s_username" id="s_username" value="<?php echo htmlentities($adminEdit['s_username']); ?>" />
+                                    <input type="text" name="s_username" id="s_username" value="<?php echo htmlentities($adminEdit['s_username'],null, "UTF-8"); ?>" />
                                 </fieldset>
                             </div>
 

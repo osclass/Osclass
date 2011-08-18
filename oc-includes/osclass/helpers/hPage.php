@@ -86,17 +86,21 @@
     }
 
     /**
+     * Get page order
+     *
+     * @return int
+     */
+    function osc_static_page_order() {
+        return (int)osc_static_page_field("i_order") ;
+    }
+
+    /**
      * Gets current page modification date
      *
      * @return string
      */
     function osc_static_page_mod_date() {
-        $date = osc_static_page_field("pk_i_id") ;
-        if($date!='') {
-            return $date;
-        } else {
-            return osc_static_page_pub_date();
-        }
+        return osc_static_page_field("dt_mod_date") ;
     }
 
     /**

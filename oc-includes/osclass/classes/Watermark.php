@@ -5,7 +5,7 @@ class Watermark{
     private $color;
 
     public function __construct() {
-        $this->font = LIB_PATH . "osclass/classes/Arial.ttf";
+        $this->font = osc_apply_filter('watermark_font_path', LIB_PATH . "osclass/classes/Arial.ttf");
     }
 
     /**
@@ -82,7 +82,7 @@ class Watermark{
         $offset = $this->calculateOffset($image, $text);
 
         // Add the text to image
-        imagettftext($image, 20, 0, $offset['x'], $offset['y'], $color, $this->font , $text);
+        imagettftext($image, 20, 0, $offset['x'], $offset['y'], $color, $this->font , html_entity_decode($text, null, "UTF-8"));
         return $image;
     }
     /**

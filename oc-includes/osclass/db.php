@@ -93,8 +93,12 @@
          */
         function osc_dbConnect() {
             //echo "#" , $this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName ;
-            $this->db = new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+            $this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
             if ($this->db->connect_error) {
+                if( !defined('OSC_INSTALLING') ) {
+                    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+                    osc_die('Error connecting to database', '<strong>Error connecting to database</strong><br/>Cannot connect to database name: \'' . $this->dbName . '\'');
+                }
                 $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
             }
 
@@ -107,7 +111,7 @@
          * Close the database connection.
          */
         function osc_dbClose() {
-            if (!$this->db->close()) {
+            if (!@$this->db->close()) {
                 $this->debug('Error releasing the connection to \'' . $this->dbName . '\'', false) ;
             }
 

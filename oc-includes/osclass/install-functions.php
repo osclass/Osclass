@@ -52,6 +52,7 @@ function get_relative_url( ) {
  * @return array Requirements
  */
 function get_requirements( ) {
+    $gd = gd_info();
     $array = array(
         'PHP version >= 5.x' => version_compare(PHP_VERSION, '5.0.0', '>='),
         'MySQLi extension for PHP' => extension_loaded('mysqli'),
@@ -421,8 +422,7 @@ function is_osclass_installed( ) {
     return false;
 }
 
-function finish_installation( ) {
-    require_once LIB_PATH . 'osclass/helpers/hSecurity.php' ;
+function finish_installation( $password ) {
     require_once LIB_PATH . 'osclass/model/Admin.php' ;
     require_once LIB_PATH . 'osclass/model/Preference.php' ;
     require_once LIB_PATH . 'osclass/model/Category.php';
@@ -434,14 +434,8 @@ function finish_installation( ) {
     require_once LIB_PATH . 'osclass/utils.php';
     
     $data = array();
-    $password = osc_genRandomPassword() ;
 
     $mAdmin = new Admin() ;
-    $admin_user = 'admin' ;
-    $admin = $mAdmin->update (
-        array('s_password' => sha1($password))
-        ,array('s_username' => $admin_user)
-    ) ;
 
     $mPreference = Preference::newInstance() ;
     $mPreference->insert (
@@ -472,36 +466,8 @@ function finish_installation( ) {
     $admin = $mAdmin->findByPrimaryKey(1) ;
 
     $data['s_email'] = $admin['s_email'] ;
-    $data['admin_user'] = $admin_user ;
-    $data['password'] = $password ;
-    
-    $body = 'Welcome ' . $mPreference->get('pageTitle') . ',<br/><br/>' ;
-    $body .= 'Your OSClass installation at ' . WEB_PATH . ' is up and running. You can access to the administration panel with this data access:<br/>' ;
-    $body .= '<ul>' ;
-    $body .= '<li>username: ' . $admin_user . '</li>' ;
-    $body .= '<li>password: ' . $password . '</li>' ;
-    $body .= '</ul>' ;
-    $body .= 'Regards,<br/>' ;
-    $body .= 'The <a href=\'http://osclass.org/\'>OSClass</a> team' ;
-
-    $sitename = strtolower( $_SERVER['SERVER_NAME'] );
-    if ( substr( $sitename, 0, 4 ) == 'www.' ) {
-        $sitename = substr( $sitename, 4 ) ;
-    }
-    require_once LIB_PATH . 'phpmailer/class.phpmailer.php' ;
-    $mail = new PHPMailer ;
-    $mail->CharSet="utf-8" ;
-    $mail->Host = "localhost" ;
-    $mail->From = 'osclass@' . $sitename ;
-    $mail->FromName = 'OSClass' ;
-    $mail->Subject = 'OSClass successfully installed!' ;
-    $mail->AddAddress($admin['s_email'], 'OSClass administrator') ;
-    $mail->Body = $body ;
-    $mail->AltBody = $body ;
-    if (!$mail->Send()) {
-        echo $admin['s_email']."<br>";
-        echo $mail->ErrorInfo ;
-    }
+    $data['admin_user'] = $admin['s_username'] ;
+    $data['password'] = $password;
 
     return $data ;
 }
@@ -596,6 +562,29 @@ function display_target() {
 <form id="target_form" name="target_form" action="#" method="POST" onsubmit="return false;">
     <h2 class="target">Information needed</h2>
     <div class="form-table">
+        <h2 class="title">Admin user</h2>
+        <table class="admin-user">
+            <tbody>
+                <tr>
+                    <th><label>Username</label></th>
+                    <td>
+                        <input size="25" id="admin_user" name="s_name" type="text" value="admin"/>
+                    </td>
+                    <td><span id="admin-user-error" class="error" style="display:none;">Admin user is required</span></td>
+                </tr>
+                <tr>
+                    <th><label>Password</label></th>
+                    <td>
+                        <input size="25" class="password_test" name="s_passwd" type="text" value=""/>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="admin-user">
+            A password will be automatically generated for you if you leave this blank.
+            <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="You can modify username and password if you like, only need change the inputs value." alt=""/>
+        </div>
         <h2 class="title">Contact information</h2>
         <table class="contact-info">
             <tbody>
@@ -613,9 +602,6 @@ function display_target() {
         </table>
         <h2 class="title">Location</h2>
         <p class="space-left-25 left no-bottom">Choose countries/cities where your target users are located</p>
-        <!--<div id="location-question" class="left question">
-            <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="Worldwide install all the countries. However, if you choose 'Country' and you write one specific country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific." alt=""/>
-        </div>-->
         <div id="location-question" class="left question">
             <img class="vtip" src="<?php echo get_absolute_url(); ?>oc-includes/images/question.png" title="Once you write a country, you'll be able to choose region and city too. Therefore, the intallation'll be more specific." alt=""/>
         </div>
@@ -690,7 +676,7 @@ function display_database_error($error ,$step) {
 <?php
 }
 
-function display_categories() {
+function display_categories($error, $password) {
     require_once ABS_PATH . 'config.php';
     require_once LIB_PATH . 'osclass/model/Category.php';
 
@@ -698,7 +684,16 @@ function display_categories() {
     $numCols = 3;
     $catsPerCol = ceil(count($categories)/$numCols) ;
 ?>
+<?php if($error) { ?>
+
+    <h2 class="target">Error</h2>
+    <p class="bottom space-left-10">
+        <?php echo $error;?>
+    </p>
+
+<?php } ?>
 <form id="category_form" action="install.php?step=5" method="POST">
+    <input type="hidden" name="password" value="<?php echo $password;?>"/>
     <h2 class="target">Categories</h2>
     <div class="form-table">
         <?php if(Params::getParam('error_location') == 1) { ?>
@@ -788,16 +783,12 @@ function ping_search_engines($bool){
         ) ;
     }
 }
-function display_finish() {
-    $data = finish_installation( );
+function display_finish($password) {
+    $data = finish_installation( $password );
 ?>
 <h2 class="target">Congratulations!</h2>
 <p class="space-left-10">OSClass has been installed. Were you expecting more steps? Sorry to disappoint.</p>
 <p class="space-left-10">An e-mail with the password for oc-admin has sent to: <?php echo $data['s_email']?></p>
-<input type="hidden" value="<?php echo $data['password']; ?>" name="original_passwd"/>
-<div style="margin:0 auto 0 auto;width:390px;height: 35px;">
-<span id="result" class="testresult" style="display:none;height: 20px;"><span></span></span>
-</div>
 <div style="clear:both;"></div>
 <div class="form-table finish">
     <table>
@@ -807,15 +798,6 @@ function display_finish() {
                 <td>
                     <div class="s_name">
                         <span style="float:left;" ><?php echo $data['admin_user']; ?></span>
-                        <div style="cursor: pointer; height: 20px; float: left;" >
-                            <img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
-                            &nbsp;
-                            <span class="update_info_name" style="color:#444444; display:none; font-size: 12px;"> Modify </span>
-                        </div>
-                    </div>
-                    <div class="s_name_input" style=" display:none;">
-                        <input id="user_id" name="s_name" type="text" value="<?php echo $data['admin_user']; ?>" style="float:left; width: 120px;" /> 
-                        <button>Update</button>
                     </div>
                 </td>
             </tr>
@@ -824,125 +806,12 @@ function display_finish() {
                 <td>
                     <div class="s_passwd">
                         <span style="float: left;"><?php echo $data['password']; ?></span>
-                        <div style="cursor: pointer; height: 20px; float: left;" >
-                            <img style="padding-left: 10px;" src="<?php echo get_absolute_url(); ?>oc-admin/images/edit.png" alt="Modify" title="Modify"/>
-                            &nbsp;
-                            <span class="update_info_passwd" style="color:#444444; display:none; font-size: 12px;"> Modify </span>
-                        </div>
                     </div>
-                    <div class="s_passwd_input" style=" display:none;">
-                        <input class="password_test" name="s_passwd" type="text" value="<?php echo $data['password']; ?>" style="float:left; width: 120px;" />
-                        <button>Update</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th></th>
-                <td>
-                    Note that password carefully! It is a random password that was generated just for you.
-                    <img src="<?php echo get_absolute_url() ?>oc-includes/images/question.png" class="question-skip vtip" title="You can modify username and password if you like, only need click them and update it!." alt=""/>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-<script type="text/javascript">
-    $(".s_name div").click(function () {
-        $(this).parent().hide();
-        $('.s_name_input').show();
-    });
-    $(".s_passwd div").click(function () {
-        $(this).parent().hide();
-        $('.s_passwd_input').show();
-    });
-
-    $('.s_name div').hover(
-        function () {
-            $('.update_info_name').show()
-        },
-        function () {
-            $('.update_info_name').hide()
-        }
-    );
-
-    $('.s_passwd div').hover(
-        function () {
-            $('.update_info_passwd').show()
-        },
-        function () {
-            $('.update_info_passwd').hide()
-        }
-    );
-
-    $(".s_name_input button").click( function(){ update_username(); } );
-
-    $("input[name='s_name']").keypress(function(e) {
-        if(e.keyCode == 13) {
-            update_username();
-        }
-    });
-
-    $(".s_passwd_input button").click( function(){ update_passwd(); } );
-    $("input[name='s_passwd']").keypress(function(e) {
-        if(e.keyCode == 13) {
-            update_passwd();
-        }
-    });
-
-    function update_username(){
-        // ajax update user
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo get_absolute_url(); ?>oc-includes/osclass/update_admin.php?old_password=' + $('input[name="original_passwd"]').val() + '&new_username=' + $('.s_name_input input').val(),
-            timeout: 2000,
-            dataType: 'json',
-            success: function(data) {
-                if(data.error){
-                    $('#result span').html("There have been some error.");
-                    $('#result').addClass('badPass');
-                    $('#result').fadeIn();
-                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
-                } else {
-                    $('.s_name span:first').html( $('.s_name_input input').val() );
-                    $('#result span').html("Updated correctly.");
-                    $('#result').addClass('strongPass');
-                    $('#result').fadeIn();
-                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
-                }
-            }
-        });
-        $('.s_name_input').hide();
-        $('.s_name').show();
-    }
-
-    function update_passwd(){
-        // ajax update passwd
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo get_absolute_url(); ?>oc-includes/osclass/update_admin.php?old_password=' + $('input[name="original_passwd"]').val() + '&new_password=' + $('.s_passwd_input input').val(),
-            timeout: 2000,
-            dataType: 'json',
-            success: function(data) {
-               if(data.error){
-                    $('.s_passwd_input input').val( $('.s_passwd span:first').html() );
-                    $('#result span').html("There have been some error.");
-                    $('#result').addClass('badPass');
-                    $('#result').fadeIn();
-                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
-                } else {
-                    $('input[name="original_passwd"]').val( $('.s_passwd_input input').val() );
-                    $('.s_passwd span:first').html( $('.s_passwd_input input').val() );
-                    $('#result span').html("Updated correctly.");
-                    $('#result').addClass('strongPass');
-                    $('#result').fadeIn();
-                    setInterval(function(){ $('#result').fadeOut(); }, 2000);
-                }
-            }
-        });
-        $('.s_passwd_input').hide();
-        $('.s_passwd').show();
-    }
-</script>
 <p class="margin20">
     <a target="_blank" href="<?php echo get_absolute_url() ?>oc-admin/index.php" class="button">Finish and go to the administration panel</a>
 </p>

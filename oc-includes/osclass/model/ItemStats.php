@@ -34,11 +34,11 @@
         public function getTableName() { return DB_TABLE_PREFIX . 't_item_stats'; }
 
         public function increase($column, $id) {
-           $this->conn->osc_dbExec('INSERT INTO %s (fk_i_item_id, dt_date, %3$s) VALUES (%d, NOW(),1) ON DUPLICATE KEY UPDATE %3$s = %3$s + 1', $this->getTableName(), $id, $column) ;
+           $this->conn->osc_dbExec('INSERT INTO %s (fk_i_item_id, dt_date, %3$s) VALUES (%d, \'%4$s\',1) ON DUPLICATE KEY UPDATE %3$s = %3$s + 1', $this->getTableName(), $id, $column, date('Y-m-d H:i:s')) ;
         }
 
         public function emptyRow($id) {
-           $this->conn->osc_dbExec('INSERT INTO %s (fk_i_item_id, dt_date) VALUES (%d, NOW())', $this->getTableName(), $id) ;
+           $this->conn->osc_dbExec('INSERT INTO %s (fk_i_item_id, dt_date) VALUES (%d, \'%s\')', $this->getTableName(), $id, date('Y-m-d H:i:s')) ;
         }
     }
 
