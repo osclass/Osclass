@@ -516,6 +516,9 @@
                                                                             osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                     case ('1'): $msg = _m('One currency has been deleted');
+                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
+                                                                    break;
+                                                                    case ('-1'): $msg = sprintf(_m("%s could not be deleted because this currency still in use"), $currencyCode);
                                                                             osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                     default:    $msg = sprintf(_m('%s currencies have been deleted'), $rowChanged);
