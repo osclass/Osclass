@@ -112,6 +112,19 @@
             $this->setCurrentThemeUrl() ;
         }
 
+        public function setGuiTheme() {
+            $this->theme = '' ;
+
+            $this->theme_exists = false;
+            $this->theme_path   = osc_lib_path() . 'osclass/gui/' ;
+            $this->theme_url    = osc_base_url() . 'oc-includes/osclass/gui/' ;
+
+            $functions_path = $this->getCurrentThemePath() . 'functions.php';
+            if(file_exists($functions_path)) {
+                require_once $functions_path;
+            }
+        }
+
         public function getCurrentTheme() {
             return $this->theme ;
         }
