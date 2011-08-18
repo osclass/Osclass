@@ -66,6 +66,9 @@ class TestOfInstaller extends WebTestCase {
                 $this->can_continue = false;
             }
             $this->assertTrue( $this->selenium->isTextPresent("Information needed"), "IS NOT STEP 3 ! (information needed)" );
+            $this->selenium->type("s_name", "admin");
+            $this->selenium->type("s_passwd", "admin");
+            
             $this->selenium->type("webtitle", "test_web_osclass");
             $this->selenium->type("email", "carlos@osclass.org");
 
@@ -83,16 +86,6 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->waitForPageToLoad("30000");
             // step 5
             $this->assertTrue($this->selenium->isTextPresent("OSClass has been installed."), "OSClass has NOT been installed!");
-            // test change password
-            $this->selenium->click("//div[contains(@class,'s_passwd')]/div/img[contains(@alt,'Modify')]");
-            $this->selenium->type("s_passwd", "new_passwd");
-            $this->selenium->click("xpath=//button[text()='Update']");
-            sleep(2);
-            $value = $this->selenium->getValue("s_passwd");
-
-            $this->assertEqual($value, "new_passwd") ; //($this->selenium->isTextPresent("new_passwd"), "Passwd NOT changed !");
-
-            
         } else {
             echo "<div style='background-color: red; color: white;padding-left:15px;'>$config_file EXIST, CANNOT INSTALL OSCLASS IF EXIST</div>";
             $this->can_continue = false;
