@@ -202,7 +202,15 @@
      * @return string
      */
     function osc_current_web_theme_path($file = '') {
-        require WebThemes::newInstance()->getCurrentThemePath() . $file ;
+
+        if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ){
+            require WebThemes::newInstance()->getCurrentThemePath() . $file ;
+        } else {
+            WebThemes::newInstance()->setGuiTheme();
+            if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ) {
+                require WebThemes::newInstance()->getGuiThemePath() . $file;
+            }
+        }
     }
 
     /**

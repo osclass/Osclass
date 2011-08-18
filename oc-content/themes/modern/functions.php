@@ -19,30 +19,34 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    function add_logo_header() {
-         $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
-         $js   = "<script>
-                      $(document).ready(function () {
-                          $('#logo').html('".$html."');
-                      });
-                  </script>";
+    if( !function_exists('add_logo_header') ) {
+        function add_logo_header() {
+             $html = '<img border="0" alt="' . osc_page_title() . '" src="' . osc_current_web_theme_url('images/logo.jpg') . '">';
+             $js   = "<script>
+                          $(document).ready(function () {
+                              $('#logo').html('".$html."');
+                          });
+                      </script>";
 
-         if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
-            echo $js;
-         }
+             if( file_exists( WebThemes::newInstance()->getCurrentThemePath() . "images/logo.jpg" ) ) {
+                echo $js;
+             }
+        }
+
+        osc_add_hook("header", "add_logo_header");
     }
 
-    osc_add_hook("header", "add_logo_header");
+    if( !function_exists('modern_admin_menu') ) {
+        function modern_admin_menu() {
+            echo '<h3><a href="#">'. __('Modern theme','modern') .'</a></h3>
+            <ul>
+                <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
+            </ul>';
+        }
 
-    function modern_admin_menu() {
-        echo '<h3><a href="#">'. __('Modern theme','modern') .'</a></h3>
-        <ul>
-            <li><a href="' . osc_admin_render_theme_url('oc-content/themes/modern/admin/admin_settings.php') . '">&raquo; '.__('Settings theme', 'modern').'</a></li>
-        </ul>';
+        osc_add_hook('admin_menu', 'modern_admin_menu');
     }
-
-    osc_add_hook('admin_menu', 'modern_admin_menu');
-
+    
     if( !function_exists('meta_title') ) {
         function meta_title( ) {
             $location = Rewrite::newInstance()->get_location();
