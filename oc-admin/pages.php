@@ -123,7 +123,6 @@
                     } else {
                         osc_add_flash_error_message( _m('Oops! That internal name is already in use. We can\'t made the changes'), 'admin') ;
                     }
-                    die();
                     $this->redirectTo(osc_admin_base_url(true)."?page=pages");
                     break;
                 case 'delete':
