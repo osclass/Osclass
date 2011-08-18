@@ -49,8 +49,8 @@
                                 'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', \'%s\')'
                                 ,$this->getTableName()
                                 ,$userEmailTmp['fk_i_user_id']
-                                ,  addslashes($userEmailTmp['s_new_email']
-                                , date('Y-m-d H:i:s'))
+                                ,  addslashes($userEmailTmp['s_new_email'])
+                                , date('Y-m-d H:i:s')
                         ) ;
 
             if (!$status) {
