@@ -515,7 +515,11 @@
                 case('mailserver'):     // calling the mailserver view
                                         $this->doView('settings/mailserver.php');
                 break;
-                case('mailserver_post'):// updating mailserver
+                case('mailserver_post'):if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                        }
+                                        // updating mailserver
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
                                         $mailserverAuth     = ($mailserverAuth != '' ? true : false);
@@ -699,15 +703,19 @@
                                         $sCurrency     = strip_tags($sCurrency);
                                         $sWeekStart    = strip_tags($sWeekStart);
                                         $sTimeFormat   = strip_tags($sTimeFormat);
-                                        $sNumRssItems  = strip_tags($sNumRssItems);
-                                        $maxLatestItems = strip_tags($maxLatestItems);
+                                        $sNumRssItems  = (int)strip_tags($sNumRssItems);
+                                        $maxLatestItems = (int)strip_tags($maxLatestItems);
+
+                                        $error = "";
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        if( !defined('DEMO') ) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        }
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'language'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
@@ -718,13 +726,30 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                        if(is_int($sNumRssItems)) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                        } else {
+                                            if($error != '') $error .= "<br/>";
+                                            $error .= _m('Number of items in the RSS must be integer');
+                                        }
+
+                                        if(is_int($maxLatestItems)) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                        } else {
+                                            if($error != '') $error .= "<br/>";
+                                            $error .= _m('Number of recent items displayed at home must be integer');
+                                        }
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                            if($error != '') {
+                                                osc_add_flash_error_message( $error . "<br/>" . _m('General settings have been updated'), 'admin');
+                                            } else {
+                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                            }
+                                        } else if($error != '') {
+                                            osc_add_flash_error_message( $error , 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');

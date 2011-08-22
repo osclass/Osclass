@@ -33,7 +33,11 @@
                 case 'import':          // calling import view
                                         $this->doView('tools/import.php');
                 break;
-                case 'import_post':     // calling
+                case 'import_post':     if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import');
+                                        }
+                                        // calling
                                         $sql = Params::getFiles('sql') ;
                                         if(isset($sql['size']) && $sql['size']!=0) {
                                             //dev.conquer: if the file es too big, we can have problems with the upload or with memory
@@ -53,7 +57,10 @@
                 case 'images':          // calling images view
                                         $this->doView('tools/images.php') ;
                 break;
-                case 'images_post':
+                case 'images_post':     if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
+                                        }
                                         $preferences = Preference::newInstance()->toArray() ;
 
                                         $wat = new Watermark();
@@ -132,7 +139,11 @@
                 case 'backup':
                                         $this->doView('tools/backup.php') ;
                 break;
-                case 'backup-sql':      //databasse dump...
+                case 'backup-sql':      if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                                        }
+                                        //databasse dump...
                                         if( Params::getParam('bck_dir') != '' ) {
                                             $path = trim( Params::getParam('bck_dir') ) ;
                                             if(substr($path, -1, 1) != "/") {
@@ -165,7 +176,11 @@
                                         }
                                         $this->redirectTo( osc_admin_base_url(true) . '?page=tools&action=backup' ) ;
                 break;
-                case 'backup-zip':      //zip of the code just to back it up
+                case 'backup-zip':      if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=backup');
+                                        }
+                                        //zip of the code just to back it up
                                         if( Params::getParam('bck_dir') != '' ) {
                                             $archive_name = trim( Params::getParam('bck_dir') ) ;
                                             if(substr(trim($archive_name), -1, 1) != "/") {
@@ -189,7 +204,11 @@
                 case 'backup_post':
                                         $this->doView('tools/backup.php');
                 break;
-                case 'maintenance':
+                case 'maintenance':     if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->doView('tools/maintenance.php');
+                                            break;
+                                        }
                                         $mode = Params::getParam('mode');
                                         if($mode=='on') {
                                             $maintenance_file = ABS_PATH . '.maintenance';
