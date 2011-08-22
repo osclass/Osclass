@@ -27,6 +27,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript">
+
+            function validateInt(field,default_value) {
+                var regExpr = /^\d*$/;
+                if (!regExpr.test(field.value)) {
+                  // Case of error
+                  field.value = default_value;
+                }
+            }
+
+        </script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
@@ -163,27 +174,14 @@
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Number of items in the RSS') ; ?></legend>
-                                    <select name="num_rss_items" id="num_rss_items">
-                                        <option value="10" <?php echo (osc_num_rss_items() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
-                                        <option value="25" <?php echo (osc_num_rss_items() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
-                                        <option value="50" <?php echo (osc_num_rss_items() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
-                                        <option value="75" <?php echo (osc_num_rss_items() == '75') ? 'selected="selected"' : '' ; ?>>75</option>
-                                        <option value="100" <?php echo (osc_num_rss_items() == '100') ? 'selected="selected"' : '' ; ?>>100</option>
-                                        <option value="150" <?php echo (osc_num_rss_items() == '150') ? 'selected="selected"' : '' ; ?>>150</option>
-                                        <option value="200" <?php echo (osc_num_rss_items() == '200') ? 'selected="selected"' : '' ; ?>>200</option>
-                                    </select>
+                                    <input type="text" id="num_rss_items" name="num_rss_items" value="<?php echo osc_num_rss_items(); ?>" onblur='validateInt(this,<?php echo osc_num_rss_items(); ?>)'/>
                                 </fieldset>
                             </div>
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('Number of recent items displayed at home') ; ?></legend>
-                                    <select name="max_latest_items_at_home" id="max_latest_items_at_home">
-                                        <option value="5" <?php echo (osc_max_latest_items_at_home() == '5') ? 'selected="selected"' : '' ; ?>>5</option>
-                                        <option value="10" <?php echo (osc_max_latest_items_at_home() == '10') ? 'selected="selected"' : '' ; ?>>10</option>
-                                        <option value="25" <?php echo (osc_max_latest_items_at_home() == '25') ? 'selected="selected"' : '' ; ?>>25</option>
-                                        <option value="50" <?php echo (osc_max_latest_items_at_home() == '50') ? 'selected="selected"' : '' ; ?>>50</option>
-                                    </select>
+                                    <input type="text" name="max_latest_items_at_home" id="max_latest_items_at_home" value="<?php echo osc_max_latest_items_at_home(); ?>" onblur='validateInt(this,<?php echo osc_max_latest_items_at_home(); ?>)'/>
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>
