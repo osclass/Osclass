@@ -515,7 +515,10 @@
                 case('mailserver'):     // calling the mailserver view
                                         $this->doView('settings/mailserver.php');
                 break;
-                case('mailserver_post'):if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                case('mailserver_post'):if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                        }
                                         // updating mailserver
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
