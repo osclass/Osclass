@@ -34,82 +34,82 @@ class TestOfAdminGeneralSettings extends WebTestCase {
     }
     
     /*           TESTS          */
-    function testCronTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCronTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - ON/OFF CRON</div>";
-        $this->cronTab() ;
-        flush();
-    }
-
-    function testMediaTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testMediaTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - MEDIA SETTINGS</div>";
-        $this->mediaTab() ;
-        flush();
-    }
-
-    function testMailServerTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testMailServerTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - MAIL SERVER SETTINGS</div>";
-        $this->mailServer() ;
-        flush();
-    }
-
-    function testSpamAndBotsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testSpamAndBotsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - SPAM AND BOTS SETTINGS</div>";
-        $this->spamAndBots() ;
-        flush();
-    }
-
-    function testPermalinksTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testPermalinksTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - PERMALINKS SETTINGS</div>";
-        $this->permalinks() ;
-        flush();
-    }
-
-    function testContactTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testContactTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - CONTACT SETTINGS</div>";
-        $this->contact() ;
-        flush();
-    }
-
-    function testCommentsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCommentsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - COMMENTS SETTINGS</div>";
-        $this->comments() ;
-        flush();
-    }
+//    function testCronTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testCronTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - ON/OFF CRON</div>";
+//        $this->cronTab() ;
+//        flush();
+//    }
+//
+//    function testMediaTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testMediaTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - MEDIA SETTINGS</div>";
+//        $this->mediaTab() ;
+//        flush();
+//    }
+//
+//    function testMailServerTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testMailServerTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - MAIL SERVER SETTINGS</div>";
+//        $this->mailServer() ;
+//        flush();
+//    }
+//
+//    function testSpamAndBotsTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testSpamAndBotsTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - SPAM AND BOTS SETTINGS</div>";
+//        $this->spamAndBots() ;
+//        flush();
+//    }
+//
+//    function testPermalinksTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testPermalinksTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - PERMALINKS SETTINGS</div>";
+//        $this->permalinks() ;
+//        flush();
+//    }
+//
+//    function testContactTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testContactTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - CONTACT SETTINGS</div>";
+//        $this->contact() ;
+//        flush();
+//    }
+//
+//    function testCommentsTab()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testCommentsTab</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - COMMENTS SETTINGS</div>";
+//        $this->comments() ;
+//        flush();
+//    }
 
     function testGeneralSettings()
     {
@@ -122,36 +122,36 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         flush();
     }
 
-    function testLocations()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
-        $this->loginCorrect();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
-        $this->locationsGEO();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
-        $this->locationsNEW();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - (ADD FORCE ERROR) </div>";
-        $this->locationsNEWForceError();
-        flush();
-    }
-
-    function testCurrencies()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCurrencies</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD & EDIT & DELETE CURRENCIES SETTINGS </div>";
-        $this->currency() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD CURRENCIES SETTINGS (INSERT TWICE) </div>";
-        $this->addCurrencyTwice() ;
-        flush();
-    }
+//    function testLocations()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
+//        $this->loginCorrect();
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
+//        $this->locationsGEO();
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
+//        $this->locationsNEW();
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - (ADD FORCE ERROR) </div>";
+//        $this->locationsNEWForceError();
+//        flush();
+//    }
+//
+//    function testCurrencies()
+//    {
+//        echo "<div style='background-color: green; color: white;'><h2>testCurrencies</h2></div>";
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - LOGIN </div>";
+//        $this->loginCorrect() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD & EDIT & DELETE CURRENCIES SETTINGS </div>";
+//        $this->currency() ;
+//        flush();
+//        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD CURRENCIES SETTINGS (INSERT TWICE) </div>";
+//        $this->addCurrencyTwice() ;
+//        flush();
+//    }
 
         /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
@@ -674,6 +674,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $pref['weekStart']      = Preference::newInstance()->findValueByName('weekStart') ;
         $pref['num_rss_items']  = Preference::newInstance()->findValueByName('num_rss_items') ;
         $pref['tf']             = Preference::newInstance()->findValueByName('timeFormat') ;
+        $pref['max_latest_items_at_home']  = Preference::newInstance()->findValueByName('maxLatestItems@home') ;
 
         return $pref;
     }
@@ -692,7 +693,8 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->selenium->select("currency_admin", "label=EUR");
         $this->selenium->select("weekStart"     , "label=Saturday");
-        $this->selenium->select("num_rss_items" , "label=25");
+        $this->selenium->type("num_rss_items" , "25");
+        $this->selenium->type("max_latest_items_at_home" , "20");
 
         $this->selenium->click("m/d/Y");
         $this->selenium->click("H:i");
@@ -708,6 +710,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('currency')      , 'EUR' ) ;
         $this->assertEqual( $this->selenium->getValue('weekStart')     , '6' ) ;
         $this->assertEqual( $this->selenium->getValue('num_rss_items') , '25'  ) ;
+        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , '20'  ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i" ) ;
 
         $this->selenium->click("link=General settings");
@@ -720,7 +723,8 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->selenium->select("currency_admin", "label=" . $pref['currency'] ) ;
         $this->selenium->select("weekStart"     , "value=" . $pref['weekStart'] ) ;
-        $this->selenium->select("num_rss_items" , "label=" . $pref['num_rss_items'] ) ;
+        $this->selenium->type("num_rss_items" , $pref['num_rss_items'] ) ;
+        $this->selenium->type("max_latest_items_at_home" , $pref['max_latest_items_at_home'] ) ;
 
         $this->selenium->click($pref['df']);
         $this->selenium->click($pref['tf']);
@@ -737,6 +741,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('weekStart')     , $pref['weekStart'] ) ;
         $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  ) ;
         $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf'] ) ;
+        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home'] ) ;
     }
 
     private function locationsGEO()
