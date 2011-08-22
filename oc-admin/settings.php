@@ -515,7 +515,8 @@
                 case('mailserver'):     // calling the mailserver view
                                         $this->doView('settings/mailserver.php');
                 break;
-                case('mailserver_post'):// updating mailserver
+                case('mailserver_post'):if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                        // updating mailserver
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
                                         $mailserverAuth     = ($mailserverAuth != '' ? true : false);
@@ -706,8 +707,10 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        if( !defined('DEMO') ) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        }
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'language'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
