@@ -33,6 +33,7 @@
                     $this->doView("appearance/add.php");
                 break;
                 case 'add_post':
+                    if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=appearance');
                     $filePackage = Params::getFiles('package');
                     if(isset($filePackage['size']) && $filePackage['size']!=0) {
                         $path = osc_themes_path() ;
