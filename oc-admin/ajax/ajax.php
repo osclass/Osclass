@@ -342,8 +342,8 @@
                     }
                     break;
                 case 'test_mail':
-                    $title = "Test email, ".osc_page_title();
-                    $body  = "Test email<br><br>".osc_page_title();
+                    $title = __('Test email').", ".osc_page_title();
+                    $body  = __("Test email")."<br><br>".osc_page_title();
 
                     $emailParams = array(
                                 'subject'  => $title
