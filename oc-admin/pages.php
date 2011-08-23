@@ -89,6 +89,11 @@
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
+                    // setForm just in case the form fails
+                    foreach (Params::getParamsAsArray() as $k => $v) {
+                        Session::newInstance()->_setForm($k, $v);
+                    }
+
                     $s_internal_name = Params::getParam("s_internal_name");
                     if($s_internal_name=='') {
                         osc_add_flash_error_message( _m('You have to set an internal name'), 'admin');
