@@ -97,7 +97,9 @@
             if ($this->db->connect_error) {
                 if( !defined('OSC_INSTALLING') ) {
                     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
-                    osc_die('Error connecting to database', '<strong>Error connecting to database</strong><br/>Cannot connect to database name: \'' . $this->dbName . '\'');
+                    $title   = 'OSClass &raquo; Error connecting to database';
+                    $message = 'Cannot connect to database. Check your configuration in <code>config.php</code> file.';
+                    osc_die($title, $message);
                 }
                 $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
             }
