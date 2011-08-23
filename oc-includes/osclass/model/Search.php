@@ -78,6 +78,12 @@
             return( array('f_price', 'dt_pub_date') ) ;
         }
 
+        // juanramon: little hack to get alerts work in search layout
+        public function reconnect()
+        {
+            $this->conn = getConnection();
+        }
+
         public function addConditions($conditions) {
             if(is_array($conditions)) {
                 foreach($conditions as $condition) {

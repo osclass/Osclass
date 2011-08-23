@@ -218,8 +218,9 @@
                 $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
                 $this->_exportVariableToView('search_total_items', $iTotalItems) ;
                 $this->_exportVariableToView('items', $aItems) ;
-                $this->_exportVariableToView('search_show_as', $p_sShowAs);
-                $this->_exportVariableToView('search', $this->mSearch);
+                $this->_exportVariableToView('search_show_as', $p_sShowAs) ;
+                $this->_exportVariableToView('search', $this->mSearch) ;
+                $this->_exportVariableToView('search_alert', base64_encode(serialize($this->mSearch))) ;
                 
                 //calling the view...
                 $this->doView('search.php') ;
