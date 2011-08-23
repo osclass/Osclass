@@ -44,6 +44,9 @@
             $mSearch = Search::newInstance();
             View::newInstance()->_exportVariableToView('search', $mSearch);
         }
+
+        // juanramon: it should be fixed, little hack to get alerts work in search layout
+        $mSearch->reconnect();
         $premiums = $mSearch->getPremiums($max);
         View::newInstance()->_exportVariableToView('premiums', $premiums);
         return $premiums;
