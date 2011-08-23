@@ -18,9 +18,10 @@
      *      You should have received a copy of the GNU Affero General Public
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
- ?>
-<?php osc_get_premiums();
-if(osc_count_premiums() > 0) { ?>
+
+    osc_get_premiums();
+    if(osc_count_premiums() > 0) {
+?>
 <table border="0" cellspacing="0">
      <tbody>
         <?php $class = "even" ; ?>
@@ -39,7 +40,7 @@ if(osc_count_premiums() > 0) { ?>
                      <h3>
                          <span style="float:left;"><a href="<?php echo osc_premium_url() ; ?>"><?php echo osc_premium_title() ; ?></a></span><span style="float:right;"><?php _e("Sponsored ad", "modern"); ?></span>
                      </h3>
-                     <p>
+                     <p style="clear: left;">
                          <strong><?php if( osc_price_enabled_at_items() ) { echo osc_premium_formated_price() ; ?> - <?php } echo osc_premium_city(); ?> (<?php echo osc_premium_region(); ?>) - <?php echo osc_format_date(osc_premium_pub_date()); ?></strong>
                      </p>
                      <p><?php echo osc_highlight( strip_tags( osc_premium_description() ) ) ; ?></p>
@@ -50,7 +51,6 @@ if(osc_count_premiums() > 0) { ?>
     </tbody>
 </table>
 <?php } ?>
-
 <table border="0" cellspacing="0">
     <tbody>
         <?php $class = "even" ; ?>
