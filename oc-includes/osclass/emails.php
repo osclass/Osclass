@@ -252,13 +252,13 @@
         }
         $item_url = osc_item_url( ) ;
         $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-        $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
-        $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
+        $edit_url = osc_item_edit_url( $item['s_secret'], $item['pk_i_id'] );
+        $delete_url = osc_item_delete_url( $item['s_secret'],  $item['pk_i_id'] );
 
         $words   = array();
         $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
-        $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
+        $words[] = array($item['pk_i_id'], $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
         $item_url, osc_page_title(), '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url) ;
         $title   = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_item_non_register_user_title', $content['s_title'])), $words) ;
         $body    = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'])), $words) ;
@@ -467,7 +467,7 @@
         $message    = $aItem['message'];
 
         $path = NULL;
-        $item = $this->manager->findByPrimaryKey( $id ) ;
+        $item = Item::newInstance()->findByPrimaryKey( $id ) ;
         View::newInstance()->_exportVariableToView('item', $item);
 
         $mPages = new Page();
@@ -524,7 +524,7 @@
 
             if(!is_writable(osc_content_path() . 'uploads/')) {
                 osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                $this->redirectTo( osc_base_url() );
+                //$this->redirectTo( osc_base_url() );
             }
 
             if(!move_uploaded_file($tmpName, $path)){
@@ -554,7 +554,7 @@
         $admin_email = osc_contact_email() ;
         $prefLocale  = osc_language() ;
 
-        $item = $this->manager->findByPrimaryKey($itemId) ;
+        $item = Item::newInstance()->findByPrimaryKey($itemId) ;
         View::newInstance()->_exportVariableToView('item', $item);
         $itemURL = osc_item_url() ;
         $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
@@ -596,7 +596,8 @@
     }
     osc_add_hook('hook_email_new_comment_admin', 'fn_email_new_comment_admin');
     
-    function fn_email_item_validation($item) {
+    function fn_email_item_validation($aItem) {
+        $item = $aItem['item'];
         $title  = $aItem['title'];
         $contactEmail   = $aItem['contactEmail'];
         $contactName    = $aItem['contactName'];
@@ -662,7 +663,8 @@
     }
     osc_add_hook('hook_email_item_validation', 'fn_email_item_validation');
     
-    function fn_email_admin_new_item($item) {
+    function fn_email_admin_new_item($aItem) {
+        $item = $aItem['item'];
         $title  = $aItem['title'];
         $contactEmail   = $aItem['contactEmail'];
         $contactName    = $aItem['contactName'];

@@ -1063,14 +1063,14 @@
              * Send email to user requesting item activation
              */
             if ( $aItem['active']=='INACTIVE' ) {
-                osc_run_hook('hook_email_item_validation', $item);
+                osc_run_hook('hook_email_item_validation', $aItem);
             }
 
             /**
              * Send email to admin about the new item
              */
             if (osc_notify_new_item()) {
-                osc_run_hook('hook_email_admin_new_item', $item);
+                osc_run_hook('hook_email_admin_new_item', $aItem);
             }
         }
 
