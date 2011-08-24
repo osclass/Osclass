@@ -75,32 +75,8 @@
                                                         ,array('pk_i_id' => $id, 's_secret' => $code)
                                                 ) ;
                                                 
-                                                $pageManager = new Page() ;
-                                                $locale = osc_current_user_locale() ;
-                                                $aPage = $pageManager->findByInternalName('email_user_registration') ;
-                                                $content = array() ;
-                                                if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                    $content = $aPage['locale'][$locale] ;
-                                                } else {
-                                                    $content = current($aPage['locale']) ;
-                                                }
-
-                                                if (!is_null($content)) {
-                                                    $words   = array();
-                                                    $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{WEB_URL}') ;
-                                                    $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>' ) ;
-                                                    $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                    $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                                                    $emailParams = array(
-                                                        'subject'  => $title
-                                                        ,'to'       => $user['s_email']
-                                                        ,'to_name'  => $user['s_name']
-                                                        ,'body'     => $body
-                                                        ,'alt_body' => $body
-                                                    );
-                                                    osc_sendMail($emailParams) ;
-                                                }
+                                                osc_run_hook('hook_email_user_registration', $user);
+                                                
                                                 osc_run_hook('validate_user', $user) ;
                                                 osc_add_flash_ok_message( _m('Your account has been validated')) ;
                                                 // Auto-login

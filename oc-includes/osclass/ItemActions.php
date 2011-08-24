@@ -547,155 +547,21 @@
             $item       = $aItem['item'];
             $s_title    = $aItem['s_title'];
             View::newInstance()->_exportVariableToView('item', $item);
+            
+            osc_run_hook('email_send_frined', $aItem);
             $item_url   = osc_item_url();
             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-            $mPages = new Page();
-            $aPage = $mPages->findByInternalName('email_send_friend');
-            $locale = osc_current_user_locale();
-
-            $content = array();
-            if(isset($aPage['locale'][$locale]['s_title'])) {
-                $content = $aPage['locale'][$locale];
-            } else {
-                $content = current($aPage['locale']);
-            }
-
-            $words   = array() ;
-            $words[] = array(
-                    '{FRIEND_NAME}'
-                    ,'{USER_NAME}'
-                    ,'{USER_EMAIL}'
-                    ,'{FRIEND_EMAIL}'
-                    ,'{WEB_URL}'
-                    ,'{ITEM_TITLE}'
-                    ,'{COMMENT}'
-                    ,'{ITEM_URL}'
-                    ,'{WEB_TITLE}'
-            ) ;
-            $words[] = array(
-                    $aItem['friendName']
-                    ,$aItem['yourName']
-                    ,$aItem['yourEmail']
-                    ,$aItem['friendEmail']
-                    ,'<a href="'.osc_base_url().'" >'.osc_base_url().'</a>'
-                    ,$aItem['s_title']
-                    ,$aItem['message']
-                    ,$item_url
-                    ,osc_page_title()
-            ) ;
-            $title = osc_mailBeauty($content['s_title'], $words) ;
-            $body  = osc_mailBeauty($content['s_text'], $words) ;
-
-            if (osc_notify_contact_friends()) {
-                $add_bbc = osc_contact_email() ;
-            }
-
-            $params = array(
-                        'add_bcc'    => $add_bbc
-                        ,'from'      => $aItem['yourEmail']
-                        ,'from_name' => $aItem['yourName']
-                        ,'subject'   => $title
-                        ,'to'        => $aItem['friendEmail']
-                        ,'to_name'   => $aItem['friendName']
-                        ,'body'      => $body
-                        ,'alt_body'  => $body
-                      ) ;
-
             Params::setParam('item_url', $item_url );
-
-            if(osc_sendMail($params)) {
-                osc_add_flash_ok_message( sprintf(_m('We just send your message to %s'), $aItem['friendName']) ) ;
-                return true;
-            } else {
-                osc_add_flash_error_message( _m('We are very sorry but we could not deliver your message to your friend. Try again later')) ;
-                return false;
-            }
+            osc_add_flash_ok_message( sprintf(_m('We just send your message to %s'), $aItem['friendName']) ) ;
+            return true;
         }
 
         public function contact()
         {
             $aItem = $this->prepareDataForFunction( 'contact' );
+            
+            osc_run_hook('hook_email_item_inquiry', $aItem);
 
-            $id         = $aItem['id'];
-            $yourEmail  = $aItem['yourEmail'];
-            $yourName   = $aItem['yourName'];
-            $phoneNumber= $aItem['phoneNumber'];
-            $message    = $aItem['message'];
-
-            $path = NULL;
-            $item = $this->manager->findByPrimaryKey( $id ) ;
-            View::newInstance()->_exportVariableToView('item', $item);
-
-            $mPages = new Page();
-            $aPage = $mPages->findByInternalName('email_item_inquiry');
-            $locale = osc_current_user_locale() ;
-
-            $content = array();
-            if(isset($aPage['locale'][$locale]['s_title'])) {
-                $content = $aPage['locale'][$locale];
-            } else {
-                $content = current($aPage['locale']);
-            }
-
-            $item_url = osc_item_url();
-            $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-            $words   = array();
-            $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                             '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
-
-            $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
-                             $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message );
-
-            $title = osc_mailBeauty($content['s_title'], $words);
-            $body = osc_mailBeauty($content['s_text'], $words);
-
-            $from = osc_contact_email() ;
-            $from_name = osc_page_title() ;
-
-            $add_bbc = '';
-            if (osc_notify_contact_item()) {
-                $add_bbc = osc_contact_email() ;
-            }
-
-            $emailParams = array (
-                                'add_bcc'   => $add_bbc
-                                ,'from'      => $from
-                                ,'from_name' => $from_name
-                                ,'subject'   => $title
-                                ,'to'        => $item['s_contact_email']
-                                ,'to_name'   => $item['s_contact_name']
-                                ,'body'      => $body
-                                ,'alt_body'  => $body
-                                ,'reply_to'  => $yourEmail
-                            ) ;
-
-
-            if(osc_item_attachment()) {
-                $attachment = Params::getFiles('attachment');
-                $resourceName = $attachment['name'] ;
-                $tmpName = $attachment['tmp_name'] ;
-                $resourceType = $attachment['type'] ;
-
-                $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
-
-                if(!is_writable(osc_content_path() . 'uploads/')) {
-                    osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                    $this->redirectTo( osc_base_url() );
-                }
-
-                if(!move_uploaded_file($tmpName, $path)){
-                    unset($path) ;
-                }
-            }
-
-            if(isset($path)) {
-                $emailParams['attachment'] = $path ;
-            }
-            osc_sendMail($emailParams);
-
-            @unlink($path) ;
         }
 
         /*
@@ -717,6 +583,7 @@
             $status_num     = -1;
 
             $item = $this->manager->findByPrimaryKey($itemId) ;
+            View::newInstance()->_exportVariableToView('item', $item);
             $itemURL = osc_item_url() ;
             $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
 
@@ -786,45 +653,10 @@
                     }
                 }
                 $notify      = osc_notify_new_comment() ;
-                $admin_email = osc_contact_email() ;
-                $prefLocale  = osc_language() ;
 
                 //Notify admin
                 if ($notify) {
-                    $mPages = new Page() ;
-                    $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
-                    $locale = osc_current_user_locale() ;
-
-                    $content = array();
-                    if(isset($aPage['locale'][$locale]['s_title'])) {
-                        $content = $aPage['locale'][$locale];
-                    } else {
-                        $content = current($aPage['locale']);
-                    }
-
-                    $words   = array();
-                    $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
-                                     '{COMMENT_TEXT}', '{ITEM_TITLE}', '{ITEM_ID}', '{ITEM_URL}');
-                    $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL);
-                    $title_email = osc_mailBeauty($content['s_title'], $words);
-                    $body_email = osc_mailBeauty($content['s_text'], $words);
-
-                    $from = osc_contact_email() ;
-                    $from_name = osc_page_title() ;
-                    if (osc_notify_contact_item()) {
-                        $add_bbc = osc_contact_email() ;
-                    }
-
-                    $emailParams = array(
-                                    'from'      => $admin_email
-                                    ,'from_name' => __('Admin mail system')
-                                    ,'subject'   => $title_email
-                                    ,'to'        => $admin_email
-                                    ,'to_name'   => __('Admin mail system')
-                                    ,'body'      => $body_email
-                                    ,'alt_body'  => $body_email
-                                    );
-                    osc_sendMail($emailParams) ;
+                    osc_run_hook('hook_email_new_comment_admin', $aItem);
                 }
                 osc_run_hook('add_comment', $item);
                 return $status_num;
@@ -1225,137 +1057,20 @@
         public function sendEmails($aItem){
 
             $item   = $aItem['item'];
-            $title  = $aItem['title'];
-            $contactEmail   = $aItem['contactEmail'];
-            $contactName    = $aItem['contactName'];
             View::newInstance()->_exportVariableToView('item', $item);
-            $mPages = new Page();
-            $locale = osc_current_user_locale();
 
             /**
              * Send email to user requesting item activation
              */
             if ( $aItem['active']=='INACTIVE' ) {
-                $aPage = $mPages->findByInternalName('email_item_validation') ;
-
-                $content = array();
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale];
-                } else {
-                    $content = current($aPage['locale']);
-                }
-
-                $item_url = osc_item_url();
-                $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-
-                $all = '';
-
-                if (isset($item['locale'])) {
-                    foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
-                        $all .= '<br/>';
-                        if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
-                            $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
-                        } else {
-                            $all .= __('Language') . ': ' . $locale . '<br/>';
-                        }
-                        $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
-                        $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
-                        $all .= '<br/>';
-                    }
-                } else {
-                    $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
-                    $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
-                }
-
-                // Format activation URL
-                $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
-
-                $words   = array();
-                $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}',
-                                 '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}',
-                                 '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
-                                 '{VALIDATION_LINK}', '{VALIDATION_URL}');
-                $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
-                                 $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
-                                 $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
-                                 osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
-
-                $emailParams =  array (
-                                    'subject'  => $title
-                                    ,'to'       => $contactEmail
-                                    ,'to_name'  => $contactName
-                                    ,'body'     => $body
-                                    ,'alt_body' => $body
-                                );
-                osc_sendMail($emailParams) ;
+                osc_run_hook('hook_email_item_validation', $aItem);
             }
 
             /**
              * Send email to admin about the new item
              */
             if (osc_notify_new_item()) {
-                $aPage = $mPages->findByInternalName('email_admin_new_item') ;
-
-                $content = array();
-                if(isset($aPage['locale'][$locale]['s_title'])) {
-                    $content = $aPage['locale'][$locale] ;
-                } else {
-                    $content = current($aPage['locale']) ;
-                }
-
-                $item_url = osc_item_url() ;
-                $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-
-                $all = '' ;
-
-                if (isset($item['locale'])) {
-                    foreach ($item['locale'] as $locale => $data) {
-                        $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
-                        $all .= '<br/>';
-                        if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
-                            $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
-                        } else {
-                            $all .= __('Language') . ': ' . $locale . '<br/>';
-                        }
-                        $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
-                        $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
-                        $all .= '<br/>';
-                    }
-                } else {
-                    $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
-                    $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
-                }
-
-                // Format activation URL
-                $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
-
-                // Format admin edit URL
-                $admin_edit_url =  osc_item_admin_edit_url( $item['pk_i_id'] );
-
-                $words   = array();
-                $words[] = array('{EDIT_LINK}', '{EDIT_URL}', '{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}',
-                                 '{ITEM_COUNTRY}', '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}',
-                                 '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}',
-                                 '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}');
-                $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
-                                 $item['f_price'], $item['s_region'], $item['s_city'], $item['pk_i_id'],
-                                 $item['s_contact_name'], $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'],
-                                 $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body  = osc_mailBeauty($content['s_text'], $words);
-
-                $emailParams = array(
-                                    'subject'  => $title
-                                    ,'to'       => osc_contact_email()
-                                    ,'to_name'  => 'admin'
-                                    ,'body'     => $body
-                                    ,'alt_body' => $body
-                ) ;
-                osc_sendMail($emailParams) ;
+                osc_run_hook('hook_email_admin_new_item', $aItem);
             }
         }
 

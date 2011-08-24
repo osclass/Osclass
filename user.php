@@ -111,35 +111,8 @@
                                                             ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
                                                         );
 
-                                                        $locale = osc_current_user_locale() ;
-                                                        $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
-                                                        if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                            $content = $aPage['locale'][$locale] ;
-                                                        } else {
-                                                            $content = current($aPage['locale']) ;
-                                                        }
-
-                                                        if (!is_null($content)) {
-                                                            $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
-
-                                                            $words = array() ;
-                                                            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                                                            $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>', osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url ) ;
-                                                            $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                            $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                                                            $params = array(
-                                                                'subject' => $title
-                                                                ,'to' => Params::getParam('new_email')
-                                                                ,'to_name' => Session::newInstance()->_get('userName')
-                                                                ,'body' => $body
-                                                                ,'alt_body' => $body
-                                                            ) ;
-                                                            osc_sendMail($params) ;
-                                                            osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
-                                                        } else {
-                                                            osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
-                                                        }
+                                                        $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+                                                        osc_run_hook('hook_email_new_email', Params::getParam('new_email'), $validation_url);
                                                         $this->redirectTo( osc_user_profile_url() ) ;
                                                     } else {
                                                         osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;

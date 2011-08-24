@@ -145,40 +145,7 @@
                         $item           = $this->itemManager->findByPrimaryKey($itemId);
 
                         if( Session::newInstance()->_get('userId') == '' ){
-                            $mPages = new Page() ;
-                            $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
-                            $locale = osc_current_user_locale() ;
-
-                            $content = array();
-                            if(isset($aPage['locale'][$locale]['s_title'])) {
-                                $content = $aPage['locale'][$locale];
-                            } else {
-                                $content = current($aPage['locale']);
-                            }
-                            //$item =  $this->itemManager->findByPrimaryKey($itemId);
-
-                            $item_url = osc_item_url( ) ;
-                            $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
-                            $edit_url = osc_item_edit_url( $item['s_secret'], $itemId );
-                            $delete_url = osc_item_delete_url( $item['s_secret'],  $itemId );
-
-                            $words   = array();
-                            $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
-                                             '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
-                            $words[] = array($itemId, $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
-                                             $item_url, osc_page_title(), '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url) ;
-                            $title   = osc_mailBeauty($content['s_title'], $words) ;
-                            $body    = osc_mailBeauty($content['s_text'], $words) ;
-
-                            $emailParams =  array(
-                                                'subject' => $title
-                                                ,'to' => $PcontactEmail
-                                                ,'to_name' => $PcontactName
-                                                ,'body' => $body
-                                                ,'alt_body' => $body
-                                            );
-
-                            osc_sendMail($emailParams);
+                            osc_run_hook('hook_email_new_item_non_register_user', $item, $PcontactName, $PcontactEmail);
                         }
 
                         osc_run_hook('posted_item', $item);
