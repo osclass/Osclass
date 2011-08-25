@@ -492,10 +492,10 @@
         static $instance ;
 
         //DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL
-        if(defined('DB_HOST') && $dbHost == null)                 $dbHost = DB_HOST ;
-        if(defined('DB_USER') && $dbUser == null)                 $dbUser = DB_USER ;
-        if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = DB_PASSWORD ;
-        if(defined('DB_NAME') && $dbName == null)                 $dbName = DB_NAME ;
+        if(defined('DB_HOST') && $dbHost == null)                 $dbHost     = osc_db_host() ;
+        if(defined('DB_USER') && $dbUser == null)                 $dbUser     = osc_db_user() ;
+        if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = osc_db_password() ;
+        if(defined('DB_NAME') && $dbName == null)                 $dbName     = osc_db_name() ;
         if(defined('DEBUG_LEVEL') && $dbLogLevel == null)         $dbLogLevel = DEBUG_LEVEL ;
 
         if(!isset($instance[$dbName . "_" . $dbHost])) {
