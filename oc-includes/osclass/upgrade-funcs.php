@@ -16,7 +16,6 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    
     if(!defined('ABS_PATH')) {
         define('ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/');
     }
@@ -116,8 +115,8 @@
         osc_changeVersionTo(220) ;
     }
 
-    if(osc_version() < 221) {
-        osc_changeVersionTo(221) ;
+    if(osc_version() < 222) {
+        osc_changeVersionTo(222) ;
     }
 
     if(Params::getParam('action') == '') {
