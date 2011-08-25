@@ -514,38 +514,92 @@ function osc_dump_table_data($path, $table)
             $_str .= "\n" ;
 
             $index = 0 ;
-			while( $row = mysql_fetch_row($result) ) {
-				$_str .= "(" ;
+            if($table==DB_TABLE_PREFIX.'t_category') {
+                $short_rows = array();
+                $unshort_rows = array();
+                while( $row = mysql_fetch_array($result) ) {
+                    if($row['fk_i_parent_id']==NULL) {
+                        $short_rows[] = $row;
+                    } else {
+                        $unshort_rows[$row['pk_i_id']] = $row;
+                    }
+                }
+                while(!empty($unshort_rows)) {
+                    foreach($unshort_rows as $k => $v) {
+                        foreach($short_rows as $r) {
+                            if($r['pk_i_id']==$v['fk_i_parent_id']) {
+                                unset($unshort_rows[$k]);
+                                $short_rows[] = $v;
+                            }
+                        }
+                    }
+                }
+                foreach($short_rows as $row) {
+                    $_str .= "(" ;
 
-                for( $i = 0 ; $i < $num_fields ; $i++ ) {
-					if(is_null( $row[$i])) {
-                        $_str .= 'null' ;
-					} else {
-						switch( $field_type[$i]) {
-							case 'int':
-                                $_str .= $row[$i] ;
-                                break;
-							case 'string':
-							case 'blob' :
-							default:
-								$_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
-						}
-					}
-					if($i < $num_fields-1) {
+                    for( $i = 0 ; $i < $num_fields ; $i++ ) {
+                        if(is_null( $row[$i])) {
+                            $_str .= 'null' ;
+                        } else {
+                            switch( $field_type[$i]) {
+                                case 'int':
+                                    $_str .= $row[$i] ;
+                                    break;
+                                case 'string':
+                                case 'blob' :
+                                default:
+                                    $_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
+                            }
+                        }
+                        if($i < $num_fields-1) {
+                            $_str .= ',' ;
+                        }
+                    }
+                    $_str .= ')' ;
+
+                    if($index < $num_rows-1) {
                         $_str .= ',' ;
-					}
-				}
-                $_str .= ')' ;
+                    } else {
+                        $_str .= ';' ;
+                    }
+                    $_str .= "\n" ;
 
-				if($index < $num_rows-1) {
-                    $_str .= ',' ;
-				} else {
-                    $_str .= ';' ;
-				}
-                $_str .= "\n" ;
+                    $index++ ;
+                }
+            } else {
+                while( $row = mysql_fetch_row($result) ) {
+                    $_str .= "(" ;
 
-				$index++ ;
-			}
+                    for( $i = 0 ; $i < $num_fields ; $i++ ) {
+                        if(is_null( $row[$i])) {
+                            $_str .= 'null' ;
+                        } else {
+                            switch( $field_type[$i]) {
+                                case 'int':
+                                    $_str .= $row[$i] ;
+                                    break;
+                                case 'string':
+                                case 'blob' :
+                                default:
+                                    $_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
+                            }
+                        }
+                        if($i < $num_fields-1) {
+                            $_str .= ',' ;
+                        }
+                    }
+                    $_str .= ')' ;
+
+                    if($index < $num_rows-1) {
+                        $_str .= ',' ;
+                    } else {
+                        $_str .= ';' ;
+                    }
+                    $_str .= "\n" ;
+
+                    $index++ ;
+                }
+            }
 		}
         mysql_free_result($result) ;
 	}
