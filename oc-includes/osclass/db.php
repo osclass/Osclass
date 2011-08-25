@@ -93,8 +93,14 @@
          */
         function osc_dbConnect() {
             //echo "#" , $this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName ;
-            $this->db = new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
+            $this->db = @new mysqli($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName);
             if ($this->db->connect_error) {
+                if( !defined('OSC_INSTALLING') ) {
+                    require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
+                    $title   = 'OSClass &raquo; Error connecting to database';
+                    $message = 'Cannot connect to database. Check your configuration in <code>config.php</code> file.';
+                    osc_die($title, $message);
+                }
                 $this->debug('Error connecting to \'' . $this->dbName . '\' (' . $this->db->connect_errno . ': ' . $this->db->connect_error . ')', false) ;
             }
 
@@ -107,7 +113,7 @@
          * Close the database connection.
          */
         function osc_dbClose() {
-            if (!$this->db->close()) {
+            if (!@$this->db->close()) {
                 $this->debug('Error releasing the connection to \'' . $this->dbName . '\'', false) ;
             }
 
@@ -486,10 +492,10 @@
         static $instance ;
 
         //DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DEBUG_LEVEL
-        if(defined('DB_HOST') && $dbHost == null)                 $dbHost = DB_HOST ;
-        if(defined('DB_USER') && $dbUser == null)                 $dbUser = DB_USER ;
-        if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = DB_PASSWORD ;
-        if(defined('DB_NAME') && $dbName == null)                 $dbName = DB_NAME ;
+        if(defined('DB_HOST') && $dbHost == null)                 $dbHost     = osc_db_host() ;
+        if(defined('DB_USER') && $dbUser == null)                 $dbUser     = osc_db_user() ;
+        if(defined('DB_PASSWORD') && $dbPassword == null)         $dbPassword = osc_db_password() ;
+        if(defined('DB_NAME') && $dbName == null)                 $dbName     = osc_db_name() ;
         if(defined('DEBUG_LEVEL') && $dbLogLevel == null)         $dbLogLevel = DEBUG_LEVEL ;
 
         if(!isset($instance[$dbName . "_" . $dbHost])) {

@@ -190,20 +190,6 @@ function is_serialized($data) {
 }
 
 /**
- * Check whether serialized data is of string type.
- * @return bool False if not a serialized string, true if it is.
- */
-/*function is_serialized_string($data) {
-    // if it isn't a string, it isn't a serialized string
-    if (!is_string($data))
-        return false;
-    $data = trim($data);
-    if (preg_match('/^s:[0-9]+:.*;$/s', $data)) // this should fetch all serialized strings
-        return true;
-    return false;
-}*/
-
-/**
  * VERY BASIC
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
@@ -216,20 +202,18 @@ function osc_doRequest($url, $_data) {
             $data[] = "$n=$v";
         }
         $data = implode('&', $data);
+
         // format --> test1=a&test2=b etc.
         // parse the given URL
         $url = parse_url($url);
-        if ($url['scheme'] != 'http') {
-            //die('Only HTTP request are supported !');
-        }
 
         // extract host and path:
         $host = $url['host'];
         $path = $url['path'];
 
         // open a socket connection on port 80
-        // using localhost due to some issues with NATs (hairpinning)
-        $fp = @fsockopen('localhost', 80);
+        // use localhost in case of issues with NATs (hairpinning)
+        $fp = @fsockopen($host, 80);
         
         if($fp!==false) {
             // send the request headers:
@@ -383,11 +367,7 @@ function osc_copyemz($file1,$file2){
 	return $status;
 } 
 
-
-
-
-function osc_dbdump($path, $file)
-{
+function osc_dbdump($path, $file) {
     if ( !is_writable($path) ) return -5 ;
 	if($path == '') return -1 ;
 
@@ -396,7 +376,7 @@ function osc_dbdump($path, $file)
     if (!$link) return -2 ;
     
     //selecting database
-    mysql_query("SET NAMES 'utf8'", $link) ;
+    mysql_set_charset('utf8', $link) ;
     $db = mysql_select_db(DB_NAME, $link) ;
     if (!$db) return -3 ;
 
@@ -415,7 +395,6 @@ function osc_dbdump($path, $file)
 
         return -4 ;
     }
-
 
     $_str = '' ;
     $_str .= '/* OSCLASS MYSQL Autobackup (' . date('Y-m-d H:i:s') . ') */' ;
@@ -507,38 +486,92 @@ function osc_dump_table_data($path, $table)
             $_str .= "\n" ;
 
             $index = 0 ;
-			while( $row = mysql_fetch_row($result) ) {
-				$_str .= "(" ;
+            if($table==DB_TABLE_PREFIX.'t_category') {
+                $short_rows = array();
+                $unshort_rows = array();
+                while( $row = mysql_fetch_array($result) ) {
+                    if($row['fk_i_parent_id']==NULL) {
+                        $short_rows[] = $row;
+                    } else {
+                        $unshort_rows[$row['pk_i_id']] = $row;
+                    }
+                }
+                while(!empty($unshort_rows)) {
+                    foreach($unshort_rows as $k => $v) {
+                        foreach($short_rows as $r) {
+                            if($r['pk_i_id']==$v['fk_i_parent_id']) {
+                                unset($unshort_rows[$k]);
+                                $short_rows[] = $v;
+                            }
+                        }
+                    }
+                }
+                foreach($short_rows as $row) {
+                    $_str .= "(" ;
 
-                for( $i = 0 ; $i < $num_fields ; $i++ ) {
-					if(is_null( $row[$i])) {
-                        $_str .= 'null' ;
-					} else {
-						switch( $field_type[$i]) {
-							case 'int':
-                                $_str .= $row[$i] ;
-                                break;
-							case 'string':
-							case 'blob' :
-							default:
-								$_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
-						}
-					}
-					if($i < $num_fields-1) {
+                    for( $i = 0 ; $i < $num_fields ; $i++ ) {
+                        if(is_null( $row[$i])) {
+                            $_str .= 'null' ;
+                        } else {
+                            switch( $field_type[$i]) {
+                                case 'int':
+                                    $_str .= $row[$i] ;
+                                    break;
+                                case 'string':
+                                case 'blob' :
+                                default:
+                                    $_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
+                            }
+                        }
+                        if($i < $num_fields-1) {
+                            $_str .= ',' ;
+                        }
+                    }
+                    $_str .= ')' ;
+
+                    if($index < $num_rows-1) {
                         $_str .= ',' ;
-					}
-				}
-                $_str .= ')' ;
+                    } else {
+                        $_str .= ';' ;
+                    }
+                    $_str .= "\n" ;
 
-				if($index < $num_rows-1) {
-                    $_str .= ',' ;
-				} else {
-                    $_str .= ';' ;
-				}
-                $_str .= "\n" ;
+                    $index++ ;
+                }
+            } else {
+                while( $row = mysql_fetch_row($result) ) {
+                    $_str .= "(" ;
 
-				$index++ ;
-			}
+                    for( $i = 0 ; $i < $num_fields ; $i++ ) {
+                        if(is_null( $row[$i])) {
+                            $_str .= 'null' ;
+                        } else {
+                            switch( $field_type[$i]) {
+                                case 'int':
+                                    $_str .= $row[$i] ;
+                                    break;
+                                case 'string':
+                                case 'blob' :
+                                default:
+                                    $_str .= '\'' . mysql_real_escape_string($row[$i]) . '\'' ;
+                            }
+                        }
+                        if($i < $num_fields-1) {
+                            $_str .= ',' ;
+                        }
+                    }
+                    $_str .= ')' ;
+
+                    if($index < $num_rows-1) {
+                        $_str .= ',' ;
+                    } else {
+                        $_str .= ';' ;
+                    }
+                    $_str .= "\n" ;
+
+                    $index++ ;
+                }
+            }
 		}
         mysql_free_result($result) ;
 	}

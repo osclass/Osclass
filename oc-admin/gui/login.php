@@ -38,13 +38,13 @@
                 <p>
                     <label>
                         <?php _e('Username') ; ?>
-                        <input type="text" name="user" id="user_login" class="input" value="" size="20" tabindex="10" />
+                        <input type="text" name="user" id="user_login" class="input" value="<?php if( defined('DEMO') ) echo 'admin' ; ?>" size="20" tabindex="10" />
                     </label>
                 </p>
                 <p>
                     <label>
                         <?php _e('Password') ; ?>
-                        <input type="password" name="password" id="user_pass" class="input" value="" size="20" tabindex="20" />
+                        <input type="password" name="password" id="user_pass" class="input" value="<?php if( defined('DEMO') ) echo 'admin' ; ?>" size="20" tabindex="20" />
                     </label>
                 </p>
 
@@ -74,7 +74,7 @@
             </form>
 
             <p id="nav">
-                <a href="index.php?page=login&action=recover" title="<?php _e('Forgot your password?') ; ?>"><?php _e('Forgot your password?') ; ?></a>
+                <a href="<?php echo osc_admin_base_url(true); ?>?page=login&action=recover" title="<?php _e('Forgot your password?') ; ?>"><?php _e('Forgot your password?') ; ?></a>
             </p>
         </div>
         <p id="backtoblog"><a href="<?php echo osc_base_url() ; ?>" title="<?php _e('Back to') . ' ' . osc_page_title() ; ?>">&larr; <?php _e('Back to') ; ?> <?php echo osc_page_title() ; ?></a></p>

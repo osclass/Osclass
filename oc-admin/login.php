@@ -73,7 +73,8 @@
                                         //#dev.conquer: we cannot use the doView here and only here
                                         $this->doView('gui/recover.php') ;
                 break ;
-                case('recover_post'):   //post execution to recover the password
+                case('recover_post'):   if( defined('DEMO') ) $this->redirectTo( osc_admin_base_url() );
+                                        //post execution to recover the password
                                         $admin = Admin::newInstance()->findByEmail( Params::getParam('email') ) ;
                                         if($admin) {
                                         

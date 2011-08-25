@@ -43,6 +43,7 @@
                     $this->doView("plugins/add.php");
                     break;
                 case 'add_post':
+                    if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
                     $package = Params::getFiles("package");
                     if(isset($package['size']) && $package['size']!=0) {
                         $path = osc_plugins_path() ;

@@ -34,8 +34,8 @@
         public function getTableName() { return DB_TABLE_PREFIX . 't_city'; }
 
         public function ajax($query, $region = null) {
-            $region_sql = ($region!=null)?' AND fk_i_region_id = '.$region.' ':'';            
-            return $this->conn->osc_dbFetchResults("SELECT pk_i_id as id, s_name as label, s_name as value FROM %s WHERE `s_name` LIKE '%s%%' %s LIMIT 5", $this->getTableName(), $query, $region_sql);
+            $region_sql = ($region != null) ? ' AND fk_i_region_id = ' . addslashes($region) . ' ' : '';
+            return $this->conn->osc_dbFetchResults("SELECT pk_i_id as id, s_name as label, s_name as value FROM %s WHERE s_name LIKE '%s%%' %s LIMIT 5", $this->getTableName(), addslashes($query), $region_sql);
         }
 
         public function getByRegion($region_id) {
@@ -43,11 +43,16 @@
         }
 
         public function findByNameAndRegion($name, $region_id) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' AND fk_i_region_id = %d LIMIT 1", $this->getTableName(), $name, $region_id);
+            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' AND fk_i_region_id = %d LIMIT 1", $this->getTableName(), addslashes($name), $region_id);
         }
 
         public function findByName($name) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' LIMIT 1", $this->getTableName(), $name);
+            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' LIMIT 1", $this->getTableName(), addslashes($name));
+        }
+
+        public function findByNameOnRegion($query, $region) {
+            $region_sql = ($region != null) ? ' AND fk_i_region_id = ' . addslashes($region) . ' ' : '';
+            return $this->conn->osc_dbFetchResult("SELECT pk_i_id, s_name, s_name FROM %s WHERE s_name LIKE '%s' %s LIMIT 1", $this->getTableName(), addslashes($query), $region_sql);
         }
 
     }

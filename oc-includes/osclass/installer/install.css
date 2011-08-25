@@ -262,6 +262,15 @@ h3.title {
     margin-bottom: 10px;
 }
 
+.admin-user {
+    margin-left: 20px;
+}
+
+div.admin-user {
+    margin-bottom: 10px;
+    margin-left: 40px;
+}
+
 .select-categories {
     padding-bottom: 8px;
     border-bottom: 1px solid grey;

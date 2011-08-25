@@ -126,34 +126,43 @@
                                                                                                                   urlencode($countryCode) . '&term=all');
                                                                             $regions = json_decode($regions_json);
                                                                             if(!isset($regions->error)) {
-                                                                                foreach($regions as $r) {
-                                                                                    $manager_region->insert(array(
-                                                                                        "fk_c_country_code" => $r->country_code,
-                                                                                        "s_name" => $r->name
-                                                                                    ));
+
+                                                                                if(count($regions) > 0) {
+                                                                                    foreach($regions as $r) {
+                                                                                        $manager_region->insert(array(
+                                                                                            "fk_c_country_code" => $r->country_code,
+                                                                                            "s_name" => $r->name
+                                                                                        ));
+                                                                                    }
                                                                                 }
                                                                                 unset($regions);
                                                                                 unset($regions_json);
 
                                                                                 $manager_city = new City();
-                                                                                foreach($countries as $c) {
-                                                                                    $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
-                                                                                    if(!isset($regions->error)) {
-                                                                                        foreach($regions as $region) {
-                                                                                            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
-                                                                                                                                 urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
-                                                                                            $cities = json_decode($cities_json) ;
-                                                                                            if(!isset($cities->error)) {
-                                                                                                foreach($cities as $ci) {
-                                                                                                    $manager_city->insert(array(
-                                                                                                        "fk_i_region_id" => $region['pk_i_id']
-                                                                                                        ,"s_name" => $ci->name
-                                                                                                        ,"fk_c_country_code" => $ci->country_code
-                                                                                                    ));
+                                                                                if(count($countries) > 0) {
+                                                                                    foreach($countries as $c) {
+                                                                                        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                                                                                        if(!isset($regions->error)) {
+                                                                                            if(count($regions) > 0) {
+                                                                                                foreach($regions as $region) {
+                                                                                                    $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
+                                                                                                                                         urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
+                                                                                                    $cities = json_decode($cities_json) ;
+                                                                                                    if(!isset($cities->error)) {
+                                                                                                        if(count($cities) > 0) {
+                                                                                                            foreach($cities as $ci) {
+                                                                                                                $manager_city->insert(array(
+                                                                                                                    "fk_i_region_id" => $region['pk_i_id']
+                                                                                                                    ,"s_name" => $ci->name
+                                                                                                                    ,"fk_c_country_code" => $ci->country_code
+                                                                                                                ));
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    unset($cities) ;
+                                                                                                    unset($cities_json) ;
                                                                                                 }
                                                                                             }
-                                                                                            unset($cities) ;
-                                                                                            unset($cities_json) ;
                                                                                         }
                                                                                     }
                                                                                 }
@@ -507,6 +516,9 @@
                                                                             osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                     case ('1'): $msg = _m('One currency has been deleted');
+                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
+                                                                    break;
+                                                                    case ('-1'): $msg = sprintf(_m("%s could not be deleted because this currency still in use"), $currencyCode);
                                                                             osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                     default:    $msg = sprintf(_m('%s currencies have been deleted'), $rowChanged);
@@ -527,7 +539,8 @@
                 case('mailserver'):     // calling the mailserver view
                                         $this->doView('settings/mailserver.php');
                 break;
-                case('mailserver_post'):// updating mailserver
+                case('mailserver_post'):if( defined('DEMO') ) $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                        // updating mailserver
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
                                         $mailserverAuth     = ($mailserverAuth != '' ? true : false);
@@ -714,8 +727,10 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        if( !defined('DEMO') ) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        }
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'language'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)

@@ -101,6 +101,20 @@
                                 <fieldset>
                                     <legend><?php _e('Help'); ?></legend>
                                     <label><?php _e('Enter your e-mail server configuration'); ?></label>
+
+                                    <?php
+                                        $aModules = @apache_get_modules();
+                                        $ssl = false;
+                                        foreach( $aModules as  $mod ){
+                                            if($mod == 'mod_ssl') { $ssl = true; }
+                                        }
+                                    ?>
+                                    <?php if(!$ssl){?>
+                                    <div id="flash_message">
+                                        <p>mod_ssl <?php _e('not found');?></p>
+                                    </div>
+                                    <?php }?>
+                                    
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>

@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.2.1') ;
+define('OSCLASS_VERSION', '2.2.2') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -46,7 +46,6 @@ require_once ABS_PATH . 'config.php';
 if( !defined('MULTISITE') ) {
     define('MULTISITE', 0);
 }
-
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';

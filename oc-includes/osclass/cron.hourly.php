@@ -48,7 +48,7 @@
             if($c['i_expiration_days']==0) {
                 $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
             } else {
-                $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 AND (b_premium = 1 || TIMESTAMPDIFF(DAY,dt_pub_date,NOW()) < %d) GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id'], $c['i_expiration_days']);
+                $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 AND (b_premium = 1 || TIMESTAMPDIFF(DAY,dt_pub_date,'%s') < %d) GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id'], date('Y-m-d H:i:s'),$c['i_expiration_days']);
             }
 
             $total = $conn->osc_dbFetchResult($sql);

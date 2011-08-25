@@ -39,27 +39,27 @@
                 theme_advanced_toolbar_location : "top",
                 theme_advanced_toolbar_align : "left",
                 theme_advanced_statusbar_location : "bottom",
-                extended_valid_elements : "script"
+                extended_valid_elements : "script[type|src|charset|defer]"
             });
         </script>
         <?php if(isset($action) && $action === "add_widget") { ?>
-                <script type="text/javascript">
-                        $(function() {
-                                // change title of the page
-                                $(this).attr("title", "<?php _e('Dashboard - Add New Widget'); ?>") ;
+            <script type="text/javascript">
+                $(function() {
+                    // change title of the page
+                    $(this).attr("title", "<?php _e('Dashboard - Add New Widget'); ?>") ;
 
-                                // remove stuff that we don't need
-                                $('#button_open').remove();
-                                $('#datatables_list_wrapper').remove();
-                                $('#pages_desc').remove();
+                    // remove stuff that we don't need
+                    $('#button_open').remove();
+                    $('#datatables_list_wrapper').remove();
+                    $('#pages_desc').remove();
 
-                                // change style of the div
-                                $('#main_div').css('margin-top', '21px');
-                                $('#main_div').css('border', '1px solid #ccc');
-                                $('#main_div input').css('width', '99%');
-                                $('#main_div').show();
-                        });
-                </script>
+                    // change style of the div
+                    $('#main_div').css('margin-top', '21px');
+                    $('#main_div').css('border', '1px solid #ccc');
+                    $('#main_div input').css('width', '99%');
+                    $('#main_div').show();
+                });
+            </script>
         <?php
         }
         ?>
@@ -93,7 +93,7 @@
 
                             <fieldset>
                                 <legend><?php _e('Description (only for internal purposes)'); ?></legend>
-                                <input type="text" name="description" id="description" value="<?php if(isset($widget['s_description'])) echo htmlentities($widget['s_description']);?>"/>
+                                <input type="text" name="description" id="description" value="<?php if(isset($widget['s_description'])) echo htmlentities($widget['s_description'],null, "UTF-8");?>"/>
                             </fieldset>
 
                             <fieldset>
@@ -112,7 +112,7 @@
     </body>
     <script type="text/javascript" >
         $(window).load(function() {
-            <?php  $str = htmlentities(str_replace(array("\r", "\n"), array("\\r", "\\n"), $widget['s_content']) );?>
+            <?php $str = htmlentities(str_replace(array("\r", "\n"), array("\\r", "\\n"), $widget['s_content']) , null, 'UTF-8');?>
             var aux = ('<?php echo (addcslashes($str, '\'') );?>');
             var str = $("<div/>").html(aux).text();
             tinyMCE.activeEditor.setContent( str.replace("\\n", '\n' ) );

@@ -1,3 +1,22 @@
+OSClass 2.2.2 2011-08-25
+------------------------
+- Now attr [type|src|charset|defer] of script html tag are not removed in widgets
+- Fixed some AJAX issues related to locations
+- If some file theme don't exists, we take the file from gui folder
+- Minor fix in sanitize item url
+- Created a define for DEMO purposes
+- Modified how admin password is set during the installation
+- Multi-byte characters in watermarks
+- Removed mysql NOW() parameter from everywhere, now the insert/update dates should be the system dates
+- Fixed some minor issues with locations when add/edit new items
+- osc_static_page_mod_date function take the correct value now
+- Custom pages shouldn't allow as internal name the file names
+- Fixed alert subscription
+- Fixed some minor bugs
+- Fixed some PHP Warnings
+- [Modern theme] Logo image is not converted now
+- [Modern theme] Some minor style changes
+
 OSClass 2.2.1 2011-08-04
 ------------------------
 - Fixed: show recaptcha in edit item if it's configured

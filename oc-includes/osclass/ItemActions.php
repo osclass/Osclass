@@ -147,7 +147,7 @@
             } else {
                 $this->manager->insert(array(
                     'fk_i_user_id'          => $aItem['userId'],
-                    'dt_pub_date'           => DB_FUNC_NOW,
+                    'dt_pub_date'           => date('Y-m-d H:i:s'),
                     'fk_i_category_id'      => $aItem['catId'],
                     'f_price'               => $aItem['price'],
                     'fk_c_currency_code'    => $aItem['currency'],
@@ -353,7 +353,7 @@
 
                 $result = $this->manager->update (
                                         array(
-                                            'dt_mod_date'           => DB_FUNC_NOW
+                                            'dt_mod_date'           => date('Y-m-d H:i:s')
                                             ,'fk_i_category_id'     => $aItem['catId']
                                             ,'f_price'              => $aItem['price']
                                             ,'fk_c_currency_code'   => $aItem['currency']
@@ -765,7 +765,7 @@
             }
 
             $mComments = ItemComment::newInstance();
-            $aComment  = array('dt_pub_date'    => DB_FUNC_NOW
+            $aComment  = array('dt_pub_date'    => date('Y-m-d H:i:s')
                               ,'fk_i_item_id'   => $itemId
                               ,'s_author_name'  => $authorName
                               ,'s_author_email' => $authorEmail
@@ -1011,8 +1011,16 @@
                 }
             } else {
                 $regionId = null;
-                $regionName = $aItem['region'];   // OJO ¿ DE DONDE VIENE ?
+                $regionName = $aItem['region'];
+                if( $aItem['countryId'] != '' ) {
+                    $auxRegion  = Region::newInstance()->findByNameOnCountry($aItem['region'], $aItem['countryId'] );
+                    if($auxRegion){
+                        $regionId   = $auxRegion['pk_i_id'];
+                        $regionName = $auxRegion['s_name'];
+                    }
+                }
             }
+            
             $aItem['regionId']      = $regionId ;
             $aItem['regionName']    = $regionName;
 
@@ -1027,6 +1035,13 @@
             } else {
                 $cityId = null;
                 $cityName = $aItem['city'];
+                if( $aItem['countryId'] != '' ) {
+                    $auxCity = city::newInstance()->findByNameOnRegion($aItem['city'], $aItem['regionId'] );
+                    if($auxCity){
+                        $cityId   = $auxCity['pk_i_id'];
+                        $cityName = $auxCity['s_name'];
+                    }
+                }
             }
 
             $aItem['cityId']      = $cityId;

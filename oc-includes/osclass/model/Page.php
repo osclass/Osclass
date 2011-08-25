@@ -254,7 +254,7 @@
         {
             $sql = 'INSERT INTO ' . $this->getTableName() . ' (s_internal_name, b_indelible, dt_pub_date, dt_mod_date)';
             $sql .= ' VALUES (\'' . $aFields['s_internal_name'] . '\', ' . '\'' . $aFields['b_indelible'] . '\'';
-            $sql .= ', NOW(), NOW())';
+            $sql .= ', \''.date('Y-m-d H:i:s').'\', \''.date('Y-m-d H:i:s').'\')';
 
             $this->conn->osc_dBExec($sql);
 
@@ -362,7 +362,7 @@
         public function updateInternalName($id, $intName)
         {
             $fields = array('s_internal_name' => $intName,
-                             'dt_mod_date'    => DB_FUNC_NOW);
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
             $result = $this->update($fields, $where);
