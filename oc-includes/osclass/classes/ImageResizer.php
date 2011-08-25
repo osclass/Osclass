@@ -103,6 +103,7 @@
             if(file_exists($imagePath) && !is_writable($imagePath)) throw new Exception("$imagePath is not writable!");
 
             imagejpeg($this->im, $imagePath);
+            osc_run_hook('saved_image_to_file', $imagePath);
         }
 
         public function show() {
