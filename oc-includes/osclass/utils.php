@@ -191,20 +191,6 @@ function is_serialized($data) {
 }
 
 /**
- * Check whether serialized data is of string type.
- * @return bool False if not a serialized string, true if it is.
- */
-/*function is_serialized_string($data) {
-    // if it isn't a string, it isn't a serialized string
-    if (!is_string($data))
-        return false;
-    $data = trim($data);
-    if (preg_match('/^s:[0-9]+:.*;$/s', $data)) // this should fetch all serialized strings
-        return true;
-    return false;
-}*/
-
-/**
  * VERY BASIC
  * Perform a POST request, so we could launch fake-cron calls and other core-system calls without annoying the user
  */
@@ -217,20 +203,18 @@ function osc_doRequest($url, $_data) {
             $data[] = "$n=$v";
         }
         $data = implode('&', $data);
+
         // format --> test1=a&test2=b etc.
         // parse the given URL
         $url = parse_url($url);
-        if ($url['scheme'] != 'http') {
-            //die('Only HTTP request are supported !');
-        }
 
         // extract host and path:
         $host = $url['host'];
         $path = $url['path'];
 
         // open a socket connection on port 80
-        // using localhost due to some issues with NATs (hairpinning)
-        $fp = @fsockopen('localhost', 80);
+        // use localhost in case of issues with NATs (hairpinning)
+        $fp = @fsockopen($host, 80);
         
         if($fp!==false) {
             // send the request headers:

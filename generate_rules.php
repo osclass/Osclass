@@ -29,9 +29,6 @@
      ********* Add rules *********
      *****************************/
 
-    // Clean archive files
-    $rewrite->addRule('^(.+?).php(.*)$', '$1.php$2');
-
     // Contact rules
     $rewrite->addRule('^contact/?$', 'index.php?page=contact');
 
@@ -80,6 +77,9 @@
     // Page rules
     $rewrite->addRule('^(.*?)-p([0-9]*)$', 'index.php?page=page&id=$2');
     $rewrite->addRule('^(.*?)-p([0-9]*)-([a-zA-Z_]*)$', 'index.php?page=page&id=$2&lang=$3');
+
+    // Clean archive files
+    $rewrite->addRule('^(.+?)\.php(.*)$', '$1.php$2');
 
     // Category rules
     $rewrite->addRule('^(.+)$', 'index.php?page=search&sCategory=$1');
