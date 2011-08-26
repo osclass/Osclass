@@ -62,7 +62,7 @@
                 $aItem['description'][$key] = $purifier->purify($value);
             }
 
-            $aItem['price']    = strip_tags( trim( $aItem['price'] ) );
+            $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
             $contactName       = osc_sanitize_name( strip_tags( trim( $aItem['contactName'] ) ) );
             $contactEmail      = strip_tags( trim( $aItem['contactEmail'] ) );
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
@@ -108,10 +108,9 @@
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($contactName, 35)) ? _m("Name too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_email($contactEmail)) ? _m("Email invalid.") . PHP_EOL : '' ) .
-                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
@@ -255,7 +254,7 @@
                 $aItem['description'][$key] = $purifier->purify($value);
             }
 
-            $aItem['price']    = strip_tags( trim( $aItem['price'] ) );
+            $aItem['price']    = !is_null($aItem['price']) ? strip_tags( trim( $aItem['price'] ) ) : $aItem['price'];
             $aItem['cityArea'] = osc_sanitize_name( strip_tags( trim( $aItem['cityArea'] ) ) );
             $aItem['address']  = osc_sanitize_name( strip_tags( trim( $aItem['address'] ) ) );
 
@@ -297,8 +296,7 @@
             $flash_error .=
                 ((!osc_validate_category($aItem['catId'])) ? _m("Category invalid.") . PHP_EOL : '' ) .
                 ((!osc_validate_number($aItem['price'])) ? _m("Price must be number.") . PHP_EOL : '' ) .
-                ((!osc_validate_max($aItem['price'], 9)) ? _m("Price too long.") . PHP_EOL : '' ) .
-                //((!osc_validate_location($aItem['cityId'], $aItem['cityName'], $aItem['regionId'], $aItem['regionName'], $aItem['countryId'], $aItem['countryName'])) ? _m("Location not selected.") . PHP_EOL : '' ) .
+                ((!osc_validate_max($aItem['price'], 15)) ? _m("Price too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['countryName'], 3, false)) ? _m("Country too short.") . PHP_EOL : '' ) .
                 ((!osc_validate_max($aItem['countryName'], 50)) ? _m("Country too long.") . PHP_EOL : '' ) .
                 ((!osc_validate_text($aItem['regionName'], 3, false)) ? _m("Region too short.") . PHP_EOL : '' ) .
@@ -813,7 +811,7 @@
             $aItem['regionId']      = Params::getParam('regionId');
             $aItem['city']          = Params::getParam('city');
             $aItem['cityId']        = Params::getParam('cityId');
-            $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : 0;
+            $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : null;
             $aItem['cityArea']      = Params::getParam('cityArea');
             $aItem['address']       = Params::getParam('address');
             $aItem['currency']      = Params::getParam('currency');
@@ -889,7 +887,7 @@
                 $aItem['address'] = null;
             }
 
-            if( $aItem['price'] != '' ) {
+            if( !is_null($aItem['price']) ) {
                 $aItem['price'] = (float) $aItem['price'];
             }
 
@@ -928,7 +926,6 @@
                     $bool_img = false;
                     if ($error == UPLOAD_ERR_OK) {
                         $size = $aResources['size'][$key];
-//                        echo "bytes: ".$size." [$size > $maxSize]<br>";
                         if($size >= $maxSize){
                             $success = false;
                         }
@@ -1053,8 +1050,6 @@
             }
         }
 
-
-
         public function sendEmails($aItem){
 
             $item   = $aItem['item'];
@@ -1074,8 +1069,6 @@
                 osc_run_hook('hook_email_admin_new_item', $aItem);
             }
         }
-
-
     }
 
 ?>
