@@ -1045,6 +1045,7 @@
                                                         ,'fk_i_item_id' => $itemId
                                                     )
                             ) ;
+                            osc_run_hook('uploaded_file', ItemResource::newInstance()->findByPrimaryKey($resourceId));
                         }
                     }
                 }

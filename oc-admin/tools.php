@@ -61,11 +61,15 @@
                                             osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
                                             $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=images');
                                         }
+                                        
                                         $preferences = Preference::newInstance()->toArray() ;
 
                                         $wat = new Watermark();
                                         $aResources = ItemResource::newInstance()->getAllResources();
                                         foreach($aResources as $resource) {
+                                            
+                                            osc_run_hook('regenerate_image', $resource);
+                                            
                                             $path = osc_content_path() . 'uploads/' ;
                                             // comprobar que no haya original
                                             $img_original = $path . $resource['pk_i_id']. "_original*";
@@ -74,9 +78,15 @@
                                             if( count($aImages) == 1 ) {
                                                 $image_tmp = $aImages[0] ;
                                             } else {
-                                                $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*" ;
-                                                $aImages = glob( $img_thumbnail );
-                                                $image_tmp = $aImages[0] ;
+                                                $img_normal = $path . $resource['pk_i_id']. ".*" ;
+                                                $aImages = glob( $img_normal );
+                                                if( count($aImages) == 1 ) {
+                                                    $image_tmp = $aImages[0] ;
+                                                } else {
+                                                    $img_thumbnail = $path . $resource['pk_i_id']. "_thumbnail*" ;
+                                                    $aImages = glob( $img_thumbnail );
+                                                    $image_tmp = $aImages[0] ;
+                                                }
                                             }
                                             
                                             // extension
@@ -117,7 +127,7 @@
                                                                             'pk_i_id'       => $resource['pk_i_id']
                                                                         )
                                                 ) ;
-
+                                                osc_run_hook('regenerated_image', ItemResource::newInstance()->findByPrimaryKey($resource['pk_i_id']));
                                                 // si extension es direfente a jpg, eliminar las imagenes con $extension si hay
                                                 if( $extension != 'jpg' ) {
                                                     $files_to_remove = osc_content_path(). 'uploads/' . $resource['pk_i_id'] . "*" . $extension;

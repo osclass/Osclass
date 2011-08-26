@@ -723,7 +723,7 @@
      * @return string
      */
     function osc_resource_path() {
-        return (string) osc_base_url().osc_resource_field("s_path");
+        return (string) osc_apply_filter('resource_path', osc_base_url().osc_resource_field("s_path"));
     }
 
     /**
