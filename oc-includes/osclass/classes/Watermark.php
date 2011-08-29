@@ -19,7 +19,7 @@ class Watermark{
         $image = $this->getImageResource($filepath, $mime );
 
         // add text watermark to image
-        $this->imageAddText($image, $color, $text);
+        $image = $this->imageAddText($image, $color, $text);
 
         // save watermarked image
         return $this->saveImageFile($image, 'image/jpeg', $filepath);
@@ -27,45 +27,81 @@ class Watermark{
 
     public function doWatermarkImage($filepath, $mime = 'image/png')
     {
-        //$path_watermark = osc_lib_path() . 'osclass/classes/watermark.png';
+
         $path_watermark = osc_content_path() . 'uploads/watermark.png' ;
-        $watermark = imagecreatefrompng( $path_watermark );
-        
-        $watermark_width  = imagesx($watermark);
-        $watermark_height = imagesy($watermark);
+        if(osc_use_imagick()) {
+            $im = new Imagick($filepath);
+            $wm = new Imagick($path_watermark);
 
-        $image = imagecreatetruecolor($watermark_width, $watermark_height);
-        $image = $this->getImageResource($filepath, $mime );
-        $size = getimagesize( $filepath );
+            $geo = $im->getImageGeometry();
+            $wgeo = $wm->getImageGeometry();
 
-        switch(osc_watermark_place()) {
-            case 'tl':
-                $dest_x = 0;
-                $dest_y = 0;
-                break;
-            case 'tr':
-                $dest_x = $size[0] - $watermark_width;
-                $dest_y = 0;
-                break;
-            case 'bl':
-                $dest_x = 0;
-                $dest_y = $size[1] - $watermark_height;
-                break;
-            case 'br':
-                $dest_x = $size[0] - $watermark_width;
-                $dest_y = $size[1] - $watermark_height;
-                break;
-            default:
-                $dest_x = ($size[0]/2) - ($watermark_width /2);
-                $dest_y = ($size[1]/2) - ($watermark_height/2);
-                break;
+            switch(osc_watermark_place()) {
+                case 'tl':
+                    $dest_x = 0;
+                    $dest_y = 0;
+                    break;
+                case 'tr':
+                    $dest_x = $geo['width'] - $wgeo['width'];
+                    $dest_y = 0;
+                    break;
+                case 'bl':
+                    $dest_x = 0;
+                    $dest_y = $geo['height'] - $wgeo['height'];
+                    break;
+                case 'br':
+                    $dest_x = $geo['width'] - $wgeo['width'];
+                    $dest_y = $geo['height'] - $wgeo['height'];
+                    break;
+                default:
+                    $dest_x = ($geo['width']/2) - ($wgeo['width']/2);
+                    $dest_y = ($geo['height']/2) - ($wgeo['height']/2);
+                    break;
+            }
+
+            $im->compositeImage( $wm, imagick::COMPOSITE_OVER, $dest_x, $dest_y );
+            $this->saveImageFile($im, 'image/jpeg', $filepath);
+            $im->destroy();
+            $wm->destroy();
+        } else {
+            $watermark = imagecreatefrompng( $path_watermark );
+
+            $watermark_width  = imagesx($watermark);
+            $watermark_height = imagesy($watermark);
+
+            $image = imagecreatetruecolor($watermark_width, $watermark_height);
+            $image = $this->getImageResource($filepath, $mime );
+            $size = getimagesize( $filepath );
+
+            switch(osc_watermark_place()) {
+                case 'tl':
+                    $dest_x = 0;
+                    $dest_y = 0;
+                    break;
+                case 'tr':
+                    $dest_x = $size[0] - $watermark_width;
+                    $dest_y = 0;
+                    break;
+                case 'bl':
+                    $dest_x = 0;
+                    $dest_y = $size[1] - $watermark_height;
+                    break;
+                case 'br':
+                    $dest_x = $size[0] - $watermark_width;
+                    $dest_y = $size[1] - $watermark_height;
+                    break;
+                default:
+                    $dest_x = ($size[0]/2) - ($watermark_width /2);
+                    $dest_y = ($size[1]/2) - ($watermark_height/2);
+                    break;
+            }
+
+            $this->imagecopymerge_alpha($image, $watermark, $dest_x, $dest_y, 0, 0, $watermark_width, $watermark_height, 100);
+
+            $this->saveImageFile($image, 'image/jpeg', $filepath);
+            imagedestroy($image);
+            imagedestroy($watermark);
         }
-
-        $this->imagecopymerge_alpha($image, $watermark, $dest_x, $dest_y, 0, 0, $watermark_width, $watermark_height, 100);
-
-        $this->saveImageFile($image, 'image/jpeg', $filepath);
-        imagedestroy($image);
-        imagedestroy($watermark);
     }
     /**
      * Add watermark text to image
@@ -75,14 +111,47 @@ class Watermark{
      * @return resource
      */
     private function imageAddText($image, $color, $text) {
-        // allocate text color
-        $color  = $this->imageColorAllocateHex($image, $color);
+        if(osc_use_imagick()) {
+            $draw = new ImagickDraw();
+            $draw->setFillColor('black');//$color);
+            $draw->setFont($this->font);
+            $draw->setFontSize( 30 );
+            $metrics = $image->queryFontMetrics($draw, $text);
+            $geometry = $image->getImageGeometry();
+            switch(osc_watermark_place()) {
+                case 'tl':
+                    $offset['x'] = 1;
+                    $offset['y'] = $metrics['ascender']+1;
+                    break;
+                case 'tr':
+                    $offset['x'] = $geometry['width'] - $metrics['textWidth']-1;
+                    $offset['y'] = $metrics['ascender']+1;
+                    break;
+                case 'bl':
+                    $offset['x'] = 1;
+                    $offset['y'] = $geometry['height']-1;
+                    break;
+                case 'br':
+                    $offset['x'] = $geometry['width'] - $metrics['textWidth']-1;
+                    $offset['y'] = $geometry['height']-1;
+                    break;
+                default:
+                    $offset['x'] = ($geometry['width'] / 2) - ($metrics['textWidth'] / 2) ;
+                    $offset['y'] = ($geometry['height'] / 2) - ($metrics['ascender'] / 2) ;
+                    break;
+            }
+            $image->annotateImage($draw, $offset['x'], $offset['y'], 0, $text);
+            $image->setImageFormat('jpg');
+        } else {
+            // allocate text color
+            $color  = $this->imageColorAllocateHex($image, $color);
 
-        // calculate watermark position and get full path to font file
-        $offset = $this->calculateOffset($image, $text);
+            // calculate watermark position and get full path to font file
+            $offset = $this->calculateOffset($image, $text);
 
-        // Add the text to image
-        imagettftext($image, 20, 0, $offset['x'], $offset['y'], $color, $this->font , html_entity_decode($text, null, "UTF-8"));
+            // Add the text to image
+            imagettftext($image, 20, 0, $offset['x'], $offset['y'], $color, $this->font , html_entity_decode($text, null, "UTF-8"));
+        }
         return $image;
     }
     /**
@@ -204,15 +273,19 @@ class Watermark{
      * @return resource
      */
     private function getImageResource($filepath, $mime_type) {
-        switch ( $mime_type ) {
-            case 'image/jpeg':
-                return imagecreatefromjpeg($filepath);
-            case 'image/png':
-                return imagecreatefrompng($filepath);
-            case 'image/gif':
-                return imagecreatefromgif($filepath);
-            default:
-                return false;
+        if(osc_use_imagick()) {
+            return new Imagick($filepath);
+        } else {
+            switch ( $mime_type ) {
+                case 'image/jpeg':
+                    return imagecreatefromjpeg($filepath);
+                case 'image/png':
+                    return imagecreatefrompng($filepath);
+                case 'image/gif':
+                    return imagecreatefromgif($filepath);
+                default:
+                    return false;
+            }
         }
     }
 
@@ -225,15 +298,20 @@ class Watermark{
      * @return boolean
      */
     private function saveImageFile($image, $mime_type, $filepath) {
-        switch ( $mime_type ) {
-            case 'image/jpeg':
-                return imagejpeg($image, $filepath);
-            case 'image/png':
-                return imagepng($image, $filepath);
-            case 'image/gif':
-                return imagegif($image, $filepath);
-            default:
-                return false;
+        if(osc_use_imagick()) {
+                $image->setImageFileName($filepath);
+                $image->writeImage();
+        } else {
+            switch ( $mime_type ) {
+                case 'image/jpeg':
+                    return imagejpeg($image, $filepath);
+                case 'image/png':
+                    return imagepng($image, $filepath);
+                case 'image/gif':
+                    return imagegif($image, $filepath);
+                default:
+                    return false;
+            }
         }
     }
 

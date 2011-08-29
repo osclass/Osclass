@@ -318,6 +318,15 @@
     }
 
     /**
+     * Gets if use of imagick is enabled or not
+     *
+     * @return string
+     */
+    function osc_use_imagick() {
+        return (getBoolPreference('use_imagick')) ;
+    }
+
+    /**
      * Gets thumbnails' dimensions
      *
      * @return string
