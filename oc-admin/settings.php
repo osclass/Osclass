@@ -628,7 +628,11 @@
                                         $dimNormal         = strip_tags($dimNormal);
                                         $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
                                         $use_imagick       = ($use_imagick != '' ? true : false);
+                                        if(!extension_loaded('imagick')) {
+                                            $use_imagick = false;
+                                        }
 
+                                        
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
                                                                                       ,array('s_name'  => 'maxSizeKb'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
