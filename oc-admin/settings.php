@@ -570,6 +570,7 @@
                                         $dimPreview        = Params::getParam('dimPreview');
                                         $dimNormal         = Params::getParam('dimNormal');
                                         $keepOriginalImage = Params::getParam('keep_original_image');
+                                        $use_imagick       = Params::getParam('use_imagick');
                                         $type_watermark    = Params::getParam('watermark_type');
                                         $watermark_color   = Params::getParam('watermark_text_color');
                                         $watermark_text    = Params::getParam('watermark_text');
@@ -626,6 +627,7 @@
                                         $dimPreview        = strip_tags($dimPreview);
                                         $dimNormal         = strip_tags($dimNormal);
                                         $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
+                                        $use_imagick       = ($use_imagick != '' ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
                                                                                       ,array('s_name'  => 'maxSizeKb'));
@@ -639,6 +641,8 @@
                                                                                       ,array('s_name'  => 'dimNormal'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
                                                                                       ,array('s_name'  => 'keep_original_image'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $use_imagick)
+                                                                                      ,array('s_name'  => 'use_imagick'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
