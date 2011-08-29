@@ -52,36 +52,6 @@
             }
         }
 
-/*        public function resizeToMax($size) {
-            if(defined('IMAGIK')) {
-            } else {
-                $w = imagesx($this->im);
-                $h = imagesy($this->im);
-
-                if($w >= $h) {
-                    //$newW = $size;
-                    $newW = ($w > $size)? $size : $w;
-                    $newH = $h * ($newW / $w);
-                } else {
-                    //$newH = $size;
-                    $newH = ($h > $size)? $size : $h;
-                    $newW = $w * ($newH / $h);
-                }
-
-                $newIm = imagecreatetruecolor($newW, $newH);
-                imagealphablending($newIm, false);
-                $colorTransparent = imagecolorallocatealpha($newIm, 255, 255, 255, 127);
-                imagefill($newIm, 0, 0, $colorTransparent);
-                imagesavealpha($newIm, true);
-                imagecopyresized($newIm, $this->im, 0, 0, 0, 0, $newW, $newH, $w, $h);
-                imagedestroy($this->im);
-
-                $this->im = $newIm;
-            }
-
-            return $this;
-        }*/
-
         public function resizeTo($width, $height) {
             if(osc_use_imagick()) {
                 $bg = new Imagick();
