@@ -32,6 +32,11 @@
         function doModel() {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        if(!osc_users_enabled()) {
+                                            osc_add_flash_error_message(_m('Users are not enabled'));
+                                            $this->redirectTo(osc_base_url());
+                                        }
+                    
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
                     
