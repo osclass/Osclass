@@ -20,6 +20,8 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('IS_AJAX', true) ;
+
     class CWebAjax extends BaseModel
     {
         function __construct() {
