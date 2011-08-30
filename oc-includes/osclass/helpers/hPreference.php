@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets comments per page
+     *
+     * @return int 
+     */
+    function osc_timezone() {
+        return (getPreference('timezone')) ;
+    }
+
+    /**
      * Gets if only users can post comments
      *
      * @return boolean
