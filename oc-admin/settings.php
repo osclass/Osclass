@@ -699,6 +699,7 @@
                                         $sCurrency     = Params::getParam('currency');
                                         $sWeekStart    = Params::getParam('weekStart');
                                         $sTimeFormat   = Params::getParam('timeFormat');
+                                        $sTimezone     = Params::getParam('timezone');
                                         $sNumRssItems  = Params::getParam('num_rss_items');
                                         $maxLatestItems = Params::getParam('max_latest_items_at_home');
 
@@ -734,6 +735,8 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));

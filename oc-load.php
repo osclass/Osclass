@@ -157,6 +157,10 @@ function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
 
+if(osc_timezone()!='') {
+    date_default_timezone_set(osc_timezone());
+};
+
 osc_add_hook("header", "osc_show_maintenance");
 osc_add_hook("header", "osc_meta_generator");
 
