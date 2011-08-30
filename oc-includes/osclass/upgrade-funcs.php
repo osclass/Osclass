@@ -142,9 +142,6 @@
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'mailserver_pop', '', 'STRING')", DB_TABLE_PREFIX));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'use_imagick', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
         $timezone = 'Europe/Belgrade';
-        if(init_get('date.timezone')!='') {
-            $timezone = init_get('date.timezone');
-        };
         if(date_default_timezone_get()!='') {
             $timezone = date_default_timezone_get();
         };
