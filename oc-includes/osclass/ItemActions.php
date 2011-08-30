@@ -941,7 +941,7 @@
         private function checkAllowedExt($aResources)
         {
             $success = true;
-            require LIB_PATH . 'osclass/classes/mimes.php';
+            require LIB_PATH . 'osclass/mimes.php';
             if($aResources != '') {
                 // get allowedExt
                 $aMimesAllowed = array();
