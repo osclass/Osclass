@@ -17,6 +17,8 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('IS_AJAX', true) ;
+
     class CAdminAjax extends AdminSecBaseModel {
 
         function __construct()
