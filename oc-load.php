@@ -145,6 +145,10 @@ Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
 
+if(osc_timezone() != '') {
+    date_default_timezone_set(osc_timezone());
+}
+
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>
         <div id="maintenance" name="maintenance">
@@ -156,10 +160,6 @@ function osc_show_maintenance() {
 function osc_meta_generator() {
     echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
 }
-
-if(osc_timezone()!='') {
-    date_default_timezone_set(osc_timezone());
-};
 
 osc_add_hook("header", "osc_show_maintenance");
 osc_add_hook("header", "osc_meta_generator");

@@ -16,7 +16,9 @@
      * You should have received a copy of the GNU Affero General Public
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
- 
+
+    define('IS_AJAX', true) ;
+
      class items_processing_ajax extends Item
      {
         private $items;
