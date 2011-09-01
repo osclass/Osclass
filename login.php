@@ -76,7 +76,11 @@
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
                                             }
-                                            $this->redirectTo( osc_user_dashboard_url() ) ;
+                                            if(Params::getParam('http_referer')!='') {
+                                                $this->redirectTo( Params::getParam('http_referer') ) ;
+                                            } else {
+                                                $this->redirectTo( osc_user_dashboard_url() ) ;
+                                            };
                                         } else {
                                             osc_add_flash_error_message(_m('This should never happens'));
                                         }
