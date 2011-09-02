@@ -53,9 +53,22 @@
             return $this->exists(array('pk_i_id' => $id, 's_name' => $code) ) ;
         }
 
-        public function countResources($itemId) {
-            $total = $this->conn->osc_dbFetchResult('SELECT COUNT(pk_i_id) as total FROM %s WHERE fk_i_item_id = %d GROUP BY fk_i_item_id', $this->getTableName(), $itemId);
-            return $total['total'];
+        public function countResources($itemId = NULL) {
+            if(is_null($itemId) || $itemId=='') {
+                $total = $this->conn->osc_dbFetchResult('SELECT COUNT(*) as total FROM %s ', $this->getTableName());
+                return $total['total'];
+            } else {
+                $total = $this->conn->osc_dbFetchResult('SELECT COUNT(*) as total FROM %s WHERE fk_i_item_id = %d GROUP BY fk_i_item_id', $this->getTableName(), $itemId);
+                return $total['total'];
+            }
+        }
+
+        public function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'pk_i_id', $type = 'DESC') {
+            if(is_null($itemId) || $itemId=='') {
+                return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id ORDER BY %s %s LIMIT %d, %d ', $this->getTableName(), $this->getTableItemName(), $order, $type, $start, $length);
+            } else {
+                return $this->conn->osc_dbFetchResults('SELECT r.*, c.dt_pub_date FROM %s r JOIN %s c ON c.pk_i_id = r.fk_i_item_id WHERE r.fk_i_item_id = %d ORDER BY %s %s LIMIT %d, %d', $this->getTableName(), $this->getTableItemName(), $itemId, $order, $type, $start, $length);
+            }
         }
         
         
