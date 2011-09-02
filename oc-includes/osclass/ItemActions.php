@@ -1056,10 +1056,14 @@
             View::newInstance()->_exportVariableToView('item', $item);
 
             /**
-             * Send email to user requesting item activation
+             * Send email to non-reg user requesting item activation
              */
-            if ( $aItem['active']=='INACTIVE' ) {
+            if( Session::newInstance()->_get('userId') == '' && $aItem['active']=='INACTIVE' ) {
+                osc_run_hook('hook_email_item_validation_non_register_user', $aItem);
+            } else if ( $aItem['active']=='INACTIVE' ) { //  USER IS REGISTERED
                 osc_run_hook('hook_email_item_validation', $aItem);
+            } else if( Session::newInstance()->_get('userId') == '' ){ // USER IS NOT REGISTERED
+                osc_run_hook('hook_email_new_item_non_register_user', $aItem);
             }
 
             /**

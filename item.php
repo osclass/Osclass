@@ -139,14 +139,8 @@
                             osc_add_flash_ok_message( _m('Your item has been published')) ;
                         }
                         
-                        $PcontactName   = Params::getParam('contactName');
-                        $PcontactEmail  = Params::getParam('contactEmail');
                         $itemId         = Params::getParam('itemId');
                         $item           = $this->itemManager->findByPrimaryKey($itemId);
-
-                        if( Session::newInstance()->_get('userId') == '' ){
-                            osc_run_hook('hook_email_new_item_non_register_user', $item, $PcontactName, $PcontactEmail);
-                        }
 
                         osc_run_hook('posted_item', $item);
                         $category = Category::newInstance()->findByPrimaryKey(Params::getParam('catId'));
