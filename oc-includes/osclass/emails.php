@@ -239,7 +239,7 @@
     }
     osc_add_hook('hook_email_comment_validated', 'fn_email_comment_validated');
     
-    function fn_email_new_item_non_register_user($item, $PcontactName, $PcontactEmail) {
+    function fn_email_new_item_non_register_user($item) {
         $mPages = new Page() ;
         $aPage = $mPages->findByInternalName('email_new_item_non_register_user') ;
         $locale = osc_current_user_locale() ;
@@ -258,15 +258,15 @@
         $words   = array();
         $words[] = array('{ITEM_ID}', '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}',
                         '{ITEM_URL}', '{WEB_TITLE}', '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
-        $words[] = array($item['pk_i_id'], $PcontactName, $PcontactEmail, osc_base_url(), $item['s_title'],
+        $words[] = array($item['pk_i_id'], $item['s_contact_name'], $item['s_contact_email'], osc_base_url(), $item['s_title'],
         $item_url, osc_page_title(), '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url) ;
         $title   = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_item_non_register_user_title', $content['s_title'])), $words) ;
         $body    = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_item_non_register_user_description', $content['s_text'])), $words) ;
 
         $emailParams =  array(
             'subject' => $title
-            ,'to' => $PcontactEmail
-            ,'to_name' => $PcontactName
+            ,'to' => $item['s_contact_email']
+            ,'to_name' => $item['s_contact_name']
             ,'body' => $body
             ,'alt_body' => $body
         );
@@ -730,6 +730,76 @@
         osc_sendMail($emailParams) ;
     }
     osc_add_hook('hook_email_admin_new_item', 'fn_email_admin_new_item');
+
     
-    
+    function fn_email_item_validation_non_register_user($item) {
+        
+        $item = $item['item'];
+        View::newInstance()->_exportVariableToView('item', $item);
+        
+        $mPages = new Page() ;
+        $aPage = $mPages->findByInternalName('email_item_validation_non_register_user') ;
+        $locale = osc_current_user_locale() ;
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $item_url = osc_item_url();
+        $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+        $edit_url = osc_item_edit_url( $item['s_secret'], $item['pk_i_id'] );
+        $delete_url = osc_item_delete_url( $item['s_secret'],  $item['pk_i_id'] );
+
+        $all = '';
+
+        if (isset($item['locale'])) {
+            foreach ($item['locale'] as $locale => $data) {
+                $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                $all .= '<br/>';
+                if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
+                    $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
+                } else {
+                    $all .= __('Language') . ': ' . $locale . '<br/>';
+                }
+                $all .= __('Title') . ': ' . $data['s_title'] . '<br/>';
+                $all .= __('Description') . ': ' . $data['s_description'] . '<br/>';
+                $all .= '<br/>';
+            }
+        } else {
+            $all .= __('Title') . ': ' . $item['s_title'] . '<br/>';
+            $all .= __('Description') . ': ' . $item['s_description'] . '<br/>';
+        }
+
+        // Format activation URL
+        $validation_url = osc_item_activate_url( $item['s_secret'], $item['pk_i_id'] );
+
+        $words   = array();
+        $words[] = array('{ITEM_DESCRIPTION_ALL_LANGUAGES}', '{ITEM_DESCRIPTION}', '{ITEM_COUNTRY}',
+                         '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}',
+                         '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
+                         '{VALIDATION_LINK}', '{VALIDATION_URL}',
+                         '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
+        $words[] = array($all, $item['s_description'], $item['s_country'], $item['f_price'],
+                         $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
+                         $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
+                         osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url,
+                         '<a href="' . $edit_url . '">' . $edit_url . '</a>', $edit_url, '<a href="' . $delete_url . '">' . $delete_url . '</a>', $delete_url);
+        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_validation_non_register_user_title', $content['s_title'])), $words);
+        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_validation_non_register_user_description', $content['s_text'])), $words);
+
+        $emailParams =  array(
+            'subject' => $title
+            ,'to' => $item['s_contact_email']
+            ,'to_name' => $item['s_contact_name']
+            ,'body' => $body
+            ,'alt_body' => $body
+        );
+
+        osc_sendMail($emailParams);
+    }
+    osc_add_hook('hook_email_item_validation_non_register_user', 'fn_email_item_validation_non_register_user');
+        
 ?>
