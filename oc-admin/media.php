@@ -50,7 +50,7 @@
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;
                 break;
-                default:                $resourceId = Params::getParam("id");
+                default:                /*$resourceId = Params::getParam("id");
 
 
                                         if( $resourceId != '' ) {
@@ -61,7 +61,7 @@
 
                                         //calling the view...
                                         $this->_exportVariableToView("resources", $resources) ;
-                                        $this->_exportVariableToView("resourceId", $resourceId) ;
+                                        $this->_exportVariableToView("resourceId", $resourceId) ;*/
                                         $this->doView('media/index.php');
 
             }

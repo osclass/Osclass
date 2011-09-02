@@ -85,6 +85,10 @@
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
                     $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
                     break;
+                case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
+                    require_once osc_admin_base_path() . 'ajax/media_processing.php';
+                    $media_processing = new media_processing_ajax(Params::getParamsAsArray("get"));
+                    break;
                 case 'categories_order': // Save the order of the categories
                     $aIds = Params::getParam('list');
                     $orderParent = 0;
