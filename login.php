@@ -124,7 +124,7 @@
                 break;
                 case('forgot_post'):
                                         if( (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
-                                            osc_add_flash_error_message( _m('Password cannot be blank')) ;
+                                            osc_add_flash_warning_message( _m('Password cannot be blank')) ;
                                             $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
                                         }
 
