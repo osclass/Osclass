@@ -300,6 +300,18 @@
             }
         }
 
+        public function fromUser($id = NULL) {
+            if(is_array($id)) {
+                $ids = array();
+                foreach($id as $_id) {
+                    $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                }
+                $this->addConditions(" ( ".implode(" || ", $ids)." ) ");
+            } else {
+                $this->addConditions(sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $id));
+            }
+        }
+
         private function pruneBranches($branches = null) {
             if($branches!=null) {
                 foreach($branches as $branch) {
