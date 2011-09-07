@@ -67,13 +67,6 @@
 
                 if (count($users) > 0 ) {
 
-                    $prefLocale = osc_language() ;
-                    $page = Page::newInstance()->findByInternalName($internal_name) ;
-
-                    $page_description = $page['locale'] ;
-
-                    $_title = $page_description[$prefLocale]['s_title'] ;
-                    $_body  = $page_description[$prefLocale]['s_text'] ;
 
                     $ads = "";
                     foreach ($items as $item) {
@@ -82,31 +75,7 @@
 
                     foreach ($users as $user)
                     {
-                        if($user['fk_i_user_id']!=0) {
-                            $user = User::newInstance()->findByPrimaryKey($user['fk_i_user_id']);
-                        } else {
-                            $user['s_name'] = $user['s_email'];
-                        }
-
-                        $unsub_link = osc_user_unsubscribe_alert_url($user['s_email'], $s_search['s_secret']);
-
-                        $unsub_link = "<a href='". $unsub_link ."'>unsubscribe alert</a>";
-
-                        $words = array() ;
-                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{ADS}', '{UNSUB_LINK}') ;
-                        $words[] = array($user['s_name'], $user['s_email'], $ads, $unsub_link) ;
-                        $title = osc_mailBeauty($_title, $words) ;
-                        $body = osc_mailBeauty($_body, $words) ;
-
-                        $params = array(
-                            'subject' => $title
-                            ,'to' => $user['s_email']
-                            ,'to_name' => $user['s_name']
-                            ,'body' => $body
-                            ,'alt_body' => $body
-                        ) ;
-
-                        osc_sendMail($params) ;
+                        osc_run_hook('hook_'.$internal_name, $user, $ads, $s_search);
                     }
                 }
             }

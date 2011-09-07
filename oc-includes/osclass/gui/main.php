@@ -86,7 +86,7 @@
                                  <tbody>
                                     <?php $class = "even"; ?>
                                     <?php while ( osc_has_latest_items() ) { ?>
-                                        <tr class="<?php echo $class ; ?>">
+                                     <tr class="<?php echo $class. (osc_item_is_premium()?" premium":"") ; ?>">
                                             <?php if( osc_images_enabled_at_items() ) { ?>
                                              <td class="photo">
                                                 <?php if( osc_count_item_resources() ) { ?>

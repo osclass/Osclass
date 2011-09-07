@@ -57,6 +57,7 @@
                     'swf'	=>	'application/x-shockwave-flash',
                     'sit'	=>	'application/x-stuffit',
                     'tar'	=>	'application/x-tar',
+                    'rar'	=>	'application/x-rar',
                     'tgz'	=>	array('application/x-tar', 'application/x-gzip-compressed'),
                     'xhtml'	=>	'application/xhtml+xml',
                     'xht'	=>	'application/xhtml+xml',

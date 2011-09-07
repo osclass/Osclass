@@ -78,6 +78,12 @@
             return( array('f_price', 'dt_pub_date') ) ;
         }
 
+        // juanramon: little hack to get alerts work in search layout
+        public function reconnect()
+        {
+            $this->conn = getConnection();
+        }
+
         public function addConditions($conditions) {
             if(is_array($conditions)) {
                 foreach($conditions as $condition) {
@@ -177,7 +183,7 @@
                 foreach($city_area as $c) {
                     $c = trim($c);
                     if($c!='') {
-                        if(is_int($c)) {
+                        if(is_numeric($c)) {
                             $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
                             $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
@@ -187,7 +193,7 @@
             } else {
                 $city_area = trim($city_area);
                 if($city_area!="") {
-                    if(is_int($city_area)) {
+                    if(is_numeric($city_area)) {
                         $this->city_areas[] = sprintf("%st_item_location.fk_i_city_area_id = %d ", DB_TABLE_PREFIX, $city_area);
                     } else {
                         $this->city_areas[] = sprintf("%st_item_location.s_city_area LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city_area);
@@ -201,7 +207,7 @@
                 foreach($city as $c) {
                     $c = trim($c);
                     if($c!='') {
-                        if(is_int($c)) {
+                        if(is_numeric($c)) {
                             $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $c);
                         } else {
                             $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $c);
@@ -211,7 +217,7 @@
             } else {
                 $city = trim($city);
                 if($city!="") {
-                    if(is_int($city)) {
+                    if(is_numeric($city)) {
                         $this->cities[] = sprintf("%st_item_location.fk_i_city_id = %d ", DB_TABLE_PREFIX, $city);
                     } else {
                         $this->cities[] = sprintf("%st_item_location.s_city LIKE '%%%s%%' ", DB_TABLE_PREFIX, $city);
@@ -225,7 +231,7 @@
                 foreach($region as $r) {
                     $r = trim($r);
                     if($r!='') {
-                        if(is_int($r)) {
+                        if(is_numeric($r)) {
                             $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $r);
                         } else {
                             $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $r);
@@ -235,7 +241,7 @@
             } else {
                 $region = trim($region);
                 if($region!="") {
-                    if(is_int($region)) {
+                    if(is_numeric($region)) {
                         $this->regions[] = sprintf("%st_item_location.fk_i_region_id = %d ", DB_TABLE_PREFIX, $region);
                     } else {
                         $this->regions[] = sprintf("%st_item_location.s_region LIKE '%%%s%%' ", DB_TABLE_PREFIX, $region);
@@ -291,6 +297,18 @@
                 $this->addConditions(sprintf("%st_item_resource.s_content_type LIKE '%%image%%' AND %st_item.pk_i_id = %st_item_resource.fk_i_item_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             } else {
 
+            }
+        }
+
+        public function fromUser($id = NULL) {
+            if(is_array($id)) {
+                $ids = array();
+                foreach($id as $_id) {
+                    $ids[] = sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $_id);
+                }
+                $this->addConditions(" ( ".implode(" || ", $ids)." ) ");
+            } else {
+                $this->addConditions(sprintf("%st_item.fk_i_user_id = %d ", DB_TABLE_PREFIX, $id));
             }
         }
 
@@ -458,7 +476,7 @@
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
             $region_int = (int)$region;
-            if(is_int($region_int) && $region_int!=0) {
+            if(is_numeric($region_int) && $region_int!=0) {
 
                 $this->addConditions(sprintf('%st_item_location.fk_i_city_id = ct.pk_i_id', DB_TABLE_PREFIX));
                 $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
@@ -477,7 +495,7 @@
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
             $city_int = (int)$city;
-            if(is_int($city_int) && $city_int!=0) {
+            if(is_numeric($city_int) && $city_int!=0) {
 
                 $this->addConditions(sprintf('%st_item_location.fk_i_city_area_id = cta.pk_i_id', DB_TABLE_PREFIX));
                 $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));

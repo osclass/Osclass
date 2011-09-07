@@ -55,6 +55,15 @@
     }
 
     /**
+     * Gets comments per page
+     *
+     * @return int 
+     */
+    function osc_timezone() {
+        return (getPreference('timezone')) ;
+    }
+
+    /**
      * Gets if only users can post comments
      *
      * @return boolean
@@ -315,6 +324,15 @@
      */
     function osc_allowed_extension() {
         return (getPreference('allowedExt')) ;
+    }
+
+    /**
+     * Gets if use of imagick is enabled or not
+     *
+     * @return string
+     */
+    function osc_use_imagick() {
+        return (getBoolPreference('use_imagick')) ;
     }
 
     /**

@@ -73,6 +73,28 @@
 
         }
 
+        function _setReferer($value) {
+            $_SESSION['osc_http_referer'] = $value ;
+            $this->session['osc_http_referer'] = $value ;
+            $_SESSION['osc_http_referer_state'] = 0 ;
+            $this->session['osc_http_referer_state'] = 0 ;
+        }
+
+        function _getReferer() {
+            if(isset($this->session['osc_http_referer'])) {
+                return ($this->session['osc_http_referer']) ;
+            } else {
+                return '';
+            }
+        }
+
+        function _dropReferer() {
+            unset($_SESSION['osc_http_referer']) ;
+            unset($this->session['osc_http_referer']) ;
+            unset($_SESSION['osc_http_referer_state']) ;
+            unset($this->session['osc_http_referer_state']) ;
+        }
+
         function _view() {
             print_r($this->session) ;
 //            echo "\n" ;
@@ -160,6 +182,14 @@
                         unset($_SESSION['form'][$key]) ;
                         unset($this->session['form'][$key]) ;
                     }
+                }
+            }
+
+            if(isset($this->session['osc_http_referer_state'])) {
+                $this->session['osc_http_referer_state']++;
+                $_SESSION['osc_http_referer_state']++;
+                if((int)($this->session['osc_http_referer_state'])>=2) {
+                    $this->_dropReferer();
                 }
             }
         }

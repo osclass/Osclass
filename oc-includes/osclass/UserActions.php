@@ -60,34 +60,7 @@
                     
                     $user = $this->manager->findByPrimaryKey($userId) ;
 
-                    $mPages = new Page() ;
-                    $locale = osc_current_user_locale() ;
-
-                    $aPage = $mPages->findByInternalName('email_user_validation') ;
-
-                    $content = array() ;
-                    if(isset($aPage['locale'][$locale]['s_title'])) {
-                        $content = $aPage['locale'][$locale] ;
-                    } else {
-                        $content = current($aPage['locale']) ;
-                    }
-                    
-                    if (!is_null($content)) {
-                        $validation_url = osc_user_activate_url($user['pk_i_id'], $input['s_secret']);
-                        $words   = array();
-                        $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                        $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>', '<a href="' . $validation_url . '" >' . $validation_url . '</a>') ;
-                        $title = osc_mailBeauty($content['s_title'], $words) ;
-                        $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                        $emailParams = array('subject'  => $title
-                                             ,'to'       => Params::getParam('s_email')
-                                             ,'to_name'  => Params::getParam('s_name')
-                                             ,'body'     => $body
-                                             ,'alt_body' => $body
-                        ) ;
-                        osc_sendMail($emailParams) ;
-                    }
+                    osc_run_hook('hook_email_user_validation', $user, $input);
                     
                     return 1 ;
                     
@@ -169,40 +142,13 @@
 
             $code = osc_genRandomPassword(30);
             $date = date('Y-m-d H:i:s');
-            $date2 = date('Y-m-d H:i:').'00';
             User::newInstance()->update(
                 array('s_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR']),
                 array('pk_i_id' => $user['pk_i_id'])
             );
 
             $password_url = osc_forgot_user_password_confirm_url($user['pk_i_id'], $code);
-            $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
-            
-            $content = array();
-            $locale = osc_current_user_locale() ;
-            if(isset($aPage['locale'][$locale]['s_title'])) {
-                $content = $aPage['locale'][$locale];
-            } else {
-                $content = current($aPage['locale']);
-            }
-
-            if (!is_null($content)) {
-                $words   = array();
-                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{IP_ADDRESS}',
-                                 '{PASSWORD_LINK}', '{PASSWORD_URL}', '{DATE_TIME}');
-                $words[] = array($user['s_name'], $user['s_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', osc_page_title(),
-                                 $_SERVER['REMOTE_ADDR'], '<a href="' . $password_url . '">' . $password_url . '</a>', $password_url, $date2);
-                $title = osc_mailBeauty($content['s_title'], $words);
-                $body = osc_mailBeauty($content['s_text'], $words);
-
-                $emailParams = array('subject'  => $title,
-                                     'to'       => $user['s_email'],
-                                     'to_name'  => $user['s_name'],
-                                     'body'     => $body,
-                                     'alt_body' => $body);
-                osc_sendMail($emailParams);
-            }
-
+            osc_run_hook('hook_email_user_forgot_password', $user, $password_url);
             return 0;
         }
         

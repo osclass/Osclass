@@ -570,6 +570,7 @@
                                         $dimPreview        = Params::getParam('dimPreview');
                                         $dimNormal         = Params::getParam('dimNormal');
                                         $keepOriginalImage = Params::getParam('keep_original_image');
+                                        $use_imagick       = Params::getParam('use_imagick');
                                         $type_watermark    = Params::getParam('watermark_type');
                                         $watermark_color   = Params::getParam('watermark_text_color');
                                         $watermark_text    = Params::getParam('watermark_text');
@@ -626,7 +627,12 @@
                                         $dimPreview        = strip_tags($dimPreview);
                                         $dimNormal         = strip_tags($dimNormal);
                                         $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
+                                        $use_imagick       = ($use_imagick != '' ? true : false);
+                                        if(!extension_loaded('imagick')) {
+                                            $use_imagick = false;
+                                        }
 
+                                        
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
                                                                                       ,array('s_name'  => 'maxSizeKb'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
@@ -639,6 +645,8 @@
                                                                                       ,array('s_name'  => 'dimNormal'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
                                                                                       ,array('s_name'  => 'keep_original_image'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $use_imagick)
+                                                                                      ,array('s_name'  => 'use_imagick'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
@@ -691,6 +699,7 @@
                                         $sCurrency     = Params::getParam('currency');
                                         $sWeekStart    = Params::getParam('weekStart');
                                         $sTimeFormat   = Params::getParam('timeFormat');
+                                        $sTimezone     = Params::getParam('timezone');
                                         $sNumRssItems  = Params::getParam('num_rss_items');
                                         $maxLatestItems = Params::getParam('max_latest_items_at_home');
 
@@ -726,6 +735,8 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
                                         if(is_int($sNumRssItems)) {
                                             $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
                                                                                           ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));

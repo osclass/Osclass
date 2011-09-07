@@ -144,6 +144,18 @@
                                         <option value="6" <?php if(osc_week_starts_at() == '6') { ?>selected="selected"<?php } ?>><?php _e('Saturday') ; ?></option>
                                     </select>
                                 </fieldset>
+
+                                <fieldset>
+                                    <legend><?php _e('Timezone'); ?></legend>
+                                    <?php require osc_lib_path() . 'osclass/timezones.php' ; ?>
+                                    <select name="timezone" id="timezone">
+                                        <?php $selected_tz = osc_timezone() ; ?>
+                                        <option value="" selected="selected"><?php _e('Select a timezone...') ; ?></option>
+                                        <?php foreach ($timezone as $tz) { ?>
+                                        <option value="<?php echo $tz ; ?>" <?php if($selected_tz == $tz) { ?> selected="selected" <?php } ?>><?php echo $tz; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </fieldset>
                             </div>
 
                             <div style="clear: both;"></div>

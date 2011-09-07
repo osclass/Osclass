@@ -723,7 +723,7 @@
      * @return string
      */
     function osc_resource_path() {
-        return (string) osc_base_url().osc_resource_field("s_path");
+        return (string) osc_apply_filter('resource_path', osc_base_url().osc_resource_field("s_path"));
     }
 
     /**
@@ -868,7 +868,7 @@
         if ( !View::newInstance()->_exists('items') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));//Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));
         }
         return osc_has_items() ;
     }
@@ -882,7 +882,7 @@
         if ( !View::newInstance()->_exists('items') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));//Item::newInstance()->listLatest( osc_max_latest_items() ) ) ;
+            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));
         }
         return osc_priv_count_items() ;
     }
@@ -898,15 +898,14 @@
      * @return string
      */
     function osc_format_price($price) {
-        if ($price == 0) return __('Check with seller') ;
-        //if ($price == null) return __('Check with seller') ;
-        //if ($price == 0) return __('Free') ;
-        $currencyFormat =  osc_locale_currency_format();
+        if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') ) ;
+        if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') ) ;
 
+        $currencyFormat = osc_locale_currency_format();
         $currencyFormat = preg_replace('/%s/', 'CURRENCY', $currencyFormat) ;
         $currencyFormat = sprintf($currencyFormat, $price);
         $currencyFormat = preg_replace('/CURRENCY/', '%s', $currencyFormat) ;
-        return sprintf($currencyFormat , osc_item_currency() ) ;
+        return osc_apply_filter('item_price', sprintf($currencyFormat , osc_item_currency() ) ) ;
     }
 
     /**

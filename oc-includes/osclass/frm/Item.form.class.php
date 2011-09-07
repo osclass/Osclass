@@ -890,7 +890,7 @@
             if($resources!=null && is_array($resources) && count($resources)>0) {
                 foreach($resources as $_r) { ?>
                     <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                        <img src="<?php echo osc_base_url() . $_r['s_path'] . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'" ;?>);"  class="delete"><?php _e('Delete'); ?></a>
+                        <img src="<?php echo osc_apply_filter('resource_path', osc_base_url() . $_r['s_path']) . $_r['pk_i_id'] . '_thumbnail.' . $_r['s_extension']; ?>" /><a href="javascript:delete_image(<?php echo $_r['pk_i_id'].", ".$_r['fk_i_item_id'].", '".$_r['s_name']."', '".Params::getParam('secret')."'" ;?>);"  class="delete"><?php _e('Delete'); ?></a>
                     </div>
                 <?php }
             }

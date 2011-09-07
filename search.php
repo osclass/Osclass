@@ -82,6 +82,7 @@
             }
 
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
+            $p_sUser      = strip_tags(Params::getParam('sUser'));
             
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches()) {
@@ -176,6 +177,11 @@
                 $osc_request['sPattern'] = $p_sPattern;
             }
 
+            // FILTERING USER
+            if($p_sUser != '') {
+                $this->mSearch->fromUser(explode(",", $p_sUser));
+            }
+
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
             if($p_bPic) {
                 $this->mSearch->withPicture(true) ;
@@ -211,6 +217,7 @@
                 $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
                 $this->_exportVariableToView('search_order', $p_sOrder) ;
                 $this->_exportVariableToView('search_pattern', $p_sPattern) ;
+                $this->_exportVariableToView('search_from_user', $p_sUser) ;
                 $this->_exportVariableToView('search_total_pages', $iNumPages) ;
                 $this->_exportVariableToView('search_page', $p_iPage) ;
                 $this->_exportVariableToView('search_has_pic', $p_bPic) ;
@@ -219,8 +226,9 @@
                 $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
                 $this->_exportVariableToView('search_total_items', $iTotalItems) ;
                 $this->_exportVariableToView('items', $aItems) ;
-                $this->_exportVariableToView('search_show_as', $p_sShowAs);
-                $this->_exportVariableToView('search', $this->mSearch);
+                $this->_exportVariableToView('search_show_as', $p_sShowAs) ;
+                $this->_exportVariableToView('search', $this->mSearch) ;
+                $this->_exportVariableToView('search_alert', base64_encode(serialize($this->mSearch))) ;
                 
                 //calling the view...
                 $this->doView('search.php') ;

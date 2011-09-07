@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.2.1') ;
+define('OSCLASS_VERSION', '2.2.2') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -87,6 +87,7 @@ require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
+require_once LIB_PATH . 'osclass/emails.php';
 require_once LIB_PATH . 'osclass/model/Admin.php';
 require_once LIB_PATH . 'osclass/model/Alerts.php';
 require_once LIB_PATH . 'osclass/model/Cron.php';
@@ -143,6 +144,10 @@ Plugins::init() ;
 Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
+
+if(osc_timezone() != '') {
+    date_default_timezone_set(osc_timezone());
+}
 
 function osc_show_maintenance() {
     if(defined('__OSC_MAINTENANCE__')) { ?>

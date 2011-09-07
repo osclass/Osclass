@@ -32,9 +32,31 @@
         function doModel() {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        if(!osc_users_enabled()) {
+                                            osc_add_flash_error_message(_m('Users are not enabled'));
+                                            $this->redirectTo(osc_base_url());
+                                        }
+                    
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
-                    
+                                        
+                                        $url_redirect = osc_user_dashboard_url();
+                                        if(preg_match('|[\?&]page=([^&]+)|', $_SERVER['HTTP_REFERER'].'&', $match)) {
+                                            $page_redirect = $match[1];
+                                        } else {
+                                            $page_redirect = '';
+                                        }
+                                        if(Params::getParam('http_referer')!='') {
+                                            Session::newInstance()->_setReferer(Params::getParam('http_referer'));
+                                            $url_redirect = Params::getParam('http_referer');
+                                        } else if(Session::newInstance()->_getReferer()!='') {
+                                            Session::newInstance()->_setReferer(Session::newInstance()->_getReferer());
+                                            $url_redirect = Session::newInstance()->_getReferer();
+                                        } else if($page_redirect!='' && $page_redirect!='login') {
+                                            Session::newInstance()->_setReferer($_SERVER['HTTP_REFERER']);
+                                            $url_redirect = $_SERVER['HTTP_REFERER'];
+                                        }
+
                                         if (!$user) {
                                             osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
                                             $this->redirectTo(osc_user_login_url());
@@ -71,7 +93,9 @@
                                                 Cookie::newInstance()->push('oc_userSecret', $secret) ;
                                                 Cookie::newInstance()->set() ;
                                             }
-                                            $this->redirectTo( osc_user_dashboard_url() ) ;
+
+                                            $this->redirectTo( $url_redirect ) ;
+
                                         } else {
                                             osc_add_flash_error_message(_m('This should never happens'));
                                         }
@@ -123,8 +147,13 @@
                                         }
                 break;
                 case('forgot_post'):
+                                        if( (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                            osc_add_flash_warning_message( _m('Password cannot be blank')) ;
+                                            $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
+                                        }
+
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
-                                        if($user['b_enabled']==1) {
+                                        if($user['b_enabled'] == 1) {
                                             if(Params::getParam('new_password')==Params::getParam('new_password2')) {
                                                 User::newInstance()->update(
                                                     array('s_pass_code' => osc_genRandomPassword(50)

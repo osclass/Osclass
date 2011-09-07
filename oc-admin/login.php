@@ -96,35 +96,9 @@
                                                 array('s_secret' => $newPassword)
                                                 ,array('pk_i_id' => $admin['pk_i_id'])
                                             );
+                                            $password_url = osc_forgot_admin_password_confirm_url($admin['pk_i_id'], $newPassword);
                                             
-                                            $password_link = osc_forgot_admin_password_confirm_url($admin['pk_i_id'], $newPassword);
-                                            $password_link = '<a href="' . $password_link . '" >' . $password_link . '</a>';
-                                            $aPage = Page::newInstance()->findByInternalName('email_user_forgot_password');
-
-                                            $content = array();
-                                            $locale = osc_current_user_locale() ;
-                                            if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                $content = $aPage['locale'][$locale];
-                                            } else {
-                                                $content = current($aPage['locale']);
-                                            }
-
-                                            if (!is_null($content)) {
-                                                $words   = array();
-                                                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{IP_ADDRESS}',
-                                                                 '{PASSWORD_LINK}', '{DATE_TIME}');
-                                                $words[] = array($admin['s_name'], $admin['s_email'], osc_page_title(),
-                                                                 $_SERVER['REMOTE_ADDR'], $password_link, date(osc_time_format() . '  ' . osc_date_format()));
-                                                $title = osc_mailBeauty($content['s_title'], $words);
-                                                $body = osc_mailBeauty($content['s_text'], $words);
-
-                                                $emailParams = array('subject'  => $title,
-                                                                     'to'       => $admin['s_email'],
-                                                                     'to_name'  => $admin['s_name'],
-                                                                     'body'     => $body,
-                                                                     'alt_body' => $body);
-                                                osc_sendMail($emailParams);
-                                            }
+                                            osc_run_hook('hook_email_user_forgot_password', $admin, $password_url);
                                         }
                                         
                                         osc_add_flash_ok_message( _m('A new password has been sent to your e-mail'), 'admin') ;
