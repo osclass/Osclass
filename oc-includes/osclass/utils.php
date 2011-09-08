@@ -281,8 +281,10 @@ function osc_sendMail($params) {
         return true ;
 
     } catch (phpmailerException $e) {
+        error_log("OSCLAS::osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     } catch (Exception $e) {
+        error_log("OSCLAS::osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     }
     return false;
