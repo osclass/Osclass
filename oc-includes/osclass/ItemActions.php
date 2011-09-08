@@ -615,6 +615,7 @@
 
         public function contact()
         {
+            $flash_error = '';
             $aItem = $this->prepareDataForFunction( 'contact' );
 
             $id         = $aItem['id'];
@@ -623,79 +624,97 @@
             $phoneNumber= $aItem['phoneNumber'];
             $message    = $aItem['message'];
 
-            $path = NULL;
-            $item = $this->manager->findByPrimaryKey( $id ) ;
-            View::newInstance()->_exportVariableToView('item', $item);
+            // check parameters
+            if( !osc_validate_email($yourEmail, true) ){
+                $flash_error .= __("Invalid email address") . PHP_EOL;
+            } else if( !osc_validate_text($message) ){
+                $flash_error .= __("Message: this field is required") . PHP_EOL;
+            } else if ( !osc_validate_text($yourName) ){
+                $flash_error .= __("Your name: this field is required") . PHP_EOL;
+            }
 
-            $mPages = new Page();
-            $aPage = $mPages->findByInternalName('email_item_inquiry');
-            $locale = osc_current_user_locale() ;
-
-            $content = array();
-            if(isset($aPage['locale'][$locale]['s_title'])) {
-                $content = $aPage['locale'][$locale];
+            if($flash_error != ''){
+                return (string)$flash_error;
             } else {
-                $content = current($aPage['locale']);
-            }
+                $path = NULL;
+                $item = $this->manager->findByPrimaryKey( $id ) ;
+                View::newInstance()->_exportVariableToView('item', $item);
 
-            $item_url = osc_item_url();
-            $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+                $mPages = new Page();
+                $aPage = $mPages->findByInternalName('email_item_inquiry');
+                $locale = osc_current_user_locale() ;
 
-            $words   = array();
-            $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
-                             '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
-
-            $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
-                             $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message );
-
-            $title = osc_mailBeauty($content['s_title'], $words);
-            $body = osc_mailBeauty($content['s_text'], $words);
-
-            $from = osc_contact_email() ;
-            $from_name = osc_page_title() ;
-
-            $add_bbc = '';
-            if (osc_notify_contact_item()) {
-                $add_bbc = osc_contact_email() ;
-            }
-
-            $emailParams = array (
-                                'add_bcc'   => $add_bbc
-                                ,'from'      => $from
-                                ,'from_name' => $from_name
-                                ,'subject'   => $title
-                                ,'to'        => $item['s_contact_email']
-                                ,'to_name'   => $item['s_contact_name']
-                                ,'body'      => $body
-                                ,'alt_body'  => $body
-                                ,'reply_to'  => $yourEmail
-                            ) ;
-
-
-            if(osc_item_attachment()) {
-                $attachment = Params::getFiles('attachment');
-                $resourceName = $attachment['name'] ;
-                $tmpName = $attachment['tmp_name'] ;
-                $resourceType = $attachment['type'] ;
-
-                $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
-
-                if(!is_writable(osc_content_path() . 'uploads/')) {
-                    osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
-                    $this->redirectTo( osc_base_url() );
+                $content = array();
+                if(isset($aPage['locale'][$locale]['s_title'])) {
+                    $content = $aPage['locale'][$locale];
+                } else {
+                    $content = current($aPage['locale']);
                 }
 
-                if(!move_uploaded_file($tmpName, $path)){
-                    unset($path) ;
+                $item_url = osc_item_url();
+                $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
+
+                $words   = array();
+                $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
+                                 '{WEB_URL}', '{ITEM_TITLE}','{ITEM_URL}', '{COMMENT}');
+
+                $words[] = array($item['s_contact_name'], $yourName, $yourEmail,
+                                 $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url, $message );
+
+                $title = osc_mailBeauty($content['s_title'], $words);
+                $body = osc_mailBeauty($content['s_text'], $words);
+
+                $from = osc_contact_email() ;
+                $from_name = osc_page_title() ;
+
+                $add_bbc = '';
+                if (osc_notify_contact_item()) {
+                    $add_bbc = osc_contact_email() ;
                 }
-            }
 
-            if(isset($path)) {
-                $emailParams['attachment'] = $path ;
-            }
-            osc_sendMail($emailParams);
+                $emailParams = array (
+                                    'add_bcc'   => $add_bbc
+                                    ,'from'      => $from
+                                    ,'from_name' => $from_name
+                                    ,'subject'   => $title
+                                    ,'to'        => $item['s_contact_email']
+                                    ,'to_name'   => $item['s_contact_name']
+                                    ,'body'      => $body
+                                    ,'alt_body'  => $body
+                                    ,'reply_to'  => $yourEmail
+                                ) ;
 
-            @unlink($path) ;
+
+                if(osc_item_attachment()) {
+                    $attachment = Params::getFiles('attachment');
+                    $resourceName = $attachment['name'] ;
+                    $tmpName = $attachment['tmp_name'] ;
+                    $resourceType = $attachment['type'] ;
+
+                    $path = osc_content_path() . 'uploads/' . time() . '_' . $resourceName ;
+
+                    if(!is_writable(osc_content_path() . 'uploads/')) {
+                        osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
+                        $this->redirectTo( osc_base_url() );
+                    }
+
+                    if(!move_uploaded_file($tmpName, $path)){
+                        unset($path) ;
+                    }
+                }
+
+                if(isset($path)) {
+                    $emailParams['attachment'] = $path ;
+                }
+                
+                if(osc_sendMail($emailParams)) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+                @unlink($path) ;
+            }
         }
 
         /*
