@@ -401,9 +401,17 @@
                     }
 
                     $mItem = new ItemActions(false);
-                    $mItem->contact();
 
-                    osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
+                    $result = $mItem->contact();
+                    if(is_bool($result)){
+                        if($result){
+                            osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
+                        } else {
+                            osc_add_flash_error_message( _m('There has been some errors sending the message')) ;
+                        }
+                    } else {
+                        osc_add_flash_error_message( $result ) ;
+                    }
                     $this->redirectTo( osc_item_url( ) );
 
                     break;
