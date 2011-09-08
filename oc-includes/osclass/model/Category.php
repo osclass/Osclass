@@ -283,15 +283,19 @@
 
         public function findByPrimaryKey($pk, $lang = true) {
             if($pk!=null) {
-                $data = $this->categories[$pk];
-                if(isset($data)) {
-                    $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
-                    $row = array();
-                    foreach ($sub_rows as $sub_row) {
-                        $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                if(array_key_exists($pk, $this->categories)){
+                    $data = $this->categories[$pk];
+                    if(isset($data)) {
+                        $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
+                        $row = array();
+                        foreach ($sub_rows as $sub_row) {
+                            $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                        }
+                        $data['locale'] = $row;
+                        return $data;
+                    } else {
+                        return null;
                     }
-                    $data['locale'] = $row;
-                    return $data;
                 } else {
                     return null;
                 }
