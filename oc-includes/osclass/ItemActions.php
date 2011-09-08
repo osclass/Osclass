@@ -214,11 +214,11 @@
                 osc_run_hook('after_item_post') ;
 
                 Session::newInstance()->_set('last_publish_time', time());
+                $this->sendEmails($aItem);
                 if($active=='INACTIVE') {
-                    $this->sendEmails($aItem);
                     return 1;
                 } else {
-                    if($aItem['userId']!=null) {    
+                    if($aItem['userId']!=null) {
                         $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
                         if($user) {
                             User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
