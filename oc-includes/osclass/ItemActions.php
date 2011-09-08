@@ -1059,18 +1059,18 @@
              * Send email to non-reg user requesting item activation
              */
             if( Session::newInstance()->_get('userId') == '' && $aItem['active']=='INACTIVE' ) {
-                osc_run_hook('hook_email_item_validation_non_register_user', $aItem);
+                osc_run_hook('hook_email_item_validation_non_register_user', $item);
             } else if ( $aItem['active']=='INACTIVE' ) { //  USER IS REGISTERED
-                osc_run_hook('hook_email_item_validation', $aItem);
+                osc_run_hook('hook_email_item_validation', $item);
             } else if( Session::newInstance()->_get('userId') == '' ){ // USER IS NOT REGISTERED
-                osc_run_hook('hook_email_new_item_non_register_user', $aItem);
+                osc_run_hook('hook_email_new_item_non_register_user', $item);
             }
 
             /**
              * Send email to admin about the new item
              */
             if (osc_notify_new_item()) {
-                osc_run_hook('hook_email_admin_new_item', $aItem);
+                osc_run_hook('hook_email_admin_new_item', $item);
             }
         }
     }
