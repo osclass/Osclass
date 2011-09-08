@@ -3,7 +3,7 @@
 Plugin Name: Google Maps
 Plugin URI: http://www.osclass.org/
 Description: This plugin shows a Google Map on the location space of every item.
-Version: 2.1.1
+Version: 2.1.2
 Author: OSClass & kingsult
 Author URI: http://www.osclass.org/
 Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
@@ -35,10 +35,6 @@ Plugin update URI: http://www.osclass.org/files/plugins/google_maps/update.php
                                                 ,array('fk_i_item_id' => $itemId));
         }
     }
-
-    // This is needed in order to be able to activate the plugin
-
-    // This is a hack to show a Uninstall link at plugins table (you could also use some other hook to show a custom option panel)
 
     osc_add_hook('location', 'google_maps_location') ;
 
