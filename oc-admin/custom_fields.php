@@ -51,7 +51,7 @@
                             osc_add_flash_error_message(_m("Sorry, you already have one field with that name"), "admin");
                         }
                     } else {
-                        osc_add_flash_error_message(_m("Name can not be mepty"), "admin");
+                        osc_add_flash_error_message(_m("Name can not be empty"), "admin");
                     }
                     $this->redirectTo(osc_admin_base_url(true)."?page=cfields");
                     break;
