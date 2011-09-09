@@ -26,24 +26,28 @@
         private $aCurrent ;
         private static $instance ;
 
-        public static function newInstance() {
+        public static function newInstance()
+        {
             if(!self::$instance instanceof self) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        function __construct() {
+        function __construct()
+        {
             $this->aExported = array() ;
         }
 
         //to export variables at the business layer
-        function _exportVariableToView($key, $value) {
+        function _exportVariableToView($key, $value)
+        {
             $this->aExported[$key] = $value ;
         }
 
         //to get the exported variables for the view
-        function _get($key) {
+        function _get($key)
+        {
             if ($this->_exists($key)) {
                 return($this->aExported[$key]) ;
             } else {
@@ -52,7 +56,8 @@
         }
 
         //only for debug
-        function _view($key = null) {
+        function _view($key = null)
+        {
             if ($key) {
                 print_r($this->aExported[$key]) ;
             } else {
@@ -60,7 +65,8 @@
             }
         }
 
-        function _next($key) {
+        function _next($key)
+        {
             if (is_array($this->aExported[$key])) {
                 $this->aCurrent[$key] = current( $this->aExported[$key] ) ;
                 if ( $this->aCurrent[$key] ) {
@@ -71,7 +77,8 @@
             return false ;
         }
 
-        function _current($key) {
+        function _current($key)
+        {
             if ( isset($this->aCurrent[$key]) && is_array($this->aCurrent[$key]) ) {
                 return $this->aCurrent[$key] ;
             } elseif ( is_array($this->aExported[$key]) ) {
@@ -81,25 +88,32 @@
             return '' ;
         }
 
-        function _reset($key) {
-            if (is_array($this->aExported[$key])) {
-                return reset($this->aExported[$key]) ;
+        function _reset($key)
+        {
+            if ( !array_key_exists($key, $this->aExported) ) {
+                return array();
             }
-            return array();
+            if ( !is_array( $this->aExported[$key] ) ) {
+                return array();
+            }
+            return reset($this->aExported[$key]) ;
         }
 
-        function _exists($key) {
+        function _exists($key)
+        {
             return ( isset($this->aExported[$key]) ? true : false ) ;
         }
 
-        function _count($key) {
+        function _count($key)
+        {
             if (is_array($this->aExported[$key])) {
                 return count($this->aExported[$key]) ;
             }
             return -1 ;
         }
 
-        function _erase($key) {
+        function _erase($key)
+        {
             unset($this->aExported[$key]) ;
             unset($this->aCurrent[$key]) ;
         }
