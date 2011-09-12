@@ -145,9 +145,9 @@ class TestOfUser extends WebTestCase {
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 echo "< ".$this->selenium->getText('//*[@id="FlashMessage"]')." ><br>";
-        $this->assertTrue( $this->selenium->isTextPresent("Passwords can't be empty"),
+        $this->assertTrue( $this->selenium->isTextPresent("Password cannot be blank"),
                            "Passwords can be EMPTY. ERROR");
-
+                   
         echo "<div style='background-color: green; color: white;padding-left:15px;'>test - Passwords don't match</div>";
         // test - Passwords don't match
         $this->selenium->type("password"        , $this->password);
