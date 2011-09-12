@@ -501,16 +501,14 @@ class TestOfAdminItems extends WebTestCase {
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         // only can delete resources
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/jpeg')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'image/jpeg')]/td/div/span/a[text()='Delete']");
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
         echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
-        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'image/jpeg')]");
-        $this->selenium->click("//table/tbody/tr[contains(.,'image/jpeg')]/td/div/span/a[text()='Delete']");
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
