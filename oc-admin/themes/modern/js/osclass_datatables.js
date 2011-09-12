@@ -284,7 +284,11 @@ function _fnFooter() {
     
     var str = this._oLanguage.sInfo;
     // replace _START_, _END_, _TOTAL_
-    str = str.replace("_START_", this._iDisplayStart+1 );
+    if( this._iTotalDisplayRecords > 0 ) {
+        str = str.replace("_START_", this._iDisplayStart+1 );
+    } else {
+        str = str.replace("_START_", this._iDisplayStart );
+    }
     str = str.replace("_END_",   this._iDisplayStart + this._aoData.length );
 
     // sInfoFiltered
