@@ -58,7 +58,7 @@
                 $total = $this->conn->osc_dbFetchResult('SELECT COUNT(*) as total FROM %s ', $this->getTableName());
                 return $total['total'];
             } else {
-                $total = $this->conn->osc_dbFetchResult('SELECT COUNT(*) as total FROM %s WHERE fk_i_item_id = %d GROUP BY fk_i_item_id', $this->getTableName(), $itemId);
+                $total = $this->conn->osc_dbFetchResult('SELECT COUNT(*) as total FROM %s WHERE fk_i_item_id = %d', $this->getTableName(), $itemId);
                 return $total['total'];
             }
         }
