@@ -596,11 +596,11 @@
     }
     osc_add_hook('hook_email_new_comment_admin', 'fn_email_new_comment_admin');
     
-    function fn_email_item_validation($aItem) {
-        $item = $aItem['item'];
-        $title  = $aItem['title'];
-        $contactEmail   = $aItem['contactEmail'];
-        $contactName    = $aItem['contactName'];
+    function fn_email_item_validation($item) {
+        View::newInstance()->_exportVariableToView('item', $item);
+        $title  = osc_item_title();
+        $contactEmail   = $item['s_contact_email'];
+        $contactName    = $item['s_contact_name'];
         $mPages = new Page();
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_item_validation') ;
@@ -663,11 +663,11 @@
     }
     osc_add_hook('hook_email_item_validation', 'fn_email_item_validation');
     
-    function fn_email_admin_new_item($aItem) {
-        $item = $aItem['item'];
-        $title  = $aItem['title'];
-        $contactEmail   = $aItem['contactEmail'];
-        $contactName    = $aItem['contactName'];
+    function fn_email_admin_new_item($item) {
+        View::newInstance()->_exportVariableToView('item', $item);
+        $title  = osc_item_title();
+        $contactEmail   = $item['s_contact_email'];
+        $contactName    = $item['s_contact_name'];
         $mPages = new Page();
         $locale = osc_current_user_locale();
         $aPage = $mPages->findByInternalName('email_admin_new_item') ;
@@ -734,7 +734,6 @@
     
     function fn_email_item_validation_non_register_user($item) {
         
-        $item = $item['item'];
         View::newInstance()->_exportVariableToView('item', $item);
         
         $mPages = new Page() ;

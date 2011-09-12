@@ -219,7 +219,7 @@
                 if($active=='INACTIVE') {
                     return 1;
                 } else {
-                    if($aItem['userId']!=null) {    
+                    if($aItem['userId']!=null) {
                         $user = User::newInstance()->findByPrimaryKey($aItem['userId']);
                         if($user) {
                             User::newInstance()->update(array( 'i_items' => $user['i_items']+1)
@@ -556,10 +556,23 @@
 
         public function contact()
         {
+            $flash_error = '';
             $aItem = $this->prepareDataForFunction( 'contact' );
             
-            osc_run_hook('hook_email_item_inquiry', $aItem);
+            // check parameters
+            if( !osc_validate_email($aItem['yourEmail'], true) ){
+                $flash_error .= __("Invalid email address") . PHP_EOL;
+            } else if( !osc_validate_text($aItem['message']) ){
+                $flash_error .= __("Message: this field is required") . PHP_EOL;
+            } else if ( !osc_validate_text($aItem['yourName']) ){
+                $flash_error .= __("Your name: this field is required") . PHP_EOL;
+            }
 
+            if($flash_error != ''){
+                return $flash_error ;
+            } else {
+                osc_run_hook('hook_email_item_inquiry', $aItem);
+            }
         }
 
         /*
@@ -1059,18 +1072,18 @@
              * Send email to non-reg user requesting item activation
              */
             if( Session::newInstance()->_get('userId') == '' && $aItem['active']=='INACTIVE' ) {
-                osc_run_hook('hook_email_item_validation_non_register_user', $aItem);
+                osc_run_hook('hook_email_item_validation_non_register_user', $item);
             } else if ( $aItem['active']=='INACTIVE' ) { //  USER IS REGISTERED
-                osc_run_hook('hook_email_item_validation', $aItem);
+                osc_run_hook('hook_email_item_validation', $item);
             } else if( Session::newInstance()->_get('userId') == '' ){ // USER IS NOT REGISTERED
-                osc_run_hook('hook_email_new_item_non_register_user', $aItem);
+                osc_run_hook('hook_email_new_item_non_register_user', $item);
             }
 
             /**
              * Send email to admin about the new item
              */
             if (osc_notify_new_item()) {
-                osc_run_hook('hook_email_admin_new_item', $aItem);
+                osc_run_hook('hook_email_admin_new_item', $item);
             }
         }
     }

@@ -362,9 +362,15 @@
                     }
 
                     $mItem = new ItemActions(false);
-                    $mItem->contact();
 
-                    osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
+                    $result = $mItem->contact();
+                    
+                    if(is_string($result)){
+                        osc_add_flash_error_message( $result ) ;
+                    } else {
+                        osc_add_flash_ok_message( _m('We\'ve just sent an e-mail to the seller')) ;
+                    }
+                    
                     $this->redirectTo( osc_item_url( ) );
 
                     break;
