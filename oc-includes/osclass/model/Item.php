@@ -38,7 +38,11 @@
 
         public function extendCategoryName($items)
         {
-            $prefLocale = osc_current_user_locale();
+            if(defined('OC_ADMIN')) {
+                $prefLocale = osc_current_admin_locale();
+            } else {
+                $prefLocale = osc_current_user_locale();
+            }
 
             $results = array();
             foreach ($items as $item) {
@@ -46,7 +50,7 @@
                 foreach ($descriptions as $desc) {
                     $item['locale'][$desc['fk_c_locale_code']]['s_category_name'] = $desc['s_category_name'];
                 }
-                if (isset($item['locale'][$prefLocale])) {
+                if (isset($item['locale'][$prefLocale]['s_category_name'])) {
                     $item['s_category_name'] = $item['locale'][$prefLocale]['s_category_name'];
                 } else {
                     $data = current($item['locale']);
