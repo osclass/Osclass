@@ -209,7 +209,7 @@ Enjoy!
           divTag.removeClass(options.activeClass);
         },
         "keyup.uniform": function(){
-          spanTag.text(elem.find(":selected").html());
+          spanTag.text(elem.find(":selected").text());
         }
       });
       
