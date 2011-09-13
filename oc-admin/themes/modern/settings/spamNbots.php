@@ -65,12 +65,12 @@
                                     <?php _e('If the field is empty it\'s because the reCAPTCHA service is disabled'); ?>. <?php _e('Get your free keys at') ; ?> <a href="http://recaptcha.net" target="_blank">http://recaptcha.net</a>.
                                 </p>
                                 <p>
-                                    <label for="recaptchaPrivKey"><?php _e('reCAPTCHA private key'); ?></label><br />
-                                    <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
-                                </p>
-                                <p>
                                     <label for="recaptchaPubKey"><?php _e('reCAPTCHA public key'); ?></label><br />
                                     <input type="text" name="recaptchaPubKey" id="recaptchaPubKey" value="<?php echo (osc_recaptcha_public_key() ? osc_recaptcha_public_key() : ''); ?>" />
+                                </p>
+                                <p>
+                                    <label for="recaptchaPrivKey"><?php _e('reCAPTCHA private key'); ?></label><br />
+                                    <input type="text" name="recaptchaPrivKey" id="recaptchaPrivKey" value="<?php echo (osc_recaptcha_private_key() ? osc_recaptcha_private_key() : ''); ?>" />
                                 </p>
                             </fieldset>
 

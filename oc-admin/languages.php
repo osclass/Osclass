@@ -97,8 +97,12 @@
                                             $languageShortName      = Params::getParam('s_short_name');
                                             $languageDescription    = Params::getParam('s_description');
                                             $languageCurrencyFormat = Params::getParam('s_currency_format');
+                                            $languageDecPoint       = Params::getParam('s_dec_point');
+                                            $languageNumDec         = Params::getParam('i_num_dec');
+                                            $languageThousandsSep   = Params::getParam('s_thousands_sep');
                                             $languageDateFormat     = Params::getParam('s_date_format');
                                             $languageStopWords      = Params::getParam('s_stop_words');
+
 
                                             // formatting variables
                                             if( !preg_match('/.{2}_.{2}/', $languageCode) ) {
@@ -138,6 +142,9 @@
                                                           ,'s_short_name'      => $languageShortName
                                                           ,'s_description'     => $languageDescription
                                                           ,'s_currency_format' => $languageCurrencyFormat
+                                                          ,'s_dec_point'       => $languageDecPoint
+                                                          ,'i_num_dec'         => $languageNumDec
+                                                          ,'s_thousands_sep'   => $languageThousandsSep
                                                           ,'s_date_format'     => $languageDateFormat
                                                           ,'s_stop_words'      => $languageStopWords);
 

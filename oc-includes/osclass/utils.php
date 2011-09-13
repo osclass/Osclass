@@ -1035,4 +1035,9 @@ function osc_save_permissions( $dir = ABS_PATH ) {
     return $perms;
 }
 
+
+function osc_prepare_price($price) {
+    return $price/1000000;
+}
+
 ?>
