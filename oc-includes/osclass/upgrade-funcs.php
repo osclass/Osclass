@@ -114,6 +114,8 @@
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'watermark_place', 'centre', 'STRING')", DB_TABLE_PREFIX));
         osc_changeVersionTo(220) ;
     }
+    
+    osc_changeVersionTo(229) ;
 
     if(osc_version() < 230) {
         $conn->osc_dbExec(sprintf("CREATE TABLE %st_item_description_tmp (
@@ -160,6 +162,15 @@
 
         $conn->osc_dbExec(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_item_validation_non_register_user', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Validate your ad', '<p>Hi {USER_NAME},</p>\n<p>You\'re receiving this e-mail because an ad has been published at {WEB_TITLE}. Please validate this item by clicking on the link at the end of this e-mail. If you didn\'t publish this ad, please ignore this e-mail.</p>\n<p>Ad details:</p>\n<p>Contact name: {USER_NAME}<br />Contact e-mail: {USER_EMAIL}</p>\n<p>{ITEM_DESCRIPTION_ALL_LANGUAGES}</p>\n<p>Price: {ITEM_PRICE}<br />Country: {ITEM_COUNTRY}<br />Region: {ITEM_REGION}<br />City: {ITEM_CITY}<br />Url: {ITEM_URL}<br /><br />Validate your ad: {VALIDATION_LINK}</p>\n\n<p>You\'re not registered at {WEB_TITLE}, but you can still edit or delete the item {ITEM_TITLE} for a short period of time.</p>\n<p>You can edit your item by following this link: {EDIT_LINK}</p>\n<p>You can delete your item by following this link: {DELETE_LINK}</p>\n\n<p>If you register as a user to post items, you will have full access to editing options.</p>\n<p>Regards,</p>\n{WEB_TITLE}</div>')", DB_TABLE_PREFIX, $conn->get_last_id()));
+
+        $conn->osc_dbExec(sprintf("UPDATE %st_locale SET s_currency_format = '{NUMBER} {CURRENCY}'", DB_TABLE_PREFIX) );
+        $items = $conn->osc_dbFetchResults("SELECT pk_i_id, f_price FROM %st_item", DB_TABLE_PREFIX);
+        foreach($items as $item) {
+            $conn->osc_dbExec("UPDATE %st_item SET s_price = '%s' WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000*$item['f_price']), $item['pk_i_id']);
+        }
+        //$conn->osc_dbExec("ALTER TABLE `%st_item` DROP `f_price`", DB_TABLE_PREFIX);
+        //$conn->osc_dbExec("ALTER TABLE `%st_item` CHANGE `s_price` `f_price` VARCHAR( 100 ) NULL DEFAULT 0", DB_TABLE_PREFIX);
+
         
         osc_changeVersionTo(230) ;
     }

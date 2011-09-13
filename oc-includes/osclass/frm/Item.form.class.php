@@ -170,9 +170,9 @@
         {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('price') != "" ) {
-                $item['f_price'] = Session::newInstance()->_getForm('price');
+                $item['s_price'] = Session::newInstance()->_getForm('price');
             }
-            parent::generic_input_text('price', (isset($item['f_price'])) ? $item['f_price'] : null) ;
+            parent::generic_input_text('price', (isset($item['s_price'])) ? osc_prepare_price($item['s_price']) : null) ;
         }
         // OK
         static public function currency_select($currencies = null, $item = null) {
@@ -445,9 +445,8 @@
                     digits: true
                 },
                 <?php if(osc_price_enabled_at_items()) { ?>
-                price: {
-                    number: true,
-                    maxlength: 15
+                price: {                   
+                    maxlength: 50
                 },
                 currency: "required",
                 <?php } ?>
@@ -475,8 +474,7 @@
                 catId: "<?php _e('Choose one category'); ?>.",
                 <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
-                    number: "<?php _e('Price: enter a valid number'); ?>.",
-                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                    maxlength: "<?php _e("Price: no more than 50 characters"); ?>."
                 },
                 currency: "<?php _e("Currency: make your selection"); ?>.",
                 <?php } ?>
@@ -756,7 +754,6 @@
                 },
                 <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
-                    number: true,
                     maxlength: 15
                 },
                 currency: "required",
@@ -797,8 +794,7 @@
                 catId: "<?php _e('Choose one category'); ?>.",
                 <?php if(osc_price_enabled_at_items()) { ?>
                 price: {
-                    number: "<?php _e('Price: enter a valid number'); ?>.",
-                    maxlength: "<?php _e("Price: no more than 15 characters"); ?>."
+                    maxlength: "<?php _e("Price: no more than 50 characters"); ?>."
                 },
                 currency: "<?php _e("Currency: make your selection"); ?>.",
                 <?php } ?>

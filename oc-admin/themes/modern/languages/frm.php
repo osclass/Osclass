@@ -70,6 +70,24 @@
                             </div>
                         </div>
                         <div class="FormElement">
+                            <div class="FormElementName"><?php _e('Number of decimals'); ?></div>
+                            <div class="FormElementInput">
+                            <?php LanguageForm::num_dec_input_text($aLocale) ; ?>
+                            </div>
+                        </div>
+                        <div class="FormElement">
+                            <div class="FormElementName"><?php _e('Decimal point'); ?></div>
+                            <div class="FormElementInput">
+                            <?php LanguageForm::dec_point_input_text($aLocale) ; ?>
+                            </div>
+                        </div>
+                        <div class="FormElement">
+                            <div class="FormElementName"><?php _e('Thousands separator'); ?></div>
+                            <div class="FormElementInput">
+                            <?php LanguageForm::thousands_sep_input_text($aLocale) ; ?>
+                            </div>
+                        </div>
+                        <div class="FormElement">
                             <div class="FormElementName"><?php _e('Date format'); ?></div>
                             <div class="FormElementInput">
                             <?php LanguageForm::date_format_input_text($aLocale) ; ?>
