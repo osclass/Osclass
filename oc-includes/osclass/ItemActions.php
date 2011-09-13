@@ -148,7 +148,7 @@
                     'fk_i_user_id'          => $aItem['userId'],
                     'dt_pub_date'           => date('Y-m-d H:i:s'),
                     'fk_i_category_id'      => $aItem['catId'],
-                    'f_price'               => $aItem['price'],
+                    's_price'               => $aItem['price'],
                     'fk_c_currency_code'    => $aItem['currency'],
                     's_contact_name'        => $contactName,
                     's_contact_email'       => $contactEmail,
@@ -355,7 +355,7 @@
                                         array(
                                             'dt_mod_date'           => date('Y-m-d H:i:s')
                                             ,'fk_i_category_id'     => $aItem['catId']
-                                            ,'f_price'              => $aItem['price']
+                                            ,'s_price'              => $aItem['price']
                                             ,'fk_c_currency_code'   => $aItem['currency']
                                         )
                                         ,array(
@@ -901,7 +901,10 @@
             }
 
             if( !is_null($aItem['price']) ) {
-                $aItem['price'] = (float) $aItem['price'];
+                $price = str_replace(osc_locale_thousands_sep(), '', trim($aItem['price']));
+                $price = str_replace(osc_locale_dec_point(), '.', $price);
+                $aItem['price'] = $price*1000000;
+                //$aItem['price'] = (float) $aItem['price'];
             }
 
             if( $aItem['catId'] == ''){

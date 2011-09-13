@@ -50,8 +50,8 @@
     function osc_list_orders() {
         return  array(
                      __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
-                    ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
-                    ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
+                    ,__('Lower price first')  => array('sOrder' => 's_price', 'iOrderType' => 'asc')
+                    ,__('Higher price first') => array('sOrder' => 's_price', 'iOrderType' => 'desc')
                 );
     }
     

@@ -249,7 +249,7 @@
      * @return float
      */
     function osc_item_price() {
-        return (float) osc_item_field("f_price") ;
+        return (float) osc_item_field("s_price") ;
     }
 
     /**
@@ -258,7 +258,7 @@
      * @return string
      */
     function osc_item_formated_price() {
-        return (string) osc_format_price( osc_item_field("f_price") ) ;
+        return (string) osc_format_price( osc_item_field("s_price") ) ;
     }
 
     /**
@@ -900,12 +900,13 @@
     function osc_format_price($price) {
         if ($price == null) return osc_apply_filter ('item_price_null', __('Check with seller') ) ;
         if ($price == 0) return osc_apply_filter ('item_price_zero', __('Free') ) ;
+        
+        $price = $price/1000000;
 
         $currencyFormat = osc_locale_currency_format();
-        $currencyFormat = preg_replace('/%s/', 'CURRENCY', $currencyFormat) ;
-        $currencyFormat = sprintf($currencyFormat, $price);
-        $currencyFormat = preg_replace('/CURRENCY/', '%s', $currencyFormat) ;
-        return osc_apply_filter('item_price', sprintf($currencyFormat , osc_item_currency() ) ) ;
+        $currencyFormat = str_replace('{NUMBER}', number_format($price, osc_locale_num_dec(), osc_locale_dec_point(), osc_locale_thousands_sep()), $currencyFormat);
+        $currencyFormat = str_replace('{CURRENCY}', osc_item_currency(), $currencyFormat);
+        return osc_apply_filter('item_price', $currencyFormat ) ;
     }
 
     /**
