@@ -396,6 +396,13 @@
         $('#region').attr( "autocomplete", "off" );
         $('#city').attr( "autocomplete", "off" );
 
+        $('#countryId').change(function(){
+            $('#regionId').val('');
+            $('#region').val('');
+            $('#cityId').val('');
+            $('#city').val('');            
+        });
+
 
         $('#region').live('keyup.autocomplete', function(){
             $('#regionId').val('');
