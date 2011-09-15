@@ -4,7 +4,13 @@ require_once '../../../../oc-load.php';
 class Frontend_login extends FrontendTest {
     
     /*
-     * Create a new user and login test, without confirmation
+     * Insert new user, without confirmation.
+     * login :
+     *  - incorrect password
+     *  - incorrect email
+     *  - correct login
+     * logout.
+     * Recover password.
      */
     public function testLogin()
     {
@@ -23,7 +29,7 @@ class Frontend_login extends FrontendTest {
         $this->assertTrue( $this->selenium->isTextPresent("The username doesn't exist"), 'Testing, Login user with incorrect username' );
 
         $this->loginWith();
-        $this->assertTrue( $this->selenium->isTextPresent("User account manager"), 'Testing, Login user with incorrect username' );
+        $this->assertTrue( $this->selenium->isTextPresent("User account manager"), 'Testing, Login user.' );
 
         $this->logout();
         $this->assertTrue( $this->selenium->isTextPresent("Log in"), "Do Logout frontend." );

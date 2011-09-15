@@ -5,6 +5,10 @@ require_once '../../../../oc-load.php';
 
 class Frontend_contactForm extends FrontendTest {
     
+    /*
+     * Send an email to 'contact' (link in footer)
+     */
+
     function testContact()
     {
         $this->selenium->open(osc_base_url(true));
@@ -13,7 +17,7 @@ class Frontend_contactForm extends FrontendTest {
         $this->selenium->type("subject", "subject");
         $this->selenium->type("message", "message\nto be\nsend");
         $this->selenium->type("yourName", "Carlos");
-        $this->selenium->type("yourEmail", "carlos+user@osclass.org");
+        $this->selenium->type("yourEmail", $this->_email);
         $this->selenium->click("xpath=//span/button[text()='Send']");
         $this->selenium->waitForPageToLoad("30000");
 

@@ -1,6 +1,7 @@
 <?php
 echo "data...<br>";
 $aData = array();
+$email = '';
 // Cars 
 $aux = array(
     "catId"         => 'Cars',

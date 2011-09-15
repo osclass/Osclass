@@ -4,6 +4,9 @@ require_once '../../../../oc-load.php';
 
 class Frontend_users extends FrontendTest {
 
+    /*
+     * Register a user without email validation.
+     */
     function testUsers_AddNewUser()
     {
         // same as Frontend-register.php function testRegisterNewUser_NoValidation()
@@ -23,6 +26,14 @@ class Frontend_users extends FrontendTest {
         unset($uSettings);
     }
 
+    /*
+     * Login user.
+     * Change the password:
+     *  - Incorrect current password.
+     *  - Empty passwords.
+     *  - Passwords do not match.
+     * Logout user
+     */
     function testUsers_ChangePassword()
     {
         $this->loginWith();
@@ -61,6 +72,15 @@ class Frontend_users extends FrontendTest {
         $this->logout();
     }
 
+    /*
+     * Registrer user2 without validation email
+     * Login user1
+     * Change email:
+     *  - The specified e-mail is already in use.
+     *  - Change email correctly.
+     * Logout
+     * Remove user2
+     */
     function testUser_ChangeEmail()
     {
         $uSettings = new utilSettings();
@@ -108,6 +128,8 @@ class Frontend_users extends FrontendTest {
 
         $this->assertTrue( $this->selenium->isTextPresent("We have sent you an e-mail. Follow the instructions to validate the changes"), "Change user email, with email validation.");
 
+        $this->logout();
+        
         $this->removeUserByMail('foo@bar.com');
 
         $uSettings->set_enabled_users($old_enabled_users);
@@ -117,6 +139,9 @@ class Frontend_users extends FrontendTest {
         unset($uSettings);
     }
 
+    /*
+     * Remove user1
+     */
     function testUser_RemoveNewUser()
     {
         $this->removeUserByMail($this->_email);

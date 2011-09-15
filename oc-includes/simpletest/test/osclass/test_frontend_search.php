@@ -210,7 +210,6 @@ class TestOfSearch extends WebTestCase {
      *      frontend
      *      backoffice
      *      search
-     *      
      */
     public function testExpiredItems()
     {
