@@ -396,18 +396,29 @@
         $('#region').attr( "autocomplete", "off" );
         $('#city').attr( "autocomplete", "off" );
 
+        $('#countryId').change(function(){
+            $('#regionId').val('');
+            $('#region').val('');
+            $('#cityId').val('');
+            $('#city').val('');            
+        });
+
 
         $('#region').live('keyup.autocomplete', function(){
+            $('#regionId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
                 minLength: 2,
                 select: function( event, ui ) {
+                    $('#cityId').val('');
+                    $('#city').val('');
                     $('#regionId').val(ui.item.id);
                 }
             });
         });
 
         $('#city').live('keyup.autocomplete', function(){
+            $('#cityId').val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
                 minLength: 2,
@@ -570,13 +581,6 @@
 
             if(pk_c_code != '') {
 
-                if (typeof $.uniform != 'undefined') {
-                    $.uniform.restore("#regionId");
-                    $.uniform.restore("#region");
-                    $.uniform.restore("#cityId");
-                    $.uniform.restore("#city");
-                }
-                
                 $("#regionId").attr('disabled',false);
                 $("#cityId").attr('disabled',true);
 
@@ -602,13 +606,6 @@
                             
                             $("#regionId").val("");
 
-                            if (typeof $.uniform != 'undefined') {
-                                $("#regionId").uniform();
-                                $("#cityId").uniform();
-                                $("#uniform-regionId span").html("<?php _e("Select a region..."); ?>");
-                                $("#uniform-cityId span").html("<?php _e("Select a city..."); ?>");
-                            }
-
                         } else {
 
                             $("#regionId").before('<input type="text" name="region" id="region" />');
@@ -617,10 +614,6 @@
                             $("#cityId").before('<input type="text" name="city" id="city" />');
                             $("#cityId").remove();
                             
-                            if (typeof $.uniform != 'undefined') {
-                                $("#region").uniform();
-                                $("#city").uniform();
-                            }
                         }
 
                         $("#regionId").html(result);
@@ -629,12 +622,6 @@
                  });
 
              } else {
-                 if (typeof $.uniform != 'undefined') {
-                     $.uniform.restore("#regionId");
-                     $.uniform.restore("#region");
-                     $.uniform.restore("#cityId");
-                     $.uniform.restore("#city");
-                 }
 
                  // add empty select
                  $("#region").before('<select name="regionId" id="regionId" ><option value=""><?php _e("Select a region..."); ?></option></select>');
@@ -655,11 +642,6 @@
                      $("#city").before('<select name="cityId" id="cityId" ><option value=""><?php _e("Select a city..."); ?></option></select>');
                      $("#city").remove();
                  }
-                 if (typeof $.uniform != 'undefined') {
-                     $("#regionId").uniform();
-                     $("#cityId").uniform();
-                 }
-
                  $("#regionId").attr('disabled',true);
                  $("#cityId").attr('disabled',true);
              }
@@ -677,11 +659,6 @@
 
             if(pk_c_code != '') {
                 
-                if (typeof $.uniform != 'undefined') {
-                    $.uniform.restore("#cityId");
-                    $.uniform.restore("#city");
-                }
-
                 $("#cityId").attr('disabled',false);
                 $.ajax({
                     type: "POST",
@@ -703,11 +680,6 @@
                             $("#cityId").remove();
                         }
                         $("#cityId").html(result);
-                        // uniform
-                        if (typeof $.uniform != 'undefined') {
-                            $("#cityId").uniform();
-                            $("#city").uniform();
-                        }
                     }
                  });
              } else {
@@ -929,7 +901,6 @@
 
             gebi('photos').appendChild(d);
 
-            $("#"+id+" input:file").uniform();
         } else {
             alert('<?php _e('Sorry, you have reached the maximum number of images per ad');?>');
         }
