@@ -1,0 +1,48 @@
+<?php
+require_once '../../../../oc-load.php';
+
+class Frontend_login extends FrontendTest {
+    
+    /*
+     * Create a new user and login test, without confirmation
+     */
+    public function testLogin()
+    {
+        $uSettings = new utilSettings();
+        // need enabled_user_validation = 0, this way isn't necessary validate
+        $uSettings->set_enabled_user_validation(0);
+
+        // register a new user.
+        $this->doRegisterUser();
+        $this->assertTrue( $this->selenium->isTextPresent("Your account has been created successfully"), "Register an user.");
+
+        $this->loginWith(NULL, 'foobar');
+        $this->assertTrue( $this->selenium->isTextPresent("The password is incorrect"), 'Testing, Login user with incorrect password' );
+
+        $this->loginWith('some@mail.com', NULL);
+        $this->assertTrue( $this->selenium->isTextPresent("The username doesn't exist"), 'Testing, Login user with incorrect username' );
+
+        $this->loginWith();
+        $this->assertTrue( $this->selenium->isTextPresent("User account manager"), 'Testing, Login user with incorrect username' );
+
+        $this->logout();
+        $this->assertTrue( $this->selenium->isTextPresent("Log in"), "Do Logout frontend." );
+
+       // recover password
+        $this->selenium->open( osc_base_url(true) );
+        $this->selenium->click("login_open");
+        $this->selenium->click("link=Forgot password?");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->selenium->type("s_email",$this->_email);
+        $this->selenium->click("xpath=//span/button[text()='Send me a new password']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("We have sent you an email with the instructions to reset your password"),"Can't recover password. ERROR");
+
+        $this->removeUserByMail($this->_email);
+
+        $uSettings->set_enabled_user_validation(1);
+    }
+}
+?>
