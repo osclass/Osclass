@@ -3,7 +3,7 @@
  *  base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage UnitTester
- *  @version    $Id: remote.php 1786 2008-04-26 17:32:20Z pp11 $
+ *  @version    $Id: remote.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+
@@ -23,7 +23,7 @@ class RemoteTestCase {
     private $url;
     private $dry_url;
     private $size;
-    
+
     /**
      *    Sets the location of the remote test.
      *    @param string $url       Test location.
@@ -35,7 +35,7 @@ class RemoteTestCase {
         $this->dry_url = $dry_url ? $dry_url : $url;
         $this->size = false;
     }
-    
+
     /**
      *    Accessor for the test name for subclasses.
      *    @return string           Name of the test.
@@ -67,7 +67,7 @@ class RemoteTestCase {
         }
         return true;
     }
-    
+
     /**
      *    Creates a new web browser object for fetching
      *    the XML report.
@@ -77,7 +77,7 @@ class RemoteTestCase {
     protected function createBrowser() {
         return new SimpleBrowser();
     }
-    
+
     /**
      *    Creates the XML parser.
      *    @param SimpleReporter $reporter    Target of test results.
@@ -87,7 +87,7 @@ class RemoteTestCase {
     protected function createParser($reporter) {
         return new SimpleTestXmlParser($reporter);
     }
-    
+
     /**
      *    Accessor for the number of subtests.
      *    @return integer           Number of test cases.

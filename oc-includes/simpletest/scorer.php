@@ -3,7 +3,7 @@
  *  base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage UnitTester
- *  @version    $Id: scorer.php 1982 2010-03-28 11:57:54Z lastcraft $
+ *  @version    $Id: scorer.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+*/
@@ -166,7 +166,7 @@ class SimpleScorer {
     function paintException($exception) {
         $this->exceptions++;
     }
-    
+
     /**
      *    Prints the message for skipping tests.
      *    @param string $message    Text of skip condition.
@@ -253,7 +253,7 @@ class SimpleReporter extends SimpleScorer {
         $this->size = null;
         $this->progress = 0;
     }
-    
+
     /**
      *    Gets the formatter for small generic data items.
      *    @return SimpleDumper          Formatter.
@@ -481,7 +481,7 @@ class SimpleReporterDecorator {
     function createInvoker($invoker) {
         return $this->reporter->createInvoker($invoker);
     }
-    
+
     /**
      *    Gets the formatter for privateiables and other small
      *    generic data items.
@@ -583,7 +583,7 @@ class SimpleReporterDecorator {
     function paintException($exception) {
         $this->reporter->paintException($exception);
     }
-    
+
     /**
      *    Prints the message for skipping tests.
      *    @param string $message    Text of skip condition.
@@ -701,7 +701,7 @@ class MultipleReporter {
         }
         return $invoker;
     }
-    
+
     /**
      *    Gets the formatter for privateiables and other small
      *    generic data items.
@@ -812,7 +812,7 @@ class MultipleReporter {
             $this->reporters[$i]->paintError($message);
         }
     }
-    
+
     /**
      *    Chains to the wrapped reporter.
      *    @param Exception $exception    Exception to display.

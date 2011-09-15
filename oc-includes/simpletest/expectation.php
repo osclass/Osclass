@@ -3,7 +3,7 @@
  *    base include file for SimpleTest
  *    @package    SimpleTest
  *    @subpackage    UnitTester
- *    @version    $Id: expectation.php 1905 2009-07-29 13:54:00Z dgheath $
+ *    @version    $Id: expectation.php 2009 2011-04-28 08:57:25Z pp11 $
  */
 
 /**#@+
@@ -770,23 +770,23 @@ class IsAExpectation extends SimpleExpectation {
         if (is_object($compare)) {
             return SimpleTestCompatibility::isA($compare, $this->type);
         } else {
-            return (strtolower(gettype($compare)) == $this->canonicalType($this->type));
+            $function = 'is_'.$this->canonicalType($this->type);
+            if (is_callable($function)) {
+                return $function($compare);
+            }
+            return false;
         }
     }
 
     /**
-     *    Coerces type name into a gettype() match.
+     *    Coerces type name into a is_*() match.
      *    @param string $type        User type.
      *    @return string             Simpler type.
      *    @access private
      */
     protected function canonicalType($type) {
         $type = strtolower($type);
-        $map = array(
-                'bool' => 'boolean',
-                'float' => 'double',
-                'real' => 'double',
-                'int' => 'integer');
+        $map = array('boolean' => 'bool');
         if (isset($map[$type])) {
             $type = $map[$type];
         }

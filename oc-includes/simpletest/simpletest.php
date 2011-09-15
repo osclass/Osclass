@@ -3,7 +3,7 @@
  *  Global state for SimpleTest and kicker script in future versions.
  *  @package    SimpleTest
  *  @subpackage UnitTester
- *  @version    $Id: simpletest.php 1994 2010-04-03 16:26:26Z lastcraft $
+ *  @version    $Id: simpletest.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+
@@ -219,7 +219,7 @@ class SimpleTest {
                 'DefaultProxyPassword' => false,
                 'Preferred' => array(new HtmlReporter(), new TextReporter(), new XmlReporter()));
     }
-    
+
     /**
      *    @deprecated
      */

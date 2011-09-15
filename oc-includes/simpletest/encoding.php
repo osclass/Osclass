@@ -3,9 +3,9 @@
  *  base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage WebTester
- *  @version    $Id: encoding.php 1964 2009-10-13 15:27:31Z maetl_ $
+ *  @version    $Id: encoding.php 2011 2011-04-29 08:22:48Z pp11 $
  */
-    
+
 /**#@+
  *  include other SimpleTest class files
  */
@@ -20,7 +20,7 @@ require_once(dirname(__FILE__) . '/socket.php');
 class SimpleEncodedPair {
     private $key;
     private $value;
-    
+
     /**
      *    Stashes the data for rendering later.
      *    @param string $key       Form element name.
@@ -30,7 +30,7 @@ class SimpleEncodedPair {
         $this->key = $key;
         $this->value = $value;
     }
-    
+
     /**
      *    The pair as a single string.
      *    @return string        Encoded pair.
@@ -39,7 +39,7 @@ class SimpleEncodedPair {
     function asRequest() {
         return urlencode($this->key) . '=' . urlencode($this->value);
     }
-    
+
     /**
      *    The MIME part as a string.
      *    @return string        MIME part encoding.
@@ -51,7 +51,7 @@ class SimpleEncodedPair {
         $part .= "\r\n" . $this->value;
         return $part;
     }
-    
+
     /**
      *    Is this the value we are looking for?
      *    @param string $key    Identifier.
@@ -61,7 +61,7 @@ class SimpleEncodedPair {
     function isKey($key) {
         return $key == $this->key;
     }
-    
+
     /**
      *    Is this the value we are looking for?
      *    @return string       Identifier.
@@ -70,7 +70,7 @@ class SimpleEncodedPair {
     function getKey() {
         return $this->key;
     }
-    
+
     /**
      *    Is this the value we are looking for?
      *    @return string       Content.
@@ -90,7 +90,7 @@ class SimpleAttachment {
     private $key;
     private $content;
     private $filename;
-    
+
     /**
      *    Stashes the data for rendering later.
      *    @param string $key          Key to add value to.
@@ -102,7 +102,7 @@ class SimpleAttachment {
         $this->content = $content;
         $this->filename = $filename;
     }
-    
+
     /**
      *    The pair as a single string.
      *    @return string        Encoded pair.
@@ -111,7 +111,7 @@ class SimpleAttachment {
     function asRequest() {
         return '';
     }
-    
+
     /**
      *    The MIME part as a string.
      *    @return string        MIME part encoding.
@@ -125,7 +125,7 @@ class SimpleAttachment {
         $part .= "\r\n\r\n" . $this->content;
         return $part;
     }
-    
+
     /**
      *    Attempts to figure out the MIME type from the
      *    file extension and the content.
@@ -138,7 +138,7 @@ class SimpleAttachment {
         }
         return 'application/octet-stream';
     }
-    
+
     /**
      *    Tests each character is in the range 0-127.
      *    @param string $ascii    String to test.
@@ -152,7 +152,7 @@ class SimpleAttachment {
         }
         return true;
     }
-    
+
     /**
      *    Is this the value we are looking for?
      *    @param string $key    Identifier.
@@ -162,7 +162,7 @@ class SimpleAttachment {
     function isKey($key) {
         return $key == $this->key;
     }
-    
+
     /**
      *    Is this the value we are looking for?
      *    @return string       Identifier.
@@ -171,7 +171,7 @@ class SimpleAttachment {
     function getKey() {
         return $this->key;
     }
-    
+
     /**
      *    Is this the value we are looking for?
      *    @return string       Content.
@@ -190,7 +190,7 @@ class SimpleAttachment {
  */
 class SimpleEncoding {
     private $request;
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -205,7 +205,7 @@ class SimpleEncoding {
         $this->clear();
         $this->merge($query);
     }
-    
+
     /**
      *    Empties the request of parameters.
      *    @access public
@@ -213,7 +213,7 @@ class SimpleEncoding {
     function clear() {
         $this->request = array();
     }
-    
+
     /**
      *    Adds a parameter to the query.
      *    @param string $key            Key to add value to.
@@ -232,7 +232,7 @@ class SimpleEncoding {
             $this->addPair($key, $value);
         }
     }
-    
+
     /**
      *    Adds a new value into the request.
      *    @param string $key            Key to add value to.
@@ -242,7 +242,7 @@ class SimpleEncoding {
     protected function addPair($key, $value) {
         $this->request[] = new SimpleEncodedPair($key, $value);
     }
-    
+
     /**
      *    Adds a MIME part to the query. Does nothing for a
      *    form encoded packet.
@@ -254,7 +254,7 @@ class SimpleEncoding {
     function attach($key, $content, $filename) {
         $this->request[] = new SimpleAttachment($key, $content, $filename);
     }
-    
+
     /**
      *    Adds a set of parameters to this query.
      *    @param array/SimpleQueryString $query  Multiple values are
@@ -270,7 +270,7 @@ class SimpleEncoding {
             }
         }
     }
-    
+
     /**
      *    Accessor for single value.
      *    @return string/array    False if missing, string
@@ -293,7 +293,7 @@ class SimpleEncoding {
             return $values;
         }
     }
-    
+
     /**
      *    Accessor for listing of pairs.
      *    @return array        All pair objects.
@@ -302,7 +302,7 @@ class SimpleEncoding {
     function getAll() {
         return $this->request;
     }
-    
+
     /**
      *    Renders the query string as a URL encoded
      *    request part.
@@ -327,7 +327,7 @@ class SimpleEncoding {
  *    @subpackage WebTester
  */
 class SimpleGetEncoding extends SimpleEncoding {
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -338,7 +338,7 @@ class SimpleGetEncoding extends SimpleEncoding {
     function __construct($query = false) {
         parent::__construct($query);
     }
-    
+
     /**
      *    HTTP request method.
      *    @return string        Always GET.
@@ -347,7 +347,7 @@ class SimpleGetEncoding extends SimpleEncoding {
     function getMethod() {
         return 'GET';
     }
-    
+
     /**
      *    Writes no extra headers.
      *    @param SimpleSocket $socket        Socket to write to.
@@ -355,7 +355,7 @@ class SimpleGetEncoding extends SimpleEncoding {
      */
     function writeHeadersTo(&$socket) {
     }
-    
+
     /**
      *    No data is sent to the socket as the data is encoded into
      *    the URL.
@@ -364,7 +364,7 @@ class SimpleGetEncoding extends SimpleEncoding {
      */
     function writeTo(&$socket) {
     }
-    
+
     /**
      *    Renders the query string as a URL encoded
      *    request part for attaching to a URL.
@@ -382,7 +382,7 @@ class SimpleGetEncoding extends SimpleEncoding {
  *    @subpackage WebTester
  */
 class SimpleHeadEncoding extends SimpleGetEncoding {
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -393,7 +393,7 @@ class SimpleHeadEncoding extends SimpleGetEncoding {
     function __construct($query = false) {
         parent::__construct($query);
     }
-    
+
     /**
      *    HTTP request method.
      *    @return string        Always HEAD.
@@ -410,7 +410,7 @@ class SimpleHeadEncoding extends SimpleGetEncoding {
  *    @subpackage WebTester
  */
 class SimpleDeleteEncoding extends SimpleGetEncoding {
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -421,7 +421,7 @@ class SimpleDeleteEncoding extends SimpleGetEncoding {
     function __construct($query = false) {
         parent::__construct($query);
     }
-    
+
     /**
      *    HTTP request method.
      *    @return string        Always DELETE.
@@ -433,7 +433,7 @@ class SimpleDeleteEncoding extends SimpleGetEncoding {
 }
 
 /**
- *    Bundles an entity-body for transporting 
+ *    Bundles an entity-body for transporting
  *    a raw content payload with the request.
  *    @package SimpleTest
  *    @subpackage WebTester
@@ -441,7 +441,7 @@ class SimpleDeleteEncoding extends SimpleGetEncoding {
 class SimpleEntityEncoding extends SimpleEncoding {
     private $content_type;
     private $body;
-    
+
     function __construct($query = false, $content_type = false) {
         $this->content_type = $content_type;
     	if (is_string($query)) {
@@ -451,7 +451,7 @@ class SimpleEntityEncoding extends SimpleEncoding {
             parent::__construct($query);
         }
     }
-    
+
     /**
      *    Returns the media type of the entity body
      *    @return string
@@ -463,7 +463,7 @@ class SimpleEntityEncoding extends SimpleEncoding {
         }
     	return $this->content_type;
     }
-       
+
     /**
      *    Dispatches the form headers down the socket.
      *    @param SimpleSocket $socket        Socket to write to.
@@ -473,7 +473,7 @@ class SimpleEntityEncoding extends SimpleEncoding {
         $socket->write("Content-Length: " . (integer)strlen($this->encode()) . "\r\n");
         $socket->write("Content-Type: " .  $this->getContentType() . "\r\n");
     }
-    
+
     /**
      *    Dispatches the form data down the socket.
      *    @param SimpleSocket $socket        Socket to write to.
@@ -482,7 +482,7 @@ class SimpleEntityEncoding extends SimpleEncoding {
     function writeTo(&$socket) {
         $socket->write($this->encode());
     }
-    
+
     /**
      *    Renders the request body
      *    @return Encoded entity body
@@ -500,7 +500,7 @@ class SimpleEntityEncoding extends SimpleEncoding {
  *    @subpackage WebTester
  */
 class SimplePostEncoding extends SimpleEntityEncoding {
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -514,7 +514,7 @@ class SimplePostEncoding extends SimpleEntityEncoding {
         }
         parent::__construct($query, $content_type);
     }
-    
+
     function hasMoreThanOneLevel($query) {
         foreach ($query as $key => $value) {
             if (is_array($value)) {
@@ -538,10 +538,10 @@ class SimplePostEncoding extends SimpleEntityEncoding {
         if ($this->hasMoreThanOneLevel($query_)) {
             $query_ = $this->rewriteArrayWithMultipleLevels($query_);
         }
-        
+
         return $query_;
     }
-    
+
     /**
      *    HTTP request method.
      *    @return string        Always POST.
@@ -550,7 +550,7 @@ class SimplePostEncoding extends SimpleEntityEncoding {
     function getMethod() {
         return 'POST';
     }
-    
+
     /**
      *    Renders the query string as a URL encoded
      *    request part for attaching to a URL.
@@ -568,7 +568,7 @@ class SimplePostEncoding extends SimpleEntityEncoding {
  *    @subpackage WebTester
  */
 class SimplePutEncoding extends SimpleEntityEncoding {
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -579,7 +579,7 @@ class SimplePutEncoding extends SimpleEntityEncoding {
     function __construct($query = false, $content_type = false) {
         parent::__construct($query, $content_type);
     }
-    
+
     /**
      *    HTTP request method.
      *    @return string        Always PUT.
@@ -598,7 +598,7 @@ class SimplePutEncoding extends SimpleEntityEncoding {
  */
 class SimpleMultipartEncoding extends SimplePostEncoding {
     private $boundary;
-    
+
     /**
      *    Starts empty.
      *    @param array $query       Hash of parameters.
@@ -610,7 +610,7 @@ class SimpleMultipartEncoding extends SimplePostEncoding {
         parent::__construct($query);
         $this->boundary = ($boundary === false ? uniqid('st') : $boundary);
     }
-    
+
     /**
      *    Dispatches the form headers down the socket.
      *    @param SimpleSocket $socket        Socket to write to.
@@ -620,7 +620,7 @@ class SimpleMultipartEncoding extends SimplePostEncoding {
         $socket->write("Content-Length: " . (integer)strlen($this->encode()) . "\r\n");
         $socket->write("Content-Type: multipart/form-data; boundary=" . $this->boundary . "\r\n");
     }
-    
+
     /**
      *    Dispatches the form data down the socket.
      *    @param SimpleSocket $socket        Socket to write to.
@@ -629,7 +629,7 @@ class SimpleMultipartEncoding extends SimplePostEncoding {
     function writeTo(&$socket) {
         $socket->write($this->encode());
     }
-    
+
     /**
      *    Renders the query string as a URL encoded
      *    request part.

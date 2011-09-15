@@ -3,7 +3,7 @@
  *  Autorunner which runs all tests cases found in a file
  *  that includes this module.
  *  @package    SimpleTest
- *  @version    $Id: autorun.php 1885 2009-07-02 10:25:52Z dgheath $
+ *  @version    $Id: autorun.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+
@@ -26,7 +26,7 @@ function simpletest_autorun() {
         return;
     }
     $result = run_local_tests();
-    if (SimpleReporter::inCli()) {        
+    if (SimpleReporter::inCli()) {
         exit($result ? 0 : 1);
     }
 }

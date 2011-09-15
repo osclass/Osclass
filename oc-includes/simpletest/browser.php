@@ -3,7 +3,7 @@
  *  Base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage WebTester
- *  @version    $Id: browser.php 1972 2009-12-13 21:38:19Z lastcraft $
+ *  @version    $Id: browser.php 2013 2011-04-29 09:29:45Z pp11 $
  */
 
 /**#@+
@@ -1039,13 +1039,13 @@ class SimpleBrowser {
      *    @return string/boolean  Page on success.
      *    @access public
      */
-    function submitFormById($id) {
+    function submitFormById($id, $additional = false) {
         if (! ($form = $this->page->getFormById($id))) {
             return false;
         }
         $success = $this->load(
                 $form->getAction(),
-                $form->submit());
+                $form->submit($additional));
         return ($success ? $this->getContent() : $success);
     }
 

@@ -3,7 +3,7 @@
  *  Optional include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage UnitTester
- *  @version    $Id: default_reporter.php 1995 2010-04-06 12:57:40Z lastcraft $
+ *  @version    $Id: default_reporter.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+
@@ -59,7 +59,7 @@ class SimpleCommandLineParser {
             }
         }
     }
-    
+
     /**
      *    Run only this test.
      *    @return string        Test name to run.
@@ -67,7 +67,7 @@ class SimpleCommandLineParser {
     function getTest() {
         return $this->test;
     }
-    
+
     /**
      *    Run only this test suite.
      *    @return string        Test class name to run.
@@ -75,7 +75,7 @@ class SimpleCommandLineParser {
     function getTestCase() {
         return $this->case;
     }
-    
+
     /**
      *    Output should be XML or not.
      *    @return boolean        True if XML desired.
@@ -83,7 +83,7 @@ class SimpleCommandLineParser {
     function isXml() {
         return $this->xml;
     }
-    
+
     /**
      *    Output should suppress skip messages.
      *    @return boolean        True for no skips.
@@ -91,7 +91,7 @@ class SimpleCommandLineParser {
     function noSkips() {
         return $this->no_skips;
     }
-    
+
     /**
      *    Output should be a help message. Disabled during XML mode.
      *    @return boolean        True if help message desired.
@@ -99,7 +99,7 @@ class SimpleCommandLineParser {
     function help() {
         return $this->help && ! $this->xml;
     }
-    
+
     /**
      *    Returns plain-text help message for command line runner.
      *    @return string         String help message
@@ -117,7 +117,7 @@ Usage: php <test_file> [args...]
 
 HELP;
     }
-    
+
 }
 
 /**
@@ -128,7 +128,7 @@ HELP;
  *    @subpackage UnitTester
  */
 class DefaultReporter extends SimpleReporterDecorator {
-    
+
     /**
      *  Assembles the appropriate reporter for the environment.
      */

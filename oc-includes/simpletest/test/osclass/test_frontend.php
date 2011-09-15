@@ -1,11 +1,10 @@
 <?php
 
 require_once('testSuiteFrontend.php');
-echo "<h1>IMPORTANT - For tests is needed a native installation</h1>";
-$test = &new AllFrontEndTests();
-$test->run(new HtmlReporter());
+require_once('FrontendTest.php');
+require_once('MyReporter.php');
+require_once("util_settings.php");
 
+$test = new AllFrontEndTests();
+$test->run(new MyReporter());
 ?>
-
-
-

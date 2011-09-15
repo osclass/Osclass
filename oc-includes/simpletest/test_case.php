@@ -3,7 +3,7 @@
  *  Base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage UnitTester
- *  @version    $Id: test_case.php 1968 2009-10-19 18:24:23Z maetl_ $
+ *  @version    $Id: test_case.php 2012 2011-04-29 08:57:00Z pp11 $
  */
 
 /**#@+
@@ -149,6 +149,7 @@ class SimpleTestCase {
             $reporter->paintCaseEnd($this->getLabel());
         }
         unset($this->reporter);
+        $context->setTest(null);
         return $reporter->getStatus();
     }
 

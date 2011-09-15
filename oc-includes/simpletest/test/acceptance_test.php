@@ -1,5 +1,5 @@
 <?php
-// $Id: acceptance_test.php 1972 2009-12-13 21:38:19Z lastcraft $
+// $Id: acceptance_test.php 2013 2011-04-29 09:29:45Z pp11 $
 require_once(dirname(__FILE__) . '/../autorun.php');
 require_once(dirname(__FILE__) . '/../compatibility.php');
 require_once(dirname(__FILE__) . '/../browser.php');
@@ -778,6 +778,12 @@ class LiveTestOfForms extends SimpleTestAcceptanceTest {
         $this->assertText('g=[g2]');
         $this->assertText('h=[1]');
         $this->assertText('go=[Go!]');
+    }
+
+    function testFormSubmissionWithIdsAndAdditionnalData() {
+        $this->get($this->samples() . 'form.html');
+        $this->assertTrue($this->clickSubmitById(99, array('additionnal' => "data")));
+        $this->assertText('additionnal=[data]');
     }
 
     function testFormSubmissionWithLabels() {

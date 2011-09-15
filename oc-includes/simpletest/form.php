@@ -3,7 +3,7 @@
  *  Base include file for SimpleTest.
  *  @package    SimpleTest
  *  @subpackage WebTester
- *  @version    $Id: form.php 1996 2010-07-27 09:11:59Z pp11 $
+ *  @version    $Id: form.php 2013 2011-04-29 09:29:45Z pp11 $
  */
 
 /**#@+
@@ -350,8 +350,12 @@ class SimpleForm {
      *    @return hash           Submitted values.
      *    @access public
      */
-    function submit() {
-        return $this->encode();
+    function submit($additional = false) {
+        $encoding = $this->encode();
+        if ($additional) {
+            $encoding->merge($additional);
+        }
+        return $encoding;
     }
 }
 ?>

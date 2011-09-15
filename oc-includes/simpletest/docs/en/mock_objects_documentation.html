@@ -377,8 +377,8 @@ function testTaskReads() {
 $buy_books = 'Buy books';
 $write_code = 'Write code';
 $pad = new MockPad();
-$vector-&gt;&lt;strong&gt;returnsByReferenceAt(0, 'note', $buy_books, array('*', 3));
-$vector-&gt;&lt;strong&gt;returnsByReferenceAt(1, 'note', $write_code, array('*', 3));
+$vector-&gt;<strong>returnsByReferenceAt(0, 'note', $buy_books, array('*', 3));</strong>
+$vector-&gt;<strong>returnsByReferenceAt(1, 'note', $write_code, array('*', 3));</strong>
 </pre>
                 This will return a reference to <span class="new_code">$buy_books</span> and
                 then to <span class="new_code">$write_code</span>, but only if two parameters

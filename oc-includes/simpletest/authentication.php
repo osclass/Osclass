@@ -3,7 +3,7 @@
  *  Base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage WebTester
- *  @version    $Id: authentication.php 1784 2008-04-26 13:07:14Z pp11 $
+ *  @version    $Id: authentication.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 /**
  *  include http class
@@ -20,7 +20,7 @@ class SimpleRealm {
     private $root;
     private $username;
     private $password;
-    
+
     /**
      *    Starts with the initial entry directory.
      *    @param string $type      Authentication type for this
@@ -35,7 +35,7 @@ class SimpleRealm {
         $this->username = false;
         $this->password = false;
     }
-    
+
     /**
      *    Adds another location to the realm.
      *    @param SimpleUrl $url    Somewhere in realm.
@@ -44,7 +44,7 @@ class SimpleRealm {
     function stretch($url) {
         $this->root = $this->getCommonPath($this->root, $url->getPath());
     }
-    
+
     /**
      *    Finds the common starting path.
      *    @param string $first        Path to compare.
@@ -62,7 +62,7 @@ class SimpleRealm {
         }
         return implode('/', $first) . '/';
     }
-    
+
     /**
      *    Sets the identity to try within this realm.
      *    @param string $username    Username in authentication dialog.
@@ -73,7 +73,7 @@ class SimpleRealm {
         $this->username = $username;
         $this->password = $password;
     }
-    
+
     /**
      *    Accessor for current identity.
      *    @return string        Last succesful username.
@@ -82,7 +82,7 @@ class SimpleRealm {
     function getUsername() {
         return $this->username;
     }
-    
+
     /**
      *    Accessor for current identity.
      *    @return string        Last succesful password.
@@ -91,7 +91,7 @@ class SimpleRealm {
     function getPassword() {
         return $this->password;
     }
-    
+
     /**
      *    Test to see if the URL is within the directory
      *    tree of the realm.
@@ -108,7 +108,7 @@ class SimpleRealm {
         }
         return false;
     }
-    
+
     /**
      *    Tests to see if one string is a substring of
      *    another.
@@ -130,7 +130,7 @@ class SimpleRealm {
  */
 class SimpleAuthenticator {
     private $realms;
-    
+
     /**
      *    Clears the realms.
      *    @access public
@@ -138,7 +138,7 @@ class SimpleAuthenticator {
     function SimpleAuthenticator() {
         $this->restartSession();
     }
-    
+
     /**
      *    Starts with no realms set up.
      *    @access public
@@ -146,7 +146,7 @@ class SimpleAuthenticator {
     function restartSession() {
         $this->realms = array();
     }
-    
+
     /**
      *    Adds a new realm centered the current URL.
      *    Browsers privatey wildly on their behaviour in this
@@ -166,7 +166,7 @@ class SimpleAuthenticator {
     function addRealm($url, $type, $realm) {
         $this->realms[$url->getHost()][$realm] = new SimpleRealm($type, $url);
     }
-    
+
     /**
      *    Sets the current identity to be presented
      *    against that realm.
@@ -181,7 +181,7 @@ class SimpleAuthenticator {
             $this->realms[$host][$realm]->setIdentity($username, $password);
         }
     }
-    
+
     /**
      *    Finds the name of the realm by comparing URLs.
      *    @param SimpleUrl $url        URL to test.
@@ -199,7 +199,7 @@ class SimpleAuthenticator {
         }
         return false;
     }
-    
+
     /**
      *    Presents the appropriate headers for this location.
      *    @param SimpleHttpRequest $request  Request to modify.
@@ -218,7 +218,7 @@ class SimpleAuthenticator {
         }
         $this->addBasicHeaders($request, $username, $password);
     }
-    
+
     /**
      *    Presents the appropriate headers for this
      *    location for basic authentication.

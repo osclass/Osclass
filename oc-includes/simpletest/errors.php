@@ -3,7 +3,7 @@
  *  base include file for SimpleTest
  *  @package    SimpleTest
  *  @subpackage UnitTester
- *  @version    $Id: errors.php 1981 2010-03-23 23:29:56Z lastcraft $
+ *  @version    $Id: errors.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+
@@ -43,7 +43,7 @@ class SimpleErrorTrappingInvoker extends SimpleInvokerDecorator {
         restore_error_handler();
         $queue->tally();
     }
-    
+
     /**
      *    Wires up the error queue for a single test.
      *    @return SimpleErrorQueue    Queue connected to the test.
@@ -120,7 +120,7 @@ class SimpleErrorQueue {
         $content = str_replace('%', '%%', $content);
         $this->testLatestError($severity, $content, $filename, $line);
     }
-    
+
     /**
      *    Any errors still in the queue are sent to the test
      *    case. Any unfulfilled expectations trigger failures.

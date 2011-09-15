@@ -3,7 +3,7 @@
  *  Base include file for SimpleTest.
  *  @package    SimpleTest
  *  @subpackage WebTester
- *  @version    $Id: tag.php 1929 2009-07-31 13:49:36Z dgheath $
+ *  @version    $Id: tag.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**#@+
@@ -182,7 +182,7 @@ class SimpleTag {
             $this->addTag($tag);
         }
     }
-    
+
     /**
      *    Accessor for tag name.
      *    @return string       Name of tag.

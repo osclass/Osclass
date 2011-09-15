@@ -1,5 +1,5 @@
 <?php
-// $Id: expectation_test.php 1905 2009-07-29 13:54:00Z dgheath $
+// $Id: expectation_test.php 2009 2011-04-28 08:57:25Z pp11 $
 require_once(dirname(__FILE__) . '/../autorun.php');
 require_once(dirname(__FILE__) . '/../expectation.php');
 
@@ -285,6 +285,24 @@ class TestOfIsA extends UnitTestCase {
         $expectation = new IsAExpectation('int');
         $this->assertTrue($expectation->test(5));
         $this->assertFalse($expectation->test(5.0));
+    }
+
+    function testScalar() {
+        $expectation = new IsAExpectation('scalar');
+        $this->assertTrue($expectation->test(5));
+        $this->assertFalse($expectation->test(array(5)));
+    }
+
+    function testNumeric() {
+        $expectation = new IsAExpectation('numeric');
+        $this->assertTrue($expectation->test(5));
+        $this->assertFalse($expectation->test('string'));
+    }
+
+    function testNull() {
+        $expectation = new IsAExpectation('null');
+        $this->assertTrue($expectation->test(null));
+        $this->assertFalse($expectation->test('string'));
     }
 }
 

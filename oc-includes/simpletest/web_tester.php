@@ -3,7 +3,7 @@
  *  Base include file for SimpleTest.
  *  @package    SimpleTest
  *  @subpackage WebTester
- *  @version    $Id: web_tester.php 1967 2009-10-14 13:09:41Z maetl_ $
+ *  @version    $Id: web_tester.php 2013 2011-04-29 09:29:45Z pp11 $
  */
 
 /**#@+
@@ -729,7 +729,7 @@ class WebTestCase extends SimpleTestCase {
     function put($url, $body = false, $content_type = false) {
         return $this->failOnError($this->browser->put($url, $body, $content_type));
     }
-    
+
     /**
      *    Fetches a page by a DELETE request
      *    @param string $url          URL to fetch.
@@ -740,8 +740,8 @@ class WebTestCase extends SimpleTestCase {
     function delete($url, $parameters = false) {
         return $this->failOnError($this->browser->delete($url, $parameters));
     }
-    
-    
+
+
     /**
      *    Does a HTTP HEAD fetch, fetching only the page
      *    headers. The current base URL is unchanged by this.
@@ -1012,8 +1012,8 @@ class WebTestCase extends SimpleTestCase {
      *    @return boolean/string  Page on success.
      *    @access public
      */
-    function submitFormById($id) {
-        return $this->failOnError($this->browser->submitFormById($id));
+    function submitFormById($id, $additional = false) {
+        return $this->failOnError($this->browser->submitFormById($id, $additional));
     }
 
     /**
@@ -1466,7 +1466,7 @@ class WebTestCase extends SimpleTestCase {
      *    @return boolean           True on pass
      *    @access public
      */
-    function assertTrue($result, $message = false) {
+    function assertTrue($result, $message = '%s') {
         return $this->assert(new TrueExpectation(), $result, $message);
     }
 

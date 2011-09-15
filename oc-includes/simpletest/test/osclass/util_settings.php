@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 class utilSettings {
  
     public function __construct() {
-        echo "contruct utilSettings<br>";flush();
+//        echo "contruct utilSettings<br>";flush();
     }
     
     /**
@@ -73,12 +73,27 @@ class utilSettings {
         Preference::newInstance()->update(array('s_value' => $bool) ,array('s_name'  => 'logged_user_item_validation'));
         return $logged_user_item_validation;
     }
-    
+
+    // users
     public function set_enabled_user_validation($bool = 0)
     {
         $enabled_user_validation = Preference::newInstance()->findValueByName('enabled_user_validation');
         Preference::newInstance()->update(array('s_value' => $bool) ,array('s_name'  => 'enabled_user_validation'));
         return $enabled_user_validation;
+    }
+
+    public function set_enabled_users($bool = 0)
+    {
+        $enabled_users = Preference::newInstance()->findValueByName('enabled_users');
+        Preference::newInstance()->update(array('s_value' => $bool) ,array('s_name'  => 'enabled_users'));
+        return $enabled_users;
+    }
+
+    public function set_enabled_user_registration($bool = 0)
+    {
+        $enabled_user_registration = Preference::newInstance()->findValueByName('enabled_user_registration');
+        Preference::newInstance()->update(array('s_value' => $bool) ,array('s_name'  => 'enabled_user_registration'));
+        return $enabled_user_registration;
     }
 }
 ?>

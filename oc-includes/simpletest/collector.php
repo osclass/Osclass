@@ -6,7 +6,7 @@
  * @author Travis Swicegood <development@domain51.com>
  * @package SimpleTest
  * @subpackage UnitTester
- * @version $Id: collector.php 1784 2008-04-26 13:07:14Z pp11 $
+ * @version $Id: collector.php 2011 2011-04-29 08:22:48Z pp11 $
  */
 
 /**
@@ -71,7 +71,7 @@ class SimpleCollector {
         }
         $test->addFile($file);
     }
-    
+
     /**
      *  Tests for hidden files so as to skip them. Currently
      *  only tests for Unix hidden files.
