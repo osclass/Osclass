@@ -148,7 +148,7 @@
                     'fk_i_user_id'          => $aItem['userId'],
                     'dt_pub_date'           => date('Y-m-d H:i:s'),
                     'fk_i_category_id'      => $aItem['catId'],
-                    's_price'               => $aItem['price'],
+                    'i_price'               => $aItem['price'],
                     'fk_c_currency_code'    => $aItem['currency'],
                     's_contact_name'        => $contactName,
                     's_contact_email'       => $contactEmail,
@@ -355,7 +355,7 @@
                                         array(
                                             'dt_mod_date'           => date('Y-m-d H:i:s')
                                             ,'fk_i_category_id'     => $aItem['catId']
-                                            ,'s_price'              => $aItem['price']
+                                            ,'i_price'              => $aItem['price']
                                             ,'fk_c_currency_code'   => $aItem['currency']
                                         )
                                         ,array(

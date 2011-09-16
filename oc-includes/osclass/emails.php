@@ -644,7 +644,7 @@
                          '{ITEM_PRICE}', '{ITEM_REGION}', '{ITEM_CITY}', '{ITEM_ID}', '{USER_NAME}',
                          '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
                          '{VALIDATION_LINK}', '{VALIDATION_URL}');
-        $words[] = array($all, $item['s_description'], $item['s_country'], osc_prepare_price($item['s_price']),
+        $words[] = array($all, $item['s_description'], $item['s_country'], osc_prepare_price($item['i_price']),
                          $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                          $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
                          osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
@@ -714,7 +714,7 @@
                          '{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}',
                          '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}');
         $words[] = array('<a href="' . $admin_edit_url . '" >' . $admin_edit_url . '</a>', $admin_edit_url, $all, $item['s_description'], $item['s_country'],
-                         osc_prepare_price($item['s_price']), $item['s_region'], $item['s_city'], $item['pk_i_id'],
+                         osc_prepare_price($item['i_price']), $item['s_region'], $item['s_city'], $item['pk_i_id'],
                          $item['s_contact_name'], $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'],
                          $item_url, osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url );
         $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_admin_new_item_title', $content['s_title'])), $words);
@@ -781,7 +781,7 @@
                          '{USER_EMAIL}', '{WEB_URL}', '{ITEM_TITLE}', '{ITEM_URL}', '{WEB_TITLE}',
                          '{VALIDATION_LINK}', '{VALIDATION_URL}',
                          '{EDIT_LINK}', '{EDIT_URL}', '{DELETE_LINK}', '{DELETE_URL}');
-        $words[] = array($all, $item['s_description'], $item['s_country'], osc_prepare_price($item['s_price']),
+        $words[] = array($all, $item['s_description'], $item['s_country'], osc_prepare_price($item['i_price']),
                          $item['s_region'], $item['s_city'], $item['pk_i_id'], $item['s_contact_name'],
                          $item['s_contact_email'], '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $item['s_title'], $item_url,
                          osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url,
