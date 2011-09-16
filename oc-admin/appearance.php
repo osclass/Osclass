@@ -126,6 +126,7 @@
                             ,array('s_section' => 'osclass', 's_name' => 'theme')
                     );
                     osc_add_flash_ok_message( _m('Theme activated correctly'), 'admin');
+                    osc_run_hook("theme_activate", Params::getParam('theme'));
                     $this->redirectTo( osc_admin_base_url(true) . "?page=appearance" );
                 break;
                 default:
