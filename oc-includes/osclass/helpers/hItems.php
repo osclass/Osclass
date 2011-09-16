@@ -249,7 +249,7 @@
      * @return float
      */
     function osc_item_price() {
-        return (float) osc_item_field("s_price") ;
+        return (float) osc_item_field("i_price") ;
     }
 
     /**
@@ -258,7 +258,7 @@
      * @return string
      */
     function osc_item_formated_price() {
-        return (string) osc_format_price( osc_item_field("s_price") ) ;
+        return (string) osc_format_price( osc_item_field("i_price") ) ;
     }
 
     /**
