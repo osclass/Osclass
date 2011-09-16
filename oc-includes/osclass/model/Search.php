@@ -75,7 +75,7 @@
         public function  getTableName() { return ''; }
 
         public static function getAllowedColumnsForSorting() {
-            return( array('s_price', 'dt_pub_date') ) ;
+            return( array('i_price', 'dt_pub_date') ) ;
         }
 
         // juanramon: little hack to get alerts work in search layout
@@ -275,13 +275,13 @@
         }
 
         public function priceRange( $price_min = 0, $price_max = 0) {
-            $price_min = osc_prepare_price($price_min);
-            $price_max = osc_prepare_price($price_max);
+            $price_min = 1000000*$price_min;
+            $price_max = 1000000*$price_max;
             if(is_numeric($price_min)) {
-                $this->addConditions(sprintf("s_price >= %d", $price_min));
+                $this->addConditions(sprintf("i_price >= %d", $price_min));
             }
             if(is_numeric($price_max) && $price_max>0) {
-                $this->addConditions(sprintf("s_price <= %d", $price_max));
+                $this->addConditions(sprintf("i_price <= %d", $price_max));
             }
         }
 

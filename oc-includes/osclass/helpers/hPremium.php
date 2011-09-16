@@ -216,7 +216,7 @@
      * @return float
      */
     function osc_premium_price() {
-        return (float) osc_premium_field("s_price") ;
+        return (float) osc_premium_field("i_price") ;
     }
 
     /**
@@ -225,7 +225,7 @@
      * @return string
      */
     function osc_premium_formated_price() {
-        return (string) osc_format_price( osc_premium_field("s_price") ) ;
+        return (string) osc_format_price( osc_premium_field("i_price") ) ;
     }
 
     /**

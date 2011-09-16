@@ -115,7 +115,9 @@
         osc_changeVersionTo(220) ;
     }
     
+    // XXX: REMOVE THIS ON RELEASE
     osc_changeVersionTo(229) ;
+
 
     if(osc_version() < 230) {
         $conn->osc_dbExec(sprintf("CREATE TABLE %st_item_description_tmp (
@@ -166,10 +168,8 @@
         $conn->osc_dbExec(sprintf("UPDATE %st_locale SET s_currency_format = '{NUMBER} {CURRENCY}'", DB_TABLE_PREFIX) );
         $items = $conn->osc_dbFetchResults("SELECT pk_i_id, f_price FROM %st_item", DB_TABLE_PREFIX);
         foreach($items as $item) {
-            $conn->osc_dbExec("UPDATE %st_item SET s_price = '%s' WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000*$item['f_price']), $item['pk_i_id']);
+            $conn->osc_dbExec("UPDATE %st_item SET i_price = %d WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000*$item['f_price']), $item['pk_i_id']);
         }
-        //$conn->osc_dbExec("ALTER TABLE `%st_item` DROP `f_price`", DB_TABLE_PREFIX);
-        //$conn->osc_dbExec("ALTER TABLE `%st_item` CHANGE `s_price` `f_price` VARCHAR( 100 ) NULL DEFAULT 0", DB_TABLE_PREFIX);
 
         
         osc_changeVersionTo(230) ;

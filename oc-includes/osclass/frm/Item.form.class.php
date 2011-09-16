@@ -170,9 +170,9 @@
         {
             if($item==null) { $item = osc_item(); };
             if( Session::newInstance()->_getForm('price') != "" ) {
-                $item['s_price'] = Session::newInstance()->_getForm('price');
+                $item['i_price'] = Session::newInstance()->_getForm('price');
             }
-            parent::generic_input_text('price', (isset($item['s_price'])) ? osc_prepare_price($item['s_price']) : null) ;
+            parent::generic_input_text('price', (isset($item['i_price'])) ? osc_prepare_price($item['i_price']) : null) ;
         }
         // OK
         static public function currency_select($currencies = null, $item = null) {
