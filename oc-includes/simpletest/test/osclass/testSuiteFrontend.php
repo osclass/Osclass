@@ -7,10 +7,11 @@ class AllFrontEndTests extends TestSuite {
     function AllFrontEndTests() {
         
         $this->TestSuite('All tests frontend');
-//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-contactForm.php');
-//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-login.php');
-//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-register.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-contactForm.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-login.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-register.php');
         $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-search.php');
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-items.php');
 
 
         
@@ -24,6 +25,4 @@ class AllFrontEndTests extends TestSuite {
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/test_frontend_register.php');        
     }
 }
-
-
 ?>
