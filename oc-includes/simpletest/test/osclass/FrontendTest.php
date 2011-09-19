@@ -126,10 +126,9 @@ abstract class FrontendTest extends WebTestCase {
         }
         $this->selenium->type("contactName" , $user);
         $this->selenium->type("contactEmail", $email);
-sleep(8);
+
         $this->selenium->click("//button[text()='Publish']");
         $this->selenium->waitForPageToLoad("3000");
-        sleep(5);
     }
 }
 ?>
