@@ -27,7 +27,7 @@ function locale_en_US_info() {
         ,'version'         => 2.2
         ,'author_name'     => 'OSClass'
         ,'author_url'      => 'http://osclass.org/'
-        ,'currency_format' => '%.02f %s'
+        ,'currency_format' => '{NUMBER} {CURRENCY}'
         ,'date_format'     => 'm/d/Y'
         ,'stop_words'      => 'i,a,about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,the'
     );
