@@ -18,7 +18,7 @@ class Frontend_search extends FrontendTest {
     /*
      * Load items for test propouse.
      */
-    /*function testLoadItems()
+    function testLoadItems()
     {
         // insert items for test
         require 'ItemData.php';
@@ -45,7 +45,7 @@ class Frontend_search extends FrontendTest {
         $uSettings->set_moderate_items( $old_moderate_items );
         
         unset($uSettings);
-    }*/
+    }
     
     /*
      * Order results by Newly
@@ -74,102 +74,102 @@ class Frontend_search extends FrontendTest {
         $this->assertTrue(preg_match('/German Training Coordination Agent \(Barcelona centre\) en Barcelona/', $text), "Search, order by Lower");
     }
     
-//    /*
-//     * Order results by Higher price
-//     */
-//    function testHigherPrice()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->click("link=Higher price first");
-//        $this->selenium->waitForPageToLoad("30000");
-//        // last item added -> TITLE : Avion ULM TL96 cerca de Biniagual
-//        $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
-//        sleep(4);
-//        $this->assertTrue(preg_match('/Avion ULM TL96 cerca de Biniagual/', $text), "Search, order by Higher "); 
-//    }
-//    
-//    /*
-//     * Search by pattern: Moto
-//     */
-//    function testSPattern()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->type("sPattern", "Moto");
-//        $this->selenium->click("xpath=//span/button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-//        $this->assertTrue($count == 4 , "Search by sPattern.");
-//    }
-//
-//    /*
-//     * Search by pattern & pMin - pMax 
-//     */
-//    function testSPatternCombi1()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->type("sPattern", "Moto");
-//        $this->selenium->type("sPriceMin", "3000");
-//        $this->selenium->type("sPriceMax", "9000");
-//        $this->selenium->click("xpath=//span/button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        sleep(4);
-//        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-//        $this->assertTrue($count == 2 , "Search by sPattern & pMin - pMax.");
-//    }
-//
-//    /*
-//     * Search by pattern & sCity
-//     */
-//    function testSPatternCombi2()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->type("sPattern", "Moto");
-//        $this->selenium->type("sCity" , "Balsareny");
-//        $this->selenium->click("xpath=//span/button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-//        $this->assertTrue($count == 3 , "Search by Moto + sCity = Balsareny.");
-//    }
-//
-//    /*
-//     * Search by sCity
-//     */
-//    function testSPatternCombi3()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->type("sCity" , "Balsareny");
-//        $this->selenium->click("xpath=//span/button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-//        $this->assertTrue($count == 4 , "Search by sCity = Balsareny.");
-//    }
-//
-//    /*
-//     * Search by category "Classes"
-//     */
-//    function testSPatternCombi4()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->click("xpath=//input[@value='2']"); // deselect category 2 (vehicles)
-//        $this->selenium->click("xpath=//span/button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-//        sleep(4);
-//        $this->assertTrue($count == 3 , "Search by sCategory = Classes.");
-//    }
-//
-//    /*
-//     * Search by, only items with pictures
-//     */
-//    function testSPatternCombi5()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->click("bPic"); // only items with pictures
-//        $this->selenium->click("xpath=//span/button[text()='Apply']");
-//        $this->selenium->waitForPageToLoad("30000");
-//        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
-//        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
-//    }
+    /*
+     * Order results by Higher price
+     */
+    function testHigherPrice()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->click("link=Higher price first");
+        $this->selenium->waitForPageToLoad("30000");
+        // last item added -> TITLE : Avion ULM TL96 cerca de Biniagual
+        $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
+        sleep(4);
+        $this->assertTrue(preg_match('/Avion ULM TL96 cerca de Biniagual/', $text), "Search, order by Higher "); 
+    }
+    
+    /*
+     * Search by pattern: Moto
+     */
+    function testSPattern()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->type("sPattern", "Moto");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 4 , "Search by sPattern.");
+    }
+
+    /*
+     * Search by pattern & pMin - pMax 
+     */
+    function testSPatternCombi1()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->type("sPattern", "Moto");
+        $this->selenium->type("sPriceMin", "3000");
+        $this->selenium->type("sPriceMax", "9000");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        sleep(4);
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 2 , "Search by sPattern & pMin - pMax.");
+    }
+
+    /*
+     * Search by pattern & sCity
+     */
+    function testSPatternCombi2()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->type("sPattern", "Moto");
+        $this->selenium->type("sCity" , "Balsareny");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 3 , "Search by Moto + sCity = Balsareny.");
+    }
+
+    /*
+     * Search by sCity
+     */
+    function testSPatternCombi3()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->type("sCity" , "Balsareny");
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 4 , "Search by sCity = Balsareny.");
+    }
+
+    /*
+     * Search by category "Classes"
+     */
+    function testSPatternCombi4()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->click("xpath=//input[@value='2']"); // deselect category 2 (vehicles)
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        sleep(4);
+        $this->assertTrue($count == 3 , "Search by sCategory = Classes.");
+    }
+
+    /*
+     * Search by, only items with pictures
+     */
+    function testSPatternCombi5()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->click("bPic"); // only items with pictures
+        $this->selenium->click("xpath=//span/button[text()='Apply']");
+        $this->selenium->waitForPageToLoad("30000");
+        $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
+        $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
+    }
 //
 //    /*
 //     *  1) expire one category

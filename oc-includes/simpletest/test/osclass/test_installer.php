@@ -21,7 +21,7 @@ class TestOfInstaller extends WebTestCase {
     {
         echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
         flush();
-        $browser = "*firefox";
+        $browser = "*googlechrome";
         $this->selenium = new Testing_Selenium($browser, "http://localhost/");
         $this->selenium->start();
         $this->selenium->setSpeed("150");
@@ -54,9 +54,11 @@ class TestOfInstaller extends WebTestCase {
             // step 2
             $this->assertTrue( $this->selenium->isTextPresent("Database information"), "IS NOT STEP 2 ! (databse information)" );
             $this->selenium->type("username", "root");
+            $this->selenium->type("password", "password");
             $this->selenium->click("css=span");
             $this->selenium->click("createdb");
             $this->selenium->type("admin_username", "root");
+            $this->selenium->type("admin_password", "password");
             $this->selenium->type("tableprefix", "test_");
             $this->selenium->click("submit");
             $this->selenium->waitForPageToLoad("30000");
@@ -70,7 +72,7 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->type("s_passwd", "admin");
             
             $this->selenium->type("webtitle", "test_web_osclass");
-            $this->selenium->type("email", "carlos@osclass.org");
+            $this->selenium->type("email", "nodani@gmail.com");
 
             $this->selenium->type("xpath=//input[@id='t_country']", "spai");
             $this->selenium->keyDown( "xpath=//input[@id='t_country']", "n" ) ;
@@ -78,7 +80,7 @@ class TestOfInstaller extends WebTestCase {
             sleep(2);
             $this->selenium->click("xpath=//div[@id='location']/div[@id='country-box']/div[@id='a_country']/ul/li/a");
             $this->selenium->click("link=Next");
-            $this->selenium->waitForPageToLoad("300000");
+            $this->selenium->waitForPageToLoad("600000");
             // step 4
             $this->assertTrue($this->selenium->isTextPresent("Categories"), "IS NOT STEP 4 ! (categories)");
             $this->selenium->click("link=Check all");
