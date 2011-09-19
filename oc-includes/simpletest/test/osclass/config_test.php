@@ -1,7 +1,7 @@
 <?php
 
 // selenium config
-$browser = "*firefox";
+$browser = "*googlechrome";
 $speed = '150';
 
 // test config

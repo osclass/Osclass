@@ -18,10 +18,10 @@ class Frontend_search extends FrontendTest {
     /*
      * Load items for test propouse.
      */
-    function testLoadItems()
+    /*function testLoadItems()
     {
         // insert items for test
-        require 'itemData.php';
+        require 'ItemData.php';
         $uSettings = new utilSettings();
         $old_reg_user_port          = $uSettings->set_reg_user_post(0);
         $old_items_wait_time        = $uSettings->set_items_wait_time(0);
@@ -45,35 +45,35 @@ class Frontend_search extends FrontendTest {
         $uSettings->set_moderate_items( $old_moderate_items );
         
         unset($uSettings);
-    }
+    }*/
     
     /*
      * Order results by Newly
      */
-//    function testNewly()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->click("link=Newly listed");
-//        $this->selenium->waitForPageToLoad("30000");
-//        // last item added -> TITLE : SPANISH LESSONS
-//        $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
-//        $this->assertTrue(preg_match('/SPANISH LESSONS/i', $text), "Search, order by Newly");
-//    }
-//    
-//    /*
-//     * Order results by Lower price
-//     */
-//    function testLowerPrice()
-//    {
-//        $this->selenium->open( osc_base_url(true) . "?page=search" );
-//        $this->selenium->click("link=Lower price first");
-//        $this->selenium->waitForPageToLoad("30000");
-//        // last item added -> TITLE : German Training Coordination Agent (Barcelona centre) en Barcelona
-//        $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
-//        sleep(4);
-//        $this->assertTrue(preg_match('/German Training Coordination Agent \(Barcelona centre\) en Barcelona/', $text), "Search, order by Lower");
-//    }
-//    
+    function testNewly()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->click("link=Newly listed");
+        $this->selenium->waitForPageToLoad("30000");
+        // last item added -> TITLE : SPANISH LESSONS
+        $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
+        $this->assertTrue(preg_match('/SPANISH LESSONS/i', $text), "Search, order by Newly");
+    }
+    
+    /*
+     * Order results by Lower price
+     */
+    function testLowerPrice()
+    {
+        $this->selenium->open( osc_base_url(true) . "?page=search" );
+        $this->selenium->click("link=Lower price first");
+        $this->selenium->waitForPageToLoad("30000");
+        // last item added -> TITLE : German Training Coordination Agent (Barcelona centre) en Barcelona
+        $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
+        sleep(4);
+        $this->assertTrue(preg_match('/German Training Coordination Agent \(Barcelona centre\) en Barcelona/', $text), "Search, order by Lower");
+    }
+    
 //    /*
 //     * Order results by Higher price
 //     */
@@ -213,7 +213,7 @@ class Frontend_search extends FrontendTest {
     /*
      * Remove all items inserted previously
      */
-    function testRemoveLoadedItems()
+    /*function testRemoveLoadedItems()
     {
         $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
         while( $item ) {
@@ -223,6 +223,6 @@ class Frontend_search extends FrontendTest {
             $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
         }
         
-    }
+    }*/
 }
 ?>
