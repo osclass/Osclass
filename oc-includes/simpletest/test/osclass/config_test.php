@@ -2,7 +2,7 @@
 
 // selenium config
 $browser = "*firefox";
-$speed = '150';
+$speed = '15000';
 
 // test config
 $email      = "carlos+user@osclass.org";
