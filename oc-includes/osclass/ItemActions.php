@@ -824,7 +824,7 @@
             $aItem['regionId']      = Params::getParam('regionId');
             $aItem['city']          = Params::getParam('city');
             $aItem['cityId']        = Params::getParam('cityId');
-            $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : 0;
+            $aItem['price']         = (Params::getParam('price') != '') ? Params::getParam('price') : null;
             $aItem['cityArea']      = Params::getParam('cityArea');
             $aItem['address']       = Params::getParam('address');
             $aItem['currency']      = Params::getParam('currency');

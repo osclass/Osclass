@@ -202,7 +202,7 @@ CREATE TABLE /*TABLE_PREFIX*/t_item (
     dt_pub_date DATETIME NOT NULL,
     dt_mod_date DATETIME NULL,
     f_price FLOAT NULL,
-    i_price BIGINT NOT NULL DEFAULT 0,
+    i_price BIGINT NULL DEFAULT 0,
     fk_c_currency_code CHAR(3) NULL,
     s_contact_name VARCHAR(100) NULL,
     s_contact_email VARCHAR(140) NULL,
