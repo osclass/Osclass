@@ -23,30 +23,28 @@ class Frontend_page extends FrontendTest {
 
         $mPage = new Page();
         if( $mPage->insert($aFields, $aFieldsDescription) ){
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>FRONTEND - Inserted ok (NEW PAGE)-</div>";
-        } else {
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>FRONTEND - Failed insertion ERROR-</div>";
-        }
+            $page = $mPage->findByInternalName('internal name');
+            $pageId =  $page['pk_i_id'];
 
-        $page = $mPage->findByInternalName('internal name');
-        $pageId =  $page['pk_i_id'];
-        
-        // go directly with url
-        $this->selenium->open(osc_base_url(true) . "?page=page&id=$pageId");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue( $this->selenium->isTextPresent("TITLE NEW PAGE") , "Visit page, directly from url.");
-        
-        // go through footer
-        $this->selenium->open(osc_base_url(true));
-        $this->selenium->click("link=TITLE NEW PAGE");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue( $this->selenium->isTextPresent("TITLE NEW PAGE") , "Visit page, through footer link");
+            // go directly with url
+            $this->selenium->open(osc_base_url(true) . "?page=page&id=$pageId");
+            $this->selenium->waitForPageToLoad("30000");
+            $this->assertTrue( $this->selenium->isTextPresent("TITLE NEW PAGE") , "Visit page, directly from url.");
 
-        // delete page
-        if( Page::newInstance()->deleteByPrimaryKey($pageId) ){
-            $this->assertTrue( true , "Delete page.");
+            // go through footer
+            $this->selenium->open(osc_base_url(true));
+            $this->selenium->click("link=TITLE NEW PAGE");
+            $this->selenium->waitForPageToLoad("30000");
+            $this->assertTrue( $this->selenium->isTextPresent("TITLE NEW PAGE") , "Visit page, through footer link");
+
+            // delete page
+            if( Page::newInstance()->deleteByPrimaryKey($pageId) ){
+                $this->assertTrue( true , "Delete page.");
+            } else {
+                $this->assertTrue( false , "Delete page.");
+            }
         } else {
-            $this->assertTrue( false , "Delete page.");
+           $this->assertTrue( false , "Insert new page.");
         }
     }
 }
