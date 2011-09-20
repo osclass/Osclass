@@ -68,5 +68,34 @@ abstract class OCadminTest extends WebTestCase {
         $this->selenium->click("link=Logout");
         $this->selenium->waitForPageToLoad("30000");
     }
+    
+    /**
+     * Do login at backend
+     */
+    function loginCorrect()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->waitForPageToLoad(10000);
+
+        // if you are logged fo log out
+        if( $this->selenium->isTextPresent('Log Out') ){
+            $this->selenium->click('Log Out');
+            $this->selenium->waitForPageToLoad(1000);
+        }
+
+        $this->selenium->type('user', 'testadmin');
+        $this->selenium->type('password', 'password');
+        $this->selenium->click('submit');
+        $this->selenium->waitForPageToLoad(1000);
+
+        if( !$this->selenium->isTextPresent('Log in') ){
+            $this->assertTrue("OK LOGIN");
+        } else {
+            $this->assertFalse("LOGIN FAILED");
+        }
+    }
+
+    
+    
 }
 ?>

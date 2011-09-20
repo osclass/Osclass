@@ -1,0 +1,40 @@
+<?php
+require_once '../../../../oc-load.php';
+
+//require_once('FrontendTest.php');
+
+class OCadmin_administrators extends OCadminTest {
+    
+    function testEditEmailAlert()
+    {
+        $this->loginCorrect() ;
+        $this->editEmailAlert() ;
+    }
+
+    private function editEmailAlert()
+    {
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Emails & Alerts");
+        $this->selenium->click("link=» Manage emails & alerts");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("link=Edit"); // edit first email/alert
+        $this->selenium->waitForPageToLoad("10000");
+
+        $title = $this->selenium->getValue("en_US#s_title");
+        $title .= " UPDATED";
+        $this->selenium->type("en_US#s_title",$title);
+
+        $this->selenium->selectFrame("index=0");
+        $body = $this->selenium->getText("//html/body");
+        $this->selenium->type("xpath=//html/body[@id='tinymce']", "NEW MAIL TEXT".$body);
+        $this->selenium->selectFrame("relative=top");
+
+        $this->selenium->click("//button[@type='submit']");
+        $this->selenium->waitForPageToLoad("30000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The email/alert has been updated"), "Edit emails and alerts");
+    }
+    
+}
+?>
