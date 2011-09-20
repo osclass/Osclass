@@ -16,7 +16,6 @@ class OCadmin_emailsAndAlerts extends OCadminTest {
         $this->selenium->click("link=Emails & Alerts");
         $this->selenium->click("link=» Manage emails & alerts");
         $this->selenium->waitForPageToLoad("10000");
-
         $this->selenium->click("link=Edit"); // edit first email/alert
         $this->selenium->waitForPageToLoad("10000");
         $title = $this->selenium->getValue("en_US#s_title");
@@ -28,7 +27,6 @@ class OCadmin_emailsAndAlerts extends OCadminTest {
         $this->selenium->selectFrame("relative=top");
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
         $this->assertTrue($this->selenium->isTextPresent("The email/alert has been updated"), "Edit emails and alerts");
     }
     

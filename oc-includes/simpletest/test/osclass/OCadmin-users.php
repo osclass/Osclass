@@ -3,7 +3,7 @@ require_once '../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
-class OCadmin_administrators extends OCadminTest {
+class OCadmin_users extends OCadminTest {
     
     
     /*
@@ -11,7 +11,7 @@ class OCadmin_administrators extends OCadminTest {
      */
     function testUserInsert()
     {
-        $this->loginCorrect() ;
+        $this->loginWith() ;
         $this->insertUser() ;
         $this->deleteUser();
     }
@@ -21,7 +21,7 @@ class OCadmin_administrators extends OCadminTest {
      */
     function testUserInsertbyLink()
     {
-        $this->loginCorrect() ;
+        $this->loginWith() ;
         $this->insertUserByLink() ;
         $this->deleteUser();
     }
@@ -31,7 +31,7 @@ class OCadmin_administrators extends OCadminTest {
      */
     public function testUserEdit()
     {
-        $this->loginCorrect() ;
+        $this->loginWith() ;
         $this->insertUser() ;
         $this->editUser();
         $this->deleteUser();
@@ -42,7 +42,7 @@ class OCadmin_administrators extends OCadminTest {
      */
     public function testExtraValidations()
     {
-        $this->loginCorrect() ;
+        $this->loginWith() ;
         $this->insertUser() ;
         $this->extraValidations();
         $this->deleteUser();
@@ -54,7 +54,7 @@ class OCadmin_administrators extends OCadminTest {
      */
     public function testSettings()
     {
-        $this->loginCorrect() ;
+        $this->loginWith() ;
         $this->settings();
     }
 
@@ -263,7 +263,7 @@ class OCadmin_administrators extends OCadminTest {
     }
 
     /*
-     * Cahnge settings (users enabled, validation,...)
+     * Change settings (users enabled, validation,...)
      */
     private function settings()
     {

@@ -62,7 +62,7 @@ class OCadmin_customfields extends OCadminTest
 
     function testCustomOthers()
     {
-        $this->loginCorrect() ;
+        $this->loginWith() ;
 //        $this->noMoreThanOneForm() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
@@ -115,8 +115,43 @@ class OCadmin_customfields extends OCadminTest
 
     function testDeleteCustomFields()
     {
-        $this->loginCorrect() ;
-        $this->deleteAllFields();
+        $this->loginWith() ;
+        
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+        $this->selenium->waitForPageToLoad("1000");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+        
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+        $this->selenium->waitForPageToLoad("1000");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Custom Fields");
+        $this->selenium->waitForPageToLoad("10000");
+        $this->selenium->click("link=» Manage custom fields");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
+        $this->selenium->waitForPageToLoad("1000");
+        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
+        
+        
+        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
+            $this->assertTrue(TRUE,"Delete all field");
+        } 
     }
 
 
@@ -216,46 +251,5 @@ class OCadmin_customfields extends OCadminTest
 
         $this->assertTrue($this->selenium->isTextPresent("A new item has been added"),"Item published" );
     }
-
-    private function deleteAllFields()
-    {
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-        $this->selenium->waitForPageToLoad("1000");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-        
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-        
-        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-        $this->selenium->waitForPageToLoad("1000");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=Custom Fields");
-        $this->selenium->waitForPageToLoad("10000");
-        $this->selenium->click("link=» Manage custom fields");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->click("xpath=//a[text()='Delete' and last()]");
-        $this->selenium->waitForPageToLoad("1000");
-        $this->assertTrue($this->selenium->isTextPresent("Saved"), "Delete field");
-        
-        
-        if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
-            $this->assertTrue(TRUE,"Delete all field");
-        } 
-
-    }
-
 }
 ?>
