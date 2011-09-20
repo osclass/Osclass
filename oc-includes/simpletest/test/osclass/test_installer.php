@@ -54,11 +54,11 @@ class TestOfInstaller extends WebTestCase {
             // step 2
             $this->assertTrue( $this->selenium->isTextPresent("Database information"), "IS NOT STEP 2 ! (databse information)" );
             $this->selenium->type("username", "root");
-            $this->selenium->type("password", "password");
+            $this->selenium->type("password", "");
             $this->selenium->click("css=span");
             $this->selenium->click("createdb");
             $this->selenium->type("admin_username", "root");
-            $this->selenium->type("admin_password", "password");
+            $this->selenium->type("admin_password", "");
             $this->selenium->type("tableprefix", "test_");
             $this->selenium->click("submit");
             $this->selenium->waitForPageToLoad("30000");

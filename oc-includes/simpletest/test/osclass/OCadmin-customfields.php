@@ -3,46 +3,12 @@ require_once '../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
-class OCadmin_administrators extends OCadminTest {
-    
-    /* TESTS */
+class OCadmin_customfields extends OCadminTest 
+{   
     function testCustomAdd()
     {
-        $this->loginCorrect() ;
-        $this->addCustomFields() ;
-    }
-
-    function testCustomEdit()
-    {
-        $this->loginCorrect() ;
-        $this->editCustomFields() ;
-    }
-
-    function testCustomOthers()
-    {
-        $this->loginCorrect() ;
-        $this->noMoreThanOneForm() ;
-        $this->sameField() ;
-    }
-
-    function testCustomOnWebsite()
-    {
-        $this->loginCorrect() ;
-        $this->customOnFrontEnd();
-        $this->customOnAdminPanel();
-
-    }
-
-    function testDeleteCustomFields()
-    {
-        $this->loginCorrect() ;
-        $this->deleteAllFields();
-    }
-
-    /*      PRIVATE FUNCTIONS       */
-
-    private function addCustomFields()
-    {
+        $this->loginWith() ;
+        
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
         $this->selenium->click("link=» Manage custom fields");
@@ -51,40 +17,33 @@ class OCadmin_administrators extends OCadminTest {
         $this->selenium->click("id=button_add");
         $this->selenium->type("field_name", "extra_field_1");
         $this->selenium->select("field_type", "TEXT");
-
         $this->selenium->click("xpath=//span[text()='Advanced options']");
         $this->selenium->type('field_slug','extra_field_1');
-
         $this->selenium->click("id=button_save");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_1"), "Add field");
-
-
         $this->selenium->click("id=button_add");
         $this->selenium->type("field_name", "extra_field_2");
         $this->selenium->select("field_type", "TEXTAREA");
-
         $this->selenium->click("xpath=//span[text()='Advanced options']");
         $this->selenium->type('field_slug','extra_field_2');
-
         $this->selenium->click("id=button_save");
         $this->selenium->waitForPageToLoad("10000");
         $this->assertTrue($this->selenium->isTextPresent("New custom field added"), "Add field");
         $this->assertTrue($this->selenium->isTextPresent("extra_field_2"), "Add field");
-        
     }
 
-    private function editCustomFields()
+    function testCustomEdit()
     {
+        $this->loginwith() ;
+        
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
         $this->selenium->click("link=» Manage custom fields");
         $this->selenium->waitForPageToLoad("10000");
-
         // edit categories,
         $this->selenium->click("link=Edit");
-
         // modificar s_name & type
         $this->selenium->type("xpath=//input[@id='s_name']", "NEW FIELD");
         $this->selenium->select("xpath=//form[@id='field_form']/div/div[2]/select", "TEXTAREA");
@@ -96,14 +55,15 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isChecked("categories[]"), "Check all categories" );
         // uncheck all !
         $this->selenium->click("link=Uncheck all");
-        
         $this->selenium->click("xpath=//button[@type='submit']");
         sleep(2);
         $this->assertTrue($this->selenium->isTextPresent("Saved"), "Edit field");
     }
 
-    private function noMoreThanOneForm()
+    function testCustomOthers()
     {
+        $this->loginCorrect() ;
+//        $this->noMoreThanOneForm() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
         $this->selenium->click("link=» Manage custom fields");
@@ -118,10 +78,7 @@ class OCadmin_administrators extends OCadminTest {
         sleep(2);
         $var = (int)$this->selenium->getXpathCount("//form[@id='field_form']");
         $this->assertTrue( ( 1 == 1) , "Form is showed more than one time");
-    }
-
-    private function sameField()
-    {
+//        $this->sameField() ;
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Custom Fields");
         $this->selenium->click("link=» Manage custom fields");
@@ -148,9 +105,28 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("Sorry, you already have one field with that name"), "Add field");
     }
 
+    function testCustomOnWebsite()
+    {
+        $this->loginWith() ;
+        $this->customOnFrontEnd();
+        $this->customOnAdminPanel();
+
+    }
+
+    function testDeleteCustomFields()
+    {
+        $this->loginCorrect() ;
+        $this->deleteAllFields();
+    }
+
+
+
+
+
     private function customOnFrontEnd()
     {
         $uSettings = new utilSettings();
+        
         $bool_reg_user_post  = $uSettings->set_reg_user_post(0);
         $bool_moderate_items = $uSettings->set_moderate_items(-1);
         // check if custom fields appears at website
@@ -190,11 +166,13 @@ class OCadmin_administrators extends OCadminTest {
         
         $this->assertTrue($this->selenium->isTextPresent("Your item has been published","Item published") );
         // volver a dejar reg_user_post flag en su estado original
-        $bool_reg_user_post  = $uSettings->set_reg_user_post($bool_reg_user_post);
-        $bool_moderate_items = $uSettings->set_moderate_items($bool_moderate_items);
+        $uSettings->set_reg_user_post($bool_reg_user_post);
+        $uSettings->set_moderate_items($bool_moderate_items);
 
         // remove item
         Item::newInstance()->delete( array('s_contact_email' => 'foobar@mail.com') ) ;
+        
+        unset($uSettings);
     }
 
     private function customOnAdminPanel()

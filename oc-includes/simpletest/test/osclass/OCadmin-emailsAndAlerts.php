@@ -3,22 +3,15 @@ require_once '../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
-class OCadmin_administrators extends OCadminTest {
+class OCadmin_emailsAndAlerts extends OCadminTest {
     
     /*
      * Edit and email / alert
      */
     function testEditEmailAlert()
     {
-        $this->loginCorrect() ;
-        $this->editEmailAlert() ;
-    }
-
-    /*
-     * Edit and email / alert
-     */
-    private function editEmailAlert()
-    {
+        $this->loginWith() ;
+        
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=Emails & Alerts");
         $this->selenium->click("link=» Manage emails & alerts");
@@ -26,16 +19,13 @@ class OCadmin_administrators extends OCadminTest {
 
         $this->selenium->click("link=Edit"); // edit first email/alert
         $this->selenium->waitForPageToLoad("10000");
-
         $title = $this->selenium->getValue("en_US#s_title");
         $title .= " UPDATED";
         $this->selenium->type("en_US#s_title",$title);
-
         $this->selenium->selectFrame("index=0");
         $body = $this->selenium->getText("//html/body");
         $this->selenium->type("xpath=//html/body[@id='tinymce']", "NEW MAIL TEXT".$body);
         $this->selenium->selectFrame("relative=top");
-
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
 
