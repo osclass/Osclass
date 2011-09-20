@@ -153,7 +153,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         flush();
     }
 
-        /*      PRIVATE FUNCTIONS       */
+    /*      PRIVATE FUNCTIONS       */
     private function loginCorrect()
     {
         $this->selenium->open( osc_admin_base_url(true) );
