@@ -3,8 +3,17 @@ error_reporting(E_ALL);
 class utilSettings {
  
     public function __construct() {
-//        echo "contruct utilSettings<br>";flush();
     }
+    
+    //oc-admin
+    public function findValueByName($name)
+    {
+        $value = Preference::newInstance()->findValueByName($name);
+        return $value;
+    }
+    
+    
+    // frontend
     
     /**
      * Set time in seconds, The user needs to wait $value

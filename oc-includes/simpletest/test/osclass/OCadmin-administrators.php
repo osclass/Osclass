@@ -1,243 +1,63 @@
 <?php
-require_once('../../autorun.php');
-require_once('../../web_tester.php');
-require_once('../../reporter.php');
-
-// LOAD OSCLASS
 require_once '../../../../oc-load.php';
-require_once LIB_PATH . 'Selenium.php';
 
-class TestOfAdminGeneralSettings extends WebTestCase {
+//require_once('FrontendTest.php');
 
-    private $selenium;
-
-    function setUp()
-    {
-        $conn = getConnection();
-        $conn->osc_dbExec(sprintf("INSERT INTO `%st_admin` (`s_name` ,`s_username` ,`s_password` ,`s_secret` ,`s_email`) VALUES ('Test Admin','testadmin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8','mvqdnrpt','testadmin@test.net')", DB_TABLE_PREFIX));
-
-        echo "<br><div style='background-color: Wheat; color: black;'>init test</div>";
-
-        $browser = "*firefox";
-        $this->selenium = new Testing_Selenium($browser, "http://localhost/");
-        $this->selenium->start();
-        $this->selenium->setSpeed("150");
-    }
-
-    function tearDown()
-    {
-        $this->selenium->stop();
-        $admin = Admin::newInstance()->findByEmail('testadmin@test.net');
-        Admin::newInstance()->delete(array('pk_i_id' =>$admin['pk_i_id']));
-        echo "<div style='background-color: Wheat; color: black;'>end test</div>";
-        flush();
-    }
+class OCadmin_generalSettings extends OCadminTest {
     
-    /*           TESTS          */
-    function testCronTab()
+    /*
+     * Login into oc-admin.
+     * GeneralSettings->Cron system.
+     * - switch inputs.
+     * Logout.
+     */
+
+    function testCrontab()
     {
-        echo "<div style='background-color: green; color: white;'><h2>testCronTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCronTab - ON/OFF CRON</div>";
-        $this->cronTab() ;
-        flush();
-    }
-
-    function testMediaTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testMediaTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMediaTab - MEDIA SETTINGS</div>";
-        $this->mediaTab() ;
-        flush();
-    }
-
-    function testMailServerTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testMailServerTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMailServerTab - MAIL SERVER SETTINGS</div>";
-        $this->mailServer() ;
-        flush();
-    }
-
-    function testSpamAndBotsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testSpamAndBotsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testSpamAndBotsTab - SPAM AND BOTS SETTINGS</div>";
-        $this->spamAndBots() ;
-        flush();
-    }
-
-    function testPermalinksTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testPermalinksTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testPermalinksTab - PERMALINKS SETTINGS</div>";
-        $this->permalinks() ;
-        flush();
-    }
-
-    function testContactTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testContactTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testContactTab - CONTACT SETTINGS</div>";
-        $this->contact() ;
-        flush();
-    }
-
-    function testCommentsTab()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCommentsTab</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCommentsTab - COMMENTS SETTINGS</div>";
-        $this->comments() ;
-        flush();
-    }
-
-    function testGeneralSettings()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testGeneralSettings</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testGeneralSettings - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testGeneralSettings - GENERAL SETTINGS </div>";
-        $this->generalSettings() ;
-        flush();
-    }
-
-    function testLocations()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testLocations</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOGIN </div>";
-        $this->loginCorrect();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD FROM GEO & EDIT & DELETE </div>";
-        $this->locationsGEO();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - ADD NEW GEO & EDIT & DELETE </div>";
-        $this->locationsNEW();
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testLocations - LOCATIONS SETTINGS - (ADD FORCE ERROR) </div>";
-        $this->locationsNEWForceError();
-        flush();
-    }
-
-    function testCurrencies()
-    {
-        echo "<div style='background-color: green; color: white;'><h2>testCurrencies</h2></div>";
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - LOGIN </div>";
-        $this->loginCorrect() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD & EDIT & DELETE CURRENCIES SETTINGS </div>";
-        $this->currency() ;
-        flush();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testCurrencies - ADD CURRENCIES SETTINGS (INSERT TWICE) </div>";
-        $this->addCurrencyTwice() ;
-        flush();
-    }
-
-    /*      PRIVATE FUNCTIONS       */
-    private function loginCorrect()
-    {
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->waitForPageToLoad(10000);
-
-        // if you are logged fo log out
-        if( $this->selenium->isTextPresent('Log Out') ){
-            $this->selenium->click('Log Out');
-            $this->selenium->waitForPageToLoad(1000);
-        }
-
-        $this->selenium->type('user', 'testadmin');
-        $this->selenium->type('password', 'password');
-        $this->selenium->click('submit');
-        $this->selenium->waitForPageToLoad(1000);
-
-        if( !$this->selenium->isTextPresent('Log in') ){
-            $this->assertTrue("todo bien");
-        } else {
-            $this->assertFalse("can't loggin");
-        }
-    }
-
-    private function categories()
-    {
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Categories");
-        $this->selenium->waitForPageToLoad("10000");
+        $uSettings = new utilSettings();
         
+        $this->loginWith();
+        $this->assertTrue(!$this->selenium->isTextPresent('Log in'), "Login oc-admin.");
         
-        
-        $selectable_parent_categories = Preference::newInstance()->findValueByName('selectable_parent_categories');
-        if($selectable_parent_categories == 1){ $selectable_parent_categories = 'on';} else { $selectable_parent_categories = 'off'; }
-        
-        $this->selenium->click("selectable_parent_categories");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        
-        $this->assertTrue($this->selenium->isTextPresent("Categories' settings have been updated"), "Can't update categories settings. ERROR");
-        if($selectable_parent_categories == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue("selectable_parent_categories")   , 'off');
-        } else {
-            $this->assertEqual( $this->selenium->getValue("selectable_parent_categories")   , 'on');
-        }
-        
-        $this->selenium->click("selectable_parent_categories");
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("30000");
-        
-        $this->assertTrue($this->selenium->isTextPresent("Categories' settings have been updated"), "Can't update categories settings. ERROR");
-        $this->assertEqual( $this->selenium->getValue("selectable_parent_categories")   , $selectable_parent_categories );
-    }
-    
-    private function cronTab()
-    {
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Cron system");
         $this->selenium->waitForPageToLoad("10000");
         
-        $cron = Preference::newInstance()->findValueByName('auto_cron');
+        $cron = $uSettings->findValueByName('auto_cron');
         if($cron == 1){ $cron = 'on';} else { $cron = 'off'; }
-
-        $this->assertEqual($cron, $this->selenium->getValue("auto_cron"), "DB Value != BackOffice value");
+        
+        $this->assertEqual($cron, $this->selenium->getValue("auto_cron"), "Cron tab, check values/ preference values.");
 
         $this->selenium->click("auto_cron");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("30000");
-
-        $cron = Preference::newInstance()->findValueByName('auto_cron');
+        
+        $cron = $uSettings->findValueByName('auto_cron');
         if($cron == 1){ $cron = 'on';} else { $cron = 'off'; }
         
-        $this->assertEqual($cron, $this->selenium->getValue("auto_cron"), "DB Value != BackOffice value");
+        $this->assertEqual($cron, $this->selenium->getValue("auto_cron"), "Cron tab, check values/ preference values.");
+        
+        unset($uSettings);
     }
-
-    private function mediaTab()
+    
+    /*
+     * Login oc-admin
+     * Update all inputs and check if change has been saved, update old configuration and check again.
+     * Logout
+     */
+    function testMediatab()
     {
-        $maxSizeKb      = Preference::newInstance()->findValueByName('maxSizeKb');
-        $allowedExt     = Preference::newInstance()->findValueByName('allowedExt');
-        $dimThumbnail   = Preference::newInstance()->findValueByName('dimThumbnail');
-        $dimPreview     = Preference::newInstance()->findValueByName('dimPreview');
-        $dimNormal      = Preference::newInstance()->findValueByName('dimNormal');
-        $keep_original_image   = Preference::newInstance()->findValueByName('keep_original_image');
+        $uSettings = new utilSettings();
+        
+        $this->loginWith();
+        
+        $maxSizeKb      = $uSettings->findValueByName('maxSizeKb');
+        $allowedExt     = $uSettings->findValueByName('allowedExt');
+        $dimThumbnail   = $uSettings->findValueByName('dimThumbnail');
+        $dimPreview     = $uSettings->findValueByName('dimPreview');
+        $dimNormal      = $uSettings->findValueByName('dimNormal');
+        $keep_original_image   = $uSettings->findValueByName('keep_original_image');
         if($keep_original_image == 1){ $keep_original_image = 'on';} else { $keep_original_image = 'off'; }
 
         $this->selenium->open( osc_admin_base_url(true) );
@@ -245,15 +65,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("link=» Media");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertEqual($maxSizeKb   , '2048');
-        $this->assertEqual($allowedExt  , 'png,gif,jpg');
-        $this->assertEqual($dimThumbnail, '240x200');
-        $this->assertEqual($dimPreview  , '480x340');
-        $this->assertEqual($dimNormal   , '640x480');
-        $this->assertEqual($keep_original_image, 'on');
-
         // change values to some test-defined ones
-
         $this->selenium->type('maxSizeKb'   , '500000');
         $this->selenium->type('allowedExt'  , 'ext,deg,osc');
         $this->selenium->type('dimThumbnail', '10x10');
@@ -264,14 +76,14 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Can't update media settings. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
-        $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500000');
-        $this->assertEqual( $this->selenium->getValue('allowedExt')     , 'ext,deg,osc');
-        $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , '10x10');
-        $this->assertEqual( $this->selenium->getValue('dimPreview')     , '50x50');
-        $this->assertEqual( $this->selenium->getValue('dimNormal')      , '100x100');
-        $this->assertEqual( $this->selenium->getValue('keep_original_image'), 'off');
+        $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , '500000', 'Media tab, check maxSizeKb');
+        $this->assertEqual( $this->selenium->getValue('allowedExt')     , 'ext,deg,osc', 'Media tab, check allowedExt ext,deg,osc');
+        $this->assertEqual( $this->selenium->getValue('dimThumbnail')   , '10x10', 'Media tab, check dimThumnai 10x10');
+        $this->assertEqual( $this->selenium->getValue('dimPreview')     , '50x50' , 'Media tab, check dimPreview 50x50');
+        $this->assertEqual( $this->selenium->getValue('dimNormal')      , '100x100', 'Media tab, check dimNormal 100x100');
+        $this->assertEqual( $this->selenium->getValue('keep_original_image'), 'off', 'Media tab, check keep_original_image');
 
         $this->selenium->type('maxSizeKb'   , $maxSizeKb);
         $this->selenium->type('allowedExt'  , $allowedExt);
@@ -283,7 +95,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Can't update media settings. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("Media config has been updated"), "Media tab, update.");
 
         $this->assertEqual( $this->selenium->getValue("maxSizeKb")      , $maxSizeKb);
         $this->assertEqual( $this->selenium->getValue('allowedExt')     , $allowedExt);
@@ -292,18 +104,28 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('dimNormal')      , $dimNormal);
         $this->assertEqual( $this->selenium->getValue('keep_original_image'), 'on');
     }
-
-    private function mailServer()
+    
+    /*
+     * Login oc-admin
+     * General Settings -> Mail server
+     * update configuration and check and set old configuration again and check.
+     * Logout.
+     */
+    function testMailServer()
     {
+        $uSettings = new utilSettings();
+        
         $pref = array();
-        $pref['mailserver_type']        = Preference::newInstance()->findValueByName('mailserver_type');
-        $pref['mailserver_host']        = Preference::newInstance()->findValueByName('mailserver_host');
-        $pref['mailserver_port']        = Preference::newInstance()->findValueByName('mailserver_port');
-        $pref['mailserver_username']    = Preference::newInstance()->findValueByName('mailserver_username');
-        $pref['mailserver_password']    = Preference::newInstance()->findValueByName('mailserver_password');
-        $pref['mailserver_ssl']         = Preference::newInstance()->findValueByName('mailserver_ssl');
-        $pref['mailserver_auth']        = Preference::newInstance()->findValueByName('mailserver_auth');
+        $pref['mailserver_type']        = $uSettings->findValueByName('mailserver_type');
+        $pref['mailserver_host']        = $uSettings->findValueByName('mailserver_host');
+        $pref['mailserver_port']        = $uSettings->findValueByName('mailserver_port');
+        $pref['mailserver_username']    = $uSettings->findValueByName('mailserver_username');
+        $pref['mailserver_password']    = $uSettings->findValueByName('mailserver_password');
+        $pref['mailserver_ssl']         = $uSettings->findValueByName('mailserver_ssl');
+        $pref['mailserver_auth']        = $uSettings->findValueByName('mailserver_auth');
         if($pref['mailserver_auth'] == 1){ $pref['mailserver_auth'] = 'on';} else { $pref['mailserver_auth'] = 'off'; }
+        
+        $this->loginWith();
 
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
@@ -321,7 +143,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent( 'Mail server configuration has changed') , "Can't update mail server configuration. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent( 'Mail server configuration has changed') , "Mail server configuration.");
 
         $this->assertEqual( $this->selenium->getValue("mailserver_type")     , 'custom');
         $this->assertEqual( $this->selenium->getValue('mailserver_host')     , 'mailserver.test.net');
@@ -342,7 +164,7 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent( 'Mail server configuration has changed') , "Can't update mail server configuration. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent( 'Mail server configuration has changed') , "Mail server configuration.");
 
         $this->assertEqual( $this->selenium->getValue("mailserver_type")     , $pref['mailserver_type']);
         $this->assertEqual( $this->selenium->getValue('mailserver_host')     , $pref['mailserver_host']);
@@ -351,16 +173,27 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertEqual( $this->selenium->getValue('mailserver_password') , $pref['mailserver_password']);
         $this->assertEqual( $this->selenium->getValue('mailserver_ssl')      , $pref['mailserver_ssl']);
         $this->assertEqual( $this->selenium->getValue('mailserver_auth')     , $pref['mailserver_auth']);
+        
         unset($pref);
+        unset($uSettings);
     }
-
-    private function spamAndBots()
+    
+    /*
+     * Login oc-admin
+     * General settings -> Spam and bots
+     * Set akismet, recaptcha, check modifications
+     * Logout
+     */
+    function testSpamAndBots()
     {
+        $uSettings = new utilSettings();
+        
         $pref = array();
-        $pref['akismet_key']        = Preference::newInstance()->findValueByName('akismet_key');
-        $pref['recaptchaPrivKey']   = Preference::newInstance()->findValueByName('recaptchaPrivKey');
-        $pref['recaptchaPubKey']    = Preference::newInstance()->findValueByName('recaptchaPubKey');
+        $pref['akismet_key']        = $uSettings->findValueByName('akismet_key');
+        $pref['recaptchaPrivKey']   = $uSettings->findValueByName('recaptchaPrivKey');
+        $pref['recaptchaPubKey']    = $uSettings->findValueByName('recaptchaPubKey');
 
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Spam and bots");
@@ -369,120 +202,146 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->type('akismetKey'          , '1234567890');
         $this->selenium->type('recaptchaPrivKey'    , '1234567890');
         $this->selenium->type('recaptchaPubKey'     , '1234567890');
-
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Akismet and reCAPTCHA have been updated") ,"Can't update Spam and bots. ERROR");
+        $this->assertEqual( $this->selenium->getValue('akismetKey')         , '1234567890', 'Spam&Bots, akismet key');
+        $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , '1234567890', 'Spam&Bots, recaptcha private key');
+        $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , '1234567890', 'Spam&Bots, recaptcha public key');
 
-        $this->assertEqual( $this->selenium->getValue('akismetKey')         , '1234567890');
-        $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , '1234567890');
-        $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , '1234567890');
-
-        $this->selenium->type('akismetKey'         , $pref['akismet_key']);
+        $this->selenium->type('akismetKey'          , $pref['akismet_key']);
         $this->selenium->type('recaptchaPrivKey'    , $pref['recaptchaPrivKey']);
         $this->selenium->type('recaptchaPubKey'     , $pref['recaptchaPubKey']);
-
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue( $this->selenium->isTextPresent("Akismet and reCAPTCHA have been updated") ,"Can't update Spam and bots. ERROR");
-
-        $this->assertEqual( $this->selenium->getValue('akismetKey')         , $pref['akismet_key']);
-        $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , $pref['recaptchaPrivKey']);
-        $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , $pref['recaptchaPubKey']);
+        $this->assertEqual( $this->selenium->getValue('akismetKey')         , $pref['akismet_key'] , 'Spam&Bots, akismet key');
+        $this->assertEqual( $this->selenium->getValue('recaptchaPrivKey')   , $pref['recaptchaPrivKey'] , 'Spam&Bots, recaptcha private key');
+        $this->assertEqual( $this->selenium->getValue('recaptchaPubKey')    , $pref['recaptchaPubKey'] , 'Spam&Bots, recaptcha public key');
+        
+        unset($pref);
+        unset($uSettings);
     }
-
-    private function permalinks()
+    
+    /*
+     * Login oc-admin
+     * General Settings -> Permalinks
+     * Set rewrite, and check
+     * Logout
+     */
+    function testPermalinks()
     {
+        $uSettings = new utilSettings();
+
         $pref = array();
-        $pref['rewrite_enabled'] = Preference::newInstance()->findValueByName('rewriteEnabled') ;
+        $pref['rewrite_enabled'] = $uSettings->findValueByName('rewriteEnabled') ;
         if($pref['rewrite_enabled'] == 1){ $pref['rewrite_enabled'] = 'on';} else { $pref['rewrite_enabled'] = 'off'; }
 
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Permalinks");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] ) ;
+        $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] , 'Permalinks, check.' ) ;
 
         $this->selenium->click("xpath=//input[@id='rewrite_enabled']");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
         if( $pref['rewrite_enabled'] == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), 'off');
+            $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), 'off','Permalinks, check.');
         }else{
-            $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), 'on');
+            $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), 'on' ,'Permalinks, check.');
         }
 
         $this->selenium->click("xpath=//input[@id='rewrite_enabled']");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] ) ;
+        $this->assertEqual( $this->selenium->getValue('rewrite_enabled'), $pref['rewrite_enabled'] , 'Permalinks, check.') ;
+        
+        unset($pref);
+        unset($uSettings);
     }
-
-    private function contact()
+    
+    /*
+     * Login oc-admin
+     * GeneralSettings -> contact
+     * set enabled attachment, check
+     * Logout
+     */
+    function testContact()
     {
+        $uSettings = new utilSettings();
+        
         $pref = array();
         $pref['contact_attachment'] = Preference::newInstance()->findValueByName('contact_attachment') ;
         if($pref['contact_attachment'] == 1){ $pref['contact_attachment'] = 'on';} else { $pref['contact_attachment'] = 'off'; }
 
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Contact");
         $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] ) ;
+        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] , 'Contact, check.') ;
 
         $this->selenium->click("enabled_attachment");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") ,"Can't update contact Attachment. ERROR");
+        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") , 'Contact, check.');
 
         if( $pref['contact_attachment'] == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'off', 'Contact, check.' ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue('enabled_attachment'), 'on', 'Contact, check.' ) ;
         }
 
         $this->selenium->click("enabled_attachment");
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") ,"Can't update contact Attachment. ERROR");
-
-        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'] ) ;
+        $this->assertTrue( $this->selenium->isTextPresent("Contact configuration has been updated") , 'Contact, check.');
+        $this->assertEqual( $this->selenium->getValue('enabled_attachment'), $pref['contact_attachment'], 'Contact, check.' ) ;
+        
+        unset($uSettings);
+        unset($pref);
     }
 
-    private function comments()
+    /*
+     * Login oc-admin
+     * GeneralSettings -> Comments
+     * update settings, and check
+     * Logout
+     * 
+     */
+    function testComments()
     {
+        $uSettings = new utilSettings();
         $pref = array();
-        $pref['enabled_comments']   = Preference::newInstance()->findValueByName('enabled_comments') ;
+        
+        $pref['enabled_comments']   = $uSettings->findValueByName('enabled_comments') ;
+        $pref['moderate_comments']  = $uSettings->findValueByName('moderate_comments') ;
+        $pref['notify_new_comment'] = $uSettings->findValueByName('notify_new_comment') ;
+        $pref['reg_user_post_comments'] = $uSettings->findValueByName('reg_user_post_comments') ;
+        $pref['num_moderate_comments'] = $uSettings->findValueByName('moderate_comments');
+        $pref['comments_per_page']     = $uSettings->findValueByName('comments_per_page');
+        
         if($pref['enabled_comments'] == 1){ $pref['enabled_comments'] = 'on';} else { $pref['enabled_comments'] = 'off'; }
-
-        $pref['moderate_comments']  = Preference::newInstance()->findValueByName('moderate_comments') ;
         if($pref['moderate_comments'] < 0){ $pref['moderate_comments'] = 'off';} else { $pref['moderate_comments'] = 'on'; }
-        
-        $pref['notify_new_comment'] = Preference::newInstance()->findValueByName('notify_new_comment') ;
         if($pref['notify_new_comment'] == 1){ $pref['notify_new_comment'] = 'on';} else { $pref['notify_new_comment'] = 'off'; }
-
-        $pref['reg_user_post_comments'] = Preference::newInstance()->findValueByName('reg_user_post_comments') ;
         if($pref['reg_user_post_comments'] == 1){ $pref['reg_user_post_comments'] = 'on';} else { $pref['reg_user_post_comments'] = 'off'; }
-        
-        $pref['num_moderate_comments'] = Preference::newInstance()->findValueByName('moderate_comments');
-        $pref['comments_per_page']     = Preference::newInstance()->findValueByName('comments_per_page');
 
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("xpath=(//a[text()='» Comments'])[position()=2]");
         $this->selenium->waitForPageToLoad("10000");
-
         $this->selenium->click("enabled_comments");
         $this->selenium->click("reg_user_post_comments");
-        
         if( !$pref['moderate_comments'] == 'on' ) {
             $this->selenium->click("moderate_comments");
         }
@@ -493,32 +352,31 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Can't update comments settings. ERROR");
-
+        $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Comments settings, check.");
         if( $pref['enabled_comments'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'off' , "Comments settings, check." ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue('enabled_comments'), 'on' , "Comments settings, check." ) ;
         }
 
         if( $pref['reg_user_post_comments'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('reg_user_post_comments'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue('reg_user_post_comments'), 'off' , "Comments settings, check." ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('reg_user_post_comments'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue('reg_user_post_comments'), 'on' , "Comments settings, check." ) ;
         }
         
         if(! $pref['moderate_comments'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('moderate_comments'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue('moderate_comments'), 'on' , "Comments settings, check." ) ;
         }
 
         if( $pref['notify_new_comment'] == 'on' ){
-            $this->assertEqual( $this->selenium->getValue('notify_new_comment'), 'off' ) ;
+            $this->assertEqual( $this->selenium->getValue('notify_new_comment'), 'off' , "Comments settings, check." ) ;
         } else {
-            $this->assertEqual( $this->selenium->getValue('notify_new_comment'), 'on' ) ;
+            $this->assertEqual( $this->selenium->getValue('notify_new_comment'), 'on' , "Comments settings, check." ) ;
         }
         
-        $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Not saved ok, num comments are 10." );
-        $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Not saved ok, num comments are 10." );
+        $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Comments settings, check. Not saved ok, num comments are 10." );
+        $this->assertTrue($this->selenium->getValue("num_moderate_comments") == 10 , "Comments settings, check. Not saved ok, num comments are 10." );
 
         $this->selenium->click("enabled_comments");
         $this->selenium->click("reg_user_post_comments");
@@ -531,139 +389,19 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
         $this->assertTrue( $this->selenium->isTextPresent("Comments' settings have been updated") , "Can't update comments settings. ERROR");
         
-        $this->assertEqual( $this->selenium->getValue('enabled_comments')    ,  $pref['enabled_comments'] ) ;
-        $this->assertEqual( $this->selenium->getValue('reg_user_post_comments')    ,  $pref['reg_user_post_comments'] ) ;
-        $this->assertEqual( $this->selenium->getValue('notify_new_comment')  ,  $pref['notify_new_comment'] ) ;
-        $this->assertEqual( $this->selenium->getValue('num_moderate_comments')  ,  $pref['num_moderate_comments'] ) ;
-        $this->assertEqual( $this->selenium->getValue('comments_per_page')  ,  $pref['comments_per_page'] ) ;
-    }
-
-    private function getPreferencesItems()
-    {
-        $pref = array();
-        $pref['enabled_recaptcha_items']        = Preference::newInstance()->findValueByName('enabled_recaptcha_items') ;
-        $pref['enabled_item_validation']        = Preference::newInstance()->findValueByName('enabled_item_validation') ;
-        $pref['logged_user_item_validation']    = Preference::newInstance()->findValueByName('logged_user_item_validation') ;
-        $pref['reg_user_post']                  = Preference::newInstance()->findValueByName('reg_user_post') ;
-        $pref['notify_new_item']                = Preference::newInstance()->findValueByName('notify_new_item') ;
-        $pref['notify_contact_item']            = Preference::newInstance()->findValueByName('notify_contact_item') ;
-        $pref['notify_contact_friends']         = Preference::newInstance()->findValueByName('notify_contact_friends') ;
-        $pref['enableField#f_price@items']      = Preference::newInstance()->findValueByName('enableField#f_price@items') ;
-        $pref['enableField#images@items']       = Preference::newInstance()->findValueByName('enableField#images@items') ;
+        $this->assertEqual( $this->selenium->getValue('enabled_comments')       ,  $pref['enabled_comments']         , "Comments settings, check.") ;
+        $this->assertEqual( $this->selenium->getValue('reg_user_post_comments') ,  $pref['reg_user_post_comments']   , "Comments settings, check.") ;
+        $this->assertEqual( $this->selenium->getValue('notify_new_comment')     ,  $pref['notify_new_comment']       , "Comments settings, check.") ;
+        $this->assertEqual( $this->selenium->getValue('num_moderate_comments')  ,  $pref['num_moderate_comments']    , "Comments settings, check.") ;
+        $this->assertEqual( $this->selenium->getValue('comments_per_page')      ,  $pref['comments_per_page']        , "Comments settings, check.") ;
         
-        $pref['num_moderate_items']             = Preference::newInstance()->findValueByName('moderate_items') ;
-        $pref['moderate_items']                 = Preference::newInstance()->findValueByName('moderate_items') ;
-        $pref['items_wait_time']                = Preference::newInstance()->findValueByName('items_wait_time') ;
-
-        if($pref['enabled_recaptcha_items'] == 1){  $pref['enabled_recaptcha_items'] = 'on'; }
-        else {                                      $pref['enabled_recaptcha_items'] = 'off'; }
-        if($pref['reg_user_post'] == 1){            $pref['reg_user_post']          = 'on'; }
-        else {                                      $pref['reg_user_post']          = 'off'; }
-        if($pref['notify_new_item'] == 1){          $pref['notify_new_item']        = 'on';}
-        else {                                      $pref['notify_new_item']        = 'off'; }
-        if($pref['notify_contact_item'] == 1){      $pref['notify_contact_item']    = 'on';}
-        else {                                      $pref['notify_contact_item']    = 'off'; }
-        if($pref['notify_contact_friends'] == 1){   $pref['notify_contact_friends'] = 'on';}
-        else {                                      $pref['notify_contact_friends'] = 'off'; }
-        if($pref['enableField#f_price@items'] == 1){$pref['enableField#f_price@items'] = 'on';}
-        else {                                      $pref['enableField#f_price@items'] = 'off'; }
-        if($pref['enableField#images@items'] == 1){ $pref['enableField#images@items'] = 'on';}
-        else {                                      $pref['enableField#images@items'] = 'off'; }
-        if($pref['logged_user_item_validation'] == 1){  $pref['logged_user_item_validation'] = 'on';}
-        else {                                          $pref['logged_user_item_validation'] = 'off'; }
-
-        return $pref;
+        unset($pref);
+        unset($uSettings);
     }
     
-    private function items()
-    {
-        $pref = $this->getPreferencesItems();
-
-        $this->selenium->open( osc_admin_base_url(true) );
-        $this->selenium->click("link=General settings");
-        $this->selenium->click("link=» Items");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->selenium->click("enabled_recaptcha_items");
-        if( $pref['moderate_items'] == -1) {
-            $this->selenium->click("moderate_items");
-        }
-        
-        $this->selenium->type("num_moderate_items",'111');
-        
-        $this->selenium->type("items_wait_time", '120' );
-        
-        $this->selenium->click("logged_user_item_validation");
-        $this->selenium->click("reg_user_post");
-        $this->selenium->click("notify_new_item");
-        $this->selenium->click("notify_contact_item");
-        $this->selenium->click("notify_contact_friends");
-        $this->selenium->click("enableField#f_price@items");
-        $this->selenium->click("enableField#images@items");
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Items' settings have been updated") , "Can't update items settings. ERROR");
-        
-        if( $pref['enabled_item_validation'] == 'on' ) {
-            $this->assertEqual( $this->selenium->getValue('num_moderate_items'), '111' ) ;
-        }
-        $this->assertEqual( $this->selenium->getValue('items_wait_time'), '120' ) ;
-        if( $pref['enabled_recaptcha_items'] == 'on' ){     $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items'), 'on' ) ;}
-        if( $pref['logged_user_item_validation'] == 'on' ){ $this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('logged_user_item_validation'), 'on' ) ;}
-        if( $pref['reg_user_post'] == 'on' ){               $this->assertEqual( $this->selenium->getValue('reg_user_post'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('reg_user_post'), 'on' ) ;}
-        if( $pref['notify_new_item'] == 'on' ){             $this->assertEqual( $this->selenium->getValue('notify_new_item'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('notify_new_item'), 'on' ) ;}
-        if( $pref['notify_contact_item'] == 'on' ){         $this->assertEqual( $this->selenium->getValue('notify_contact_item'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('notify_contact_item'), 'on' ) ;}
-        if( $pref['notify_contact_friends'] == 'on' ){      $this->assertEqual( $this->selenium->getValue('notify_contact_friends'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('notify_contact_friends'), 'on' ) ;}
-        if( $pref['enableField#f_price@items'] == 'on' ){   $this->assertEqual( $this->selenium->getValue('enableField#f_price@items'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('enableField#f_price@items'), 'on' ) ;}
-        if( $pref['enableField#images@items'] == 'on' ){    $this->assertEqual( $this->selenium->getValue('enableField#images@items'), 'off' ) ;
-        } else {                                            $this->assertEqual( $this->selenium->getValue('enableField#images@items'), 'on' ) ;}
-
-        $this->selenium->click("enabled_recaptcha_items");
-        $this->selenium->click("logged_user_item_validation");
-        $this->selenium->click("reg_user_post");
-        $this->selenium->click("notify_new_item");
-        $this->selenium->click("notify_contact_item");
-        $this->selenium->click("notify_contact_friends");
-        $this->selenium->click("enableField#f_price@items");
-        $this->selenium->click("enableField#images@items");
-        if( $pref['moderate_items'] == -1) {
-            $this->selenium->type("num_moderate_items", $pref['num_moderate_items'] );
-            $this->selenium->click("moderate_items");
-        }
-        $this->selenium->type("num_moderate_items", $pref['num_moderate_items'] );
-        $this->selenium->type("items_wait_time", $pref['items_wait_time'] );
-
-        $this->selenium->click("//input[@type='submit']");
-        $this->selenium->waitForPageToLoad("10000");
-
-        $this->assertTrue( $this->selenium->isTextPresent("Items' settings have been updated") , "Can't update items settings. ERROR");
-
-        $this->assertEqual( $this->selenium->getValue('enabled_recaptcha_items')        , $pref['enabled_recaptcha_items']) ;
-        $this->assertEqual( $this->selenium->getValue('logged_user_item_validation')    , $pref['logged_user_item_validation'] ) ;
-        $this->assertEqual( $this->selenium->getValue('reg_user_post')                  , $pref['reg_user_post'] ) ;
-        $this->assertEqual( $this->selenium->getValue('notify_new_item')                , $pref['notify_new_item'] ) ;
-        $this->assertEqual( $this->selenium->getValue('notify_contact_item')            , $pref['notify_contact_item'] ) ;
-        $this->assertEqual( $this->selenium->getValue('notify_contact_friends')         , $pref['notify_contact_friends'] ) ;
-        $this->assertEqual( $this->selenium->getValue('enableField#f_price@items')      , $pref['enableField#f_price@items']  ) ;
-        $this->assertEqual( $this->selenium->getValue('enableField#images@items')       , $pref['enableField#images@items'] ) ;
-        
-        $this->assertEqual( $this->selenium->getValue('items_wait_time')                , $pref['items_wait_time'] ) ;
-        $this->assertEqual( Preference::newInstance()->findValueByName('moderate_items'), $pref['num_moderate_items'] ) ;
-            
-        unset($pref);
-    }
-
     private function getPreferencesGeneralSettings()
     {
+        $uSettings = new utilSettings();
         $pref = array();
         $pref['pageTitle']      = Preference::newInstance()->findValueByName('pageTitle') ;
         $pref['contactEmail']   = Preference::newInstance()->findValueByName('contactEmail') ;
@@ -675,13 +413,21 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $pref['num_rss_items']  = Preference::newInstance()->findValueByName('num_rss_items') ;
         $pref['tf']             = Preference::newInstance()->findValueByName('timeFormat') ;
         $pref['max_latest_items_at_home']  = Preference::newInstance()->findValueByName('maxLatestItems@home') ;
-
+        unset($uSettings);  
         return $pref;
     }
-    private function generalSettings()
+    
+    /*
+     * Login oc-admin
+     * GeneralSettings->GeneralSettings
+     * update settings, and check
+     * Logout
+     */
+    function testGeneralSettings()
     {
         $pref = $this->getPreferencesGeneralSettings();
         
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» General settings");
@@ -690,62 +436,63 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->selenium->type("pageTitle"   ,"New title web");
         $this->selenium->type("contactEmail","foo@bar.com");
         $this->selenium->type("pageDesc"    ,"Description web");
-
         $this->selenium->select("currency_admin", "label=EUR");
         $this->selenium->select("weekStart"     , "label=Saturday");
         $this->selenium->type("num_rss_items" , "25");
         $this->selenium->type("max_latest_items_at_home" , "20");
-
         $this->selenium->click("m/d/Y");
         $this->selenium->click("H:i");
 
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
 
-        $this->assertEqual( $this->selenium->getValue('pageTitle')     , "New title web") ;
-        $this->assertEqual( $this->selenium->getValue('contactEmail')  , "foo@bar.com" ) ;
-        $this->assertEqual( $this->selenium->getValue('dateFormat')    , "m/d/Y" ) ;
-        $this->assertEqual( $this->selenium->getValue('pageDesc')      , "Description web" ) ;
+        $this->assertEqual( $this->selenium->getValue('pageTitle')     , "New title web" , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('contactEmail')  , "foo@bar.com"   , 'GeneralSettings, check.' ) ;
+        $this->assertEqual( $this->selenium->getValue('dateFormat')    , "m/d/Y"         , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('pageDesc')      , "Description web"  , 'GeneralSettings, check.') ;
 //        $this->assertEqual( $this->selenium->getValue('language')      , 'en_US' ) ;
-        $this->assertEqual( $this->selenium->getValue('currency')      , 'EUR' ) ;
-        $this->assertEqual( $this->selenium->getValue('weekStart')     , '6' ) ;
-        $this->assertEqual( $this->selenium->getValue('num_rss_items') , '25'  ) ;
-        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , '20'  ) ;
-        $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i" ) ;
+        $this->assertEqual( $this->selenium->getValue('currency')      , 'EUR'          , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('weekStart')     , '6'            , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('num_rss_items') , '25'           , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home')       , '20'  , 'GeneralSettings, check.' ) ;
+        $this->assertEqual( $this->selenium->getValue('timeFormat')    , "H:i"          , 'GeneralSettings, check.') ;
 
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» General settings");
         $this->selenium->waitForPageToLoad("10000");
-
         $this->selenium->type("pageTitle"   , $pref['pageTitle']);
         $this->selenium->type("contactEmail", $pref['contactEmail']);
         $this->selenium->type("pageDesc"    , $pref['pageDesc']);
-
         $this->selenium->select("currency_admin", "label=" . $pref['currency'] ) ;
         $this->selenium->select("weekStart"     , "value=" . $pref['weekStart'] ) ;
         $this->selenium->type("num_rss_items" , $pref['num_rss_items'] ) ;
         $this->selenium->type("max_latest_items_at_home" , $pref['max_latest_items_at_home'] ) ;
-
         $this->selenium->click($pref['df']);
         $this->selenium->click($pref['tf']);
-
         $this->selenium->click("//input[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");
         
-        $this->assertEqual( $this->selenium->getValue('pageTitle')     , $pref['pageTitle']) ;
-        $this->assertEqual( $this->selenium->getValue('contactEmail')  , $pref['contactEmail'] ) ;
-        $this->assertEqual( $this->selenium->getValue('dateFormat')    , $pref['df'] ) ;
-        $this->assertEqual( $this->selenium->getValue('pageDesc')      , $pref['pageDesc'] ) ;
-        $this->assertEqual( $this->selenium->getValue('language')      , $pref['language'] ) ;
-        $this->assertEqual( $this->selenium->getValue('currency')      , $pref['currency'] ) ;
-        $this->assertEqual( $this->selenium->getValue('weekStart')     , $pref['weekStart'] ) ;
-        $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  ) ;
-        $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf'] ) ;
-        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home'] ) ;
+        $this->assertEqual( $this->selenium->getValue('pageTitle')     , $pref['pageTitle']      , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('contactEmail')  , $pref['contactEmail']   , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('dateFormat')    , $pref['df']             , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('pageDesc')      , $pref['pageDesc']       , 'GeneralSettings, check.') ;
+//        $this->assertEqual( $this->selenium->getValue('language')      , $pref['language']       , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('currency')      , $pref['currency']       , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('weekStart')     , $pref['weekStart']      , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('num_rss_items') , $pref['num_rss_items']  , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('timeFormat')    , $pref['tf']             , 'GeneralSettings, check.') ;
+        $this->assertEqual( $this->selenium->getValue('max_latest_items_at_home') , $pref['max_latest_items_at_home']  , 'GeneralSettings, check.') ;
     }
 
-    private function locationsGEO()
+    /*
+     * Login oc-admin
+     * GeneralSettings -> locations 
+     * Add & edit & delete locations 
+     * Logout
+     */
+    function testLocationsGEO()
     {
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Locations");
@@ -778,8 +525,17 @@ class TestOfAdminGeneralSettings extends WebTestCase {
 
     }
 
-    private function locationsNEW()
+    /*
+     * Login oc-admin
+     * GeneralSettings -> locations 
+     * add country,region,city
+     * edit country/region/city
+     * delete country
+     * Logout
+     */
+    function testLocationsNEW()
     {
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Locations");
@@ -854,8 +610,16 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
     }
 
-    private function locationsNEWForceError()
+    /*
+     * Login oc-admin
+     * GeneralSettings -> locations 
+     * add country/region/city twice
+     * edit country/region/city test location already exist
+     * Logout
+     */
+    function testLocationsNEWForceError()
     {
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Locations");
@@ -983,9 +747,16 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( $this->selenium->isTextPresent("regexp:has been deleted") , "Can't delete Country" ) ;
 
     }
-
-    private function currency()
+        
+    /*
+     * Login oc-admin
+     * add new currency
+     * edit & delete the currency
+     * Logout
+     */
+    function testCurrency()
     {
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Currencies");
@@ -1037,8 +808,15 @@ class TestOfAdminGeneralSettings extends WebTestCase {
         $this->assertTrue( !$this->selenium->isTextPresent("regexp:Indian_Rupee") , "Can't delete a currency" ) ;
     }
 
-    private function addCurrencyTwice()
+    /*
+     * Login oc-admin
+     * Add new currency twice
+     * Delete 
+     * Logout
+     */
+    function testAddCurrencyTwice()
     {
+        $this->loginWith();
         $this->selenium->open( osc_admin_base_url(true) );
         $this->selenium->click("link=General settings");
         $this->selenium->click("link=» Currencies");
