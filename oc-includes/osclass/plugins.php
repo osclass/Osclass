@@ -317,7 +317,9 @@
 
         // Add a hook
         static function addHook($hook, $function, $priority = 5) {
-            $hook = str_replace(osc_plugins_path(), '', $hook);
+            $hook         = preg_replace('|/+|', '/', str_replace('\\', '/', $hook)) ;
+            $plugin_path  = str_replace('\\', '/', osc_plugins_path()) ;
+            $hook         = str_replace($plugin_path, '', $hook) ;
             $found_plugin = false;
             if(isset(Plugins::$hooks[$hook])) {
                 if(is_array(Plugins::$hooks[$hook])) {
