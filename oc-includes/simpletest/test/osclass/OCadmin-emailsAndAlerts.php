@@ -5,12 +5,18 @@ require_once '../../../../oc-load.php';
 
 class OCadmin_administrators extends OCadminTest {
     
+    /*
+     * Edit and email / alert
+     */
     function testEditEmailAlert()
     {
         $this->loginCorrect() ;
         $this->editEmailAlert() ;
     }
 
+    /*
+     * Edit and email / alert
+     */
     private function editEmailAlert()
     {
         $this->selenium->open( osc_admin_base_url(true) );

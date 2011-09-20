@@ -5,6 +5,7 @@ require_once '../../../../oc-load.php';
 
 class OCadmin_administrators extends OCadminTest {
     
+    /* TESTS */
     function testCustomAdd()
     {
         $this->loginCorrect() ;

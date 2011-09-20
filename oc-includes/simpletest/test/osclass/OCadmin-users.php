@@ -5,20 +5,30 @@ require_once '../../../../oc-load.php';
 
 class OCadmin_administrators extends OCadminTest {
     
-        function testUserInsert()
+    
+    /*
+     * Create a new user
+     */
+    function testUserInsert()
     {
         $this->loginCorrect() ;
         $this->insertUser() ;
         $this->deleteUser();
     }
 
+    /*
+     * Create a new user
+     */
     function testUserInsertbyLink()
     {
         $this->loginCorrect() ;
         $this->insertUserByLink() ;
         $this->deleteUser();
     }
-
+    
+    /*
+     * Edit an user
+     */
     public function testUserEdit()
     {
         $this->loginCorrect() ;
@@ -27,6 +37,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->deleteUser();
     }
 
+    /*
+     * Validations
+     */
     public function testExtraValidations()
     {
         $this->loginCorrect() ;
@@ -35,13 +48,19 @@ class OCadmin_administrators extends OCadminTest {
         $this->deleteUser();
     }
 
+    
+    /*
+     * Test settings (users enabled, validation,...)
+     */
     public function testSettings()
     {
         $this->loginCorrect() ;
         $this->settings();
     }
 
-    
+    /*
+     * Create a new user
+     */    
     private function insertUser()
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -75,6 +94,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("The user has been created and activated"),"Create user");
     }
 
+    /*
+     * Validation of autofill location
+     */
     private function extraValidations()
     {
         // add item no user logged
@@ -144,6 +166,9 @@ class OCadmin_administrators extends OCadminTest {
         Item::newInstance()->delete( array('s_contact_email' => 'foobar@mail.com') ) ;
     }
 
+    /*
+     * Create a new user
+     */
     private function insertUserByLink()
     {
         $this->selenium->open( osc_admin_base_url(true) ) ;
@@ -179,6 +204,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("The user has been created and activated"),"Create user");
     }
 
+    /*
+     * Edit an user
+     */
     private function editUser()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -216,6 +244,10 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("The user has been updated"),"Edit user");
     }
 
+    
+    /*
+     * Delete an user
+     */
     private function deleteUser()
     {
         $this->selenium->open( osc_admin_base_url(true) );
@@ -230,6 +262,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->assertTrue($this->selenium->isTextPresent("One user has been deleted"), "Delete user" ) ;
     }
 
+    /*
+     * Cahnge settings (users enabled, validation,...)
+     */
     private function settings()
     {
         $pref = array();
@@ -304,6 +339,9 @@ class OCadmin_administrators extends OCadminTest {
         $this->checkWebsite_enabled_user_registration(1);
     }
 
+    /*
+     * Check is users are enabled
+     */
     private function checkWebsite_enabled_users($bool)
     {
         $this->selenium->open( osc_user_login_url() );
@@ -326,6 +364,9 @@ class OCadmin_administrators extends OCadminTest {
         }
     }
 
+    /*
+     * Check is users' validation is enabled
+     */
     private function checkWebsite_enabled_user_validation($bool)
     {
         $this->selenium->open( osc_register_account_url() );
@@ -346,6 +387,9 @@ class OCadmin_administrators extends OCadminTest {
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
+    /*
+     * Check is users could register
+     */
     private function checkWebsite_enabled_user_registration($bool)
     {
         $this->selenium->open( osc_register_account_url() );
