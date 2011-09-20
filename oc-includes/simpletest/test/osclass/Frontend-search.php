@@ -50,7 +50,7 @@ class Frontend_search extends FrontendTest {
     /*
      * Order results by Newly
      */
-    function testNewly()
+    /*function testNewly()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->click("link=Newly listed");
@@ -58,12 +58,12 @@ class Frontend_search extends FrontendTest {
         // last item added -> TITLE : SPANISH LESSONS
         $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
         $this->assertTrue(preg_match('/SPANISH LESSONS/i', $text), "Search, order by Newly");
-    }
+    }*/
     
     /*
      * Order results by Lower price
      */
-    function testLowerPrice()
+    /*function testLowerPrice()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->click("link=Lower price first");
@@ -72,12 +72,12 @@ class Frontend_search extends FrontendTest {
         $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
         sleep(4);
         $this->assertTrue(preg_match('/German Training Coordination Agent \(Barcelona centre\) en Barcelona/', $text), "Search, order by Lower");
-    }
+    }*/
     
     /*
      * Order results by Higher price
      */
-    function testHigherPrice()
+    /*function testHigherPrice()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->click("link=Higher price first");
@@ -86,12 +86,12 @@ class Frontend_search extends FrontendTest {
         $text = $this->selenium->getText('//table/tbody/tr[1]/td[2]');
         sleep(4);
         $this->assertTrue(preg_match('/Avion ULM TL96 cerca de Biniagual/', $text), "Search, order by Higher "); 
-    }
+    }*/
     
     /*
      * Search by pattern: Moto
      */
-    function testSPattern()
+    /*function testSPattern()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->type("sPattern", "Moto");
@@ -99,12 +99,12 @@ class Frontend_search extends FrontendTest {
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 4 , "Search by sPattern.");
-    }
+    }*/
 
     /*
      * Search by pattern & pMin - pMax 
      */
-    function testSPatternCombi1()
+    /*function testSPatternCombi1()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->type("sPattern", "Moto");
@@ -115,12 +115,12 @@ class Frontend_search extends FrontendTest {
         sleep(4);
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 2 , "Search by sPattern & pMin - pMax.");
-    }
+    }*/
 
     /*
      * Search by pattern & sCity
      */
-    function testSPatternCombi2()
+    /*function testSPatternCombi2()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->type("sPattern", "Moto");
@@ -129,12 +129,12 @@ class Frontend_search extends FrontendTest {
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 3 , "Search by Moto + sCity = Balsareny.");
-    }
+    }*/
 
     /*
      * Search by sCity
      */
-    function testSPatternCombi3()
+    /*function testSPatternCombi3()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->type("sCity" , "Balsareny");
@@ -142,12 +142,12 @@ class Frontend_search extends FrontendTest {
         $this->selenium->waitForPageToLoad("30000");
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 4 , "Search by sCity = Balsareny.");
-    }
+    }*/
 
     /*
      * Search by category "Classes"
      */
-    function testSPatternCombi4()
+    /*function testSPatternCombi4()
     {
         $this->selenium->open( osc_base_url(true) . "?page=search" );
         $this->selenium->click("xpath=//input[@value='2']"); // deselect category 2 (vehicles)
@@ -156,7 +156,7 @@ class Frontend_search extends FrontendTest {
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         sleep(4);
         $this->assertTrue($count == 3 , "Search by sCategory = Classes.");
-    }
+    }*/
 
     /*
      * Search by, only items with pictures
@@ -170,50 +170,50 @@ class Frontend_search extends FrontendTest {
         $count = $this->selenium->getXpathCount('//table/tbody/tr/td[2]');
         $this->assertTrue($count == 9 , "Search by [ Show only items with pictures ].");
     }
-//
-//    /*
-//     *  1) expire one category
-//     *  2) update dt_pub_date 
-//     *  3) run cron.hourly.php manualy (update values)
-//     *  4) asserts
-//     *      frontend
-//     *      backoffice
-//     *      search
-//     */
-//    function testExpiredItems()
-//    {
-//        // expire one category (Language Classes)
-//        $mCategory = new Category();
-//        $mCategory->update(array('i_expiration_days' => '1') , array('pk_i_id' => '39') );
-//        // update dt_pub_date
-//        $mItems = new Item();
-//        $aItems = $mItems->listWhere('fk_i_category_id = 39');
-//        foreach($aItems as $actual_item) {
-//            echo "update -> " . $actual_item['pk_i_id'] ."<br>";
-//            $mItems->update( array('dt_pub_date' => '2010-05-05 10:00:00') , array('pk_i_id' => $actual_item['pk_i_id']) );
-//        }
-//
-//        $conn = getConnection();
-//        $conn->osc_dbExec(sprintf("UPDATE %st_cron set d_last_exec = '0000-00-00 00:00:00', d_next_exec = '0000-00-00 00:00:00' WHERE e_type = 'HOURLY'",DB_TABLE_PREFIX) );
-//        unset($conn);
-//        
-//        $this->selenium->open( osc_base_url(true) . "?page=cron" );
-//        $this->selenium->waitForPageToLoad("3000");
-//
-//        // tests
-//        // _testMainFrontend();
-//        $this->selenium->open( osc_base_url(true) );
-//        $this->assertTrue($this->selenium->isTextPresent("Classes (0)"), "Main frontend - category parent of category id 39 have bad counters ERROR" );
-//        $this->assertTrue($this->selenium->isTextPresent("Language Classes (0)"), "Main frontend - category 'Language Classes' (id 39) have bad counters ERROR" );
-//        // _testSearch();
-//        $this->selenium->open( osc_base_url(true) . "?page=search&sCategory=3" );
-//        $this->assertTrue($this->selenium->isTextPresent("There are no results matching"), "search frontend - there are items ERROR" );
-//    }
-//    
+
+    /*
+     *  1) expire one category
+     *  2) update dt_pub_date 
+     *  3) run cron.hourly.php manualy (update values)
+     *  4) asserts
+     *      frontend
+     *      backoffice
+     *      search
+    */
+    /*function testExpiredItems()
+    {
+        // expire one category (Language Classes)
+        $mCategory = new Category();
+        $mCategory->update(array('i_expiration_days' => '1') , array('pk_i_id' => '39') );
+        // update dt_pub_date
+        $mItems = new Item();
+        $aItems = $mItems->listWhere('fk_i_category_id = 39');
+        foreach($aItems as $actual_item) {
+            echo "update -> " . $actual_item['pk_i_id'] ."<br>";
+            $mItems->update( array('dt_pub_date' => '2010-05-05 10:00:00') , array('pk_i_id' => $actual_item['pk_i_id']) );
+        }
+
+        $conn = getConnection();
+        $conn->osc_dbExec(sprintf("UPDATE %st_cron set d_last_exec = '0000-00-00 00:00:00', d_next_exec = '0000-00-00 00:00:00' WHERE e_type = 'HOURLY'",DB_TABLE_PREFIX) );
+        unset($conn);
+        
+        $this->selenium->open( osc_base_url(true) . "?page=cron" );
+        $this->selenium->waitForPageToLoad("3000");
+
+        // tests
+        // _testMainFrontend();
+        $this->selenium->open( osc_base_url(true) );
+        $this->assertTrue($this->selenium->isTextPresent("Classes (0)"), "Main frontend - category parent of category id 39 have bad counters ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("Language Classes (0)"), "Main frontend - category 'Language Classes' (id 39) have bad counters ERROR" );
+        // _testSearch();
+        $this->selenium->open( osc_base_url(true) . "?page=search&sCategory=3" );
+        $this->assertTrue($this->selenium->isTextPresent("There are no results matching"), "search frontend - there are items ERROR" );
+    }*/
+    
     /*
      * Remove all items inserted previously
      */
-    /*function testRemoveLoadedItems()
+    function testRemoveLoadedItems()
     {
         $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
         while( $item ) {
@@ -223,6 +223,6 @@ class Frontend_search extends FrontendTest {
             $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
         }
         
-    }*/
+    }
 }
 ?>
