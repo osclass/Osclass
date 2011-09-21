@@ -84,3 +84,8 @@
         });
     </script>
 <?php } ?>
+
+<script>
+    var fileDefaultText = '<?php _e('No file selected','modern'); ?>';
+    var fileBtnText     = '<?php _e('Choose File','modern'); ?>';
+</script>
