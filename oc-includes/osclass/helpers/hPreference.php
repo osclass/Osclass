@@ -280,6 +280,15 @@
     }
 
     /**
+     * Gets if notification are sent to admin with new user
+     *
+     * @return boolean
+     */
+    function osc_notify_new_user() {
+        return(getBoolPreference('notify_new_user')) ;
+    }
+
+    /**
      * Gets if the mailserver requires authetification
      *
      * @return boolean

@@ -55,16 +55,16 @@
                 Log::newInstance()->insertLog('user', 'add', $userId, $input['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():$userId);
 
                 osc_run_hook('user_register_completed', $userId) ;
+                $user = $this->manager->findByPrimaryKey($userId) ;
 
                 if( osc_user_validation_enabled() && !$this->is_admin ) {
                     
-                    $user = $this->manager->findByPrimaryKey($userId) ;
-
                     osc_run_hook('hook_email_user_validation', $user, $input);
                     
                     return 1 ;
                     
                 } else {
+                    osc_run_hook('hook_email_admin_new_user', $user);
                     User::newInstance()->update(
                                     array('b_active' => '1')
                                     ,array('pk_i_id' => $userId)
@@ -249,6 +249,9 @@
             $user = $this->manager->findByPrimaryKey($user_id);
             if($user) {
                 $this->manager->update(array('b_active' => 1), array('pk_i_id' => $user_id));
+                if(!$this->is_admin) {
+                    osc_run_hook('hook_email_admin_new_user', $user);
+                }
                 Log::newInstance()->insertLog('user', 'activate', $user_id, $user['s_email'], $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
                 if($user['b_enabled']==1) {
                      $mItem = new ItemActions(true);

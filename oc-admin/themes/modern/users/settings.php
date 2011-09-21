@@ -56,6 +56,9 @@
                                     <br/>
                                     <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="enabled_user_registration" id="enabled_user_registration" <?php echo (osc_user_registration_enabled() ? 'checked="checked"' : ''); ?> value="1" />
                                     <label for="enabled_user_registration"><?php _e('User registration enabled') ; ?></label>
+                                    <br/>
+                                    <input style="height: 20px; padding-left: 4px;padding-top: 4px;" type="checkbox" name="notify_new_user" id="notify_new_user" <?php echo (osc_notify_new_user() ? 'checked="checked"' : ''); ?> value="1" />
+                                    <label for="notify_new_user"><?php _e('Notify admin when a new user registers') ; ?></label>
                                 </fieldset>
                             </div>
                             <div style="clear: both;"></div>

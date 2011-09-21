@@ -257,6 +257,8 @@
                                         $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
                                         $enabledUsers            = Params::getParam('enabled_users');
                                         $enabledUsers            = (($enabledUsers != '') ? true : false);
+                                        $notifyNewUser           = Params::getParam('notify_new_user');
+                                        $notifyNewUser           = (($notifyNewUser != '') ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
                                                                                       ,array('s_name'  => 'enabled_user_validation'));
@@ -264,6 +266,8 @@
                                                                                       ,array('s_name'  => 'enabled_user_registration'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
                                                                                       ,array('s_name'  => 'enabled_users'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewUser)
+                                                                                      ,array('s_name'  => 'notify_new_user'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
