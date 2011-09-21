@@ -225,7 +225,7 @@
                 case 'activate':
                     $secret = Params::getParam('secret');
                     $id     = Params::getParam('id');
-                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND ((i.s_secret = '%s' AND i.fk_i_user_id IS NULL) OR (i.fk_i_user_id = '%d'))", $id, $secret, $this->userId);
+                    $item   = $this->itemManager->listWhere("i.pk_i_id = '%s' AND i.s_secret = '%s'", $id, $secret);
                     View::newInstance()->_exportVariableToView('item', $item[0]);
                     if ($item[0]['b_active']==0) {
                         // ACTIVETE ITEM
