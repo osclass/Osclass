@@ -25,6 +25,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'active_plugins', '', 'STRING')
     ,('osclass', 'installed_plugins', '', 'STRING')
     ,('osclass', 'notify_new_item', '1', 'BOOLEAN')
+    ,('osclass', 'notify_new_user', '1', 'BOOLEAN')
     ,('osclass', 'auto_cron', '1', 'BOOLEAN')
     ,('osclass', 'item_attachment', '0', 'BOOLEAN')
     ,('osclass', 'contact_attachment', '0', 'BOOLEAN')

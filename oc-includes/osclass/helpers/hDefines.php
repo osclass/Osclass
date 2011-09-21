@@ -838,6 +838,19 @@
     }
 
     /**
+     * Get if user is on search page
+     *
+     * @return boolean
+     */
+    function osc_is_search_page() {
+        $location = Rewrite::newInstance()->get_location();
+        if($location=='search') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Get if user is on a static page
      *
      * @return boolean
