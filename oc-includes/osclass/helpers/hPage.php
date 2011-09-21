@@ -81,7 +81,7 @@
      *
      * @return string
      */
-    function osc_static_page_id() {
+    function osc_static_page_id() { echo "###########".osc_static_page_field("pk_i_id")."##############";
         return osc_static_page_field("pk_i_id") ;
     }
 

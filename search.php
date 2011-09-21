@@ -29,6 +29,7 @@
 
         //Business Layer...
         function doModel() {
+            osc_run_hook('before_search');
             $mCategories = new Category() ;
             //$aCategories = $mCategories->findRootCategories() ;
             $mCategoryStats = new CategoryStats() ;
