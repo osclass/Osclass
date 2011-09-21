@@ -10,37 +10,37 @@ class OCadmin_items extends OCadminTest {
      * Insert item
      * 
      */
-    function testInsertItem()
-    {
-        $this->loginWith();
-        $this->insertItem() ;
-        $this->viewMedia_NoMedia();
-        $this->viewComments_NoComments();
-        $this->deactivate();
-        $this->activate();
-        $this->markAsPremium();
-        $this->unmarkAsPremium();
-    }
-
-    /*
-     * Login oc-admin
-     * Edit item
-     */
-    function testEditItem()
-    {
-        $this->loginWith() ;
-        $this->editItem() ;
-    }
-
-    /*
-     * Login oc-admin
-     * Delete item
-     */
-    function testDeleteItem()
-    {
-        $this->loginWith() ;
-        $this->deleteItem() ;
-    }
+//    function testInsertItem()
+//    {
+//        $this->loginWith();
+//        $this->insertItem() ;
+//        $this->viewMedia_NoMedia();
+//        $this->viewComments_NoComments();
+//        $this->deactivate();
+//        $this->activate();
+//        $this->markAsPremium();
+//        $this->unmarkAsPremium();
+//    }
+//
+//    /*
+//     * Login oc-admin
+//     * Edit item
+//     */
+//    function testEditItem()
+//    {
+//        $this->loginWith() ;
+//        $this->editItem() ;
+//    }
+//
+//    /*
+//     * Login oc-admin
+//     * Delete item
+//     */
+//    function testDeleteItem()
+//    {
+//        $this->loginWith() ;
+//        $this->deleteItem() ;
+//    }
 
     /*
      * Login oc-admin
@@ -66,11 +66,11 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Check all item settings (values & behaviour into website)
      */
-    function testSettings()
-    {
-        $this->loginWith() ;
-        $this->settings() ;
-    }
+//    function testSettings()
+//    {
+//        $this->loginWith() ;
+//        $this->settings() ;
+//    }
     
      /*      PRIVATE FUNCTIONS       */
     private function addUserForTesting()
@@ -167,7 +167,7 @@ class OCadmin_items extends OCadminTest {
         if( $bPhotos ){
             $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
             $this->selenium->click("link=Add new photo");
-            $this->selenium->type("//div[@id='p-0']/div/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
+            $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
         
         sleep(4);
