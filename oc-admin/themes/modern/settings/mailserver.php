@@ -102,6 +102,7 @@
                                     <legend><?php _e('Help'); ?></legend>
                                     <label><?php _e('Enter your e-mail server configuration'); ?></label>
 
+                                    <?php if( function_exists('@apache_get_modules') ) { ?>
                                     <?php
                                         $aModules = @apache_get_modules();
                                         $ssl = false;
@@ -113,6 +114,7 @@
                                     <div id="flash_message">
                                         <p>mod_ssl <?php _e('not found');?></p>
                                     </div>
+                                    <?php }?>
                                     <?php }?>
                                     
                                 </fieldset>
