@@ -72,7 +72,7 @@ class TestOfInstaller extends WebTestCase {
             $this->selenium->type("s_passwd", "admin");
             
             $this->selenium->type("webtitle", "test_web_osclass");
-            $this->selenium->type("email", "nodani@gmail.com");
+            $this->selenium->type("email", "carlos@osclass.org");
 
             $this->selenium->type("xpath=//input[@id='t_country']", "spai");
             $this->selenium->keyDown( "xpath=//input[@id='t_country']", "n" ) ;
