@@ -75,7 +75,7 @@ class OCadmin_items extends OCadminTest {
      /*      PRIVATE FUNCTIONS       */
     private function addUserForTesting()
     {
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
 
         echo "insert new user for testing<br>";
@@ -96,10 +96,9 @@ class OCadmin_items extends OCadminTest {
         $input['b_company']         = 0;
         $input['b_enabled']         = 1;
         $input['b_active']          = 1;
-        $input['s_email']           = "carlos+user@osclass.org";
-        $this->email                = "carlos+user@osclass.org";
-        $input['s_password']        = sha1('carlos');
-        $this->password             = "carlos";
+        $input['s_email']           = $this->_email;
+        
+        $input['s_password']        = sha1($this->_password);
 
         $this->array = $input;
 
@@ -112,13 +111,11 @@ class OCadmin_items extends OCadminTest {
         $bool = $this->selenium->isElementPresent('login_open') ;
         if($bool){
             $this->selenium->click("login_open");
-            $this->selenium->type("email"   , $this->email);
-            $this->selenium->type("password", $this->password);
-
+            $this->selenium->type("email"   , $this->_email);
+            $this->selenium->type("password", $this->_password);
             $this->selenium->click("xpath=//button[@type='submit']");
             $this->selenium->waitForPageToLoad("30000");
-
-            echo "<div style='background-color: green; color: white;padding-left:15px;'>Login user ...</div>";
+            
             if($this->selenium->isTextPresent("User account manager")){
                 $this->logged = 1;
                 $this->assertTrue("ok");
@@ -344,7 +341,7 @@ class OCadmin_items extends OCadminTest {
                                              ,array('s_name'  => 'moderate_comments'));
         }
         // insert comment from frontend
-        echo "<".osc_item_url_ns( $item['pk_i_id'] )."><br>";
+//        echo "<".osc_item_url_ns( $item['pk_i_id'] )."><br>";
 
         $this->selenium->open(osc_item_url_ns( $item['pk_i_id'] ));
 
@@ -363,22 +360,19 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("link=Items");
         $this->selenium->click("link=» Comments");
         $this->selenium->waitForPageToLoad("10000");
-
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - ACTIVATE COMMENT</div>";
+        
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Activate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been approved"), "Can't activate comment. ERROR" );
-
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - DEACTIVATE COMMENT</div>";
+        
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Deactivate']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("The comment has been disapproved"), "Can't deactivate comment. ERROR" );
-
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - EDIT COMMENT</div>";
+        
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Edit']");
         $this->selenium->waitForPageToLoad("10000");
@@ -392,7 +386,6 @@ class OCadmin_items extends OCadminTest {
 
         $this->assertTrue($this->selenium->isTextPresent("Great! We just updated your comment"), "Can't edit a comment. ERROR") ;
 
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testComments - DELETE COMMENT</div>";
         $this->selenium->mouseOver("//table/tbody/tr[contains(.,'Can you provide more info please :)')]");
         $this->selenium->click("//table/tbody/tr[contains(.,'Can you provide more info please :)')]/td/div/a[text()='Delete']");
         $this->selenium->waitForPageToLoad("10000");
@@ -436,14 +429,12 @@ class OCadmin_items extends OCadminTest {
         
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
         // only can delete resources
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
         $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
 
         $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
 
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>testMedia - MEDIA DELETE</div>";
         $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
         $this->selenium->waitForPageToLoad("10000");
 
@@ -467,85 +458,59 @@ class OCadmin_items extends OCadminTest {
     {
 // reg_user_post
         Preference::newInstance()->replace('reg_user_post', '0',"osclass", 'INTEGER') ;
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_post 0 (NO USER)</div>";
         $this->checkWebsite_reg_user_post(0);
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_post 0 (USER REGISTRED)</div>";
         $this->checkWebsite_reg_user_post(0,true);
         Preference::newInstance()->replace('reg_user_post', '1',"osclass", 'INTEGER') ;
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_post 1 (NO USER)</div>";
         $this->checkWebsite_reg_user_post(1);
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_post 1 (USER REGISTRED)</div>";
         $this->checkWebsite_reg_user_post(1,true);
 // enabled_recaptcha_items
         Preference::newInstance()->replace('reg_user_post', '0',"osclass", 'INTEGER') ;
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>RECAPTCHA 1</div>";
         Preference::newInstance()->replace('enabled_recaptcha_items', 1,"osclass", 'BOOLEAN') ;
         $this->checkWebsite_recaptcha(1);
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>RECAPTCHA 0</div>";
         Preference::newInstance()->replace('enabled_recaptcha_items', 0,"osclass", 'BOOLEAN') ;
         $this->checkWebsite_recaptcha(0);
-        flush();
 // moderate_items
         // moderate only one item.
         Preference::newInstance()->replace('logged_user_item_validation', '0',"osclass", 'INTEGER') ;
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>MODERATE 1</div>";
         Preference::newInstance()->replace('moderate_items', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_moderate_items('1');
         // never moderate
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>MODERATE -1</div>";
         Preference::newInstance()->replace('moderate_items', '-1',"osclass", 'INTEGER') ;
         $this->checkWebsite_moderate_items('-1');
         // always moderate
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>MODERATE 0</div>";
         Preference::newInstance()->replace('moderate_items', '0',"osclass", 'INTEGER') ;
         $this->checkWebsite_moderate_items('0');
-        flush();
 // logged_user_item_validation
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>logged_user_item_validation 0 </div>";
         Preference::newInstance()->replace('logged_user_item_validation', '0',"osclass", 'INTEGER') ;
-        $this->checkWebsite_logged_user_item_validation('0');
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>logged_user_item_validation 1 </div>";
+        $this->checkWebsite_logged_user_item_validation('0');        
         Preference::newInstance()->replace('logged_user_item_validation', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_logged_user_item_validation('1');
-        flush();
 // items_wait_time
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>items_wait_time 0s </div>";
         Preference::newInstance()->replace('items_wait_time', '0',"osclass", 'INTEGER') ;
         $this->checkWebsite_items_wait_time('0');
         $this->selenium->deleteAllVisibleCookies();
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>items_wait_time 5s </div>";
         Preference::newInstance()->replace('items_wait_time', '30',"osclass", 'INTEGER') ;
         $this->checkWebsite_items_wait_time('30');
-        flush();
 // reg_user_can_contact
         Preference::newInstance()->replace('items_wait_time', '0',"osclass", 'INTEGER') ;
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_can_contact 0</div>";
         Preference::newInstance()->replace('reg_user_can_contact', '0',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_reg_user_can_contact('0');
         usleep(25000);
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>reg_user_can_contact 1</div>";
         Preference::newInstance()->replace('reg_user_can_contact', '1',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_reg_user_can_contact('1');
-        flush();
 // enableField#f_price@items
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items 0</div>";
         Preference::newInstance()->replace('enableField#f_price@items', '0',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_enableField_f_price_items('0');
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items 1</div>";
         usleep(25000);
         Preference::newInstance()->replace('enableField#f_price@items', '1',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_enableField_f_price_items('1');
-        flush();
 // enableField#images@items  //  numImages@items
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items = 0</div>";
         Preference::newInstance()->replace('enableField#images@items', '0',"osclass", 'BOOLEAN') ;
         $this->checkWebsite_enableField_images_items('0');
-        echo "<div style='background-color: green; color: white;padding-left:15px;'>enableField#f_price@items = 1 & numImages@items = 1</div>";
         Preference::newInstance()->replace('enableField#images@items', '1',"osclass", 'BOOLEAN') ;
         Preference::newInstance()->replace('numImages@items', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_enableField_images_items('1','1');
         Preference::newInstance()->replace('numImages@items', '4',"osclass", 'INTEGER') ;
-        flush();
     }
 
     private function post_item_website(){
@@ -593,7 +558,7 @@ class OCadmin_items extends OCadminTest {
 
         if($loginUser){
             // detele user and items
-            $user = User::newInstance()->findByEmail($this->email);
+            $user = User::newInstance()->findByEmail($this->_email);
             User::newInstance()->deleteUser($user['pk_i_id']);
         } else {
             // delete items
@@ -644,7 +609,7 @@ class OCadmin_items extends OCadminTest {
         } else if($moderation == 0 || $moderation == 1) {
             $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear") ;
             // fake validate item
-            $user = User::newInstance()->findByEmail($this->email);
+            $user = User::newInstance()->findByEmail($this->_email);
             $new_i_item = $user['i_items']+1;
             User::newInstance()->update(array('i_items' => $new_i_item), array('pk_i_id' => $user['pk_i_id']));
         }
@@ -656,7 +621,7 @@ class OCadmin_items extends OCadminTest {
             $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Need validation but message don't appear" );
         }
         
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
         
     }
@@ -678,7 +643,7 @@ class OCadmin_items extends OCadminTest {
             $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Item need validation moderate_items = -1 (NEVER MODERATE). ERROR" );
         }
 
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
@@ -701,7 +666,7 @@ class OCadmin_items extends OCadminTest {
             $this->assertTrue($this->selenium->isTextPresent("Too fast. You should wait a little to publish your ad."),"CAN insert item. ERROR" );
         }
 
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
@@ -732,7 +697,7 @@ class OCadmin_items extends OCadminTest {
             $this->assertTrue($div_present, "There aren't div contact form. ERROR");
         }
 
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
@@ -766,7 +731,7 @@ class OCadmin_items extends OCadminTest {
         } else {
             $this->assertTrue( !$exist_span_price , "Exist span price!. ERROR");
         }
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
@@ -793,7 +758,7 @@ class OCadmin_items extends OCadminTest {
 
             $this->assertTrue(($num == $num_photo_input), "More or less input photos[]! ERROR") ;
         }
-        $user = User::newInstance()->findByEmail($this->email);
+        $user = User::newInstance()->findByEmail($this->_email);
         User::newInstance()->deleteUser($user['pk_i_id']);
     }
 
