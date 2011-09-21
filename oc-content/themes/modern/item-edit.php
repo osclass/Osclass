@@ -31,6 +31,25 @@
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
         <?php ItemForm::location_javascript_new(); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+        <script type="text/javascript">
+            setInterval("uniform_input_file()", 250);
+            function uniform_input_file(){
+                photos_div = $('div.photos');
+                $('div',photos_div).each(
+                    function(){
+                        if( $(this).find('div.uploader').length == 0  ){
+                            divid = $(this).attr('id');
+                            if(divid != 'photos'){
+                                divclass = $(this).hasClass('box');
+                                if( !$(this).hasClass('box') & !$(this).hasClass('uploader') & !$(this).hasClass('row')){
+                                    $("div#"+$(this).attr('id')+" input:file").uniform({fileDefaultText: fileDefaultText,fileBtnText: fileBtnText});
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        </script>
         <!-- end only item-edit.php -->
     </head>
     <body>
