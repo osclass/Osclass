@@ -75,51 +75,6 @@
             $roots = $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1") ;
             return $roots ;
         }
-
-        /*public function toSubTree($category = null) {
-            if($category==null) {
-                return null ;
-            } else {
-                $branches = $this->listWhere("a.fk_i_parent_id = ".$category." AND a.b_enabled = 1 ") ;
-                foreach($branches as &$branch) {
-                    $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
-                }
-                unset($branch) ;
-                print_r($branches);
-                return $branches ;
-            }
-        }*/
-
-        /*public function toSubTreeAll($category = null) {
-            if($category==null) {
-                return null ;
-            } else {
-                $branches = $this->listWhere("a.fk_i_parent_id = ".$category."") ;
-                foreach($branches as &$branch) {
-                    $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
-                }
-                unset($branch) ;
-                return $branches ;
-            }
-        }
-
-        public function toTree() {
-            $roots = $this->findRootCategoriesEnabled() ;
-            foreach ($roots as &$r) {
-                $r['categories'] = $this->toSubTree($r['pk_i_id']) ;
-            }
-            unset($r) ;
-            return $roots ;
-        }
-
-        public function toTreeAll() {
-            $roots = $this->findRootCategories();
-            foreach ($roots as &$r) {
-                $r['categories'] = $this->toSubTreeAll($r['pk_i_id']);
-            }
-            unset($r);
-            return $roots;
-        }*/
         
         public function toSubTree($category = null) {
             $this->toTree();
@@ -132,7 +87,7 @@
                 } else {
                     array();
                 }
-            };
+            }
         }
 
         public function toTreeAll() {
@@ -201,7 +156,6 @@
             return $tree;
         }
 
-
         public function toRootTree($cat = null) {
             $tree = null;
             if($cat!=null) {
@@ -229,7 +183,7 @@
         public function findRootCategory($category_id) {
             $results = $this->listWhere("a.pk_i_id = " . $category_id . " AND a.fk_i_parent_id IS NOT NULL");
             if (count($results) > 0) {
-                return $this->findRootCategory($results['fk_i_parent_id']);
+                return $this->findRootCategory($results[0]['fk_i_parent_id']);
             } else {
                 return $this->findByPrimaryKey($category_id);
             }
@@ -413,7 +367,6 @@
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                //$fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_unique = 1;
                 while(true) {
