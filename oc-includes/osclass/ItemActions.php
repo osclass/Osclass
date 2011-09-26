@@ -669,10 +669,12 @@
                 $notify      = osc_notify_new_comment() ;
 
                 //Notify admin
+                $conn = getConnection();
+                $id = $conn->osc_dbFetchResult("SELECT pk_i_id FROM %st_item_comment ORDER BY pk_i_id DESC LIMIT 1", DB_TABLE_PREFIX);
                 if ($notify) {
                     osc_run_hook('hook_email_new_comment_admin', $aItem);
                 }
-                osc_run_hook('add_comment', $item);
+                osc_run_hook('add_comment', $id['pk_i_id']);
                 return $status_num;
             }
 
