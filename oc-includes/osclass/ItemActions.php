@@ -425,8 +425,8 @@
                     array('b_active' => 0),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'deactivate_item', $id );
                 if($item['b_enabled']==1) {
-                    osc_run_hook( 'deactivate_item', $id );
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
                 return true;
@@ -441,8 +441,8 @@
                     array('b_enabled' => 1),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'enable_item', $id );
                 if($item['b_active']==1) {
-                    osc_run_hook( 'enable_item', $id );
                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
                 }
                 return true;
@@ -457,8 +457,8 @@
                     array('b_enabled' => 0),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'disable_item', $id );
                 if($item['b_active']==1) {
-                    osc_run_hook( 'disable_item', $id );
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
                 return true;
