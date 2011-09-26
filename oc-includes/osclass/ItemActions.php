@@ -410,7 +410,7 @@
                     }
                 }
 
-                osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
+                osc_run_hook( 'activate_item', $id );
                 CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                 return $result;
             } else {
@@ -426,6 +426,7 @@
                     array('pk_i_id' => $id)
                 );
                 if($item['b_enabled']==1) {
+                    osc_run_hook( 'deactivate_item', $id );
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
                 return true;
@@ -441,6 +442,7 @@
                     array('pk_i_id' => $id)
                 );
                 if($item['b_active']==1) {
+                    osc_run_hook( 'enable_item', $id );
                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
                 }
                 return true;
@@ -456,6 +458,7 @@
                     array('pk_i_id' => $id)
                 );
                 if($item['b_active']==1) {
+                    osc_run_hook( 'disable_item', $id );
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
                 return true;
