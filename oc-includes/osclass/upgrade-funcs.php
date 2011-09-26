@@ -115,8 +115,8 @@
         osc_changeVersionTo(220) ;
     }
 
-    if(osc_version() < 222) {
-        osc_changeVersionTo(222) ;
+    if(osc_version() < 223) {
+        osc_changeVersionTo(223) ;
     }
 
     if(Params::getParam('action') == '') {

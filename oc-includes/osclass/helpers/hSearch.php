@@ -376,7 +376,7 @@
      * @return int
      */
     function osc_count_list_countries() {
-        if ( !View::newInstance()->_exists('list_contries') ) {
+        if ( !View::newInstance()->_exists('list_countries') ) {
             View::newInstance()->_exportVariableToView('list_countries', Search::newInstance()->listCountries() ) ;
         }
         return View::newInstance()->_count('list_countries') ;

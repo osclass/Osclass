@@ -153,13 +153,22 @@
                 case 'change_password_post':    //change password post
                                                 $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
+                                                if( (Params::getParam('password') == '') || (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                                    osc_add_flash_error_message( _m('Password cannot be blank')) ;
+                                                    $this->redirectTo( osc_change_user_password_url() ) ;
+                                                }
+
                                                 if( $user['s_password'] != sha1( Params::getParam('password') ) ) {
                                                     osc_add_flash_error_message( _m('Current password doesn\'t match')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
-                                                } elseif( !Params::getParam('new_password') ) {
+                                                }
+
+                                                if( !Params::getParam('new_password') ) {
                                                     osc_add_flash_error_message( _m('Passwords can\'t be empty')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
-                                                } elseif( Params::getParam('new_password') != Params::getParam('new_password2') ) {
+                                                }
+
+                                                if( Params::getParam('new_password') != Params::getParam('new_password2') ) {
                                                     osc_add_flash_error_message( _m('Passwords don\'t match'));
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }

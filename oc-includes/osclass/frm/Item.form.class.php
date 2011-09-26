@@ -396,18 +396,29 @@
         $('#region').attr( "autocomplete", "off" );
         $('#city').attr( "autocomplete", "off" );
 
+        $("#countryId").change(function(){
+            $("regionId").val('');
+            $("region").val('');
+            $("cityId").val('');
+            $("city").val('');
+        });
+
 
         $('#region').live('keyup.autocomplete', function(){
+            $("#regionId").val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_regions&country="+$('#countryId').val(),
                 minLength: 2,
                 select: function( event, ui ) {
+                    $("#cityId").val('');
+                    $("#city").val('');
                     $('#regionId').val(ui.item.id);
                 }
             });
         });
 
         $('#city').live('keyup.autocomplete', function(){
+            $("#cityId").val('');
             $( this ).autocomplete({
                 source: "<?php echo osc_base_url(true); ?>?page=ajax&action=location_cities&region="+$('#regionId').val(),
                 minLength: 2,

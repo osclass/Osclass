@@ -88,22 +88,16 @@
         }
 
         static function loadActive() {
-            try {
-                $data['s_value'] = osc_active_plugins() ;
-                $plugins_list = unserialize($data['s_value']);
-                if(is_array($plugins_list)) {
-                    foreach($plugins_list as $plugin_name) {
-                        $pluginPath = osc_plugins_path() . $plugin_name;
-                        if(file_exists($pluginPath)) {
-                            //This should include the file and adds the hooks
-                            include_once $pluginPath;
-                        } else {
-                            trigger_error(sprintf(__('Plugin %s is missing its main file'), $plugin_name));
-                        }
+            $data['s_value'] = osc_active_plugins() ;
+            $plugins_list = unserialize($data['s_value']);
+            if(is_array($plugins_list)) {
+                foreach($plugins_list as $plugin_name) {
+                    $pluginPath = osc_plugins_path() . $plugin_name;
+                    if(file_exists($pluginPath)) {
+                        //This should include the file and adds the hooks
+                        include_once $pluginPath;
                     }
                 }
-            } catch (Exception $e) {
-                echo $e->getMessage();
             }
         }
 
@@ -323,7 +317,9 @@
 
         // Add a hook
         static function addHook($hook, $function, $priority = 5) {
-            $hook = str_replace(osc_plugins_path(), '', $hook);
+            $hook         = preg_replace('|/+|', '/', str_replace('\\', '/', $hook)) ;
+            $plugin_path  = str_replace('\\', '/', osc_plugins_path()) ;
+            $hook         = str_replace($plugin_path, '', $hook) ;
             $found_plugin = false;
             if(isset(Plugins::$hooks[$hook])) {
                 if(is_array(Plugins::$hooks[$hook])) {
