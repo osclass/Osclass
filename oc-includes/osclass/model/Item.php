@@ -148,6 +148,12 @@
             $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE l.fk_i_item_id = i.pk_i_id AND %s', $this->getTableName(), DB_TABLE_PREFIX, $sql);
             return $this->extendData($items);
         }
+        
+        public function mostViewed($limit = 10) {
+            $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.*, count(s.i_num_views) as i_num_views, count(s.i_num_premium_views) as i_num_premium_views FROM %s i, %st_item_location l, %st_item_stats s WHERE l.fk_i_item_id = i.pk_i_id AND s.fk_i_item_id = i.pk_i_id GROUP BY s.fk_i_item_id ORDER BY i_num_views DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit);
+            return $this->extendData($items);
+        }
+        
 
         public function findByPrimaryKey($id)
         {
