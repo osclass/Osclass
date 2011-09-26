@@ -118,7 +118,6 @@
     // XXX: REMOVE THIS ON RELEASE
     osc_changeVersionTo(229) ;
 
-
     if(osc_version() < 230) {
         $conn->osc_dbExec(sprintf("CREATE TABLE %st_item_description_tmp (
     fk_i_item_id INT UNSIGNED NOT NULL,
