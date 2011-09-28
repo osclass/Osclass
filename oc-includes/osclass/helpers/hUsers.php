@@ -1,5 +1,18 @@
 <?php
+    /**
+     * Helper Users
+     * @package OSClass
+     * @subpackage Helpers
+     * @author OSClass
+     */
 
+    /**
+     * Gets a specific field from current user
+     *
+     * @param string $field
+     * @param string $locale
+     * @return mixed
+     */
     function osc_user_field($field, $locale = "") {
         if (View::newInstance()->_exists('users')) {
             $user = View::newInstance()->_current('users') ;
@@ -8,7 +21,12 @@
         }
         return osc_field($user, $field, $locale) ;
     }
-    
+
+    /**
+     * Gets user array from view
+     *
+     * @return array
+     */
     function osc_user() {
         if (View::newInstance()->_exists('users')) {
             $user = View::newInstance()->_current('users') ;
@@ -19,11 +37,15 @@
         return($user) ;
     }
 
-
+    /**
+     * Gets true if user is logged in web
+     *
+     * @return boolean
+     */
     function osc_is_web_user_logged_in() {
         if (Session::newInstance()->_get("userId") != '') {
             $user = User::newInstance()->findByPrimaryKey(Session::newInstance()->_get("userId"));
-            if(isset($user['pk_i_id'])) {
+            if(isset($user['b_enabled']) && $user['b_enabled']==1) {
                 return true ;
             } else {
                 return false;
@@ -33,7 +55,7 @@
         //can already be a logged user or not, we'll take a look into the cookie
         if ( Cookie::newInstance()->get_value('oc_userId') != '' && Cookie::newInstance()->get_value('oc_userSecret') != '') {
             $user = User::newInstance()->findByIdSecret( Cookie::newInstance()->get_value('oc_userId'), Cookie::newInstance()->get_value('oc_userSecret') ) ;
-            if(isset($user['pk_i_id'])) {
+            if(isset($user['b_enabled']) && $user['b_enabled']==1) {
                 Session::newInstance()->_set('userId', $user['pk_i_id']) ;
                 Session::newInstance()->_set('userName', $user['s_name']) ;
                 Session::newInstance()->_set('userEmail', $user['s_email']) ;
@@ -49,22 +71,47 @@
         return false ;
     }
 
+    /**
+     * Gets logged user id
+     *
+     * @return int
+     */
     function osc_logged_user_id() {
-        return Session::newInstance()->_get("userId") ;
+        return (int) Session::newInstance()->_get("userId") ;
     }
 
+    /**
+     * Gets logged user mail
+     *
+     * @return string
+     */
     function osc_logged_user_email() {
-        return Session::newInstance()->_get('userEmail') ;
+        return (string) Session::newInstance()->_get('userEmail') ;
     }
 
+    /**
+     * Gets logged user email
+     *
+     * @return string
+     */
     function osc_logged_user_name() {
-        return Session::newInstance()->_get('userName') ;
+        return (string) Session::newInstance()->_get('userName') ;
     }
 
+    /**
+     * Gets logged user phone
+     *
+     * @return string
+     */
     function osc_logged_user_phone() {
-        return Session::newInstance()->_get('userPhone') ;
+        return (string) Session::newInstance()->_get('userPhone') ;
     }
 
+    /**
+     * Gets true if admin user is logged in
+     *
+     * @return boolean
+     */
     function osc_is_admin_user_logged_in() {
         if (Session::newInstance()->_get("adminId") != '') {
             $admin = Admin::newInstance()->findByPrimaryKey( Session::newInstance()->_get("adminId") ) ;
@@ -94,54 +141,118 @@
         return false ;
     }
 
+    /**
+     * Gets logged admin id
+     *
+     * @return int
+     */
     function osc_logged_admin_id() {
-        return Session::newInstance()->_get("adminId") ;
+        return (int) Session::newInstance()->_get("adminId") ;
     }
 
+    /**
+     * Gets logged admin username
+     *
+     * @return string
+     */
     function osc_logged_admin_username() {
-        return Session::newInstance()->_get('adminUserName') ;
+        return (string) Session::newInstance()->_get('adminUserName') ;
     }
 
+    /**
+     * Gets logged admin name
+     * @return string
+     */
     function osc_logged_admin_name() {
-        return Session::newInstance()->_get('adminName') ;
+        return (string) Session::newInstance()->_get('adminName') ;
     }
 
+    /**
+     * Gets logged admin email
+     *
+     * @return string
+     */
     function osc_logged_admin_email() {
-        return Session::newInstance()->_get('adminEmail') ;
+        return (string) Session::newInstance()->_get('adminEmail') ;
     }
 
+    /**
+     * Gets name of current user
+     *
+     * @return string
+     */
     function osc_user_name() {
-        return osc_user_field("s_name");
-    }
-    
-    function osc_user_email() {
-        return osc_user_field("s_email");
-    }
-    
-    function osc_user_regdate() {
-        return osc_user_field("dt_reg_date");
-    }
-    
-    function osc_user_id() {
-        return osc_user_field("pk_i_id");
-    }
-    
-    function osc_user_website() {
-        return osc_user_field("s_website");
-    }
-    
-    function osc_user_info() {
-        return osc_user_field("s_info");
-    }
-    
-    function osc_user_phone_land() {
-        return osc_user_field("s_phone_land");
-    }
-    
-    function osc_user_phone_moble() {
-        return osc_user_field("s_phone_mobile");
+        return (string) osc_user_field("s_name");
     }
 
+    /**
+     * Gets email of current user
+     *
+     * @return string
+     */
+    function osc_user_email() {
+        return (string) osc_user_field("s_email");
+    }
+
+    /**
+     * Gets registration date of current user
+     *
+     * @return string
+     */
+    function osc_user_regdate() {
+        return (string) osc_user_field("dt_reg_date");
+    }
+
+    /**
+     * Gets id of current user
+     *
+     * @return int
+     */
+    function osc_user_id() {
+        return (int) osc_user_field("pk_i_id");
+    }
+
+    /**
+     * Gets website of current user
+     *
+     * @return string
+     */
+    function osc_user_website() {
+        return (string) osc_user_field("s_website");
+    }
+
+    /**
+     * Gets description/information of current user
+     *
+     * @return string
+     */
+    function osc_user_info() {
+        return (string) osc_user_field("s_info");
+    }
+
+    /**
+     * Gets phone of current user
+     *
+     * @return string
+     */
+    function osc_user_phone_land() {
+        return (string) osc_user_field("s_phone_land");
+    }
+
+    /**
+     * Gets cell phone of current user
+     *
+     * @return string
+     */
+    function osc_user_phone_moble() {
+        return (string) osc_user_field("s_phone_mobile");
+    }
+
+    /**
+     * Gets phone_land if exist, else if exist return phone_mobile,
+     * else return string blank
+     * @return string
+     */
     function osc_user_phone() {
         if(osc_user_field("s_phone_land")!="") {
             return osc_user_field("s_phone_land");
@@ -150,43 +261,93 @@
         }
         return "";
     }
-        
+
+    /**
+     * Gets country of current user
+     *
+     * @return string
+     */
     function osc_user_country() {
-        return osc_user_field("s_country");
+        return (string) osc_user_field("s_country");
     }
 
+    /**
+     * Gets region of current user
+     *
+     * @return string
+     */
     function osc_user_region() {
-        return osc_user_field("s_region");
+        return (string) osc_user_field("s_region");
     }
 
+    /**
+     * Gets city of current user
+     *
+     * @return string
+     */
     function osc_user_city() {
-        return osc_user_field("s_city");
+        return (string) osc_user_field("s_city");
     }
 
+    /**
+     * Gets city area of current user
+     *
+     * @return string
+     */
     function osc_user_city_area() {
-        return osc_user_field("s_city_area");
+        return (string) osc_user_field("s_city_area");
     }
 
+    /**
+     * Gets address of current user
+     *
+     * @return address
+     */
     function osc_user_address() {
-        return osc_user_field("s_address");
+        return (string) osc_user_field("s_address");
     }
 
+    /**
+     * Gets postal zip of current user
+     *
+     * @return string
+     */
     function osc_user_zip() {
-        return osc_user_field("s_zip");
+        return (string) osc_user_field("s_zip");
     }
 
+    /**
+     * Gets latitude of current user
+     *
+     * @return float
+     */
     function osc_user_latitude() {
-        return osc_user_field("d_coord_lat");
+        return (float) osc_user_field("d_coord_lat");
     }
 
+    /**
+     * Gets longitude of current user
+     *
+     * @return float
+     */
     function osc_user_longitude() {
-        return osc_user_field("d_coord_long");
+        return (float) osc_user_field("d_coord_long");
     }
-    
+
+    /**
+     * Gets number of items validated of current user
+     *
+     * @return int
+     */
     function osc_user_items_validated() {
-        return osc_user_field("i_items");
+        return (int) osc_user_field("i_items");
     }
-    
+
+    /**
+     * Gets number of comments validated of current user
+     *
+     * @return int
+     */
     function osc_user_comments_validated() {
         return osc_user_field("i_comments");
     }
@@ -194,10 +355,22 @@
     /////////////
     // ALERTS  //
     /////////////
+
+    /**
+     * Gets a specific field from current alert
+     *
+     * @param array $field
+     * @return mixed
+     */
     function osc_alert_field($field) {
         return osc_field(View::newInstance()->_current('alerts'), $field, '') ;
     }
 
+    /**
+     * Gets next alert if there is, else return null
+     *
+     * @return array
+     */
     function osc_has_alerts() {
         $result = View::newInstance()->_next('alerts') ;
         $alert = osc_alert();
@@ -205,27 +378,54 @@
         return $result;
     }
 
+    /**
+     * Gets number of alerts in array alerts
+     * @return int
+     */
     function osc_count_alerts() {
-        return View::newInstance()->_count('alerts') ;
+        return (int) View::newInstance()->_count('alerts') ;
     }
-    
+
+    /**
+     * Gets current alert fomr view
+     *
+     * @return array
+     */
     function osc_alert() {
         return View::newInstance()->_current('alerts');
     }
-    
+
+    /**
+     * Gets search field of current alert
+     *
+     * @return string
+     */
     function osc_alert_search() {
-        return osc_alert_field('s_search');
+        return (string) osc_alert_field('s_search');
     }
 
+    /**
+     * Gets secret of current alert
+     * @return string
+     */
     function osc_alert_secret() {
-        return osc_alert_field('s_secret');
+        return (string) osc_alert_field('s_secret');
     }
-    
+
+    /**
+     * Gets the search object of a specific alert
+     *
+     * @return Search
+     */
     function osc_alert_search_object() {
         return osc_unserialize(base64_decode(osc_alert_field('s_search')));
     }
     
-    
+    /**
+     * Gets next user in users array
+     * 
+     * @return <type>
+     */
     function osc_prepare_user_info() {
         if ( !View::newInstance()->_exists('users') ) {
             View::newInstance()->_exportVariableToView('users', array ( User::newInstance()->findByPrimaryKey( osc_item_user_id() ) ) ) ;

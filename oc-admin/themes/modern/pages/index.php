@@ -19,6 +19,7 @@
     $pages = __get("pages");
     $prefLocale = __get("prefLocale");
     $last = end($pages); $last_id = $last['pk_i_id'];
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -29,8 +30,39 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Pages'); ?></div>              
         <script type="text/javascript">
+            function order_up(id) {
+                $('#datatables_list_processing').show();
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=up",
+                    success: function(res){
+                        oTable.fnClearTable();
+                        json = eval( '(' + res + ')') ;
+                        oTable.fnAddData(json);
+                        $('#datatables_list_processing').hide();
+                    },
+                    error: function(){
+                        $('#datatables_list_processing').hide();
+                    }
+                });
+            }
+            
+            function order_down(id) {
+                $('#datatables_list_processing').show();
+                $.ajax({
+                    url: "<?php echo osc_admin_base_url(true)?>?page=ajax&action=order_pages&id="+id+"&order=down",
+                    success: function(res){
+                        oTable.fnClearTable();
+                        json = eval( '(' + res + ')') ;
+                        oTable.fnAddData(json);
+                        $('#datatables_list_processing').hide();
+                    },
+                    error: function(){
+                        $('#datatables_list_processing').hide();
+                    }
+                });
+            }
+            
             $(function() {
                 $.fn.dataTableExt.oApi.fnGetFilteredNodes = function ( oSettings ) {
                     var anRows = [];
@@ -94,7 +126,8 @@
                                     "<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\"" +
                                     "href='<?php echo osc_admin_base_url(true); ?>?page=pages&action=delete&id=<?php echo osc_static_page_id(); ?>'>" +
                                     "<?php _e('Delete'); ?></a><?php }; ?></div>",
-                                    '<?php echo $p_body; ?>'
+                                    '<?php echo $p_body; ?>',
+                                    "<img id='up' onclick='order_up(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>'/> <br/><img id='down' onclick='order_down(<?php echo osc_static_page_id(); ?>);' style='cursor:pointer;width:15;height:15px;' src='<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>'/>"
                                   ] <?php echo $last_id != osc_static_page_id() ? ',' : ''; ?>
                         <?php };}; ?>
                               ],
@@ -106,14 +139,21 @@
                          "bSearchable": false
                          },
                         {"sTitle": "<?php _e('Name'); ?>",
+                         "bSortable": false,
                          "sWidth": "30%"
                         },
-                        {"sTitle": "<?php _e('Description'); ?>" }
+                        {"sTitle": "<?php _e('Description'); ?>",
+                            "bSortable": false
+                        },
+                        {"sTitle": "Order",
+                         "bSortable": false,
+                         "sWidth": "30px"
+                        }
                     ]
                 });
             });
         </script>
-        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
         <div id="content">
             <div id="separator"></div>
 
@@ -121,7 +161,7 @@
 
             <div id="right_column">
                 <div id="content_header" class="content_header">
-                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url() ; ?>images/pages-icon.png" alt="" title=""/></div>
+                    <div style="float: left;"><img src="<?php echo osc_current_admin_theme_url('images/pages-icon.png') ; ?>" alt="" title=""/></div>
                     <div id="content_header_arrow">&raquo; <?php _e('Pages') ; ?></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=pages&action=add" id="button_open"><?php _e('Create page') ; ?></a>
                     <div style="clear: both;"></div>
@@ -139,8 +179,11 @@
                     <button id="bulk_apply" class="display"><?php _e('Apply') ; ?></button>
                 </div>
 
+                
+
                 <form id="datatablesForm" action="<?php echo osc_admin_base_url(true); ?>?page=pages" method="post">
                     <input type="hidden" name="action" value="delete" />
+                    <div id="datatables_list_processing" class="dataTables_processing" style="display:none;z-index:3;"><?php _e('Processing'); ?>...</div>
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatables_list"></table>
                     <br />
                 </form>
@@ -155,10 +198,23 @@
                     $('#datatables_list tr').live('mouseleave', function(event) {
                         $('#datatables_quick_edit', this).hide();
                     });
+
+                    $('#up').live('mouseover', function(event) {
+                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_up_dark.png');?>');
+                    });
+                    $('#down').live('mouseover', function(event) {
+                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_down_dark.png');?>');
+                    });
+                    $('#up').live('mouseleave', function(event) {
+                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_up.png');?>');
+                    });
+                    $('#down').live('mouseleave', function(event) {
+                        $(this).attr('src', '<?php echo osc_current_admin_theme_url('images/arrow_down.png');?>');
+                    });
 	        });
             </script>
             <div style="clear: both;"></div>
         </div> <!-- end of container -->
         <?php osc_current_admin_theme_path('footer.php') ; ?>
     </body>
-</html>				
+</html>

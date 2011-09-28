@@ -31,32 +31,33 @@
             echo '</select>' ;
         }
 
-        static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false) {
-            echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . $value . '" ' ;
+        static protected function generic_input_text($name, $value, $maxLength = null, $readOnly = false, $autocomplete = true) {
+            echo '<input id="' . $name . '" type="text" name="' . $name . '" value="' . htmlentities($value, ENT_COMPAT, "UTF-8") . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
+            if (!$autocomplete) echo ' autocomplete="off" ';
             if ($readOnly) echo 'disabled readonly ' ;
             echo '/>' ;
         }
 
         static protected function generic_password($name, $value, $maxLength = null, $readOnly = false) {
-            echo '<input id="' . $name . '" type="password" name="' . $name . '" value="' . $value . '" ' ;
+            echo '<input id="' . $name . '" type="password" name="' . $name . '" value="' . htmlentities($value, ENT_COMPAT, "UTF-8") . '" ' ;
             if (isset($maxLength)) echo 'maxlength="' . $maxLength . '" ' ;
             if ($readOnly) echo 'disabled readonly ' ;
             echo '/>' ;
         }
 
         static protected function generic_input_hidden($name, $value) {
-            echo '<input id="' . $name . '" type="hidden" name="' . $name . '" value="' . $value . '" />' ;
+            echo '<input id="' . $name . '" type="hidden" name="' . $name . '" value="' . htmlentities($value, ENT_COMPAT, "UTF-8") . '" />' ;
         }
 
         static protected function generic_input_checkbox($name, $value, $checked = false) {
-            echo '<input id="' . $name . '" type="checkbox" name="' . $name . '" value="' . $value . '" ' ;
+            echo '<input id="' . $name . '" type="checkbox" name="' . $name . '" value="' . htmlentities($value, ENT_COMPAT, "UTF-8") . '" ' ;
             if ($checked) echo 'checked="checked" ' ;
             echo '/>' ;
         }
 
         static protected function generic_textarea($name, $value) {
-            echo '<textarea id="' . $name . '" name="' . $name . '" rows="10"/>' . $value . '</textarea>' ;
+            echo '<textarea id="' . $name . '" name="' . $name . '" rows="10">' . $value . '</textarea>' ;
         }
 
     }

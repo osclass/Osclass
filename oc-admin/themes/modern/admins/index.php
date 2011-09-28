@@ -77,7 +77,7 @@
                                             [
                                                     "<input type='checkbox' name='id[]' value='<?php echo $a['pk_i_id']; ?>' />",
                                                     "<?php echo $a['s_username']; ?>&nbsp;<div id='datatables_quick_edit'><a href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=edit&amp;id=<?php echo $a['pk_i_id']; ?>'><?php _e('Edit'); ?></a> | <a onclick=\"javascript:return confirm('<?php _e('This action can\\\\\'t be undone. Are you sure you want to continue?'); ?>')\" href='<?php echo osc_admin_base_url(true); ?>?page=admins&action=delete&amp;id[]=<?php echo $a['pk_i_id']; ?>'><?php _e('Delete'); ?></a></div>",
-                                                    "<?php echo $a['s_name']; ?>",
+                                                    "<?php echo addcslashes($a['s_name'], '"'); ?>",
                                                     "<?php echo $a['s_email']; ?>"
                                             ] <?php echo $last_id != $a['pk_i_id'] ? ',' : ''; ?>
                                     <?php } ?>
@@ -99,14 +99,14 @@
                     });
                 });
         </script>
-        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url() ; ?>js/datatables.post_init.js"></script>
+        <script type="text/javascript" src="<?php echo  osc_current_admin_theme_url('js/datatables.post_init.js') ; ?>"></script>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/admin-icon.png" title="" alt="" />
+                        <img src="<?php echo  osc_current_admin_theme_url('images/admin-icon.png') ; ?>" title="" alt="" />
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Admins'); ?></div>
                     <a href="<?php echo osc_admin_base_url(true); ?>?page=admins&action=add" id="button_open"><?php _e('Add new admin') ; ?></a>

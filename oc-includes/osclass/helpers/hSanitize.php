@@ -19,15 +19,25 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- 
+     /**
+    * Helper Sanitize
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
     /**
      * Sanitize a website URL.
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_url($value) {
-        return filter_var($value, FILTER_SANITIZE_URL);
+        if(!function_exists('filter_var')) { 
+            return preg_replace('|([^a-zA-Z0-9\$\-\_\.\+!\*\'\(\),{}\|\^~\[\]`"#%;\/\?:@=<>\\\&]*)|', '', $value);
+        } else {
+            return filter_var($value, FILTER_SANITIZE_URL);
+        }
     }
 
 
@@ -36,7 +46,7 @@
      * Capitalize first letter of each name.
      * If all-caps, remove all-caps.
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_name($value) {
@@ -47,7 +57,7 @@
     /**
      * Sanitize string that's all-caps
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_allcaps($value) {
@@ -61,7 +71,7 @@
     /**
      * Sanitize number (with no periods)
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_int($value) {
@@ -76,7 +86,7 @@
      * Format phone number. Supports 10-digit with extensions,
      * and defaults to international if cannot match US number.
      * 
-     * @param <string> $value value to sanitize
+     * @param string $value value to sanitize
      * @return string sanitized
      */
     function osc_sanitize_phone($value) {

@@ -79,7 +79,6 @@
                     $this->redirectTo(osc_admin_base_url(true)."?page=emails?action=edit&id=" . $id);
                     break;
                 default:
-
                     $this->_exportVariableToView("prefLocale", osc_current_admin_locale());
                     $this->_exportVariableToView("emails", $this->emailManager->listAll(1));
                     $this->doView("emails/index.php");
@@ -90,6 +89,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

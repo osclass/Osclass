@@ -19,6 +19,20 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Translation
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
+     * Translate strings
+     *
+     * @param string $key
+     * @param string $domain
+     * @return string
+     */
     function __($key, $domain = 'core') {
         $gt = Translation::newInstance()->_get($domain);
         
@@ -28,6 +42,13 @@
         return $gt->translate($key);
     }
 
+    /**
+     * Translate strings (echo them)
+     *
+     * @param string $key
+     * @param string $domain
+     * @return string
+     */
     function _e($key, $domain = 'core') {
         $gt = Translation::newInstance()->_get($domain);
 
@@ -39,8 +60,48 @@
         return '';
     }
 
+    /**
+     * Translate string (flash messages)
+     *
+     * @param string $key
+     * @return string
+     */
     function _m($key) {
         return __($key, 'messages');
+    }
+
+    /**
+     * Retrieve the singular or plural translation of the string.
+     *
+     * @since 2.2
+     *
+     * @param string $single_key
+     * @param string $plural_key
+     * @param int $count
+     * @param string $domain
+     * @return string
+     */
+    function _n($single_key, $plural_key, $count, $domain = 'core') {
+        $gt = Translation::newInstance()->_get($domain);
+
+        if(!$gt) {
+            return $key;
+        }
+        return $gt->ngettext($single_key, $plural_key, $count);
+    }
+
+    /**
+     * Retrieve the singular or plural translation of the string.
+     *
+     * @since 2.2
+     *
+     * @param string $single_key
+     * @param string $plural_key
+     * @param int $count
+     * @return string
+     */
+    function _mn($single_key, $plural_key, $count) {
+        return _n($single_key, $plural_key, $count, 'messages');
     }
 
 ?>

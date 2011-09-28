@@ -43,7 +43,7 @@
         public function __construct() {
             parent::__construct();
 
-            $this->columns      = array('pk_i_id', 's_internal_name', 'b_indelible', 'dt_pub_date, dt_mod_date');
+            $this->columns      = array('pk_i_id', 's_internal_name', 'b_indelible', 'dt_pub_date, dt_mod_date', 'i_order');
             $this->columns_desc = array('fk_i_pages_id', 'fk_c_locale_code', 's_title', 's_text');
         }
 
@@ -128,6 +128,26 @@
         }
 
         /**
+         * Find a page by order.
+         *
+         * @param int order
+         * @return array It returns page fields. If it has no results, it returns an empty array.
+         */
+        public function findByOrder($order, $locale = null)
+        {
+            $sql = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->getTableName();
+            $sql .= ' WHERE i_order = ' . $order . ' AND b_indelible = 0';
+            $row = $this->conn->osc_dbFetchResult($sql);
+
+            if(count($row) == 0) {
+                return array();
+            }
+
+            $result = $this->extendDescription($row, $locale);
+            return $result;
+        }
+
+        /**
          * Get all the pages with the parameters you choose.
          *
          * @param bool $indelible It's true if the page is indelible and false if not.
@@ -153,6 +173,8 @@
                 }
                 $sql .= implode(' AND ', $aResultConditions);
             }
+
+            $sql .= " ORDER BY i_order ASC ";
 
             if(!is_null($limit)) {
                 $sql .= ' LIMIT ';
@@ -218,6 +240,11 @@
          */
         public function deleteByPrimaryKey($id)
         {
+            $row = $this->findByPrimaryKey($id);
+            $order = $row['i_order'];
+            
+            $this->reOrderPages($order);
+
             $this->conn->osc_dbExec('DELETE FROM %s WHERE fk_i_pages_id = %d', $this->getDescriptionTableName(), $id);
             $result = $this->delete(array('pk_i_id' => $id));
             if($result > 0) {
@@ -234,13 +261,32 @@
          */
         public function deleteByInternalName($intName)
         {
-            $row = $this->conn->findByInternalName($intName);
+            $row = $this->findByInternalName($intName);
+            $order = $row['i_order'];
 
             if(!isset($row)) {
                 return false;
             }
 
-            return $this->deleteByPrimaryKey($id);
+            $this->reOrderPages($order);
+            
+            return $this->deleteByPrimaryKey($row['pk_i_id']);
+        }
+
+        /**
+         * Order pages from $order
+         *
+         * @param int $order
+         */
+        private function reOrderPages($order)
+        {
+            $aPages = $this->listAll(false);
+            foreach($aPages as $page){
+                if($page['i_order'] > $order){
+                    $new_order = $page['i_order']-1;
+                    $this->update(array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
+                }
+            }
         }
 
         /**
@@ -252,9 +298,17 @@
          */
         public function insert($aFields, $aFieldsDescription = null)
         {
-            $sql = 'INSERT INTO ' . $this->getTableName() . ' (s_internal_name, b_indelible, dt_pub_date, dt_mod_date)';
+            $sql = "SELECT MAX(i_order) as o FROM ". $this->getTableName() ." WHERE b_indelible = 0";
+            $lastPage = $this->conn->osc_dbFetchResult($sql);
+
+            $order = $lastPage['o'];
+            if( is_null($order) ){
+                $order = -1;
+            }
+
+            $sql = 'INSERT INTO ' . $this->getTableName() . ' (s_internal_name, b_indelible, dt_pub_date, dt_mod_date, i_order)';
             $sql .= ' VALUES (\'' . $aFields['s_internal_name'] . '\', ' . '\'' . $aFields['b_indelible'] . '\'';
-            $sql .= ', NOW(), NOW())';
+            $sql .= ', \''.date('Y-m-d H:i:s').'\', \''.date('Y-m-d H:i:s').'\', '.($order+1).')';
 
             $this->conn->osc_dBExec($sql);
 
@@ -362,7 +416,7 @@
         public function updateInternalName($id, $intName)
         {
             $fields = array('s_internal_name' => $intName,
-                             'dt_mod_date'    => DB_FUNC_NOW);
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
             $result = $this->update($fields, $where);

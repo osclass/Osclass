@@ -51,6 +51,11 @@
                     $id = Params::getParam("id");
                     $s_internal_name = Params::getParam("s_internal_name");
 
+                    if( !WebThemes::newInstance()->isValidPage($s_internal_name) ) {
+                        osc_add_flash_error_message( _m('You have to set a different internal name'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=pages?action=edit&id=" . $id);
+                    }
+
                     $aFieldsDescription = array();
                     $postParams = Params::getParamsAsArray();
                     $not_empty = false;
@@ -84,9 +89,19 @@
                     $this->doView("pages/frm.php");
                     break;
                 case 'add_post':
+                    // setForm just in case the form fails
+                    foreach (Params::getParamsAsArray() as $k => $v) {
+                        Session::newInstance()->_setForm($k, $v);
+                    }
+
                     $s_internal_name = Params::getParam("s_internal_name");
                     if($s_internal_name=='') {
                         osc_add_flash_error_message( _m('You have to set an internal name'), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
+                    }
+
+                    if( !WebThemes::newInstance()->isValidPage($s_internal_name) ) {
+                        osc_add_flash_error_message( _m('You have to set a different internal name'), 'admin');
                         $this->redirectTo(osc_admin_base_url(true)."?page=pages&action=add");
                     }
 
@@ -175,7 +190,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
-
 ?>

@@ -17,15 +17,6 @@
      */
 
     $new_item = __get("new_item");
-    $users = __get("users");
-    $categories = __get("categories");
-    $countries = __get("countries");
-    $regions = __get("regions");
-    $cities = __get("cities");
-    $currencies = __get("currencies");
-    $locales = __get("locales");
-    $item = __get("item");
-    $resources = __get("resources");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -36,8 +27,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e("Items");?></div>
-
         <script type="text/javascript">
             document.write('<style type="text/css">.tabber{display:none;}<\/style>');
             $(document).ready(function(){
@@ -53,10 +42,31 @@
                 } else {
                     $("#contact_info").hide();
                 }
-                $('textarea, button,select, input:file').uniform();
+                if (typeof $.uniform != 'undefined') {
+                    $('textarea, button,select, input:file').uniform();
+                }
             });
         </script>
-        <?php ItemForm::location_javascript('admin'); ?>
+        <script type="text/javascript">
+            setInterval("uniform_input_file()", 250);
+            function uniform_input_file(){
+                photos_div = $('div.photos');
+                $('div',photos_div).each(
+                    function(){
+                        if( $(this).find('div.uploader').length == 0  ){
+                            divid = $(this).attr('id');
+                            if(divid != 'photos'){
+                                divclass = $(this).hasClass('box');
+                                if( !$(this).hasClass('box') & !$(this).hasClass('uploader') & !$(this).hasClass('row')){
+                                    $("div#"+$(this).attr('id')+" input:file").uniform({fileDefaultText: fileDefaultText,fileBtnText: fileBtnText});
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        </script>
+        <?php ItemForm::location_javascript_new('admin'); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
         <div id="content">
             <div id="separator"></div>
@@ -64,68 +74,68 @@
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 
             <div id="right_column">
+                <?php osc_show_flash_message('admin') ; ?>
                 <div class="content_header" id="content_header">
                     <div style="float: left;">
-                        <img alt="" title="" src="http://localhost/osclass/oc-admin/themes/modern/images/new-folder-icon.png">
+                        <img alt="" title="" src="<?php echo osc_current_admin_theme_url('images/new-folder-icon.png') ; ?>">
                     </div>
                     <div id="content_header_arrow">» <?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?></div>
                     <div style="clear: both;"></div>
                 </div>
 
                 <div id="add_item_form" class="item-form">
+                    <h1 style="display: none;"><?php if($new_item) { _e('New item'); } else { _e('Edit item'); } ?></h1>
                     <ul id="error_list"></ul>
-                    <form name="item" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data">
+                    <form name="item" action="<?php echo osc_admin_base_url(true); ?>" method="post" enctype="multipart/form-data" >
                         <input type="hidden" name="page" value="items" />
                         <?php if($new_item) { ?>
                             <input type="hidden" name="action" value="post_item" />
                         <?php } else { ?>
                             <input type="hidden" name="action" value="item_edit_post" />
-                            <input type="hidden" name="id" value="<?php echo $item['pk_i_id']; ?>" />
-                            <input type="hidden" name="secret" value="<?php echo $item['s_secret']; ?>" />
+                            <input type="hidden" name="id" value="<?php echo osc_item_id() ;?>" />
+                            <input type="hidden" name="secret" value="<?php echo osc_item_secret() ;?>" />
                         <?php }; ?>
 
                         <div class="user-post">
                             <h2><?php _e('User'); ?></h2>
                             <label><?php _e('Item posted by'); ?></label>
-                            <?php ItemForm::user_select($users, $item, __('Non-registered user')); ?>
+                            <?php ItemForm::user_select(null, null, __('Non-registered user')); ?>
                             <div  id="contact_info">
                                 <label for="contactName"><?php _e('Name'); ?></label>
-                                <?php ItemForm::contact_name_text($item) ; ?><br/>
+                                <?php ItemForm::contact_name_text() ; ?><br/>
                                 <label for="contactEmail"><?php _e('E-Mail'); ?></label>
-                                <?php ItemForm::contact_email_text($item); ?>
+                                <?php ItemForm::contact_email_text(); ?>
                             </div>
                         </div>
-
                         <h2>
                             <?php _e('General information'); ?>
                         </h2>
                         <label for="catId">
                             <?php _e('Category') ?>:
                         </label>
-                        <?php ItemForm::category_select($categories, $item); ?>
+                        <?php ItemForm::category_select(); ?>
 
-                        <?php ItemForm::multilanguage_title_description($locales, $item); ?>
+                        <?php ItemForm::multilanguage_title_description(osc_get_locales()); ?>
 
                         <?php if(osc_price_enabled_at_items()) { ?>
                             <div class="_200 auto">
                                 <h2><?php _e('Price'); ?></h2>
-                                <?php ItemForm::price_input_text($item); ?>
-                                <?php ItemForm::currency_select($currencies, $item); ?>
+                                <?php ItemForm::price_input_text(); ?>
+                                <?php ItemForm::currency_select(); ?>
                             </div>
                         <?php } ?>
 
                         <?php if(osc_images_enabled_at_items()) { ?>
-                            <div>
+                            <div class="photos">
                                 <h2><?php _e('Photos') ; ?></h2>
+                                <?php ItemForm::photos(); ?>
                                 <div id="photos">
-                                    <?php foreach($resources as $_r) {?>
-                                        <div id="<?php echo $_r['pk_i_id'];?>" fkid="<?php echo $_r['fk_i_item_id'];?>" name="<?php echo $_r['s_name'];?>">
-                                            <img src="<?php echo osc_base_url().$_r['s_path'].$_r['pk_i_id']."_thumbnail.".$_r['s_extension']; ?>" /><a onclick="deleteResource(<?php echo $_r['pk_i_id'];?>)" style="cursor:pointer;" class="delete"><?php _e('Delete'); ?></a>
-                                        </div>
-                                    <?php } ?>
+                                    
+                                    <?php if(osc_max_images_per_item()==0 || (osc_max_images_per_item()!=0 && osc_count_item_resources() < osc_max_images_per_item())) { ?>
                                     <div>
                                         <input type="file" name="photos[]" /> (<?php _e('optional'); ?>)
                                     </div>
+                                    <?php }; ?>
                                 </div>
                                 <p><a style="font-size: small;" href="#" onclick="addNewPhoto(); return false;"><?php _e('Add new photo') ; ?></a></p>
                             </div>
@@ -136,23 +146,23 @@
                             <h2><?php _e('Location'); ?></h2>
                             <div class="row">
                                 <label><?php _e('Country'); ?></label>
-                                <?php ItemForm::country_select($countries, $item) ; ?>
+                                <?php ItemForm::country_select() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Region'); ?></label>
-                                <?php ItemForm::region_select($regions, $item) ; ?>
+                                <?php ItemForm::region_text() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City'); ?></label>
-                                <?php ItemForm::city_select($cities, $item) ; ?>
+                                <?php ItemForm::city_text() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('City area'); ?></label>
-                                <?php ItemForm::city_area_text($item) ; ?>
+                                <?php ItemForm::city_area_text() ; ?>
                             </div>
                             <div class="row">
                                 <label><?php _e('Address'); ?></label>
-                                <?php ItemForm::address_text($item) ; ?>
+                                <?php ItemForm::address_text() ; ?>
                             </div>
                         </div>
 
@@ -167,8 +177,8 @@
                             <button type="submit"><?php if($new_item) { _e('Add item'); } else { _e('Update'); } ?></button>
                             <button type="button" onclick="window.location='<?php echo osc_admin_base_url(true);?>?page=items';" ><?php _e('Cancel'); ?></button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
 
         </div>

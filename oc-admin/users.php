@@ -120,16 +120,16 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'activate':        //activate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
                                             osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
+                                        $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
-                                            $conditions = array('pk_i_id' => $id);
-                                            $values     = array('b_enabled' => 1);
-                                            $iUpdated  += $this->userManager->update($values, $conditions);
+                                            $iUpdated   += $userActions->activate($id);
                                         }
 
                                         switch ($iUpdated) {
@@ -145,16 +145,16 @@
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
                 case 'deactivate':      //deactivate
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $iUpdated = 0;
                                         $userId   = Params::getParam('id');
                                         if(!is_array($userId)) {
                                             osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
                                         }
 
+                                        $userActions = new UserActions(true) ;
                                         foreach($userId as $id) {
-                                            $conditions = array('pk_i_id' => $id);
-                                            $values     = array('b_enabled' => 0);
-                                            $iUpdated  += $this->userManager->update($values, $conditions);
+                                            $iUpdated   += $userActions->deactivate($id);
                                         }
 
                                         switch ($iUpdated) {
@@ -169,6 +169,56 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
+                case 'enable':
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->enable($id);
+                                        }
+
+                                        switch ($iUpdated) {
+                                            case (0):   $msg = _m('No user has been enabled');
+                                            break;
+                                            case (1):   $msg = _m('One user has been enabled');
+                                            break;
+                                            default:    $msg = sprintf(_m('%s users have been enabled'), $iUpdated);
+                                            break;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
+                case 'disable':
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
+                                        $iUpdated = 0;
+                                        $userId   = Params::getParam('id');
+                                        if(!is_array($userId)) {
+                                            osc_add_flash_error_message(_m('User id isn\'t in the correct format'), 'admin');
+                                        }
+
+                                        $userActions = new UserActions(true) ;
+                                        foreach($userId as $id) {
+                                            $iUpdated   += $userActions->disable($id);
+                                        }
+
+                                        switch ($iUpdated) {
+                                            case (0):   $msg = _m('No user has been disabled');
+                                            break;
+                                            case (1):   $msg = _m('One user has been disabled');
+                                            break;
+                                            default:    $msg = sprintf(_m('%s users have been disabled'), $iUpdated);
+                                            break;
+                                        }
+
+                                        osc_add_flash_ok_message($msg, 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users');
+                break;
                 case 'delete':          //delete
                                         $iDeleted = 0;
                                         $userId   = Params::getParam('id');
@@ -177,6 +227,8 @@
                                         }
 
                                         foreach($userId as $id) {
+                                            $user = $this->userManager->findByPrimaryKey($id);
+                                            Log::newInstance()->insertLog('user', 'delete', $id, $user['s_email'], 'admin', osc_logged_admin_id());
                                             if($this->userManager->deleteUser($id)) {
                                                 $iDeleted++;
                                             }
@@ -194,6 +246,34 @@
                                         osc_add_flash_ok_message($msg, 'admin');
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=users');
                 break;
+                case ('settings'):         // calling the users settings view
+                                        $this->doView('users/settings.php');
+                break;
+                case ('settings_post'):    // updating users
+                                        $iUpdated                = 0;
+                                        $enabledUserValidation   = Params::getParam('enabled_user_validation');
+                                        $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
+                                        $enabledUserRegistration = Params::getParam('enabled_user_registration');
+                                        $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
+                                        $enabledUsers            = Params::getParam('enabled_users');
+                                        $enabledUsers            = (($enabledUsers != '') ? true : false);
+                                        $notifyNewUser           = Params::getParam('notify_new_user');
+                                        $notifyNewUser           = (($notifyNewUser != '') ? true : false);
+
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
+                                                                                      ,array('s_name'  => 'enabled_user_validation'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
+                                                                                      ,array('s_name'  => 'enabled_user_registration'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
+                                                                                      ,array('s_name'  => 'enabled_users'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewUser)
+                                                                                      ,array('s_name'  => 'notify_new_user'));
+
+                                        if($iUpdated > 0) {
+                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
+                                        }
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=users&action=settings');
+                break;
                 default:                // manage users view
                                         $aUsers = $this->userManager->listAll();
 
@@ -206,6 +286,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

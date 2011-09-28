@@ -25,12 +25,9 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Admins'); ?></div>
         <div id="content">
             <div id="separator"></div>
-
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
-
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
@@ -57,7 +54,7 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
-                                    <legend><?php _e('E-mail'); ?></legend>
+                                    <legend><?php _e('E-mail'); ?> (<?php _e('required'); ?>)</legend>
                                     <input type="text" name="s_email" id="s_email" />
                                 </fieldset>
                             </div>

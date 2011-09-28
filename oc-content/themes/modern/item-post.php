@@ -21,7 +21,7 @@
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="noindex, nofollow" />
@@ -29,8 +29,27 @@
         
         <!-- only item-post.php -->
         <script type="text/javascript" src="<?php echo osc_current_web_theme_js_url('jquery.validate.min.js') ; ?>"></script>
-        <?php ItemForm::location_javascript(); ?>
+        <?php ItemForm::location_javascript_new(); ?>
         <?php if(osc_images_enabled_at_items()) ItemForm::photos_javascript(); ?>
+        <script type="text/javascript">
+            setInterval("uniform_input_file()", 250);
+            function uniform_input_file(){
+                photos_div = $('div.photos');
+                $('div',photos_div).each(
+                    function(){
+                        if( $(this).find('div.uploader').length == 0  ){
+                            divid = $(this).attr('id');
+                            if(divid != 'photos'){
+                                divclass = $(this).hasClass('box');
+                                if( !$(this).hasClass('box') & !$(this).hasClass('uploader') & !$(this).hasClass('row')){
+                                    $("div#"+$(this).attr('id')+" input:file").uniform({fileDefaultText: fileDefaultText,fileBtnText: fileBtnText});
+                                }
+                            }
+                        }
+                    }
+                );
+            }
+        </script>
         <!-- end only item-post.php -->
     </head>
     <body>
@@ -47,7 +66,7 @@
                             <h2><?php _e('General Information', 'modern'); ?></h2>
                             <div class="row">
                                 <label for="catId"><?php _e('Category', 'modern'); ?> *</label>
-                                <?php ItemForm::category_select(); ?>
+                                <?php ItemForm::category_select(null, null, __('Select a category', 'modern')); ?>
                             </div>
                             <div class="row">
                                 <?php ItemForm::multilanguage_title_description(); ?>
@@ -75,16 +94,16 @@
                         <div class="box location">
                             <h2><?php _e('Item Location', 'modern'); ?></h2>
                             <div class="row">
-                                <label for="countryId"><?php _e('Country', 'modern'); ?> *</label>
+                                <label for="countryId"><?php _e('Country', 'modern'); ?></label>
                                 <?php ItemForm::country_select(osc_get_countries(), osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="regionId"><?php _e('Region', 'modern'); ?> *</label>
-                                <?php ItemForm::region_select(osc_get_regions(), osc_user()) ; ?>
+                                <label for="regionId"><?php _e('Region', 'modern'); ?></label>
+                                <?php ItemForm::region_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
-                                <label for="city"><?php _e('City', 'modern'); ?> *</label>
-                                <?php ItemForm::city_select(osc_get_cities(), osc_user()) ; ?>
+                                <label for="city"><?php _e('City', 'modern'); ?></label>
+                                <?php ItemForm::city_text(osc_user()) ; ?>
                             </div>
                             <div class="row">
                                 <label for="city"><?php _e('City Area', 'modern'); ?></label>
@@ -116,6 +135,14 @@
                         </div>
                         <?php }; ?>
                         <?php ItemForm::plugin_post_item(); ?>
+                        <?php if( osc_recaptcha_items_enabled() ) {?>
+                        <div class="box">
+                            <div class="row">
+                                <?php osc_show_recaptcha(); ?>
+                            </div>
+                        </div>
+                        <?php }?>
+                        
                     <div class="clear"></div>
                     <button  type="submit"><?php _e('Publish', 'modern'); ?></button>
                     </fieldset>

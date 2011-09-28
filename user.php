@@ -1,6 +1,5 @@
 <?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
 
-
     /**
      * OSClass – software for creating and publishing online classified advertising platforms
      *
@@ -23,6 +22,10 @@
 
         function __construct() {
             parent::__construct() ;
+            if( !osc_users_enabled() ) {
+                osc_add_flash_error_message( _m('Users not enabled') ) ;
+                $this->redirectTo(osc_base_url(true));
+            }
         }
 
         //Business Layer...
@@ -30,7 +33,7 @@
             switch( $this->action ) {
                 case('dashboard'):      //dashboard...
                                         $max_items = (Params::getParam('max_items')!='')?Params::getParam('max_items'):5;
-                                        $aItems = Item::newInstance()->findByUserID(Session::newInstance()->_get('userId'), 0, $max_items);//Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));
+                                        $aItems = Item::newInstance()->findByUserIDEnabled(Session::newInstance()->_get('userId'), 0, $max_items);//Item::newInstance()->listWhere("fk_i_user_id = ".Session::newInstance()->_get('userId'));
                                         //calling the view...
                                         $this->_exportVariableToView('items', $aItems) ;
                                         $this->_exportVariableToView('max_items', $max_items) ;
@@ -66,13 +69,7 @@
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->edit( $userId ) ;
 
-                                        // This has been moved to special area (only password changes)
-                                        /*if( $success == 1 ) {
-                                            osc_add_flash_error_message( _m('Passwords don\'t match') ) ;
-                                        } else {*/
-                                            osc_add_flash_ok_message( _m('Your profile has been updated successfully') ) ;
-                                        //}
-
+                                        osc_add_flash_ok_message( _m('Your profile has been updated successfully') ) ;
                                         $this->redirectTo( osc_user_profile_url() ) ;
                 break ;
                 case('alerts'):         //alerts
@@ -99,64 +96,24 @@
                                                 } else {
                                                     $user = User::newInstance()->findByEmail(Params::getParam('new_email'));
                                                     if(!isset($user['pk_i_id'])) {
-                                                        if( osc_user_validation_enabled() )
-                                                        {
-                                                            $userEmailTmp = array() ;
-                                                            $userEmailTmp['fk_i_user_id'] = Session::newInstance()->_get('userId') ;
-                                                            $userEmailTmp['s_new_email'] = Params::getParam('new_email') ;
+                                                        $userEmailTmp = array() ;
+                                                        $userEmailTmp['fk_i_user_id'] = Session::newInstance()->_get('userId') ;
+                                                        $userEmailTmp['s_new_email'] = Params::getParam('new_email') ;
 
-                                                            UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
+                                                        UserEmailTmp::newInstance()->insertOrUpdate($userEmailTmp) ;
 
-                                                            $code = osc_genRandomPassword(30) ;
-                                                            $date = date('Y-m-d H:i:s') ;
+                                                        $code = osc_genRandomPassword(30) ;
+                                                        $date = date('Y-m-d H:i:s') ;
 
-                                                            $userManager = new User() ;
-                                                            $userManager->update (
-                                                                array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR'] )
-                                                                ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
-                                                            );
+                                                        $userManager = new User() ;
+                                                        $userManager->update (
+                                                            array( 's_pass_code' => $code, 's_pass_date' => $date, 's_pass_ip' => $_SERVER['REMOTE_ADDR'] )
+                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
+                                                        );
 
-                                                            $locale = osc_current_user_locale() ;
-                                                            $aPage = Page::newInstance()->findByInternalName('email_new_email') ;
-                                                            if(isset($aPage['locale'][$locale]['s_title'])) {
-                                                                $content = $aPage['locale'][$locale] ;
-                                                            } else {
-                                                                $content = current($aPage['locale']) ;
-                                                            }
-
-                                                            if (!is_null($content)) {
-                                                                $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
-
-                                                                $words = array() ;
-                                                                $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_URL}', '{WEB_TITLE}', '{VALIDATION_LINK}', '{VALIDATION_URL}') ;
-                                                                $words[] = array(Session::newInstance()->_get('userName'), Params::getParam('new_email'), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>', osc_page_title(), '<a href="' . $validation_url . '" >' . $validation_url . '</a>', $validation_url ) ;
-                                                                $title = osc_mailBeauty($content['s_title'], $words) ;
-                                                                $body = osc_mailBeauty($content['s_text'], $words) ;
-
-                                                                $params = array(
-                                                                    'subject' => $title
-                                                                    ,'to' => Params::getParam('new_email')
-                                                                    ,'to_name' => Session::newInstance()->_get('userName')
-                                                                    ,'body' => $body
-                                                                    ,'alt_body' => $body
-                                                                ) ;
-                                                                osc_sendMail($params) ;
-                                                                osc_add_flash_ok_message( _m('We have sent you an e-mail. Follow the instructions to validate the changes')) ;
-                                                            } else {
-                                                                osc_add_flash_error_message( _m('We tried to sent you an e-mail, but it failed. Please, contact the administrator')) ;
-                                                            }
-                                                            $this->redirectTo( osc_user_profile_url() ) ;
-
-                                                        } else {
-
-                                                            User::newInstance()->update(
-                                                                array( 's_email' => Params::getParam('new_email') )
-                                                                ,array( 'pk_i_id' => Params::getParam('userId') )
-                                                            ) ;
-                                                            osc_add_flash_ok_message( _m('Your email has been changed successfully')) ;
-                                                            $this->redirectTo( osc_user_profile_url() ) ;
-
-                                                        }
+                                                        $validation_url = osc_change_user_email_confirm_url( Session::newInstance()->_get('userId'), $code ) ;
+                                                        osc_run_hook('hook_email_new_email', Params::getParam('new_email'), $validation_url);
+                                                        $this->redirectTo( osc_user_profile_url() ) ;
                                                     } else {
                                                         osc_add_flash_error_message( _m('The specified e-mail is already in use')) ;
                                                         $this->redirectTo( osc_change_user_email_url() ) ;
@@ -169,21 +126,28 @@
                 case 'change_password_post':    //change password post
                                                 $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId') ) ;
 
+                                                if( (Params::getParam('password') == '') || (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                                    osc_add_flash_warning_message( _m('Password cannot be blank')) ;
+                                                    $this->redirectTo( osc_change_user_password_url() ) ;
+                                                }
+
                                                 if( $user['s_password'] != sha1( Params::getParam('password') ) ) {
                                                     osc_add_flash_error_message( _m('Current password doesn\'t match')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
-                                                } elseif( !Params::getParam('new_password') ) {
+                                                }
+
+                                                if( !Params::getParam('new_password') ) {
                                                     osc_add_flash_error_message( _m('Passwords can\'t be empty')) ;
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
-                                                } elseif( Params::getParam('new_password') != Params::getParam('new_password2') ) {
+                                                }
+
+                                                if( Params::getParam('new_password') != Params::getParam('new_password2') ) {
                                                     osc_add_flash_error_message( _m('Passwords don\'t match'));
                                                     $this->redirectTo( osc_change_user_password_url() ) ;
                                                 }
 
-                                                User::newInstance()->update(
-                                                            array( 's_password' => sha1( Params::getParam ('new_password') ) )
-                                                            ,array( 'pk_i_id' => Session::newInstance()->_get('userId') )
-                                                    ) ;
+                                                User::newInstance()->update(array( 's_password' => sha1( Params::getParam ('new_password') ) )
+                                                                           ,array( 'pk_i_id' => Session::newInstance()->_get('userId') ) ) ;
 
                                                 osc_add_flash_ok_message( _m('Password has been changed')) ;
                                                 $this->redirectTo( osc_user_profile_url() ) ;
@@ -191,9 +155,9 @@
                 case 'items':                   // view items user
                                                 $itemsPerPage = (Params::getParam('itemsPerPage')!='')?Params::getParam('itemsPerPage'):5;
                                                 $page = (Params::getParam('iPage')!='')?Params::getParam('iPage'):0;
-                                                $total_items = Item::newInstance()->countByUserID($_SESSION['userId']);
+                                                $total_items = Item::newInstance()->countByUserIDEnabled($_SESSION['userId']);
                                                 $total_pages = ceil($total_items/$itemsPerPage);
-                                                $items = Item::newInstance()->findByUserID($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
+                                                $items = Item::newInstance()->findByUserIDEnabled($_SESSION['userId'], $page*$itemsPerPage, $itemsPerPage);
 
                                                 $this->_exportVariableToView('items', $items);
                                                 $this->_exportVariableToView('list_total_pages', $total_pages);
@@ -214,9 +178,9 @@
                     }
 
                     if( $result == 1 ) {
-                        osc_add_flash_message(__('Alert activated.'));
+                        osc_add_flash_ok_message(_m('Alert activated'));
                     }else{
-                        osc_add_flash_message(__('Ops! There was a problem trying to activate alert. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
                     }
 
                     $this->redirectTo( osc_base_url(true) );
@@ -226,9 +190,9 @@
                     $secret = Params::getParam('secret');
                     if($email!='' && $secret!='') {
                         Alerts::newInstance()->delete(array('s_email' => $email, 's_secret' => $secret));
-                        osc_add_flash_ok_message(__('Unsubscribed correctly.'));
+                        osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
-                        osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
                     }
                     $this->redirectTo(osc_user_alerts_url());
                 break;
@@ -251,7 +215,10 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
     }
 

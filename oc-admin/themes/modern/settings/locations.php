@@ -28,18 +28,18 @@
             var s_view_more = '<?php _e('View more'); ?>';
         </script>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
         <div id="content">
             <div id="separator"></div>
             <?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
             <div id="right_column">
                 <div id="content_header" class="content_header">
                     <div style="float: left;">
-                        <img src="<?php echo osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
                     </div>
                     <div id="content_header_arrow">&raquo; <?php _e('Locations'); ?></div>
                     <div style="clear: both;"></div>
@@ -47,12 +47,12 @@
                 <div id="content_separator"></div>
                 <?php osc_show_flash_message('admin') ; ?>
                 <!-- settings form -->
-                <div id="settings_form" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
+                <div id="settings_form" class="locations" style="border: 1px solid #ccc; background: #eee; min-height: 200px; ">
                     <!-- Country -->
                     <div style="float:left; width: 33%; ">
                         <div style="border-bottom: 1px dashed black; padding: 4px 4px 0px; width: 90%;" >
                             <div style="float:left;">
-                                <h3 style="">
+                                <h3>
                                     <?php _e('Countries'); ?>
                                 </h3>
                             </div>
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div style="float:right">
-                                    <a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo $country['s_name'] ; ?>')"><?php _e('View more'); ?> &raquo;</a>
+                                    <a href="javascript:void(0)" onclick="show_region('<?php echo $country['pk_c_code']; ?>', '<?php echo addslashes($country['s_name']) ; ?>')"><?php _e('View more'); ?> &raquo;</a>
                                 </div>
                             </div>
                             <div style="clear:both;"></div>
@@ -143,8 +143,9 @@
                     <label><?php _e('Country code'); ?>: </label><br/>
                     <input type="text" id="c_country" name="c_country" value="" /><br/>
                     <div><small id="c_code_error" style="color: red; display: none;"><?php _e('Country code should have two characters'); ?></small></div>
+                    <?php $locales = OSCLocale::newInstance()->listAllEnabled(); 
+                    if(count($locales)>1) {?>
                     <div class="tabber">
-                    <?php $locales = OSCLocale::newInstance()->listAllEnabled(); ?>
                     <?php foreach($locales as $locale) { ?>
                         <div class="tabbertab">
                             <h2><?php echo $locale['s_name'];?></h2>
@@ -155,6 +156,12 @@
                         </div>
                     <?php }; ?>
                     </div>
+                    <?php } else { ?>
+                        <p>
+                            <label><?php _e('Country'); ?>: </label><br/>
+                            <input type="text" id="country" name="country[<?php echo $locales[0]['pk_c_code'];?>]" value="" />
+                        </p>
+                    <?php }; ?>
                     <div style="margin-top: 8px; text-align: right; ">
                         <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_add_country').css('display','none');$('#fade').css('display','none');"/>
                         <input type="submit" name="submit" value="<?php _e('Add'); ?>" />
@@ -174,6 +181,8 @@
                     <input type="hidden" name="action" value="locations" />
                     <input type="hidden" name="type" value="edit_country" />
                     <input type="hidden" name="country_code" value="" />
+                    <?php $locales = OSCLocale::newInstance()->listAllEnabled();
+                    if(count($locales)>1) { ?>
                     <div class="tabber">
                         <?php $locales = OSCLocale::newInstance()->listAllEnabled(); ?>
                         <?php foreach($locales as $locale) { ?>
@@ -185,7 +194,14 @@
                                     </p>
                             </div>
                         <?php }; ?>
-                        </div>                    <div style="margin-top: 8px; text-align: right; ">
+                        </div>
+                    <?php } else { ?>
+                        <p>
+                            <label><?php _e('Country'); ?>: </label><br/>
+                            <input type="text" id="e_country" name="e_country[<?php echo $locales[0]['pk_c_code'];?>]" value="" />
+                        </p>
+                    <?php }; ?>
+                    <div style="margin-top: 8px; text-align: right; ">
                         <input type="button" value="<?php _e('Cancel'); ?>" onclick="$('#d_edit_country').css('display','none');$('#fade').css('display','none');"/>
                         <input type="submit" name="submit" value="<?php _e('Edit'); ?>" />
                     </div>

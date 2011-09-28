@@ -38,7 +38,11 @@
 
         public function extendCategoryName($items)
         {
-            $prefLocale = osc_current_user_locale();
+            if(defined('OC_ADMIN')) {
+                $prefLocale = osc_current_admin_locale();
+            } else {
+                $prefLocale = osc_current_user_locale();
+            }
 
             $results = array();
             foreach ($items as $item) {
@@ -46,7 +50,7 @@
                 foreach ($descriptions as $desc) {
                     $item['locale'][$desc['fk_c_locale_code']]['s_category_name'] = $desc['s_category_name'];
                 }
-                if (isset($item['locale'][$prefLocale])) {
+                if (isset($item['locale'][$prefLocale]['s_category_name'])) {
                     $item['s_category_name'] = $item['locale'][$prefLocale]['s_category_name'];
                 } else {
                     $data = current($item['locale']);
@@ -60,7 +64,11 @@
 
         public function extendData($items)
         {
-            $prefLocale = osc_current_user_locale();
+            if(defined('OC_ADMIN')) {
+                $prefLocale = osc_current_admin_locale();
+            } else {
+                $prefLocale = osc_current_user_locale();
+            }
 
             $results = array();
             foreach ($items as $item) {
@@ -140,6 +148,12 @@
             $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE l.fk_i_item_id = i.pk_i_id AND %s', $this->getTableName(), DB_TABLE_PREFIX, $sql);
             return $this->extendData($items);
         }
+        
+        public function mostViewed($limit = 10) {
+            $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.*, count(s.i_num_views) as i_num_views, count(s.i_num_premium_views) as i_num_premium_views FROM %s i, %st_item_location l, %st_item_stats s WHERE l.fk_i_item_id = i.pk_i_id AND s.fk_i_item_id = i.pk_i_id GROUP BY s.fk_i_item_id ORDER BY i_num_views DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit);
+            return $this->extendData($items);
+        }
+        
 
         public function findByPrimaryKey($id)
         {
@@ -165,129 +179,6 @@
         public function findByCategoryID($catId)
         {
             return $this->listWhere('fk_i_category_id = %d', $catId);
-        }
-
-        public function list_items($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null)
-        {
-            $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS i.* FROM %st_item i, %st_category c WHERE c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
-
-            $conditions = array();
-            if (!is_null($category)) {
-                $conditions[] = '(c.pk_i_id = ' . $category['pk_i_id'] . ' OR c.fk_i_parent_id = ' . $category['pk_i_id'] . ')';
-                if ($category['i_expiration_days'] > 0) {
-                    $conditions[] = 'DATE_SUB(CURDATE(),INTERVAL ' . $category['i_expiration_days'] . ' DAY) <= i.dt_pub_date';
-                }
-            }
-
-            if (!is_null($active)) {
-                if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
-                    $conditions[] = "e_status = '$active'";
-                }
-            }
-
-            if (count($conditions) > 0) {
-                $sql .= ' AND ';
-                for ($i = 0; $i < count($conditions); $i++) {
-                    $sql .= $conditions[$i];
-                    if ($i < (count($conditions) - 1)) {
-                        $sql .= ' AND ';
-                    }
-                }
-            }
-
-            if ($search) {
-                //$sql .= " AND ";
-                //$sql .= "i.s_title LIKE '%$search%' OR i.s_description LIKE '%$search%'";
-            }
-
-            if ($order_by) {
-                $sql .= ' ORDER BY ' . $order_by['column_name'] . ' ' . $order_by['type'];
-            } else {
-                $sql .= ' ORDER BY i.dt_pub_date DESC';
-            }
-
-            if ($start == 0 && $limit == 0) {
-                $sql .= '';
-            } else {
-                $sql .= ' LIMIT ' . $start . ',' . $limit;
-            }
-            $aItems = $this->conn->osc_dbFetchResults($sql);
-            $found = $this->found_rows();
-            $items = $this->extendData($aItems);
-            $items = $this->extendCategoryName($items);
-
-            return array('found' => $found, 'items' => $items);
-        }
-
-        public function list_items_conditions($category = null, $start = 0, $limit = 10, $conditions = array(), $active = null, $order_by = null, $search = null)
-        {
-            $sql = sprintf('SELECT SQL_CALC_FOUND_ROWS i.* FROM %st_item i, %st_category c WHERE AND c.pk_i_id = i.fk_i_category_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX);
-
-            if (!is_null($category)) {
-                $conditions[] = '(c.pk_i_id = ' . $category['pk_i_id'] . ' OR c.fk_i_parent_id = ' . $category['pk_i_id'] . ')';
-                if ($category['i_expiration_days'] > 0) {
-                    $conditions[] = 'DATE_SUB(CURDATE(),INTERVAL ' . $category['i_expiration_days'] . ' DAY) <= i.dt_pub_date';
-                }
-            }
-
-            if (!is_null($active)) {
-                if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
-                    $conditions[] = "e_status = '$active'";
-                }
-            }
-
-            if (count($conditions) > 0) {
-                $sql .= ' AND ';
-                for ($i = 0; $i < count($conditions); $i++) {
-                    $sql .= $conditions[$i];
-                    if ($i < (count($conditions) - 1)) {
-                        $sql .= ' AND ';
-                    }
-                }
-            }
-
-            if ($search) {
-                //$sql .= " AND ";
-                //$sql .= "i.s_title LIKE '%$search%' OR i.s_description LIKE '%$search%'";
-            }
-
-            if ($order_by) {
-                $sql .= ' ORDER BY ' . $order_by['column_name'] . ' ' . $order_by['type'];
-            } else {
-                $sql .= ' ORDER BY i.dt_pub_date DESC';
-            }
-
-            if ($start == 0 && $limit == 0) {
-                $sql .= '';
-            } else {
-                $sql .= ' LIMIT ' . $start . ',' . $limit;
-            }
-
-            $aItems = $this->conn->osc_dbFetchResults($sql);
-            $found = $this->found_rows();
-            $items = $this->extendData($aItems);
-            $items = $this->extendCategoryName($items);
-
-            return array('found' => $found, 'items' => $items);
-        }
-
-        public function list_premiums($category = null, $start = 0, $limit = 2, $active = null, $order_by = null, $search = null)
-        {
-            $condtions = array();
-            $conditions[] = ' b_premium = 1 ';
-            return list_items_conditions($category, $start, $limit, $conditions, $active, $order_by, $search);
-        }
-
-        public function list_no_premiums($category = null, $start = 0, $limit = 10, $active = null, $order_by = null, $search = null)
-        {
-            $condtions = array();
-            $conditions[] = ' b_premium = 0 ';
-            return list_items_conditions($category, $start, $limit, $conditions, $active, $order_by, $search);
-        }
-
-        public function list_items_with_premiums($category = null, $start = 0, $limit = 10, $premium_start = 0, $premium_limit = 2, $active = null, $order_by = null, $search = null)
-        {
-            $premiums = list_premiums($category, $premium_start, $premium_limit, $active, $order_by, $search);
         }
 
         public function found_rows()
@@ -323,9 +214,11 @@
             return $total_ads['total'];
         }
 
+        // LEAVE THIS FOR COMPATIBILITIES ISSUES (ONLY SITEMAP GENERATOR)
+        // BUT REMEMBER TO DELETE IN ANYTHING > 2.1.x THANKS
         public function listLatest($limit = 10)
         {
-            return $this->listWhere(" e_status = 'ACTIVE' ORDER BY dt_pub_date DESC LIMIT " . $limit);
+            return $this->listWhere(" b_active = 1 AND b_enabled = 1 ORDER BY dt_pub_date DESC LIMIT " . $limit);
         }
 
         public function insertLocale($id, $locale, $title, $description, $what)
@@ -339,7 +232,7 @@
 
         public function listLatestExtended($limit = 10)
         {
-            return $this->conn->osc_dbFetchResults('SELECT * FROM %s, %st_item_location WHERE %st_item.e_status = \'%s\' AND %st_item_location.fk_i_item_id = %st_item.pk_i_id  ORDER BY %st_item.dt_pub_date DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, 'ACTIVE', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit) ;
+            return $this->conn->osc_dbFetchResults('SELECT * FROM %s, %st_item_location WHERE %st_item.b_active = 1 AND %st_item.b_enabled = 1 AND %st_item_location.fk_i_item_id = %st_item.pk_i_id  ORDER BY %st_item.dt_pub_date DESC LIMIT %d', $this->getTableName(), DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $limit) ;
         }
 
         public function listAllWithCategories()
@@ -376,8 +269,14 @@
             } else {
                 $limit_text = ' LIMIT '.$start.", ".$end;
             }
-            $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.e_status = \'ACTIVE\' AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
+            $items = $this->conn->osc_dbFetchResults('SELECT l.*, i.* FROM %s i, %st_item_location l WHERE i.b_enabled = 1 AND l.fk_i_item_id = i.pk_i_id AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC %s', $this->getTableName(), DB_TABLE_PREFIX, $userId, $limit_text);
             return $this->extendData($items);
+        }
+
+        public function countByUserIDEnabled($userId)
+        {
+            $items = $this->conn->osc_dbFetchResult('SELECT count(i.pk_i_id) as total FROM %s i WHERE i.b_enabled = 1 AND i.fk_i_user_id = %d ORDER BY i.pk_i_id DESC ', $this->getTableName(), $userId);
+            return $items['total'];
         }
 
         public function listLocations($scope)
@@ -402,71 +301,33 @@
             return $results;
         }
 
-        public function findByItemStat($stat)
-        {
-            switch($stat) {
-                case 'spam':
-                    $sql = "SELECT i.*, s.i_num_spam as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_spam` > 0";
-                    break;
-
-                case 'duplicated':
-                    $sql = "SELECT i.*, s.i_num_repeated as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_repeated` > 0";
-                    break;
-
-                case 'bad':
-                    $sql = "SELECT i.*, s.i_num_bad_classified as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_bad_classified` > 0";
-                    break;
-
-                case 'offensive':
-                    $sql = "SELECT i.*, s.i_num_offensive as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_offensive` > 0";
-                    break;
-
-                case 'expired':
-                    $sql = "SELECT i.*, s.i_num_expired as num_total FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id INNER JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE s.`i_num_expired` > 0";
-                    break;
-
-                case 'pending':
-                    $sql = "SELECT i.*, s.* FROM oc_t_item AS i INNER JOIN `oc_t_item_description` AS d ON i.pk_i_id = d.fk_i_item_id LEFT JOIN `oc_t_item_stats` AS s ON i.pk_i_id = s.fk_i_item_id WHERE i.`e_status` = 'INACTIVE'";
-                    break;
-
-                default:
-                    break;
-            }
-
-            $aItems = $this->conn->osc_dbFetchResults($sql);
-            $found = $this->found_rows();
-            $items = $this->extendData($aItems);
-            $items = $this->extendCategoryName($items);
-            return array('found' => $found, 'items' => $items);
-        }
-
         public function clearStat($id, $stat)
         {
             switch($stat) {
                 case 'spam':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_spam = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_spam = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'duplicated':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_repeated = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_repeated = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'bad':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_bad_classified = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_bad_classified = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'offensive':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_offensive = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_offensive = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 case 'expired':
-                    $sql = "UPDATE `oc_t_item_stats` SET i_num_expired = 0 WHERE fk_i_item_id = $id";
+                    $sql = "UPDATE `%st_item_stats` SET i_num_expired = 0 WHERE fk_i_item_id = $id";
                     break;
 
                 default:
                     break;
             }
-
+            $sql = sprintf($sql,DB_TABLE_PREFIX);
             return $this->conn->osc_dbExec($sql);
         }
 
@@ -476,17 +337,21 @@
             $text  = addslashes($text);
 
             $sql = sprintf("REPLACE INTO %st_item_description SET `s_title` = '%s', `s_description` = '%s', `fk_c_locale_code` = '%s', `fk_i_item_id` = %s, `s_what` = '%s'", DB_TABLE_PREFIX, $title, $text, $locale, $id, $title . " " . $text);
-            $this->conn->osc_dbExec($sql);
-            $date = date('Y-m-d H:i:s');
-            $sql = sprintf("UPDATE %st_item SET `dt_mod_date` = '%s' WHERE `pk_i_id` = %s", DB_TABLE_PREFIX, $date, $id);
             return $this->conn->osc_dbExec($sql);
+            /*$date = date('Y-m-d H:i:s');
+            $sql = sprintf("UPDATE %st_item SET `dt_mod_date` = '%s' WHERE `pk_i_id` = %s", DB_TABLE_PREFIX, $date, $id);
+            return $this->conn->osc_dbExec($sql);*/
+        }
+        
+        public function meta_fields($id) {
+            return $this->conn->osc_dbFetchResults("SELECT im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type FROM %st_item i, %st_item_meta im, %st_meta_categories mc, %st_meta_fields mf WHERE im.fk_i_item_id = %d AND mf.pk_i_id = im.fk_i_field_id AND i.pk_i_id = %d AND mf.pk_i_id = mc.fk_i_field_id AND mc.fk_i_category_id = i.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, $id, $id);
         }
 
         public function deleteByPrimaryKey($id)
         {
             osc_run_hook('delete_item', $id);
             $item = $this->findByPrimaryKey($id);
-            if($item['e_status']=='ACTIVE') {
+            if($item['b_active']==1) {
                 CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
             }
             
@@ -495,6 +360,7 @@
             $this->conn->osc_dbExec('DELETE FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
             $this->conn->osc_dbExec('DELETE FROM %st_item_location WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
             $this->conn->osc_dbExec('DELETE FROM %st_item_stats WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
+            $this->conn->osc_dbExec('DELETE FROM %st_item_meta WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
             return $this->conn->osc_dbExec('DELETE FROM %st_item WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
         }
 

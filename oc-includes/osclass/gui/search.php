@@ -21,7 +21,7 @@
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
         <?php if(osc_count_items() == 0) { ?>
@@ -89,6 +89,7 @@
                             </fieldset>
 
                             <fieldset class="box show_only">
+                                <?php if( osc_images_enabled_at_items() ) { ?>
                                 <h3><strong><?php _e('Show only', 'modern') ; ?></strong></h3>
                                 <div class="row checkboxes">
                                     <ul>
@@ -98,15 +99,16 @@
                                         </li>
                                     </ul>
                                 </div>
-
+                                <?php } ?>
+                                <?php if( osc_price_enabled_at_items() ) { ?>
                                 <div class="row two_input">
                                     <h6><?php _e('Price', 'modern') ; ?></h6>
-                                    <?php _e('Min', 'modern') ; ?>.
+                                    <div><?php _e('Min', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMin" name="sPriceMin" value="<?php echo osc_search_price_min() ; ?>" size="6" maxlength="6" />
-                                    <?php _e('Max', 'modern') ; ?>.
+                                    <div><?php _e('Max', 'modern') ; ?>.</div>
                                     <input type="text" id="priceMax" name="sPriceMax" value="<?php echo osc_search_price_max() ; ?>" size="6" maxlength="6" />
                                 </div>
-
+                                <?php } ?>
                                 <?php  osc_get_non_empty_categories(); ?>
                                 <?php  if ( osc_count_categories() ) { ?>
                                     <div class="row checkboxes">
@@ -116,7 +118,7 @@
                                             <?php osc_goto_first_category() ; ?>
                                             <?php while(osc_has_categories()) { ?>
                                                 <li>
-                                                    <input type="checkbox" name="sCategory[]" id="sCategory" value="<?php echo osc_category_id(); ?>" <?php echo ( (in_array(osc_category_id(), osc_search_category())  || in_array(osc_category_slug()."/", osc_search_category()) || count(osc_search_category())==0 )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
+                                                    <input type="checkbox" id="cat<?php echo osc_category_id(); ?>" name="sCategory[]" value="<?php echo osc_category_id(); ?>" <?php echo ( (in_array(osc_category_id(), osc_search_category())  || in_array(osc_category_slug()."/", osc_search_category()) || count(osc_search_category())==0 )  ? 'checked' : '') ; ?> /> <label for="cat<?php echo osc_category_id(); ?>"><strong><?php echo osc_category_name(); ?></strong></label>
                                                 </li>
                                             <?php } ?>
                                         </ul>
@@ -156,7 +158,7 @@
                     });
                     
                     function checkEmptyCategories() {
-                        var n = $("#sCategory:checked").length;
+                        var n = $("input[id*=cat]:checked").length;
                         if(n>0) {
                             return true;
                         } else {

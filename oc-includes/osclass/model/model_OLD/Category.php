@@ -27,6 +27,7 @@
         private $tree;
         private $categories;
         private $relation;
+        private $empty_tree;
 
         public function __construct($l = "") {
             if($l == "") {
@@ -38,6 +39,8 @@
             $this->relation = null;
             $this->categories = null;
             parent::__construct() ;
+            $this->empty_tree = true;
+            $this->toTree();
         }
 
         public static function newInstance() {
@@ -55,6 +58,10 @@
             return DB_TABLE_PREFIX . 't_category_description';
         }
 
+        public function getTableStats() {
+            return DB_TABLE_PREFIX . 't_category_stats';
+        }
+
         public function getTableItemName() {
             return DB_TABLE_PREFIX . 't_item' ;
         }
@@ -68,51 +75,6 @@
             $roots = $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1") ;
             return $roots ;
         }
-
-        /*public function toSubTree($category = null) {
-            if($category==null) {
-                return null ;
-            } else {
-                $branches = $this->listWhere("a.fk_i_parent_id = ".$category." AND a.b_enabled = 1 ") ;
-                foreach($branches as &$branch) {
-                    $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
-                }
-                unset($branch) ;
-                print_r($branches);
-                return $branches ;
-            }
-        }*/
-
-        /*public function toSubTreeAll($category = null) {
-            if($category==null) {
-                return null ;
-            } else {
-                $branches = $this->listWhere("a.fk_i_parent_id = ".$category."") ;
-                foreach($branches as &$branch) {
-                    $branch['categories'] = $this->toSubTree($branch['pk_i_id']) ;
-                }
-                unset($branch) ;
-                return $branches ;
-            }
-        }
-
-        public function toTree() {
-            $roots = $this->findRootCategoriesEnabled() ;
-            foreach ($roots as &$r) {
-                $r['categories'] = $this->toSubTree($r['pk_i_id']) ;
-            }
-            unset($r) ;
-            return $roots ;
-        }
-
-        public function toTreeAll() {
-            $roots = $this->findRootCategories();
-            foreach ($roots as &$r) {
-                $r['categories'] = $this->toSubTreeAll($r['pk_i_id']);
-            }
-            unset($r);
-            return $roots;
-        }*/
         
         public function toSubTree($category = null) {
             $this->toTree();
@@ -125,7 +87,7 @@
                 } else {
                     array();
                 }
-            };
+            }
         }
 
         public function toTreeAll() {
@@ -142,44 +104,57 @@
                     $all_relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
                 }
             }
-            $tree = $this->sideTree($all_relation[0], $all_categories, $all_relation);
+            if(isset($all_relation[0])) {
+                $tree = $this->sideTree($all_relation[0], $all_categories, $all_relation);
+            } else {
+                $tree = array();
+            }
             return $tree;
         }
 
-        public function toTree() {
-            if($this->tree!=null) {
+        public function toTree($empty = true) {
+            if($empty==$this->empty_tree && $this->tree!=null) {
                 return $this->tree;
             }
+            $this->empty_tree = $empty;
             $categories = $this->listEnabled();
             $this->categories = array();
             $this->relation = array();
             foreach($categories as $c) {
-                $this->categories[$c['pk_i_id']] = $c;
-                if($c['fk_i_parent_id']==null) {
-                    $this->tree[] = $c;
-                    $this->relation[0][] = $c['pk_i_id'];
-                } else {
-                    $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                if($empty || (!$empty && $c['i_num_items']>0)) {
+                    $this->categories[$c['pk_i_id']] = $c;
+                    if($c['fk_i_parent_id']==null) {
+                        $this->tree[] = $c;
+                        $this->relation[0][] = $c['pk_i_id'];
+                    } else {
+                        $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
+                    }
                 }
             }
+
+            if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
+                return null;
+            }
+
             $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
             return $this->tree;
         }
 
         private function sideTree($branch, $categories, $relation) {
             $tree = array();
-            foreach($branch as $b) {
-                $aux = $categories[$b];
-                if(isset($relation[$b]) && is_array($relation[$b])) {
-                    $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
-                } else {
-                    $aux['categories'] = array();
+            if( !empty($branch) ) {
+                foreach($branch as $b) {
+                    $aux = $categories[$b];
+                    if(isset($relation[$b]) && is_array($relation[$b])) {
+                        $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
+                    } else {
+                        $aux['categories'] = array();
+                    }
+                    $tree[] = $aux;
                 }
-                $tree[] = $aux;
             }
             return $tree;
         }
-
 
         public function toRootTree($cat = null) {
             $tree = null;
@@ -208,7 +183,7 @@
         public function findRootCategory($category_id) {
             $results = $this->listWhere("a.pk_i_id = " . $category_id . " AND a.fk_i_parent_id IS NOT NULL");
             if (count($results) > 0) {
-                return $this->findRootCategory($results['fk_i_parent_id']);
+                return $this->findRootCategory($results[0]['fk_i_parent_id']);
             } else {
                 return $this->findByPrimaryKey($category_id);
             }
@@ -247,23 +222,8 @@
             }
         }
 
-        public function findSubcategories($cat_id, $withads = false) {
-            if (!$withads) {
-                $results = $this->listWhere("fk_i_parent_id = %d", $cat_id);
-            } else {
-                // ( DATE_SUB ( CURDATE(), INTERVAL a.i_expiration_days DAY) <= c.dt_pub_date ) OR
-                // That was on the SQL but I don't know why it failed.
-                $results = $this->conn->osc_dbFetchResults("SELECT a.pk_i_id, b.s_name, count(a.pk_i_id) FROM %s as a, %s as b, %s as c WHERE " .
-                        "a.fk_i_parent_id = %d AND a.pk_i_id = c.fk_i_category_id AND b.fk_i_category_id = c.fk_i_category_id AND " .
-                        "(  a.i_expiration_days = 0 ) GROUP BY b.s_name ORDER BY a.i_position DESC",
-                        $this->getTableName(),
-                        $this->getTableDescriptionName(),
-                        $this->getTableItemName(),
-                        $cat_id
-                );
-            }
-
-            return ($results);
+        public function findSubcategories($cat_id) {
+            return $this->listWhere("fk_i_parent_id = %d", $cat_id);
         }
 
         //overwritten
@@ -277,15 +237,22 @@
 
         public function findByPrimaryKey($pk, $lang = true) {
             if($pk!=null) {
-                $data = $this->listWhere('a.pk_i_id = '.$pk);
-                $data = $data[0];
-                $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
-                $row = array();
-                foreach ($sub_rows as $sub_row) {
-                    $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                if(array_key_exists($pk, $this->categories)){
+                    $data = $this->categories[$pk];
+                    if(isset($data)) {
+                        $sub_rows = $this->conn->osc_dbFetchResults('SELECT * FROM %s WHERE fk_i_category_id = %s ORDER BY fk_c_locale_code', $this->getTableDescriptionName(), $data['pk_i_id']);
+                        $row = array();
+                        foreach ($sub_rows as $sub_row) {
+                            $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                        }
+                        $data['locale'] = $row;
+                        return $data;
+                    } else {
+                        return null;
+                    }
+                } else {
+                    return null;
                 }
-                $data['locale'] = $row;
-                return $data;
             } else {
                 return null;
             }
@@ -306,7 +273,7 @@
                     break;
             }
 
-            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'en_US\', \''.$this->language.'\') as sorter FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), $this->getTableDescriptionName(), $sql);
+            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'en_US\', \''.$this->language.'\') as sorter FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), $this->getTableDescriptionName(), $sql, DB_TABLE_PREFIX);
         }
 
         public function deleteByPrimaryKey($pk) {
@@ -326,7 +293,11 @@
                 }
             }
 
+            osc_run_hook("delete_category", $pk);
+            
+            $this->conn->osc_dbExec("DELETE FROM %st_plugin_category WHERE fk_i_category_id = '" . $pk . "'", DB_TABLE_PREFIX);
             $this->conn->osc_dbExec("DELETE FROM %s WHERE fk_i_category_id = '" . $pk . "'", $this->getTableDescriptionName());
+            $this->conn->osc_dbExec("DELETE FROM %s WHERE fk_i_category_id = '" . $pk . "'", $this->getTableStats());
             $this->conn->osc_dbExec("DELETE FROM %s WHERE pk_i_id = '" . $pk . "'", $this->getTableName());
         }
 
@@ -345,7 +316,17 @@
                 //UPDATE for description of categories
                 $fieldsDescription['fk_i_category_id'] = $pk;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_unique = 1;
+                while(true) {
+                    if(!$this->find_by_slug($slug)) {
+                        break;
+                    } else {
+                        $slug = $slug_tmp . "_" . $slug_unique;
+                        $slug_unique++;
+                    }
+                }
+                $fieldsDescription['s_slug'] = $slug;
                 $set = "";
                 foreach ($fieldsDescription as $key => $value) {
                     if ($set != "")
@@ -386,7 +367,17 @@
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;
                 $fieldsDescription['fk_c_locale_code'] = $k;
-                $fieldsDescription['s_slug'] = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
+                $slug_unique = 1;
+                while(true) {
+                    if(!$this->find_by_slug($slug)) {
+                        break;
+                    } else {
+                        $slug = $slug_tmp . "_" . $slug_unique;
+                        $slug_unique++;
+                    }
+                }
+                $fieldsDescription['s_slug'] = $slug;
                 $columns = implode(', ', array_keys($fieldsDescription));
 
                 $set = "";
@@ -398,6 +389,8 @@
                 $sql = 'INSERT INTO ' . $this->getTableDescriptionName() . ' (' . $columns . ') VALUES (' . $set . ')';
                 $this->conn->osc_dbExec($sql);
             }
+
+            return $category_id;
         }
 
         public function insert_description($fields_description) {

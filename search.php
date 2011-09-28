@@ -29,9 +29,8 @@
 
         //Business Layer...
         function doModel() {
+            osc_run_hook('before_search');
             $mCategories = new Category() ;
-            //$aCategories = $mCategories->findRootCategories() ;
-            $mCategoryStats = new CategoryStats() ;
 
             ////////////////////////////////
             //GETTING AND FIXING SENT DATA//
@@ -82,6 +81,7 @@
             }
 
             $p_sPattern   = strip_tags(Params::getParam('sPattern'));
+            $p_sUser      = strip_tags(Params::getParam('sUser'));
             
             // ADD TO THE LIST OF LAST SEARCHES
             if(osc_save_latest_searches()) {
@@ -171,8 +171,13 @@
 
             // FILTERING PATTERN
             if($p_sPattern != '') {
-                $this->mSearch->addConditions(sprintf("(d.s_title LIKE '%%%s%%' OR d.s_description LIKE '%%%s%%')", $p_sPattern, $p_sPattern));
+                $this->mSearch->addConditions(sprintf("MATCH(d.s_title, d.s_description) AGAINST('%s' IN BOOLEAN MODE)", $p_sPattern));
                 $osc_request['sPattern'] = $p_sPattern;
+            }
+
+            // FILTERING USER
+            if($p_sUser != '') {
+                $this->mSearch->fromUser(explode(",", $p_sUser));
             }
 
             // FILTERING IF WE ONLY WANT ITEMS WITH PICS
@@ -191,36 +196,14 @@
 
             osc_run_hook('search_conditions', Params::getParamsAsArray());
 
-            $this->mSearch->addConditions(sprintf("%st_item.e_status = 'ACTIVE' ", DB_TABLE_PREFIX));
-
-            // RETRIEVE ITEMS AND TOTAL
-            $iTotalItems = $this->mSearch->count();
-            $aItems = $this->mSearch->doSearch();
-
             if(!Params::existParam('sFeed')) {
+                // RETRIEVE ITEMS AND TOTAL
+                $aItems = $this->mSearch->doSearch();
+                $iTotalItems = $this->mSearch->count();
+                
                 $iStart    = $p_iPage * $p_iPageSize ;
                 $iEnd      = min(($p_iPage+1) * $p_iPageSize, $iTotalItems) ;
-                //Static data, which is the point?
-                /*$aOrders   = array(
-                                 __('Newly listed')       => array('sOrder' => 'dt_pub_date', 'iOrderType' => 'desc')
-                                ,__('Lower price first')  => array('sOrder' => 'f_price', 'iOrderType' => 'asc')
-                                ,__('Higher price first') => array('sOrder' => 'f_price', 'iOrderType' => 'desc')
-                             );*/
                 $iNumPages = ceil($iTotalItems / $p_iPageSize) ;
-
-                //Categories for select at view "search.php"
-                //$mCategories = new Category();
-                //$aCategories = $mCategories->findRootCategories();
-                //$mCategoryStats = new CategoryStats();
-                /*$aCategories = $mCategories->toTree();
-                foreach($aCategories as $k => $v) {
-                    $iCategoryNumItems = CategoryStats::newInstance()->getNumItems($v);
-                    if($iCategoryNumItems > 0) {
-                        $aCategories[$k]['total'] = $iCategoryNumItems;
-                    } else {
-                        unset($aCategories[$k]);
-                    }
-                }*/
 
                 osc_run_hook('search', $this->mSearch) ;
 
@@ -232,6 +215,7 @@
                 $this->_exportVariableToView('search_order_type', $p_iOrderType) ;
                 $this->_exportVariableToView('search_order', $p_sOrder) ;
                 $this->_exportVariableToView('search_pattern', $p_sPattern) ;
+                $this->_exportVariableToView('search_from_user', $p_sUser) ;
                 $this->_exportVariableToView('search_total_pages', $iNumPages) ;
                 $this->_exportVariableToView('search_page', $p_iPage) ;
                 $this->_exportVariableToView('search_has_pic', $p_bPic) ;
@@ -240,13 +224,19 @@
                 $this->_exportVariableToView('search_price_max', $p_sPriceMax) ;
                 $this->_exportVariableToView('search_total_items', $iTotalItems) ;
                 $this->_exportVariableToView('items', $aItems) ;
-                $this->_exportVariableToView('search_show_as', $p_sShowAs);
-                $this->_exportVariableToView('search', $this->mSearch);
+                $this->_exportVariableToView('search_show_as', $p_sShowAs) ;
+                $this->_exportVariableToView('search', $this->mSearch) ;
+                $this->_exportVariableToView('search_alert', base64_encode(serialize($this->mSearch))) ;
                 
                 //calling the view...
                 $this->doView('search.php') ;
 
             } else {
+                $this->mSearch->page(0, osc_num_rss_items());
+                // RETRIEVE ITEMS AND TOTAL
+                $iTotalItems = $this->mSearch->count();
+                $aItems = $this->mSearch->doSearch();
+                
                 $this->_exportVariableToView('items', $aItems) ;
                 if($p_sFeed=='' || $p_sFeed=='rss') {
                     // FEED REQUESTED!
@@ -259,11 +249,26 @@
 
                     if(osc_count_items()>0) {
                         while(osc_has_items()) {
-                            $feed->addItem(array(
-                                'title' => osc_item_title(),
-                                'link' => htmlentities( osc_item_url() ),
-                                'description' => osc_item_description()
-                            ));
+                            
+                            if(osc_count_item_resources() > 0){
+                                osc_has_item_resources();
+                                $feed->addItem(array(
+                                    'title' => osc_item_title(),
+                                    'link' => htmlentities( osc_item_url() ),
+                                    'description' => osc_item_description(),
+                                    'dt_pub_date' => osc_item_pub_date(),
+                                    'image'     => array(  'url'    => htmlentities(osc_resource_thumbnail_url()),
+                                                           'title'  => osc_item_title(),
+                                                           'link'   => htmlentities( osc_item_url() ) )
+                                ));
+                            } else {
+                                $feed->addItem(array(
+                                    'title' => osc_item_title(),
+                                    'link' => htmlentities( osc_item_url() ),
+                                    'description' => osc_item_description(),
+                                    'dt_pub_date' => osc_item_pub_date()
+                                ));
+                            }
                         }
                     }
 
@@ -277,7 +282,10 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
 
     }

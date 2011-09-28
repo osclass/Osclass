@@ -25,6 +25,7 @@ define( 'ABS_PATH', dirname(dirname(dirname(__FILE__))) . '/' );
 define( 'LIB_PATH', ABS_PATH . 'oc-includes/' ) ;
 define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
 define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
+define( 'OSC_INSTALLING', 1 );
 
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/classes/DAO.php';
@@ -77,8 +78,14 @@ switch ($step) {
             $error = oc_install();
         }
         break;
+    case 4:
+        if( Params::getParam('result') != '' ) {
+            $error = Params::getParam('result');
+        }
+        $password = Params::getParam('password');
+        break;
     case 5:
-        
+        $password = Params::getParam('password');
         break;
     default:
         break;
@@ -95,23 +102,9 @@ switch ($step) {
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/vtip.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/jquery.jsonp.js" type="text/javascript"></script>
         <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.js" type="text/javascript"></script>
-        <?php if($step == 5) { ?>
-        <script src="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/password_strength_plugin.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/strengthPasswd/style.css" />
-        <?php } ?>
+        <script src="<?php echo get_absolute_url(); ?>oc-admin/themes/modern/js/location.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/install.css" />
         <link rel="stylesheet" type="text/css" media="all" href="<?php echo get_absolute_url(); ?>oc-includes/osclass/installer/vtip/css/vtip.css" />
-        <?php if( $step == 5 ) {?>
-        <script>
-            $(document).ready( function() {
-                //BASIC
-                $(".password_test").passStrength({
-                    userid:	"#user_id",
-                    messageloc:		1
-                });
-            });
-        </script>
-        <?php } ?>
     </head>
     <body>
         <div id="wrapper">
@@ -158,7 +151,7 @@ switch ($step) {
                             <div class="more-stats">
                                 <input type="checkbox" name="ping_engines" id="ping_engines" checked="checked" value="1"/>
                                 <label for="ping_engines">
-                                    Allow my site to appear in search engines like Gooogle.
+                                    Allow my site to appear in search engines like Google.
                                 </label>
                                 <br/>
                                 <input type="checkbox" name="save_stats" id="save_stats" checked="checked" value="1"/>
@@ -187,13 +180,13 @@ switch ($step) {
                             display_database_error($error, ($step - 1));
                         }
                     } elseif($step == 4) {
-                        display_categories();
+                        display_categories($error, $password);
                     } elseif($step == 5) {
                         // ping engines
                         ping_search_engines( $_COOKIE['osclass_ping_engines'] ) ;
                         setcookie('osclass_save_stats', '', time() - 3600);
                         setcookie('osclass_ping_engines', '', time() - 3600);
-                        display_finish();
+                        display_finish($password);
                     }
                 ?>
                 </div>
@@ -203,7 +196,7 @@ switch ($step) {
                             <a href="<?php echo get_absolute_url(); ?>readme.php" target="_blank">Readme</a>
                         </li>
                         <li>
-                            <a href="http://osclass.org/contact/" target="_blank">Feedback</a>
+                            <a href="http://admin.osclass.org/feedback.php" target="_blank">Feedback</a>
                         </li>
                         <li>
                             <a href="http://forums.osclass.org/index.php" target="_blank">Forums</a>

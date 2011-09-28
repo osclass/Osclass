@@ -33,14 +33,13 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Dashboard'); ?></div>
 		<div id="content">
             <div id="separator"></div>
 			<?php osc_current_admin_theme_path ( 'include/backoffice_menu.php' ) ; ?>
 		    <div id="right_column">
 				<div id="content_header" class="content_header">
 					<div style="float: left;">
-                        <img src="<?php echo  osc_current_admin_theme_url() ; ?>images/settings-icon.png" alt="" title=""/>
+                        <img src="<?php echo  osc_current_admin_theme_url('images/settings-icon.png') ; ?>" alt="" title=""/>
                     </div>
 					<div id="content_header_arrow">&raquo; <?php _e('Permalinks settings'); ?></div>
 					<div style="clear: both;"></div>
@@ -72,7 +71,7 @@
                                     <?php switch($htaccess_status) {
                                             case 1:     _e('Module <em>mod_rewrite</em> was found on the server.');
                                             break;
-                                            case 2:     _e('Warning! Rewrite module wasn\'t found on the server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use friendly urls if AllowPathInfo option is on in your Apache configuration (we can\'t know if it\'s enabled or not, but it usually is). "Index.php" will appear as a part of your URL (ie. http://www.example.com/index.php/nice/url).');
+                                            case 2:     _e('Warning! Rewrite module wasn\'t found on the server. This means you don\'t have it enabled or you\'re running PHP as CGI (or fastCGI). In the case you don\'t have mod_rewrite you could still use friendly urls if AcceptPathInfo option is on in your Apache configuration (we can\'t know if it\'s enabled or not, but it usually is). "Index.php" will appear as a part of your URL (ie. http://www.example.com/index.php/nice/url).');
                                             break;
                                           }
                                     ?>

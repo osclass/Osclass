@@ -1,3 +1,97 @@
+OSClass 2.2.3 2011-09-26
+------------------------
+- Bug fix: with plugins in Windows environments
+- Fixed an error when installing a new plugin if some plugin has been removed from the plugin directory
+- Bug fix: when user modifies the location in edit item
+- Bug fix: we're not using filter_var function any more
+- Bug fix: manage item doesn't crack if category name is not set
+- Bug fix: notify admin of new items works in all the cases now
+- Bug fix: check blank parameters in forgot-password-post, user-change-password and contact form
+- Bug fix: mailserver setting in oc-admin works fine in different environments
+- Pagination Class: now can be inherited
+- Fixed some minor Notice errors
+
+OSClass 2.2.2 2011-08-25
+------------------------
+- Now attr [type|src|charset|defer] of script html tag are not removed in widgets
+- Fixed some AJAX issues related to locations
+- If some file theme don't exists, we take the file from gui folder
+- Minor fix in sanitize item url
+- Created a define for DEMO purposes
+- Modified how admin password is set during the installation
+- Multi-byte characters in watermarks
+- Removed mysql NOW() parameter from everywhere, now the insert/update dates should be the system dates
+- Fixed some minor issues with locations when add/edit new items
+- osc_static_page_mod_date function take the correct value now
+- Custom pages shouldn't allow as internal name the file names
+- Fixed alert subscription
+- Fixed some minor bugs
+- Fixed some PHP Warnings
+- [Modern theme] Logo image is not converted now
+- [Modern theme] Some minor style changes
+
+OSClass 2.2.1 2011-08-04
+------------------------
+- Fixed: show recaptcha in edit item if it's configured
+- Fixed: if you have another table_prefix, it show the latest items + items in the search list
+
+OSClass 2.2 2011-08-01
+----------------------
+- New layout and more filters in manage items
+- Added custom fields (for items)
+- Watermark on pictures
+- Helpers for Rewrite::get_location and Rewrite::get_section
+- Premium ads (see paypal plugin)
+- Plurals in translations
+- Improved inputs related to locations
+- Improved error page in the front theme
+- Worlwide option is disabled in the installation
+- Permalinks with Chinese an Arabic characters works
+- All known bugs have been fixed fixed
+
+OSClass 2.1.1 2011-06-22
+----------------------
+- Filter of title and description is not too restrictive now
+- Fixed a warning message when there aren't categories
+- Fixed error checkdnsrr in windows
+- We don't show price filters or any field related with prices when it is disabled
+
+OSClass 2.1 2011-06-14
+----------------------
+- Help messages if you don't pass the requirements in the installer
+- Ping search engines in the installation
+- Change password at the end of the installation
+- Limit amount of items per user in a set time
+- Limit the number of photos that the user can add in an item
+- Statistics module: new users, new items...
+- Skip admin validation if the user has more than a defined number of items/comments
+- Improved category management: you can reorder, edit, delete, disable in the same page
+- Upload a logo to the header
+- Disable adding new items in root categories
+- Fill automatically the fields in case that something goes wrong
+- Delete photos of items via ajax
+- Improved pagination in search page
+- Added maintenance mode (in case you want to disable the website to the users)
+- Email verification on alerts
+- Disable contact item for non-registered users
+- Fancybox in modern theme
+- Improved expiration features
+- Some bugs fixed
+
+OSClass 2.0.3 2011-05-05
+------------------------
+- Price is showed fine when there're more than one language enabled
+- Locale Class renamed
+- STRICT Standars error in Category Class fixed
+- STRICT Standars error in Search Class fixed
+- Configure in Manage plugins appears even if the folder is a soft-link
+- [Modern theme] Input select in user dashboard has jquery.uniform style
+- Create mb_substr function if not exists
+- NOTICE error when users send an item to a friend
+- Upload images in IIS Servers
+- [Modern theme] Sidebar in main page shows now only regions fo the active items
+- [Modern theme] CSS category drop down improvements so the hierarchy of subcategories are visible.
+
 OSClass 2.0.2 2011-04-20
 ------------------------
 - RSS fixed, now works fine if you write sFeed=rss or sFedD= in the search url.

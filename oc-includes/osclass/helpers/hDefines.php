@@ -22,6 +22,13 @@
 
 
     /**
+    * Helper Defines
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
      * Gets the root url for your installation
      *
      * @param boolean $with_index true if index.php in the url is needed
@@ -59,7 +66,7 @@
     /**
     * Gets the root path for your installation
     *
-    * @return <string>
+    * @return string
     */
     function osc_base_path() {
         return(ABS_PATH) ;
@@ -68,7 +75,7 @@
     /**
     * Gets the root path of oc-admin
     *
-    * @return <string>
+    * @return string
     */
     function osc_admin_base_path() {
         return(osc_base_path() . "oc-admin/") ;
@@ -77,7 +84,7 @@
     /**
     * Gets the librarieas path
     *
-    * @return <string>
+    * @return string
     */
     function osc_lib_path() {
         return(LIB_PATH) ;
@@ -86,7 +93,7 @@
     /**
     * Gets the content path
     *
-    * @return <string>
+    * @return string
     */
     function osc_content_path() {
         return(CONTENT_PATH) ;
@@ -95,7 +102,7 @@
     /**
     * Gets the themes path
     *
-    * @return <string>
+    * @return string
     */
     function osc_themes_path() {
         return(THEMES_PATH) ;
@@ -104,7 +111,7 @@
     /**
     * Gets the plugins path
     *
-    * @return <string>
+    * @return string
     */
     function osc_plugins_path() {
         return(PLUGINS_PATH) ;
@@ -113,7 +120,7 @@
     /**
     * Gets the translations path
     *
-    * @return <string>
+    * @return string
     */
     function osc_translations_path() {
         return(TRANSLATIONS_PATH) ;
@@ -122,7 +129,7 @@
     /**
     * Gets the current oc-admin theme
     *
-    * @return <string>
+    * @return string
     */
     function osc_current_admin_theme() {
         return( AdminThemes::newInstance()->getCurrentTheme() ) ;
@@ -131,8 +138,8 @@
     /**
      * Gets the complete url of a given admin's file
      *
-     * @param <string> $file the admin's file
-     * @return <string>
+     * @param string $file the admin's file
+     * @return string
      */
     function osc_current_admin_theme_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeUrl() . $file ;
@@ -142,8 +149,8 @@
     /**
      * Gets the complete path of a given admin's file
      *
-     * @param <string> $file the admin's file
-     * @return <string>
+     * @param string $file the admin's file
+     * @return string
      */
     function osc_current_admin_theme_path($file = '') {
         require AdminThemes::newInstance()->getCurrentThemePath() . $file ;
@@ -152,8 +159,8 @@
     /**
      * Gets the complete url of a given style's file
      *
-     * @param <string> $file the style's file
-     * @return <string>
+     * @param string $file the style's file
+     * @return string
      */
     function osc_current_admin_theme_styles_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeStyles() . $file ;
@@ -162,8 +169,8 @@
     /**
      * Gets the complete url of a given js's file
      *
-     * @param <string> $file the js's file
-     * @return <string>
+     * @param string $file the js's file
+     * @return string
      */
     function osc_current_admin_theme_js_url($file = '') {
         return AdminThemes::newInstance()->getCurrentThemeJs() . $file ;
@@ -172,7 +179,7 @@
     /**
      * Gets the current theme for the public website
      *
-     * @return <string>
+     * @return string
      */
     function osc_current_web_theme() {
         return WebThemes::newInstance()->getCurrentTheme() ;
@@ -181,8 +188,8 @@
     /**
      * Gets the complete url of a given file using the theme url as a root
      *
-     * @param <string> $file the given file
-     * @return <string>
+     * @param string $file the given file
+     * @return string
      */
     function osc_current_web_theme_url($file = '') {
         return WebThemes::newInstance()->getCurrentThemeUrl() . $file ;
@@ -191,11 +198,19 @@
     /**
      * Gets the complete path of a given file using the theme path as a root
      *
-     * @param <type> $file
-     * @return <string>
+     * @param string $file
+     * @return string
      */
     function osc_current_web_theme_path($file = '') {
-        require WebThemes::newInstance()->getCurrentThemePath() . $file ;
+
+        if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ){
+            require WebThemes::newInstance()->getCurrentThemePath() . $file ;
+        } else {
+            WebThemes::newInstance()->setGuiTheme();
+            if( file_exists(WebThemes::newInstance()->getCurrentThemePath() . $file) ) {
+                require WebThemes::newInstance()->getCurrentThemePath() . $file;
+            }
+        }
     }
 
     /**
@@ -272,7 +287,8 @@
     /**
      * Create automatically the url of a category
      *
-     * @return string the url 
+     * @param string $pattern
+     * @return string the url
      */
     function osc_search_category_url($pattern = '') {
         $category = osc_category() ;
@@ -359,6 +375,8 @@
     /**
      * Create automatically the url to activate an account
      *
+     * @param int $id
+     * @param string $code
      * @return string
      */
     function osc_user_activate_url($id, $code) {
@@ -372,15 +390,22 @@
     /**
      * Create automatically the url of the item's comments page
      *
+     * @param mixed $page
+     * @param string $locale
      * @return string
      */
     function osc_item_comments_url($page = 'all', $locale = '') {
-        return osc_item_url($locale) . "?comments-page=" . $page;
+        if ( osc_rewrite_enabled() ) {
+            return osc_item_url($locale) . "?comments-page=" . $page;
+        } else {
+            return osc_item_url($locale) . "&comments-page=" . $page;
+        }
     }
 
     /**
      * Create automatically the url of the item's comments page
      *
+     * @param string $locale
      * @return string
      */
     function osc_comment_url($locale = '') {
@@ -391,6 +416,7 @@
     /**
      * Create automatically the url of the item details page
      *
+     * @param string $locale
      * @return string
      */
     function osc_item_url($locale = '') {
@@ -414,10 +440,36 @@
     }
 
     /**
+     * Create automatically the url of the item details page
+     *
+     * @param string $locale
+     * @return string
+     */
+    function osc_premium_url($locale = '') {
+        if ( osc_rewrite_enabled() ) {
+            $sanitized_title = osc_sanitizeString(osc_premium_title()) ;
+            $sanitized_category = '';
+            $cat = Category::newInstance()->hierarchy(osc_premium_category_id()) ;
+            for ($i = (count($cat)); $i > 0; $i--) {
+                $sanitized_category .= $cat[$i - 1]['s_slug'] . '/' ;
+            }
+            if($locale!='') {
+                $path = osc_base_url() . sprintf('%s_%s%s_%d', $locale, $sanitized_category, $sanitized_title, osc_premium_id()) ;
+            } else {
+                $path = osc_base_url() . sprintf('%s%s_%d', $sanitized_category, $sanitized_title, osc_premium_id()) ;
+            }
+        } else {
+            //$path = osc_base_url(true) . sprintf('?page=item&id=%d', osc_item_id()) ;
+            $path = osc_item_url_ns( osc_premium_id(), $locale ) ;
+        }
+        return $path ;
+    }
+
+    /**
      * Create the no friendly url of the item using the id of the item
      * 
-     * @param int the primary key of the item
-     *
+     * @param int $id the primary key of the item
+     * @param $locale
      * @return string
      */
     function osc_item_url_ns($id, $locale = '') {
@@ -432,25 +484,18 @@
     /**
      * Create automatically the url to for admin to edit an item
      *
+     * @param int $id
      * @return string
      */
     function osc_item_admin_edit_url($id) {
         return osc_admin_base_url(true) . '?page=items&action=item_edit&id=' . $id ;
     }
      
-    //osc_createPageURL
-    // DEPRECATED : NOT USED
-    /*function osc_page_url() {
-        if ( osc_rewrite_enabled() ) {
-            $sanitizedString = osc_sanitizeString( osc_pages_title() ) ;
-            $path = sprintf( osc_base_url() . '%s-p%d', urlencode($sanitizedString), osc_pages_id() ) ;
-        } else {
-            $path = sprintf( osc_base_url(true) . '?page=page&id=%d', osc_pages_id() ) ;
-        }
-        return $path ;
-    }*/
-
-    //osc_createUserAlertsURL
+    /**
+     * Gets current user alerts' url
+     *
+     * @return string
+     */
     function osc_user_alerts_url() {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/alerts' ;
@@ -459,12 +504,26 @@
         }
     }
 
+    /**
+     * Gets current user alert unsubscribe url
+     *
+     * @param string $email
+     * @param string $secret
+     * @return string
+     */
     function osc_user_unsubscribe_alert_url($email = '', $secret = '') {
         if($secret=='') { $secret = osc_alert_secret(); }
         if($email=='') { $email = osc_user_email(); }
         return osc_base_url(true) . '?page=user&action=unsub_alert&email='.urlencode($email).'&secret='.$secret ;
     }
 
+    /**
+     * Gets user alert activate url
+     *
+     * @param string $secret
+     * @param string $email
+     * @return string
+     */
     function osc_user_activate_alert_url( $secret , $email ) {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/activate_alert/' . $secret . '/' . urlencode($email) ;
@@ -474,7 +533,11 @@
 
     }
 
-    //osc_createProfileURL
+    /**
+     * Gets current user url
+     *
+     * @return string
+     */
     function osc_user_profile_url() {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/profile' ;
@@ -483,7 +546,12 @@
         }
     }
 
-    //osc_createUserItemsURL
+    /**
+     * Gets current user alert activate url
+     *
+     * @param int $page
+     * @return string
+     */
     function osc_user_list_items_url($page = '') {
         if ( osc_rewrite_enabled() ) {
             if($page=='') {
@@ -500,6 +568,11 @@
         }
     }
 
+    /**
+     * Gets url to change email
+     *
+     * @return string
+     */
     function osc_change_user_email_url() {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/change_email' ;
@@ -508,6 +581,13 @@
         }
     }
 
+    /**
+     * Gets confirmation url of change email
+     *
+     * @param int $userId
+     * @param string $code
+     * @return string
+     */
     function osc_change_user_email_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/change_email_confirm/' . $userId . '/' . $code ;
@@ -516,6 +596,11 @@
         }
     }
 
+    /**
+     * Gets url for changing password
+     *
+     * @return string
+     */
     function osc_change_user_password_url() {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/change_password' ;
@@ -524,6 +609,11 @@
         }
     }
     
+    /**
+     * Gets url for recovering password
+     *
+     * @return string
+     */
     function osc_recover_user_password_url() {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/recover' ;
@@ -532,6 +622,13 @@
         }
     }
     
+    /**
+     * Gets url for confirm the forgot password process
+     *
+     * @param int $userId
+     * @param string $code
+     * @return string
+     */
     function osc_forgot_user_password_confirm_url($userId, $code) {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'user/forgot/' . $userId . '/' . $code ;
@@ -540,11 +637,23 @@
         }
     }
 
+    /**
+     * Gets url for confirmation admin password recover proces
+     *
+     * @param int $adminId
+     * @param string $code
+     * @return string
+     */
     function osc_forgot_admin_password_confirm_url($adminId, $code) {
         return osc_admin_base_url(true) . '?page=login&action=forgot&adminId='.$adminId.'&code='.$code;
     }
 
-    //doens't exists til now
+    /**
+     * Gets url for changing website language (for users)
+     *
+     * @param string $locale
+     * @return string
+     */
     function osc_change_language_url($locale) {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'language/' . $locale ;
@@ -557,7 +666,13 @@
     //       functions for items       //
     /////////////////////////////////////
     
-    // URL to edit an item
+    /**
+     * Gets url for editing an item
+     *
+     * @param string $secret
+     * @param int $id
+     * @return string
+     */
     function osc_item_edit_url($secret = '', $id = '') {
         if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
@@ -567,7 +682,13 @@
         }
     }
 
-    // URL to delete an item
+    /**
+     * Gets url for delete an item
+     *
+     * @param string $secret
+     * @param int $id
+     * @return string
+     */
     function osc_item_delete_url($secret = '', $id = '') {
         if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
@@ -577,7 +698,13 @@
         }
     }
     
-    // URL to activate an item
+    /**
+     * Gets url for activate an item
+     *
+     * @param string $secret
+     * @param int $id
+     * @return string
+     */
     function osc_item_activate_url($secret = '', $id = '') {
         if ($id == '') $id = osc_item_id();
         if ( osc_rewrite_enabled() ) {
@@ -587,7 +714,15 @@
         }
     }
     
-    // URL to delete a file/photo
+    /**
+     * Gets url for deleting a resource of an item
+     *
+     * @param int $id of the resource
+     * @param int $item
+     * @param string $code
+     * @param string $secret
+     * @return string
+     */
     function osc_item_resource_delete_url($id, $item, $code, $secret = '') {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'item/resource/delete/' . $id . '/' . $item . '/' . $code . ($secret != '' ? '/' . $secret : '');
@@ -596,6 +731,11 @@
         }
     }
 
+    /**
+     * Gets url of send a friend (current item)
+     *
+     * @return string
+     */
     function osc_item_send_friend_url() {
         if ( osc_rewrite_enabled() ) {
             return osc_base_url() . 'item/send-friend/' . osc_item_id() ;
@@ -608,6 +748,11 @@
     /////////////////////////////////////
 
 
+    /**
+     * Gets list of countries
+     *
+     * @return string
+     */
     function osc_get_countries() {
         if (View::newInstance()->_exists('countries')) {
             return View::newInstance()->_get('countries') ;
@@ -616,6 +761,12 @@
         }
     }
     
+    /**
+     * Gets list of regions (from a country)
+     *
+     * @param int $country
+     * @return string
+     */
     function osc_get_regions($country = '') {
         if (View::newInstance()->_exists('regions')) {
             return View::newInstance()->_get('regions') ;
@@ -628,6 +779,12 @@
         }
     }
     
+    /**
+     * Gets list of cities (from a region)
+     *
+     * @param int $region
+     * @return string
+     */
     function osc_get_cities($region = '') {
         if (View::newInstance()->_exists('cities')) {
             return View::newInstance()->_get('cities') ;
@@ -640,6 +797,11 @@
         }
     }
     
+    /**
+     * Gets list of currencies
+     *
+     * @return string
+     */
     function osc_get_currencies() {
         if (!View::newInstance()->_exists('currencies')) {
             View::newInstance()->_exportVariableToView('currencies', Currency::newInstance()->listAll());
@@ -648,6 +810,133 @@
     }
 
 
+    /**
+     * Prints the additional options to the menu
+     *
+     * @param array $option with options of the form array('name' => 'display name', 'url' => 'url of link')
+     *
+     * @return void
+     */
+    function osc_add_option_menu($option = null) {
+        if($option!=null) {
+            echo '<li><a href="' . $option['url'] . '" >' . $option['name'] . '</a></li>' ;
+        }
+    }
+
+    /**
+     * Get if user is on ad page
+     *
+     * @return boolean
+     */
+    function osc_is_ad_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='item' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on search page
+     *
+     * @return boolean
+     */
+    function osc_is_search_page() {
+        $location = Rewrite::newInstance()->get_location();
+        if($location=='search') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on a static page
+     *
+     * @return boolean
+     */
+    function osc_is_static_page() {
+        $location = Rewrite::newInstance()->get_location();
+        if($location=='page') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on homepage
+     *
+     * @return boolean
+     */
+    function osc_is_home_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get if user is on user dashboard
+     *
+     * @return boolean
+     */
+    function osc_is_user_dashboard() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='user' && $section=='dashboard') {
+            return true;
+        }
+        return false;
+    }
     
+    /**
+     * Get if user is on publish page
+     *
+     * @return boolean
+     */
+    function osc_is_publish_page() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='item' && $section=='item_add') {
+            return true;
+        }
+        return false;
+    }
     
+    /**
+     * Get if user is on login form
+     *
+     * @return boolean
+     */
+    function osc_is_login_form() {
+        $location = Rewrite::newInstance()->get_location();
+        $section = Rewrite::newInstance()->get_section();
+        if($location=='login' && $section=='') {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    function osc_get_osclass_location() {
+        return Rewrite::newInstance()->get_location();
+    }
+
+    /**
+     * Get section
+     *
+     * @return string
+     */
+    function osc_get_osclass_section() {
+        return Rewrite::newInstance()->get_section();
+    }
+
+
+
 ?>

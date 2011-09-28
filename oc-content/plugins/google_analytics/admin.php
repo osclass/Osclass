@@ -4,14 +4,12 @@
     $webid          = Params::getParam('webid');
     $option         = Params::getParam('option');
     
-    if($webid == '') {
-    	$webid = (osc_google_analytics_id() != '') ? osc_google_analytics_id() : '';
-    }
-    
     if( $option == 'stepone' ) {
         $dao_preference->update(array("s_value" => $webid)
                                ,array("s_section" => "plugin-google_analytics", "s_name" => "google_analytics_id")) ;
         echo '<div style="text-align:center; font-size:22px; background-color:#00bb00;"><p>' . __('Congratulations. The plugin is now configured','google_analytics') . '.</p></div>' ;
+    } else {
+        $webid = osc_google_analytics_id() ;
     }
 
 ?>

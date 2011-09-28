@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.0.2') ;
+define('OSCLASS_VERSION', '2.2.3') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -34,7 +34,7 @@ define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
 if( !file_exists(ABS_PATH . 'config.php') ) {
     require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
 
-    $title = 'OSClass &raquo; Error' ;
+    $title   = 'OSClass &raquo; Error' ;
     $message = 'There doesn\'t seem to be a <code>config.php</code> file. OSClass isn\'t installed. <a href="http://forums.osclass.org/">Need more help?</a></p>' ;
     $message .= '<p><a class="button" href="' . osc_get_absolute_url() .'oc-includes/osclass/install.php">Install</a></p>' ;
 
@@ -45,8 +45,9 @@ if( !defined('MULTISITE') ) {
     define('MULTISITE', 0);
 }
 
-require_once ABS_PATH . 'config.php' ;
-require_once ABS_PATH . 'oc-dbload.php' ;
+require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hDefines.php';
@@ -63,6 +64,8 @@ require_once LIB_PATH . 'osclass/helpers/hSanitize.php';
 require_once LIB_PATH . 'osclass/helpers/hValidate.php';
 require_once LIB_PATH . 'osclass/helpers/hPage.php';
 require_once LIB_PATH . 'osclass/helpers/hPagination.php';
+require_once LIB_PATH . 'osclass/helpers/hPremium.php';
+require_once LIB_PATH . 'osclass/helpers/hTheme.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
 require_once LIB_PATH . 'osclass/core/Cookie.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
@@ -83,11 +86,40 @@ require_once LIB_PATH . 'osclass/locales.php';
 require_once LIB_PATH . 'osclass/plugins.php';
 require_once LIB_PATH . 'osclass/helpers/hPlugins.php';
 require_once LIB_PATH . 'osclass/ItemActions.php';
+require_once LIB_PATH . 'osclass/emails.php';
+require_once LIB_PATH . 'osclass/model/Admin.php';
+require_once LIB_PATH . 'osclass/model/Alerts.php';
+require_once LIB_PATH . 'osclass/model/Cron.php';
+require_once LIB_PATH . 'osclass/model/Category.php';
+require_once LIB_PATH . 'osclass/model/CategoryStats.php';
+require_once LIB_PATH . 'osclass/model/City.php';
+require_once LIB_PATH . 'osclass/model/Country.php';
+require_once LIB_PATH . 'osclass/model/Currency.php';
+require_once LIB_PATH . 'osclass/model/OSCLocale.php';
+require_once LIB_PATH . 'osclass/model/Item.php';
+require_once LIB_PATH . 'osclass/model/ItemComment.php';
+require_once LIB_PATH . 'osclass/model/ItemResource.php';
+require_once LIB_PATH . 'osclass/model/ItemStats.php';
+require_once LIB_PATH . 'osclass/model/Page.php';
+require_once LIB_PATH . 'osclass/model/PluginCategory.php';
+require_once LIB_PATH . 'osclass/model/Region.php';
+require_once LIB_PATH . 'osclass/model/Rewrite.php';
+require_once LIB_PATH . 'osclass/model/User.php';
+require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
+require_once LIB_PATH . 'osclass/model/ItemLocation.php';
+require_once LIB_PATH . 'osclass/model/Widget.php';
+require_once LIB_PATH . 'osclass/model/Search.php';
+require_once LIB_PATH . 'osclass/model/LatestSearches.php';
+require_once LIB_PATH . 'osclass/model/SiteInfo.php';
+require_once LIB_PATH . 'osclass/model/Stats.php';
+require_once LIB_PATH . 'osclass/model/Field.php';
+require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
 require_once LIB_PATH . 'osclass/classes/ImageResizer.php';
 require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
+require_once LIB_PATH . 'osclass/classes/Watermark.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';
@@ -100,26 +132,35 @@ require_once LIB_PATH . 'osclass/frm/User.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
+require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
 
-
-
-//TO REVIEW
-require_once LIB_PATH . 'osclass/model/static/Preference.php' ;
-
-
+require_once LIB_PATH . 'osclass/functions.php';
 
 define('__OSC_LOADED__', true);
-if(!defined('__FROM_CRON__')) {
-    if(osc_auto_cron()) {
-        osc_doRequest(osc_base_url() . 'oc-includes/osclass/cron.php', array()) ;
-
-    }
-}
 
 Plugins::init() ;
 
 Rewrite::newInstance()->init();
 // Moved from BaseModel, since we need some session magic on index.php ;)
 Session::newInstance()->session_start() ;
+
+if(osc_timezone() != '') {
+    date_default_timezone_set(osc_timezone());
+}
+
+function osc_show_maintenance() {
+    if(defined('__OSC_MAINTENANCE__')) { ?>
+        <div id="maintenance" name="maintenance">
+             <?php _e("The website is currently under maintenance mode"); ?>
+        </div>
+    <?php }
+}
+
+function osc_meta_generator() {
+    echo '<meta name="generator" content="OSClass ' . OSCLASS_VERSION . '" />';
+}
+
+osc_add_hook("header", "osc_show_maintenance");
+osc_add_hook("header", "osc_meta_generator");
 
 ?>

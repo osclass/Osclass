@@ -22,45 +22,52 @@
 
     class CAdminPlugins extends AdminSecBaseModel
     {
-        //specific for this class
-        private $pageManager ;
-
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
-
             //specific things for this class
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             //specific things for this class
             switch ($this->action)
             {
-
                 case 'add':
                     $this->doView("plugins/add.php");
                     break;
                 case 'add_post':
+                    if( defined('DEMO') ) {
+                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                        $this->redirectTo(osc_admin_base_url(true) . '?page=plugins');
+                    }
                     $package = Params::getFiles("package");
-                    $path = osc_plugins_path() ;
-
-                    (int) $status = osc_unzip_file($package['tmp_name'], $path);
-
+                    if(isset($package['size']) && $package['size']!=0) {
+                        $path = osc_plugins_path() ;
+                        (int) $status = osc_unzip_file($package['tmp_name'], $path);
+                    } else {
+                        $status = 3;
+                    }
                     switch ($status) {
                         case(0):   $msg = _m('The plugin folder is not writable');
-                                osc_add_flash_error_message($msg, 'admin');
+                                    osc_add_flash_error_message($msg, 'admin');
                         break;
                         case(1):   $msg = _m('The plugin has been uploaded correctly');
-                                osc_add_flash_ok_message($msg, 'admin');
+                                   osc_add_flash_ok_message($msg, 'admin');
                         break;
                         case(2):   $msg = _m('The zip file is not valid');
-                                osc_add_flash_error_message($msg, 'admin');
+                                   osc_add_flash_error_message($msg, 'admin');
+                        break;
+                        case(3):   $msg = _m('No file was uploaded');
+                                   osc_add_flash_error_message($msg, 'admin');
+                                   $this->redirectTo(osc_admin_base_url(true)."?page=plugins&action=add");
                         break;
                         case(-1):
                         default:   $msg = _m('There was a problem adding the plugin');
-                                osc_add_flash_error_message($msg, 'admin');
+                                   osc_add_flash_error_message($msg, 'admin');
                         break;
                     }
 
@@ -69,21 +76,56 @@
                 case 'install':
                     $pn = Params::getParam("plugin");
 
-                    Plugins::activate($pn);
-                    //run this after installing the plugin
-                    Plugins::runHook('install_'.$pn) ;
+                    // CATCH FATAL ERRORS
+                    $old_value = error_reporting(0);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn);
+                    $installed = Plugins::install($pn);
+                    
+                    if($installed) {
+                        //run this after installing the plugin
+                        Plugins::runHook('install_'.$pn) ;
+                        osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
+                    } else {
+                        osc_add_flash_error_message( _m('Error: Plugin already installed'), 'admin') ;
+                    }
+                    error_reporting($old_value);            
 
-
-                    osc_add_flash_ok_message( _m('Plugin installed'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'uninstall':
                     $pn = Params::getParam("plugin");
 
                     Plugins::runHook($pn.'_uninstall') ;
-                    Plugins::deactivate($pn);
+                    Plugins::uninstall($pn);
 
                     osc_add_flash_ok_message( _m('Plugin uninstalled'), 'admin');
+                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    break;
+                case 'enable':
+                    $pn = Params::getParam("plugin");
+
+                    // CATCH FATAL ERRORS
+                    $old_value = error_reporting(0);
+                    register_shutdown_function(array($this, 'errorHandler'), $pn);
+                    $enabled = Plugins::activate($pn);
+                    
+                    if($enabled) {
+                        Plugins::runHook($pn.'_enable') ;
+                        osc_add_flash_ok_message( _m('Plugin enabled'), 'admin');
+                    } else {
+                        osc_add_flash_error_message( _m('Error: Plugin already enabled'), 'admin') ;
+                    }
+                    error_reporting($old_value);            
+
+                    $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+                    break;
+                case 'disable':
+                    $pn = Params::getParam("plugin");
+
+                    Plugins::runHook($pn.'_disable') ;
+                    Plugins::deactivate($pn);
+
+                    osc_add_flash_ok_message( _m('Plugin disabled'), 'admin');
                     $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
                     break;
                 case 'admin':
@@ -116,6 +158,25 @@
                         $this->_exportVariableToView("file", osc_plugins_path() . $file);
                         //osc_renderPluginView($file);
                         $this->doView("plugins/view.php");
+                    }
+                    break;
+
+                case 'render':
+                    $file = Params::getParam("file");
+                    if($file!="") {
+                        // We pass the GET variables (in case we have somes)
+                        if(preg_match('|(.+?)\?(.*)|', $file, $match)) {
+                            $file = $match[1];
+                            if(preg_match_all('|&([^=]+)=([^&]*)|', urldecode('&'.$match[2].'&'), $get_vars)) {
+                                for($var_k=0;$var_k<count($get_vars[1]);$var_k++) {
+                                    Params::setParam($get_vars[1][$var_k], $get_vars[2][$var_k]);
+                                }
+                            }
+                        } else {
+                            $file = $_REQUEST['file'];
+                        };
+                        $this->_exportVariableToView("file", ABS_PATH . $file);
+                        $this->doView("theme/view.php");
                     }
                     break;
 
@@ -153,9 +214,22 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
+
+        function errorHandler($pn)
+        {
+            if( false === is_null($aError = error_get_last()) ) {
+                Plugins::deactivate($pn);
+                osc_add_flash_error_message( sprintf(_m('There was a fatal error and the plugin was not installed.<br />Error: "%s" Line: %s<br/>File: %s'), $aError['message'], $aError['line'], $aError['file']), 'admin');
+                $this->redirectTo(osc_admin_base_url(true)."?page=plugins");
+            }
+        }
+        
     }
+
 
 ?>

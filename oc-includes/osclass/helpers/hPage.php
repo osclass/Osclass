@@ -20,6 +20,18 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+    * Helper Pages
+    * @package OSClass
+    * @subpackage Helpers
+    * @author OSClass
+    */
+
+    /**
+     * Gets current page object
+     *
+     * @return array
+     */
     function osc_static_page() {
         if (View::newInstance()->_exists('pages')) {
             $page = View::newInstance()->_current('pages') ;
@@ -31,37 +43,81 @@
         return($page) ;
     }
     
+    /**
+     * Gets current page field
+     * 
+     * @param string $field
+     * @param string $locale
+     * @return string
+     */
     function osc_static_page_field($field, $locale = '') {
         return osc_field(osc_static_page(), $field, $locale) ;
     }
 
+    /**
+     * Gets current page title
+     *
+     * @param string $locale
+     * @return string
+     */
     function osc_static_page_title($locale = '') {
         if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_static_page_field("s_title", $locale) ;
     }
 
+    /**
+     * Gets current page text
+     *
+     * @param string $locale
+     * @return string
+     */
     function osc_static_page_text($locale = '') {
         if ($locale == "") $locale = osc_current_user_locale() ;
         return osc_static_page_field("s_text", $locale) ;
     }
 
-    function osc_static_page_id() {
+    /**
+     * Gets current page ID
+     *
+     * @return string
+     */
+    function osc_static_page_id() { echo "###########".osc_static_page_field("pk_i_id")."##############";
         return osc_static_page_field("pk_i_id") ;
     }
 
-    function osc_static_page_mod_date() {
-        $date = osc_static_page_field("pk_i_id") ;
-        if($date!='') {
-            return $date;
-        } else {
-            return osc_static_page_pub_date();
-        }
+    /**
+     * Get page order
+     *
+     * @return int
+     */
+    function osc_static_page_order() {
+        return (int)osc_static_page_field("i_order") ;
     }
 
+    /**
+     * Gets current page modification date
+     *
+     * @return string
+     */
+    function osc_static_page_mod_date() {
+        return osc_static_page_field("dt_mod_date") ;
+    }
+
+    /**
+     * Gets current page publish date
+     *
+     * @return string
+     */
     function osc_static_page_pub_date() {
         return osc_static_page_field("dt_pub_date") ;
     }
 
+    /**
+     * Gets current page url
+     *
+     * @param string $locale
+     * @return string
+     */
     function osc_static_page_url($locale = '') {
         if($locale!='') {
             if(osc_rewrite_enabled()) {
@@ -81,7 +137,9 @@
     /**
      * Gets the specified static page by internal name.
      *
-     * @return <boolean>
+     * @param string $internal_name
+     * @param string $locale
+     * @return boolean
      */
     function osc_get_static_page($internal_name, $locale = '') {
         if ($locale == "") $locale = osc_current_user_locale() ;
@@ -91,7 +149,7 @@
     /**
      * Gets the total of static pages. If static pages are not loaded, this function will load them.
      *
-     * @return <int>
+     * @return int
      */
     function osc_count_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
@@ -101,9 +159,10 @@
     }
 
     /**
-     * Let you know if there are more static pages in the list. If static pages are not loaded, this function will load them.
+     * Let you know if there are more static pages in the list. If static pages are not loaded,
+     * this function will load them.
      *
-     * @return <boolean>
+     * @return boolean
      */
     function osc_has_static_pages() {
         if ( !View::newInstance()->_exists('pages') ) {
@@ -113,6 +172,13 @@
         return View::newInstance()->_next('pages') ;
     }
 
+    /**
+     * Move the iterator to the first position of the pages array
+     * It reset the osc_has_page function so you could have several loops
+     * on the same page
+     *
+     * @return boolean
+     */
     function osc_reset_static_pages() {
         return View::newInstance()->_erase('pages') ;
     }

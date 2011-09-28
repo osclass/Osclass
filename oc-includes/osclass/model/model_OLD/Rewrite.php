@@ -29,7 +29,8 @@
         private $location;
         private $section;
 
-        public function __construct() {
+        public function __construct()
+        {
             $this->rules = $this->getRules();
             $this->request_uri = '';
             $this->uri = '';
@@ -38,7 +39,8 @@
             parent::__construct() ;
         }
 
-        public static function newInstance() {
+        public static function newInstance()
+        {
             if(!self::$instance instanceof self) {
                 self::$instance = new self ;
             }
@@ -47,22 +49,26 @@
 
         public function getTableName() {}
 
-        public function getRules() {
+        public function getRules()
+        {
             return unserialize(osc_rewrite_rules()) ;
         }
 
-        public function setRules() {
+        public function setRules()
+        {
             Preference::newInstance()->update(
                     array('s_value' => serialize($this->rules))
                     ,array('s_name' => 'rewrite_rules')
             );
         }
 
-        public function listRules() {
+        public function listRules()
+        {
             return $this->rules;
         }
 
-        public function addRules($rules) {
+        public function addRules($rules)
+        {
             if(is_array($rules)) {
                 foreach($rules as $rule) {
                     if(is_array($rule) && count($rule)>1) {
@@ -72,7 +78,8 @@
             }
         }
 
-        public function addRule($regexp, $uri) {
+        public function addRule($regexp, $uri)
+        {
             $regexp = trim($regexp);
             $uri = trim($uri);
             if($regexp!='' && $uri!='') {
@@ -82,11 +89,15 @@
             }
         }
 
-        public function init() {
+        public function init()
+        {
             // $_SERVER is not supported by Params Class... we should fix that
             if(isset($_SERVER['REQUEST_URI'])) {
                 $request_uri = urldecode(preg_replace('@^' . REL_WEB_URL . '@', "", $_SERVER['REQUEST_URI']));
                 if(osc_rewrite_enabled()) {
+                    $this->extractParams($request_uri);
+                    $tmp_ar = explode("?", $request_uri);
+                    $request_uri = $tmp_ar[0];
                     foreach($this->rules as $match => $uri) {
                         // UNCOMMENT TO DEBUG
                         //echo 'Request URI: '.$request_uri." # Match : ".$match." # URI to go : ".$uri." <br />";
@@ -98,14 +109,14 @@
                 }
                 $this->extractParams($request_uri);
                 $this->request_uri = $request_uri;
-                //$this->uri = $this->extractURL($request_uri);
-                //$this->location = str_replace(".php", "", $this->uri);
+
                 if(Params::getParam('page')!='') { $this->location = Params::getParam('page'); };
                 if(Params::getParam('action')!='') { $this->section = Params::getParam('action'); };
             }
         }
 
-        public function extractURL($uri = '') {
+        public function extractURL($uri = '')
+        {
             $uri_array = explode('?', str_replace('index.php', '', $uri));
             if(substr($uri_array[0], 0, 1)=="/") {
                 return substr($uri_array[0], 1);
@@ -114,7 +125,8 @@
             }
         }
 
-        public function extractParams($uri = '') {
+        public function extractParams($uri = '')
+        {
             $uri_array = explode('?', $uri);
             $url = substr($uri_array[0], 1);
             $length_i = count($uri_array);
@@ -128,28 +140,36 @@
             }
         }
 
-        public function removeRule($regexp) {
+        public function removeRule($regexp)
+        {
             unset($this->rules[$regexp]);
         }
 
-        public function clearRules() {
+        public function clearRules()
+        {
             unset($this->rules);
             $this->rules = array();
         }
 
-        public function get_request_uri() {
+        public function get_request_uri()
+        {
             return $this->request_uri;
         }
 
-        public function get_location() {
+        public function set_location($location)
+        {
+            $this->location = $location;
+        }
+
+        public function get_location()
+        {
             return $this->location;
         }
 
-        public function get_section() {
+        public function get_section()
+        {
             return $this->section;
         }
-
-
     }
 
 ?>

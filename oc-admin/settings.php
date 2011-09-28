@@ -30,67 +30,6 @@
         //Business Layer...
         function doModel() {
             switch($this->action) {
-                case('items'):          // calling the items settings view
-                                        $this->doView('settings/items.php');
-                break;
-                case('items_post'):     // update item settings
-                                        $iUpdated                   = 0;
-                                        $enabledRecaptchaItems      = Params::getParam('enabled_recaptcha_items');
-                                        $enabledRecaptchaItems      = (($enabledRecaptchaItems != '') ? true : false);
-                                        //$enabledItemValidation      = Params::getParam('enabled_item_validation');
-                                        //$enabledItemValidation      = (($enabledItemValidation != '') ? true : false);
-                                        $moderateItems              = Params::getParam('moderate_items');
-                                        $moderateItems              = (($moderateItems != '') ? true : false);
-                                        $numModerateItems           = Params::getParam('num_moderate_items');
-                                        $itemsWaitTime              = Params::getParam('items_wait_time');
-                                        $loggedUserItemValidation   = Params::getParam('logged_user_item_validation');
-                                        $loggedUserItemValidation   = (($loggedUserItemValidation != '') ? true : false);
-                                        $regUserPost                = Params::getParam('reg_user_post');
-                                        $regUserPost                = (($regUserPost != '') ? true : false);
-                                        $notifyNewItem              = Params::getParam('notify_new_item');
-                                        $notifyNewItem              = (($notifyNewItem != '') ? true : false);
-                                        $notifyContactItem          = Params::getParam('notify_contact_item');
-                                        $notifyContactItem          = (($notifyContactItem != '') ? true : false);
-                                        $notifyContactFriends       = Params::getParam('notify_contact_friends');
-                                        $notifyContactFriends       = (($notifyContactFriends != '') ? true : false);
-                                        $enabledFieldPriceItems     = Params::getParam('enableField#f_price@items');
-                                        $enabledFieldPriceItems     = (($enabledFieldPriceItems != '') ? true : false);
-                                        $enabledFieldImagesItems    = Params::getParam('enableField#images@items');
-                                        $enabledFieldImagesItems    = (($enabledFieldImagesItems != '') ? true : false);
-
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledRecaptchaItems)
-                                                                                      ,array('s_name'  => 'enabled_recaptcha_items'));
-                                        //$iUpdated += Preference::newInstance()->update(array('s_value' => $enabledItemValidation)
-                                        //                                              ,array('s_name'  => 'enabled_item_validation'));
-                                        if($moderateItems) {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value' => $numModerateItems)
-                                                                                          ,array('s_name' => 'moderate_items'));
-                                        } else {
-                                            $iUpdated += Preference::newInstance()->update(array('s_value' => '-1')
-                                                                                          ,array('s_name' => 'moderate_items'));
-                                        }
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $loggedUserItemValidation)
-                                                                                      ,array('s_name'  => 'logged_user_item_validation'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPost)
-                                                                                      ,array('s_name'  => 'reg_user_post'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewItem)
-                                                                                      ,array('s_name'  => 'notify_new_item'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyContactItem)
-                                                                                      ,array('s_name'  => 'notify_contact_item'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyContactFriends)
-                                                                                      ,array('s_name'  => 'notify_contact_friends'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldPriceItems)
-                                                                                      ,array('s_name'  => 'enableField#f_price@items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledFieldImagesItems)
-                                                                                      ,array('s_name'  => 'enableField#images@items'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $itemsWaitTime)
-                                                                                      ,array('s_name'  => 'items_wait_time'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Items\' settings have been updated'), 'admin');
-                                        }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=items');
-                break;
                 case('comments'):       //calling the comments settings view
                                         $this->doView('settings/comments.php');
                 break;
@@ -104,6 +43,8 @@
                                         $commentsPerPage  = Params::getParam('comments_per_page');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
+                                        $regUserPostComments  = Params::getParam('reg_user_post_comments');
+                                        $regUserPostComments  = (($regUserPostComments != '') ? true : false);
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledComments)
                                                                                       ,array('s_name' => 'enabled_comments'));
@@ -119,34 +60,13 @@
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
                                                                                       ,array('s_name' => 'comments_per_page'));
 
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $regUserPostComments )
+                                                                                      ,array('s_name' => 'reg_user_post_comments'));
+
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Comments\' settings have been updated'), 'admin');
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=comments');
-                break;
-                case ('users'):         // calling the users settings view
-                                        $this->doView('settings/users.php');
-                break;
-                case ('users_post'):    // updating users
-                                        $iUpdated                = 0;
-                                        $enabledUserValidation   = Params::getParam('enabled_user_validation');
-                                        $enabledUserValidation   = (($enabledUserValidation != '') ? true : false);
-                                        $enabledUserRegistration = Params::getParam('enabled_user_registration');
-                                        $enabledUserRegistration = (($enabledUserRegistration != '') ? true : false);
-                                        $enabledUsers            = Params::getParam('enabled_users');
-                                        $enabledUsers            = (($enabledUsers != '') ? true : false);
-
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserValidation)
-                                                                                      ,array('s_name'  => 'enabled_user_validation'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUserRegistration)
-                                                                                      ,array('s_name'  => 'enabled_user_registration'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $enabledUsers)
-                                                                                      ,array('s_name'  => 'enabled_users'));
-
-                                        if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('Users\' settings have been updated'), 'admin');
-                                        }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=users');
                 break;
                 case ('locations'):     // calling the locations settings view
                                         $location_action = Params::getParam('type');
@@ -162,7 +82,7 @@
                                                                     }
                                                                     $exists = $mCountries->findByCode($countryCode);
                                                                     if(isset($exists['s_name'])) {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                       $countryName), 'admin');
                                                                     } else {
                                                                         $countries_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=country_code&term=' .
@@ -182,42 +102,50 @@
                                                                                                                   urlencode($countryCode) . '&term=all');
                                                                             $regions = json_decode($regions_json);
                                                                             if(!isset($regions->error)) {
-                                                                                foreach($regions as $r) {
-                                                                                    $manager_region->insert(array(
-                                                                                        "fk_c_country_code" => $r->country_code,
-                                                                                        "s_name" => $r->name
-                                                                                    ));
+
+                                                                                if(count($regions) > 0) {
+                                                                                    foreach($regions as $r) {
+                                                                                        $manager_region->insert(array(
+                                                                                            "fk_c_country_code" => $r->country_code,
+                                                                                            "s_name" => $r->name
+                                                                                        ));
+                                                                                    }
                                                                                 }
                                                                                 unset($regions);
                                                                                 unset($regions_json);
 
                                                                                 $manager_city = new City();
-                                                                                foreach($countries as $c) {
-                                                                                    $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
-                                                                                    if(!isset($regions->error)) {
-                                                                                        foreach($regions as $region) {
-                                                                                            $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
-                                                                                                                                 urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
-                                                                                            $cities = json_decode($cities_json) ;
-                                                                                            if(!isset($cities->error)) {
-                                                                                                foreach($cities as $ci) {
-                                                                                                    $manager_city->insert(array(
-                                                                                                        "fk_i_region_id" => $region['pk_i_id']
-                                                                                                        ,"s_name" => $ci->name
-                                                                                                        ,"fk_c_country_code" => $ci->country_code
-                                                                                                    ));
+                                                                                if(count($countries) > 0) {
+                                                                                    foreach($countries as $c) {
+                                                                                        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                                                                                        if(!isset($regions->error)) {
+                                                                                            if(count($regions) > 0) {
+                                                                                                foreach($regions as $region) {
+                                                                                                    $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
+                                                                                                                                         urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
+                                                                                                    $cities = json_decode($cities_json) ;
+                                                                                                    if(!isset($cities->error)) {
+                                                                                                        if(count($cities) > 0) {
+                                                                                                            foreach($cities as $ci) {
+                                                                                                                $manager_city->insert(array(
+                                                                                                                    "fk_i_region_id" => $region['pk_i_id']
+                                                                                                                    ,"s_name" => $ci->name
+                                                                                                                    ,"fk_c_country_code" => $ci->country_code
+                                                                                                                ));
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                    unset($cities) ;
+                                                                                                    unset($cities_json) ;
                                                                                                 }
                                                                                             }
-                                                                                            unset($cities) ;
-                                                                                            unset($cities_json) ;
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             }
                                                                         }
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $countryName), 'admin');
                                                                     }                                                
-                                                                    osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'),
-                                                                                                          $countryName), 'admin');
 
 
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -231,19 +159,12 @@
                                                                         if(!$result) {
                                                                             $ok = false;
                                                                         }
-                                                                    }                                                                    /*if(!isset($exists['pk_c_code']) || $exists['pk_c_code']==$old_exists['pk_c_code']) {
-                                                                        $mCountries->update(array('s_name' => $newCountry)
-                                                                                           ,array('s_name' => $oldCountry));
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been edited'),
-                                                                                                          $newCountry), 'admin');
-                                                                    } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
-                                                                                                           $newCountry),'admin');
-                                                                    }*/
+                                                                    }
+
                                                                     if($ok) {
-                                                                        osc_add_flash_ok_message(__('Country has been edited'), 'admin');
+                                                                        osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_ok_message(__('There were some problems editing the country'), 'admin');
+                                                                        osc_add_flash_ok_message(_m('There were some problems editing the country'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -263,9 +184,9 @@
                                                                         }
                                                                         $mCountries->delete(array('pk_c_code' => $aCountries['pk_c_code']));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been deleted'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'), $aCountries['s_name']), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
+                                                                        osc_add_flash_error_message(sprintf(_m('%s can not be deleted, some items are located in it'), $aCountries['s_name']), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -282,10 +203,10 @@
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
                                                                             $mRegions->insert($data);
-                                                                            osc_add_flash_ok_message(sprintf(__('%s has been added as a new region'),
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new region'),
                                                                                                              $regionName), 'admin');
                                                                         } else {
-                                                                            osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                            osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                              $regionName), 'admin');
                                                                         }
                                                                     }
@@ -300,11 +221,11 @@
                                                                         if($regionId != '') {
                                                                             $mRegions->update(array('s_name' => $newRegion)
                                                                                              ,array('pk_i_id' => $regionId));
-                                                                            osc_add_flash_ok_message(sprintf(__('%s has been edited'),
+                                                                            osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                               $newRegion), 'admin');
                                                                         }
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                             $newRegion), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -321,7 +242,7 @@
                                                                         $mCities->delete(array('fk_i_region_id' => $regionId));
                                                                         $mRegion->delete(array('pk_i_id' => $regionId));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been deleted'),
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
                                                                                 $aRegion['s_name']), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -338,10 +259,10 @@
                                                                                               ,'s_name'            => $newCity
                                                                                               ,'fk_c_country_code' => $countryCode));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been added as a new city'),
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been added as a new city'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -356,10 +277,10 @@
                                                                         $mCities->update(array('s_name' => $newCity)
                                                                                         ,array('pk_i_id' => $cityId));
 
-                                                                        osc_add_flash_ok_message(sprintf(__('%s has been edited'),
+                                                                        osc_add_flash_ok_message(sprintf(_m('%s has been edited'),
                                                                                                          $newCity), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_error_message(sprintf(__('%s already was in the database'),
+                                                                        osc_add_flash_error_message(sprintf(_m('%s already was in the database'),
                                                                                                          $newCity), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
@@ -371,7 +292,7 @@
                                                                     $aCity   = $mCities->findByPrimaryKey($cityId);
                                                                     $mCities->delete(array('pk_i_id' => $cityId));
 
-                                                                    osc_add_flash_ok_message(sprintf(__('%s has been deleted'),
+                                                                    osc_add_flash_ok_message(sprintf(_m('%s has been deleted'),
                                                                                                      $aCity['s_name']), 'admin');
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
@@ -381,20 +302,6 @@
                                         $this->_exportVariableToView('aCountries', $aCountries);
 
                                         $this->doView('settings/locations.php');
-                break;
-                case('categories'):     // calling the categories view
-                                        $this->doView('settings/categories.php');
-                break;
-                case('categories_post'):// updating categories option
-                                        $selectableParent = Params::getParam('selectable_parent_categories');
-                                        
-                                        $updated = Preference::newInstance()->update(array('s_value' => $selectableParent)
-                                                                                    ,array('s_name'  => 'selectable_parent_categories'));
-                                        if($updated > 0) {
-                                            osc_add_flash_ok_message( _m('Categories\' settings have been updated'), 'admin');
-                                        }
-                                        $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=categories');
-                                        
                 break;
                 case('permalinks'):     // calling the permalinks view
                                         $htaccess = Params::getParam('htaccess_status');
@@ -569,22 +476,29 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
+                                                                $msg_current = '';
                                                                 foreach($aCurrencyCode as $currencyCode) {
                                                                     if(preg_match('/.{1,3}/', $currencyCode) && $currencyCode != osc_currency()) {
                                                                         $rowChanged += Currency::newInstance()->delete(array('pk_c_code' => $currencyCode));
+                                                                    }
+                                                                    if($currencyCode == osc_currency()) {
+                                                                        $msg_current = sprintf('. ' . _m("%s could not be deleted because it's the default currency"), $currencyCode) ;
                                                                     }
                                                                 }
 
                                                                 $msg = '';
                                                                 switch ($rowChanged) {
-                                                                    case ('0'): $msg = __('No currencies have been deleted');
-                                                                            osc_add_flash_error_message($msg, 'admin');
+                                                                    case ('0'): $msg = _m('No currencies have been deleted');
+                                                                            osc_add_flash_error_message($msg . $msg_current, 'admin');
                                                                     break;
-                                                                    case ('1'): $msg = __('One currency has been deleted');
-                                                                            osc_add_flash_error_message($msg, 'admin');
+                                                                    case ('1'): $msg = _m('One currency has been deleted');
+                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
                                                                     break;
-                                                                    default:    $msg = sprintf(__('%s currencies have been deleted'), $rowChanged);
-                                                                            osc_add_flash_ok_message($msg, 'admin');
+                                                                    case ('-1'): $msg = sprintf(_m("%s could not be deleted because this currency still in use"), $currencyCode);
+                                                                            osc_add_flash_error_message($msg . $msg_current, 'admin');
+                                                                    break;
+                                                                    default:    $msg = sprintf(_m('%s currencies have been deleted'), $rowChanged);
+                                                                            osc_add_flash_ok_message($msg . $msg_current, 'admin');
                                                                     break;
                                                                 }
 
@@ -601,10 +515,16 @@
                 case('mailserver'):     // calling the mailserver view
                                         $this->doView('settings/mailserver.php');
                 break;
-                case('mailserver_post'):// updating mailserver
+                case('mailserver_post'):if( defined('DEMO') ) {
+                                            osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                            $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=mailserver');
+                                        }
+                                        // updating mailserver
                                         $iUpdated           = 0;
                                         $mailserverAuth     = Params::getParam('mailserver_auth');
                                         $mailserverAuth     = ($mailserverAuth != '' ? true : false);
+                                        $mailserverPop     = Params::getParam('mailserver_pop');
+                                        $mailserverPop     = ($mailserverPop != '' ? true : false);
                                         $mailserverType     = Params::getParam('mailserver_type');
                                         $mailserverHost     = Params::getParam('mailserver_host');
                                         $mailserverPort     = Params::getParam('mailserver_port');
@@ -619,6 +539,8 @@
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverAuth)
                                                                                        ,array('s_name' => 'mailserver_auth'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverPop)
+                                                                                       ,array('s_name' => 'mailserver_pop'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverType)
                                                                                        ,array('s_name' => 'mailserver_type'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $mailserverHost)
@@ -648,7 +570,56 @@
                                         $dimPreview        = Params::getParam('dimPreview');
                                         $dimNormal         = Params::getParam('dimNormal');
                                         $keepOriginalImage = Params::getParam('keep_original_image');
+                                        $use_imagick       = Params::getParam('use_imagick');
+                                        $type_watermark    = Params::getParam('watermark_type');
+                                        $watermark_color   = Params::getParam('watermark_text_color');
+                                        $watermark_text    = Params::getParam('watermark_text');
+                                        $watermark_image   = Params::getParam('watermark_image');
+                                       
+                                        switch ($type_watermark) {
+                                            case 'none':
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text_color'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_image'));
+                                            break;
+                                            case 'text':
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_color)
+                                                                                              ,array('s_name'  => 'watermark_text_color'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => $watermark_text)
+                                                                                              ,array('s_name'  => 'watermark_text'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_image'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_text_place'))
+                                                                                              ,array('s_name'  => 'watermark_place'));
+                                            break;
+                                            case 'image':
+                                                // upload image & move to path
+                                                if( $_FILES['watermark_image']['error'] == UPLOAD_ERR_OK ) {
+                                                    $tmpName = $_FILES['watermark_image']['tmp_name'] ;
+                                                    $path = osc_content_path() . 'uploads/watermark.png' ;
+                                                    if( move_uploaded_file($tmpName, $path) ){
+                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $path)
+                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                    } else {
+                                                        $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                                      ,array('s_name'  => 'watermark_image'));
+                                                    }
+                                                }
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text_color'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => '')
+                                                                                              ,array('s_name'  => 'watermark_text'));
+                                                $iUpdated += Preference::newInstance()->update(array('s_value' => Params::getParam('watermark_image_place'))
+                                                                                              ,array('s_name'  => 'watermark_place'));
+                                            break;
 
+                                            default:
+                                            break;
+                                        }
+                                        
                                         // format parameters
                                         $maxSizeKb         = strip_tags($maxSizeKb);
                                         $allowedExt        = strip_tags($allowedExt);
@@ -656,7 +627,12 @@
                                         $dimPreview        = strip_tags($dimPreview);
                                         $dimNormal         = strip_tags($dimNormal);
                                         $keepOriginalImage = ($keepOriginalImage != '' ? true : false);
+                                        $use_imagick       = ($use_imagick != '' ? true : false);
+                                        if(!extension_loaded('imagick')) {
+                                            $use_imagick = false;
+                                        }
 
+                                        
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $maxSizeKb)
                                                                                       ,array('s_name'  => 'maxSizeKb'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $allowedExt)
@@ -669,6 +645,8 @@
                                                                                       ,array('s_name'  => 'dimNormal'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $keepOriginalImage)
                                                                                       ,array('s_name'  => 'keep_original_image'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $use_imagick)
+                                                                                      ,array('s_name'  => 'use_imagick'));
 
                                         if($iUpdated > 0) {
                                             osc_add_flash_ok_message( _m('Media config has been updated'), 'admin');
@@ -721,7 +699,9 @@
                                         $sCurrency     = Params::getParam('currency');
                                         $sWeekStart    = Params::getParam('weekStart');
                                         $sTimeFormat   = Params::getParam('timeFormat');
+                                        $sTimezone     = Params::getParam('timezone');
                                         $sNumRssItems  = Params::getParam('num_rss_items');
+                                        $maxLatestItems = Params::getParam('max_latest_items_at_home');
 
                                         // preparing parameters
                                         $sPageTitle    = strip_tags($sPageTitle);
@@ -732,14 +712,19 @@
                                         $sCurrency     = strip_tags($sCurrency);
                                         $sWeekStart    = strip_tags($sWeekStart);
                                         $sTimeFormat   = strip_tags($sTimeFormat);
-                                        $sNumRssItems  = strip_tags($sNumRssItems);
+                                        $sNumRssItems  = (int)strip_tags($sNumRssItems);
+                                        $maxLatestItems = (int)strip_tags($maxLatestItems);
+
+                                        $error = "";
 
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageTitle)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageTitle'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sPageDesc)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'pageDesc'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        if( !defined('DEMO') ) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sContactEmail)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'contactEmail'));
+                                        }
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sLanguage)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'language'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sDateFormat)
@@ -750,11 +735,32 @@
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'weekStart'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimeFormat)
                                                                                       ,array('s_section' => 'osclass', 's_name' => 'timeFormat'));
-                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
-                                                                                      ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value'   => $sTimezone)
+                                                                                      ,array('s_section' => 'osclass', 's_name' => 'timezone'));
+                                        if(is_int($sNumRssItems)) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $sNumRssItems)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'num_rss_items'));
+                                        } else {
+                                            if($error != '') $error .= "<br/>";
+                                            $error .= _m('Number of items in the RSS must be integer');
+                                        }
+
+                                        if(is_int($maxLatestItems)) {
+                                            $iUpdated += Preference::newInstance()->update(array('s_value'   => $maxLatestItems)
+                                                                                          ,array('s_section' => 'osclass', 's_name' => 'maxLatestItems@home'));
+                                        } else {
+                                            if($error != '') $error .= "<br/>";
+                                            $error .= _m('Number of recent items displayed at home must be integer');
+                                        }
 
                                         if($iUpdated > 0) {
-                                            osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                            if($error != '') {
+                                                osc_add_flash_error_message( $error . "<br/>" . _m('General settings have been updated'), 'admin');
+                                            } else {
+                                                osc_add_flash_ok_message( _m('General settings have been updated'), 'admin');
+                                            }
+                                        } else if($error != '') {
+                                            osc_add_flash_error_message( $error , 'admin');
                                         }
 
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=settings');
@@ -790,6 +796,7 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
 
         function install_location_by_country() {
@@ -802,14 +809,14 @@
 
             $countries = json_decode($countries_json);
             if(isset($countries->error)) {
-                osc_add_flash_error_message(sprintf(__('%s cannot be added'), $country), 'admin');
+                osc_add_flash_error_message(sprintf(_m('%s cannot be added'), $country), 'admin');
                 return false;
             }
 
             foreach($countries as $c) {
                 $exists = $manager_country->findByCode($c->id);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(__('%s already was in the database'), $exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_country->insert(array(
@@ -853,7 +860,7 @@
                 }
             }
 
-            osc_add_flash_ok_message(sprintf(__('%s has been added as a new country'), $country), 'admin');
+            osc_add_flash_ok_message(sprintf(_m('%s has been added as a new country'), $country), 'admin');
         }
 
         function install_location_by_region() {
@@ -881,14 +888,14 @@
                                                   urlencode(implode(',', $aCountry)) . '&term=' . urlencode(implode(',', $aRegion)));
             $regions = json_decode($regions_json);
             if(isset($regions->error)) {
-                osc_add_flash_error_message(sprintf(__('%s cannot be added'), $region), 'admin');
+                osc_add_flash_error_message(sprintf(_m('%s cannot be added'), $region), 'admin');
                 return false;
             }
 
             foreach($regions as $r) {
                 $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
-                    osc_add_flash_error_message(sprintf(__('%s already was in the database'), $c_exists['s_name']), 'admin');
+                    osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;
                 }
                 $manager_region->insert(array(
@@ -919,7 +926,7 @@
                 unset($cities_json);
             }
 
-            osc_add_flash_ok_message(sprintf(__('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
+            osc_add_flash_ok_message(sprintf(_m('%s has been added as a region of %s'), $region, $country['s_name']), 'admin');
         }
     }
 

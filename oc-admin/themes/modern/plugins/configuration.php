@@ -27,11 +27,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
     <head>
         <?php osc_current_admin_theme_path('head.php') ; ?>
+        <link href="<?php echo osc_current_admin_theme_styles_url('jquery.treeview.css') ; ?>" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.treeview.js') ; ?>"></script>
     </head>
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Plugins'); ?></div>              
         <script type="text/javascript">
 
             function checkAll (frm, check) {
@@ -50,6 +51,13 @@
                     }
                 }
             }
+            
+            $(document).ready(function(){
+                $("#cat_tree").treeview({
+                    animated: "fast",
+                    collapsed: true
+                });
+            });
 
         </script>
         <div id="content">
@@ -80,7 +88,7 @@
                         <p>
                             <?php echo "<b>".$plugin_data['plugin_name']."</b>,<br/>".$plugin_data['description']; ?>
                             <br/>
-                            <?php _e('Select the categories where you want to apply these attributes'); ?>:
+                            <?php _e('Select the categories where you want to apply these attributes (click on their names to expand them)'); ?>:
                         </p>
                         <p>
                             <table>
@@ -90,7 +98,9 @@
                                         <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', true); return false;"><?php _e("Check all");?></a> - <a style="font-size: x-small; color: gray;" href="#" onclick="checkAll('frm3', false); return false;"><?php _e("Uncheck all");?></a>
                                     </td>
                                     <td>
-                                        <?php CategoryForm::plugin_categories($categories, $selected); ?>
+                                        <ul id="cat_tree">
+                                            <?php CategoryForm::categories_tree($categories, $selected); ?>
+                                        </ul>
                                     </td>
                                 </tr>
                             </table>

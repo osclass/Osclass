@@ -52,9 +52,11 @@ function check(id) {
 }
 
 function validate_form() {
+    admin_user        = document.getElementById('admin_user');
+    error_admin_user  = document.getElementById('admin-user-error');
     email = document.getElementById('email');
     error = document.getElementById('email-error');
-    var pattern=/^([a-zA-Z0-9_\.-])+@([a-zA-Z0-9_\.-])+\.([a-zA-Z])+([a-zA-Z])+/;
+    var pattern=/^([a-zA-Z0-9_\.\-\+])+@([a-zA-Z0-9_\.\-])+\.([a-zA-Z])+([a-zA-Z])+$/;
     var num_error = 0;
     if( !pattern.test(email.value) ) {
         email.setAttribute('style', 'color:red;');
@@ -73,12 +75,22 @@ function validate_form() {
         }
     }
     
+    var pattern_notnull=/^[a-zA-Z0-9]+$/;
+    if( !pattern_notnull.test(admin_user.value) ) {
+        error_admin_user.setAttribute('style', 'display:block;');
+        num_error = num_error + 1;
+    }
+
     if(num_error > 0) {
         return false;
     }
 
     var input = $("#target_form input");
     $("#lightbox").css('display','');
+
+    if( $('input[name=c_country]:checked').val() == 'International' ) {
+        alert('You\'ve chosen worlwide, it might take a while')
+    }
 
     $.ajax({
         type: 'POST',
@@ -88,8 +100,33 @@ function validate_form() {
         timeout: 600000,
         success: function(data) {
             if(data.status == 200) {
-                window.location = 'install.php?step=4';
+                var form = document.createElement("form");
+                form.setAttribute("method", 'POST');
+                form.setAttribute("action", 'install.php');
+
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", 'step');
+                hiddenField.setAttribute("value", '4');
+                form.appendChild(hiddenField);
+
+                hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", 'result');
+                hiddenField.setAttribute("value", data.email_status);
+                form.appendChild(hiddenField);
+
+                hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", 'password');
+                hiddenField.setAttribute("value", data.password);
+                form.appendChild(hiddenField);
+
+                document.body.appendChild(form);
+                form.submit();
+
             } else {
+                alert("Error:<br/>"+data);
                 window.location = 'install.php?step=4&error_location=1';
             }
         },
@@ -372,6 +409,10 @@ $(document).ready(function(){
     $("#email").focus(function() {
         $("#email").attr('style', '');
         $('#email-error').attr('style', 'display:none;');
+    });
+
+    $("#admin_user").focus(function() {
+        $('#admin-user-error').attr('style', 'display:none;');
     });
 });
 

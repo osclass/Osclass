@@ -38,11 +38,11 @@
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.cookie.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.json.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.uniform.js') ; ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('osclass_datatables.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tabber-minimized.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('tiny_mce/tiny_mce.js') ; ?>"></script>
-<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('location.js') ; ?>"></script>
 <script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.validate.min.js') ; ?>"></script>
+<script type="text/javascript" src="<?php echo osc_current_admin_theme_js_url('jquery.dataTables.min.js') ; ?>"></script>
 
 <script type="text/javascript">
     $(function() {
@@ -76,7 +76,6 @@
             $.getJSON("http://osclass.org/latest_version.php?callback=?", function(data) {
                 var update = document.getElementById('update_version') ;
                 if(data.version > version) {
-                    //var text = 'OSClass ' + data.s_name + ' is available! <a href="tools.php?action=upgrade">Please upgrade now</a>' ;
                     var text = '<?php printf(__('OSClass %s is available!'), '\' + data.s_name + \'') ; ?> <a href="index.php?page=tools&action=upgrade"><?php _e('Please upgrade now') ; ?></a>' ;
                     update.innerHTML = text ;
                     update.setAttribute('style', '') ;
@@ -85,3 +84,8 @@
         });
     </script>
 <?php } ?>
+
+<script>
+    var fileDefaultText = '<?php _e('No file selected','modern'); ?>';
+    var fileBtnText     = '<?php _e('Choose File','modern'); ?>';
+</script>

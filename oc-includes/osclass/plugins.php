@@ -68,6 +68,16 @@
             return false;
         }
 
+        static function isEnabled($plugin) {
+            $p_installed = Plugins::listEnabled();
+            foreach($p_installed as $p) {
+                if($p==$plugin) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         static function listAll() {
             $plugins = array();
             $pluginsPath = osc_plugins_path();
@@ -88,26 +98,36 @@
         }
 
         static function loadActive() {
+            $data['s_value'] = osc_active_plugins() ;
+            $plugins_list = unserialize($data['s_value']);
+            if(is_array($plugins_list)) {
+                foreach($plugins_list as $plugin_name) {
+                    $pluginPath = osc_plugins_path() . $plugin_name;
+                    if(file_exists($pluginPath)) {
+                        //This should include the file and adds the hooks
+                        include_once $pluginPath;
+                    }
+                }
+            }
+        }
+
+        static function listInstalled() {
+            $p_array = array();
             try {
-                $data['s_value'] = osc_active_plugins() ;
-                $plugins_list = unserialize($data['s_value']);
+                $data['s_value'] = osc_installed_plugins() ;
+                $plugins_list = unserialize($data['s_value']) ;
                 if(is_array($plugins_list)) {
                     foreach($plugins_list as $plugin_name) {
-                        $pluginPath = osc_plugins_path() . $plugin_name;
-                        if(file_exists($pluginPath)) {
-                            //This should include the file and adds the hooks
-                            include_once $pluginPath;
-                        } else {
-                            trigger_error(sprintf(__('Plugin %s is missing its main file'), $plugin_name));
-                        }
+                        $p_array[] = $plugin_name;
                     }
                 }
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
+            return $p_array;
         }
 
-        static function listInstalled() {
+        static function listEnabled() {
             $p_array = array();
             try {
                 $data['s_value'] = osc_active_plugins() ;
@@ -155,9 +175,9 @@
                     unset($data);
                     $conn->commit();
                     Plugins::reload();
+                    return true;
                 } else {
-                    osc_add_flash_ok_message( _m('Error: Plugin already installed'), 'admin') ;
-
+                    return false;
                 }
             } catch (Exception $e) {
                 $conn->rollback();
@@ -193,8 +213,6 @@
                     unset($condition);
                     unset($data);
                     $conn->commit();
-                    $plugin = Plugins::getInfo($path);
-                    Plugins::cleanCategoryFromPlugin($plugin['short_name']);
                     Plugins::reload();
                 }
             } catch (Exception $e) {
@@ -205,6 +223,75 @@
 
         }
 
+        static function install($path) {
+            $conn = getConnection() ;
+            $conn->autocommit(false);
+            try {
+                $data['s_value'] = osc_installed_plugins() ;
+                $plugins_list = unserialize($data['s_value']);
+                $found_it = false;
+                if(is_array($plugins_list)) {
+                    foreach($plugins_list as $plugin_name) {
+                        // Check if the plugin is already installed
+                        if($plugin_name==$path) {
+                            $found_it = true;
+                            break;
+                        }
+                    }
+                }
+                Plugins::activate($path);
+                if(!$found_it) {
+                    $plugins_list[] = $path;
+                    $data['s_value'] = serialize($plugins_list);
+                    $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins');
+                    Preference::newInstance()->update($data, $condition);
+                    unset($condition);
+                    unset($data);
+                    $conn->commit();
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception $e) {
+                $conn->rollback();
+                echo $e->getMessage();
+            }
+            $conn->autocommit(true);
+        }
+
+        static function uninstall($path)
+        {
+            $conn = getConnection() ;
+            $conn->autocommit(false);
+            try {
+                $data['s_value'] = osc_installed_plugins() ;
+                $plugins_list = unserialize($data['s_value']);
+                Plugins::deactivate($path);
+
+                $path = str_replace(osc_plugins_path(), '', $path);
+                if(is_array($plugins_list)) {
+                    foreach($plugins_list as $key=>$value){
+                        if($value==$path){
+                            unset($plugins_list[$key]);
+                        }
+                    }
+                    $data['s_value'] = serialize($plugins_list);
+                    $condition = array( 's_section' => 'osclass', 's_name' => 'installed_plugins') ;
+                    Preference::newInstance()->update($data, $condition) ;
+                    unset($condition);
+                    unset($data);
+                    $conn->commit();
+                    $plugin = Plugins::getInfo($path);
+                    Plugins::cleanCategoryFromPlugin($plugin['short_name']);
+                }
+            } catch (Exception $e) {
+                $conn->rollback();
+                echo $e->getMessage();
+            }
+            $conn->autocommit(true);
+
+        }
+        
         static function isThisCategory($name, $id) {
             return PluginCategory::newInstance()->isThisCategory($name, $id);
         }
@@ -323,7 +410,9 @@
 
         // Add a hook
         static function addHook($hook, $function, $priority = 5) {
-            $hook = str_replace(osc_plugins_path(), '', $hook);
+            $hook         = preg_replace('|/+|', '/', str_replace('\\', '/', $hook)) ;
+            $plugin_path  = str_replace('\\', '/', osc_plugins_path()) ;
+            $hook         = str_replace($plugin_path, '', $hook) ;
             $found_plugin = false;
             if(isset(Plugins::$hooks[$hook])) {
                 if(is_array(Plugins::$hooks[$hook])) {

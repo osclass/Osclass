@@ -25,7 +25,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Plugins'); ?></div>              
             <div id="content">
                 <div id="separator"></div>
 
@@ -48,6 +47,11 @@
                         <div style="padding: 20px;">
 
                             <?php if(is_writable(osc_plugins_path())) { ?>
+
+                                <p style="border-bottom: 1px black solid;padding-bottom: 10px;">
+                                    <img style="padding-right: 10px;"src="<?php echo osc_current_admin_theme_url('images/info-icon.png') ; ?>"/>
+                                    Download more plugins at <a href="https://sourceforge.net/projects/osclass/files/Plugins/" target="_blank">Sourceforge</a>
+                                </p>
 
                                 <form action="<?php echo osc_admin_base_url(true);?>?page=plugins" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="action" value="add_post" />

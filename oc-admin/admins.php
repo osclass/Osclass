@@ -25,7 +25,8 @@
         //specific for this class
         private $adminManager ;
 
-        function __construct() {
+        function __construct()
+        {
             parent::__construct() ;
 
             //specific things for this class
@@ -33,7 +34,8 @@
         }
 
         //Business Layer...
-        function doModel() {
+        function doModel()
+        {
             parent::doModel() ;
 
             switch ($this->action)
@@ -41,7 +43,11 @@
                 case 'add':         // callin add view
                                     $this->doView('admins/add.php') ;
                 break;
-                case 'add_post':    // adding a new admin
+                case 'add_post':    if( defined('DEMO') ) {
+                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    }
+                                    // adding a new admin
                                     $sPassword = Params::getParam('s_password');
                                     $sName     = Params::getParam('s_name');
                                     $sEmail    = Params::getParam('s_email');
@@ -58,12 +64,16 @@
                                     $sUserName = trim($sUserName);
                                     
                                     // Checks for legit data
-                                    if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
+                                    if( !osc_validate_email($sEmail, true) ) {
                                         osc_add_flash_error_message( _m("Email invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
-                                    if($sUserName=='') {
+                                    if( !osc_validate_username($sUserName) ) {
                                         osc_add_flash_error_message( _m("Username invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
+                                    }
+                                    if($sName=='') {
+                                        osc_add_flash_error_message( _m("Real Name invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
                                     if($sPassword=='') {
@@ -80,7 +90,6 @@
                                         osc_add_flash_error_message( _m("Username already in use"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=add');
                                     }
-
 
                                     $array = array('s_password' =>  sha1($sPassword)
                                                   ,'s_name'     =>  $sName
@@ -114,7 +123,11 @@
                                     $this->_exportVariableToView("admin", $adminEdit);
                                     $this->doView('admins/edit.php') ;
                 break;
-                case 'edit_post':   // updating a new admin
+                case 'edit_post':   if( defined('DEMO') ) {
+                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    }
+                                    // updating a new admin
                                     $iUpdated = 0;
                                     $adminId  = Params::getParam('id');
 
@@ -139,12 +152,16 @@
 
 
                                     // Checks for legit data
-                                    if(!preg_match("/^[_a-z0-9-+]+(\.[_a-z0-9-+]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/",$sEmail)) {
+                                    if( !osc_validate_email($sEmail, true) ) {
                                         osc_add_flash_error_message( _m("Email invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
                                     }
-                                    if($sUserName=='') {
+                                    if( !osc_validate_username($sUserName) ) {
                                         osc_add_flash_error_message( _m("Username invalid"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
+                                    }
+                                    if($sName=='') {
+                                        osc_add_flash_error_message( _m("Real Name invalid"), 'admin');
                                         $this->redirectTo(osc_admin_base_url(true).'?page=admins&action=edit&id='.$adminId);
                                     }
 
@@ -200,7 +217,11 @@
 
                                     $this->redirectTo(osc_admin_base_url(true).'?page=admins');
                 break;
-                case 'delete':      // deleting and admin
+                case 'delete':      if( defined('DEMO') ) {
+                                        osc_add_flash_warning_message( _m("This action cannot be done because is a demo site"), 'admin');
+                                        $this->redirectTo(osc_admin_base_url(true) . '?page=admins');
+                                    }
+                                    // deleting and admin
                                     $isDeleted = false;
                                     $adminId   = Params::getParam('id');
 
@@ -234,8 +255,10 @@
         }
 
         //hopefully generic...
-        function doView($file) {
+        function doView($file)
+        {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
         }
     }
 

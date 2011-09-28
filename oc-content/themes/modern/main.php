@@ -19,9 +19,8 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="<?php echo str_replace('_', '-', osc_current_user_locale()); ?>">
     <head>
         <?php osc_current_web_theme_path('head.php') ; ?>
         <meta name="robots" content="index, follow" />
@@ -87,7 +86,8 @@
                                  <tbody>
                                     <?php $class = "even"; ?>
                                     <?php while ( osc_has_latest_items() ) { ?>
-                                        <tr class="<?php echo $class ; ?>">
+                                     <tr class="<?php echo $class. (osc_item_is_premium()?" premium":"") ; ?>">
+                                            <?php if( osc_images_enabled_at_items() ) { ?>
                                              <td class="photo">
                                                 <?php if( osc_count_item_resources() ) { ?>
                                                     <a href="<?php echo osc_item_url() ; ?>">
@@ -97,11 +97,12 @@
                                                     <img src="<?php echo osc_current_web_theme_url('images/no_photo.gif') ; ?>" alt="" title=""/>
                                                 <?php } ?>
                                              </td>
+                                            <?php } ?>
                                              <td class="text">
                                                  <h3><a href="<?php echo osc_item_url() ; ?>"><?php echo osc_item_title() ; ?></a></h3>
-                                                 <p><?php echo osc_item_description() ; ?></p>
-                                             </td>
-                                            <td class="price"><strong><?php echo osc_item_formated_price() ; ?></strong></td>
+                                                 <p><strong><?php if( osc_price_enabled_at_items() ) { echo osc_item_formated_price() ; ?> - <?php } echo osc_item_city(); ?> (<?php echo osc_item_region();?>) - <?php echo osc_format_date(osc_item_pub_date()); ?></strong></p>
+                                                 <p><?php echo osc_highlight( strip_tags( osc_item_description() ) ) ; ?></p>
+                                             </td>                                       
                                          </tr>
                                         <?php $class = ($class == 'even') ? 'odd' : 'even' ; ?>
                                     <?php } ?>

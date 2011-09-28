@@ -22,24 +22,61 @@
 
         function __construct() {
             parent::__construct() ;
+            if( !osc_users_enabled() ) {
+                osc_add_flash_error_message( _m('Users not enabled') ) ;
+                $this->redirectTo(osc_base_url(true));
+            }
         }
 
         //Business Layer...
         function doModel() {
             switch( $this->action ) {
                 case('login_post'):     //post execution for the login
+                                        if(!osc_users_enabled()) {
+                                            osc_add_flash_error_message(_m('Users are not enabled'));
+                                            $this->redirectTo(osc_base_url());
+                                        }
+                    
+                                        require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $user = User::newInstance()->findByEmail( Params::getParam('email') ) ;
+                                        
+                                        $url_redirect = osc_user_dashboard_url();
+                                        if(preg_match('|[\?&]page=([^&]+)|', $_SERVER['HTTP_REFERER'].'&', $match)) {
+                                            $page_redirect = $match[1];
+                                        } else {
+                                            $page_redirect = '';
+                                        }
+                                        if(Params::getParam('http_referer')!='') {
+                                            Session::newInstance()->_setReferer(Params::getParam('http_referer'));
+                                            $url_redirect = Params::getParam('http_referer');
+                                        } else if(Session::newInstance()->_getReferer()!='') {
+                                            Session::newInstance()->_setReferer(Session::newInstance()->_getReferer());
+                                            $url_redirect = Session::newInstance()->_getReferer();
+                                        } else if($page_redirect!='' && $page_redirect!='login') {
+                                            Session::newInstance()->_setReferer($_SERVER['HTTP_REFERER']);
+                                            $url_redirect = $_SERVER['HTTP_REFERER'];
+                                        }
+
                                         if (!$user) {
                                             osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
 
-                                        if(!$user['b_enabled']) {
-                                            osc_add_flash_error_message(_m('The user has not been validated yet'));
+                                        if ( $user["s_password"] != sha1( Params::getParam('password') ) ) {
+                                            osc_add_flash_error_message( _m('The password is incorrect')) ;
                                             $this->redirectTo(osc_user_login_url());
                                         }
-
-                                        if ( $user["s_password"] == sha1( Params::getParam('password') ) ) {
+                                        
+                                        $uActions = new UserActions(false);
+                                        $logged = $uActions->bootstrap_login($user['pk_i_id']) ;
+                                        
+                                        if($logged==0) {
+                                            osc_add_flash_error_message(_m('The username doesn\'t exist')) ;
+                                        } else if($logged==1) {
+                                            osc_add_flash_error_message(_m('The user has not been validated yet'));
+                                        } else if($logged==2) {
+                                            osc_add_flash_error_message(_m('The user has been suspended'));
+                                        } else if($logged==3) {
                                             if ( Params::getParam('remember') == 1 ) {
 
                                                 //this include contains de osc_genRandomPassword function
@@ -57,34 +94,46 @@
                                                 Cookie::newInstance()->set() ;
                                             }
 
-                                            //we are logged in... let's go!
-                                            Session::newInstance()->_set('userId', $user['pk_i_id']) ;
-                                            Session::newInstance()->_set('userName', $user['s_name']) ;
-                                            Session::newInstance()->_set('userEmail', $user['s_email']) ;
-                                            $phone = ($user['s_phone_mobile']) ? $user['s_phone_mobile'] : $user['s_phone_land'];
-                                            Session::newInstance()->_set('userPhone', $phone) ;
+                                            $this->redirectTo( $url_redirect ) ;
 
                                         } else {
-                                            osc_add_flash_error_message( _m('The password is incorrect')) ;
+                                            osc_add_flash_error_message(_m('This should never happens'));
                                         }
 
-                                        //returning logged in to the main page...
-                                        $this->redirectTo( osc_user_dashboard_url() ) ;
+                                        if(!$user['b_enabled']) {
+                                            $this->redirectTo(osc_user_login_url());
+                                        }
+
+                                        $this->redirectTo(osc_user_login_url());
                 break ;
                 case('recover'):        //form to recover the password (in this case we have the form in /gui/)
                                         $this->doView( 'user-recover.php' ) ;
                 break ;
                 case('recover_post'):   //post execution to recover the password
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
+
+                                        // e-mail is incorrect
+                                        if( !preg_match('|^[a-z0-9\.\_\+\-]+@[a-z0-9\.\-]+\.[a-z]{2,3}$|i', Params::getParam('s_email')) ) {
+                                            osc_add_flash_error_message( _m('Invalid email address') ) ;
+                                            $this->redirectTo( osc_recover_user_password_url() );
+                                        }
+
                                         $userActions = new UserActions(false) ;
-                                        $recaptcha_ok = $userActions->recover_password() ;
-                                        if($recaptcha_ok) {
-                                            // We ALWAYS show the same message, so we don't give clues about which emails are in our database and which don't!
-                                            osc_add_flash_ok_message( _m('We have sent you an email with the instructions to reset your password')) ;
-                                            $this->redirectTo( osc_base_url() ) ;
-                                        } else {
-                                            osc_add_flash_error_message( _m('The recaptcha code is wrong')) ;
-                                            $this->redirectTo( osc_recover_user_password_url() ) ;
+                                        $success = $userActions->recover_password() ;
+
+                                        switch ($success) {
+                                            case(0): // recover ok
+                                                     osc_add_flash_ok_message( _m('We have sent you an email with the instructions to reset your password')) ;
+                                                     $this->redirectTo( osc_base_url() ) ;
+                                                     break;
+                                            case(1): // e-mail does not exist
+                                                     osc_add_flash_error_message( _m('We were not able to identify you given the information provided')) ;
+                                                     $this->redirectTo( osc_recover_user_password_url() ) ;
+                                                     break;
+                                            case(2): // recaptcha wrong
+                                                     osc_add_flash_error_message( _m('The recaptcha code is wrong')) ;
+                                                     $this->redirectTo( osc_recover_user_password_url() ) ;
+                                                     break;
                                         }
                 break ;
 
@@ -98,8 +147,13 @@
                                         }
                 break;
                 case('forgot_post'):
+                                        if( (Params::getParam('new_password') == '') || (Params::getParam('new_password2') == '') ) {
+                                            osc_add_flash_warning_message( _m('Password cannot be blank')) ;
+                                            $this->redirectTo(osc_forgot_user_password_confirm_url(Params::getParam('userId'), Params::getParam('code')));
+                                        }
+
                                         $user = User::newInstance()->findByIdPasswordSecret(Params::getParam('userId'), Params::getParam('code'));
-                                        if($user) {
+                                        if($user['b_enabled'] == 1) {
                                             if(Params::getParam('new_password')==Params::getParam('new_password2')) {
                                                 User::newInstance()->update(
                                                     array('s_pass_code' => osc_genRandomPassword(50)
@@ -131,7 +185,9 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            osc_run_hook("after_html");
         }
     }
 

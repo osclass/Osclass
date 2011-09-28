@@ -29,31 +29,57 @@
         }
 
         static public function internal_name_input_text($page = null) {
-            parent::generic_input_text("s_internal_name", (isset($page) && isset($page["s_internal_name"])) ? $page["s_internal_name"] : "", null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
-            return true ;
+            $internal_name = '';
+            if( is_array($page) && isset($page['s_internal_name']) ) {
+                $internal_name = $page['s_internal_name'];
+            }
+            if( Session::newInstance()->_getForm('s_internal_name') != '' ) {
+                $internal_name = Session::newInstance()->_getForm('s_internal_name');
+            }
+            parent::generic_input_text('s_internal_name', $internal_name, null, (isset($page['b_indelible']) && $page['b_indelible'] == 1) ? true : false) ;
         }
 
         static public function multilanguage_name_description($locales, $category = null) {
             $num_locales = count($locales);
-            if($num_locales>1) { echo '<div class="tabber">'; };
+            if($num_locales > 1) echo '<div class="tabber">';
             foreach($locales as $locale) {
-               if($num_locales>1) {  echo '<div class="tabbertab">'; };
-                    if($num_locales>1) { echo '<h2>' . $locale['s_name'] . '</h2>'; };
-                    echo '<div class="FormElement">';
-                        echo '<div class="FormElementName">' . __('Title') . '</div>';
-                        echo '<div class="FormElementInput">' ;
-                            parent::generic_input_text($locale['pk_c_code'] . '#s_title', (isset($category['locale'][$locale['pk_c_code']])) ? $category['locale'][$locale['pk_c_code']]['s_title'] : "") ;
-                        echo '</div>' ;
+                if($num_locales > 1) {
+                    echo '<div class="tabbertab">';
+                    echo '<h2>' . $locale['s_name'] . '</h2>';
+                }
+                echo '<div class="FormElement">';
+                echo '<div class="FormElementName">' . __('Title') . '</div>';
+                echo '<div class="FormElementInput">' ;
+                $title = '';
+                if(isset($category['locale'][$locale['pk_c_code']])) {
+                    $title = $category['locale'][$locale['pk_c_code']]['s_title'];
+                }
+                if( Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_title') != '' ) {
+                    $title = Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_title');
+                }
+                parent::generic_input_text($locale['pk_c_code'] . '#s_title', $title) ;
+                echo '</div>' ;
+                echo '</div>';
+                echo '<div class="FormElement">';
+                echo '<div class="FormElementName">' . __('Body') . '</div>';
+                echo '<div class="FormElementInput">' ;
+                $description = '';
+                if(isset($category['locale'][$locale['pk_c_code']])) {
+                    $description = $category['locale'][$locale['pk_c_code']]['s_text'];
+                }
+                if( Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_text') != '' ) {
+                    $description = Session::newInstance()->_getForm($locale['pk_c_code'] . '#s_text');
+                }
+                parent::generic_textarea($locale['pk_c_code'] . '#s_text', $description) ;
+                echo '</div>';
+                echo '</div>';
+                if($num_locales > 1) {
                     echo '</div>';
-                    echo '<div class="FormElement">';
-                        echo '<div class="FormElementName">' . __('Body') . '</div>';
-                        echo '<div class="FormElementInput">' ;
-                            parent::generic_textarea($locale['pk_c_code'] . '#s_text', (isset($category['locale'][$locale['pk_c_code']])) ? htmlentities($category['locale'][$locale['pk_c_code']]['s_text']) : "") ;
-                        echo '</div>' ;
-                    echo '</div>';
-                if($num_locales>1) { echo '</div>'; };
+                }
              }
-             if($num_locales>1) { echo '</div>'; };
+             if($num_locales > 1) {
+                 echo '</div>';
+             }
         }
     }
 

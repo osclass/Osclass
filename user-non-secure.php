@@ -22,6 +22,10 @@
 
         function __construct() {
             parent::__construct() ;
+            if( !osc_users_enabled() && ($this->action != 'activate_alert' && $this->action != 'unsub_alert') ) {
+                osc_add_flash_error_message( _m('Users not enabled') ) ;
+                $this->redirectTo(osc_base_url(true));
+            }
         }
 
         //Business Layer...
@@ -33,7 +37,7 @@
                                                     $userManager = new User() ;
                                                     $user = $userManager->findByPrimaryKey( Params::getParam('userId') ) ;
 
-                                                    if( $user['s_pass_code'] == Params::getParam('code') ) {
+                                                    if( $user['s_pass_code'] == Params::getParam('code') && $user['b_enabled']==1) {
                                                         $userEmailTmp = UserEmailTmp::newInstance()->findByPk( Params::getParam('userId') ) ;
                                                         $code = osc_genRandomPassword(50) ;
                                                         $userManager->update(
@@ -66,9 +70,9 @@
                     }
 
                     if( $result == 1 ) {
-                        osc_add_flash_message(__('Alert activated.'));
+                        osc_add_flash_ok_message(_m('Alert activated'));
                     }else{
-                        osc_add_flash_message(__('Ops! There was a problem trying to activate alert. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to activate alert. Please contact the administrator'));
                     }
 
                     $this->redirectTo( osc_base_url(true) );
@@ -78,9 +82,9 @@
                     $secret = Params::getParam('secret');
                     if($email!='' && $secret!='') {
                         Alerts::newInstance()->delete(array('s_email' => $email, 'S_secret' => $secret));
-                        osc_add_flash_ok_message(__('Unsubscribed correctly.'));
+                        osc_add_flash_ok_message(_m('Unsubscribed correctly'));
                     } else {
-                        osc_add_flash_error_message(__('Ops! There was a problem trying to unsubscribe you. Please contact the administrator.'));
+                        osc_add_flash_error_message(_m('Ops! There was a problem trying to unsubscribe you. Please contact the administrator'));
                     }
                     $this->redirectTo(osc_base_url());
 
@@ -94,7 +98,10 @@
 
         //hopefully generic...
         function doView($file) {
+            osc_run_hook("before_html");
             osc_current_web_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+            osc_run_hook("after_html");
         }
     }
 

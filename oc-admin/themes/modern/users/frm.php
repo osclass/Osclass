@@ -50,7 +50,14 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e('Users'); ?></div>
+        <script type="text/javascript">
+            document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+            $(document).ready(function(){
+                if (typeof $.uniform != 'undefined') {
+                    $('textarea, button,select, input:file').uniform();
+                }
+            });
+        </script>
         <div id="content">
             <div id="separator"></div>
             <?php UserForm::location_javascript("admin") ; ?>
@@ -72,6 +79,7 @@
                             <input type="hidden" name="action" value="<?php echo $action_frm;?>"/>
                             <?php UserForm::primary_input_hidden($user); ?>
                             <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ?>" />
+                            <input type="hidden" name="b_active" value="<?php echo $user['b_active'] ?>" />
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('E-mail'); ?></legend>
@@ -89,7 +97,7 @@
                                     <?php UserForm::check_password_text($user); ?>
                                 </fieldset>
                                 <p id="password-error" style="display:none;">
-                                    <?php _e('Passwords don\'t match.'); ?>
+                                    <?php _e('Passwords don\'t match'); ?>.
                                 </p>
                             </div>
 

@@ -42,7 +42,12 @@
         }
 
         public function decreaseNumItems($categoryId) {
-            $this->conn->osc_dbExec('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 0) ON DUPLICATE KEY UPDATE i_num_items = i_num_items - 1', $this->getTableName(), $categoryId);
+            $result = $this->conn->osc_dbFetchResult("SELECT i_num_items FROM %s WHERE fk_i_category_id = %d", $this->getTableName(), $categoryId);
+            if(isset($result['i_num_items'])) {
+                $this->conn->osc_dbExec('UPDATE %s SET i_num_items = i_num_items - 1 WHERE i_num_items > 0 AND fk_i_category_id = %d', $this->getTableName(), $categoryId);
+            } ELSE {
+                $this->conn->osc_dbExec('INSERT INTO %s (fk_i_category_id, i_num_items) VALUES (%d, 0)', $this->getTableName(), $categoryId);
+            }
             $result = Category::newInstance()->findByPrimaryKey($categoryId);
             if($result['fk_i_parent_id']!=NULL) {
                 $this->decreaseNumItems($result['fk_i_parent_id']);
@@ -63,8 +68,10 @@
             if(is_null($numItemsMap)) {
                 $numItemsMap = $this->toNumItemsMap();
             }
-            if(isset($numItemsMap[$cat['pk_i_id']]))
-                return $numItemsMap[$cat['pk_i_id']];
+            if(isset($numItemsMap['parent'][$cat['pk_i_id']]))
+                return $numItemsMap['parent'][$cat['pk_i_id']]['numItems'];
+            else if (isset($numItemsMap['subcategories'][$cat['pk_i_id']]))
+                return $numItemsMap['subcategories'][$cat['pk_i_id']]['numItems'];
             else
                 return 0;
         }
@@ -72,10 +79,27 @@
         public function toNumItemsMap() {
             $map = array();
             $all = $this->listAll();
+	
+	    if( empty($all) ) return array();
+
+            $roots = Category::newInstance()->findRootCategories();
+
             foreach($all as $a)
                 $map[$a['fk_i_category_id']] = $a['i_num_items'];
 
-            return $map;
+            $new_map = array();
+            foreach($roots as $root ){
+                $root_description = Category::newInstance()->findByPrimaryKey($root['pk_i_id']);
+                $new_map['parent'][ $root['pk_i_id'] ] =  array('numItems' => @$map[ $root['pk_i_id'] ], 's_name' => @$root_description['s_name'] );
+                $subcategories = Category::newInstance()->findSubcategories($root['pk_i_id']);
+                $aux = array();
+                foreach($subcategories as $sub) {
+                    $sub_description = Category::newInstance()->findByPrimaryKey($sub['pk_i_id']);
+                    $aux[$sub['pk_i_id']] = array('numItems' => $map[$sub['pk_i_id']], 's_name' => $sub_description['s_name'] );
+                }
+                $new_map['subcategories'][$root['pk_i_id']] = $aux;
+            }
+            return $new_map;
         }
     }
 

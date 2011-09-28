@@ -33,10 +33,11 @@
         }
 
         static public function default_email_text() {
-            return __('Enter your e-mail', 'gui') ;
+            return __('Enter your e-mail') ;
         }
 
         static public function email_text() {
+            $value = "";
             if( osc_logged_user_email() == '' ){
                 $value = self::default_email_text() ;
             }

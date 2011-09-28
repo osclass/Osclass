@@ -24,10 +24,10 @@ function locale_en_US_info() {
          'name'            => 'English (US)'
         ,'short_name'      => 'English'
         ,'description'     => 'American english translation'
-        ,'version'         => 2.0
+        ,'version'         => 2.2
         ,'author_name'     => 'OSClass'
         ,'author_url'      => 'http://osclass.org/'
-        ,'currency_format' => '%.02f %s'
+        ,'currency_format' => '{NUMBER} {CURRENCY}'
         ,'date_format'     => 'm/d/Y'
         ,'stop_words'      => 'i,a,about,an,are,as,at,be,by,com,for,from,how,in,is,it,of,on,or,that,the,this,to,was,what,when,where,who,will,with,the'
     );

@@ -45,23 +45,57 @@
                                                     case 'delete_all':      $this->itemCommentManager->delete(array(
                                                                                 DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $id) . ')'
                                                                             ));
+                                                                            foreach ($id as $_id) {
+                                                                                $iUpdated = $this->itemCommentManager->delete(array(
+                                                                                    'pk_i_id' => $_id
+                                                                                ));
+                                                                                osc_add_hook("delete_comment", $_id);
+                                                                            }
                                                                             osc_add_flash_ok_message( _m('The comments have been deleted'), 'admin') ;
                                                     break;
-                                                    case 'activate_all':    $value = 'ACTIVE' ;
+                                                    case 'activate_all':
                                                                             foreach ($id as $_id) {
-                                                                                $this->itemCommentManager->update(
-                                                                                    array('e_status' => $value),
-                                                                                    array('pk_i_id' => $_id)
+                                                                                $iUpdated = $this->itemCommentManager->update(
+                                                                                     array('b_active' => 1)
+                                                                                    ,array('pk_i_id'  => $_id)
                                                                                 );
+                                                                                if($iUpdated) {
+                                                                                    $this->sendCommentActivated($_id);
+                                                                                }
+                                                                                osc_add_hook("activate_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been approved'), 'admin') ;
                                                     break;
-                                                    case 'deactivate_all':  $value = 'INACTIVE' ;
+                                                    case 'deactivate_all':
                                                                             foreach ($id as $_id) {
                                                                                 $this->itemCommentManager->update(
-                                                                                    array('e_status' => $value),
+                                                                                    array('b_active' => 0),
                                                                                     array('pk_i_id' => $_id)
                                                                                 );
+                                                                                osc_add_hook("deactivate_comment", $_id);
+                                                                            }
+                                                                            osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
+                                                    break;
+                                                    case 'enable_all':
+                                                                            foreach ($id as $_id) {
+                                                                                $iUpdated = $this->itemCommentManager->update(
+                                                                                     array('b_enabled' => 1)
+                                                                                    ,array('pk_i_id'  => $_id)
+                                                                                );
+                                                                                if($iUpdated) {
+                                                                                    $this->sendCommentActivated($_id);
+                                                                                }
+                                                                                osc_add_hook("enable_comment", $_id);
+                                                                            }
+                                                                            osc_add_flash_ok_message( _m('The comments have been approved'), 'admin') ;
+                                                    break;
+                                                    case 'disable_all':
+                                                                            foreach ($id as $_id) {
+                                                                                $this->itemCommentManager->update(
+                                                                                    array('b_enabled' => 0),
+                                                                                    array('pk_i_id' => $_id)
+                                                                                );
+                                                                                osc_add_hook("disable_comment", $_id);
                                                                             }
                                                                             osc_add_flash_ok_message( _m('The comments have been disapproved'), 'admin') ;
                                                     break;
@@ -75,16 +109,39 @@
                                             if (!$id) return false;
                                             $id = (int) $id;
                                             if (!is_numeric($id)) return false;
-                                            if (!in_array($value, array('ACTIVE', 'INACTIVE'))) return false ;
+                                            if (!in_array($value, array('ACTIVE', 'INACTIVE', 'ENABLE', 'DISABLE'))) return false ;
 
-                                            $this->itemCommentManager->update(
-                                                    array('e_status' => $value)
-                                                    ,array('pk_i_id' => $id)
-                                            );
                                             if( $value == 'ACTIVE' ) {
+                                                $iUpdated = $this->itemCommentManager->update(
+                                                        array('b_active' => 1)
+                                                        ,array('pk_i_id' => $id)
+                                                );
+                                                if($iUpdated) {
+                                                    $this->sendCommentActivated($id);
+                                                }
+                                                osc_add_hook("activate_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been approved'), 'admin');
-                                            } else {
+                                            } else if($value=='INACTIVE') {
+                                                $iUpdated = $this->itemCommentManager->update(
+                                                        array('b_active' => 1)
+                                                        ,array('pk_i_id' => $id)
+                                                );
+                                                osc_add_hook("deactivate_comment", $id);
                                                 osc_add_flash_ok_message( _m('The comment has been disapproved'), 'admin');
+                                            } else if($value=='ENABLE') {
+                                                $iUpdated = $this->itemCommentManager->update(
+                                                        array('b_enabled' => 1)
+                                                        ,array('pk_i_id' => $id)
+                                                );
+                                                osc_add_hook("enable_comment", $id);
+                                                osc_add_flash_ok_message( _m('The comment has been enabled'), 'admin');
+                                            } else if($value=='DISABLE') {
+                                                $iUpdated = $this->itemCommentManager->update(
+                                                        array('b_enabled' => 0)
+                                                        ,array('pk_i_id' => $id)
+                                                );
+                                                osc_add_hook("disable_comment", $id);
+                                                osc_add_flash_ok_message( _m('The comment has been disabled'), 'admin');
                                             }
 
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
@@ -97,24 +154,22 @@
                                             $this->doView('comments/frm.php') ;
                 break;
                 case 'comment_edit_post':   $this->itemCommentManager->update(
-                                                array(
-                                                    's_title' => Params::getParam('s_title')
-                                                    ,'s_body' => Params::getParam('s_body')
-                                                    ,'s_author_name' => Params::getParam('s_author_name')
-                                                    ,'s_author_email' => Params::getParam('s_author_email')
-                                                )
+                                                 array('s_title' => Params::getParam('title')
+                                                     ,'s_body' => Params::getParam('body')
+                                                     ,'s_author_name' => Params::getParam('authorName')
+                                                     ,'s_author_email' => Params::getParam('authorEmail'))
                                                 ,array(
                                                     'pk_i_id' => Params::getParam('id')
-                                                )
-                                            );
+                                                ));
 
-                                            osc_run_hook('item_edit_post') ;
+                                            osc_run_hook('edit_comment', Params::getParam('id')) ;
 
                                             osc_add_flash_ok_message( _m('Great! We just updated your comment'), 'admin') ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 case 'delete':              $this->itemCommentManager->deleteByPrimaryKey( Params::getParam('id') );
                                             osc_add_flash_ok_message( _m('The comment have been deleted'), 'admin') ;
+                                            osc_run_hook('delete_comment', Params::getParam('id')) ;
                                             $this->redirectTo( osc_admin_base_url(true) . "?page=comments" ) ;
                 break;
                 default:                    if( Params::getParam('id') != '' ){
@@ -134,6 +189,17 @@
         //hopefully generic...
         function doView($file) {
             osc_current_admin_theme_path($file) ;
+            Session::newInstance()->_clearVariables();
+        }
+
+        function sendCommentActivated ($commentId)
+        {
+            $aComment = $this->itemCommentManager->findByPrimaryKey($commentId);
+            $aItem    = Item::newInstance()->findByPrimaryKey($aComment['fk_i_item_id']);
+            View::newInstance()->_exportVariableToView('item', $aItem);
+            
+            osc_run_hook('hook_email_comment_validated', $aComment);
+
         }
     }
 

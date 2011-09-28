@@ -27,7 +27,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header"><?php _e("Comments");?></div>
         <?php
             if(isset($comment['pk_i_id'])) {
                 //editing...
@@ -119,7 +118,11 @@
                             </div>
                         </div>
                         <div class="FormElement">
-                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo $comment['e_status']; ?> ( <a href="<?php echo osc_admin_base_url(true);?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['e_status']=='ACTIVE')?'INACTIVE':'ACTIVE');?>"><?php echo (($comment['e_status']=='ACTIVE')?__('De-activate'):__('Activate'));?></a> )
+                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo ($comment['b_active']?__('ACTIVE'):_('INACTIVE')); ?> ( <a href="<?php echo osc_admin_base_url(true);?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['b_active']==1)?'INACTIVE':'ACTIVE');?>"><?php echo (($comment['b_active']==1)?__('De-activate'):__('Activate'));?></a> )
+                            </div>
+                        </div>
+                        <div class="FormElement">
+                            <div class="FormElementName"><?php _e('Status'); ?>: <?php echo ($comment['b_enabled']?__('ENABLED'):_('DISABLED')); ?> ( <a href="<?php echo osc_admin_base_url(true);?>?page=comments&action=status&id=<?php echo $comment['pk_i_id'];?>&value=<?php echo (($comment['b_enabled']==1)?'DISABLE':'ENABLE');?>"><?php echo (($comment['b_enabled']==1)?__('Disable'):__('Enable'));?></a> )
                             </div>
                         </div>
                         <div class="FormElement">

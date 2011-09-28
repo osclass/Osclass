@@ -21,7 +21,6 @@
     $numAdmins = __get("numAdmins") ;
     $numItems = __get("numItems") ;
     $numItemsPerCategory = __get("numItemsPerCategory") ;
-    $categories = __get("categories") ;
     $newsList = __get("newsList") ;
     $comments = __get("comments") ;
 ?>
@@ -34,8 +33,6 @@
     <body>
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
-        <div class="Header">Dashboard</div>
-
         <script type="text/javascript">
             $.extend({
                 initDashboard: function(args) {
@@ -144,19 +141,21 @@
 						<div id="last_items" class="ui-widget-content ui-corner-all">
 							<h3 class="ui-state-default"><?php _e('Items by category') ; ?></h3>
 							<div id="last_items_body">
-							<?php $totalWithItems = 0 ; ?>
-                            <?php foreach($categories as $c) { ?>
-                                <?php if (isset($numItemsPerCategory[$c['pk_i_id']]) && $numItemsPerCategory[$c['pk_i_id']] > 0) { ?>
-                                    <a href="<?php osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id']?>"><?php echo $c['s_name'] ; ?></a>
-                                    <?php echo "(" . $numItemsPerCategory[$c['pk_i_id']] . "&nbsp;" . ( ( $numItemsPerCategory[$c['pk_i_id']] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
-                                    <br />
-                                    <?php $totalWithItems++ ; ?>
-                                <?php } ?>
-							<?php } ?>
-							
-							<?php if ($totalWithItems == 0) {
-								_e('There aren\'t any uploaded items yet');
-							 } ?>
+                                <?php if( !empty($numItemsPerCategory) ) {?>
+                                    <?php foreach($numItemsPerCategory as $c) {?>
+                                        <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $c['pk_i_id'];?>"><?php echo $c['s_name'] ; ?></a>
+                                        <?php echo "(" . $c['i_num_items'] . "&nbsp;" . ( ( $c['i_num_items'] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                        <br />
+                                        <?php foreach($c['categories'] as $subc) {?>
+                                            <?php echo "&nbsp;&nbsp;"; ?>
+                                            <a href="<?php echo osc_admin_base_url(true); ?>?page=items&catId=<?php echo $subc['pk_i_id'];?>"><?php echo $subc['s_name'] ; ?></a>
+                                            <?php echo "(" . $subc['i_num_items'] . "&nbsp;" . ( ( $subc['i_num_items'] == 1 ) ? __('Item') : __('Items') ) . ")" ; ?>
+                                            <br />
+                                        <?php }?>
+                                    <?php }?>
+                                <?php }else {
+                                    _e('There aren\'t any uploaded items yet');
+                                } ?>
 							</div>					
 						</div>
 
@@ -168,7 +167,6 @@
 								<?php _e('Number of administrators') ; ?>: <?php echo $numAdmins; ?><br />
 							</div>							
 						</div>
-
 					</div>
 
 					<!-- right side -->
