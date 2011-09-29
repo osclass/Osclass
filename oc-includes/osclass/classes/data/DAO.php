@@ -1,47 +1,58 @@
 <?php
 
-    define('LOG_NONE', 0) ;
-    define('LOG_WEB', 1) ;
-    define('LOG_COMMENT', 2) ;
-    define('DEBUG_LEVEL', LOG_WEB) ;
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
 
-	require_once LIB_PATH . "osclass/classes/data/DBConnectionClass.php" ;
-	require_once LIB_PATH . "osclass/classes/data/DBCommandClass.php" ;
-	require_once LIB_PATH . "osclass/classes/data/DBRecordsetClass.php" ;
-
+    /**
+     * 
+     */
 	class DAO
     {
-        //attributes
-		public $conn ;
-        
-		/**
-		* Get a connection object in a static variable
-		*
-		* @param mixed $connect
-		* @return boolean 
-		*/
-		function getConnection($db_name, $db_server, $db_user, $db_pwd, $db_log_level, $who) {
-            $this->conn = DBConnectionClass::newInstance() ;
-            $this->conn->init($db_server, $db_name, $db_user, $db_pwd, $db_log_level, $who) ;
-		}              
-		
-		function get_sql($sql) {
-			$rs = new DBRecordsetClass(self::$conn, $sql) ;
-			$rs->query() ;
-			
-			while(!$rs->movenext()) {
-				$aDO[] = $rs->fetch_array() ;
-			}
-			return ($aDO) ;			
-		}
-        
-        function select_db($db) {
-            self::$conn->select_db($db) ;
+        /**
+         *
+         * @var type 
+         */
+        var $dao ;
+        /**
+         * 
+         * @var type 
+         */
+        var $table_name ;
+
+        /**
+         * 
+         */
+        function __construct()
+        {
+            $conn = new DBConnectionClass() ;
+            $conn->init(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, 0) ;
+            $this->dao = new DBCommandClass($conn->get_db()) ;
         }
 
-        function get_table_name($table) {
-            return DB_TABLE_PREFIX . $table ;
+        /**
+         *
+         * @param type $table 
+         */
+        function set_table_name($table)
+        {
+            $this->table_name = DB_TABLE_PREFIX . $table ;
         }
+
 	}
 
+    /* file end: ./oc-includes/osclass/classes/data/DAO.php */
 ?>

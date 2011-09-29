@@ -1,177 +1,244 @@
 <?php
-	class DBConnectionClass 
-	{
-        private static $instance ;
-        
-		// Init variables required
-		public $server ;
-		public $database ;
-		public $user ;
-		public $pwd ;
-		public $debuglv ;
-        public $who ;
-		public $logfile ;
-		
-		// Data related variables
-		public $db           = 0 ;
-		public $error_level  = 0 ;
-		public $error_desc   = "No errors" ;
-		public $filehdl      = 0 ;
-		public $msg          = "" ;
 
-        public static function newInstance() {
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
+
+    /**
+     * 
+     */
+    class DBConnectionClass
+    {
+        /**
+         *
+         * @var type 
+         */
+        private static $instance ;
+
+        /**
+         *
+         * @var type 
+         */
+        public $db_host ;
+        /**
+         *
+         * @var type 
+         */
+        public $db_name ;
+        /**
+         *
+         * @var type 
+         */
+        public $db_user ;
+        /**
+         *
+         * @var type 
+         */
+        public $db_password ;
+        /**
+         *
+         * @var type 
+         */
+        public $db_debug_level ;
+
+        // Data related variables
+        /**
+         *
+         * @var type 
+         */
+        public $db               = 0 ;
+        /**
+         *
+         * @var type 
+         */
+        public $error_level      = 0 ;
+        /**
+         *
+         * @var type 
+         */
+        public $error_desc       = "" ;
+        /**
+         *
+         * @var type 
+         */
+        public $conn_error_level = 0 ;
+        /**
+         *
+         * @var type 
+         */
+        public $conn_error_desc  = 0 ;
+
+        /**
+         *
+         * @return type 
+         */
+        public static function newInstance()
+        {
             if(!self::$instance instanceof self) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        //empty constructor (it is not used)
-		function __construct() { }
-		
-		// --------- Public interface ---------
-		// Initialization
-		function init($server, $database, $user, $pwd, $debulv, $who)
+        /**
+         * 
+         */
+        public function __construct() { }
+
+		/**
+         * Initializate database connection
+         * 
+         * @param string $server Host name where it's located the mysql server
+         * @param string $database Default database to be used when performing queries
+         * @param string $user MySQL user name
+         * @param string $password MySQL password
+         * @param int $debug_level Debug level
+         */
+		public function init($server, $user, $password, $database, $debug_level)
 		{
-            $this->server		=   $server ;
-			$this->database		=   $database ;
-			$this->user			=   $user ;
-			$this->pwd			=   $pwd ;
-			$this->debuglv		=   $debulv ;
-            $this->who          =   $who ;
+            $this->db_host        = $server ;
+			$this->db_name        = $database ;
+			$this->db_user        = $user ;
+			$this->db_password    = $password ;
+			$this->db_debug_level = $debug_level ;
             
-            
-            $this->logfile_init() ;
 			$this->connect_to_db() ;
 		}
-	
-	
-		// connection destructor
-		function destroy() {
+
+		/**
+         * Connection destructor
+         */
+		public function destroy()
+        {
 			$this->release_db() ;
 		}
-		
-		
-		// --------- Private methods ---------
-		// Error reporting auxiliary method
+
+		/**
+         * Set error num error and error description
+         */
 		function error_report()
 		{
-			$this->error_level = mysql_errno($this->db) ;
-			$this->error_desc = mysql_error($this->db) ;
+			$this->error_level = $this->db->errno ;
+			$this->error_desc  = $this->db->error ;
 		}
-	
-		// Opening the database connection
+
+        /**
+         * 
+         */
+        function error_connection()
+        {
+            $this->conn_error_level = $this->db->connect_errno ;
+            $this->conn_error_desc  = $this->db->connect_error ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
 		function connect_to_db()
 		{
 			// Try to connect to database server...
-            $this->db = mysql_connect($this->server, $this->user, $this->pwd, true) ;
-            
+            $this->db = new mysqli($this->db_host, $this->db_user, $this->db_password) ;
 			$this->error_report() ;
-			if (!$this->db) {
-				if($this->error_level == 0) $this->error_level = 666;
-				// Failed to connect... abort connection process
-				$this->msg = date("d/m/Y - H:i:s") . " - ERROR - 1 " .  $_SERVER["PHP_SELF"] . " ~~ ". $this->server . " - " .  $this->database . $this->error_level . ": " . $this->error_desc . "\r\n" ;
-				$this->debug() ;
-				$this->release_db() ;
-			} else {
-	            mysql_query("SET NAMES 'utf8'", $this->db) ;
-				// Try to select a database...
-				if (mysql_select_db($this->database, $this->db)) {
-					// Everything is ready to work with the database
-					$this->msg = date("d/m/Y - H:i:s") . " - OPERATION O.K.: Connected to database " . $this->database .  "\r\n" ;
-				} else {
-					// Failed to select the database... abort connection process
-					$this->error_report() ;
-					$this->msg = date("d/m/Y - H:i:s") . " - ERROR - 2 " . $_SERVER["PHP_SELF"] . " ~~ " . $this->database . $this->error_level . ": " . $this->error_desc . "\r\n" ;
-					$this->debug() ;
-					$this->release_db() ;
-				}
+
+			if ( !$this->db ) {
+                $this->error_connection() ;
+                $this->release_db() ;
+				return false ;
 			}
+
+            $this->db->set_charset('utf8') ;
+
+            // Try to select a database...
+            if ( !$this->select_db() ) {
+                // Select error
+                $this->error_report() ;
+                $this->release_db() ;
+                return false ;
+            }
+
+            // succesfull connection
+            return true ;
 		}
 
-		// Opening the database connection
-		function select_db( $dbname )
+        /**
+         *
+         * @param string $dbname Database name. If you leave blank this field, it will
+         * select the database set in the init method.
+         * @return type 
+         */
+		function select_db($dbname = '')
 		{
-			if (!$this->db) {
-				// Failed to connect... abort connection process
-				$this->msg = date("d/m/Y - H:i:s") . " - ERROR - 3 " .  $_SERVER["PHP_SELF"] . " ~~ " . $this->error_level . ": " . $this->error_desc . "\r\n" ;
-				$this->debug() ;
+            if( $dbname == '') {
+                $dbname = $this->db_name ;
+            }
+
+			if ( !$this->db ) {
 				$this->release_db() ;
-			} else {
-				// Try to select a database...
-				$this->database = $dbname;
-				if (mysql_select_db($this->database, $this->db)) {
-					// Everything is ready to work with the database
-					$this->msg = date("d/m/Y - H:i:s") . " - OPERATION O.K.: Selected database " . $this->database .  "\r\n" ;
-				} else {
-					// Failed to select the database... abort connection process
-					$this->error_report() ;
-					$this->msg = date("d/m/Y - H:i:s") . " - ERROR - 4 " .  $_SERVER["PHP_SELF"] . " ~~ " . $this->error_level . ": " . $this->error_desc . "\r\n" ;
-					$this->debug() ;
-					$this->release_db() ;
-				}
-			}
+                return false ;
+			} 
+
+            if ( !$this->db->select_db($dbname) ) {
+                // Failed to select the database... abort connection process
+                $this->error_report() ;
+                $this->release_db() ;
+                return false ;
+            }
+
+            // Database selected
+            return true ;
 		}
-		
+
+        /**
+         * 
+         */
         function reconnect() {
             $this->release_db() ;
-            $this->logfile_init() ;
 			$this->connect_to_db() ;
         }
-	
-		// Releasing database connection
+
+        /**
+         *
+         * @return type 
+         */
 		function release_db()
 		{
-			// Do we have a database open?
-			if ($this->db) {
-				// Must close the connection... not too important as php does by itself...
-				if (mysql_close($this->db)) {
-					$this->msg = date("d/m/Y - H:i:s") . " - OPERATION O.K.: Database " . $this->database . " released" . "\r\n";
-				} else {
-					// Failed to liberate the database...
-					$this->error_report() ;
-					$this->msg = date("d/m/Y - H:i:s") . " - ERROR " . $this->error_level . ": " . $this->error_desc . "\r\n" ;
-				}
-			} else {
-				// No database open
-				$this->msg = date("d/m/Y - H:i:s") . " - OPERATION CANCELLED: No database open" . "\r\n";
-			}
-			// LOG the operation and close logging operations
-			$this->debug() ;
-		}
-	
-		// Log operations initialization
-		function logfile_init()
-		{
-			$fechagm = gmmktime()+3600 ;
-			$fecha = getdate($fechagm) ;
-			$this->msg = date("d/m/Y - H:i:s") . " ===== SESSION STARTED BY " . $this->who . " =====" .  "\r\n" ;
-			switch ($this->debuglv) 
-			{
-				case 0: // NO LOG OPERATIONS
-				break ;
-				case 1: // SCREEN OUTPUT
-				break ;
-				case 2: // SILENT OUTPUT (<!-- -->)
-				break ;
-			}
-			$this->debug() ;
+			if( !$this->db ) {
+                return true ;
+            }
+
+            // Close database
+            if( !$this->db->close() ) {
+                // error closing database
+                $this->error_report() ;
+                return false; 
+            }
+
+            // Connection to database closed successfully
+            return true ;
 		}
 
-		// Debugging operations
-		function debug()
-		{
-			switch ($this->debuglv) 
-			{
-				case 0: // NO LOG OPERATIONS
-				break ;
-				case 1: // SCREEN OUTPUT
-				        echo '<br>DEBUG: ' . $this->msg . '<BR>' ;
-				break ;
-				case 2: // SILENT OUTPUT (<!-- -->)
-				        echo "\n<!-- DEBUG: " . $this->msg . "-->\n" ;
-				break ;
-			}
-		}
+        function get_db() {
+            if( $this->db ) {
+                return $this->db ;
+            }
+
+            return false ;
+        }
 	}
+
+    /* file end: ./oc-includes/osclass/classes/data/DBConnectionClass.php */
 ?>

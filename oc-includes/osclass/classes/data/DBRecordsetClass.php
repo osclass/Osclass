@@ -1,146 +1,314 @@
-<?PHP
-	class DBRecordsetClass {
-		
-		// Init variables required
-		public $connobj      = "" ;
-		public $sqlstring    = "" ;
-		
-		// Data related variables
-		public $rs           = 0 ;
-		public $row          = 0 ;
-		public $recordcount  = 0 ;
-		public $EOF          = true ;
-	
-		//constructor
-		function __construct($connobj, $sqlcommand)
-		{
-			$this->connobj = $connobj ;
-			$this->sqlstring = $sqlcommand ;
-		}
-	
-	
-		// Public interface
-		function query()
-		{
-			$this->get_recordset() ;
-			return $this->recordcount ;
-		}
-	
-		function movenext()
-		{
-			$this->get_row() ;
-			return $this->EOF ;
-		}
-		
-		function field($campo)	
-		{
-			echo stripslashes($this->row[$campo]) ;
-		}
-	
-		function frm_field($campo)	
-		{
-			echo htmlspecialchars(stripslashes($this->row[$campo])) ;
-		}
-	
-		function value($campo)
-		{
-			return $this->row[$campo] ;
-		}
-		
-		function clear_recordset()
-		{
-			$this->sqlstring = "" ;
-			if ($this->rs) {
-				mysql_free_result($this->rs) ;
-			}
-		}
-		
-		function move_to($rnumber)
-		{
-			if ($this->rs)
-			{
-				if (!mysql_data_seek($this->rs,$rnumber)) 
-				{
-					$this->connobj->error_report() ;
-					$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION FAILED: Could not move to record " . $rnumber . " " . $this->connobj->error_level . " " . $this->connobj->error_desc . "\r\n";
-				} else {
-					$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION O.K.: Result pointer moved to " . $rnumber . "\r\n" ;
-				}
-			} else {
-				$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION FAILED: No result open" . "\r\n" ;
-			}
-			$this->connobj->debug() ;
-		}
-		
-		function movefirst()
-		{
-			$this->move_to(0) ;
-		}
-		
-		function movelast()
-		{
-			$this->move_to($this->recordcount-1) ;
-		}
-	
-	
-		// Private methods	
-		function get_recordset()
-		{
-			$this->connobj->msg = "" ;
-            
-            // Determine if there's an open database a valid sql command
-			if ($this->connobj->db && $this->sqlstring != "") 
-			{
-				$this->rs = mysql_query($this->sqlstring, $this->connobj->db) ;	
-                
-                if(mysql_errno($this->connobj->db) == 2006) {
-                    //mail("daniel@niumba.com","ERROR Reconexion DBRecordset!","Reconectamos DBRecordset en el server por fallo de timeout!!\n<br />" . $this->sqlstring) ;
-                    $this->connobj->reconnect() ; 
-                    //Repetimos la peticion de nuevo en el caso de wait_timeout
-				    $this->rs = mysql_query($this->sqlstring, $this->connobj->db) ;	
-                }
-				$this->connobj->error_report() ;
-                
-				// Determine if there's a valid result
-				if ($this->rs) 
-				{
-					// Valid recordset
-					$this->EOF = false ;
-					$this->recordcount = mysql_num_rows($this->rs) ;
-					$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION O.K.: Executed " . $this->sqlstring ." got " . $this->recordcount . " rows" . "\r\n";
-				} else {
-				    // Not a valid recordset
-					$this->recordcount = 0 ;
-					$this->EOF = true ;
-					$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION FAILED: Executed " . $this->sqlstring . " got " . $this->connobj->error_level . " " . $this->connobj->error_desc . "\r\n" ;
-				}
-			} else {
-                // No db or no SQL command
-				$this->recordcount = 0 ;
-				$this->EOF = true ;
-				$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION CANCELED: No database open OR no SQL command provided" . "\r\n" ;
-			}
-			$this->connobj->debug() ;
-		}
-		
-		function get_row()
-		{
-			if ($this->rs && $this->connobj->db) 
-			{
-				$this->row = mysql_fetch_array($this->rs, MYSQL_ASSOC) ;
-				$this->connobj->error_report() ;
-				if ($this->row){
-					$this->EOF = false ;
-				} else {
-					$this->EOF = true ;
-				}
-			} else {
-	 			$this->connobj->msg = date("d/m/Y - H:i:s") . " - OPERATION FAILED: No database open" . "\r\n" ;
-			}
-		}
+<?php
 
-		function fetch_array() {
-			return($this->row) ;
-		}
+    /**
+     * OSClass – software for creating and publishing online classified advertising platforms
+     *
+     * Copyright (C) 2010 OSCLASS
+     *
+     * This program is free software: you can redistribute it and/or modify it under the terms
+     * of the GNU Affero General Public License as published by the Free Software Foundation,
+     * either version 3 of the License, or (at your option) any later version.
+     *
+     * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+     * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+     * See the GNU Affero General Public License for more details.
+     *
+     * You should have received a copy of the GNU Affero General Public
+     * License along with this program. If not, see <http://www.gnu.org/licenses/>.
+     */
+
+    /**
+     * 
+     */
+	class DBRecordsetClass
+    {
+        /**
+         *
+         * @var type 
+         */
+		public $conn_id ;
+        /**
+         *
+         * @var type 
+         */
+        public $result_id ;
+        /**
+         *
+         * @var type 
+         */
+        public $result_array ;
+        /**
+         *
+         * @var type 
+         */
+        public $result_object ;
+        /**
+         *
+         * @var type 
+         */
+        public $current_row ;
+        /**
+         *
+         * @var type 
+         */
+        public $num_rows ;
+
+        /**
+         *
+         * @param type $conn_id
+         * @param type $result_id 
+         */
+        function __construct($conn_id = null, $result_id = null)
+        {
+            $this->conn_id       = $conn_id ;
+            $this->result_id     = $result_id ;
+            $this->result_array  = array() ;
+            $this->result_object = array() ;
+            $this->current_row   = 0 ;
+            $this->num_rows      = 0 ;
+        }
+
+        /**
+         *
+         * @param type $type
+         * @return type 
+         */
+        function result($type = 'array')
+        {
+            if($type == 'array') {
+                return $this->result_array() ;
+            }
+
+            return $this->result_object() ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function result_array()
+        {
+            if( count($this->result_array) > 0 ) {
+                return $this->result_array ;
+            }
+
+            $this->_data_seek(0) ;
+            while($row= $this->_fetch_array()) {
+                $this->result_array[] = $row ;
+            }
+
+            return $this->result_array ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function result_object()
+        {
+            if( count($this->result_object) > 0 ) {
+                return $this->result_object ;
+            }
+
+            $this->_data_seek(0) ;
+            while($row = $this->_fetch_object()) {
+                $this->result_object[] = $row ;
+            }
+
+            return $this->result_object ;
+        }
+
+        /**
+         *
+         * @param type $offset
+         * @return type 
+         */
+        function _data_seek($offset = 0)
+        {
+            return $this->result_id->data_seek($offset) ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function _fetch_object()
+        {
+            return $this->result_id->fetch_object() ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function _fetch_array()
+        {
+            return $this->result_id->fetch_assoc() ;
+        }
+
+        /**
+         *
+         * @param int $n
+         * @param type $type
+         * @return type 
+         */
+        function row($n = 0, $type = 'array')
+        {
+            if( !is_numeric($n) ) {
+                $n = 0 ;
+            }
+
+            if($type == 'array') {
+                return $this->row_array($n) ;
+            }
+
+            return $this->row_object($n) ;
+        }
+
+        /**
+         *
+         * @param type $n
+         * @return type 
+         */
+        function row_object($n = 0)
+        {
+            $result = $this->result_object() ;
+
+            if( count($result) == 0) {
+                return $result ;
+            }
+
+            if($n != $this->current_row && isset($result[$n]) ) {
+                $this->current_row = $n;
+            }
+
+            return $result[$this->current_row] ;
+        }
+
+        /**
+         *
+         * @param type $n
+         * @return type 
+         */
+        function row_array($n = 0)
+        {
+            $result = $this->result_array() ;
+
+            if( count($result) == 0) {
+                return $result ;
+            }
+
+            if($n != $this->current_row && isset($result[$n]) ) {
+                $this->current_row = $n;
+            }
+
+            return $result[$this->current_row] ;
+        }
+
+        /**
+         *
+         * @param type $type
+         * @return type 
+         */
+        function first_row($type = 'array')
+        {
+            $result = $this->result($type) ;
+
+            if( count($result) == 0 ) {
+                return $result ;
+            }
+
+            return $result[0] ;
+        }
+
+        /**
+         *
+         * @param type $type
+         * @return type 
+         */
+        function last_row($type = 'array')
+        {
+            $result = $this->result($type) ;
+
+            if( count($result) == 0 ) {
+                return $result ;
+            }
+
+            return $result[count($result) - 1] ;
+        }
+
+        /**
+         *
+         * @param type $type
+         * @return type 
+         */
+        function next_row($type = 'array')
+        {
+            $result = $this->result($type) ;
+
+            if( count($result) == 0 ) {
+                return $result ;
+            }
+
+            if( isset($result[$this->current_row + 1]) ) {
+                $this->current_row++ ;
+            }
+
+            return $result[$this->current_row] ;
+        }
+
+        /**
+         *
+         * @param type $type
+         * @return type 
+         */
+        function previous_row($type = 'array')
+        {
+            $result = $this->result($type) ;
+
+            if( count($result) == 0 ) {
+                return $result ;
+            }
+
+            if( isset($result[$this->current_row - 1]) ) {
+                $this->current_row-- ;
+            }
+
+            return $result[$this->current_row] ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function num_rows()
+        {
+            return $this->result_id->num_rows ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function num_fields()
+        {
+            return $this->result_id->field_count ;
+        }
+
+        /**
+         *
+         * @return type 
+         */
+        function list_fields()
+        {
+            $field_names = array() ;
+            while( $field = $this->result_id->fetch_field() ) {
+                $field_names[] = $field->name ;
+            }
+
+            return $field_names ;
+        }
 	}
+
+    /* file end: ./oc-includes/osclass/classes/data/DBRecordsetClass.php */
 ?>
