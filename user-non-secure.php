@@ -94,7 +94,9 @@
                     if($id!='') {
                         $user = User::newInstance()->findByPrimaryKey($id);
                         if($user) {
-                            $this->_exportVariableToView('user', $user) ;
+                            View::newInstance()->_exportVariableToView('user', $user) ;
+                            $items = Item::newInstance()->findByUserIDEnabled($user['pk_i_id'], 0, 3);
+                            View::newInstance()->_exportVariableToView('items', $items) ;
                             $this->doView('user-public-profile.php') ;
                         } else {
                             $this->redirectTo(osc_base_url());
