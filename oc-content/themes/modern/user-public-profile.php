@@ -81,15 +81,15 @@ unset($location_array);
                         <ul id="error_list"></ul>
                         <?php ContactForm::js_validation(); ?>
                         <form action="<?php echo osc_base_url(true) ; ?>" method="post" name="contact_form" id="contact_form">
+                            <input type="hidden" name="action" value="contact_post" />
+                            <input type="hidden" name="page" value="user" />
+                            <input type="hidden" name="id" value="<?php echo osc_user_id();?>" />
                             <?php osc_prepare_user_info() ; ?>
                             <fieldset>
                                 <label for="yourName"><?php _e('Your name', 'modern') ; ?>:</label> <?php ContactForm::your_name(); ?>
                                 <label for="yourEmail"><?php _e('Your e-mail address', 'modern') ; ?>:</label> <?php ContactForm::your_email(); ?>
                                 <label for="phoneNumber"><?php _e('Phone number', 'modern') ; ?> (<?php _e('optional', 'modern'); ?>):</label> <?php ContactForm::your_phone_number(); ?>
                                 <label for="message"><?php _e('Message', 'modern') ; ?>:</label> <?php ContactForm::your_message(); ?>
-                                <input type="hidden" name="action" value="contact_post" />
-                                <input type="hidden" name="page" value="user" />
-                                <input type="hidden" name="id" value="<?php echo osc_user_id();?>" />
                                 <?php if( osc_recaptcha_public_key() ) { ?>
                                 <script type="text/javascript">
                                     var RecaptchaOptions = {
