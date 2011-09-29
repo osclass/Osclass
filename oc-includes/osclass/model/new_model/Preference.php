@@ -20,34 +20,55 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class Preference
+    /**
+     * 
+     */
+    class Preference extends DAO
     {
+        /**
+         *
+         * @var type 
+         */
         private static $instance ;
-        private $dao ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function __construct() {
-            $this->dao = new DAO_osclass_t_preference() ;
-            $this->dao->selectAll() ;
+        /**
+         * 
+         */
+        function __construct()
+        {
+            parent::__construct();
+            $this->set_table_name('t_preference') ;
         }
 
-        public function get($key, $section = "osclass") {
-            if (!isset($this->dao->aDO['pk_' . $section . '_' . $key])) {
-                return '' ;
+        /**
+         *
+         * @param type $name
+         * @return type 
+         */
+        function findValueByName($name)
+        {
+            $this->dao->select('s_value') ;
+            $this->dao->from($this->table_name) ;
+            $this->dao->where('s_name', $name) ;
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return false ;
             }
-            return ($this->dao->aDO['pk_' . $section . '_' . $key]) ;
-        }
-
-        public function set($key, $value, $section = "osclass") {
-            $this->dao->aDO['pk_' . $section . '_' . $key] = $value ;
+            
+            $row = $result->row() ;
+            return $row['s_value'] ;
         }
 
     }
 
+    /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
 ?>
