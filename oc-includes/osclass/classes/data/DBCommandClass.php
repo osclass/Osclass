@@ -363,6 +363,8 @@
                 $this->a_wherein[] = $this->escape($value) ;
             }
 
+            $prefix   = (count($this->a_where) > 0) ? $type : '' ;
+
             $where_in = $key . $not . ' IN (' . implode(', ', $this->a_wherein) . ') ' ;
 
             $this->a_where[]   = $where_in ;
