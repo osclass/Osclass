@@ -25,7 +25,7 @@
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
     require_once '../osclass/classes/data/DAO.php' ;
 
-    require_once '../osclass/model/new_model/Preference.php' ;
+    require_once '../osclass/model/new_model/Cron.php' ;
 
     /**
      * Run: $> phpunit CronTest.php
