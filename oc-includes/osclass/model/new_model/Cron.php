@@ -60,11 +60,11 @@
             $this->dao->where('e_type', $type) ;
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
+            if( $result->num_rows == 0 ) {
                 return false ;
+            } else {
+                return $result->row();
             }
-            
-            return $result->row();
         }
 
     }
