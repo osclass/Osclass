@@ -17,43 +17,39 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+
+    require_once 'config.php' ;
+
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
+    require_once '../osclass/classes/data/DAO.php' ;
+
+    require_once '../osclass/model/new_model/Preference.php' ;
 
     /**
-     * Run: $> phpunit DBConnectionClassTest.php
+     * Run: $> phpunit CronTest.php
      */
-    class DBConnectionClassTest extends PHPUnit_Framework_TestCase
+    class PreferenceTest extends PHPUnit_Framework_TestCase
     {
-        private $conn ;
-
+        private $cron;
+        
         public function __construct()
         {
             parent::__construct() ;
-            $this->conn = new DBConnectionClass() ;
-            $this->conn->init('localhost', 'root', '', 'osclass', 0) ;
+            $this->cron = new Cron() ;
         }
 
-        public function testDatabaseConnection()
+        public function testGetCronByType()
         {
-            $this->assertEquals(true, $this->conn->connect_to_db()) ;
+            $this->cron->getCronByType('HOURLY');
+            $this->assertNotEmpty($this->cron->dao->last_query());
+            $this->cron->getCronByType('DAILY');
+            $this->assertNotEmpty($this->cron->dao->last_query());
+            $this->cron->getCronByType('WEEKLY');
+            $this->assertNotEmpty($this->cron->dao->last_query());
         }
-
-        public function testDatabaseSelectDB()
-        {
-            // select default database
-            $this->assertEquals(true, $this->conn->select_db()) ;
-            // select another database
-            $this->assertEquals(true, $this->conn->select_db()) ;
-            // non existent database
-            $this->assertEquals(false, $this->conn->select_db('nodatabase')) ;
-        }
-
-        public function testReleaseDatabase()
-        {
-            $this->assertEquals(true, $this->conn->release_db()) ;
-        }
+        
     }
-
+    
 ?>
