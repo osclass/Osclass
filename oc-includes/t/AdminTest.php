@@ -102,12 +102,12 @@
             $condition = array('pk_i_id' => 'not_id') ;
             $values = array('s_name' => 'updated name') ;
             $res = $this->admin->dao->update($this->admin->table_name, $values, $condition) ;
-            $this->assertFalse($res, $this->admin->dao->error_level) ;
+            $this->assertFalse($res, $this->admin->dao->last_query()) ;
             
             $condition = array('pk_i_id' => self::$adminId) ;
             $values = array('s_name' => 'updated name') ;
             $res = $this->admin->dao->update($this->admin->table_name, $values, $condition) ;
-            $this->assertNotNull($res, $this->admin->dao->error_level) ;
+            $this->assertTrue($res, $this->admin->dao->error_level) ;
         }
         
         public function testDelete()

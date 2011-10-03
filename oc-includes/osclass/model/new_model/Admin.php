@@ -57,7 +57,7 @@
          */
         function findByEmail($email) 
         {
-            $this->dao->select('*') ;
+            $this->dao->select() ;
             $this->dao->from($this->table_name) ;
             $this->dao->where('s_email', $email) ;
             $result = $this->dao->get() ;
