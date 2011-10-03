@@ -285,13 +285,15 @@
             }
 
             foreach($key as $k => $v) {
+                $prefix = (count($this->a_where) > 0) ? $type : '' ;
+                
                 if( !$this->_has_operator($k) ) {
                     $k .= ' =' ;
                 }
 
                 $v = ' ' . $this->escape($v) ;
 
-                $this->a_where[] = $k . $v ;
+                $this->a_where[] = $prefix . $k . $v ;
             }
 
             return $this ;

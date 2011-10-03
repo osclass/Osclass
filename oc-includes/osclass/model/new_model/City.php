@@ -23,7 +23,7 @@
     /**
      * 
      */
-    class Preference extends DAO
+    class City extends DAO
     {
         /**
          *
@@ -45,29 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_preference') ;
-            /* $this->set_primary_key($key) ; // no primary key in preference table */
-            $this->set_fields( array('s_section', 's_name', 's_value', 'e_type') ) ;
-        }
-
-        /**
-         *
-         * @param type $name
-         * @return type 
-         */
-        function findValueByName($name)
-        {
-            $this->dao->select('s_value') ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', $name) ;
-            $result = $this->dao->get() ;
-
-            if( $result == false ) {
-                return false ;
-            }
-            
-            $row = $result->row() ;
-            return $row['s_value'] ;
+            $this->set_table_name('t_city') ;
+            $this->set_primary_key('pk_i_id') ;
+            $this->set_fields( array('pk_i_id', 'fk_i_region_id', 's_name', 'fk_c_country_code', 'b_active') ) ;
         }
 
     }
