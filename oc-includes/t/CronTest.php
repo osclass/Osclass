@@ -30,7 +30,7 @@
     /**
      * Run: $> phpunit CronTest.php
      */
-    class PreferenceTest extends PHPUnit_Framework_TestCase
+    class CronTest extends PHPUnit_Framework_TestCase
     {
         private $cron;
         
@@ -42,12 +42,15 @@
 
         public function testGetCronByType()
         {
-            $this->cron->getCronByType('HOURLY');
-            $this->assertNotEmpty($this->cron->dao->last_query());
-            $this->cron->getCronByType('DAILY');
-            $this->assertNotEmpty($this->cron->dao->last_query());
-            $this->cron->getCronByType('WEEKLY');
-            $this->assertNotEmpty($this->cron->dao->last_query());
+            $res = $this->cron->getCronByType('HOURLY');
+            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            $res = $this->cron->getCronByType('DAILY');
+            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            $res = $this->cron->getCronByType('WEEKLY');
+            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            
+            $res = $this->cron->getCronByType('FOOBAR');
+            $this->assertFalse($res, $this->cron->dao->error_level);
         }
         
     }
