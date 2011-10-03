@@ -17,11 +17,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('DB_HOST', 'localhost') ;
-    define('DB_USER', 'root') ;
-    define('DB_PASSWORD', '') ;
-    define('DB_NAME', 'osclass') ;
-    define('DB_TABLE_PREFIX', 'oc_') ;
+    require_once 'config.php' ;
 
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
