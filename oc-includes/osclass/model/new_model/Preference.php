@@ -46,6 +46,8 @@
         {
             parent::__construct();
             $this->set_table_name('t_preference') ;
+            /* $this->set_primary_key($key) ; // no primary key in preference table */
+            $this->set_fields( array('s_section', 's_name', 's_value', 'e_type') ) ;
         }
 
         /**
@@ -60,12 +62,12 @@
             $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
 
-            if( $result == false ) {
+            if( $result->num_rows == 0 ) {
                 return false ;
+            } else {
+                $row = $result->row() ;
+                return $row['s_value'] ;
             }
-            
-            $row = $result->row() ;
-            return $row['s_value'] ;
         }
 
     }

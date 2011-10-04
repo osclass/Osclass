@@ -23,7 +23,7 @@
     /**
      * 
      */
-    class Cron extends DAO
+    class City extends DAO
     {
         /**
          *
@@ -45,26 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_cron') ;
-        }
-
-        /**
-         *
-         * @param type $type
-         * @return array
-         */
-        function getCronByType($type)
-        {
-            $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where('e_type', $type) ;
-            $result = $this->dao->get() ;
-
-            if( $result->num_rows == 0 ) {
-                return false ;
-            } else {
-                return $result->row();
-            }
+            $this->set_table_name('t_city') ;
+            $this->set_primary_key('pk_i_id') ;
+            $this->set_fields( array('pk_i_id', 'fk_i_region_id', 's_name', 'fk_c_country_code', 'b_active') ) ;
         }
 
     }

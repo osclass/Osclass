@@ -37,7 +37,7 @@
             return count($results) == 1 ? $results[0] : null;
         }
 
-            public function findByUsername($username) {
+        public function findByUsername($username) {
             $results = $this->listWhere("s_username = '%s'", $username);
             return count($results) == 1 ? $results[0] : null;
         }

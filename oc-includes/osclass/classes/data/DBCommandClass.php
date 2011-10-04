@@ -285,13 +285,15 @@
             }
 
             foreach($key as $k => $v) {
+                $prefix = (count($this->a_where) > 0) ? $type : '' ;
+                
                 if( !$this->_has_operator($k) ) {
                     $k .= ' =' ;
                 }
 
                 $v = ' ' . $this->escape($v) ;
 
-                $this->a_where[] = $k . $v ;
+                $this->a_where[] = $prefix . $k . $v ;
             }
 
             return $this ;
@@ -360,6 +362,8 @@
             foreach($values as $value) {
                 $this->a_wherein[] = $this->escape($value) ;
             }
+
+            $prefix   = (count($this->a_where) > 0) ? $type : '' ;
 
             $where_in = $key . $not . ' IN (' . implode(', ', $this->a_wherein) . ') ' ;
 
@@ -648,9 +652,51 @@
         
         function update($table = '', $set = null, $where = null)
         {
-            
+            if( !is_null($set) ) {
+                $this->set($set) ;
+            }
+
+            if( count($this->a_set) == 0 ) {
+                return false ;
+            }
+
+            if( $table == '') {
+                if( !isset($this->a_from[0]) ) {
+                    return false ;
+                }
+
+                $table = $this->a_from[0] ;
+            }
+
+            if( $where != null ) {
+                $this->where($where) ;
+            }
+
+            $sql = $this->_update($table, $this->a_set, $this->a_where) ;
+
+            $this->_reset_write() ;
+            return $this->query($sql) ;
         }
-        
+
+        /**
+         *
+         * @param type $table
+         * @param type $values
+         * @param type $where 
+         */
+        function _update($table, $values, $where)
+        {
+            foreach($values as $k => $v) {
+                $valstr[] = $k . ' = ' . $v ;
+            }
+
+            $sql = 'UPDATE ' . $table . ' SET ' . implode(', ', $valstr) ;
+
+            $sql .= ($where != '' && count($where) > 0) ? " WHERE " . implode(" ", $where) : '' ;
+
+            return $sql ;
+        }
+
         function delete($table = '', $where = '')
         {
             
@@ -834,7 +880,7 @@
          *
          * @return type 
          */
-        function affectd_rows()
+        function affected_rows()
         {
             return $this->conn_id->affected_rows ;
         }

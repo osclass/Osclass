@@ -32,6 +32,16 @@
          * @var type 
          */
         var $table_name ;
+        /**
+         *
+         * @var type 
+         */
+        var $primary_key ;
+        /**
+         *
+         * @var type 
+         */
+        var $fields ;
 
         /**
          * 
@@ -45,6 +55,29 @@
 
         /**
          *
+         * @param type $value
+         * @return type 
+         */
+        function find_by_primary_key($value)
+        {
+            $this->dao->select($this->fields) ;
+            $this->dao->from($this->table_name) ;
+            $this->dao->where($this->primary_key, $value) ;
+            $result = $this->dao->get() ;
+
+            if( $result === false ) {
+                return false ;
+            }
+
+            if( $result->num_rows() !== 1 ) {
+                return false ;
+            }
+
+            return $result->row() ;
+        }
+
+        /**
+         *
          * @param type $table 
          */
         function set_table_name($table)
@@ -52,6 +85,23 @@
             $this->table_name = DB_TABLE_PREFIX . $table ;
         }
 
+        /**
+         *
+         * @param type $key 
+         */
+        function set_primary_key($key)
+        {
+            $this->primary_key = $key ;
+        }
+
+        /**
+         *
+         * @param type $fields 
+         */
+        function set_fields($fields)
+        {
+            $this->fields = $fields ;
+        }
 	}
 
     /* file end: ./oc-includes/osclass/classes/data/DAO.php */

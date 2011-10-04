@@ -21,9 +21,9 @@
      */
 
     /**
-     * 
+     * Currency DAO
      */
-    class Cron extends DAO
+    class Currency extends DAO
     {
         /**
          *
@@ -45,29 +45,10 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_cron') ;
+            $this->set_table_name('t_currency') ;
+            $this->set_primary_key('pk_c_code') ;
+            $this->set_fields(array('s_name', 's_description', 'b_enabled')) ;
         }
-
-        /**
-         *
-         * @param type $type
-         * @return array
-         */
-        function getCronByType($type)
-        {
-            $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where('e_type', $type) ;
-            $result = $this->dao->get() ;
-
-            if( $result->num_rows == 0 ) {
-                return false ;
-            } else {
-                return $result->row();
-            }
-        }
-
+        
     }
-
-    /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
 ?>

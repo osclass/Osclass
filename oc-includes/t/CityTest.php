@@ -17,40 +17,39 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-
-    require_once 'config.php' ;
+    define('DB_HOST', 'localhost') ;
+    define('DB_USER', 'root') ;
+    define('DB_PASSWORD', '') ;
+    define('DB_NAME', 'osclass') ;
+    define('DB_TABLE_PREFIX', 'oc_') ;
 
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
     require_once '../osclass/classes/data/DAO.php' ;
 
-    require_once '../osclass/model/new_model/Cron.php' ;
+    require_once '../osclass/model/new_model/City.php' ;
 
     /**
-     * Run: $> phpunit CronTest.php
+     * Run: $> phpunit PreferenceTest.php
      */
-    class CronTest extends PHPUnit_Framework_TestCase
+    class PreferenceTest extends PHPUnit_Framework_TestCase
     {
-        private $cron;
+        private $cityDAO ;
         
         public function __construct()
         {
             parent::__construct() ;
-            $this->cron = new Cron() ;
+            $this->cityDAO = new City() ;
         }
 
-        public function testGetCronByType()
+        public function testFindByPrimaryKey()
         {
-            $res = $this->cron->getCronByType('HOURLY');
-            $this->assertNotEmpty($res, $this->cron->dao->error_level);
-            $res = $this->cron->getCronByType('DAILY');
-            $this->assertNotEmpty($res, $this->cron->dao->error_level);
-            $res = $this->cron->getCronByType('WEEKLY');
-            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            $city = $this->cityDAO->find_by_primary_key('3') ;
+            $this->assertEquals('Sabadell', $city['s_name'], $this->cityDAO->dao->last_query() ) ;
             
-            $res = $this->cron->getCronByType('FOOBAR');
-            $this->assertFalse($res, $this->cron->dao->error_level);
+            $city = $this->cityDAO->find_by_primary_key('10000') ;
+            $this->assertEquals(false, $city, $this->cityDAO->dao->last_query() ) ;
         }
         
     }
