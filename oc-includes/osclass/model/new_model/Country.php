@@ -50,39 +50,52 @@
 
         /**
          *
-         * @param type $type
+         * @param type $code
          * @return array
          */
-        function getCronByType($type)
-        {
+        public function findByCode($code) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('e_type', $type) ;
+            $this->dao->where('pk_c_code', $code) ;
             $result = $this->dao->get() ;
-
-            if( $result == false ) {
-                return false ;
-            }
-            
-            return $result->row();
+            return $result->result_array();
         }
 
-        public function findByCode($code) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_c_code = '%s'", $this->getTableName(), addslashes($code));
+        /**
+         *
+         * @param type $code
+         * @return array
+         */
+        public function findByName($name) {
+            $this->dao->select('*') ;
+            $this->dao->from($this->table_name) ;
+            $this->dao->where('s_name', addslashes($code)) ;
+            $result = $this->dao->get() ;
+            return $result->result_array();
         }
 
-        /*public function findByName($name) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s'", $this->getTableName(), addslashes($name));
-        }
-
-        public function listAll($language = '') {
+        /**
+         *
+         * @param type $language
+         * @return array
+         */
+        public function listAll($language) {
             if($language=='') { $language = osc_current_user_locale(); } else { $language = 'en_US'; }
-            return $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \'' . osc_current_user_locale() . '\', \'' . $language . '\') as sorter FROM %s WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC', $this->getTableName());
+            $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
+            $result = $this->dao->get() ;
+            return $result->result_array();
         }
 
+        /**
+         *
+         * @param type $language
+         * @return array
+         */
         public function listAllAdmin($language = "") {
             if($language=='') { $language = osc_current_user_locale(); } else { $language = 'en_US'; }
-            $countries_temp = $this->conn->osc_dbFetchResults('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \''.osc_current_user_locale().'\', \''.$language.'\') as sorter FROM %s WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC', $this->getTableName());
+            $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'en_US\', \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
+            $result = $this->dao->get() ;
+            $countries_temp = $result->result_array();
             $countries = array();
             foreach($countries_temp as $country) {
                 $locales = $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE pk_c_code = '%s'", $this->getTableName(), $country['pk_c_code']);
@@ -93,19 +106,35 @@
             }
             return $countries;
         }
-        
-        public function updateLocale($code, $locale, $name) {
+
+        /**
+         *
+         * @param type $language
+         * @return array
+         */
+        /*public function updateLocale($code, $locale, $name) {
             $country = $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE pk_c_code = '%s' AND fk_c_locale_code = '%s'", $this->getTableName(), addslashes($code), addslashes($locale));
             if($country) {
                 return $this->update(array('s_name' => $name), array('pk_c_code' => $code, 'fk_c_locale_code' => $locale));
             } else {
                 return $this->conn->osc_dbExec("INSERT INTO %s (pk_c_code, fk_c_locale_code, s_name) VALUES ('%s', '%s', '%s')", $this->getTableName(), addslashes($code), addslashes($locale), addslashes($name) );
             }
-        }
-        
-        public function ajax($query) {
-            return $this->conn->osc_dbFetchResults("SELECT pk_c_code as id, s_name as label, s_name as value FROM %s WHERE s_name LIKE '%s%%' LIMIT 5", $this->getTableName(), addslashes($query));
         }*/
+
+        
+        /**
+         *
+         * @param type $language
+         * @return array
+         */
+        public function ajax($query) {
+            $this->dao->select('pk_c_code as id, s_name as label, s_name as value') ;
+            $this->dao->from($this->table_name) ;
+            $this->dao->where('s_name', addslashes($query)."%%") ;
+            $this->dao->limit(5);
+            $result = $this->dao->get() ;
+            return $result->result_array();
+        }
         
         
     }
