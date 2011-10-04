@@ -50,26 +50,5 @@
             $this->set_fields(array('s_name', 's_description', 'b_enabled')) ;
         }
         
-        /**
-         * Searches for locale information, given a code language.
-         * If code language not exist return false.
-         * 
-         * @param string $code
-         * @return array 
-         */
-        function findBycode($code)
-        {
-            $this->dao->select();
-            $this->dao->from($this->table_name) ;
-            $this->dao->where('pk_c_code', $code) ;
-            $result = $this->dao->get() ;
-            
-            if( $result->num_rows == 0 ) {
-                return false;
-            } else {
-                return $result->row();
-            }
-        }
-        
     }
 ?>
