@@ -445,8 +445,8 @@
             }
 
             foreach($field as $k => $v) {
-                $prefix = (count($this->ar_like) == 0) ? '' : $type;
-                $v      = $this->escape_str($str, true) ;
+                $prefix = (count($this->a_like) == 0) ? '' : $type;
+                $v      = $this->escape_str($v, true) ;
 
                 switch ($side) {
                     case 'before':  $like_statement = "$prefix $k $not LIKE '%$v'" ;
