@@ -177,19 +177,19 @@
             $this->dao->from($this->table_name.' c') ;
             $this->dao->from('t_item i') ;
             
+            $conditions = array() ;
             if(is_null($itemId)) {
                 $conditions = array(
                     'c.fk_i_item_id' => 'i.pk_i_id'
                 );
-                $this->dao->where($conditions) ;
             } else {
                 $conditions = array(
                     'i.pk_i_id'      => $itemId,
                     'c.fk_i_item_id' => $itemId
                 );
-                $this->dao->where($conditions) ;
             }
             
+            $this->dao->where($conditions) ;
             $this->dao->order_by('dt_pub_date','DESC') ;            
             $aux = $this->dao->get() ;
             $comments = $aux->result() ;
@@ -210,8 +210,8 @@
 
             $this->dao->select('i.*, d.s_title') ;
             $this->dao->from($this->table_name.' i') ;
-            $this->dao->join('t_item c', 'c.pk_i_id = i.fk_i_item_id') ;
-            $this->dao->join('t_item_description d', 'd.fk_i_item_id = i.fk_i_item_id');
+            $this->dao->join(DB_TABLE_PREFIX.'t_item c', 'c.pk_i_id = i.fk_i_item_id') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item_description d', 'd.fk_i_item_id = i.fk_i_item_id');
             $this->dao->group_by('d.fk_i_item_id');
             $this->doa->order_by('pk_i_id', 'DESC');
             $this->dao->limit(0,$num);
