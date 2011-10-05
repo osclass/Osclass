@@ -29,7 +29,7 @@
          *
          * @var type 
          */
-        private static $_instance;
+        private static $instance;
         /**
          *
          * @var type 
@@ -78,9 +78,17 @@
          */
         public function print_messages()
         {
-            echo '<pre>' ;
             print_r($this->messages) ;
-            echo '</pre>' ;
+        }
+
+        public function total_time()
+        {
+            $time = 0 ;
+            foreach($this->messages as $m) {
+                $time = $time + $m['query_time'] ;
+            }
+
+            return $time ;
         }
     }
 
