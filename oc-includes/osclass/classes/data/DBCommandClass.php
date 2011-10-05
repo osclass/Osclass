@@ -872,7 +872,7 @@
             // "LIKE" portion of the query
             if( count($this->a_like) > 0 ) {
                 if( count($this->a_where) > 0 ) {
-                    $sql .= "\n" ;
+                    $sql .= "\nAND" ;
                 }
 
                 $sql .= implode("\n", $this->a_like) ;
@@ -893,7 +893,11 @@
             // "ORDER BY" portion of the query
             if( count($this->a_orderby) > 0 ) {
                 $sql .= "\nORDER BY " ;
-                $sql .= implode(', ', $this->a_orderby) ;
+                if(is_array($this->a_orderby)) {
+                    $sql .= implode(', ', $this->a_orderby) ;
+                } else {
+                    $sql .= $this->a_orderby;
+                }
 
                 if($this->a_order !== false) {
                     $sql .= ($this->a_order == 'desc') ? ' DESC' : ' ASC' ;
