@@ -72,7 +72,7 @@
         public function findByName($name) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($name)) ;
+            $this->dao->where('s_name', $name) ;
             $this->dao->limit(1);
             $result = $this->dao->get() ;
             return $result->row();
@@ -87,8 +87,8 @@
         public function findByNameAndCode($name, $code) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($name)) ;
-            $this->dao->where('fk_c_country_code', addslashes($code)) ;
+            $this->dao->where('s_name', $name) ;
+            $this->dao->where('fk_c_country_code', $code) ;
             $this->dao->limit(1);
             $result = $this->dao->get() ;
             return $result->row();
@@ -103,9 +103,9 @@
         public function findByNameOnCountry($name, $country = null) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($name)) ;
+            $this->dao->where('s_name', $name) ;
             if($country!=null) {
-                $this->dao->where('fk_c_country_code', addslashes($code)) ;
+                $this->dao->where('fk_c_country_code', $country) ;
             }
             $this->dao->limit(1);
             $result = $this->dao->get() ;
