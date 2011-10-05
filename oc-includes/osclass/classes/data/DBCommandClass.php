@@ -132,6 +132,12 @@
 
         /**
          *
+         * @var type 
+         */
+        var $log ;
+
+        /**
+         *
          * @param type $conn_id 
          */
         function __construct(&$conn_id)
@@ -157,7 +163,9 @@
             $this->a_offset         = false ;
             $this->a_order          = false ;
             $this->a_orderby        = array() ;
-            $this->a_wherein        = array() ;         
+            $this->a_wherein        = array() ;
+
+            $this->log              = LogDatabase::newInstance() ;
         }
 
         /**
@@ -780,8 +788,9 @@
             $this->result_id = $this->_execute($sql) ;
 
             // error
+            $this->error_report() ;
             if( false === $this->result_id ) {
-                $this->error_report() ;
+                $this->log->add_message($sql, 0, $this->error_level, $this->error_desc) ;
                 return false ;
             }
 
@@ -789,6 +798,8 @@
             $this->query_times[] = ($em + $es) - ($sm + $ss) ;
 
             $this->query_count++ ;
+            
+            $this->log->add_message($sql, ($em + $es) - ($sm + $ss), $this->error_level, $this->error_desc) ;
             
             if( $this->is_write_type($sql) === true ) {
                 return true ;
