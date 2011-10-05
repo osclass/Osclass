@@ -61,7 +61,7 @@
             $this->dao->where('fk_c_country_code', addslashes($country_id)) ;
             $this->dao->order_by('s_name', 'ASC');
             $result = $this->dao->get() ;
-            return $result->result_array();
+            return $result->result();
         }
 
         /**
@@ -72,7 +72,7 @@
         public function findByName($name) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($name)) ;
+            $this->dao->where('s_name', $name) ;
             $this->dao->limit(1);
             $result = $this->dao->get() ;
             return $result->row();
@@ -87,8 +87,8 @@
         public function findByNameAndCode($name, $code) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($name)) ;
-            $this->dao->where('fk_c_country_code', addslashes($code)) ;
+            $this->dao->where('s_name', $name) ;
+            $this->dao->where('fk_c_country_code', $code) ;
             $this->dao->limit(1);
             $result = $this->dao->get() ;
             return $result->row();
@@ -103,9 +103,9 @@
         public function findByNameOnCountry($name, $country = null) {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($name)) ;
+            $this->dao->where('s_name', $name) ;
             if($country!=null) {
-                $this->dao->where('fk_c_country_code', addslashes($code)) ;
+                $this->dao->where('fk_c_country_code', $country) ;
             }
             $this->dao->limit(1);
             $result = $this->dao->get() ;
@@ -120,17 +120,20 @@
         public function ajax($query, $country = null) {
             $this->dao->select('pk_i_id, s_name, s_name') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', addslashes($query)) ;
+            $this->dao->like('s_name', $query, 'after') ;
             if($country!=null) {
-                $this->dao->where('fk_c_country_code', addslashes(strtolower($country))) ;
+                $this->dao->where('fk_c_country_code', strtolower($country)) ;
             }
-            $this->dao->limit(1);
+            $this->dao->limit(5);
             $result = $this->dao->get() ;
-            return $result->result_array();
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
         
         
     }
 
-    /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
 ?>
