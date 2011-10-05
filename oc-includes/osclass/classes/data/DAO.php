@@ -48,9 +48,8 @@
          */
         function __construct()
         {
-            $conn = new DBConnectionClass() ;
-            $conn->init(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, 0) ;
-            $this->dao = new DBCommandClass($conn->get_db()) ;
+            $conn = DBConnectionClass::newInstance() ;
+            $this->dao = new DBCommandClass($conn->get_osclass_db()) ;
         }
 
         /**
@@ -87,6 +86,15 @@
 
         /**
          *
+         * @return type 
+         */
+        function get_table_name()
+        {
+            return $this->table_name ;
+        }
+
+        /**
+         *
          * @param type $key 
          */
         function set_primary_key($key)
@@ -96,11 +104,28 @@
 
         /**
          *
+         * @return type 
+         */
+        function get_primary_key()
+        {
+            return $this->primary_key ;
+        }
+
+        /**
+         *
          * @param type $fields 
          */
         function set_fields($fields)
         {
             $this->fields = $fields ;
+        }
+
+        /**
+         * 
+         */
+        function get_fields()
+        {
+            return $this->fields ;
         }
 	}
 
