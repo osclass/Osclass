@@ -545,7 +545,7 @@
                 $direction = (in_array(strtoupper(trim($direction)), array('ASC', 'DESC'))) ? ' ' . $direction : ' ASC' ;
             }
 
-            $this->a_orderby = $orderby . $direction ;
+            $this->a_orderby[] = $orderby . $direction ;
             return $this ;
         }
 
@@ -904,11 +904,7 @@
             // "ORDER BY" portion of the query
             if( count($this->a_orderby) > 0 ) {
                 $sql .= "\nORDER BY " ;
-                if(is_array($this->a_orderby)) {
-                    $sql .= implode(', ', $this->a_orderby) ;
-                } else {
-                    $sql .= $this->a_orderby;
-                }
+                $sql .= implode(', ', $this->a_orderby) ;
 
                 if($this->a_order !== false) {
                     $sql .= ($this->a_order == 'desc') ? ' DESC' : ' ASC' ;
