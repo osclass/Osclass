@@ -26,7 +26,7 @@
          *
          * @var type 
          */
-		var $conn_id ;
+        var $conn_id ;
         /**
          *
          * @var type 
@@ -37,7 +37,7 @@
          *
          * @var type 
          */
-		var $queries ;
+        var $queries ;
         /**
          *
          * @var type 
@@ -632,7 +632,7 @@
 
                 $table = $this->a_from[0] ;
             }
-            
+
             $sql = $this->_replace($table, array_keys($this->a_set), array_values($this->a_set)) ;
             $this->_reset_write() ;
             return $this->query($sql) ;
@@ -699,7 +699,44 @@
 
         function delete($table = '', $where = '')
         {
+            if( $table == '') {
+                if( !isset($this->a_from[0]) ) {
+                    return false ;
+                }
+
+                $table = $this->a_from[0] ;
+            }
+
+            if( $where != null ) {
+                $this->where($where) ;
+            }
+
+            if( count($this->a_where) == 0 && count($this->a_wherein) == 0 && count($this->a_like) == 0 ) {
+                return false ;
+            }
+
+            $sql = $this->_delete($table, $this->a_where, $this->a_like) ;
             
+            $this->_reset_write() ;
+            
+            return $this->query($sql) ;
+        }
+
+        function _delete($table, $where, $like)
+        {
+            $conditions = '' ;
+
+            if( count($where) > 0 || count($like) > 0 ) {
+                $conditions  = "\nWHERE " ;
+                $conditions .= implode("\n", $where) ;
+
+                if( count($where) > 0 && count($like) > 0 ) {
+                    $conditions .= ' AND ' ;
+                }
+                $conditions .= implode("\n", $like) ;
+            }
+
+            $sql = 'DELETE FROM ' . $table . $conditions ;
         }
 
         /**
@@ -1021,12 +1058,12 @@
         /**
          * 
          */
-		function error_report()
-		{
-			$this->error_level = $this->conn_id->errno ;
-			$this->error_desc  = $this->conn_id->error ;
-		}
-	}
+        function error_report()
+        {
+            $this->error_level = $this->conn_id->errno ;
+            $this->error_desc  = $this->conn_id->error ;
+        }
+    }
 
     /* file end: ./oc-includes/osclass/classes/data/DBCommandClass.php */
 ?>
