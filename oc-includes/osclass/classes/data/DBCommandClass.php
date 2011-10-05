@@ -917,7 +917,7 @@
          *
          * @return type 
          */
-        function affectd_rows()
+        function affected_rows()
         {
             return $this->conn_id->affected_rows ;
         }
