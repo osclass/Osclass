@@ -34,12 +34,12 @@
          *
          * @var type 
          */
-        private $dao_metadata ;
+        private $daoMetadata ;
         /**
          *
          * @var type 
          */
-        private $site_info ;
+        private $siteInfo ;
 
         /**
          *
@@ -61,23 +61,23 @@
         {
             parent::__construct() ;
 
-            $this->set_table_name('tbl_sites') ;
-            $this->set_primary_key('s_site') ; 
-            $this->set_fields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password') ) ;
+            $this->setTableName('tbl_sites') ;
+            $this->setPrimaryKey('s_site') ; 
+            $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password') ) ;
 
             $conn = DBConnectionClass::newInstance() ;
-            $this->dao_metadata = new DBCommandClass($conn->get_metadata_db()) ;
+            $this->daoMetadata = new DBCommandClass($conn->getMetadataDb()) ;
 
-            $this->to_array() ;
+            $this->toArray() ;
         }
 
         /**
          * 
          */
-        public function to_array()
+        public function toArray()
         {
             $domain = $_SERVER['HTTP_HOST'] ;
-            $this->site_info = $this->find_by_primary_key($domain) ;
+            $this->siteInfo = $this->findByPrimaryKey($domain) ;
         }
 
         /**
@@ -87,11 +87,11 @@
          */
         public function get($key)
         {
-            if (!isset($this->site_info[$key])) {
+            if (!isset($this->siteInfo[$key])) {
                 return '' ;
             }
 
-            return ($this->site_info[$key]) ;
+            return ($this->siteInfo[$key]) ;
         }
 
         /**
@@ -99,12 +99,12 @@
          * @param type $value
          * @return type 
          */
-        public function find_by_primary_key($value)
+        public function findByPrimaryKey($value)
         {
-            $this->dao_metadata->select($this->get_fields()) ;
-            $this->dao_metadata->from($this->get_table_name()) ;
-            $this->dao_metadata->like('s_site', $value, 'both') ;
-            $result = $this->dao_metadata->get() ;
+            $this->daoMetadata->select($this->getFields()) ;
+            $this->daoMetadata->from($this->getTableName()) ;
+            $this->daoMetadata->like('s_site', $value, 'both') ;
+            $result = $this->daoMetadata->get() ;
 
             if( $result == false ) {
                 return array() ;
@@ -118,7 +118,7 @@
          * @param type $table
          * @return type 
          */
-        public function set_table_name($table)
+        public function setTableName($table)
         {
             return $this->table_name = $table ;
         }
