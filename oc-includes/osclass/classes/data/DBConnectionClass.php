@@ -393,7 +393,7 @@
          */
         function debug()
         {
-            switch ($this->db_debug_level) {
+            switch ($this->dbDebugLevel) {
                 case 1:     $log = LogDatabase::newInstance() ;
                             $log->printMessages() ;
                 break ;
