@@ -120,7 +120,7 @@
          */
         public function setTableName($table)
         {
-            return $this->table_name = $table ;
+            return $this->tableName = $table ;
         }
 
     }
