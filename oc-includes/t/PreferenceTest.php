@@ -19,6 +19,8 @@
 
     require_once 'config.php' ;
 
+    require_once '../osclass/Logger/LogDatabase.php' ;
+    require_once '../osclass/helpers/hDatabaseInfo.php' ;
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
@@ -32,11 +34,13 @@
     class PreferenceTest extends PHPUnit_Framework_TestCase
     {
         private $preference ;
+        private $log ;
         
         public function __construct()
         {
             parent::__construct() ;
             $this->preference = new Preference() ;
+            $this->log        = LogDatabase::newInstance() ;
         }
 
         public function testFindByValue()
