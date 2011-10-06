@@ -23,7 +23,7 @@
     /**
      * 
      */
-    class Cron extends DAO
+    class UserEmailTmp extends DAO
     {
         /**
          *
@@ -45,30 +45,34 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_cron') ;
-            $this->set_fields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
+            $this->set_table_name('t_user_email_tmp') ;
+            $this->set_primary_key('fk_i_user_id') ;
+            $this->set_fields( array('fk_i_user_id','s_new_email','dt_date') ) ;
         }
 
         /**
          *
-         * @param type $type
+         * @param type $id
          * @return array
          */
-        function getCronByType($type)
-        {
-            $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where('e_type', $type) ;
-            $result = $this->dao->get() ;
+        function findByPk($id) {
+            return $this->dao->find_by_primary_key($id) ;
+        }
+        
+        /**
+         *
+         * @param type $userEmailTmp
+         * @return array
+         */
+        public function insertOrUpdate($userEmailTmp) {
 
-            if( $result->num_rows == 0 ) {
-                return false ;
-            } else {
-                return $result->row();
+            $status = $this->dao->insert($this->table_name, array('fk_i_user_id' => $userEmailTmp['fk_i_user_id'], 's_new_email' => $userEmailTmp['s_new_email'], 'dt_date' => date('Y-m-d H:i:s')));
+            if (!$status) {
+                $this->dao->update($this->table_name, array('s_new_email' => $userEmailTmp['s_new_email'], 'dt_date' => date('Y-m-d H:i:s')), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
             }
         }
+        
 
     }
 
-    /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
 ?>
