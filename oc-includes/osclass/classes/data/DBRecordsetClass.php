@@ -26,46 +26,46 @@
          *
          * @var type 
          */
-		public $conn_id ;
+		public $connId ;
         /**
          *
          * @var type 
          */
-        public $result_id ;
+        public $resultId ;
         /**
          *
          * @var type 
          */
-        public $result_array ;
+        public $resultArray ;
         /**
          *
          * @var type 
          */
-        public $result_object ;
+        public $resultObject ;
         /**
          *
          * @var type 
          */
-        public $current_row ;
+        public $currentRow ;
         /**
          *
          * @var type 
          */
-        public $num_rows ;
+        public $numRows ;
 
         /**
          *
          * @param type $conn_id
          * @param type $result_id 
          */
-        function __construct($conn_id = null, $result_id = null)
+        function __construct($connId = null, $resultId = null)
         {
-            $this->conn_id       = $conn_id ;
-            $this->result_id     = $result_id ;
-            $this->result_array  = array() ;
-            $this->result_object = array() ;
-            $this->current_row   = 0 ;
-            $this->num_rows      = 0 ;
+            $this->connId       = $connId ;
+            $this->resultId     = $resultId ;
+            $this->resultArray  = array() ;
+            $this->resultObject = array() ;
+            $this->currentRow   = 0 ;
+            $this->numRows      = 0 ;
         }
 
         /**
@@ -76,46 +76,46 @@
         function result($type = 'array')
         {
             if($type == 'array') {
-                return $this->result_array() ;
+                return $this->resultArray() ;
             }
 
-            return $this->result_object() ;
+            return $this->resultObject() ;
         }
 
         /**
          *
          * @return type 
          */
-        function result_array()
+        function resultArray()
         {
-            if( count($this->result_array) > 0 ) {
-                return $this->result_array ;
+            if( count($this->resultArray) > 0 ) {
+                return $this->resultArray ;
             }
 
-            $this->_data_seek(0) ;
-            while($row= $this->_fetch_array()) {
-                $this->result_array[] = $row ;
+            $this->_dataSeek(0) ;
+            while($row= $this->_fetchArray()) {
+                $this->resultArray[] = $row ;
             }
 
-            return $this->result_array ;
+            return $this->resultArray ;
         }
 
         /**
          *
          * @return type 
          */
-        function result_object()
+        function resultObject()
         {
-            if( count($this->result_object) > 0 ) {
-                return $this->result_object ;
+            if( count($this->resultObject) > 0 ) {
+                return $this->resultObject ;
             }
 
-            $this->_data_seek(0) ;
-            while($row = $this->_fetch_object()) {
-                $this->result_object[] = $row ;
+            $this->_dataSeek(0) ;
+            while($row = $this->_fetchObject()) {
+                $this->resultObject[] = $row ;
             }
 
-            return $this->result_object ;
+            return $this->resultObject ;
         }
 
         /**
@@ -123,27 +123,27 @@
          * @param type $offset
          * @return type 
          */
-        function _data_seek($offset = 0)
+        function _dataSeek($offset = 0)
         {
-            return $this->result_id->data_seek($offset) ;
+            return $this->resultId->data_seek($offset) ;
         }
 
         /**
          *
          * @return type 
          */
-        function _fetch_object()
+        function _fetchObject()
         {
-            return $this->result_id->fetch_object() ;
+            return $this->resultId->fetch_object() ;
         }
 
         /**
          *
          * @return type 
          */
-        function _fetch_array()
+        function _fetchArray()
         {
-            return $this->result_id->fetch_assoc() ;
+            return $this->resultId->fetch_assoc() ;
         }
 
         /**
@@ -159,10 +159,10 @@
             }
 
             if($type == 'array') {
-                return $this->row_array($n) ;
+                return $this->rowArray($n) ;
             }
 
-            return $this->row_object($n) ;
+            return $this->rowObject($n) ;
         }
 
         /**
@@ -170,19 +170,19 @@
          * @param type $n
          * @return type 
          */
-        function row_object($n = 0)
+        function rowObject($n = 0)
         {
-            $result = $this->result_object() ;
+            $result = $this->resultObject() ;
 
             if( count($result) == 0) {
                 return $result ;
             }
 
-            if($n != $this->current_row && isset($result[$n]) ) {
-                $this->current_row = $n;
+            if($n != $this->currentRow && isset($result[$n]) ) {
+                $this->currentRow = $n;
             }
 
-            return $result[$this->current_row] ;
+            return $result[$this->currentRow] ;
         }
 
         /**
@@ -190,19 +190,19 @@
          * @param type $n
          * @return type 
          */
-        function row_array($n = 0)
+        function rowArray($n = 0)
         {
-            $result = $this->result_array() ;
+            $result = $this->resultArray() ;
 
             if( count($result) == 0) {
                 return $result ;
             }
 
-            if($n != $this->current_row && isset($result[$n]) ) {
-                $this->current_row = $n;
+            if($n != $this->currentRow && isset($result[$n]) ) {
+                $this->currentRow = $n;
             }
 
-            return $result[$this->current_row] ;
+            return $result[$this->currentRow] ;
         }
 
         /**
@@ -210,7 +210,7 @@
          * @param type $type
          * @return type 
          */
-        function first_row($type = 'array')
+        function firstRow($type = 'array')
         {
             $result = $this->result($type) ;
 
@@ -226,7 +226,7 @@
          * @param type $type
          * @return type 
          */
-        function last_row($type = 'array')
+        function lastRow($type = 'array')
         {
             $result = $this->result($type) ;
 
@@ -242,7 +242,7 @@
          * @param type $type
          * @return type 
          */
-        function next_row($type = 'array')
+        function nextRow($type = 'array')
         {
             $result = $this->result($type) ;
 
@@ -250,11 +250,11 @@
                 return $result ;
             }
 
-            if( isset($result[$this->current_row + 1]) ) {
-                $this->current_row++ ;
+            if( isset($result[$this->currentRow + 1]) ) {
+                $this->currentRow++ ;
             }
 
-            return $result[$this->current_row] ;
+            return $result[$this->currentRow] ;
         }
 
         /**
@@ -262,7 +262,7 @@
          * @param type $type
          * @return type 
          */
-        function previous_row($type = 'array')
+        function previousRow($type = 'array')
         {
             $result = $this->result($type) ;
 
@@ -270,43 +270,43 @@
                 return $result ;
             }
 
-            if( isset($result[$this->current_row - 1]) ) {
-                $this->current_row-- ;
+            if( isset($result[$this->currentRow - 1]) ) {
+                $this->currentRow-- ;
             }
 
-            return $result[$this->current_row] ;
+            return $result[$this->currentRow] ;
         }
 
         /**
          *
          * @return type 
          */
-        function num_rows()
+        function numRows()
         {
-            return $this->result_id->num_rows ;
+            return $this->resultId->num_rows ;
         }
 
         /**
          *
          * @return type 
          */
-        function num_fields()
+        function numFields()
         {
-            return $this->result_id->field_count ;
+            return $this->resultId->field_count ;
         }
 
         /**
          *
          * @return type 
          */
-        function list_fields()
+        function listFields()
         {
-            $field_names = array() ;
-            while( $field = $this->result_id->fetch_field() ) {
-                $field_names[] = $field->name ;
+            $fieldNames = array() ;
+            while( $field = $this->resultId->fetch_field() ) {
+                $fieldNames[] = $field->name ;
             }
 
-            return $field_names ;
+            return $fieldNames ;
         }
 	}
 
