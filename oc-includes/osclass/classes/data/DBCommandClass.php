@@ -714,15 +714,15 @@
 
                 $table = $this->a_from[0] ;
             }
-
+echo "1 ";
             if( $where != null ) {
                 $this->where($where) ;
             }
-
+echo "2 ";
             if( count($this->a_where) == 0 && count($this->a_wherein) == 0 && count($this->a_like) == 0 ) {
                 return false ;
             }
-
+echo "3 ";
             $sql = $this->_delete($table, $this->a_where, $this->a_like) ;
             
             $this->_reset_write() ;
@@ -745,6 +745,7 @@
             }
 
             $sql = 'DELETE FROM ' . $table . $conditions ;
+            return $sql;
         }
 
         /**

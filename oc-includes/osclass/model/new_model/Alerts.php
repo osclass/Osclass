@@ -192,7 +192,7 @@
             $this->dao->from($this->table_name);
             $conditions = array('e_type'        => $type,
                                 'fk_i_user_id'  => $userId);
-            $this->dao->where('e_type', $conditions);
+            $this->dao->where($conditions) ;
             $result = $this->dao->get();
             
             if( $result == false ) { 
@@ -208,7 +208,7 @@
             $this->dao->from($this->table_name);
             $conditions = array('e_type'   => $type,
                                 's_email'  => $email);
-            $this->dao->where('e_type', $conditions);
+            $this->dao->where($conditions);
             $result = $this->dao->get();
             
             if( $result == false ) { 
