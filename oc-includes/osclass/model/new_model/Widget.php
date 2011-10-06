@@ -23,7 +23,7 @@
     /**
      * 
      */
-    class Cron extends DAO
+    class Widget extends DAO
     {
         /**
          *
@@ -45,30 +45,25 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_cron') ;
-            $this->set_fields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
+            $this->set_table_name('t_widget') ;
+            $this->set_primary_key('pk_i_id') ;
+            $this->set_fields( array('pk_i_id','s_description','s_location','e_kind','s_content') ) ;
         }
 
         /**
          *
-         * @param type $type
+         * @param type $location
          * @return array
          */
-        function getCronByType($type)
+        function findByLocation($location)
         {
             $this->dao->select('*') ;
             $this->dao->from($this->table_name) ;
-            $this->dao->where('e_type', $type) ;
+            $this->dao->where('s_location', $location) ;
             $result = $this->dao->get() ;
-
-            if( $result->num_rows == 0 ) {
-                return false ;
-            } else {
-                return $result->row();
-            }
+            return $result->result();
         }
 
     }
 
-    /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
 ?>

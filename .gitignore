@@ -8,3 +8,4 @@ dist
 oc-content/uploads/admin-blog_news.cache
 oc-content/plugins/shop/demo_table.css
 oc-content/plugins/shop/jquery.dataTables.min.js
+oc-includes/osclass/t/config.php

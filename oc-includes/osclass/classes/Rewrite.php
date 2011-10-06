@@ -20,7 +20,7 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class Rewrite extends DAO
+    class Rewrite
     {
         private static $instance ;
         private $rules;
