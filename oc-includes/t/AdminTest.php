@@ -19,6 +19,8 @@
 
     require_once 'config.php' ;
 
+    require_once '../osclass/Logger/LogDatabase.php' ;
+    require_once '../osclass/helpers/hDatabaseInfo.php' ;
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
@@ -54,71 +56,71 @@
                 's_email'       => $this->email,
                 's_password'    => sha1('admin'),
                 's_secret'      => $this->secret
-                );
+            );
             
-            $res = $this->admin->dao->insert( $this->admin->table_name, $set) ;
-            self::$adminId = (int)$this->admin->dao->inserted_id() ;
-            $this->assertTrue($res, $this->admin->dao->error_level ) ;
+            $res = $this->admin->dao->insert( $this->admin->getTableName(), $set) ;
+            self::$adminId = (int) $this->admin->dao->insertedId() ;
+            $this->assertTrue($res, $this->admin->dao->errorLevel ) ;
         }
         
         public function testFindByEmail()
         {
             $res = $this->admin->findByEmail($this->email) ;
-            $this->assertNotEmpty($res, $this->admin->dao->error_level ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->errorLevel ) ;
             
             $res = $this->admin->findByEmail('incorrect@email.com');
-            $this->assertFalse($res, $this->admin->dao->error_level );
+            $this->assertFalse($res, $this->admin->dao->errorLevel );
         }
         
         public function testFindByUsername()
         {
             $res = $this->admin->findByUsername($this->username) ;
-            $this->assertNotEmpty($res, $this->admin->dao->error_level ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->errorLevel ) ;
             
             $res = $this->admin->findByUsername('incorrect');
-            $this->assertFalse($res, $this->admin->dao->error_level );
+            $this->assertFalse($res, $this->admin->dao->errorLevel );
         }
         
         public function testFindByCredentials()
         {
             $res = $this->admin->findByCredentials($this->username, $this->password) ;
-            $this->assertNotEmpty($res, $this->admin->dao->error_level." > ".$this->admin->dao->last_query() ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->errorLevel." > ".$this->admin->dao->lastQuery() ) ;
             
             $res = $this->admin->findByCredentials('incorrect', 'incorrect secret') ;
-            $this->assertFalse($res, $this->admin->dao->error_level ) ;
+            $this->assertFalse($res, $this->admin->dao->errorLevel ) ;
         }
         
         public function testFindByIdSecret()
         {
             $res = $this->admin->findByIdSecret(self::$adminId, $this->secret) ;
-            $this->assertNotEmpty($res, $this->admin->dao->error_level ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->errorLevel ) ;
             
             $res = $this->admin->findByIdSecret('11', 'incorrect secret');
-            $this->assertFalse($res, $this->admin->dao->error_level ) ; 
+            $this->assertFalse($res, $this->admin->dao->errorLevel ) ;
         }
         
         public function testUpdateArray()
         {
             $condition = array('pk_i_id' => 'not_id') ;
             $values = array('s_name' => 'updated name') ;
-            $res = $this->admin->dao->update($this->admin->table_name, $values, $condition) ;
-            $this->assertFalse($res, $this->admin->dao->last_query()) ;
+            $res = $this->admin->dao->update($this->admin->getTableName(), $values, $condition) ;
+            $this->assertFalse($res, $this->admin->dao->lastQuery()) ;
             
             $condition = array('pk_i_id' => self::$adminId) ;
             $values = array('s_name' => 'updated name') ;
-            $res = $this->admin->dao->update($this->admin->table_name, $values, $condition) ;
-            $this->assertTrue($res, $this->admin->dao->error_level) ;
+            $res = $this->admin->dao->update($this->admin->getTableName(), $values, $condition) ;
+            $this->assertTrue($res, $this->admin->dao->errorLevel) ;
         }
         
         public function testDelete()
         {
             $conditions = array('pk_i_id' => 'not_id') ;
-            $res = $this->admin->dao->delete($this->admin->table_name, $conditions) ;
-            $this->assertFalse($res, $this->admin->dao->error_level);
+            $res = $this->admin->dao->delete($this->admin->getTableName(), $conditions) ;
+            $this->assertFalse($res, $this->admin->dao->errorLevel);
             
             $conditions = array('pk_i_id' => self::$adminId) ;
-            $res = $this->admin->dao->delete($this->admin->table_name, $conditions) ;
-            $this->assertTrue($res, $this->admin->dao->error_level);
+            $res = $this->admin->dao->delete($this->admin->getTableName(), $conditions) ;
+            $this->assertTrue($res, $this->admin->dao->errorLevel);
         }
     }
     
