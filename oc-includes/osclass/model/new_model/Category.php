@@ -142,14 +142,13 @@
         }
         
         
-        /*public function findRootCategories() {
-            $roots = $this->listWhere("a.fk_i_parent_id IS NULL") ;
-            return $roots ;
+        public function findRootCategories() {
+            return $this->listWhere("a.fk_i_parent_id IS NULL") ;
         }
 
+        
         public function findRootCategoriesEnabled() {
-            $roots = $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1") ;
-            return $roots ;
+            return $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1") ;
         }
         
         public function toSubTree($category = null) {
@@ -164,6 +163,10 @@
                     array();
                 }
             }
+        }
+
+        public function listAll() {
+            return $this->listWhere('1 = 1');
         }
 
         public function toTreeAll() {
@@ -188,51 +191,7 @@
             return $tree;
         }
 
-        public function toTree($empty = true) {
-            if($empty==$this->empty_tree && $this->tree!=null) {
-                return $this->tree;
-            }
-            $this->empty_tree = $empty;
-            $categories = $this->listEnabled();
-            $this->categories = array();
-            $this->relation = array();
-            foreach($categories as $c) {
-                if($empty || (!$empty && $c['i_num_items']>0)) {
-                    $this->categories[$c['pk_i_id']] = $c;
-                    if($c['fk_i_parent_id']==null) {
-                        $this->tree[] = $c;
-                        $this->relation[0][] = $c['pk_i_id'];
-                    } else {
-                        $this->relation[$c['fk_i_parent_id']][] = $c['pk_i_id'];
-                    }
-                }
-            }
-
-            if(count($this->relation) == 0 || !isset($this->relation[0]) ) {
-                return null;
-            }
-
-            $this->tree = $this->sideTree($this->relation[0], $this->categories, $this->relation);
-            return $this->tree;
-        }
-
-        private function sideTree($branch, $categories, $relation) {
-            $tree = array();
-            if( !empty($branch) ) {
-                foreach($branch as $b) {
-                    $aux = $categories[$b];
-                    if(isset($relation[$b]) && is_array($relation[$b])) {
-                        $aux['categories'] = $this->sideTree($relation[$b], $categories, $relation);
-                    } else {
-                        $aux['categories'] = array();
-                    }
-                    $tree[] = $aux;
-                }
-            }
-            return $tree;
-        }
-
-        public function toRootTree($cat = null) {
+/*        public function toRootTree($cat = null) {
             $tree = null;
             if($cat!=null) {
                 $tree_b = array();
@@ -249,13 +208,12 @@
                 }
             }
             return $tree;
-        }
+        }*/
 
         public function isParentOf($parent_id) {
-            $children = $this->listWhere("a.fk_i_parent_id = " . $parent_id . "");
-            return $children;
+            return $this->listWhere("a.fk_i_parent_id = " . $parent_id . "");
         }
-
+/*
         public function findRootCategory($category_id) {
             $results = $this->listWhere("a.pk_i_id = " . $category_id . " AND a.fk_i_parent_id IS NOT NULL");
             if (count($results) > 0) {
@@ -263,9 +221,9 @@
             } else {
                 return $this->findByPrimaryKey($category_id);
             }
-        }
+        }*/
 
-        //#DANI: NOT CHANGED YET
+        // CHANGE NAME TO NEW STANDARD findBySlug
         public function find_by_slug($slug) {
             $results = $this->listWhere("b.s_slug = '" . $slug . "'");
             if(isset($results[0])) {
@@ -274,7 +232,7 @@
             return null;
         }
 
-        public function hierarchy($category_id) {
+        /*public function hierarchy($category_id) {
             $hierarchy = array();
             $cat = $this->findByPrimaryKey($category_id);
 
@@ -302,10 +260,6 @@
             return $this->listWhere("fk_i_parent_id = %d", $cat_id);
         }
 
-        //overwritten
-        public function listAll() {
-            return $this->listWhere('1 = 1');
-        }
 
         public function listEnabled() {
             return $this->listWhere('a.b_enabled = 1');

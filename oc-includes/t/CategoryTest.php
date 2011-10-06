@@ -53,7 +53,49 @@
         public function testToTree()
         {
             $cat = $this->catDAO->toTree();
-            print_r($cat);
+            $this->assertEquals(10, count($cat), $this->catDAO->dao->last_query() ) ;
+            $this->assertEquals(20, count($cat[7]['categories']), $this->catDAO->dao->last_query() ) ;
+            $tmp = end($cat);
+            $this->assertEquals('Animalsa', $tmp['s_name'], $this->catDAO->dao->last_query() ) ;
+            
+            $cat = $this->catDAO->toTreeAll();
+            $this->assertEquals(10, count($cat), $this->catDAO->dao->last_query() ) ;
+            $this->assertEquals(20, count($cat[7]['categories']), $this->catDAO->dao->last_query() ) ;
+            $tmp = end($cat);
+            $this->assertEquals('Animalsa', $tmp['s_name'], $this->catDAO->dao->last_query() ) ;
+        }
+        
+        public function testfindRootCategories()
+        {
+            $cat = $this->catDAO->findRootCategories();
+            $this->assertEquals(10, count($cat), $this->catDAO->dao->last_query() ) ;
+            $cat = $this->catDAO->findRootCategoriesEnabled();
+            $this->assertEquals(10, count($cat), $this->catDAO->dao->last_query() ) ;
+        }
+
+        public function testToSubTree()
+        {
+            $cat = $this->catDAO->toSubTree(95);
+            $this->assertEquals(true, empty($cat), $this->catDAO->dao->last_query() ) ;
+            $cat = $this->catDAO->toSubTree(8);
+            $this->assertEquals(20, count($cat), $this->catDAO->dao->last_query() ) ;
+        }
+        
+        public function testIsParentOf()
+        {
+            $cat = $this->catDAO->isParentOf(95);
+            $this->assertEquals(true, empty($cat), $this->catDAO->dao->last_query() ) ;
+            $cat = $this->catDAO->isParentOf(8);
+            $this->assertEquals(20, count($cat), $this->catDAO->dao->last_query() ) ;
+        }
+        
+        public function testFindBySlug()
+        {
+            $cat = $this->catDAO->isParentOf('animalsa');
+            $this->assertEquals('Animalsa', $cat['s_name'], $this->catDAO->dao->last_query() ) ;
+
+            $cat = $this->catDAO->isParentOf('xXx');
+            $this->assertEquals(null, $cat, $this->catDAO->dao->last_query() ) ;
         }
         
     }
