@@ -20,6 +20,8 @@
 
     require_once 'config.php' ;
 
+    require_once '../osclass/Logger/LogDatabase.php' ;
+    require_once '../osclass/helpers/hDatabaseInfo.php' ;
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
@@ -33,7 +35,7 @@
     class CronTest extends PHPUnit_Framework_TestCase
     {
         private $cron;
-        
+
         public function __construct()
         {
             parent::__construct() ;
@@ -43,16 +45,16 @@
         public function testGetCronByType()
         {
             $res = $this->cron->getCronByType('HOURLY');
-            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            $this->assertNotEmpty($res, $this->cron->dao->errorLevel);
             $res = $this->cron->getCronByType('DAILY');
-            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            $this->assertNotEmpty($res, $this->cron->dao->errorLevel);
             $res = $this->cron->getCronByType('WEEKLY');
-            $this->assertNotEmpty($res, $this->cron->dao->error_level);
+            $this->assertNotEmpty($res, $this->cron->dao->errorLevel);
             
             $res = $this->cron->getCronByType('FOOBAR');
-            $this->assertFalse($res, $this->cron->dao->error_level);
+            $this->assertFalse($res, $this->cron->dao->errorLevel);
         }
-        
+
     }
     
 ?>
