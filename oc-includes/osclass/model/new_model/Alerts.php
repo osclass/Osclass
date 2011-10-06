@@ -145,7 +145,7 @@
          * @param string $type
          * @return array
          * 
-         * OJO soble where!
+         * OJO doble where!
          */
         function getAlertsBySearchAndType($search, $type)
         {
