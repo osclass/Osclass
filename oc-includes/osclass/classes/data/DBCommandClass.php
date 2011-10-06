@@ -683,7 +683,17 @@
             $sql = $this->_update($table, $this->aSet, $this->aWhere) ;
 
             $this->_resetWrite() ;
-            return $this->query($sql) ;
+            $result = $this->query($sql) ;
+
+            if( $result == false ) {
+                return false ;
+            }
+
+            if( $this->affectedRows() == 0 ) {
+                return false ;
+            }
+
+            return true ;
         }
 
         /**
@@ -726,8 +736,17 @@
             $sql = $this->_delete($table, $this->aWhere, $this->aLike) ;
             
             $this->_resetWrite() ;
-            
-            return $this->query($sql) ;
+            $result = $this->query($sql) ;
+
+            if( $result == false ) {
+                return false ;
+            }
+
+            if( $this->affectedRows() == 0 ) {
+                return false ;
+            }
+
+            return true ;
         }
 
         function _delete($table, $where, $like)
