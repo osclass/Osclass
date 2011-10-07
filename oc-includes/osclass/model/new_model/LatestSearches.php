@@ -45,12 +45,12 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_latest_searches') ;
+            $this->setTableName('t_latest_searches') ;
             $array_fields = array(
                 'd_date',
                 's_search'
             );
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         /**
@@ -62,9 +62,9 @@
         function getSearches($limit = 20)
         {
             $this->dao->select('d_date, s_search, COUNT(s_search) as i_total') ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->group_by('s_search') ;
-            $this->dao->order_by('d_date', 'DESC') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->groupBy('s_search') ;
+            $this->dao->orderBy('d_date', 'DESC') ;
             $this->dao->limit($limit) ;
             $result = $this->dao->get() ;
             
@@ -86,10 +86,10 @@
             if($time==null) { $time = time() - (7*24*3600); };
             
             $this->dao->select('d_date, s_search, COUNT(s_search) as i_total') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('d_date', date('Y-m-d H:i:s', $time)) ;
-            $this->dao->group_by('s_search') ;
-            $this->dao->order_by('d_date', 'DESC') ;
+            $this->dao->groupBy('s_search') ;
+            $this->dao->orderBy('d_date', 'DESC') ;
             $this->dao->limit($limit) ;
             $result = $this->dao->get() ;
             
@@ -109,7 +109,7 @@
         function purgeDate($date = null) 
         {
             if($date!=null) {
-                return $this->dao->delete($this->table_name, array('d_date <= '.$date));
+                return $this->dao->delete($this->getTableName(), array('d_date <= '.$date));
             } else {
                 return false;
             }
@@ -124,14 +124,14 @@
         public function purgeNumber($number = null) {
             if($number!=null) {
                 $this->dao->select('d_date') ;
-                $this->dao->from($this->table_name) ; 
-                $this->dao->group_by('s_search') ;
-                $this->dao->order_by('d_date', 'DESC') ;
+                $this->dao->from($this->getTableName()) ; 
+                $this->dao->groupBy('s_search') ;
+                $this->dao->orderBy('d_date', 'DESC') ;
                 $this->dao->limit($number, 1) ;
                 $result = $this->dao->get() ;
                 $last= $result->row();
                 
-                return $this->dao->delete($this->table_name, array('d_date <= '.$last['d_date']));
+                return $this->dao->delete($this->getTableName(), array('d_date <= '.$last['d_date']));
             } else {
                 return false;
             }

@@ -45,7 +45,7 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_log') ;
+            $this->setTableName('t_log') ;
             $array_fields = array(
                 'dt_date',
                 's_section',
@@ -56,7 +56,7 @@
                 's_who',
                 'fk_i_who_id'
             );
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         /**
@@ -70,7 +70,7 @@
          * @param integer $who_id
          * @return boolean 
          */
-        public function insertLog($section, $action, $id, $data, $who, $who_id) 
+        public function insertLog($section, $action, $id, $data, $who, $whoId) 
         {
             $array_set = array(
                 'dt_date'       => date('Y-m-d H:i:s'),
@@ -80,9 +80,9 @@
                 's_data'        => $data, 
                 's_ip'          => $_SERVER['REMOTE_ADDR'],
                 's_who'         => $who, 
-                'fk_i_who_id'   => $who_id 
+                'fk_i_who_id'   => $whoId 
             );
-            return $this->dao->insert($this->table_name, $array_set);
+            return $this->dao->insert($this->getTableName(), $array_set);
         }
     }
 ?>

@@ -45,8 +45,8 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_locale') ;
-            $this->set_primary_key('pk_c_code') ;
+            $this->setTableName('t_locale') ;
+            $this->setPrimaryKey('pk_c_code') ;
             $array_fields = array(
                 'pk_c_code',
                 's_name',
@@ -64,33 +64,33 @@
                 'b_enabled',
                 'b_enabled_bo'
             );
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         /**
          * Return all locales enabled.
          *
-         * @param boolean $is_bo
-         * @param boolean $indexed_by_pk
+         * @param boolean $isBo
+         * @param boolean $indexedByKk
          * @return array
          */
-        function listAllEnabled($is_bo = false, $indexed_by_pk = false) 
+        function listAllEnabled($isBo = false, $indexedByPk = false) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
-            if($is_bo) {
+            $this->dao->from($this->getTableName()) ;
+            if($isBo) {
                 $this->dao->where('b_enabled_bo');
             } else {
                 $this->dao->where('b_enabled');
             }
-            $this->dao->order_by('s_name', 'ASC') ;
+            $this->dao->orderBy('s_name', 'ASC') ;
             $result = $this->dao->get();
             $aResults = $result->result();
             
-            if ($indexed_by_pk) {
+            if ($indexedByPk) {
                 $aTmp = array() ;
                 for ($i = 0 ; $i < count($aResults) ; $i++) {
-                    $aTmp[(string)$aResults[$i][$this->primary_key]] = $aResults[$i] ;
+                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
                 }
                 $aResults = $aTmp ;
             }
@@ -114,7 +114,7 @@
             $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', $array_where) ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_pages_description', $array_where) ;
             $this->dao->delete(DB_TABLE_PREFIX.'t_country', $array_where) ;
-            $result = $this->dao->delete($this->table_name, array('pk_c_code' => $locale )) ;
+            $result = $this->dao->delete($this->getTableName(), array('pk_c_code' => $locale )) ;
             
             return $result;
         }
