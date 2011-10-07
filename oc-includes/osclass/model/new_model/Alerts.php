@@ -45,7 +45,7 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_alerts') ;
+            $this->setTableName('t_alerts') ;
 //            $this->set_primary_key('') ; // no primary key in preference table 
 //            $this->set_fields( array('s_section', 's_name', 's_value', 'e_type') ) ;
         }
@@ -60,7 +60,7 @@
         function getAlertsFromUser($userId) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('fk_i_user_id', $userId) ;
             $result = $this->dao->get() ;
 
@@ -81,7 +81,7 @@
         function getAlertsFromEmail($email) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_email', $email) ;
             $result = $this->dao->get() ;
             
@@ -102,7 +102,7 @@
         function getAlertsByType($type) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type);
             $result = $this->dao->get();
             
@@ -124,12 +124,12 @@
         function getAlertsByTypeGroup($type, $active = FALSE) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type);
             if($active){
                 $this->dao->where('b_active', 1);
             }
-            $this->dao->group_by('s_search');
+            $this->dao->groupBy('s_search');
             $result = $this->dao->get();
             
             if( $result == false ) { 
@@ -150,7 +150,7 @@
         function getAlertsBySearchAndType($search, $type)
         {
             $this->dao->select();
-            $this->dao->from($this->table_name);
+            $this->dao->from($this->getTableName());
             $conditions = array('e_type'    => $type,
                                 's_search'  => $search);
             $this->dao->where('e_type', $type);
@@ -169,13 +169,13 @@
         function getUsersBySearchAndType($search, $type, $active = FALSE) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type);
             $this->dao->where('s_search', $search);
             if($active){
                 $this->dao->where('b_active', 1); 
             }
-            $this->dao->group_by('s_search');
+            $this->dao->groupBy('s_search');
             $result = $this->dao->get();
             
             if( $result == false ) { 
@@ -189,7 +189,7 @@
         function getAlertsFromUserByType($userId, $type)
         {
             $this->dao->select();
-            $this->dao->from($this->table_name);
+            $this->dao->from($this->getTableName());
             $conditions = array('e_type'        => $type,
                                 'fk_i_user_id'  => $userId);
             $this->dao->where($conditions) ;
@@ -205,7 +205,7 @@
         function getAlertsFromEmailByType($email, $type)
         {
             $this->dao->select();
-            $this->dao->from($this->table_name);
+            $this->dao->from($this->getTableName());
             $conditions = array('e_type'   => $type,
                                 's_email'  => $email);
             $this->dao->where($conditions);
@@ -222,7 +222,7 @@
         {
             $results = 0;
             $this->dao->select();
-            $this->dao->from($this->table_name);
+            $this->dao->from($this->getTableName());
             $this->dao->where('s_search', $alert);
             if($userid == 0 || $userid == null){
                 $this->dao->where('fk_i_user_id', 0);
@@ -232,16 +232,15 @@
             }
             $results = $this->dao->get();
             
-            if($results->num_rows() == 0) {
-                return $this->dao->insert($this->table_name, array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => $type, 's_secret' => $secret));
+            if($results->numRows() == 0) {
+                return $this->dao->insert($this->getTableName(), array( 'fk_i_user_id' => $userid, 's_email' => $email, 's_search' => $alert, 'e_type' => $type, 's_secret' => $secret));
             }
             return false;
         }
         
         function activate($email, $secret)
         {
-            $this->dao->update($this->table_name, array('b_active' => 1), array('s_email' => $email, 's_secret' => $secret));
-            return $this->dao->affected_rows();
+            return $this->dao->update($this->getTableName(), array('b_active' => 1), array('s_email' => $email, 's_secret' => $secret));
         }
     }
     

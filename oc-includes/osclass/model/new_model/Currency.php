@@ -45,9 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_currency') ;
-            $this->set_primary_key('pk_c_code') ;
-            $this->set_fields(array('s_name', 's_description', 'b_enabled')) ;
+            $this->setTableName('t_currency') ;
+            $this->setPrimaryKey('pk_c_code') ;
+            $this->setFields(array('s_name', 's_description', 'b_enabled')) ;
         }
         
     }

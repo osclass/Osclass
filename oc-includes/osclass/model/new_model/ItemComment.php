@@ -45,8 +45,8 @@
         function __construct()
         {
             parent::__construct() ;
-            $this->set_table_name('t_item_comment') ;
-            $this->set_primary_key('pk_i_id') ;
+            $this->setTableName('t_item_comment') ;
+            $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
                 'fk_i_item_id',
                 'dt_pub_date',
@@ -59,7 +59,7 @@
                 'b_spam',
                 'fk_i_user_id'
             );
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         /**
@@ -71,7 +71,7 @@
         function findByItemIDAll($id)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('fk_i_item_id', $id) ;
             $result = $this->dao->get() ;
             
@@ -90,22 +90,22 @@
          * @param integer $comments_per_page
          * @return array
          */
-        function findByItemID($id, $page = null, $comments_per_page = null) 
+        function findByItemID($id, $page = null, $commentsPerPage = null) 
         {
             $result = array();
             if( $page == null ) { $page = osc_item_comments_page(); }
             if( $page == '' ) { $page = 0; }
-            if( $comments_per_page == null ) { $comments_per_page = osc_comments_per_page(); }
+            if( $commentsPerPage == null ) { $commentsPerPage = osc_comments_per_page(); }
             
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array('fk_i_item_id'  => $id,
                                 'b_active'      => 1,
                                 'b_enabled'     => 1);
             $this->dao->where($conditions) ;
             
-            if( ($page !== 'all') || ($comments_per_page > 0) ) {
-                $this->dao->limit(($page*$comments_per_page), $comments_per_page);
+            if( ($page !== 'all') || ($commentsPerPage > 0) ) {
+                $this->dao->limit(($page*$commentsPerPage), $commentsPerPage);
             }
             
             $result = $this->dao->get() ;
@@ -123,7 +123,7 @@
          * @param integer $id
          * @return integer
          */
-        function total_comments($id)
+        function totalComments($id)
         {
             $this->dao->select('count(pk_i_id) as total') ;
             $this->dao->from($this->table_name) ;
@@ -151,7 +151,7 @@
         function findByAuthorID($id)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array('fk_i_user_id'  => $id,
                                 'b_active'      => 1,
                                 'b_enabled'     => 1);
@@ -174,7 +174,7 @@
         function getAllComments($itemId = null) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name.' c') ;
+            $this->dao->from($this->getTableName().' c') ;
             $this->dao->from('t_item i') ;
             
             $conditions = array() ;
@@ -190,7 +190,7 @@
             }
             
             $this->dao->where($conditions) ;
-            $this->dao->order_by('dt_pub_date','DESC') ;            
+            $this->dao->orderBy('dt_pub_date','DESC') ;            
             $aux = $this->dao->get() ;
             $comments = $aux->result() ;
             
@@ -209,11 +209,11 @@
             $lang = osc_current_user_locale() ;
 
             $this->dao->select('i.*, d.s_title') ;
-            $this->dao->from($this->table_name.' i') ;
+            $this->dao->from($this->getTableName().' i') ;
             $this->dao->join(DB_TABLE_PREFIX.'t_item c', 'c.pk_i_id = i.fk_i_item_id') ;
             $this->dao->join(DB_TABLE_PREFIX.'t_item_description d', 'd.fk_i_item_id = i.fk_i_item_id');
-            $this->dao->group_by('d.fk_i_item_id');
-            $this->doa->order_by('pk_i_id', 'DESC');
+            $this->dao->groupBy('d.fk_i_item_id');
+            $this->doa->orderBy('pk_i_id', 'DESC');
             $this->dao->limit(0,$num);
 
             $result = $this->dao->get();
