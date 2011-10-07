@@ -30,6 +30,11 @@
          * @var type 
          */
         private static $instance ;
+        /**
+         * array for save preferences
+         * @var array
+         */
+        private $pref ;
 
         public static function newInstance()
         {
@@ -45,9 +50,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_preference') ;
+            $this->setTableName('t_preference') ;
             /* $this->set_primary_key($key) ; // no primary key in preference table */
-            $this->set_fields( array('s_section', 's_name', 's_value', 'e_type') ) ;
+            $this->setFields( array('s_section', 's_name', 's_value', 'e_type') ) ;
         }
 
         /**
@@ -62,7 +67,7 @@
             $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
 
-            if( $result->num_rows == 0 ) {
+            if( $result->numRows() == 0 ) {
                 return false ;
             } else {
                 $row = $result->row() ;
@@ -70,6 +75,87 @@
             }
         }
 
+        /**
+         * Find array preference for a given section
+         *
+         * @param string $name
+         * @return array 
+         */
+        public function findBySection($name) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('s_section', $name) ;
+            $result = $this->dao->get() ;
+
+            if( $result->numRows() == 0 ) {
+                return false ;
+            } else {
+                return $result->result() ;
+            }
+        }
+        
+        /**
+         * Modify the structure of table.
+         */
+        public function toArray() 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $result = $this->dao->get() ;
+            $aTmpPref = $result->result() ;
+
+            foreach($aTmpPref as $tmpPref) {
+                $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'] ;
+            }
+        }
+        
+        /**
+         * Get value, given a preference name and a section name.
+         * 
+         * @param string $key
+         * @param string $section
+         * @return string
+         */
+        public function get($key, $section = "osclass") 
+        {
+            if (!isset($this->pref[$section][$key])) {
+                return '' ;
+            }
+            return ($this->pref[$section][$key]) ;
+        }
+        
+        /**
+         * Set preference value, given a preference name and a section name.
+         *
+         * @param string $key
+         * @param string$value
+         * @param string $section 
+         */
+        public function set($key, $value, $section = "osclass") 
+        {
+            $this->pref[$section][$key] = $value ;
+        }
+        
+        /**
+         * Replace preference value, given preference name, preference section and type value.
+         *
+         * @param string $key
+         * @param string $value
+         * @param string $section
+         * @param string $type 
+         * @return boolean
+         */
+        public function replace($key, $value, $section = "osclass", $type = 'STRING') 
+        {
+            $array_replace = array(
+                's_name'    => $key,
+                's_value'   => $value,
+                's_section' => $section,
+                'e_type'    => $type
+            );
+            return $this->dao->replace($this->getTableName(), $array_replace) ;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
