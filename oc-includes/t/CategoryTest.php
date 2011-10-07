@@ -91,10 +91,10 @@
         
         public function testFindBySlug()
         {
-            $cat = $this->catDAO->isParentOf('animalsa');
+            $cat = $this->catDAO->find_by_slug('animalsa');
             $this->assertEquals('Animalsa', $cat['s_name'], $this->catDAO->dao->last_query() ) ;
 
-            $cat = $this->catDAO->isParentOf('xXx');
+            $cat = $this->catDAO->find_by_slug('xXx');
             $this->assertEquals(null, $cat, $this->catDAO->dao->last_query() ) ;
         }
         
