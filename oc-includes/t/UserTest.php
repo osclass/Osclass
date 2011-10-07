@@ -40,8 +40,6 @@
     require_once '../osclass/helpers/hSecurity.php' ;
     require_once '../osclass/helpers/hLocale.php' ;
     
-//    require_once LIB_PATH . 'osclass/db.php';
-    
     require_once '../osclass/model/new_model/Preference.php';
     require_once '../osclass/helpers/hPreference.php';
     require_once '../osclass/helpers/hDatabaseInfo.php';
@@ -174,6 +172,9 @@
             $this->assertFalse($res, $this->model->dao->errorLevel);
         }
         
+        /**
+         * @todo Implement Item model.
+         */
         public function testDeleteUser()
         {
             $res = $this->model->deleteUser(self::$aInfo['test@email.com']['id']);
