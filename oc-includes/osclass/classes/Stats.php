@@ -49,9 +49,6 @@
             $this->conn = new DBCommandClass($conn->getOsclassDb()) ;
         }
         
-//                $this->conn->select() ;
-//                $this->conn->from() ;
-//                $this->conn->where() ;
         public function new_users_count($from_date, $date = 'day') 
         {    
             if($date=='week') {
