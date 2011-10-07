@@ -60,68 +60,69 @@
             
             $res = $this->admin->dao->insert( $this->admin->getTableName(), $set) ;
             self::$adminId = (int) $this->admin->dao->insertedId() ;
-            $this->assertTrue($res, $this->admin->dao->errorLevel ) ;
+            $this->assertTrue($res, $this->admin->dao->getErrorLevel() ) ;
         }
         
         public function testFindByEmail()
         {
             $res = $this->admin->findByEmail($this->email) ;
-            $this->assertNotEmpty($res, $this->admin->dao->errorLevel ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->getErrorLevel() ) ;
             
             $res = $this->admin->findByEmail('incorrect@email.com');
-            $this->assertFalse($res, $this->admin->dao->errorLevel );
+            $this->assertFalse($res, $this->admin->dao->getErrorLevel() );
         }
         
         public function testFindByUsername()
         {
             $res = $this->admin->findByUsername($this->username) ;
-            $this->assertNotEmpty($res, $this->admin->dao->errorLevel ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->getErrorLevel() ) ;
             
             $res = $this->admin->findByUsername('incorrect');
-            $this->assertFalse($res, $this->admin->dao->errorLevel );
+            $this->assertFalse($res, $this->admin->dao->getErrorLevel() );
         }
         
         public function testFindByCredentials()
         {
             $res = $this->admin->findByCredentials($this->username, $this->password) ;
-            $this->assertNotEmpty($res, $this->admin->dao->errorLevel." > ".$this->admin->dao->lastQuery() ) ;
+            $this->assertNotEmpty($res, sprintf('%s > %s', $this->admin->dao->getErrorLevel(), $this->admin->dao->lastQuery()) ) ;
             
             $res = $this->admin->findByCredentials('incorrect', 'incorrect secret') ;
-            $this->assertFalse($res, $this->admin->dao->errorLevel ) ;
+            $this->assertFalse($res, $this->admin->dao->getErrorLevel() ) ;
         }
         
         public function testFindByIdSecret()
         {
             $res = $this->admin->findByIdSecret(self::$adminId, $this->secret) ;
-            $this->assertNotEmpty($res, $this->admin->dao->errorLevel ) ;
+            $this->assertNotEmpty($res, $this->admin->dao->getErrorLevel() ) ;
             
             $res = $this->admin->findByIdSecret('11', 'incorrect secret');
-            $this->assertFalse($res, $this->admin->dao->errorLevel ) ;
+            $this->assertFalse($res, $this->admin->dao->getErrorLevel() ) ;
         }
         
         public function testUpdateArray()
         {
             $condition = array('pk_i_id' => 'not_id') ;
-            $values = array('s_name' => 'updated name') ;
+            $values    = array('s_name' => 'updated name') ;
             $res = $this->admin->dao->update($this->admin->getTableName(), $values, $condition) ;
             $this->assertFalse($res, $this->admin->dao->lastQuery()) ;
             
             $condition = array('pk_i_id' => self::$adminId) ;
-            $values = array('s_name' => 'updated name') ;
+            $values    = array('s_name' => 'updated name') ;
             $res = $this->admin->dao->update($this->admin->getTableName(), $values, $condition) ;
-            $this->assertTrue($res, $this->admin->dao->errorLevel) ;
+            $this->assertTrue($res, $this->admin->dao->getErrorLevel()) ;
         }
         
         public function testDelete()
         {
             $conditions = array('pk_i_id' => 'not_id') ;
             $res = $this->admin->dao->delete($this->admin->getTableName(), $conditions) ;
-            $this->assertFalse($res, $this->admin->dao->errorLevel);
+            $this->assertFalse($res, $this->admin->dao->getErrorLevel());
             
             $conditions = array('pk_i_id' => self::$adminId) ;
             $res = $this->admin->dao->delete($this->admin->getTableName(), $conditions) ;
-            $this->assertTrue($res, $this->admin->dao->errorLevel);
+            $this->assertTrue($res, $this->admin->dao->getErrorLevel());
         }
     }
-    
+
+    /* file end: ./oc-includes/osclass/t/AdminTest.php */
 ?>
