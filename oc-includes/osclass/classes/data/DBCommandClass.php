@@ -1086,13 +1086,41 @@
         }
 
         /**
+         * Set last error code and descriptionfor the most recent mysqli function call
          * 
+         * @access private
+         * @since 2.3
          */
         function errorReport()
         {
             $this->errorLevel = $this->connId->errno ;
             $this->errorDesc  = $this->connId->error ;
         }
+
+        /**
+         * Returns the last error code for the most recent mysqli function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
+         */
+        function getErrorLevel()
+        {
+            return $this->errorLevel ;
+        }
+
+        /**
+         * Returns a string description of the last error for the most recent MySQLi function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getErrorDesc()
+        {
+            return $this->errorDesc ;
+        }
+
     }
 
     /* file end: ./oc-includes/osclass/classes/data/DBCommandClass.php */
