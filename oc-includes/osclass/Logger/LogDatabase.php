@@ -60,28 +60,28 @@
          *
          * @param type $sql
          * @param type $time
-         * @param type $error_level
-         * @param type $error_description 
+         * @param type $errorLevel
+         * @param type $errorDescription 
          */
-        public function add_message($sql, $time, $error_level, $error_description)
+        public function addMessage($sql, $time, $errorLevel, $errorDescription)
         {
             $this->messages[] = array(
                 'query'      => $sql,
                 'query_time' => $time,
-                'errno'      => $error_level,
-                'error'      => $error_description
+                'errno'      => $errorLevel,
+                'error'      => $errorDescription
             ) ;
         }
 
         /**
          * 
          */
-        public function print_messages()
+        public function printMessages()
         {
             print_r($this->messages) ;
         }
 
-        public function total_time()
+        public function totalTime()
         {
             $time = 0 ;
             foreach($this->messages as $m) {

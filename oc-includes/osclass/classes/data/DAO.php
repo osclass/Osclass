@@ -31,12 +31,12 @@
          * 
          * @var type 
          */
-        var $table_name ;
+        var $tableName ;
         /**
          *
          * @var type 
          */
-        var $primary_key ;
+        var $primaryKey ;
         /**
          *
          * @var type 
@@ -49,7 +49,7 @@
         function __construct()
         {
             $conn = DBConnectionClass::newInstance() ;
-            $this->dao = new DBCommandClass($conn->get_osclass_db()) ;
+            $this->dao = new DBCommandClass($conn->getOsclassDb()) ;
         }
 
         /**
@@ -57,18 +57,18 @@
          * @param type $value
          * @return type 
          */
-        function find_by_primary_key($value)
+        function findByPrimaryKey($value)
         {
             $this->dao->select($this->fields) ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where($this->primary_key, $value) ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($this->primaryKey, $value) ;
             $result = $this->dao->get() ;
 
             if( $result === false ) {
                 return false ;
             }
 
-            if( $result->num_rows() !== 1 ) {
+            if( $result->numRows() !== 1 ) {
                 return false ;
             }
 
@@ -79,43 +79,43 @@
          *
          * @param type $table 
          */
-        function set_table_name($table)
+        function setTableName($table)
         {
-            $this->table_name = DB_TABLE_PREFIX . $table ;
+            $this->tableName = DB_TABLE_PREFIX . $table ;
         }
 
         /**
          *
          * @return type 
          */
-        function get_table_name()
+        function getTableName()
         {
-            return $this->table_name ;
+            return $this->tableName ;
         }
 
         /**
          *
          * @param type $key 
          */
-        function set_primary_key($key)
+        function setPrimaryKey($key)
         {
-            $this->primary_key = $key ;
+            $this->primaryKey = $key ;
         }
 
         /**
          *
          * @return type 
          */
-        function get_primary_key()
+        function getPrimaryKey()
         {
-            return $this->primary_key ;
+            return $this->primaryKey ;
         }
 
         /**
          *
          * @param type $fields 
          */
-        function set_fields($fields)
+        function setFields($fields)
         {
             $this->fields = $fields ;
         }
@@ -123,7 +123,7 @@
         /**
          * 
          */
-        function get_fields()
+        function getFields()
         {
             return $this->fields ;
         }

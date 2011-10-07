@@ -42,7 +42,7 @@
          * @since 2.3
          * @var string 
          */
-        var $db_host ;
+        private $dbHost ;
         /**
          * Database name where it's installed OSClass
          * 
@@ -50,7 +50,7 @@
          * @since 2.3
          * @var string 
          */
-        var $db_name ;
+        private $dbName ;
         /**
          * Database user
          * 
@@ -58,7 +58,7 @@
          * @since 2.3
          * @var string
          */
-        var $db_user ;
+        private $dbUser ;
         /**
          * Database user password
          * 
@@ -66,7 +66,7 @@
          * @since 2.3
          * @var string 
          */
-        var $db_password ;
+        private $dbPassword ;
         /**
          * Debug level:
          *  - 0: No debug
@@ -77,7 +77,7 @@
          * @since 2.3
          * @var int 
          */
-        var $db_debug_level ;
+        private $dbDebugLevel ;
 
         /**
          * Database connection object to OSClass database
@@ -86,7 +86,7 @@
          * @since 2.3
          * @var mysqli 
          */
-        var $db               = 0 ;
+        private $db             = 0 ;
         /**
          * Database connection object to metadata database
          * 
@@ -94,7 +94,7 @@
          * @since 2.3
          * @var mysqli 
          */
-        var $metadata_db      = 0 ;
+        private $metadataDb     = 0 ;
         /**
          * Database error number
          * 
@@ -102,7 +102,7 @@
          * @since 2.3
          * @var int 
          */
-        var $error_level      = 0 ;
+        private $errorLevel     = 0 ;
         /**
          * Database error description
          * 
@@ -110,7 +110,7 @@
          * @since 2.3
          * @var string 
          */
-        var $error_desc       = "" ;
+        private $errorDesc      = "" ;
         /**
          * Database connection error number 
          * 
@@ -118,7 +118,7 @@
          * @since 2.3
          * @var int 
          */
-        var $conn_error_level = 0 ;
+        private $connErrorLevel = 0 ;
         /**
          * Database connection error description
          * 
@@ -126,25 +126,31 @@
          * @since 2.3
          * @var string 
          */
-        var $conn_error_desc  = 0 ;
+        private $connErrorDesc  = 0 ;
 
         /**
          * It creates a new DBConnection object class or if it has been created before, it 
          * returns the previous object
          * 
          * @access public
+         * @since 2.3
+         * @param string $server Host name where it's located the mysql server
+         * @param string $database Default database to be used when performing queries
+         * @param string $user MySQL user name
+         * @param string $password MySQL password
+         * @param int $debugLevel Debug level
          * @return DBConnectionClass 
          */
-        public static function newInstance($server = '', $user = '', $password = '', $database = '', $debug_level = '')
+        public static function newInstance($server = '', $user = '', $password = '', $database = '', $debugLevel = '')
         {
             $server      = ($server == '') ? osc_db_host() : $server ;
             $user        = ($user == '') ? osc_db_user() : $user ;
             $password    = ($password == '') ? osc_db_password() : $password ;
             $database    = ($database == '') ? osc_db_name() : $database ;
-            $debug_level = ($debug_level == '') ? DEBUG_LEVEL : $debug_level ;
+            $debugLevel = ($debugLevel == '') ? DEBUG_LEVEL : $debugLevel ;
 
             if(!self::$instance instanceof self) {
-                self::$instance = new self ($server, $user, $password, $database, $debug_level);
+                self::$instance = new self ($server, $user, $password, $database, $debugLevel);
             }
             return self::$instance ;
         }
@@ -156,17 +162,17 @@
          * @param string $database Default database to be used when performing queries
          * @param string $user MySQL user name
          * @param string $password MySQL password
-         * @param int $debug_level Debug level
+         * @param int $debugLevel Debug level
          */
-        public function __construct($server, $user, $password, $database, $debug_level)
+        public function __construct($server, $user, $password, $database, $debugLevel)
         {
-            $this->db_host        = $server ;
-            $this->db_name        = $database ;
-            $this->db_user        = $user ;
-            $this->db_password    = $password ;
-            $this->db_debug_level = $debug_level ;
+            $this->dbHost       = $server ;
+            $this->dbName       = $database ;
+            $this->dbUser       = $user ;
+            $this->dbPassword   = $password ;
+            $this->dbDebugLevel = $debugLevel ;
 
-            $this->connect_to_osclass_db() ;
+            $this->connectToOsclassDb() ;
         }
 
 		/**
@@ -174,8 +180,8 @@
          */
         public function __destruct()
         {
-            $this->release_osclass_db() ;
-            $this->release_metadata_db() ;
+            $this->releaseOsclassDb() ;
+            $this->releaseMetadataDb() ;
             $this->debug() ;
         }
 
@@ -185,10 +191,10 @@
          * @access private
          * @since 2.3
          */
-		function error_report()
+		function errorReport()
 		{
-			$this->error_level = $this->db->errno ;
-			$this->error_desc  = $this->db->error ;
+			$this->errorLevel = $this->db->errno ;
+			$this->errorDesc  = $this->db->error ;
 		}
 
         /**
@@ -197,10 +203,10 @@
          * @access private
          * @since 2.3
          */
-        function error_connection()
+        function errorConnection()
         {
-            $this->conn_error_level = $this->db->connect_errno ;
-            $this->conn_error_desc  = $this->db->connect_error ;
+            $this->connErrorLevel = $this->db->connect_errno ;
+            $this->connErrorDesc  = $this->db->connect_error ;
         }
 
         /**
@@ -210,28 +216,25 @@
          * @since 2.3
          * @return boolean It returns true if the connection has been successful or false if not
          */
-        function connect_to_osclass_db()
+        function connectToOsclassDb()
         {
-            $conn = $this->_connect_to_db($this->db_host, $this->db_user, $this->db_password, $this->db) ;
+            $conn = $this->_connectToDb($this->dbHost, $this->dbUser, $this->dbPassword, $this->db) ;
 
             if ( $conn == false ) {
-                $this->error_connection() ;
-                $this->release_osclass_db() ;
+                $this->errorConnection() ;
+                $this->releaseOsclassDb() ;
                 return false ;
             }
 
-            $this->_set_charset('utf8', $this->db) ;
+            $this->_setCharset('utf8', $this->db) ;
 
-            // Try to select a database...
-            $select_db = $this->select_osclass_db() ;
-            if ( $select_db == false) {
-                // Select error
-                $this->error_report() ;
-                $this->release_osclass_db() ;
+            $selectDb = $this->selectOsclassDb() ;
+            if ( $selectDb == false) {
+                $this->errorReport() ;
+                $this->releaseOsclassDb() ;
                 return false ;
             }
 
-            // succesfull connection
             return true ;
 		}
 
@@ -242,26 +245,23 @@
          * @since 2.3
          * @return boolean It returns true if the connection has been successful or false if not
          */
-        function connect_to_metadata_db()
+        function connectToMetadataDb()
         {
-            $conn = $this->_connect_to_db(DB_HOST, DB_USER, DB_PASSWORD, $this->metadata_db) ;
+            $conn = $this->_connectToDb(DB_HOST, DB_USER, DB_PASSWORD, $this->metadataDb) ;
 
 			if ( $conn == false ) {
-                $this->release_metadata_db() ;
+                $this->releaseMetadataDb() ;
 				return false ;
 			}
 
-            $this->_set_charset('utf8', $this->metadata_db) ;
+            $this->_setCharset('utf8', $this->metadataDb) ;
 
-            // Try to select a database...
-            $select_db = $this->select_metadata_db() ;
-            if ( $select_db == false) {
-                // Select error
-                $this->release_metadata_db() ;
+            $selectDb = $this->selectMetadataDb() ;
+            if ( $selectDb == false ) {
+                $this->releaseMetadataDb() ;
                 return false ;
             }
 
-            // succesfull connection
             return true ;
         }
 
@@ -272,9 +272,9 @@
          * @since 2.3
          * @return boolean It returns true if the database has been selected sucessfully or false if not
          */
-        function select_osclass_db()
+        function selectOsclassDb()
         {
-            return $this->_select_db($this->db_name, $this->db) ;
+            return $this->_selectDb($this->dbName, $this->db) ;
         }
 
         /**
@@ -284,9 +284,9 @@
          * @since 2.3
          * @return boolean It returns true if the database has been selected sucessfully or false if not
          */
-        function select_metadata_db()
+        function selectMetadataDb()
         {
-            return $this->_select_db(DB_NAME, $this->metadata_db) ;
+            return $this->_selectDb(DB_NAME, $this->metadataDb) ;
         }
 
         /**
@@ -295,10 +295,10 @@
          * @access private
          * @since 2.3
          */
-        function reconnect_osclass_db()
+        function reconnectOsclassDb()
         {
-            $this->release_osclass_db() ;
-			$this->connect_to_osclass_db() ;
+            $this->releaseOsclassDb() ;
+			$this->connectToOsclassDb() ;
         }
 
         /**
@@ -307,10 +307,10 @@
          * @access private
          * @since 2.3
          */
-        function reconnect_metadata_db()
+        function reconnectMetadataDb()
         {
-            $this->release_metadata_db() ;
-			$this->connect_to_metadata_db() ;
+            $this->releaseMetadataDb() ;
+			$this->connectToMetadataDb() ;
         }
 
         /**
@@ -320,12 +320,12 @@
          * @since 2.3
          * @return boolean 
          */
-        function release_osclass_db()
+        function releaseOsclassDb()
         {
-            $release = $this->_release_db($this->db) ;
+            $release = $this->_releaseDb($this->db) ;
 
             if( !$release ) {
-                $this->error_report() ;
+                $this->errorReport() ;
             }
 
             return $release ;
@@ -338,9 +338,9 @@
          * @since 2.3
          * @return boolean 
          */
-        function release_metadata_db()
+        function releaseMetadataDb()
         {
-            return $this->_release_db($this->metadata_db) ;
+            return $this->_releaseDb($this->metadataDb) ;
         }
 
         /**
@@ -349,9 +349,9 @@
          * @access public
          * @since 2.3
          */
-        function get_osclass_db()
+        function getOsclassDb()
         {
-            return $this->_get_db($this->db) ;
+            return $this->_getDb($this->db) ;
         }
 
         /**
@@ -360,9 +360,9 @@
          * @access public
          * @since 2.3
          */
-        function get_metadata_db()
+        function getMetadataDb()
         {
-            return $this->_get_db($this->metadata_db) ;
+            return $this->_getDb($this->metadataDb) ;
         }
 
         /**
@@ -371,14 +371,14 @@
          * @param string $host Database host
          * @param string $user Database user
          * @param string $password Database user password
-         * @param mysqli $conn_id Database connector link
+         * @param mysqli $connId Database connector link
          * @return boolean It returns true if the connection 
          */
-        function _connect_to_db($host, $user, $password, &$conn_id)
+        function _connectToDb($host, $user, $password, &$connId)
         {
-            $conn_id = new mysqli($host, $user, $password) ;
+            $connId = new mysqli($host, $user, $password) ;
 
-            if ( $conn_id == false ) {
+            if ( $connId == false ) {
                 return false ;
             }
 
@@ -393,13 +393,13 @@
          */
         function debug()
         {
-            switch ($this->db_debug_level) {
+            switch ($this->dbDebugLevel) {
                 case 1:     $log = LogDatabase::newInstance() ;
-                            $log->print_messages() ;
+                            $log->printMessages() ;
                 break ;
                 case 2:     $log = LogDatabase::newInstance() ;
                             echo '<!--' ;
-                            $this->print_messages() ;
+                            $this->printMessages() ;
                             echo '-->' ;
                 break ;
             }
@@ -410,17 +410,18 @@
          * 
          * @since 2.3
          * @access private
-         * @param string $dbname Database name. If you leave blank this field, it will
+         * @param string $dbName Database name. If you leave blank this field, it will
          * select the database set in the init method
+         * @param mysqli $connId Database connector link
          * @return boolean It returns true if the database has been selected or false if not
          */
-        function _select_db($dbname, &$conn_id)
+        function _selectDb($dbName, &$connId)
         {
-            if ( !$conn_id ) {
+            if ( !$connId ) {
                 return false ;
             }
 
-            if ( !$conn_id->select_db($dbname) ) {
+            if ( !$connId->select_db($dbName) ) {
                 return false ;
             }
 
@@ -433,11 +434,11 @@
          * @since 2.3
          * @access private
          * @param string $charset The charset to be set
-         * @param mysqli $conn_id Database link connector
+         * @param mysqli $connId Database link connector
          */
-        function _set_charset($charset, &$conn_id)
+        function _setCharset($charset, &$connId)
         {
-            $conn_id->set_charset($charset) ;
+            $connId->set_charset($charset) ;
         }
 
         /**
@@ -445,17 +446,17 @@
          * 
          * @since 2.3
          * @access private
-         * @param mysqli Database connection to be released 
+         * @param mysqli $connId Database connection to be released 
          * @return boolean It returns true if the database connection is released and false
          * if the database connection couldn't be closed
          */
-        function _release_db(&$conn_id)
+        function _releaseDb(&$connId)
         {
-            if( !$conn_id ) {
+            if( !$connId ) {
                 return true ;
             }
 
-            if( !$conn_id->close() ) {
+            if( !$connId->close() ) {
                 return false; 
             }
 
@@ -465,14 +466,14 @@
         /**
          * It returns database link connection
          * 
-         * @param type $conn_id Database connector link
+         * @param type $connId Database connector link
          * @return mysqli|boolean mysqli link connector if it's correct, or false if the dabase connection
          * hasn't been done.
          */
-        function _get_db(&$conn_id)
+        function _getDb(&$connId)
         {
-            if( $conn_id != false ) {
-                return $conn_id ;
+            if( $connId != false ) {
+                return $connId ;
             }
 
             return false ;
