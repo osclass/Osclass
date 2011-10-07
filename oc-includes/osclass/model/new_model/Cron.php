@@ -44,9 +44,9 @@
          */
         function __construct()
         {
-            parent::__construct();
-            $this->set_table_name('t_cron') ;
-            $this->set_fields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
+            parent::__construct() ;
+            $this->setTableName('t_cron') ;
+            $this->setFields( array('e_type', 'd_last_exec', 'd_next_exec') ) ;
         }
 
         /**
@@ -57,15 +57,15 @@
         function getCronByType($type)
         {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('e_type', $type) ;
             $result = $this->dao->get() ;
 
-            if( $result->num_rows == 0 ) {
+            if( $result->numRows == 0 ) {
                 return false ;
-            } else {
-                return $result->row();
             }
+
+            return $result->row() ;
         }
 
     }

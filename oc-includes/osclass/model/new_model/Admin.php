@@ -45,55 +45,61 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_admin') ;
+            $this->setTableName('t_admin') ;
         }
 
         /**
          * Searches for admin information, given an email address.
          * If email not exist return false.
-         *  
+         * 
+         * @access public
+         * @since unknown
          * @param string $email
-         * @return array  
+         * @return array
          */
         function findByEmail($email) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_email', $email) ;
             $result = $this->dao->get() ;
 
-            if( $result->num_rows == 0 ) {
-                return false;
-            } else {
-                return $result->row();
+            if( $result->numRows == 0 ) {
+                return false ;
             }
+
+            return $result->row() ;
         }
         
         /**
          * Searches for admin information, given a username.
          * If admin not exist return false.
          * 
+         * @access public
+         * @since unknown
          * @param string $username
          * @return array
          */
         function findByUsername($username) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_username', $username) ;
             $result = $this->dao->get() ;
             
-            if( $result->num_rows == 0 ) {
-                return false;
-            } else {    
-               return $result->row();
+            if( $result->numRows == 0 ) {
+                return false ;
             }
+
+            return $result->row() ;
         }
         
         /**
          * Searches for admin information, given a username and password
          * If credential don't match return false.
          * 
+         * @access public
+         * @since unknown
          * @param string $userName
          * @param string $password
          * @return array 
@@ -101,23 +107,25 @@
         function findByCredentials($userName, $password) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
-            $conditions = array( 's_username'    => $userName,
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array( 's_username' => $userName,
                                  's_password' => sha1($password) );
             $this->dao->where($conditions);
             $result = $this->dao->get();
-            
-            if( $result->num_rows == 0 ) {
-                return false;
-            } else {    
-                return $result->row();
+
+            if( $result->numRows == 0 ) {
+                return false ;
             }
+
+            return $result->row() ;
         }
         
         /**
          * Searches for admin information, given a admin id and secret.
          * If credential don't match return false.
          * 
+         * @access public
+         * @since unknown
          * @param integer $id
          * @param string $secret
          * @return array
@@ -125,17 +133,17 @@
         function findByIdSecret($id, $secret) 
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array( 'pk_i_id'  => $id,
                                  's_secret' => $secret);
             $this->dao->where($conditions);
             $result = $this->dao->get();
-            
-            if( $result->num_rows == 0 ) {
-                return false;
-            } else {    
-                return $result->row();
+
+            if( $result->numRows == 0 ) {
+                return false ;
             }
+
+            return $result->row() ;
         }
     }
 

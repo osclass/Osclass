@@ -20,26 +20,17 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-     /**
-      * 
-      */
-    class LogDatabase
+    /**
+     * Log DAO
+     */
+    class Log extends DAO
     {
         /**
          *
          * @var type 
          */
-        private static $instance;
-        /**
-         *
-         * @var type 
-         */
-        var $messages ;
+        private static $instance ;
 
-        /**
-         *
-         * @return type 
-         */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
@@ -51,46 +42,47 @@
         /**
          * 
          */
-        public function _construct()
+        function __construct()
         {
-            $this->messages = array() ;
+            parent::__construct();
+            $this->set_table_name('t_log') ;
+            $array_fields = array(
+                'dt_date',
+                's_section',
+                's_action',
+                'fk_i_id',
+                's_data',
+                's_ip',
+                's_who',
+                'fk_i_who_id'
+            );
+            $this->set_fields($array_fields) ;
         }
-
+        
         /**
+         * Insert a log row.
          *
-         * @param type $sql
-         * @param type $time
-         * @param type $errorLevel
-         * @param type $errorDescription 
+         * @param string $section
+         * @param string $action
+         * @param integer $id
+         * @param string $data
+         * @param string $who
+         * @param integer $who_id
+         * @return boolean 
          */
-        public function addMessage($sql, $time, $errorLevel, $errorDescription)
+        public function insertLog($section, $action, $id, $data, $who, $who_id) 
         {
-            $this->messages[] = array(
-                'query'      => $sql,
-                'query_time' => $time,
-                'errno'      => $errorLevel,
-                'error'      => $errorDescription
-            ) ;
-        }
-
-        /**
-         * 
-         */
-        public function printMessages()
-        {
-            print_r($this->messages) ;
-        }
-
-        public function totalTime()
-        {
-            $time = 0 ;
-            foreach($this->messages as $m) {
-                $time = $time + $m['query_time'] ;
-            }
-
-            return $time ;
+            $array_set = array(
+                'dt_date'       => date('Y-m-d H:i:s'),
+                's_section'     => $section, 
+                's_action'      => $action, 
+                'fk_i_id'       => $id,
+                's_data'        => $data, 
+                's_ip'          => $_SERVER['REMOTE_ADDR'],
+                's_who'         => $who, 
+                'fk_i_who_id'   => $who_id 
+            );
+            return $this->dao->insert($this->table_name, $array_set);
         }
     }
-
-    /* file end: ./oc-includes/osclass/classes/Logger/LogDatabase.php */
 ?>
