@@ -129,7 +129,8 @@
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
-            $result = $this->dao->where('s_email', $email) ;
+            $this->dao->where('s_email', $email) ;
+            $result = $this->dao->get() ;
             
             if( $result == false ) {
                 return false;

@@ -55,7 +55,7 @@
                 'b_active',
                 'e_type'
             );
-            $this->setFields();
+            $this->setFields($array_fields);
         }
 
         /**
