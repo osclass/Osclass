@@ -45,8 +45,8 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_user') ;
-            $this->set_primary_key('pk_i_id') ;
+            $this->setTableName('t_user') ;
+            $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
                 'dt_reg_date',
                 'dt_mod_date',
@@ -81,7 +81,7 @@
                 'i_items',
                 'i_comments'
             );
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         /**
@@ -94,8 +94,8 @@
         public function findByPrimaryKey($id, $locale = null)
         {   
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where($this->primary_key, $id) ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($this->getPrimaryKey(), $id) ;
             $result = $this->dao->get();
             $row = $result->row() ;
 
@@ -128,12 +128,12 @@
         public function findByEmail($email)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $result = $this->dao->where('s_email', $email) ;
             
             if( $result == false ) {
                 return false;
-            } else if($result->num_rows == 1){
+            } else if($result->numRows() == 1){
                 return $result->row() ;
             } else {
                 return array();
@@ -150,7 +150,7 @@
         public function findByCredentials($key, $password)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array(
                 's_email'   => $key,
                 's_password'=> sha1($password)
@@ -160,7 +160,7 @@
             
             if( $result == false ) {
                 return false;
-            } else if($result->num_rows == 1){
+            } else if($result->numRows() == 1){
                 return $result->row() ;
             } else {
                 return array();
@@ -176,7 +176,7 @@
         public function findByIdSecret($id, $secret)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array(
                 'pk_i_id'  => $id,
                 's_secret' => $secret
@@ -186,7 +186,7 @@
             
             if( $result == false ) {
                 return false;
-            } else if($result->num_rows == 1){
+            } else if($result->numRows() == 1){
                 return $result->row() ;
             } else {
                 return array();
@@ -205,7 +205,7 @@
             if($secret=='') { return null; }
             $date = date("Y-m-d H:i:s", (time()-(24*3600)));
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array(
                 'pk_i_id'       => $id,
                 's_pass_code'   => $secret
@@ -216,7 +216,7 @@
             
            if( $result == false ) {
                 return false;
-            } else if($result->num_rows == 1){
+            } else if($result->numRows() == 1){
                 return $result->row() ;
             } else {
                 return array();
@@ -248,7 +248,7 @@
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id', $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id', $id)) ;
-                $this->dao->delete($this->table_name, array('pk_i_id' => $id)) ;
+                $this->dao->delete($this->getTableName(), array('pk_i_id' => $id)) ;
                 return true;
             }
             return false;
@@ -316,7 +316,7 @@
             
             $result = $this->dao->get() ;
             
-            if( $result == false || $result->num_rows == 0) {
+            if( $result == false || $result->numRows() == 0) {
                 return false;
             } else {
                 return true;
