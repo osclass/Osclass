@@ -46,8 +46,16 @@
         {
             parent::__construct();
             $this->setTableName('t_alerts') ;
-//            $this->set_primary_key('') ; // no primary key in preference table 
-//            $this->set_fields( array('s_section', 's_name', 's_value', 'e_type') ) ;
+//            $this->setPrimaryKey('') ; // no primary key in preference table 
+            $array_fields = array(
+                's_email',
+                'fk_i_user_id',
+                's_search',
+                's_secret',
+                'b_active',
+                'e_type'
+            );
+            $this->setFields();
         }
 
         /**
