@@ -26,7 +26,8 @@
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
     require_once '../osclass/classes/data/DAO.php' ;
 
-    require_once '../osclass/model/new_model/Preference.php' ;
+    require_once '../osclass/model/new_model/User.php' ;
+    require_once '../osclass/helpers/hSecurity.php' ;
 
     /**
      * Run: $> phpunit UserTest.php
@@ -41,10 +42,69 @@
             $this->model = new User() ;
         }
 
-        public function testFindByValue()
+        public function testInsert()
+        {// minimal information
+            $array_set = array(
+                's_name'        => 'user name',
+                's_password'    => 'password',
+                's_secret'      => osc_genRandomPassword(),
+                'dt_reg_date'   => date('Y-m-d H:i:s'),
+                's_email'       => 'test@email.com'
+            );
+            $res = $this->model->dao->insert($this->model->get_table_name(), $array_set ) ;
+            $this->assertTrue($res, $this->model->dao->last_query()) ;
+            
+            $array_set['s_email']       = 'test@email.com' ;
+            $array_set['b_active']      = '1' ;
+            $array_set['s_password']    = 'password2';
+            $res = $this->model->dao->insert($this->model->get_table_name(), $array_set ) ;
+            $this->assertTrue($res, $this->model->dao->error_level) ;
+        }
+        
+        public function testFindByPrimaryKey()
+        {   // findByPrimaryKey($id, $locale = null)
+            
+            
+        }
+
+        public function testFindByEmail()
         {
-            $purge_latest_searches = $this->preference->findValueByName('purge_latest_searches') ;
-            $this->assertEquals(1000, $purge_latest_searches, $this->preference->dao->last_query() ) ;
+            $email = 'test@email.com';
+            $result = $this->model->findByEmail($email);
+            
+            print_r($result);
+            
+            $this->assertEquals('1', count($result), $this->model->dao->error_level);
+            $this->assertNotNull($result, $this->model->dao->error_level);
+            
+            foreach($this->model->get_fields() as $field){
+                $this->assertArrayHasKey($field, $result);
+            }
+        }
+        
+        public function testFindByCredentials()
+        {
+            
+        }
+        
+        public function testFindByIdSecret()
+        {
+            
+        }
+        
+        public function testFindByIdPasswordSecret()
+        {
+            
+        }
+        
+        public function testUpdateDescription()
+        {
+            
+        }
+        
+        public function testDeleteUser()
+        {
+            
         }
     }
     

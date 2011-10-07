@@ -308,7 +308,7 @@
          * @param array $conditions
          * @return boolean
          */
-        public function existDescription($conditions)
+        private function existDescription($conditions)
         {
             $this->dao->select() ;
             $this->dao->from(DB_TABLE_PREFIX.'t_user_description') ;
