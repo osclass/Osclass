@@ -18,33 +18,49 @@
      */
 
     /**
+     * DAO base model
      * 
+     * @package OSClass
+     * @subpackage Model
+     * @since 2.3
      */
 	class DAO
     {
         /**
-         *
-         * @var type 
+         * DBCommandClass object
+         * 
+         * @acces public
+         * @since 2.3
+         * @var DBCommandClass 
          */
         var $dao ;
         /**
+         * Table name
          * 
-         * @var type 
+         * @access private
+         * @since unknown
+         * @var string 
          */
         var $tableName ;
         /**
+         * Primary key of the table
          *
-         * @var type 
+         * @access private
+         * @since 2.3
+         * @var string 
          */
         var $primaryKey ;
         /**
-         *
-         * @var type 
+         * Fields of the table
+         * 
+         * @access private
+         * @since 2.3
+         * @var array 
          */
         var $fields ;
 
         /**
-         * 
+         * Init connection of the database and create DBCommandClass object
          */
         function __construct()
         {
@@ -53,15 +69,18 @@
         }
 
         /**
-         *
-         * @param type $value
-         * @return type 
+         * Get the result match of the primary key passed by paramete
+         * 
+         * @access public
+         * @since unknown
+         * @param string $key
+         * @return boolean|array 
          */
-        function findByPrimaryKey($value)
+        function findByPrimaryKey($key)
         {
             $this->dao->select($this->fields) ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->primaryKey, $value) ;
+            $this->dao->where($this->getPrimaryKey(), $key) ;
             $result = $this->dao->get() ;
 
             if( $result === false ) {
@@ -76,8 +95,46 @@
         }
 
         /**
-         *
-         * @param type $table 
+         * Delete the result match from the primary key passed by parameter
+         * 
+         * @access public
+         * @since unknown
+         * @param string $value
+         * @return boolean 
+         */
+        function deleteByPrimaryKey($key)
+        {
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($this->getPrimaryKey(), $key) ;
+            return $this->dao->delete() ;
+        }
+
+        /**
+         * Get all the rows from the table $tableName
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
+        function listAll()
+        {
+            $this->dao->select($this->getFields()) ;
+            $this->dao->from($this->getTableName()) ;
+            $result = $this->dao->get() ;
+
+            if($result == false) {
+                return array() ;
+            }
+
+            return $result ;
+        }
+
+        /**
+         * Set table name, adding the DB_TABLE_PREFIX at the beginning
+         * 
+         * @access private
+         * @since unknown
+         * @param string $table 
          */
         function setTableName($table)
         {
@@ -85,8 +142,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get table name
+         * 
+         * @access public
+         * @since unknown
+         * @return string 
          */
         function getTableName()
         {
@@ -94,8 +154,11 @@
         }
 
         /**
-         *
-         * @param type $key 
+         * Set primary key string
+         * 
+         * @access private
+         * @since unknown
+         * @param string $key 
          */
         function setPrimaryKey($key)
         {
@@ -103,8 +166,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get primary key string
+         * 
+         * @access public
+         * @since unknown
+         * @return string 
          */
         function getPrimaryKey()
         {
@@ -112,8 +178,11 @@
         }
 
         /**
-         *
-         * @param type $fields 
+         * Set fields array
+         * 
+         * @access private
+         * @since 2.3
+         * @param array $fields 
          */
         function setFields($fields)
         {
@@ -121,7 +190,11 @@
         }
 
         /**
+         * Get fields array
          * 
+         * @access public
+         * @since 2.3
+         * @return array 
          */
         function getFields()
         {
