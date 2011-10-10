@@ -390,34 +390,131 @@
         // TODO
         public function deleteByPrimaryKey($id)
         {
-//            osc_run_hook('delete_item', $id);
-//            $item = $this->findByPrimaryKey($id);
-//            if($item['b_active']==1) {
-//                CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
-//            }
-//            
-//            $this->conn->osc_dbExec('DELETE FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-//            $this->conn->osc_dbExec('DELETE FROM %st_item_comment WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-//            $this->conn->osc_dbExec('DELETE FROM %st_item_resource WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-//            $this->conn->osc_dbExec('DELETE FROM %st_item_location WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-//            $this->conn->osc_dbExec('DELETE FROM %st_item_stats WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-//            $this->conn->osc_dbExec('DELETE FROM %st_item_meta WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $id);
-//            return $this->conn->osc_dbExec('DELETE FROM %st_item WHERE pk_i_id = %d', DB_TABLE_PREFIX, $id);
+            osc_run_hook('delete_item', $id);
+            $item = $this->findByPrimaryKey($id);
+            if ($item ) {
+                if($item['b_active']==1) {
+                    CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
+                }
+                $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', "fk_i_item_id = $id") ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_item_comment' , "fk_i_item_id = $id") ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_item_resource', "fk_i_item_id = $id") ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
+                return parent::deleteByPrimaryKey($id) ;
+            } else {
+                return false;
+            }
         }
         
         public function extendDataSingle($item)
         {
+            $prefLocale = osc_current_user_locale();
+
+            $this->dao->select() ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
+            $this->dao->where('fk_i_item_id', $id) ;
+            $result = $this->dao->get() ;
+            $descriptions = $result->result() ;
             
+            $item['locale'] = array();
+            foreach ($descriptions as $desc) {
+                if ($desc['s_title'] != "" || $desc['s_description'] != "") {
+                    $item['locale'][$desc['fk_c_locale_code']] = $desc;
+                }
+            }
+            $is_itemLanguageAvailable = (!empty($item['locale'][$prefLocale]['s_title'])
+                                         && !empty($item['locale'][$prefLocale]['s_description']));
+            if (isset($item['locale'][$prefLocale]) && $is_itemLanguageAvailable) {
+                $item['s_title'] = $item['locale'][$prefLocale]['s_title'];
+                $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
+            } else {
+                $aCategory = Category::newInstance()->findByPrimaryKey($item['fk_i_category_id']);
+
+                $title = sprintf(__('%s in'), $aCategory['s_name']);
+                if(isset($item['s_city'])) {
+                    $title .= ' ' . $item['s_city'];
+                } else if(isset($item['s_region'])) {
+                    $title .= ' ' .$item['s_region'];
+                } else if(isset($item['s_country'])) {
+                    $title .= ' ' . $item['s_country'];
+                }
+                $item['s_title'] = $title;
+                $item['s_description'] = __('There\'s no description available in your language');
+                unset($data);
+            }
+            return $item;
         }
         
         public function extendCategoryName($items)
         {
-            
+            if(defined('OC_ADMIN')) {
+                $prefLocale = osc_current_admin_locale();
+            } else {
+                $prefLocale = osc_current_user_locale();
+            }
+
+            $results = array();
+            foreach ($items as $item) {
+                $this->dao->select('fk_c_locale_code, s_name as s_category_name') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_category_description') ;
+                $this->dao->where('fk_i_category_id', $item['fk_i_category_id']) ;
+                $result = $this->dao->get() ;
+                $descriptions = $result->result() ;
+                
+                foreach ($descriptions as $desc) {
+                    $item['locale'][$desc['fk_c_locale_code']]['s_category_name'] = $desc['s_category_name'];
+                }
+                if (isset($item['locale'][$prefLocale]['s_category_name'])) {
+                    $item['s_category_name'] = $item['locale'][$prefLocale]['s_category_name'];
+                } else {
+                    $data = current($item['locale']);
+                    $item['s_category_name'] = $data['s_category_name'];
+                    unset($data);
+                }
+                $results[] = $item;
+            }
+            return $results;
         }
         
         public function extendData($items)
         {
-            
+            if(defined('OC_ADMIN')) {
+                $prefLocale = osc_current_admin_locale();
+            } else {
+                $prefLocale = osc_current_user_locale();
+            }
+
+            $results = array();
+            foreach ($items as $item) {
+                $this->dao->select() ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
+                $this->dao->where('fk_i_item_id', $item['pk_i_id']) ;
+                
+                $result = $this->dao->get() ;
+                $descriptions = $result->result() ;
+                
+                $item['locale'] = array();
+                foreach ($descriptions as $desc) {
+                    if ($desc['s_title'] != "" || $desc['s_description'] != "") {
+                        $item['locale'][$desc['fk_c_locale_code']] = $desc;
+                    }
+                }
+                if (isset($item['locale'][$prefLocale])) {
+                    $item['s_title'] = $item['locale'][$prefLocale]['s_title'];
+                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
+                    $item['s_what'] = $item['locale'][$prefLocale]['s_what'];
+                } else {
+                    $data = current($item['locale']);
+                    $item['s_title'] = $data['s_title'];
+                    $item['s_description'] = $data['s_description'];
+                    $item['s_what'] = $data['s_what'];
+                    unset($data);
+                }
+                $results[] = $item;
+            }
+            return $results;
         }
         
     }
