@@ -657,7 +657,14 @@
         {
             return 'REPLACE INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')';
         }
-        
+
+        /**
+         *
+         * @param type $table
+         * @param type $set
+         * @param type $where
+         * @return type 
+         */
         function update($table = '', $set = null, $where = null)
         {
             if( !is_null($set) ) {
@@ -689,11 +696,7 @@
                 return false ;
             }
 
-            if( $this->affectedRows() == 0 ) {
-                return false ;
-            }
-
-            return true ;
+            return $this->affectedRows() ;
         }
 
         /**
@@ -715,6 +718,12 @@
             return $sql ;
         }
 
+        /**
+         *
+         * @param type $table
+         * @param type $where
+         * @return type 
+         */
         function delete($table = '', $where = '')
         {
             if( $table == '') {
@@ -742,11 +751,7 @@
                 return false ;
             }
 
-            if( $this->affectedRows() == 0 ) {
-                return false ;
-            }
-
-            return true ;
+            return $this->affectedRows() ;
         }
 
         function _delete($table, $where, $like)

@@ -18,50 +18,78 @@
      */
 
     /**
+     * DAO base model
      * 
+     * @package OSClass
+     * @subpackage Model
+     * @since 2.3
      */
 	class DAO
     {
         /**
-         *
-         * @var type 
+         * DBCommandClass object
+         * 
+         * @acces public
+         * @since 2.3
+         * @var DBCommandClass 
          */
         var $dao ;
         /**
+         * Table name
          * 
-         * @var type 
+         * @access private
+         * @since unknown
+         * @var string 
          */
         var $tableName ;
         /**
+         * Table prefix
+         * 
+         * @access private
+         * @since unknown
+         * @var string 
+         */
+        var $tablePrefix ;
+        /**
+         * Primary key of the table
          *
-         * @var type 
+         * @access private
+         * @since 2.3
+         * @var string 
          */
         var $primaryKey ;
         /**
-         *
-         * @var type 
+         * Fields of the table
+         * 
+         * @access private
+         * @since 2.3
+         * @var array 
          */
         var $fields ;
 
         /**
-         * 
+         * Init connection of the database and create DBCommandClass object
          */
         function __construct()
         {
-            $conn = DBConnectionClass::newInstance() ;
-            $this->dao = new DBCommandClass($conn->getOsclassDb()) ;
+            $conn              = DBConnectionClass::newInstance() ;
+            $this->dao         = new DBCommandClass($conn->getOsclassDb()) ;
+            $this->tablePrefix = DB_TABLE_PREFIX ;
         }
 
         /**
-         *
-         * @param type $value
-         * @return type 
+         * Get the result match of the primary key passed by paramete
+         * 
+         * @access public
+         * @since unknown
+         * @param string $key
+         * @return boolean|array 
          */
-        function findByPrimaryKey($value)
+        function findByPrimaryKey($key)
         {
             $this->dao->select($this->fields) ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->primaryKey, $value) ;
+            $this->dao->where($this->getPrimaryKey(), $key) ;
             $result = $this->dao->get() ;
 
             if( $result === false ) {
@@ -76,17 +104,136 @@
         }
 
         /**
-         *
-         * @param type $table 
+         * Update row by primary key
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values Array with keys (database field) and values
+         * @param string $key Primary key to be updated
+         * @return boolean|int It return the number of affected rows if the update has been 
+         * correct or false if nothing has been modified
          */
-        function setTableName($table)
+        function updateByPrimaryKey($values, $key)
         {
-            $this->tableName = DB_TABLE_PREFIX . $table ;
+            $cond = array(
+                $this->getPrimaryKey() => $key
+            ) ;
+
+            return $this->update($values, $cond) ;
         }
 
         /**
-         *
-         * @return type 
+         * Delete the result match from the primary key passed by parameter
+         * 
+         * @access public
+         * @since unknown
+         * @param string $value
+         * @return boolean 
+         */
+        function deleteByPrimaryKey($key)
+        {
+            $cond = array(
+                $this->getPrimaryKey() => $key
+            ) ;
+
+            return $this->delete($cond) ;
+        }
+
+        /**
+         * Get all the rows from the table $tableName
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
+        function listAll()
+        {
+            $this->dao->select($this->getFields()) ;
+            $this->dao->from($this->getTableName()) ;
+            $result = $this->dao->get() ;
+
+            if($result == false) {
+                return array() ;
+            }
+
+            return $result ;
+        }
+
+        /**
+         * Basic update. It returns false if the keys from $values or $where doesn't
+         * match with the fields defined in the construct
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values Array with keys (database field) and values
+         * @param array $where
+         * @return boolean|int It return the number of affected rows if the update has been 
+         * correct or false if nothing has been modified
+         */
+        function update($values, $where)
+        {
+            // check if keys from $values array exists
+            foreach(array_keys($values) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            // check if keys from $where array exists
+            foreach(array_keys($where) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->set($values) ;
+            $this->dao->where($where) ;
+            return $this->dao->update() ;
+        }
+
+        /**
+         * Basic delete. It returns false if the keys from $where doesn't
+         * match with the fields defined in the construct
+         * 
+         * @access public
+         * @since unknown
+         * @param array $where
+         * @return boolean|int  It return the number of affected rows if the delete has been 
+         * correct or false if nothing has been modified
+         */
+        function delete($where)
+        {
+            // check if keys from $where array exists
+            foreach(array_keys($where) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($where) ;
+            return $this->dao->delete() ;
+        }
+
+        /**
+         * Set table name, adding the DB_TABLE_PREFIX at the beginning
+         * 
+         * @access private
+         * @since unknown
+         * @param string $table 
+         */
+        function setTableName($table)
+        {
+            $this->tableName = $this->tablePrefix . $table ;
+        }
+
+        /**
+         * Get table name
+         * 
+         * @access public
+         * @since unknown
+         * @return string 
          */
         function getTableName()
         {
@@ -94,8 +241,11 @@
         }
 
         /**
-         *
-         * @param type $key 
+         * Set primary key string
+         * 
+         * @access private
+         * @since unknown
+         * @param string $key 
          */
         function setPrimaryKey($key)
         {
@@ -103,8 +253,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get primary key string
+         * 
+         * @access public
+         * @since unknown
+         * @return string 
          */
         function getPrimaryKey()
         {
@@ -112,8 +265,11 @@
         }
 
         /**
-         *
-         * @param type $fields 
+         * Set fields array
+         * 
+         * @access private
+         * @since 2.3
+         * @param array $fields 
          */
         function setFields($fields)
         {
@@ -121,11 +277,51 @@
         }
 
         /**
+         * Get fields array
          * 
+         * @access public
+         * @since 2.3
+         * @return array 
          */
         function getFields()
         {
             return $this->fields ;
+        }
+
+        /**
+         * Get table prefix
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getTablePrefix()
+        {
+            return $this->tablePrefix ;
+        }
+
+        /**
+         * Returns the last error code for the most recent mysqli function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
+         */
+        function getErrorLevel()
+        {
+            return $this->dao->getErrorLevel() ;
+        }
+
+        /**
+         * Returns a string description of the last error for the most recent MySQLi function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getErrorDesc()
+        {
+            return $this->dao->getErrorDesc() ;
         }
 	}
 
