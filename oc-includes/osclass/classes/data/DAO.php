@@ -130,6 +130,36 @@
         }
 
         /**
+         * Basic update. We return false if the keys from $values or $where doesn't
+         * match with the fields defined in the construct
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values Array with keys (database field) and values
+         * @param array $where
+         * @return boolean It return true if the update has been correct or false if nothing has been modified
+         */
+        function update($values, $where)
+        {
+            // check if keys from $values array exists
+            foreach(array_keys($values) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            // check if keys from $where array exists
+            foreach(array_keys($where) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            return $this->dao->update($values, $where) ;
+        }
+
+        /**
          * Set table name, adding the DB_TABLE_PREFIX at the beginning
          * 
          * @access private
@@ -199,6 +229,30 @@
         function getFields()
         {
             return $this->fields ;
+        }
+
+        /**
+         * Returns the last error code for the most recent mysqli function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
+         */
+        function getErrorLevel()
+        {
+            return $this->dao->getErrorLevel() ;
+        }
+
+        /**
+         * Returns a string description of the last error for the most recent MySQLi function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getErrorDesc()
+        {
+            return $this->dao->getErrorDesc() ;
         }
 	}
 
