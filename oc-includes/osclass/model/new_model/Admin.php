@@ -21,13 +21,21 @@
      */
 
     /**
-     * Admin DAO
+     * Model database for Admin table
+     * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class Admin extends DAO
     {
         /**
-         *
-         * @var type 
+         * It references to self object: Admin.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var Admin 
          */
         private static $instance ;
 
@@ -40,12 +48,14 @@
         }
 
         /**
-         * 
+         * Set data from t_admin table
          */
         function __construct()
         {
             parent::__construct();
             $this->setTableName('t_admin') ;
+            $this->setPrimaryKey('pk_i_id') ;
+            $this->setFields( array('pk_i_id', 's_name', 's_username', 's_password', 's_email', 's_secret') ) ;
         }
 
         /**

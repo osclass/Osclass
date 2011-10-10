@@ -129,7 +129,8 @@
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
-            $result = $this->dao->where('s_email', $email) ;
+            $this->dao->where('s_email', $email) ;
+            $result = $this->dao->get() ;
             
             if( $result == false ) {
                 return false;
@@ -232,7 +233,7 @@
         public function deleteUser($id = null)
             {
             if($id!=null) {
-                osc_run_hook('delete_user', $id);
+//                osc_run_hook('delete_user', $id);
                 
                 $this->dao->select('pk_i_id, fk_i_category_id');
                 $this->dao->from(DB_TABLE_PREFIX."t_item") ;

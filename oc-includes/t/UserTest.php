@@ -19,6 +19,16 @@
 
     require_once 'config.php' ;
 
+    if( !defined('ABS_PATH') ) {
+        define( 'ABS_PATH', dirname(__FILE__) . '/../../' );
+    }
+    echo ABS_PATH."\n";
+    define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
+    define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
+    define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
+    define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
+    define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
+    
     require_once '../osclass/Logger/LogDatabase.php' ;
     require_once '../osclass/helpers/hDatabaseInfo.php' ;
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
@@ -28,14 +38,41 @@
 
     require_once '../osclass/model/new_model/User.php' ;
     require_once '../osclass/helpers/hSecurity.php' ;
+    require_once '../osclass/helpers/hLocale.php' ;
+    
+    require_once '../osclass/model/new_model/Preference.php';
+    require_once '../osclass/helpers/hPreference.php';
+    require_once '../osclass/helpers/hDatabaseInfo.php';
+    require_once '../osclass/helpers/hDefines.php';
+    require_once '../osclass/helpers/hLocale.php';
+    require_once '../osclass/helpers/hMessages.php';
+    require_once '../osclass/helpers/hUsers.php';
+    require_once '../osclass/helpers/hItems.php';
+    require_once '../osclass/helpers/hSearch.php';
+    require_once '../osclass/helpers/hUtils.php';
+    require_once '../osclass/helpers/hCategories.php';
+    require_once '../osclass/helpers/hTranslations.php';
+    require_once '../osclass/helpers/hSecurity.php';
+    require_once '../osclass/helpers/hSanitize.php';
+    require_once '../osclass/helpers/hValidate.php';
+    require_once '../osclass/helpers/hPage.php';
+    require_once '../osclass/helpers/hPagination.php';
+    require_once '../osclass/helpers/hPremium.php';
+    require_once '../osclass/helpers/hTheme.php';
+    require_once '../osclass/core/Params.php';
+    require_once '../osclass/core/Cookie.php';
+    require_once '../osclass/core/Session.php';
 
+    
     /**
      * Run: $> phpunit UserTest.php
      */
     class UserTest extends PHPUnit_Framework_TestCase
     {
         private $preference ;
-        
+        protected static $aInfo = array();
+
+
         public function __construct()
         {
             parent::__construct() ;
@@ -43,22 +80,33 @@
         }
 
         public function testInsert()
-        {// minimal information
+        {
+            $secret = osc_genRandomPassword() ;
+            $pass_secret = osc_genRandomPassword() ;
             $array_set = array(
                 's_name'        => 'user name',
                 's_password'    => 'password',
-                's_secret'      => osc_genRandomPassword(),
+                's_secret'      => $secret,
                 'dt_reg_date'   => date('Y-m-d H:i:s'),
-                's_email'       => 'test@email.com'
+                's_email'       => 'test@email.com',
+                's_pass_code'   => $pass_secret
             );
-            $res = $this->model->dao->insert($this->model->get_table_name(), $array_set ) ;
-            $this->assertTrue($res, $this->model->dao->last_query()) ;
+            self::$aInfo['test@email.com']['secret'] = $secret;
+            self::$aInfo['test@email.com']['pass_code'] = $pass_secret;
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set ) ;
+            self::$aInfo['test@email.com']['id']     = $this->model->dao->insertedId();
+            $this->assertTrue($res, $this->model->dao->lastQuery()) ;
             
-            $array_set['s_email']       = 'test@email.com' ;
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set ) ;
+            $this->assertFalse($res, $this->model->dao->errorLevel) ;
+            
+            $array_set['s_email']       = 'new@email.com' ;
             $array_set['b_active']      = '1' ;
-            $array_set['s_password']    = 'password2';
-            $res = $this->model->dao->insert($this->model->get_table_name(), $array_set ) ;
-            $this->assertTrue($res, $this->model->dao->error_level) ;
+            $array_set['s_password']    = 'password2' ;
+            
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set ) ;
+            self::$aInfo['new@email.com']['id']     = $this->model->dao->insertedId();
+            $this->assertTrue($res, $this->model->dao->lastQuery()) ;
         }
         
         public function testFindByPrimaryKey()
@@ -71,40 +119,71 @@
         {
             $email = 'test@email.com';
             $result = $this->model->findByEmail($email);
+            $this->assertNotEmpty($result, $this->model->dao->errorLevel);
             
-            print_r($result);
-            
-            $this->assertEquals('1', count($result), $this->model->dao->error_level);
-            $this->assertNotNull($result, $this->model->dao->error_level);
-            
-            foreach($this->model->get_fields() as $field){
+            foreach($this->model->getFields() as $field){
                 $this->assertArrayHasKey($field, $result);
             }
+            
+            $result = $this->model->findByEmail('foo@bar.com');
+            $this->assertEmpty($result, $this->model->dao->errorLevel);
         }
         
         public function testFindByCredentials()
         {
+            $key      = 'test@email.com';
+            $password = 'password';
+            $result = $this->model->findByCredentials($key, $password);
+            $this->assertNotEmpty($result, $this->model->dao->errorLevel);
             
+            $result = $this->model->findByCredentials($key, 'foobar');
+            $this->assertEmpty($result, $this->model->dao->errorLevel);
         }
         
         public function testFindByIdSecret()
         {
+            $id     = self::$aInfo['test@email.com']['id'];
+            $secret = self::$aInfo['test@email.com']['secret'];
+            $result = $this->model->findByIdSecret($id, $secret) ;
+            $this->assertNotEmpty($result, $this->model->dao->errorLevel);
             
+            $result = $this->model->findByIdSecret($id, 'foobar') ;
+            $this->assertEmpty($result, $this->model->dao->errorLevel);
         }
         
         public function testFindByIdPasswordSecret()
         {
+            $id     = self::$aInfo['test@email.com']['id'];
+            $secret = self::$aInfo['test@email.com']['pass_code'];
+            $result = $this->model->findByIdPasswordSecret($id, $secret) ;
+            $this->assertNotEmpty($result, $this->model->dao->errorLevel);
             
+            $result = $this->model->findByIdSecret($id, 'foobar') ;
+            $this->assertEmpty($result, $this->model->dao->errorLevel);
         }
         
         public function testUpdateDescription()
         {
+            $id     = self::$aInfo['test@email.com']['id'];
+            $res = $this->model->updateDescription($id, osc_current_user_locale(), 'User information');
+            $this->assertTrue($res, $this->model->dao->errorLevel);
             
+            $res = $this->model->updateDescription('foobar', osc_current_user_locale(), 'User information');
+            $this->assertFalse($res, $this->model->dao->errorLevel);
         }
         
+        /**
+         * @todo Implement Item model.
+         */
         public function testDeleteUser()
         {
+            $res = $this->model->deleteUser(self::$aInfo['test@email.com']['id']);
+            $this->assertTrue($res, $this->model->dao->errorLevel);
+            $res = $this->model->deleteUser(self::$aInfo['test@email.com']['id']);
+            $this->assertTrue($res, $this->model->dao->errorLevel);
             
+            $res = $this->model->deleteUser('foobar');
+            $this->assertFalse($res, $this->model->dao->errorLevel);
         }
     }
     
