@@ -43,6 +43,14 @@
          */
         var $tableName ;
         /**
+         * Table prefix
+         * 
+         * @access private
+         * @since unknown
+         * @var string 
+         */
+        var $tablePrefix ;
+        /**
          * Primary key of the table
          *
          * @access private
@@ -64,8 +72,9 @@
          */
         function __construct()
         {
-            $conn = DBConnectionClass::newInstance() ;
-            $this->dao = new DBCommandClass($conn->getOsclassDb()) ;
+            $conn              = DBConnectionClass::newInstance() ;
+            $this->dao         = new DBCommandClass($conn->getOsclassDb()) ;
+            $this->tablePrefix = DB_TABLE_PREFIX ;
         }
 
         /**
@@ -104,9 +113,11 @@
          */
         function deleteByPrimaryKey($key)
         {
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->getPrimaryKey(), $key) ;
-            return $this->dao->delete() ;
+            $cond = array(
+                $this->getPrimaryKey() => $key
+            ) ;
+
+            return $this->delete($cond) ;
         }
 
         /**
@@ -130,14 +141,15 @@
         }
 
         /**
-         * Basic update. We return false if the keys from $values or $where doesn't
+         * Basic update. It returns false if the keys from $values or $where doesn't
          * match with the fields defined in the construct
          * 
          * @access public
          * @since unknown
          * @param array $values Array with keys (database field) and values
          * @param array $where
-         * @return boolean It return true if the update has been correct or false if nothing has been modified
+         * @return boolean|int It return the number of affected rows if the update has been 
+         * correct or false if nothing has been modified
          */
         function update($values, $where)
         {
@@ -156,7 +168,33 @@
             }
 
             $this->dao->from($this->getTableName()) ;
-            return $this->dao->update($values, $where) ;
+            $this->dao->set($values) ;
+            $this->dao->where($where) ;
+            return $this->dao->update() ;
+        }
+
+        /**
+         * Basic delete. It returns false if the keys from $where doesn't
+         * match with the fields defined in the construct
+         * 
+         * @access public
+         * @since unknown
+         * @param array $where
+         * @return boolean|int  It return the number of affected rows if the delete has been 
+         * correct or false if nothing has been modified
+         */
+        function delete($where)
+        {
+            // check if keys from $where array exists
+            foreach(array_keys($where) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($where) ;
+            return $this->dao->delete() ;
         }
 
         /**
@@ -168,7 +206,7 @@
          */
         function setTableName($table)
         {
-            $this->tableName = DB_TABLE_PREFIX . $table ;
+            $this->tableName = $this->tablePrefix . $table ;
         }
 
         /**
@@ -229,6 +267,18 @@
         function getFields()
         {
             return $this->fields ;
+        }
+
+        /**
+         * Get table prefix
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getTablePrefix()
+        {
+            return $this->tablePrefix ;
         }
 
         /**
