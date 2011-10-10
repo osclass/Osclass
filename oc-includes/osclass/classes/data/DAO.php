@@ -160,6 +160,25 @@
         }
 
         /**
+         * Basic insert
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values
+         * @return boolean 
+         */
+        function insert($values)
+        {
+            if( !$this->checkFieldKeys(array_keys($values)) ) {
+                return false ;
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->set($values) ;
+            return $this->dao->insert() ;
+        }
+
+        /**
          * Basic update. It returns false if the keys from $values or $where doesn't
          * match with the fields defined in the construct
          * 
@@ -172,18 +191,12 @@
          */
         function update($values, $where)
         {
-            // check if keys from $values array exists
-            foreach(array_keys($values) as $key) {
-                if( !in_array($key, $this->getFields()) ) {
-                    return false ;
-                }
+            if( !$this->checkFieldKeys(array_keys($values)) ) {
+                return false ;
             }
 
-            // check if keys from $where array exists
-            foreach(array_keys($where) as $key) {
-                if( !in_array($key, $this->getFields()) ) {
-                    return false ;
-                }
+            if( !$this->checkFieldKeys(array_keys($where)) ) {
+                return false ;
             }
 
             $this->dao->from($this->getTableName()) ;
@@ -204,11 +217,8 @@
          */
         function delete($where)
         {
-            // check if keys from $where array exists
-            foreach(array_keys($where) as $key) {
-                if( !in_array($key, $this->getFields()) ) {
-                    return false ;
-                }
+            if( !$this->checkFieldKeys(array_keys($where)) ) {
+                return false ;
             }
 
             $this->dao->from($this->getTableName()) ;
@@ -286,6 +296,25 @@
         function getFields()
         {
             return $this->fields ;
+        }
+
+        /**
+         * Check if the keys of the array exist in the $fields array
+         * 
+         * @access private
+         * @since 2.3
+         * @param array $aKey
+         * @return boolean 
+         */
+        function checkFieldKeys($aKey)
+        {
+            foreach($aKey as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            return true ;
         }
 
         /**
