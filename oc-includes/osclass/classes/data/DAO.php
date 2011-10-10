@@ -43,6 +43,14 @@
          */
         var $tableName ;
         /**
+         * Table prefix
+         * 
+         * @access private
+         * @since unknown
+         * @var string 
+         */
+        var $tablePrefix ;
+        /**
          * Primary key of the table
          *
          * @access private
@@ -64,8 +72,9 @@
          */
         function __construct()
         {
-            $conn = DBConnectionClass::newInstance() ;
-            $this->dao = new DBCommandClass($conn->getOsclassDb()) ;
+            $conn              = DBConnectionClass::newInstance() ;
+            $this->dao         = new DBCommandClass($conn->getOsclassDb()) ;
+            $this->tablePrefix = DB_TABLE_PREFIX ;
         }
 
         /**
@@ -95,6 +104,25 @@
         }
 
         /**
+         * Update row by primary key
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values Array with keys (database field) and values
+         * @param string $key Primary key to be updated
+         * @return boolean|int It return the number of affected rows if the update has been 
+         * correct or false if nothing has been modified
+         */
+        function updateByPrimaryKey($values, $key)
+        {
+            $cond = array(
+                $this->getPrimaryKey() => $key
+            ) ;
+
+            return $this->update($values, $cond) ;
+        }
+
+        /**
          * Delete the result match from the primary key passed by parameter
          * 
          * @access public
@@ -104,9 +132,11 @@
          */
         function deleteByPrimaryKey($key)
         {
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->getPrimaryKey(), $key) ;
-            return $this->dao->delete() ;
+            $cond = array(
+                $this->getPrimaryKey() => $key
+            ) ;
+
+            return $this->delete($cond) ;
         }
 
         /**
@@ -130,6 +160,63 @@
         }
 
         /**
+         * Basic update. It returns false if the keys from $values or $where doesn't
+         * match with the fields defined in the construct
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values Array with keys (database field) and values
+         * @param array $where
+         * @return boolean|int It return the number of affected rows if the update has been 
+         * correct or false if nothing has been modified
+         */
+        function update($values, $where)
+        {
+            // check if keys from $values array exists
+            foreach(array_keys($values) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            // check if keys from $where array exists
+            foreach(array_keys($where) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->set($values) ;
+            $this->dao->where($where) ;
+            return $this->dao->update() ;
+        }
+
+        /**
+         * Basic delete. It returns false if the keys from $where doesn't
+         * match with the fields defined in the construct
+         * 
+         * @access public
+         * @since unknown
+         * @param array $where
+         * @return boolean|int  It return the number of affected rows if the delete has been 
+         * correct or false if nothing has been modified
+         */
+        function delete($where)
+        {
+            // check if keys from $where array exists
+            foreach(array_keys($where) as $key) {
+                if( !in_array($key, $this->getFields()) ) {
+                    return false ;
+                }
+            }
+
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where($where) ;
+            return $this->dao->delete() ;
+        }
+
+        /**
          * Set table name, adding the DB_TABLE_PREFIX at the beginning
          * 
          * @access private
@@ -138,7 +225,7 @@
          */
         function setTableName($table)
         {
-            $this->tableName = DB_TABLE_PREFIX . $table ;
+            $this->tableName = $this->tablePrefix . $table ;
         }
 
         /**
@@ -199,6 +286,42 @@
         function getFields()
         {
             return $this->fields ;
+        }
+
+        /**
+         * Get table prefix
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getTablePrefix()
+        {
+            return $this->tablePrefix ;
+        }
+
+        /**
+         * Returns the last error code for the most recent mysqli function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
+         */
+        function getErrorLevel()
+        {
+            return $this->dao->getErrorLevel() ;
+        }
+
+        /**
+         * Returns a string description of the last error for the most recent MySQLi function call
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
+         */
+        function getErrorDesc()
+        {
+            return $this->dao->getErrorDesc() ;
         }
 	}
 
