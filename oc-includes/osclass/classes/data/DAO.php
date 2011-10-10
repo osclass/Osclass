@@ -104,6 +104,25 @@
         }
 
         /**
+         * Update row by primary key
+         * 
+         * @access public
+         * @since unknown
+         * @param array $values Array with keys (database field) and values
+         * @param string $key Primary key to be updated
+         * @return boolean|int It return the number of affected rows if the update has been 
+         * correct or false if nothing has been modified
+         */
+        function updateByPrimaryKey($values, $key)
+        {
+            $cond = array(
+                $this->getPrimaryKey() => $key
+            ) ;
+
+            return $this->update($values, $cond) ;
+        }
+
+        /**
          * Delete the result match from the primary key passed by parameter
          * 
          * @access public
