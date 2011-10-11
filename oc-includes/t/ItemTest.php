@@ -94,7 +94,13 @@
                 'b_show_email'          => 0
             );
             $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
-//            $this->assertTrue($res, );
+            $this->assertTrue($res, $this->model->getErrorLevel());
+            
+            $array_set['s_secret'] = osc_genRandomPassword();
+            $array_set['i_price']  = '2200';
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
+            $this->assertTrue($res, $this->model->getErrorLevel());
+            
         }
     }
 ?>
