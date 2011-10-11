@@ -148,5 +148,311 @@
         }
         
         
+        /**
+         * Get all the pages with the parameters you choose.
+         *
+         * @param bool $indelible It's true if the page is indelible and false if not.
+         * @param string $locale It's
+         * @param int $start
+         * @param int $limit
+         * @return array Return all the pages that have been found with the criteria selected. If there's no pages, the
+         * result is an empty array.
+         */
+        public function listAll($indelible = null, $locale = null, $start = null, $limit = null)
+        {
+
+            $this->dao->select() ;
+            $this->dao->from($this->table_name) ;
+            if(!is_null($indelible)) {
+                $this->dao->where('b_indelible', $indelible?1:0);
+            }
+            $this->dao->orderBy('i_order', 'ASC');
+            if(!is_null($limit)) {
+                $this->dao->limit($limit, $start);
+            }
+            $result = $this->dao->get() ;
+            $aPages = $result->results();
+
+            $aPages = $this->conn->osc_dbFetchResults($sql);
+
+            if(count($aPages) == 0) {
+                return array();
+            }
+
+            $result = array();
+            foreach($aPages as $aPage) {
+                $data = $this->extendDescription($aPage, $locale);
+                if(count($data) > 0) {
+                    $result[] = $data;
+                }
+                unset($data);
+            }
+
+            return $result;
+        }
+
+        /**
+         * An array with data of some page, returns the title and description in every language available
+         *
+         * @param array $aPage
+         * @return array Page information, title and description in every language available
+         */
+        public function extendDescription($aPage, $locale = null)
+        {
+            $this->dao->select();
+            $this->dao->from(sprintf("%st_page_description", DB_ABLE_PREIX));
+            $sql = sprintf('SELECT * FROM %s ', $this->getDescriptionTableName());
+            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']);
+            if(!is_null($locale)) {
+                $this->dao->where('fk_c_locale_code', $locale);
+            }
+            $results = $this->dao->get();
+            $descriptions = $results->results();
+
+            if(count($descriptions) == 0) {
+                return array();
+            }
+
+            $aPage['locale'] = array();
+            foreach($descriptions as $desc) {
+                if( !empty($desc['s_title']) || !empty($desc['s_text']) ) {
+                    $aPage['locale'][$desc['fk_c_locale_code']] = $desc;
+                }
+            }
+
+            return $aPage;
+        }
+
+        /**
+         * Delete a page by id number.
+         *
+         * @param int $id Page id which is going to be deleted
+         * @return bool True on successful removal, false on failure
+         */
+        public function deleteByPrimaryKey($id)
+        {
+            $row = $this->findByPrimaryKey($id);
+            $order = $row['i_order'];
+            
+            $this->reOrderPages($order);
+
+            $result = $this->dao->delete(sprintf('%st_page_description', DB_TABLE_PREFIX), array('pk_i_id' => $id));
+            $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
+            if($result > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Delete a page by internal name.
+         *
+         * @param string $intName Page internal name which is going to be deleted
+         * @return bool True on successful removal, false on failure
+         */
+        public function deleteByInternalName($intName)
+        {
+            $row = $this->findByInternalName($intName);
+            $order = $row['i_order'];
+
+            if(!isset($row)) {
+                return false;
+            }
+
+            $this->reOrderPages($order);
+            
+            return $this->deleteByPrimaryKey($row['pk_i_id']);
+        }
+
+        /**
+         * Order pages from $order
+         *
+         * @param int $order
+         */
+        private function reOrderPages($order)
+        {
+            $aPages = $this->listAll(false);
+            foreach($aPages as $page){
+                if($page['i_order'] > $order){
+                    $new_order = $page['i_order']-1;
+                    $this->dao->update($this->tableName, array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
+                }
+            }
+        }
+
+        /**
+         * Insert a new page. You have to pass all the parameters
+         *
+         * @param array $aFields Fields to be inserted in pages table
+         * @param array $aFieldsDescription An array with the titles and descriptions in every language.
+         * @return boolean True if the insert has been done well and false if not.
+         */
+        public function insert($aFields, $aFieldsDescription = null)
+        {
+            $this->dao->select("MAX(i_order) as o");
+            $this->dao->from($this->tableName);
+            $results = $this->dao->get();
+            $lastPage = $results->row();
+
+            $order = $lastPage['o'];
+            if( is_null($order) ){
+                $order = -1;
+            }
+            
+            $this->dao->insert($this->tableName, array(
+                's_internal_name' => $aFields['s_internal_name']
+                ,'b_indelible' => $aFields['b_indelible']
+                ,'dt_pub_date' => date('Y-m-d H:i:s')
+                ,'dt_mod_date' => date('Y-m-d H:i:s')
+                ,'i_order' => ($order+1)
+            ));
+
+
+            $id = $this->dao->insertedId();
+
+            if($this->dao->affectedRows() == 0) {
+                return false;
+            }
+
+            foreach($aFieldsDescription as $k => $v) {
+                $affected_rows = $this->insertDescription($id, $k, $v['s_title'], $v['s_text']);
+                if(!$affected_rows) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /**
+         * Insert the content (title and description) of a page.
+         *
+         * @param int $id Id of the page, it would be the foreign key
+         * @param string $locale Locale code of the language
+         * @param string $title Text to be inserted in s_title
+         * @param string $text Text to be inserted in s_text
+         * @return bool True if the insert has been done well and false if not.
+         */
+        private function insertDescription($id, $locale, $title, $text)
+        {
+            $title = addslashes($title);
+            $text  = addslashes($text);
+
+            $this->dao->insert(sprintf("%st_page_description", DB_TABLE_PREFIX),array(
+                'fk_i_pages_id' => $id
+                ,'fk_c_locale_code' => $locale
+                ,'s_title' => $title
+                ,'s_text' => $text
+            ));
+
+            
+            if($this->dao->affectedRows() == 0) {
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
+         * Update the content (title and description) of a page
+         *
+         * @param int $id Id of the page id is going to be modified
+         * @param string $locale Locale code of the language
+         * @param string $title Text to be updated in s_title
+         * @param string $text Text to be updated in s_text
+         * @return int Number of affected rows.
+         */
+        public function updateDescription($id, $locale, $title, $text)
+        {
+            $conditions = array('fk_c_locale_code' => $locale, 'fk_i_pages_id' => $id);
+            $exist= $this->existDescription($conditions);
+
+            if(!$exist) {
+                $result = $this->insertDescription($id, $locale, $title, $text);
+                return $result;
+            }
+
+            return $this->dao->update(sprintf("%st_page_description", DB_TABLE_PREFIX),
+                    array(
+                        's_title' => $title
+                        ,'s_text' => $text
+                    ), array(
+                        'fk_c_locale_code' => $locale
+                        ,'fk_i_pages_id' => $id
+                    ));
+        }
+
+        /**
+         * Check if depending the conditions, the row exists in de DB.
+         *
+         * @param array $conditions
+         * @return bool Return true if exists and false if not.
+         */
+        public function existDescription($conditions) {
+            $this->dao->select("COUNT(*)");
+            $this->dao->from(sprintf("%st_page_description", DB_TABLE_PREFIX));
+            foreach($conditions as $key => $value) {
+                $this->dao->where($key, $this->formatValue($value));
+            }
+
+            $result = $this->dao->get();
+
+            return (bool) $result->row();
+        }
+
+        /**
+         * It change the internal name of a page. Here you don't check if in indelible or not the page.
+         *
+         * @param int $id The id of the page to be changed.
+         * @param string $intName The new internal name.
+         * @return int Number of affected rows.
+         */
+        public function updateInternalName($id, $intName)
+        {
+            $fields = array('s_internal_name' => $intName,
+                             'dt_mod_date'    => date('Y-m-d H:i:s'));
+            $where  = array('pk_i_id' => $id);
+
+            $result = $this->dao->update($this->tableName, $fields, $where);
+
+            return $result;
+        }
+
+        /**
+         * Check if a page id is indelible
+         *
+         * @param int $id Page id
+         * @return true if it's indelible, false in case not
+         */
+        function isIndelible($id)
+        {
+            $page = $this->findByPrimaryKey($id);
+            if($page['b_indelible'] == 1) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * Check if Internal Name exists with another id
+         *
+         * @param int $id page id
+         * @param string $internalName page internal name
+         * @return true if internal name exists, false if not
+         */
+        function internalNameExists($id, $internalName)
+        {
+            $this->dao->select();
+            $this->dao->from($this->tableName);
+            $this->dao->where('s_internal_name', $internalName);
+            $this->dao->where('pk_i_id <> '.$id);
+            $result = $this->dao->get();
+            if(count($result) > 0) {
+                return true;
+            }
+            return false;
+        }
+        
+        
     }
 ?>
