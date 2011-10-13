@@ -223,7 +223,8 @@
             );
             $this->dao->where($array_where) ;
             $this->dao->orderBy($this->getTableName().'.dt_pub_date', 'DESC') ;
-            $result = $this->dao->limit($limit) ;
+            $this->dao->limit($limit) ;
+            $result = $this->dao->get() ;
             return $result->result();
         }
 
@@ -234,11 +235,6 @@
             $this->dao->where('c.pk_i_id = i.fk_i_category_id AND cd.fk_i_category_id = i.fk_i_category_id') ;
             $result = $this->dao->get() ;
             return $result->result() ;
-        }
-
-        public function search($pattern)
-        {
-            return $this->listWhere("s_title LIKE '%%%s%%' OR s_description LIKE '%%%1\$s%%'", $pattern);
         }
         
         public function findByUserID($userId, $start = 0, $end = null)

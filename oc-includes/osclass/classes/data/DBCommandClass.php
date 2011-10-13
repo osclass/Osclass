@@ -222,7 +222,7 @@
         {
             if( !is_array($from) ) {
                 if( strpos($from, ',') !== false) {
-                    $from = explode(',', $val) ;
+                    $from = explode(',', $from) ;
                 } else {
                     $from = array($from) ;
                 }
@@ -298,9 +298,12 @@
                 if( !$this->_hasOperator($k) ) {
                     $k .= ' =' ;
                 }
+                
+                if(!is_null($v)) {
+                    $v = ' ' . $this->escape($v) ;
+                }
 
-                $v = ' ' . $this->escape($v) ;
-
+                $prefix . $k . $v ;
                 $this->aWhere[] = $prefix . $k . $v ;
             }
 
@@ -457,7 +460,7 @@
                     break;
                 }
 
-                $this->aLike[] = $like_statement ;
+                $this->aLike[] = $likeStatement ;
             }
 
             return $this ;

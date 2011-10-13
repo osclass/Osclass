@@ -22,7 +22,7 @@
     if( !defined('ABS_PATH') ) {
         define( 'ABS_PATH', dirname(__FILE__) . '/../../' );
     }
-    echo ABS_PATH."\n";
+    
     define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
     define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
     define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
@@ -40,6 +40,7 @@
     require_once '../osclass/model/new_model/User.php';
     require_once '../osclass/model/new_model/Category.php';
     require_once '../osclass/model/new_model/Preference.php';
+    require_once '../osclass/model/new_model/ItemLocation.php';
     
     require_once '../osclass/helpers/hSecurity.php' ;
     require_once '../osclass/helpers/hLocale.php' ;
@@ -90,89 +91,75 @@
         
         public function testInsert()
         {
+            include_once 'DataItemTest/user.php';
             //insert user for testing propouse
-            $secret = osc_genRandomPassword() ;
-            $pass_secret = osc_genRandomPassword() ;
-            $array_set_user = array(
-                's_name'        => 'user name',
-                's_password'    => 'password',
-                's_secret'      => $secret,
-                'dt_reg_date'   => date('Y-m-d H:i:s'),
-                's_email'       => 'test@email.com',
-                's_pass_code'   => $pass_secret
-            );
             $user = new User();
             $res = $user->insert($array_set_user);
-            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            $this->assertTrue($res, $user->dao->lastQuery());
             self::$aInfo['userID'] = $user->dao->insertedId();
-            echo self::$aInfo['userID']."\n";
             // -----------------------------------------------------------------
             $locale = Preference::newInstance()->findValueByName('language') ;
             // item 1 ----------------------------------------------------------
-            $array_set = array(
-                'fk_i_user_id'          => self::$aInfo['userID'],
-                'dt_pub_date'           => date('Y-m-d H:i:s'),
-                'fk_i_category_id'      => 1,
-                'i_price'               => '1000',
-                'fk_c_currency_code'    => 'USD',
-                's_contact_name'        => 'contact name 1',
-                's_contact_email'       => 'contact1@email.com',
-                's_secret'              => osc_genRandomPassword(),
-                'b_active'              => 0,
-                'b_enabled'             => 1,
-                'b_show_email'          => 0
-            );
-            
-            $title       = "Title ad 1";
-            $description = "Description ad 1 keywords car , foobar, osclass";
-            $what        = $title." ".$description ;
-            
-            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
+            include_once 'DataItemTest/item1.php';
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set1);
             $this->assertTrue($res, $this->model->dao->lastQuery());
             self::$aInfo['itemID1']['id'] = $this->model->dao->insertedId();
-            
-            $res = $this->model->insertLocale(self::$aInfo['itemID1']['id'], $locale, $title, $description, $what) ;
+            $res = $this->model->insertLocale(self::$aInfo['itemID1']['id'], $locale, $title1, $description1, $what1) ;
             $this->assertTrue($res, $this->model->dao->lastQuery());
+            // item 1 Location -------------------------------------------------
+            include_once 'DataItemTest/item1Location.php';
+            $res = ItemLocation::newInstance()->insert($array_location1) ;
+            $this->assertTrue($res, ItemLocation::newInstance()->dao->lastQuery());
             // item 2 ----------------------------------------------------------
-            $array_set['s_secret'] = osc_genRandomPassword();
-            $array_set['i_price']  = '2200';
-            
-            $title       = "Title ad 2";
-            $description = "Description ad 2 keywords moto , forums , osclass";
-            $what        = $title." ".$description ;
-            
-            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
-            $this->assertTrue($res, $this->model->getErrorLevel());
+            include_once 'DataItemTest/item2.php';
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set2);
+            $this->assertTrue($res, $this->model->dao->lastQuery());
             self::$aInfo['itemID2']['id'] = $this->model->dao->insertedId();
-            self::$aInfo['itemID2']['array'] = $array_set;
+            self::$aInfo['itemID2']['array'] = $array_set2;
             
-            $res = $this->model->insertLocale(self::$aInfo['itemID2']['id'], $locale, $title, $description, $what) ;
+            $res = $this->model->insertLocale(self::$aInfo['itemID2']['id'], $locale, $title2, $description2, $what2) ;
             $this->assertTrue($res, $this->model->dao->lastQuery());
-        
+            // item 2 Location -------------------------------------------------
+            include_once 'DataItemTest/item2Location.php';
+            $res = ItemLocation::newInstance()->insert($array_location2) ;
+            $this->assertTrue($res, ItemLocation::newInstance()->dao->lastQuery());
             // item 3 ----------------------------------------------------------
-            unset($array_set['fk_i_user_id']);
-            
-            $array_set['s_secret'] = osc_genRandomPassword();
-            $array_set['i_price']  = '200';
-            
-            $title       = "Title ad 3";
-            $description = "Description ad 3 keywords moto , forums , osclass";
-            $what        = $title." ".$description ;
-            
-            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
-            $this->assertTrue($res, $this->model->dao->lastQuery());
+            include_once 'DataItemTest/item3.php';
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set3);
             self::$aInfo['itemID3']['id'] = $this->model->dao->insertedId();
-            self::$aInfo['itemID3']['array'] = $array_set;
-            
-            $res = $this->model->insertLocale(self::$aInfo['itemID3']['id'], $locale, $title, $description, $what) ;
+            self::$aInfo['itemID3']['array'] = $array_set3;
             $this->assertTrue($res, $this->model->dao->lastQuery());
+            $res = $this->model->insertLocale(self::$aInfo['itemID3']['id'], $locale, $title3, $description3, $what3) ;
+            $this->assertTrue($res, $this->model->dao->lastQuery());
+            // item 3 Location -------------------------------------------------
+            include_once 'DataItemTest/item3Location.php';
+            $res = ItemLocation::newInstance()->insert($array_location3) ;
+            $this->assertTrue($res, ItemLocation::newInstance()->dao->lastQuery());
             
+        }
+        
+        public function testFindByCategoryID()
+        {
+            $result = $this->model->findByCategoryID(1);
+            $this->assertEquals(2, count($result), $this->model->dao->lastQuery()) ;
+            $result = $this->model->findByCategoryID(2);
+            $this->assertEquals(1, count($result), $this->model->dao->lastQuery()) ;
+            $result = $this->model->findByCategoryID(9999);
+            $this->assertEquals(0, count($result), $this->model->dao->lastQuery()) ;
+            $this->assertEmpty($result, $this->model->dao->lastQuery()) ;
+        }
+        
+        public function testSearch()
+        {
+           
         }
         
         public function testDeleteAll()
         {
-            User::newInstance()->deleteUser(self::$aInfo['userID']) ;
-            Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
+            $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
+            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
+            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
         }
         
     }
