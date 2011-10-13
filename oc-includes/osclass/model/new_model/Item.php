@@ -45,8 +45,8 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_item') ;
-            $this->set_primary_key('pk_i_id') ;
+            $this->setTableName('t_item') ;
+            $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
                 'fk_i_user_id',
                 'fk_i_category_id',
@@ -64,7 +64,7 @@
                 's_secret',
                 'b_show_email'
             );
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         public function mostViewed($limit = 10) 
@@ -208,7 +208,7 @@
                 's_description'     => $description,
                 's_what'            => $what
             );  
-            return $this->dao->insert($this->getTableName(), $array_set) ;
+            return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
 
         public function listLatestExtended($limit = 10)

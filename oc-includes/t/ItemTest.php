@@ -37,6 +37,7 @@
     require_once '../osclass/classes/data/DAO.php' ;
 
     require_once '../osclass/model/new_model/Item.php' ;
+    require_once '../osclass/model/new_model/User.php';
     require_once '../osclass/model/new_model/Preference.php';
     
     require_once '../osclass/helpers/hSecurity.php' ;
@@ -70,6 +71,7 @@
     class ItemTest extends PHPUnit_Framework_TestCase
     {
         private $model ;
+        protected static $aInfo = array();
 
 
         public function __construct()
@@ -78,14 +80,36 @@
             $this->model = new Item() ;
         }
         
+        /**
+         * insert / insertLo
+         */
         public function testInsert()
         {
+            //insert user for testing propouse
+            $secret = osc_genRandomPassword() ;
+            $pass_secret = osc_genRandomPassword() ;
+            $array_set_user = array(
+                's_name'        => 'user name',
+                's_password'    => 'password',
+                's_secret'      => $secret,
+                'dt_reg_date'   => date('Y-m-d H:i:s'),
+                's_email'       => 'test@email.com',
+                's_pass_code'   => $pass_secret
+            );
+            $user = new User();
+            $res = $user->insert($array_set_user);
+            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            self::$aInfo['userID'] = $user->dao->insertedId();
+            // ---------------------
+            echo self::$aInfo['userID']."\n";
+            $locale = Preference::newInstance()->findValueByName('language') ;
+            // item 1
             $array_set = array(
-                'fk_i_user_id'          => 1,
+                'fk_i_user_id'          => self::$aInfo['userID'],
                 'dt_pub_date'           => date('Y-m-d H:i:s'),
                 'fk_i_category_id'      => 1,
                 'i_price'               => '1000',
-                'fk_c_currency_code'    => 1,
+                'fk_c_currency_code'    => 'USD',
                 's_contact_name'        => 'contact name 1',
                 's_contact_email'       => 'contact1@email.com',
                 's_secret'              => osc_genRandomPassword(),
@@ -93,13 +117,49 @@
                 'b_enabled'             => 1,
                 'b_show_email'          => 0
             );
-            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
-            $this->assertTrue($res, $this->model->getErrorLevel());
             
+            $title       = "Title ad 1";
+            $description = "Description ad 1 keywords car , foobar, osclass";
+            $what        = $title." ".$description ;
+            
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
+            $this->assertTrue($res, $this->model->dao->lastQuery());
+            self::$aInfo['itemID1']['id'] = $this->model->dao->insertedId();
+            
+            $res = $this->model->insertLocale(self::$aInfo['itemID1']['id'], $locale, $title, $description, $what) ;
+            $this->assertTrue($res, $this->model->dao->lastQuery());
+            // item 2
             $array_set['s_secret'] = osc_genRandomPassword();
             $array_set['i_price']  = '2200';
+            
+            
+            $title = "Title ad 2";
+            $description = "Description ad 2 keywords moto , forums , osclass";
+            
             $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
             $this->assertTrue($res, $this->model->getErrorLevel());
+            self::$aInfo['itemID2']['id'] = $this->model->dao->insertedId();
+            self::$aInfo['itemID2']['array'] = $array_set;
+            
+            $res = $this->model->insertLocale(self::$aInfo['itemID2']['id'], $locale, $title, $description, $what) ;
+            $this->assertTrue($res, $this->model->dao->lastQuery());
+        
+            // item 3
+            unset($array_set['fk_i_user_id']);
+            
+            $array_set['s_secret'] = osc_genRandomPassword();
+            $array_set['i_price']  = '200';
+            
+            $title = "Title ad 3";
+            $description = "Description ad 3 keywords moto , forums , osclass";
+            
+            $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
+            $this->assertTrue($res, $this->model->dao->lastQuery());
+            self::$aInfo['itemID3']['id'] = $this->model->dao->insertedId();
+            self::$aInfo['itemID3']['array'] = $array_set;
+            
+            $res = $this->model->insertLocale(self::$aInfo['itemID3']['id'], $locale, $title, $description, $what) ;
+            $this->assertTrue($res, $this->model->dao->lastQuery());
             
         }
     }

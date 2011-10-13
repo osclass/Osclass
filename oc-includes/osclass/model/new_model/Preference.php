@@ -63,7 +63,7 @@
         function findValueByName($name)
         {
             $this->dao->select('s_value') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
 
