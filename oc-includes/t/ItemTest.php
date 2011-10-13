@@ -38,6 +38,7 @@
 
     require_once '../osclass/model/new_model/Item.php' ;
     require_once '../osclass/model/new_model/User.php';
+    require_once '../osclass/model/new_model/Category.php';
     require_once '../osclass/model/new_model/Preference.php';
     
     require_once '../osclass/helpers/hSecurity.php' ;
@@ -63,7 +64,8 @@
     require_once '../osclass/core/Params.php';
     require_once '../osclass/core/Cookie.php';
     require_once '../osclass/core/Session.php';
-
+    require_once '../osclass/core/Translation.php' ;
+    require_once '../osclass/Plugins.php' ;
     
     /**
      * Run: $> phpunit ItemTest.php
@@ -85,6 +87,7 @@
          * Add ONE user1;
          * Add TWO items like user1
          */
+        
         public function testInsert()
         {
             //insert user for testing propouse
@@ -103,9 +106,9 @@
             $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
             self::$aInfo['userID'] = $user->dao->insertedId();
             echo self::$aInfo['userID']."\n";
-            // ---------------------
+            // -----------------------------------------------------------------
             $locale = Preference::newInstance()->findValueByName('language') ;
-            // item 1
+            // item 1 ----------------------------------------------------------
             $array_set = array(
                 'fk_i_user_id'          => self::$aInfo['userID'],
                 'dt_pub_date'           => date('Y-m-d H:i:s'),
@@ -130,7 +133,7 @@
             
             $res = $this->model->insertLocale(self::$aInfo['itemID1']['id'], $locale, $title, $description, $what) ;
             $this->assertTrue($res, $this->model->dao->lastQuery());
-            // item 2
+            // item 2 ----------------------------------------------------------
             $array_set['s_secret'] = osc_genRandomPassword();
             $array_set['i_price']  = '2200';
             
@@ -146,7 +149,7 @@
             $res = $this->model->insertLocale(self::$aInfo['itemID2']['id'], $locale, $title, $description, $what) ;
             $this->assertTrue($res, $this->model->dao->lastQuery());
         
-            // item 3
+            // item 3 ----------------------------------------------------------
             unset($array_set['fk_i_user_id']);
             
             $array_set['s_secret'] = osc_genRandomPassword();
@@ -169,7 +172,7 @@
         public function testDeleteAll()
         {
             User::newInstance()->deleteUser(self::$aInfo['userID']) ;
-            
+            Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
         }
         
     }

@@ -48,6 +48,7 @@
             $this->setTableName('t_item') ;
             $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
+                'pk_i_id',
                 'fk_i_user_id',
                 'fk_i_category_id',
                 'dt_pub_date',
@@ -92,10 +93,10 @@
             $this->dao->where('i.pk_i_id', $id) ;
             $this->dao->groupBy('s.fk_i_item_id') ;
             $result = $this->dao->get() ;
-            $item   = $result->result() ; 
+            $item   = $result->row() ; 
 
-            if(count($item) == 0) {
-                return $this->extendDataSingle($item[0]);
+            if(!is_null($item) ) {
+                return $this->extendDataSingle($item);
             } else {
                 return array();
             }
@@ -392,7 +393,7 @@
         {
 //            osc_run_hook('delete_item', $id);
             $item = $this->findByPrimaryKey($id);
-            if ($item ) {
+            if (!is_null($item)) {
                 if($item['b_active']==1) {
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
@@ -402,7 +403,8 @@
                 $this->dao->delete(DB_TABLE_PREFIX.'t_item_location', "fk_i_item_id = $id") ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_item_stats'   , "fk_i_item_id = $id") ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_item_meta'    , "fk_i_item_id = $id") ;
-                return parent::deleteByPrimaryKey($id) ;
+                $res = parent::deleteByPrimaryKey($id) ;
+                return $res;
             } else {
                 return false;
             }
@@ -414,7 +416,7 @@
 
             $this->dao->select() ;
             $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
-            $this->dao->where('fk_i_item_id', $id) ;
+            $this->dao->where('fk_i_item_id', $item['pk_i_id']) ;
             $result = $this->dao->get() ;
             $descriptions = $result->result() ;
             

@@ -48,6 +48,7 @@
             $this->setTableName('t_user') ;
             $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
+                'pk_i_id',
                 'dt_reg_date',
                 'dt_mod_date',
                 's_name',
@@ -249,8 +250,7 @@
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id', $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id', $id)) ;
-                $this->dao->delete($this->getTableName(), array('pk_i_id' => $id)) ;
-                return true;
+                return $this->dao->delete($this->getTableName(), array('pk_i_id' => $id)) ;
             }
             return false;
         }
