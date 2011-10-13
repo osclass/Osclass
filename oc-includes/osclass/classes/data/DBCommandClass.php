@@ -254,7 +254,7 @@
                 }
             }
 
-            $join = $type . 'JOIN' . $table . ' ON ' . $cond ;
+            $join = $type . ' JOIN ' . $table . ' ON ' . $cond ;
             $this->aJoin[] = $join ;
 
             return $this ;
@@ -793,6 +793,7 @@
 
             $result = $this->query($sql) ;
             $this->_resetSelect() ;
+            
             return $result ;
         }
 
@@ -833,7 +834,7 @@
             $rs->connId   = $this->connId ;
             $rs->resultId = $this->resultId ;
             $rs->numRows  = $rs->numRows() ;
-
+            
             return $rs ;
         }
 

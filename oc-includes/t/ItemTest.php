@@ -81,7 +81,9 @@
         }
         
         /**
-         * insert / insertLo
+         * insert Item / insert Item Locations
+         * Add ONE user1;
+         * Add TWO items like user1
          */
         public function testInsert()
         {
@@ -100,8 +102,8 @@
             $res = $user->insert($array_set_user);
             $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
             self::$aInfo['userID'] = $user->dao->insertedId();
-            // ---------------------
             echo self::$aInfo['userID']."\n";
+            // ---------------------
             $locale = Preference::newInstance()->findValueByName('language') ;
             // item 1
             $array_set = array(
@@ -132,9 +134,9 @@
             $array_set['s_secret'] = osc_genRandomPassword();
             $array_set['i_price']  = '2200';
             
-            
-            $title = "Title ad 2";
+            $title       = "Title ad 2";
             $description = "Description ad 2 keywords moto , forums , osclass";
+            $what        = $title." ".$description ;
             
             $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
             $this->assertTrue($res, $this->model->getErrorLevel());
@@ -150,8 +152,9 @@
             $array_set['s_secret'] = osc_genRandomPassword();
             $array_set['i_price']  = '200';
             
-            $title = "Title ad 3";
+            $title       = "Title ad 3";
             $description = "Description ad 3 keywords moto , forums , osclass";
+            $what        = $title." ".$description ;
             
             $res = $this->model->dao->insert($this->model->getTableName(), $array_set);
             $this->assertTrue($res, $this->model->dao->lastQuery());
@@ -162,5 +165,12 @@
             $this->assertTrue($res, $this->model->dao->lastQuery());
             
         }
+        
+        public function testDeleteAll()
+        {
+            User::newInstance()->deleteUser(self::$aInfo['userID']) ;
+            
+        }
+        
     }
 ?>

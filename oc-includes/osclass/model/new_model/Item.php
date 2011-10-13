@@ -86,9 +86,9 @@
         public function findByPrimaryKey($id)
         {
             $this->dao->select('l.*, i.*, SUM(s.i_num_views) AS i_num_views') ;
-            $this->dao->from($this->getTableName(),' i') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_item_location', 'l.fk_i_item_id = i.pk_i_id ', 'LEFT') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_item_stats', 'i.pk_i_id = s.fk_i_item_id', 'LEFT') ;
+            $this->dao->from($this->getTableName().' i') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item_location l', 'l.fk_i_item_id = i.pk_i_id ', 'LEFT') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item_stats s', 'i.pk_i_id = s.fk_i_item_id', 'LEFT') ;
             $this->dao->where('i.pk_i_id', $id) ;
             $this->dao->groupBy('s.fk_i_item_id') ;
             $result = $this->dao->get() ;
@@ -390,7 +390,7 @@
         // TODO
         public function deleteByPrimaryKey($id)
         {
-            osc_run_hook('delete_item', $id);
+//            osc_run_hook('delete_item', $id);
             $item = $this->findByPrimaryKey($id);
             if ($item ) {
                 if($item['b_active']==1) {
