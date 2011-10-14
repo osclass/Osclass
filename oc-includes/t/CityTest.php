@@ -17,12 +17,10 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('DB_HOST', 'localhost') ;
-    define('DB_USER', 'root') ;
-    define('DB_PASSWORD', '') ;
-    define('DB_NAME', 'osclass') ;
-    define('DB_TABLE_PREFIX', 'oc_') ;
+    require_once 'config.php' ;
 
+    require_once '../osclass/Logger/LogDatabase.php' ;
+    require_once '../osclass/helpers/hDatabaseInfo.php' ;
     require_once '../osclass/classes/data/DBConnectionClass.php' ;
     require_once '../osclass/classes/data/DBCommandClass.php' ;
     require_once '../osclass/classes/data/DBRecordsetClass.php' ;
@@ -31,12 +29,12 @@
     require_once '../osclass/model/new_model/City.php' ;
 
     /**
-     * Run: $> phpunit PreferenceTest.php
+     * Run: $> phpunit CityTest.php
      */
-    class PreferenceTest extends PHPUnit_Framework_TestCase
+    class CityTest extends PHPUnit_Framework_TestCase
     {
         private $cityDAO ;
-        
+
         public function __construct()
         {
             parent::__construct() ;
@@ -51,7 +49,42 @@
             $city = $this->cityDAO->find_by_primary_key('10000') ;
             $this->assertEquals(false, $city, $this->cityDAO->dao->last_query() ) ;
         }
+
+        public function testFindByRegion()
+        {
+            
+        }
+
+        public function testAjax()
+        {
+            
+        }
+
+        public function testInsert()
+        {
+            
+        }
         
+        public function testFindByNameOnRegion()
+        {
+            
+        }
+        
+        public function testDelete()
+        {
+            
+        }
+        
+        public function testUpdate()
+        {
+            
+        }
+        
+        public function testFindByName()
+        {
+            
+        }
     }
-    
+
+    /* file end: ./oc-includes/osclass/t/CityTest.php */
 ?>
