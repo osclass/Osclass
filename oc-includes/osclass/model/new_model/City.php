@@ -75,12 +75,12 @@
          * @param int|null $regionId Region id
          * @return array If there's an error or 0 results, it returns an empty array
          */
-        function ajax($query, $regionId)
+        function ajax($query, $regionId = null)
         {
             $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
-            if( $region != null ) {
+            if( $regionId != null ) {
                 $this->dao->where('fk_i_region_id', $regionId) ;
             }
 
@@ -129,7 +129,7 @@
                 return array() ;
             }
 
-            return $result->array() ;
+            return $result->result() ;
         }
 
         /**
@@ -155,7 +155,7 @@
                 return array() ;
             }
 
-            return $result->array() ;
+            return $result->result() ;
         }
 
         /**
@@ -176,7 +176,7 @@
                 return array() ;
             }
 
-            return $result->array() ;
+            return $result->result() ;
         }
 
         /**
@@ -204,7 +204,7 @@
                 return array() ;
             }
 
-            return $result->array() ;
+            return $result->result() ;
         }
 
     }
