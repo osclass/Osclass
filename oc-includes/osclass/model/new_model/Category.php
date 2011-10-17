@@ -401,8 +401,14 @@
         }
 
         public function update_name($pk_i_id, $locale, $name) {
-            $sql = 'UPDATE ' . DB_TABLE_PREFIX . "t_category_description SET `s_name` = '".$name."' WHERE `fk_i_category_id` = " . $pk_i_id . " AND `fk_c_locale_code` = '" . $locale . "'";
-            return $this->dao->query($sql);
+            $array_set = array(
+                's_name'    => $name
+            );
+            $array_where = array(
+                'fk_i_category_id'  => $pk_i_id,
+                'fk_c_locale_code'  => $locale
+            );
+            return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set);
         }
 
         

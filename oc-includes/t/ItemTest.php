@@ -82,7 +82,7 @@
             parent::__construct() ;
             $this->model = new Item() ;
         }
-        
+
         /**
          * insert Item / insert Item Locations
          * Add ONE user1;
@@ -149,18 +149,38 @@
             $this->assertEmpty($result, $this->model->dao->lastQuery()) ;
         }
         
-        public function testSearch()
+        public function testListAllWithCategories()
         {
-           
+           $result = $this->model->listAllWithCategories();
+           $this->assertEquals(3, count($result), $this->model->dao->lastQuery() );
+           $lastItem    = end($result);
+           $categoryId  = $lastItem['fk_i_category_id'];
+           $category    = Category::newInstance()->findByPrimaryKey($categoryId);
+           $this->assertEquals($category['s_name'], $lastItem['s_category_name'], 'Item Category NOT THE SAME with Category->s_name');
         }
         
-        public function testDeleteAll()
+        public function testFindByUserID()
+        {
+            $result = $this->model->findByUserID(self::$aInfo['userID']);
+            $this->assertEquals(2, count($result), $this->model->dao->lastQuery());
+            foreach($result as $item){
+                $this->assertEquals(self::$aInfo['userID'], $item['fk_i_user_id'], 'User NOT equal') ;
+            }
+            
+            $result = $this->model->findByUserID(self::$aInfo['userID'], 1);
+            echo $this->model->dao->lastQuery()."\n";
+            $this->assertEquals(1, count($result), $this->model->dao->lastQuery());
+            $item = $result[0];
+            $this->assertEquals('2200', $item['f_price'], $this->model->dao->lastQuery());
+            
+        }
+        
+        public function testDeleteall()
         {
             $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
             $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
             $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
             $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
         }
-        
     }
 ?>

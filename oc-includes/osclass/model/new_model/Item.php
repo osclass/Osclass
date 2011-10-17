@@ -216,10 +216,10 @@
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName().', '.DB_TABLE_PREFIX.'t_item_location') ;
+            $this->dao->where(DB_TABLE_PREFIX.'t_item_location.fk_i_item_id = '.$this->getTableName().'.pk_i_id') ;
             $array_where = array(
                 $this->getTableName().'.b_active'    => 1,
-                $this->getTableName().'.b_enabled'   => 1,
-                DB_TABLE_PREFIX.'t_item_location.fk_i_item_id' => $this->getTableName().'.pk_i_id'   
+                $this->getTableName().'.b_enabled'   => 1
             );
             $this->dao->where($array_where) ;
             $this->dao->orderBy($this->getTableName().'.dt_pub_date', 'DESC') ;
@@ -241,14 +241,18 @@
         {
             $this->dao->select('l.*, i.*') ;
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l') ;
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
             $array_where = array(
-                'l.fk_i_item_id' => 'i.pk_i_id',
                 'i.fk_i_user_id' => $userId
             );
             $this->dao->where($array_where) ;
             $this->dao->orderBy('i.pk_i_id', 'DESC') ;
             if($end!=null) {
                 $this->dao->limit($start, $end) ;
+            } else {
+                if ($start > 0 ) {
+                    $this->dao->limit($start) ;
+                }
             }
             
             $result = $this->dao->get() ;
@@ -273,8 +277,8 @@
         {
             $this->dao->select('l.*, i.*') ;
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_location l') ;
+            $this->dao->where('l.fk_i_item_id = i.pk_i_id');
             $array_where = array(
-                'l.fk_i_item_id'    => 'i.pk_i_id',
                 'i.b_enabled'       => 1,
                 'i.fk_i_user_id' => $userId
             );
@@ -282,7 +286,10 @@
             $this->dao->oderBy('i.pk_i_id', 'DESC') ;
             if($end!=null) {
                 $this->dao->limit($start, $end) ;
+            } else if ($start > 0 ) {
+                $this->dao->limit($start) ;
             }
+                
             $result = $this->dao->get() ;
             $items  = $result->result() ;
             return $this->extendData($items);
@@ -372,12 +379,12 @@
         {
             $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type') ;
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_meta im, '.DB_TABLE_PREFIX.'t_meta_categories mc, '.DB_TABLE_PREFIX.'t_meta_fields mf') ;
+            $this->dao->where('mf.pk_i_id = im.fk_i_field_id');
+            $this->dao->where('mf.pk_i_id = mc.fk_i_field_id');
+            $this->dao->where('mc.fk_i_category_id = i.fk_i_category_id');
             $array_where = array(
                 'im.fk_i_item_id'       => $id,
-                'mf.pk_i_id'            => 'im.fk_i_field_id',
-                'i.pk_i_id'             => $id,
-                'mf.pk_i_id'            => 'mc.fk_i_field_id' ,
-                'mc.fk_i_category_id'   => 'i.fk_i_category_id'
+                'i.pk_i_id'             => $id
             );
             $this->dao->where($array_where) ;
             $result = $this->dao->get() ;
