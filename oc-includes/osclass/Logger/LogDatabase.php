@@ -78,7 +78,8 @@
          */
         public function printMessages()
         {
-            print_r($this->messages) ;
+            var_dump($this->messages) ;
+            var_dump($this->totalTime()) ;
         }
 
         public function totalTime()
