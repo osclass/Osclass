@@ -155,7 +155,7 @@
                 return array() ;
             }
 
-            return $result->result() ;
+            return $result->row() ;
         }
 
         /**
@@ -176,7 +176,7 @@
                 return array() ;
             }
 
-            return $result->result() ;
+            return $result->row() ;
         }
 
         /**
@@ -204,7 +204,7 @@
                 return array() ;
             }
 
-            return $result->result() ;
+            return $result->row() ;
         }
 
     }
