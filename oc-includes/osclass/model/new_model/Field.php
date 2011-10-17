@@ -243,5 +243,4 @@
 
     }
 
-    /* file end: ./oc-includes/osclass/model/new_model/City.php */
 ?>
