@@ -41,6 +41,7 @@
     require_once '../osclass/model/new_model/Category.php';
     require_once '../osclass/model/new_model/Preference.php';
     require_once '../osclass/model/new_model/ItemLocation.php';
+    require_once '../osclass/model/new_model/ItemResource.php';
     require_once '../osclass/model/new_model/CategoryStats.php';
     
     require_once '../osclass/helpers/hSecurity.php' ;
@@ -260,12 +261,43 @@
             
         }
         
-        public function testDeleteall()
+        public function testFindResourcesByID()
+        {
+            // add some fake resources ...
+            $s_path = 'oc-content/uploads/' ;
+            $resourceType = 'image/jpeg' ;
+            for($i = 1; $i <= 4; $i++) {
+                $res = ItemResource::newInstance()->insert(array( 'fk_i_item_id' => self::$aInfo['itemID3']['id']));
+                $this->assertTrue($res, 'No inserted resource.');
+                $resourceId = $this->model->dao->insertedId();
+                if($res){
+                    $res = ItemResource::newInstance()->update(
+                                            array(
+                                                's_path'            => $s_path
+                                                ,'s_name'           => osc_genRandomPassword()
+                                                ,'s_extension'      => 'jpg'
+                                                ,'s_content_type'   => $resourceType
+                                            )
+                                            ,array(
+                                                'pk_i_id'       => $resourceId
+                                                ,'fk_i_item_id' => self::$aInfo['itemID3']['id']
+                                            )
+                    ) ;
+                    $this->assertGreaterThan(0, $res, 'No updated resource.');
+                }
+            }
+            // test
+            $result = $this->model->findResourcesByID(self::$aInfo['itemID3']['id']) ;
+            echo $this->model->dao->lastQuery();
+            $this->assertEquals(4, count($result), 'Resouces don\'t match') ;
+        }
+        
+        public function testDeleteAll()
         {
             $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
             $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
-            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
-            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+//            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
+//            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
         }
     }
 ?>

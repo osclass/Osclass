@@ -102,6 +102,16 @@
             }
         }
         
+        public function listAllWithCategories()
+        {
+            $this->dao->select('i.*, cd.s_name AS s_category_name ') ;
+            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_category c, '.DB_TABLE_PREFIX.'t_category_description cd') ;
+            $this->dao->where('c.pk_i_id = i.fk_i_category_id AND cd.fk_i_category_id = i.fk_i_category_id') ;
+            $result = $this->dao->get() ;
+            
+            return $result->result() ;
+        }
+        
         public function listWhere()
         {
             $argv = func_get_args();
@@ -130,12 +140,7 @@
         
         public function findResourcesByID($id)
         {
-            $this->dao->select() ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_item_resource') ;
-            $this->dao->where('fk_i_item_id', $id) ;
-            $result = $this->dao->get() ;
-            
-            return $result->result();
+            return ItemResource::newInstance()->getResources($id);
         }
 
         public function findLocationByID($id)
@@ -213,15 +218,6 @@
                 's_what'            => $what
             );  
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
-        }
-
-        public function listAllWithCategories()
-        {
-            $this->dao->select('i.*, cd.s_name AS s_category_name') ;
-            $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_category c, '.DB_TABLE_PREFIX.'t_category_description cd') ;
-            $this->dao->where('c.pk_i_id = i.fk_i_category_id AND cd.fk_i_category_id = i.fk_i_category_id') ;
-            $result = $this->dao->get() ;
-            return $result->result() ;
         }
         
         public function findByUserID($userId, $start = 0, $end = null)
@@ -301,9 +297,9 @@
         public function listLocations($scope)
         {
             $availabe_scopes = array('country', 'region', 'city');
-            $fields = array('country' => 's_country',
-                            'region'  => 's_region',
-                            'city'    => 's_city');
+            $fields       = array('country' => 's_country',
+                                  'region'  => 's_region',
+                                  'city'    => 's_city');
             $stringFields = array('country' => 's_country',
                                   'region'  => 's_region',
                                   'city'    => 's_city');
@@ -314,13 +310,12 @@
 
             $this->dao->select('*, count(*) as total') ;
             $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
-            $this->dao->where("$fields[$scope] IS NOT NULL") ;
+            $this->dao->where($fields[$scope]." IS NOT NULL") ;
             $this->dao->groupBy($fields[$scope]) ;
             $this->dao->orderBy($stringFields[$scope]) ;
 
             $results = $this->dao->get() ;
-            $results = $results->result() ;
-            return $results;
+            return $results->result() ;
         }
         
         public function clearStat($id, $stat)
@@ -362,7 +357,7 @@
             return $this->dao->replace(DB_TABLE_PREFIX.'t_item_description', $array_replace) ;
         }        
         
-        public function meta_fields($id)
+        public function metaFields($id)
         {
             $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type') ;
             $this->dao->from($this->getTableName().' i, '.DB_TABLE_PREFIX.'t_item_meta im, '.DB_TABLE_PREFIX.'t_meta_categories mc, '.DB_TABLE_PREFIX.'t_meta_fields mf') ;
