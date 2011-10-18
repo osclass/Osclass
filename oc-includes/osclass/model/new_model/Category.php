@@ -423,7 +423,7 @@
          * @since unknown
          * @param array $fields
          * @param array $aFieldsDescriptions
-         * @param integer$pk primary key
+         * @param int $pk primary key
          */
         public function updateByPrimaryKey($fields, $aFieldsDescription, $pk) {
             //UPDATE for category
@@ -554,7 +554,7 @@
          * @since unknown
          * @param integer$pk_i_id
          * @param integer$order
-         * @return bool on success
+         * @return mixed false on fail, int of num. of affected rows
          */
         public function updateOrder($pk_i_id, $order) {
             $sql = 'UPDATE ' . $this->tableName . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
@@ -569,7 +569,7 @@
          * @param integer$pk_i_id
          * @param string $locale
          * @param string $name
-         * @return bool on success
+         * @return mixed false on fail, int of num. of affected rows
          */
         public function updateName($pk_i_id, $locale, $name) {
             $array_set = array(

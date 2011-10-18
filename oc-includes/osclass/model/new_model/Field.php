@@ -272,7 +272,7 @@
          * @param int $itemId
          * @param int $field
          * @param string $value
-         * @return bool on success
+         * @return mixed false on fail, int of num. of affected rows
          */
         public function replace($itemId, $field, $value) {
             return $this->dao->replace(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_item_id' => $itemId, 'fk_i_field_id' => $field, 's_value' => $value));

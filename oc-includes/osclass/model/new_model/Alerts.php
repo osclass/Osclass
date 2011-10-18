@@ -308,7 +308,7 @@
          * @since unknown
          * @param string $email
          * @param string $secret
-         * @return bool on success
+         * @return mixed false on fail, int of num. of affected rows
          */
         function activate($email, $secret)
         {
