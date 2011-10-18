@@ -55,9 +55,9 @@
                                         foreach($rootCategories as $cat){
                                             $order = $cat['i_position'];
                                             $order++;
-                                            $this->categoryManager->update_order($cat['pk_i_id'],$order);
+                                            $this->categoryManager->updateOrder($cat['pk_i_id'],$order);
                                         }
-                                        $this->categoryManager->update_order($categoryId,'0');
+                                        $this->categoryManager->updateOrder($categoryId,'0');
 
                                         $this->redirectTo(osc_admin_base_url(true).'?page=categories');
                 break; 

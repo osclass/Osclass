@@ -99,7 +99,7 @@
 
                     foreach ($aIds as $id => $parent) {
                         if ($parent == 'root') {
-                            if (!$catManager->update_order($id, $orderParent)) {
+                            if (!$catManager->updateOrder($id, $orderParent)) {
                                 $error = 1;
                             }
                             // set parent category 
@@ -114,7 +114,7 @@
                                 $catParent = $parent;
                                 $orderSub = 0;
                             }
-                            if (!$catManager->update_order($id, $orderSub)) {
+                            if (!$catManager->updateOrder($id, $orderSub)) {
                                 $error = 1;
                             }
 

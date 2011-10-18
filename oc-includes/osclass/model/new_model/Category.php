@@ -45,7 +45,7 @@
         }
 
         /**
-         * 
+         * Set data related to t_category table
          */
         function __construct($l = '')
         {
@@ -74,6 +74,14 @@
             $this->toTree();
         }
 
+        /**
+         * Comodin function to serve multiple queries
+         * 
+         * @access public
+         * @since unknown
+         * @param mixed 
+         * @return array 
+         */
         public function listWhere() {
             $argv = func_get_args();
             $sql = null;
@@ -93,10 +101,25 @@
             return $result->result();
         }
         
+        /**
+         * List all enabled categories
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
         public function listEnabled() {
             return $this->listWhere('a.b_enabled = 1');
         }
         
+        /**
+         * Return categories in a tree
+         * 
+         * @access public
+         * @since unknown
+         * @param boolean $empty
+         * @return array 
+         */
         public function toTree($empty = true) {
             if($empty==$this->empty_tree && $this->tree!=null) {
                 return $this->tree;
@@ -125,6 +148,16 @@
             return $this->tree;
         }
 
+        /**
+         * Helps create the tree
+         * 
+         * @access private
+         * @since unknown
+         * @param array $branch
+         * @param array $categories
+         * @param array $relation
+         * @return array 
+         */
         private function sideTree($branch, $categories, $relation) {
             $tree = array();
             if( !empty($branch) ) {
@@ -142,15 +175,37 @@
         }
         
         
+        /**
+         * Find root categories
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
         public function findRootCategories() {
             return $this->listWhere("a.fk_i_parent_id IS NULL") ;
         }
 
         
+        /**
+         * Find root enabled categories
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
         public function findRootCategoriesEnabled() {
             return $this->listWhere("a.fk_i_parent_id IS NULL AND a.b_enabled = 1") ;
         }
         
+        /**
+         * Returna  tree of a given category as the root
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$category
+         * @return array 
+         */
         public function toSubTree($category = null) {
             $this->toTree();
             if($category==null) {
@@ -165,10 +220,24 @@
             }
         }
 
+        /**
+         * Lit all categories
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
         public function listAll() {
             return $this->listWhere('1 = 1');
         }
 
+        /**
+         * Return a tree of ALL (enabled & disabled) categories
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
         public function toTreeAll() {
             $categories = $this->listAll();
             $all_categories = array();
@@ -191,6 +260,14 @@
             return $tree;
         }
 
+        /**
+         * Given a category, return the branch from the root to the category
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$category
+         * @return array 
+         */
         public function toRootTree($cat = null) {
             $tree = null;
             if($cat!=null) {
@@ -198,7 +275,7 @@
                 if(is_numeric($cat)) {
                     $cat = $this->findByPrimaryKey($cat);
                 } else {
-                    $cat = $this->find_by_slug($cat);
+                    $cat = $this->findBySlug($cat);
                 }
                 $tree[0] = $cat;
                 while($cat['fk_i_parent_id']!=null) {
@@ -210,10 +287,14 @@
             return $tree;
         }
 
-        public function isParentOf($parent_id) {
-            return $this->listWhere("a.fk_i_parent_id = " . $parent_id . "");
-        }
-
+        /**
+         * Return the root category of a one given
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$category_id
+         * @return array 
+         */
         public function findRootCategory($category_id) {
             $results = $this->listWhere("a.pk_i_id = " . $category_id . " AND a.fk_i_parent_id IS NOT NULL");
             if (count($results) > 0) {
@@ -223,8 +304,15 @@
             }
         }
 
-        // CHANGE NAME TO NEW STANDARD findBySlug
-        public function find_by_slug($slug) {
+        /**
+         * Find a category find its slug
+         * 
+         * @access public
+         * @since unknown
+         * @param string $slug
+         * @return array 
+         */
+        public function findBySlug($slug) {
             $results = $this->listWhere("b.s_slug = '" . $slug . "'");
             if(isset($results[0])) {
                 return $results[0];
@@ -232,12 +320,28 @@
             return null;
         }
 
+        /**
+         * Same as toRootTree but reverse the results
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$category_id
+         * @return array 
+         */
         public function hierarchy($category_id) {
             return array_reverse($this->toRootTree($category_id));
         }
 
         
-        public function is_root($category_id) {
+        /**
+         * Check if it's a root category
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$category_id
+         * @return boolean
+         */
+        public function isRoot($category_id) {
             $results = $this->listWhere("pk_i_id = " . $category_id . " AND fk_i_parent_id IS NULL");
             if (count($results) > 0) {
                 return true;
@@ -246,10 +350,27 @@
             }
         }
 
+        /**
+         * returns the children of a given category
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$cat_id
+         * @return array 
+         */
         public function findSubcategories($cat_id) {
             return $this->listWhere("fk_i_parent_id = %d", $cat_id);
         }
 
+        /**
+         * Return a category given an id
+         * This overwrite findByPrimaryKey of DAO model because we store the categories on an array for the tree and it's faster than a SQL query
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$pk primary key
+         * @return array 
+         */
         public function findByPrimaryKey($pk) {
             if($pk!=null) {
                 if(array_key_exists($pk, $this->categories)){
@@ -263,6 +384,13 @@
         }
 
 
+        /**
+         * delete a category and all information linked to it
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$pk primary key
+         */
         public function deleteByPrimaryKey($pk) {
 
 
@@ -288,6 +416,15 @@
             $this->dao->query(sprintf("DELETE FROM %s WHERE pk_i_id = '%s'", $this->tableName, $pk));
         }
 
+        /**
+         * Update a category
+         * 
+         * @access public
+         * @since unknown
+         * @param array $fields
+         * @param array $aFieldsDescriptions
+         * @param integer$pk primary key
+         */
         public function updateByPrimaryKey($fields, $aFieldsDescription, $pk) {
             //UPDATE for category
             $set = "";
@@ -306,7 +443,7 @@
                 $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_unique = 1;
                 while(true) {
-                    if(!$this->find_by_slug($slug)) {
+                    if(!$this->findBySlug($slug)) {
                         break;
                     } else {
                         $slug = $slug_tmp . "_" . $slug_unique;
@@ -330,12 +467,20 @@
                 if($rs->numRows == 0) {
                     $rows = $this->dao->query("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k);
                     if($rows->numRows == 0) {
-                        $this->insert_description($fieldsDescription);
+                        $this->insertDescription($fieldsDescription);
                     }
                 }
             }
         }
 
+        /**
+         * Inser a new category
+         * 
+         * @access public
+         * @since unknown
+         * @param array $fields
+         * @param array $aFieldsDescriptions
+         */
         public function insert($fields, $aFieldsDescription = null )
         {
             $columns = implode(', ', array_keys($fields));
@@ -357,7 +502,7 @@
                 $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_unique = 1;
                 while(true) {
-                    if(!$this->find_by_slug($slug)) {
+                    if(!$this->findBySlug($slug)) {
                         break;
                     } else {
                         $slug = $slug_tmp . "_" . $slug_unique;
@@ -380,7 +525,14 @@
             return $category_id;
         }
 
-        public function insert_description($fields_description) {
+        /**
+         * Insert the description of a category
+         * 
+         * @access public
+         * @since unknown
+         * @param array $fields_description
+         */
+        public function insertDescription($fields_description) {
             if (!empty($fields_description['s_name'])) {
                 $columns = implode(', ', array_keys($fields_description));
 
@@ -395,12 +547,31 @@
             }
         }
 
-        public function update_order($pk_i_id, $order) {
+        /**
+         * Update categories' order
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$pk_i_id
+         * @param integer$order
+         * @return boolean on success
+         */
+        public function updateOrder($pk_i_id, $order) {
             $sql = 'UPDATE ' . $this->tableName . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
             return $this->dao->query($sql);
         }
 
-        public function update_name($pk_i_id, $locale, $name) {
+        /**
+         * update name of a category
+         * 
+         * @access public
+         * @since unknown
+         * @param integer$pk_i_id
+         * @param string $locale
+         * @param string $name
+         * @return boolean on success
+         */
+        public function updateName($pk_i_id, $locale, $name) {
             $array_set = array(
                 's_name'    => $name
             );

@@ -334,7 +334,7 @@
             if(!is_numeric($category)) {
                 $category = preg_replace('|/$|','',$category);
                 $aCategory = explode('/', $category) ;
-                $category = Category::newInstance()->find_by_slug($aCategory[count($aCategory)-1]) ;
+                $category = Category::newInstance()->findBySlug($aCategory[count($aCategory)-1]) ;
                 $category = $category['pk_i_id'] ;
             }
             $tree = Category::newInstance()->toSubTree($category) ;

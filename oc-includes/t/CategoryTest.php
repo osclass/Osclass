@@ -83,18 +83,18 @@
         
         public function testIsParentOf()
         {
-            $cat = $this->catDAO->isParentOf(95);
+            $cat = $this->catDAO->findSubCategories(95);
             $this->assertEquals(true, empty($cat), $this->catDAO->dao->lastQuery() ) ;
-            $cat = $this->catDAO->isParentOf(8);
+            $cat = $this->catDAO->findSubCategories(8);
             $this->assertEquals(20, count($cat), $this->catDAO->dao->lastQuery() ) ;
         }
         
         public function testFindBySlug()
         {
-            $cat = $this->catDAO->find_by_slug('animalsa');
+            $cat = $this->catDAO->findBySlug('animalsa');
             $this->assertEquals('Animalsa', $cat['s_name'], $this->catDAO->dao->lastQuery() ) ;
 
-            $cat = $this->catDAO->find_by_slug('xXx');
+            $cat = $this->catDAO->findBySlug('xXx');
             $this->assertEquals(null, $cat, $this->catDAO->dao->lastQuery() ) ;
         }
         
@@ -139,13 +139,13 @@
         
         public function testIsRoot()
         {
-            $cat = $this->catDAO->is_root(95);
+            $cat = $this->catDAO->isRoot(95);
             $this->assertEquals(true, $cat, $this->catDAO->dao->lastQuery() ) ;
             
-            $cat = $this->catDAO->is_root(8);
+            $cat = $this->catDAO->isRoot(8);
             $this->assertEquals(true, $cat, $this->catDAO->dao->lastQuery() ) ;
             
-            $cat = $this->catDAO->is_root(94);
+            $cat = $this->catDAO->isRoot(94);
             $this->assertEquals(false, $cat, $this->catDAO->dao->lastQuery() ) ;
             
         }
