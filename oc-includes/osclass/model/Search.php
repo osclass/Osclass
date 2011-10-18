@@ -422,9 +422,12 @@
             $items = $this->conn->osc_dbFetchResults($this->makeSQL(false));
 
             // get total items
-            $data  = $this->conn->osc_dbFetchResult('SELECT FOUND_ROWS() as totalItems');
-            if(isset($data['totalItems'])) {
-                $this->total_results = $data['totalItems'];
+            $sql = "SELECT FOUND_ROWS() as total" ;
+            $result = $this->dao->query($sql) ;
+            $total_ads = $result->row() ;
+           
+            if( is_set($total_ads['total'])) {
+                $this->total_results = $total_ads['total'];
             } else {
                 $this->total_results = 0;
             }
