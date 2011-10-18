@@ -152,31 +152,34 @@
         {
             return $this->listWhere('fk_i_category_id = %d', $catId);
         }
-
-        public function found_rows()
-        {
-            $sql = "SELECT FOUND_ROWS() as total" ;
-            $result = $this->conn->query($sql) ;
-            $total_ads = $result->row() ;
-            return $total_ads['total'] ;
-        }
         
-        public function total_items($category = null, $active = null)
+        public function totalItems($categoryId = null, $active = null)
         {
             $this->dao->select('count(*) as total') ;
             $this->dao->from($this->getTableName().' i') ;
             $this->dao->join(DB_TABLE_PREFIX.'t_category c', 'c.pk_i_id = i.fk_i_category_id') ;
+            if(!is_null($categoryId)) {
+                $this->dao->where('i.fk_i_category_id', $categoryId) ;
+            }
             
             $conditions = '';
             if (!is_null($active)) {
-                if (($active == 'ACTIVE') ||  ($active == 'INACTIVE') ||  ($active == 'SPAM')) {
-                    $condition = "e_status = '$active'";
-                    $this->dao->where($condition) ;
-                }
+                switch ($active) {
+                    case 'ACTIVE':  
+                        $this->dao->where('b_active', 1);
+                    break;
+                    case 'INACTIVE':   
+                        $this->dao->where('b_active', 0);
+                    break;
+                    case 'SPAM':   
+                        $this->dao->where('b_spam', 1);
+                    break;
+                    default:
+                }   
             }
 
             $result = $this->dao->get() ;
-            $total_ads = $result->result() ;
+            $total_ads = $result->row() ;
             return $total_ads['total'];
         }
 
@@ -210,22 +213,6 @@
                 's_what'            => $what
             );  
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
-        }
-
-        public function listLatestExtended($limit = 10)
-        {
-            $this->dao->select() ;
-            $this->dao->from($this->getTableName().', '.DB_TABLE_PREFIX.'t_item_location') ;
-            $this->dao->where(DB_TABLE_PREFIX.'t_item_location.fk_i_item_id = '.$this->getTableName().'.pk_i_id') ;
-            $array_where = array(
-                $this->getTableName().'.b_active'    => 1,
-                $this->getTableName().'.b_enabled'   => 1
-            );
-            $this->dao->where($array_where) ;
-            $this->dao->orderBy($this->getTableName().'.dt_pub_date', 'DESC') ;
-            $this->dao->limit($limit) ;
-            $result = $this->dao->get() ;
-            return $result->result();
         }
 
         public function listAllWithCategories()
@@ -263,13 +250,13 @@
 
         public function countByUserID($userId)
         {
-            $this->dao->select('count(i.pk_i_id) as ') ;
+            $this->dao->select('count(i.pk_i_id) as total') ;
             $this->dao->from($this->getTableName().' i') ;
             $this->dao->where('i.fk_i_user_id', $userId) ;
             $this->dao->orderBy('i.pk_i_id', 'DESC') ;
             
             $result = $this->dao->get() ;
-            $total_ads = $result->result() ;
+            $total_ads = $result->row() ;
             return $total_ads['total'];
         }
         
@@ -283,7 +270,7 @@
                 'i.fk_i_user_id' => $userId
             );
             $this->dao->where($array_where) ;
-            $this->dao->oderBy('i.pk_i_id', 'DESC') ;
+            $this->dao->orderBy('i.pk_i_id', 'DESC') ;
             if($end!=null) {
                 $this->dao->limit($start, $end) ;
             } else if ($start > 0 ) {
@@ -298,10 +285,10 @@
         public function countByUserIDEnabled($userId)
         {
             $this->dao->select('count(i.pk_i_id) as total') ;
-            $this->dao->from($this->getTableName.' i') ;
+            $this->dao->from($this->getTableName().' i') ;
             $array_where = array(
                 'i.b_enabled'     => 1,
-                'i.fk_i_iser_id'  => $userId
+                'i.fk_i_user_id'  => $userId
             );
             $this->dao->where($array_where) ;
             $this->dao->orderBy('i.pk_i_id', 'DESC') ;

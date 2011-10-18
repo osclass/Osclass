@@ -41,6 +41,7 @@
     require_once '../osclass/model/new_model/Category.php';
     require_once '../osclass/model/new_model/Preference.php';
     require_once '../osclass/model/new_model/ItemLocation.php';
+    require_once '../osclass/model/new_model/CategoryStats.php';
     
     require_once '../osclass/helpers/hSecurity.php' ;
     require_once '../osclass/helpers/hLocale.php' ;
@@ -135,7 +136,6 @@
             include_once 'DataItemTest/item3Location.php';
             $res = ItemLocation::newInstance()->insert($array_location3) ;
             $this->assertTrue($res, ItemLocation::newInstance()->dao->lastQuery());
-            
         }
         
         public function testFindByCategoryID()
@@ -168,10 +168,95 @@
             }
             
             $result = $this->model->findByUserID(self::$aInfo['userID'], 1);
-            echo $this->model->dao->lastQuery()."\n";
             $this->assertEquals(1, count($result), $this->model->dao->lastQuery());
             $item = $result[0];
-            $this->assertEquals('2200', $item['f_price'], $this->model->dao->lastQuery());
+            $this->assertEquals(2200, $item['i_price'], $this->model->dao->lastQuery());
+        }
+        
+        public function testFindByUserIDEnabled()
+        {
+            $result = $this->model->findByUserIDEnabled(self::$aInfo['userID']);
+            $this->assertEquals(2, count($result), $this->model->dao->lastQuery());
+            foreach($result as $item){
+                $this->assertEquals(self::$aInfo['userID'], $item['fk_i_user_id'], 'User NOT equal') ;
+            }
+            
+            $result = $this->model->findByUserIDEnabled(self::$aInfo['userID'], 1);
+            $this->assertEquals(1, count($result), $this->model->dao->lastQuery());
+            $item = $result[0];
+            $this->assertEquals(2200, $item['i_price'], $this->model->dao->lastQuery());
+            
+            // update b_enabled = 0
+            $res = $this->model->dao->update($this->model->getTableName(), array('b_enabled' => 0), array('pk_i_id' => self::$aInfo['itemID2']['id'] ) ) ;
+            $this->assertEquals(1, $res, $this->model->dao->lastQuery());
+            $result = $this->model->findByUserIDEnabled(self::$aInfo['userID']);
+            $this->assertEquals(1, count($result), $this->model->dao->lastQuery());
+            // update again b_enabled = 1
+            $res = $this->model->dao->update($this->model->getTableName(), array('b_enabled' => 1), array('pk_i_id' => self::$aInfo['itemID2']['id'] ) ) ;
+            $this->assertEquals(1, $res, $this->model->dao->lastQuery());
+        }
+        
+        public function testListLatest()
+        {
+            $result = $this->model->listLatest();
+            $this->assertEquals(0, count($result), $this->model->dao->lastQuery());
+        }
+        
+        public function testActivateItem()
+        {
+            $res = $this->model->dao->update($this->model->getTableName(), array('b_active' => 1), array('pk_i_id' => self::$aInfo['itemID3']['id'] ) ) ;
+            $this->assertEquals(1, $res, $this->model->dao->lastQuery());
+            $res = $this->model->dao->update($this->model->getTableName(), array('b_active' => 1), array('pk_i_id' => self::$aInfo['itemID2']['id'] ) ) ;
+            $this->assertEquals(1, $res, $this->model->dao->lastQuery());
+            $result = $this->model->listLatest();
+            $this->assertEquals(2, count($result), $this->model->dao->lastQuery());
+        }
+        
+        public function testTotalItems()
+        {
+            $res = $this->model->totalItems() ;
+            $this->assertEquals(3, $res, 'Item, totalItems()') ;
+            // total category
+            $res = $this->model->totalItems(2) ;
+            $this->assertEquals(1, $res, 'Item, totalItems()') ;
+            $res = $this->model->totalItems(1) ;
+            $this->assertEquals(2, $res, 'Item, totalItems()') ;
+            // category 2 & ACTIVE
+            $res = $this->model->totalItems(null, 'ACTIVE') ;
+            $this->assertEquals(2, $res, 'Item, totalItems()') ;
+            $res = $this->model->dao->update($this->model->getTableName(), array('b_active' => 0), array('pk_i_id' => self::$aInfo['itemID2']['id'] ) ) ;
+            $this->assertEquals(1, $res, $this->model->dao->lastQuery());
+            $res = $this->model->totalItems(null, 'ACTIVE') ;
+            $this->assertEquals(1, $res, 'Item, totalItems()') ;
+        }
+        
+        public function testREListLatest()
+        {
+            $result = $this->model->listLatest();
+            $this->assertEquals(1, count($result), $this->model->dao->lastQuery());
+        }
+        
+        public function testCountByUserID()
+        {
+            $res = $this->model->countByUserID(self::$aInfo['userID']);
+            $this->assertEquals(2, $res, $this->model->dao->lastQuery());
+        }
+        
+        public function testCountByUserIDEnabled()
+        {
+            $res = $this->model->countByUserIDEnabled(self::$aInfo['userID']);
+            $this->assertEquals(2, $res, $this->model->dao->lastQuery());
+        }
+        
+        public function testStats()
+        {
+            // add stats ItemStats
+            // ItemStats::newInstance()->increase('i_num_spam',self::$aInfo['itemID2']['id']);
+            // ItemStats::newInstance()->increase('i_num_repeated',self::$aInfo['itemID2']['id']);
+            // ItemStats::newInstance()->increase('i_num_bad_classified',self::$aInfo['itemID2']['id']);
+            // ItemStats::newInstance()->increase('i_num_offensive',self::$aInfo['itemID2']['id']);
+            // ItemStats::newInstance()->increase('i_num_expired',self::$aInfo['itemID2']['id']);
+            // check 
             
         }
         
