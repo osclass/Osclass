@@ -62,6 +62,8 @@
          * Searches for user alerts, given an user id.
          * If user id not exist return empty array.
          *  
+         * @access public
+         * @since unknown
          * @param string $userId
          * @return array  
          */
@@ -83,6 +85,8 @@
          * Searches for user alerts, given an user id.
          * If user id not exist return empty array.
          * 
+         * @access public
+         * @since unknown
          * @param string $email
          * @return array
          */
@@ -104,6 +108,8 @@
          * Searches for alerts, given a type.
          * If type don't match return empty array.
          * 
+         * @access public
+         * @since unknown
          * @param string $type
          * @return array 
          */
@@ -125,6 +131,8 @@
          * Searches for alerts, given a type group by s_search.
          * If type don't match return empty array.
          * 
+         * @access public
+         * @since unknown
          * @param string $type
          * @param boolean $active
          * @return array
@@ -148,12 +156,16 @@
         }
         
         /**
+         * Searches for alerts, given a type group and a s_search.
+         * If type don't match return empty array.
          *
+         * @access public
+         * @since unknown
          * @param string $search
          * @param string $type
          * @return array
          * 
-         * OJO doble where!
+         * WARNIGN doble where!
          */
         function getAlertsBySearchAndType($search, $type)
         {
@@ -174,6 +186,17 @@
         
         
         // a.s_email, a.fk_i_user_id @TODO
+        /**
+         * Searches for users, given a type group and a s_search.
+         * If type don't match return empty array.
+         *
+         * @access public
+         * @since unknown
+         * @param string $search
+         * @param string $type
+         * @param boolean $active
+         * @return array
+         */
         function getUsersBySearchAndType($search, $type, $active = FALSE) 
         {
             $this->dao->select() ;
@@ -194,6 +217,16 @@
         }
         
         
+        /**
+         * Searches for alerts, given a type group and an user id
+         * If type don't match return empty array.
+         *
+         * @access public
+         * @since unknown
+         * @param integer $userId
+         * @param string $type
+         * @return array
+         */
         function getAlertsFromUserByType($userId, $type)
         {
             $this->dao->select();
@@ -210,6 +243,16 @@
             }
         }
         
+        /**
+         * Searches for alerts, given a type group and an email
+         * If type don't match return empty array.
+         *
+         * @access public
+         * @since unknown
+         * @param string $email
+         * @param string $type
+         * @return array
+         */
         function getAlertsFromEmailByType($email, $type)
         {
             $this->dao->select();
@@ -226,6 +269,18 @@
             }
         }
         
+        /**
+         * Create a new alert
+         *
+         * @access public
+         * @since unknown
+         * @param integer $userid
+         * @param string $email
+         * @param string $alert
+         * @param string $secret
+         * @param string $type
+         * @return boolean on success
+         */
         function createAlert($userid = 0, $email, $alert, $secret, $type = 'DAILY')
         {
             $results = 0;
@@ -246,6 +301,15 @@
             return false;
         }
         
+        /**
+         * Activate an alert
+         *
+         * @access public
+         * @since unknown
+         * @param string $email
+         * @param string $secret
+         * @return boolean on success
+         */
         function activate($email, $secret)
         {
             return $this->dao->update($this->getTableName(), array('b_active' => 1), array('s_email' => $email, 's_secret' => $secret));
