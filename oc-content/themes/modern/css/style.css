@@ -542,3 +542,7 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
 	font-weight: normal;
 	margin: -1px;
 }
+
+#user_data {
+    padding: 20px;
+}
