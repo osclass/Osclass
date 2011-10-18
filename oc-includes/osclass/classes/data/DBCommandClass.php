@@ -945,7 +945,7 @@
                 $sql .= "LIMIT " . $this->aLimit ;
 
                 if( $this->aOffset > 0 ) {
-                    $sql .= " OFFSET " . $this->aOffset ;
+                    $sql .= ", " . $this->aOffset ;
                 }
             }
 
