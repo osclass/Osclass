@@ -42,6 +42,7 @@
     require_once '../osclass/model/new_model/Preference.php';
     require_once '../osclass/model/new_model/ItemLocation.php';
     require_once '../osclass/model/new_model/ItemResource.php';
+    require_once '../osclass/model/new_model/ItemStats.php';
     require_once '../osclass/model/new_model/CategoryStats.php';
     
     require_once '../osclass/helpers/hSecurity.php' ;
@@ -292,12 +293,57 @@
             $this->assertEquals(4, count($result), 'Resouces don\'t match') ;
         }
         
+        public function testFindLocationByID()
+        {
+            $result = $this->model->findLocationByID(self::$aInfo['itemID3']['id']);
+            $this->assertArrayHasKey('fk_i_item_id', $result) ;
+            $this->assertEquals(self::$aInfo['itemID3']['id'], $result['fk_i_item_id']) ;
+            $this->assertArrayHasKey('fk_c_country_code', $result) ;
+            $this->assertEquals('ES', $result['fk_c_country_code']) ;
+            $this->assertArrayHasKey('fk_i_region_id', $result) ;
+            $this->assertEquals(61, $result['fk_i_region_id']) ;
+            $this->assertArrayHasKey('fk_i_city_id', $result) ;
+            $this->assertEquals(1994, $result['fk_i_city_id']) ;
+        }
+        
+        public function testMostViewed()
+        {
+            // visiting items ...
+            for($i=0;$i<10;$i++){
+                $res = ItemStats::newInstance()->increase('i_num_views', self::$aInfo['itemID3']['id']) ;
+                $this->assertGreaterThan(0, $res, 'No updated item stats.');
+            }
+            for($i=0;$i<5;$i++){
+                $res = ItemStats::newInstance()->increase('i_num_views', self::$aInfo['itemID2']['id']) ;
+                $this->assertGreaterThan(0, $res, 'No updated item stats.');
+            }
+            for($i=0;$i<2;$i++){
+                $res = ItemStats::newInstance()->increase('i_num_views', self::$aInfo['itemID1']['id']) ;
+                $this->assertGreaterThan(0, $res, 'No updated item stats.');
+            }
+            
+            $result = $this->model->mostViewed();
+            
+            $first = array_shift($result);
+            foreach($result as $item){
+                $this->assertLessThan($first['i_num_views'], $item['i_num_views'], 'mostViewed don\t work');
+                $first = $item;
+            }
+            
+        }
+        
+        public function testExtendCategoryName()
+        {
+            $result = $this->model->extendCategoryName($this->model->findByCategoryID(1));
+            $this->assertEquals('For sale', $result[0]['s_category_name'], 'No extend category name.');
+        }
+        
         public function testDeleteAll()
         {
             $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
             $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
-//            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
-//            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
+            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
         }
     }
 ?>

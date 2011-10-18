@@ -60,6 +60,7 @@
          * @param type $column
          * @param type $itemId
          * @return type 
+         * @todo OJO query('update ....') cambiar a ->update()
          */
         function increase($column, $itemId)
         {
@@ -78,9 +79,7 @@
 
             // duplicated key
             if( $this->dao->getErrorLevel() == 1062 ) {
-                $values = array($column        => $column . ' + 1') ;
-                $where  = array('fk_i_item_id' => $itemId) ;
-                $this->update($values, $where) ;
+                $this->dao->query('UPDATE '.$this->getTableName().' SET i_num_views = i_num_views + 1 WHERE fk_i_item_id = '.$itemId) ;
             }
 
             return true ;

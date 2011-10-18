@@ -21,16 +21,32 @@
      */
 
     /**
-     * Item DAO
+     * Model database for Item table
+     * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class Item extends DAO
     {
         /**
-         *
-         * @var type 
+         * It references to self object: Item.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var Item 
          */
         private static $instance ;
-
+        
+        /**
+         * It creates a new Item object class ir if it has been created
+         * before, it return the previous object
+         * 
+         * @access public
+         * @since unknown
+         * @return Item 
+         */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
@@ -40,7 +56,7 @@
         }
 
         /**
-         * 
+         * Set data related to t_item table
          */
         function __construct()
         {
@@ -68,6 +84,14 @@
             $this->setFields($array_fields) ;
         }
         
+        /**
+         * List items ordered by views
+         *
+         * @access public
+         * @since unknown
+         * @param int $limit
+         * @return array of items
+         */
         public function mostViewed($limit = 10) 
         {
             $this->dao->select() ;
@@ -83,7 +107,15 @@
             return $this->extendData($items);
         }
         
-
+        /**
+         * Get the result match of the primary key passed by parameter, extended with
+         * location information and number of views.
+         *
+         * @access public
+         * @since unknown
+         * @param int $id Item id
+         * @return array 
+         */
         public function findByPrimaryKey($id)
         {
             $this->dao->select('l.*, i.*, SUM(s.i_num_views) AS i_num_views') ;
@@ -102,6 +134,13 @@
             }
         }
         
+        /**
+         * List Items with category name
+         *
+         * @access public
+         * @since unknown
+         * @return array of items
+         */
         public function listAllWithCategories()
         {
             $this->dao->select('i.*, cd.s_name AS s_category_name ') ;
@@ -112,6 +151,13 @@
             return $result->result() ;
         }
         
+        /**
+         * Comodin function to serve multiple queries
+         *
+         * @access public
+         * @since unknown
+         * @return array of items
+         */
         public function listWhere()
         {
             $argv = func_get_args();
@@ -138,11 +184,27 @@
             return $this->extendData($items);
         }
         
+        /**
+         * Find item resources belong to an item given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id Item id
+         * @return array of resources
+         */
         public function findResourcesByID($id)
         {
             return ItemResource::newInstance()->getResources($id);
         }
 
+        /**
+         * Find the item location given a item id
+         *
+         * @access public
+         * @since unknown
+         * @param int $id Item id
+         * @return array of location 
+         */
         public function findLocationByID($id)
         {
             $this->dao->select() ;
@@ -150,14 +212,32 @@
             $this->dao->where('fk_i_item_id', $id) ;
             $result = $this->dao->get() ;
             
-            return $result->result();
+            return $result->row();
         }
 
+        /**
+         * Find items belong to a category given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $catId
+         * @return array of items
+         */
         public function findByCategoryID($catId)
         {
             return $this->listWhere('fk_i_category_id = %d', $catId);
         }
         
+        /**
+         * Count all items, or all items belong to a category id, can be filtered
+         * by $active  ['ACTIVE'|'INACTIVE'|'SPAM']
+         *
+         * @access public
+         * @since unknown
+         * @param type $categoryId
+         * @param string $active 
+         * @return int total items
+         */
         public function totalItems($categoryId = null, $active = null)
         {
             $this->dao->select('count(*) as total') ;
@@ -196,9 +276,11 @@
         }
         
         /**
-         * Insert title, description and what given a locale.
+         * Insert title, description and what for a given locale and item id.
          * 
-         * @param string $id
+         * @access public
+         * @since unknown
+         * @param string $id Item id
          * @param string $locale
          * @param string $title
          * @param string $description
@@ -220,6 +302,16 @@
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
         
+        /**
+         * Find items belong to an user given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param int $start begining
+         * @param int $end ending
+         * @return array of items
+         */
         public function findByUserID($userId, $start = 0, $end = null)
         {
             $this->dao->select('l.*, i.*') ;
@@ -244,6 +336,14 @@
             return $this->extendData($items) ;
         }
 
+        /**
+         * Count items belong to an user given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @return int number of items
+         */
         public function countByUserID($userId)
         {
             $this->dao->select('count(i.pk_i_id) as total') ;
@@ -256,6 +356,16 @@
             return $total_ads['total'];
         }
         
+        /**
+         * Find enabled items belong to an user given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @param int $start beginning from $start
+         * @param int $end ending 
+         * @return array of items
+         */
         public function findByUserIDEnabled($userId, $start = 0, $end = null)
         {
             $this->dao->select('l.*, i.*') ;
@@ -278,6 +388,14 @@
             return $this->extendData($items);
         }
 
+        /**
+         * Count enabled items belong to an user given its id
+         *
+         * @access public
+         * @since unknown
+         * @param int $userId User id
+         * @return int number of items
+         */
         public function countByUserIDEnabled($userId)
         {
             $this->dao->select('count(i.pk_i_id) as total') ;
@@ -294,30 +412,16 @@
             return $items['total'];
         }
         
-        public function listLocations($scope)
-        {
-            $availabe_scopes = array('country', 'region', 'city');
-            $fields       = array('country' => 's_country',
-                                  'region'  => 's_region',
-                                  'city'    => 's_city');
-            $stringFields = array('country' => 's_country',
-                                  'region'  => 's_region',
-                                  'city'    => 's_city');
-
-            if(!in_array($scope, $availabe_scopes)) {
-                return array();
-            }
-
-            $this->dao->select('*, count(*) as total') ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_item_location') ;
-            $this->dao->where($fields[$scope]." IS NOT NULL") ;
-            $this->dao->groupBy($fields[$scope]) ;
-            $this->dao->orderBy($stringFields[$scope]) ;
-
-            $results = $this->dao->get() ;
-            return $results->result() ;
-        }
-        
+        /**
+         * Clear item stat given item id and stat to clear
+         * $stat array('spam', 'duplicated', 'bad', 'offensive', 'expired')
+         *
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @param string $stat
+         * @return mixed int if updated correctly or false when error occurs
+         */
         public function clearStat($id, $stat)
         {
             switch($stat) {
@@ -339,12 +443,21 @@
                 default:
                     break;
             }
-            
             $array_conditions = array('fk_i_item_id' => $id);
-            
             return $this->update(DB_TABLE_PREFIX.'t_item_stats', $array_set, $array_conditions);
         }
         
+        /**
+         * Update title and description given a item id and locale.
+         *
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @param string $locale
+         * @param string $title
+         * @param string $text
+         * @return bool 
+         */
         public function updateLocaleForce($id, $locale, $title, $text)
         {
             $array_replace = array(
@@ -357,6 +470,14 @@
             return $this->dao->replace(DB_TABLE_PREFIX.'t_item_description', $array_replace) ;
         }        
         
+        /**
+         * Return meta fields for a given item
+         *
+         * @access public
+         * @since unknown
+         * @param int $id Item id
+         * @return array meta fields array
+         */
         public function metaFields($id)
         {
             $this->dao->select('im.s_value as s_value,mf.pk_i_id as pk_i_id, mf.s_name as s_name, mf.e_type as e_type') ;
@@ -373,7 +494,14 @@
             return $result->result() ;
         }
         
-        // TODO
+        /**
+         * Delete by primary key, delete dependencies too
+         *
+         * @access public
+         * @since unknown
+         * @param int $id Item id
+         * @return bool
+         */
         public function deleteByPrimaryKey($id)
         {
 //            osc_run_hook('delete_item', $id);
@@ -395,6 +523,14 @@
             }
         }
         
+        /**
+         * Extends the given array $item with description in available locales
+         *  
+         * @access public
+         * @since unknown
+         * @param array $item
+         * @return array item array with description in available locales
+         */
         public function extendDataSingle($item)
         {
             $prefLocale = osc_current_user_locale();
@@ -434,6 +570,14 @@
             return $item;
         }
         
+        /**
+         * Extends the given array $items with category name , and description in available locales
+         *
+         * @access public
+         * @since unknown
+         * @param array $items array with items
+         * @return array with category name 
+         */
         public function extendCategoryName($items)
         {
             if(defined('OC_ADMIN')) {
@@ -465,6 +609,14 @@
             return $results;
         }
         
+        /**
+         * Extends the given array $items with description in available locales
+         *
+         * @access public
+         * @since unknown
+         * @param type $items
+         * @return array with description extended with all available locales 
+         */
         public function extendData($items)
         {
             if(defined('OC_ADMIN')) {

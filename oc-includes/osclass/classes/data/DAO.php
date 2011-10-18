@@ -78,7 +78,7 @@
         }
 
         /**
-         * Get the result match of the primary key passed by paramete
+         * Get the result match of the primary key passed by parameter
          * 
          * @access public
          * @since unknown
