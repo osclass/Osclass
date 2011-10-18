@@ -429,7 +429,13 @@
 
         public function doSearch($extended = true) {
             $result = $this->dao->query($this->makeSQL(false));
-            $this->total_results = $result->numRows();
+            // get total items
+            $data  = $this->conn->osc_dbFetchResult('SELECT FOUND_ROWS() as totalItems');
+            if(isset($data['totalItems'])) {
+                $this->total_results = $data['totalItems'];
+            } else {
+                $this->total_results = 0;
+            }
 
             $items = $result->resultArray();
 
