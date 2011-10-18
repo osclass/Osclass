@@ -68,7 +68,9 @@
 
         /**
          * Find a field by its id.
-         *
+         * 
+         * @access public
+         * @since unknown
          * @param int $id
          * @return array Field information. If there's no information, return an empty array.
          */
@@ -90,6 +92,8 @@
         /**
          * Find a field by its name
          *
+         * @access public
+         * @since unknown
          * @param string $id
          * @return array Field information. If there's no information, return an empty array.
          */
@@ -112,6 +116,8 @@
         /**
          * Find fields from a category and an item
          *
+         * @access public
+         * @since unknown
          * @param string $id
          * @return array Field information. If there's no information, return an empty array.
          */
@@ -129,6 +135,8 @@
         /**
          * Find a field by its name
          *
+         * @access public
+         * @since unknown
          * @param string $name
          * @return array Field information. If there's no information, return an empty array.
          */
@@ -150,6 +158,8 @@
         /**
          * Find a field by its name
          *
+         * @access public
+         * @since unknown
          * @param string $slug
          * @return array Field information. If there's no information, return an empty array.
          */
@@ -171,6 +181,8 @@
         /**
          * Gets which categories are associated with that field
          *
+         * @access public
+         * @since unknown
          * @param string $id
          * @return array
          */
@@ -197,9 +209,14 @@
         /**
          * Insert a new field
          * 
-         * @param type $name
-         * @param type $type
-         * @param type $categories 
+         * @access public
+         * @since unknown
+         * @param string $name
+         * @param string $type
+         * @param string $slug
+         * @param bool $required
+         * @param array $options
+         * @param array $categories 
          */
         public function insertField($name, $type, $slug, $required, $options, $categories = null) {
             $this->dao->insert($this->getTableName(), array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug, 's_options' => $options));
@@ -213,6 +230,14 @@
         }
         
         
+        /**
+         * Save the categories linked to a field
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @param array $categories 
+         */
         public function insertCategories($id, $categories = null) {
             if($categories!=null) {
                 foreach($categories as $c) {
@@ -227,14 +252,40 @@
             }
         }
         
+        /**
+         * Removes categories from a field
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @return bool on success
+         */
         public function cleanCategoriesFromField($id) {
             return $this->dao->delete(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
         }
         
+        /**
+         * Update a field value
+         * 
+         * @access public
+         * @since unknown
+         * @param int $itemId
+         * @param int $field
+         * @param string $value
+         * @return mixed false on fail, int of num. of affected rows
+         */
         public function replace($itemId, $field, $value) {
             return $this->dao->replace(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_item_id' => $itemId, 'fk_i_field_id' => $field, 's_value' => $value));
         }
 
+        /**
+         * Delete a field and all information associated with it
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @return bool on success
+         */
         public function deleteByPrimaryKey($id) {
             $this->dao->delete(sprint('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
             $this->dao->delete(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));

@@ -62,6 +62,8 @@
         /**
          * Insert a log row.
          *
+         * @access public
+         * @since unknown
          * @param string $section
          * @param string $action
          * @param integer $id

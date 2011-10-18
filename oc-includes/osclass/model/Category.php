@@ -163,7 +163,7 @@
                 if(ctype_digit($cat)) {
                     $cat = $this->findByPrimaryKey($cat);
                 } else {
-                    $cat = $this->find_by_slug($cat);
+                    $cat = $this->findBySlug($cat);
                 }
                 $tree[0] = $cat;
                 while($cat['fk_i_parent_id']!=null) {
@@ -175,7 +175,7 @@
             return $tree;
         }
 
-        public function isParentOf($parent_id) {
+        public function findSubCategories($parent_id) {
             $children = $this->listWhere("a.fk_i_parent_id = " . $parent_id . "");
             return $children;
         }
@@ -190,7 +190,7 @@
         }
 
         //#DANI: NOT CHANGED YET
-        public function find_by_slug($slug) {
+        public function findBySlug($slug) {
             $results = $this->listWhere("b.s_slug = '" . $slug . "'");
             if(isset($results[0])) {
                 return $results[0];
@@ -213,7 +213,7 @@
             return $hierarchy;
         }
 
-        public function is_root($category_id) {
+        public function isRoot($category_id) {
             $results = parent::listWhere("pk_i_id = " . $category_id . " AND fk_i_parent_id IS NULL");
             if (count($results) > 0) {
                 return true;
@@ -319,7 +319,7 @@
                 $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_unique = 1;
                 while(true) {
-                    if(!$this->find_by_slug($slug)) {
+                    if(!$this->findBySlug($slug)) {
                         break;
                     } else {
                         $slug = $slug_tmp . "_" . $slug_unique;
@@ -343,7 +343,7 @@
                 if($this->conn->get_affected_rows() == 0) {
                     $rows = $this->conn->osc_dbFetchResult("SELECT * FROM %s as a INNER JOIN %s as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->getTableName(), $this->getTableDescriptionName(), $pk, $k);
                     if(count($rows) == 0) {
-                        $this->insert_description($fieldsDescription);
+                        $this->insertDescription($fieldsDescription);
                     }
                 }
             }
@@ -370,7 +370,7 @@
                 $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_unique = 1;
                 while(true) {
-                    if(!$this->find_by_slug($slug)) {
+                    if(!$this->findBySlug($slug)) {
                         break;
                     } else {
                         $slug = $slug_tmp . "_" . $slug_unique;
@@ -393,7 +393,7 @@
             return $category_id;
         }
 
-        public function insert_description($fields_description) {
+        public function insertDescription($fields_description) {
             if (!empty($fields_description['s_name'])) {
                 $columns = implode(', ', array_keys($fields_description));
 
@@ -408,12 +408,12 @@
             }
         }
 
-        public function update_order($pk_i_id, $order) {
+        public function updateOrder($pk_i_id, $order) {
             $sql = 'UPDATE ' . $this->getTableName() . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
             return $this->conn->osc_dbExec($sql);
         }
 
-        public function update_name($pk_i_id, $locale, $name) {
+        public function updateName($pk_i_id, $locale, $name) {
             $sql = 'UPDATE ' . $this->getTableDescriptionName() . " SET `s_name` = '".$name."' WHERE `fk_i_category_id` = " . $pk_i_id . " AND `fk_c_locale_code` = '" . $locale . "'";
             return $this->conn->osc_dbExec($sql);
         }
