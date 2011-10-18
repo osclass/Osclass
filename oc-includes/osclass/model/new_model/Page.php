@@ -59,6 +59,8 @@
         /**
          * Find a page by page id.
          *
+         * @access public
+         * @since unknown
          * @param int $id Page id.
          * @param string $locale By default is null but you can specify locale code.
          * @return array Page information. If there's no information, return an empty array.
@@ -93,6 +95,8 @@
         /**
          * Find a page by internal name.
          *
+         * @access public
+         * @since unknown
          * @param string $intName Internal name of the page to find.
          * @param string $locale Locale string.
          * @return array It returns page fields. If it has no results, it returns an empty array.
@@ -121,6 +125,8 @@
         /**
          * Find a page by order.
          *
+         * @access public
+         * @since unknown
          * @param int order
          * @return array It returns page fields. If it has no results, it returns an empty array.
          */
@@ -151,6 +157,8 @@
         /**
          * Get all the pages with the parameters you choose.
          *
+         * @access public
+         * @since unknown
          * @param bool $indelible It's true if the page is indelible and false if not.
          * @param string $locale It's
          * @param int $start
@@ -194,6 +202,8 @@
         /**
          * An array with data of some page, returns the title and description in every language available
          *
+         * @access public
+         * @since unknown
          * @param array $aPage
          * @return array Page information, title and description in every language available
          */
@@ -226,6 +236,8 @@
         /**
          * Delete a page by id number.
          *
+         * @access public
+         * @since unknown
          * @param int $id Page id which is going to be deleted
          * @return bool True on successful removal, false on failure
          */
@@ -247,6 +259,8 @@
         /**
          * Delete a page by internal name.
          *
+         * @access public
+         * @since unknown
          * @param string $intName Page internal name which is going to be deleted
          * @return bool True on successful removal, false on failure
          */
@@ -267,6 +281,8 @@
         /**
          * Order pages from $order
          *
+         * @access private
+         * @since unknown
          * @param int $order
          */
         private function reOrderPages($order)
@@ -283,9 +299,11 @@
         /**
          * Insert a new page. You have to pass all the parameters
          *
+         * @access public
+         * @since unknown
          * @param array $aFields Fields to be inserted in pages table
          * @param array $aFieldsDescription An array with the titles and descriptions in every language.
-         * @return boolean True if the insert has been done well and false if not.
+         * @return bool True if the insert has been done well and false if not.
          */
         public function insert($aFields, $aFieldsDescription = null)
         {
@@ -327,6 +345,8 @@
         /**
          * Insert the content (title and description) of a page.
          *
+         * @access private
+         * @since unknown
          * @param int $id Id of the page, it would be the foreign key
          * @param string $locale Locale code of the language
          * @param string $title Text to be inserted in s_title
@@ -356,6 +376,8 @@
         /**
          * Update the content (title and description) of a page
          *
+         * @access public
+         * @since unknown
          * @param int $id Id of the page id is going to be modified
          * @param string $locale Locale code of the language
          * @param string $title Text to be updated in s_title
@@ -385,6 +407,8 @@
         /**
          * Check if depending the conditions, the row exists in de DB.
          *
+         * @access public
+         * @since unknown
          * @param array $conditions
          * @return bool Return true if exists and false if not.
          */
@@ -403,6 +427,8 @@
         /**
          * It change the internal name of a page. Here you don't check if in indelible or not the page.
          *
+         * @access public
+         * @since unknown
          * @param int $id The id of the page to be changed.
          * @param string $intName The new internal name.
          * @return int Number of affected rows.
@@ -421,6 +447,8 @@
         /**
          * Check if a page id is indelible
          *
+         * @access public
+         * @since unknown
          * @param int $id Page id
          * @return true if it's indelible, false in case not
          */
@@ -436,6 +464,8 @@
         /**
          * Check if Internal Name exists with another id
          *
+         * @access public
+         * @since unknown
          * @param int $id page id
          * @param string $internalName page internal name
          * @return true if internal name exists, false if not

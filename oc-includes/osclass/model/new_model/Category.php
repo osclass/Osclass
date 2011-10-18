@@ -117,7 +117,7 @@
          * 
          * @access public
          * @since unknown
-         * @param boolean $empty
+         * @param bool $empty
          * @return array 
          */
         public function toTree($empty = true) {
@@ -554,7 +554,7 @@
          * @since unknown
          * @param integer$pk_i_id
          * @param integer$order
-         * @return boolean on success
+         * @return bool on success
          */
         public function updateOrder($pk_i_id, $order) {
             $sql = 'UPDATE ' . $this->tableName . " SET `i_position` = '".$order."' WHERE `pk_i_id` = " . $pk_i_id;
@@ -569,7 +569,7 @@
          * @param integer$pk_i_id
          * @param string $locale
          * @param string $name
-         * @return boolean on success
+         * @return bool on success
          */
         public function updateName($pk_i_id, $locale, $name) {
             $array_set = array(

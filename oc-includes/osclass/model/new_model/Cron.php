@@ -50,7 +50,10 @@
         }
 
         /**
+         * Return crons by type
          *
+         * @access public
+         * @since unknown
          * @param type $type
          * @return array
          */

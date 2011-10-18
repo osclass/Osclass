@@ -214,7 +214,7 @@
          * @param string $name
          * @param string $type
          * @param string $slug
-         * @param boolean $required
+         * @param bool $required
          * @param array $options
          * @param array $categories 
          */
@@ -235,7 +235,7 @@
          * 
          * @access public
          * @since unknown
-         * @param integer $id
+         * @param int $id
          * @param array $categories 
          */
         public function insertCategories($id, $categories = null) {
@@ -257,8 +257,8 @@
          * 
          * @access public
          * @since unknown
-         * @param integer $id
-         * @return boolean on success
+         * @param int $id
+         * @return bool on success
          */
         public function cleanCategoriesFromField($id) {
             return $this->dao->delete(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
@@ -269,10 +269,10 @@
          * 
          * @access public
          * @since unknown
-         * @param integer $itemId
-         * @param integer $field
+         * @param int $itemId
+         * @param int $field
          * @param string $value
-         * @return boolean on success
+         * @return bool on success
          */
         public function replace($itemId, $field, $value) {
             return $this->dao->replace(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_item_id' => $itemId, 'fk_i_field_id' => $field, 's_value' => $value));
@@ -283,8 +283,8 @@
          * 
          * @access public
          * @since unknown
-         * @param integer $id
-         * @return boolean on success
+         * @param int $id
+         * @return bool on success
          */
         public function deleteByPrimaryKey($id) {
             $this->dao->delete(sprint('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));

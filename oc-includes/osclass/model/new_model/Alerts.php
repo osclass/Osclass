@@ -134,7 +134,7 @@
          * @access public
          * @since unknown
          * @param string $type
-         * @param boolean $active
+         * @param bool $active
          * @return array
          */
         function getAlertsByTypeGroup($type, $active = FALSE) 
@@ -194,7 +194,7 @@
          * @since unknown
          * @param string $search
          * @param string $type
-         * @param boolean $active
+         * @param bool $active
          * @return array
          */
         function getUsersBySearchAndType($search, $type, $active = FALSE) 
@@ -223,7 +223,7 @@
          *
          * @access public
          * @since unknown
-         * @param integer $userId
+         * @param int $userId
          * @param string $type
          * @return array
          */
@@ -274,12 +274,12 @@
          *
          * @access public
          * @since unknown
-         * @param integer $userid
+         * @param int $userid
          * @param string $email
          * @param string $alert
          * @param string $secret
          * @param string $type
-         * @return boolean on success
+         * @return bool on success
          */
         function createAlert($userid = 0, $email, $alert, $secret, $type = 'DAILY')
         {
@@ -308,7 +308,7 @@
          * @since unknown
          * @param string $email
          * @param string $secret
-         * @return boolean on success
+         * @return bool on success
          */
         function activate($email, $secret)
         {
