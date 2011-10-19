@@ -21,16 +21,32 @@
      */
 
     /**
-     * Currency DAO
+     * Model database for Currency table
+     * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class Currency extends DAO
     {
         /**
-         *
-         * @var type 
+         * It references to self object: Currency.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var Currency
          */
         private static $instance ;
 
+        /**
+         * It creates a new Currency object class ir if it has been created
+         * before, it return the previous object
+         * 
+         * @access public
+         * @since unknown
+         * @return Currency
+         */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
@@ -40,7 +56,7 @@
         }
 
         /**
-         * 
+         * Set data related to t_currency table
          */
         function __construct()
         {

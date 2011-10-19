@@ -21,16 +21,32 @@
      */
 
     /**
-     * ItemLocation DAO
+     * Model database for ItemLocation table
+     * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class ItemLocation extends DAO
     {
         /**
-         *
-         * @var type 
+         * It references to self object: ItemLocation.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var ItemResource
          */
         private static $instance ;
 
+        /**
+         * It creates a new ItemLocation object class ir if it has been created
+         * before, it return the previous object
+         * 
+         * @access public
+         * @since unknown
+         * @return ItemLocation
+         */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
@@ -40,7 +56,7 @@
         }
 
         /**
-         * 
+         * Set data related to t_item_location table
          */
         function __construct()
         {

@@ -21,16 +21,32 @@
      */
 
     /**
-     * ItemComment DAO
+     * Model database for ItemComment table
+     * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class ItemComment extends DAO
     {
         /**
-         *
-         * @var type 
+         * It references to self object: ItemComment.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var Item 
          */
         private static $instance ;
 
+        /**
+         * It creates a new ItemComment object class ir if it has been created
+         * before, it return the previous object
+         * 
+         * @access public
+         * @since unknown
+         * @return ItemComment 
+         */
         public static function newInstance()
         {
             if( !self::$instance instanceof self ) {
@@ -40,7 +56,7 @@
         }
 
         /**
-         * 
+         * Set data related to t_item_comment table
          */
         function __construct()
         {
@@ -48,6 +64,7 @@
             $this->setTableName('t_item_comment') ;
             $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
+                'pk_i_id',
                 'fk_i_item_id',
                 'dt_pub_date',
                 's_title',
@@ -65,6 +82,8 @@
         /**
          * Searches for comments information, given an item id.
          * 
+         * @access public
+         * @since unknown
          * @param integer $id
          * @return array 
          */
@@ -85,6 +104,8 @@
         /**
          * Searches for comments information, given an item id, page and comments per page.
          * 
+         * @access public
+         * @since unknown
          * @param integer $id
          * @param integer $page
          * @param integer $comments_per_page
@@ -120,6 +141,8 @@
         /**
          * Return total of comments, given an item id.
          * 
+         * @access public
+         * @since unknown
          * @param integer $id
          * @return integer
          */
@@ -145,6 +168,8 @@
         /**
          * Searches for comments information, given an user id.
          * 
+         * @access public
+         * @since unknown
          * @param integer $id
          * @return array
          */
@@ -168,6 +193,8 @@
         /**
          * Searches for comments information, given an user id.
          *
+         * @access public
+         * @since unknown
          * @param integer $itemId
          * @return array
          */
@@ -200,6 +227,8 @@
         /**
          * Searches for last comments information, given a limit of comments.
          *
+         * @access public
+         * @since unknown
          * @param integer $num
          * @return array
          */
@@ -223,6 +252,8 @@
         /**
          * Extends an array of comments with title / description / what
          * 
+         * @access public
+         * @since unknown
          * @param array $items
          * @return array
          */
