@@ -116,7 +116,7 @@
                     }
 
                     // Does id & code combination exist?
-                    $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
+                    $result = ItemResource::newInstance()->existResource($id, $code) ;
 
                     if ($result > 0) {
                         // Delete: file, db table entry

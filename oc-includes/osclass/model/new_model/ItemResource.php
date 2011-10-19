@@ -21,19 +21,31 @@
      */
 
     /**
+     * Model database for ItemResource table
      * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class ItemResource extends DAO
     {
         /**
-         *
-         * @var type 
+         * It references to self object: ItemResource.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var ItemResource
          */
         private static $instance ;
 
         /**
-         *
-         * @return type 
+         * It creates a new ItemResource object class ir if it has been created
+         * before, it return the previous object
+         * 
+         * @access public
+         * @since unknown
+         * @return ItemResource 
          */
         public static function newInstance()
         {
@@ -44,7 +56,7 @@
         }
 
         /**
-         * 
+         * Set data related to t_item_resource table
          */
         function __construct()
         {
@@ -55,9 +67,10 @@
         }
 
         /**
+         * Get all resources belong to an item given its id
          *
-         * @param type $itemId
-         * @return type 
+         * @param int $itemId Item id
+         * @return array of resources 
          */
         function getAllResources($itemId = null)
         {
@@ -78,9 +91,10 @@
         }
 
         /**
+         * Get first resource belong to an item given it id
          *
-         * @param type $itemId
-         * @return type 
+         * @param int $itemId Item id
+         * @return array resource
          */
         function getResource($itemId)
         {
@@ -103,12 +117,26 @@
         }
 
         /**
-         *
-         * @param type $resourceId
-         * @param type $code
-         * @return type 
+         * Check if resource id and name exist
+         * 
+         * @deprecated since 2.3
+         * @param int $resourceId
+         * @param string $code
+         * @return bool 
          */
         function getResourceSecure($resourceId, $code)
+        {
+            return $this->existResource($resourceId, $code);
+        }
+        
+        /**
+         * Check if resource id and name exist
+         *
+         * @param int $resourceId
+         * @param string $code
+         * @return bool 
+         */
+        function existResource($resourceId, $code)
         {
             $this->dao->select('COUNT(*) AS numrows') ;
             $this->dao->from( $this->getTableName() ) ;
@@ -130,9 +158,10 @@
         }
 
         /**
+         * Count resouces belong to item given its id
          *
-         * @param type $itemId
-         * @return type 
+         * @param int $itemId Item id
+         * @return int 
          */
         function countResources($itemId = null)
         {
@@ -157,13 +186,15 @@
         }
 
         /**
+         * Get resources, if $itemId is set return resources belong to an item given its id,
+         * can be filtered by $start/$end and ordered by column.
          *
-         * @param type $itemId
-         * @param type $start
-         * @param type $length
-         * @param type $order
-         * @param type $type
-         * @return type 
+         * @param int $itemId Item id
+         * @param int $start beginig
+         * @param int $length ending
+         * @param string $order column order default='pk_i_id'
+         * @param string $type order type [DESC|ASC]
+         * @return array of resources 
          */
         function getResources($itemId = NULL, $start = 0, $length = 10, $order = 'pk_i_id', $type = 'DESC')
         {
@@ -197,8 +228,9 @@
         }
 
         /**
+         * Return table item name
          *
-         * @return type 
+         * @return string table name
          */
         function getTableItemName()
         {
@@ -206,8 +238,9 @@
         }
 
         /**
+         * Return table description name
          *
-         * @return type 
+         * @return string table description name
          */
         function getTableItemDescription()
         {
