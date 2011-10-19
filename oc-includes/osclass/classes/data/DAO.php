@@ -156,7 +156,7 @@
                 return array() ;
             }
 
-            return $result ;
+            return $result->result() ;
         }
 
         /**
