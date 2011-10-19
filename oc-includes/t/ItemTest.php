@@ -341,9 +341,9 @@
         public function testDeleteAll()
         {
             $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
-            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            $this->assertGreaterThan(0, $res, User::newInstance()->dao->lastQuery());
             $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID3']['id']) ;
-            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            $this->assertGreaterThan(0, $res, Item::newInstance()->dao->lastQuery());
         }
     }
 ?>

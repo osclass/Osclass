@@ -139,7 +139,7 @@
         }
         
         /**
-         * Return total of comments, given an item id.
+         * Return total of comments, given an item id. (active & enabled)
          * 
          * @access public
          * @since unknown
@@ -149,16 +149,18 @@
         function totalComments($id)
         {
             $this->dao->select('count(pk_i_id) as total') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $conditions = array('fk_i_item_id'  => $id,
                                 'b_active'      => 1,
                                 'b_enabled'     => 1);
             $this->dao->where($conditions) ;
-            $this->dao->group_by('fk_i_item_id') ;
+            $this->dao->groupBy('fk_i_item_id') ;
             $result = $this->dao->get() ;
             
             if( $result == false ) { 
                 return false;
+            } else if($result->numRows() === 0) {
+                return 0;
             } else {
                 $total = $result->row();
                 return $total['total'];
@@ -202,13 +204,11 @@
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName().' c') ;
-            $this->dao->from('t_item i') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
             
             $conditions = array() ;
             if(is_null($itemId)) {
-                $conditions = array(
-                    'c.fk_i_item_id' => 'i.pk_i_id'
-                );
+                $conditions = 'c.fk_i_item_id = i.pk_i_id';
             } else {
                 $conditions = array(
                     'i.pk_i_id'      => $itemId,
@@ -217,7 +217,7 @@
             }
             
             $this->dao->where($conditions) ;
-            $this->dao->orderBy('dt_pub_date','DESC') ;            
+            $this->dao->orderBy('c.dt_pub_date','DESC') ;            
             $aux = $this->dao->get() ;
             $comments = $aux->result() ;
             
@@ -237,12 +237,11 @@
 
             $lang = osc_current_user_locale() ;
 
-            $this->dao->select('i.*, d.s_title') ;
-            $this->dao->from($this->getTableName().' i') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_item c', 'c.pk_i_id = i.fk_i_item_id') ;
-            $this->dao->join(DB_TABLE_PREFIX.'t_item_description d', 'd.fk_i_item_id = i.fk_i_item_id');
-            $this->dao->groupBy('d.fk_i_item_id');
-            $this->doa->orderBy('pk_i_id', 'DESC');
+            $this->dao->select('c.*,c.s_title as comment_title, d.s_title') ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item i', 'i.pk_i_id = c.fk_i_item_id') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item_description d', 'd.fk_i_item_id = c.fk_i_item_id');
+            $this->dao->orderBy('c.pk_i_id', 'DESC');
             $this->dao->limit(0,$num);
 
             $result = $this->dao->get();
@@ -252,19 +251,19 @@
         /**
          * Extends an array of comments with title / description / what
          * 
-         * @access public
+         * @access private
          * @since unknown
          * @param array $items
          * @return array
          */
-        function extendData($items) 
+        private function extendData($items) 
         {
             $prefLocale = osc_current_user_locale();
 
             $results = array();
             foreach($items as $item) {
                 $this->dao->select() ;
-                $this->dao->from('t_item_description') ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
                 $this->dao->where('fk_i_item_id', $item['fk_i_item_id']) ;
                 $aux = $this->dao->get();
                 $descriptions = $aux->result();

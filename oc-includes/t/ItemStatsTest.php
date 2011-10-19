@@ -101,8 +101,8 @@
             $this->assertTrue($res, Item::newInstance()->dao->lastQuery());
             // item 1 Location -------------------------------------------------
             include_once 'data/ItemLocationData1.1.php';
-            $res = $this->model->insert($array_location1) ;
-            $this->assertTrue($res, $this->model->dao->lastQuery());
+            $res = ItemLocation::newInstance()->insert($array_location1) ;
+            $this->assertTrue($res, $this->model->dao->errorLevel);
             // item 2 ----------------------------------------------------------
             $res = Item::newInstance()->insert($array_set1);
             self::$aInfo['itemID2']['id'] = Item::newInstance()->dao->insertedId();
@@ -112,7 +112,7 @@
             $this->assertTrue($res, Item::newInstance()->dao->lastQuery());
             // item 2 Location -------------------------------------------------
             include_once 'data/ItemLocationData1.2.php';
-            $res = $this->model->insert($array_location2) ;
+            $res = ItemLocation::newInstance()->insert($array_location2) ;
             $this->assertTrue($res, $this->model->dao->lastQuery());
             // stats
             $res = $this->model->emptyRow(self::$aInfo['itemID1']['id']);

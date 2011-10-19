@@ -86,13 +86,13 @@
 
             $result = $this->insert( array(
                 'fk_i_item_id' => $itemId,
-                'dt_date'      => '',
+                'dt_date'      => date('Y-m-d H:i:s'),
                 $column        => 1
             ) ) ;
 
             // duplicated key
             if( $this->dao->getErrorLevel() == 1062 ) {
-                $result = $this->dao->query('UPDATE '.$this->getTableName().' SET i_num_views = i_num_views + 1 WHERE fk_i_item_id = '.$itemId) ;
+                $result = $this->dao->query('UPDATE '.$this->getTableName().' SET '.$column.' = '.$column.' + 1 WHERE fk_i_item_id = '.$itemId) ;
             }
 
             return $result ;

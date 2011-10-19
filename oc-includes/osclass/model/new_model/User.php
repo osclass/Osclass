@@ -232,7 +232,7 @@
          * @return boolean
          */
         public function deleteUser($id = null)
-            {
+        {
             if($id!=null) {
 //                osc_run_hook('delete_user', $id);
                 
@@ -246,6 +246,8 @@
                 foreach($items as $item) {
                     $itemManager->deleteByPrimaryKey($item['pk_i_id']);
                 }
+                
+                ItemComment::newInstance()->delete(array('fk_i_user_id' => $id));
                 
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id)) ;
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id', $id)) ;
