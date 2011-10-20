@@ -67,7 +67,7 @@
          * @param string $userId
          * @return array  
          */
-        function getAlertsFromUser($userId) 
+        function findByUser($userId) 
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -90,7 +90,7 @@
          * @param string $email
          * @return array
          */
-        function getAlertsFromEmail($email) 
+        function findByEmail($email) 
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -113,7 +113,7 @@
          * @param string $type
          * @return array 
          */
-        function getAlertsByType($type) 
+        function findByType($type) 
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -137,7 +137,7 @@
          * @param bool $active
          * @return array
          */
-        function getAlertsByTypeGroup($type, $active = FALSE) 
+        function findByTypeGroup($type, $active = FALSE) 
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -167,7 +167,7 @@
          * 
          * WARNIGN doble where!
          */
-        function getAlertsBySearchAndType($search, $type)
+        function findBySearchAndType($search, $type)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
@@ -197,7 +197,7 @@
          * @param bool $active
          * @return array
          */
-        function getUsersBySearchAndType($search, $type, $active = FALSE) 
+        function findUsersBySearchAndType($search, $type, $active = FALSE) 
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
@@ -227,7 +227,7 @@
          * @param string $type
          * @return array
          */
-        function getAlertsFromUserByType($userId, $type)
+        function findByUserByType($userId, $type)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());
@@ -253,7 +253,7 @@
          * @param string $type
          * @return array
          */
-        function getAlertsFromEmailByType($email, $type)
+        function findByEmailByType($email, $type)
         {
             $this->dao->select();
             $this->dao->from($this->getTableName());

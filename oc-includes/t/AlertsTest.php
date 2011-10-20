@@ -52,24 +52,24 @@
             $type        = 'DAILY';
             
             $res = $this->model->createAlert( 0, $s_email, $s_search, $s_secret, $type) ;
-            $this->assertTrue($res, $this->model->dao->error_level ) ;
+            $this->assertTrue($res, true ) ;
             // same s_search return FALSE
             $res = $this->model->createAlert( 0, $s_email, $s_search, $s_secret, $type) ;
-            $this->assertFalse($res, $this->model->dao->error_level ) ;
+            $this->assertFalse($res, true ) ;
             
             for($i=0; $i<10;$i++){
                 $s_secret    = osc_genRandomPassword();
                 array_push(self::$aSecret, $s_secret) ;
                 $s_search = base64_encode($i) ;
                 $res = $this->model->createAlert( 0, $s_email, $s_search, $s_secret, $type) ;
-                $this->assertTrue($res, $this->model->dao->error_level ) ;
+                $this->assertTrue($res, $this->model->dao->getErrorLevel() ) ;
             }
             
             for($i=1; $i<11;$i++){
                 $s_secret    = osc_genRandomPassword();
                 $s_search = base64_encode($i-1) ;
                 $res = $this->model->createAlert( $i, $s_email, $s_search, $s_secret, $type) ;
-                $this->assertTrue($res, $this->model->dao->error_level ) ;
+                $this->assertTrue($res, $this->model->dao->getErrorLevel() ) ;
             }
             
             $s_email = "new@email.com" ;
@@ -78,14 +78,14 @@
                 $s_secret    = osc_genRandomPassword();
                 $s_search = base64_encode($i-2) ;
                 $res = $this->model->createAlert( $i, $s_email, $s_search, $s_secret, $type) ;
-                $this->assertTrue($res, $this->model->dao->error_level ) ;
+                $this->assertTrue($res, $this->model->dao->getErrorLevel() ) ;
             }
         }
         
         public function testGetAlertsFromUser()
         {
             // assert count($array_result)
-            $result = $this->model->getAlertsFromUser(1) ;
+            $result = $this->model->findByUser(1) ;
             $this->assertEquals('1', count($result)) ;
             
             // assert keys & values
@@ -111,30 +111,30 @@
         public function  testGetAlertsFromEmail()
         {
             $s_email     = 'test@email.com';
-            $result = $this->model->getAlertsFromEmail($s_email) ;
+            $result = $this->model->findByEmail($s_email) ;
             $this->assertEquals('21', count($result)) ;
             $row = $result[0] ;
             $this->assertEquals($s_email, $row['s_email']) ;
             
             $s_email = 'new@email.com' ;
-            $result = $this->model->getAlertsFromEmail($s_email) ;
+            $result = $this->model->findByEmail($s_email) ;
             $this->assertEquals('10', count($result)) ;
             $row = $result[0] ;
             $this->assertEquals($s_email, $row['s_email']) ;
             
-            $result = $this->model->getAlertsFromEmail('inexistene@email.com') ;
+            $result = $this->model->findByEmail('inexistene@email.com') ;
             $this->assertEquals('0', count($result)) ;
         }
         
         public function testGetAlertsByType()
         {
-            $result = $this->model->getAlertsByType('DAILY') ;
+            $result = $this->model->findByType('DAILY') ;
             $this->assertEquals('21', count($result)) ;
             
-            $result = $this->model->getAlertsByType('WEEKLY') ;
+            $result = $this->model->findByType('WEEKLY') ;
             $this->assertEquals('10', count($result)) ;
             
-            $result = $this->model->getAlertsByType('FOOBAR') ;
+            $result = $this->model->findByType('FOOBAR') ;
             $this->assertEquals('0', count($result)) ;
         }
         
@@ -144,70 +144,70 @@
             $array = self::$aSecret;
             foreach($array as $secret) {
                 $res = $this->model->activate($email, $secret) ;
-                $this->assertEquals('1', $res, $this->model->dao->last_query()) ;
+                $this->assertEquals('1', $res, $this->model->dao->lastQuery()) ;
             }
         }
         
         public function testGetAlertsByTypeGroup()
         {
-            $result = $this->model->getAlertsByTypeGroup('DAILY') ;
-            $this->assertEquals('11', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findByTypeGroup('DAILY') ;
+            $this->assertEquals('11', count($result), $this->model->dao->lastQuery()) ;
             
-            $result = $this->model->getAlertsByTypeGroup('DAILY', TRUE) ;
-            $this->assertEquals('10', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findByTypeGroup('DAILY', TRUE) ;
+            $this->assertEquals('10', count($result), $this->model->dao->lastQuery()) ;
             
-            $result = $this->model->getAlertsByTypeGroup('WEEKLY') ;
-            $this->assertEquals('10', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findByTypeGroup('WEEKLY') ;
+            $this->assertEquals('10', count($result), $this->model->dao->lastQuery()) ;
             
-            $result = $this->model->getAlertsByTypeGroup('WEEKLY', TRUE) ;
-            $this->assertEquals('0', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findByTypeGroup('WEEKLY', TRUE) ;
+            $this->assertEquals('0', count($result), $this->model->dao->lastQuery()) ;
         }
         
         public function testGetAlertsBySearchAndType()
         {
             $search = base64_encode('1') ;
             $type   = 'DAILY' ;
-            $result = $this->model->getAlertsBySearchAndType($search, $type) ;
-            $this->assertEquals('2', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findBySearchAndType($search, $type) ;
+            $this->assertEquals('2', count($result), $this->model->dao->lastQuery()) ;
             
             $type   = 'WEEKLY' ;
-            $result = $this->model->getAlertsBySearchAndType($search, $type) ;
-            $this->assertEquals('1', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findBySearchAndType($search, $type) ;
+            $this->assertEquals('1', count($result), $this->model->dao->lastQuery()) ;
         }
         
         public function testGetUsersBySearchAndType()
         {
             $search = base64_encode('1') ;
             $type   = 'DAILY' ;
-            $result = $this->model->getUsersBySearchAndType($search, $type) ;
-            $this->assertEquals('1', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findUsersBySearchAndType($search, $type) ;
+            $this->assertEquals('1', count($result), $this->model->dao->lastQuery()) ;
             
-            $result = $this->model->getUsersBySearchAndType($search, $type, FALSE) ;
-            $this->assertEquals('1', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findUsersBySearchAndType($search, $type, FALSE) ;
+            $this->assertEquals('1', count($result), $this->model->dao->lastQuery()) ;
         }
         
         public function testGetAlertsFromUserByType()
         {
             $type  = 'DAILY' ;
-            $result = $this->model->getAlertsFromUserByType('1', $type) ;
-            $this->assertEquals('1', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findByUserByType('1', $type) ;
+            $this->assertEquals('1', count($result), $this->model->dao->lastQuery()) ;
         }
      
         public function testGetAlertsFromEmailByType()
         {
             $email = 'test@email.com' ;
             $type  = 'DAILY' ;
-            $result = $this->model->getAlertsFromEmailByType($email, $type);
-            $this->assertEquals('21', count($result), $this->model->dao->last_query()) ;
+            $result = $this->model->findByEmailByType($email, $type);
+            $this->assertEquals('21', count($result), $this->model->dao->lastQuery()) ;
         }
         
         public function testDelete()
         {
             $conditions = array('s_email' => 'test@email.com') ;
-            $res = $this->model->dao->delete( $this->model->table_name, $conditions ) ;
-            $this->assertTrue($res, $this->model->dao->last_query()) ;
-            $res = $this->model->dao->delete( $this->model->table_name, array('s_email' => 'new@email.com' ) ) ;
-            $this->assertTrue($res, $this->model->dao->last_query()) ;
+            $res = $this->model->dao->delete( $this->model->getTableName(), $conditions ) ;
+            $this->assertTrue($res, $this->model->dao->lastQuery()) ;
+            $res = $this->model->dao->delete( $this->model->getTableName(), array('s_email' => 'new@email.com' ) ) ;
+            $this->assertTrue($res, $this->model->dao->lastQuery()) ;
         }
     }
     

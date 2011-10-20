@@ -73,7 +73,7 @@
                                         $this->redirectTo( osc_user_profile_url() ) ;
                 break ;
                 case('alerts'):         //alerts
-                                        $aAlerts = Alerts::newInstance()->getAlertsFromUser( Session::newInstance()->_get('userId') ) ;
+                                        $aAlerts = Alerts::newInstance()->findByUser( Session::newInstance()->_get('userId') ) ;
                                         $user = User::newInstance()->findByPrimaryKey( Session::newInstance()->_get('userId'));
                                         foreach($aAlerts as $k => $a) {
                                             $search = osc_unserialize(base64_decode($a['s_search'])) ;

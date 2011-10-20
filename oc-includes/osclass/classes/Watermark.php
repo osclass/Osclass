@@ -177,37 +177,37 @@ class Watermark{
      * @param array $opt
      * @return array
      */
-    private function calculateOffset($image,$text) { //, array $opt) {
-        $offset = array('x' => 0, 'y' => 0);
+    private function calculateOffset($image,$text) {
+        $offset = array('x' => 0, 'y' => 0) ;
 
         // get image size and calculate bounding box
-        $isize  = $this->getImageSize($image);
-        $bbox   = $this->calculateBBox($text);
+        $isize  = $this->getImageSize($image) ;
+        $bbox   = $this->calculateBBox($text) ;
 
-        switch(osc_watermark_place()) {
+        switch( osc_watermark_place() ) {
             case 'tl':
-                $offset['x'] = 1;
-                $offset['y'] = $bbox['height']+1;
-                break;
+                $offset['x'] = $bbox['height'] ;
+                $offset['y'] = $bbox['height'] * 1.5 ;
+            break ;
             case 'tr':
-                $offset['x'] = $isize['x'] - $bbox['top_right']['x']-1;
-                $offset['y'] = $bbox['height']+1;
-                break;
+                $offset['x'] = $isize['x'] - ($bbox['width'] + $bbox['height']) ;
+                $offset['y'] = $bbox['height'] * 1.5 ;
+            break ;
             case 'bl':
-                $offset['x'] = 1;
-                $offset['y'] = $isize['y']-1;
-                break;
+                $offset['x'] = $bbox['height'] ;
+                $offset['y'] = $isize['y'] - $bbox['height'] ;
+            break ;
             case 'br':
-                $offset['x'] = $isize['x'] - $bbox['top_right']['x']-1;
-                $offset['y'] = $isize['y']-1;
-                break;
+                $offset['x'] = $isize['x'] - ($bbox['width'] + $bbox['height']) ;
+                $offset['y'] = $isize['y'] - $bbox['height'] ;
+            break ;
             default:
                 $offset['x'] = ($isize['x'] / 2) - ($bbox['top_right']['x'] / 2) ;
                 $offset['y'] = ($isize['y'] / 2) - ($bbox['top_right']['y'] / 2) ;
-                break;
+            break ;
         }
 
-        return $offset;
+        return $offset ;
     }
 
     /**
