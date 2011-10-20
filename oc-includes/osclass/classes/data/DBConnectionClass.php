@@ -466,8 +466,8 @@
         /**
          * It returns database link connection
          * 
-         * @param type $connId Database connector link
-         * @return mysqli|boolean mysqli link connector if it's correct, or false if the dabase connection
+         * @param mysqli $connId Database connector link
+         * @return mixed mysqli link connector if it's correct, or false if the dabase connection
          * hasn't been done.
          */
         function _getDb(&$connId)

@@ -17,159 +17,170 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-     /**
-      * 
-      */
+    /**
+     * Database command object
+     * 
+     * @package OSClass
+     * @subpackage Database
+     * @since 2.3
+     */
 	class DBCommandClass
 	{
         /**
-         *
-         * @var type 
+         * Database connection object to OSClass database
+         * 
+         * @access private
+         * @since 2.3
+         * @var mysqli 
          */
         var $connId ;
         /**
-         *
-         * @var type 
+         * Database result object
+         * 
+         * @access public
+         * @since 2.3
+         * @var MySQLi_Result 
          */
         var $resultId ;
         
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $queries ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $queryTimes ;
         /**
          *
-         * @var type 
+         * @var int 
          */
         var $queryCount ;
 
         /**
          *
-         * @var type 
+         * @var int 
          */
         var $errorLevel ;
         /**
          *
-         * @var type 
+         * @var string 
          */
         var $errorDesc ;
 
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aSelect ;
         /* var $aDistinct ; */
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aFrom ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aJoin ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aWhere ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aLike ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aGroupby ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aHaving ;
         /* var $aKeys ; */
         /**
          *
-         * @var type 
+         * @var mixed 
          */
         var $aLimit ;
         /**
          *
-         * @var type 
+         * @var mixed 
          */
         var $aOffset ;
         /**
          *
-         * @var type 
+         * @var mixed 
          */
         var $aOrder ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aOrderby ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aSet ;
         /**
          *
-         * @var type 
+         * @var array 
          */
         var $aWherein ;
         /* var $aAliasedTables ; */
         /* var $aStoreArray ; */
 
         /**
-         *
-         * @var type 
+         * 
+         * @var LogDatabase 
          */
         var $log ;
 
         /**
-         *
-         * @param type $conn_id 
+         * Initializate variables
+         * 
+         * @param mysqli $connId 
          */
         function __construct(&$connId)
         {
-            $this->connId          = &$connId ;
-            $this->resultId        = 0 ;
+            $this->connId     = &$connId ;
+            $this->resultId   = 0 ;
 
-            $this->queries          = array() ;
-            $this->queryTimes      = array() ;
-            $this->queryCount      = 0 ;
+            $this->queries    = array() ;
+            $this->queryTimes = array() ;
+            $this->queryCount = 0 ;
 
-            $this->errorLevel      = 0 ;
-            $this->errorDesc       = "" ;
+            $this->errorLevel = 0 ;
+            $this->errorDesc  = "" ;
 
-            $this->aSelect         = array() ;
-            $this->aFrom           = array() ;
-            $this->aJoin           = array() ;
-            $this->aWhere          = array() ;
-            $this->aLike           = array() ;
-            $this->aGroupby        = array() ;
-            $this->aHaving         = array() ;
-            $this->aLimit          = false ;
-            $this->aOffset         = false ;
-            $this->aOrder          = false ;
-            $this->aOrderby        = array() ;
-            $this->aWherein        = array() ;
+            $this->aSelect    = array() ;
+            $this->aFrom      = array() ;
+            $this->aJoin      = array() ;
+            $this->aWhere     = array() ;
+            $this->aLike      = array() ;
+            $this->aGroupby   = array() ;
+            $this->aHaving    = array() ;
+            $this->aLimit     = false ;
+            $this->aOffset    = false ;
+            $this->aOrder     = false ;
+            $this->aOrderby   = array() ;
+            $this->aWherein   = array() ;
 
-            $this->log             = LogDatabase::newInstance() ;
+            $this->log        = LogDatabase::newInstance() ;
         }
 
         /**
-         * 
+         * Unset connection and result objects
          */
         function __destruct()
         {
@@ -178,8 +189,12 @@
         }
 
         /**
-         *
-         * @return type 
+         * It creates a new DBCommandClass object or if it has been created before, it 
+         * returns the previous object
+         * 
+         * @access public
+         * @since 2.3
+         * @return DBCommandClass 
          */
         public static function newInstance()
         {
@@ -190,8 +205,10 @@
         }
 
         /**
-         * Set SELECT parameter
+         * Set SELECT clause
          * 
+         * @access public
+         * @since 2.3
          * @param mixed $select It can be a string or array
          * @return DBCommandClass 
          */
@@ -213,7 +230,7 @@
         }
 
         /**
-         * Set FROM parameter
+         * Set FROM clause
          * 
          * @param mixed $from It can be a string or array
          * @return DBCommandClass 
@@ -236,10 +253,13 @@
         }
 
         /**
-         *
-         * @param type $table
-         * @param type $cond
-         * @param type $type
+         * Set JOIN clause
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $table
+         * @param string $cond
+         * @param string $type It can be: LEFT, RIGHT, OUTER, INNER, LEFT OUTER or RIGHT OUTER
          * @return DBCommandClass 
          */
         function join($table, $cond, $type = '')
@@ -261,30 +281,42 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $value 
+         * Set WHERE clause using OR operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $value 
+         * @return DBCommandClass 
          */
         function where($key, $value = null)
         {
-            $this->_where($key, $value, 'AND ') ;
+            return $this->_where($key, $value, 'AND ') ;
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $value 
+         * Set WHERE clause using OR operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $value 
+         * @return DBCommandClass 
          */
         function orWhere($key, $value = null)
         {
-            $this->_where($key, $value, 'OR ') ;
+            return $this->_where($key, $value, 'OR ') ;
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $value
-         * @param type $type 
+         * Set WHERE clause
+         * 
+         * @access private
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $value
+         * @param string $type
+         * @return DBCommandClass 
          */
         function _where($key, $value = null, $type = 'AND ')
         {
@@ -311,10 +343,13 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $values
-         * @return type 
+         * Set WHERE IN clause using AND operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $values
+         * @return DBCommandClass 
          */
         function whereIn($key = null, $values = null)
         {
@@ -322,10 +357,13 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $values
-         * @return type 
+         * Set WHERE IN clause using OR operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $values
+         * @return DBCommandClass 
          */
         function orWhereIn($key = null, $values = null)
         {
@@ -333,10 +371,13 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $values
-         * @return type 
+         * Set WHERE NOT IN clause using AND operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $values
+         * @return DBCommandClass 
          */
         function whereNotIn($key = null, $values = null)
         {
@@ -344,10 +385,13 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $values
-         * @return type 
+         * Set WHERE NOT IN clause using OR operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $values
+         * @return DBCommandClass 
          */
         function orWhereNotIn($key = null, $values = null)
         {
@@ -355,11 +399,14 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $values
-         * @param type $not
-         * @param type $type
+         * Set WHERE IN clause
+         * 
+         * @access private
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $values
+         * @param bool $not
+         * @param string $type
          * @return DBCommandClass 
          */
         function _whereIn($key = null, $values = null, $not = false, $type = 'AND ')
@@ -384,11 +431,13 @@
         }
 
         /**
-         *
+         * Set LIKE clause
+         * 
+         * @access public
          * @param type $field
          * @param type $match
          * @param type $side
-         * @return type 
+         * @return DBCommandClass 
          */
         function like($field, $match = '', $side = 'both')
         {
@@ -396,10 +445,14 @@
         }
 
         /**
+         * Set NOT LIKE clause using AND operator
          *
-         * @param type $field
-         * @param type $match
-         * @param type $side 
+         * @access public
+         * @since 2.3
+         * @param string $field
+         * @param string $match
+         * @param string $side 
+         * @return DBCommandClass
          */
         function notLike($field, $match = '', $side = 'both')
         {
@@ -407,11 +460,14 @@
         }
 
         /**
+         * Set LIKE clause using OR operator
          *
-         * @param type $field
-         * @param type $match
+         * @access public
+         * @since 2.3
+         * @param string $field
+         * @param string $match
          * @param type $side
-         * @return type 
+         * @return string 
          */
         function orLike($field, $match = '', $side = 'both')
         {
@@ -419,11 +475,14 @@
         }
 
         /**
-         *
-         * @param type $field
-         * @param type $match
-         * @param type $side
-         * @return type 
+         * Set NOT LIKE clause using OR operator
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $field
+         * @param string $match
+         * @param string $side
+         * @return DBCommandClass 
          */
         function orNotLike($field, $match = '', $side = 'both')
         {
@@ -431,12 +490,15 @@
         }
 
         /**
-         *
-         * @param type $field
-         * @param type $match
-         * @param type $type
-         * @param type $side
-         * @param type $not
+         * Set LIKE clause
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $field
+         * @param string $match 
+         * @param string $type Types: AND, OR
+         * @param string $side Options: before, after, both
+         * @param string $not Two possibilities: blank or NOT
          * @return DBCommandClass 
          */
         function _like($field, $match = '', $type = 'AND ', $side = 'both', $not = '')
@@ -467,8 +529,11 @@
         }
 
         /**
+         * Fields for GROUP BY clause
          *
-         * @param type $by
+         * @access public
+         * @since 2.3
+         * @param mixed $by
          * @return DBCommandClass 
          */
         function groupBy($by)
@@ -536,9 +601,12 @@
         }
 
         /**
-         *
-         * @param type $orderby
-         * @param type $direction 
+         * Set ORDER BY clause
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $orderby 
+         * @param string $direction Accepted directions: random, asc, desc
          */
         function orderBy($orderby, $direction = '')
         {
@@ -553,9 +621,12 @@
         }
 
         /**
-         *
-         * @param type $value
-         * @param type $offset
+         * Set LIMIT clause
+         * 
+         * @access public
+         * @since 2.3
+         * @param int $value
+         * @param int $offset
          * @return DBCommandClass 
          */
         function limit($value, $offset = '')
@@ -570,8 +641,11 @@
         }
 
         /**
-         *
-         * @param type $offset
+         * Set the offset in the LIMIT clause
+         * 
+         * @access public
+         * @since 2.3
+         * @param int $offset
          * @return DBCommandClass 
          */
         function offset($offset)
@@ -581,10 +655,13 @@
         }
 
         /**
-         *
-         * @param type $table
-         * @param type $set
-         * @return type 
+         * Create the INSERT sql and perform the query
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $table
+         * @param mixed $set
+         * @return boolean 
          */
         function insert($table = '', $set = null)
         {
@@ -610,11 +687,14 @@
         }
 
         /**
-         *
-         * @param type $table
-         * @param type $keys
-         * @param type $values
-         * @return type 
+         * Create the INSERT sql string
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $table
+         * @param array $keys
+         * @param array $values
+         * @return string 
          */
         function _insert($table, $keys, $values)
         {
@@ -622,9 +702,13 @@
         }
 
         /**
+         * Create the REPLACE INTO sql and perform the query
          *
-         * @param type $table
-         * @param type $set 
+         * @access public
+         * @since 2.3
+         * @param mixed $table
+         * @param mixed $set
+         * @return boolean 
          */
         function replace($table = '', $set = null)
         {
@@ -650,11 +734,14 @@
         }
 
         /**
+         * Create the REPLACE INTO sql string
          *
-         * @param type $table
-         * @param type $key
-         * @param type $values
-         * @return type 
+         * @access private
+         * @since 2.3
+         * @param string $table
+         * @param array $key
+         * @param array $values
+         * @return string 
          */
         function _replace($table, $key, $values)
         {
@@ -662,11 +749,14 @@
         }
 
         /**
-         *
-         * @param type $table
-         * @param type $set
-         * @param type $where
-         * @return type 
+         * Create the UPDATE sql and perform the query
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $table
+         * @param mixed $set
+         * @param mixed $where
+         * @return mixed 
          */
         function update($table = '', $set = null, $where = null)
         {
@@ -703,10 +793,14 @@
         }
 
         /**
-         *
-         * @param type $table
-         * @param type $values
-         * @param type $where 
+         * Create the UPDATE sql string
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $table
+         * @param array $values
+         * @param array $where
+         * @return string 
          */
         function _update($table, $values, $where)
         {
@@ -722,10 +816,13 @@
         }
 
         /**
+         * Create the DELETE sql and perform the query
          *
-         * @param type $table
-         * @param type $where
-         * @return type 
+         * @access public
+         * @since 2.3
+         * @param mixed $table
+         * @param mixed $where
+         * @return mixed 
          */
         function delete($table = '', $where = '')
         {
@@ -757,6 +854,16 @@
             return $this->affectedRows() ;
         }
 
+        /**
+         * Create the DELETE sql string
+         *
+         * @access private
+         * @since 2.3
+         * @param string $table
+         * @param array $where
+         * @param array $like
+         * @return string 
+         */
         function _delete($table, $where, $like)
         {
             $conditions = '' ;
@@ -776,11 +883,15 @@
         }
 
         /**
+         * Compile the select sql string and perform the query. Quick method for 
+         * getting the rows of one table
          *
-         * @param type $table
-         * @param type $limit
-         * @param type $offset
-         * @return type 
+         * @access public
+         * @since 2.3
+         * @param mixed $table
+         * @param mixed $limit
+         * @param mixed $offset
+         * @return mixed 
          */
         function get($table = '', $limit = null, $offset = null)
         {
@@ -801,9 +912,12 @@
         }
 
         /**
+         * Performs a query on the database
          *
-         * @param type $sql
-         * @return DBRecordsetClass 
+         * @access public
+         * @since 2.3
+         * @param string $sql
+         * @return mixed 
          */
         function query($sql)
         {
@@ -842,9 +956,12 @@
         }
 
         /**
+         * Performs a query on the database
          *
-         * @param type $sql
-         * @return type 
+         * @access private
+         * @since 2.3
+         * @param string $sql
+         * @return mixed 
          */
         function _execute($sql)
         {
@@ -852,9 +969,12 @@
         }
 
         /**
-         *
-         * @param type $key
-         * @param type $value
+         * Set aSet array
+         * 
+         * @access public
+         * @since 2.3
+         * @param mixed $key
+         * @param mixed $value
          * @return DBCommandClass 
          */
         function set($key, $value = '')
@@ -871,7 +991,10 @@
         }
 
         /**
-         *
+         * Create SELECT sql statement
+         * 
+         * @access private
+         * @since 2.3
          * @return string 
          */
         function _getSelect()
@@ -953,8 +1076,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Gets the number of affected rows in a previous MySQL operation
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
          */
         function affectedRows()
         {
@@ -962,8 +1088,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get last SQL query
+         * 
+         * @access public
+         * @since 2.3
+         * @return string 
          */
         function lastQuery()
         {
@@ -971,8 +1100,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get the ID generated from the previous INSERT operation
+         * 
+         * @access public
+         * @since 2.3
+         * @return mixed 
          */
         function insertedId()
         {
@@ -980,9 +1112,12 @@
         }
 
         /**
-         *
-         * @param type $str
-         * @return type 
+         * Check if the string has an operator
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $str
+         * @return bool 
          */
         function _hasOperator($str)
         {
@@ -996,9 +1131,12 @@
         }
 
         /**
-         *
-         * @param type $sql
-         * @return type 
+         * Check if the sql is a write type such as INSERT, UPDATE, UPDATE...
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $sql
+         * @return bool 
          */
         function isWriteType($sql)
         {
@@ -1010,8 +1148,11 @@
 	    }
 
         /**
-         *
-         * @param type $str
+         * Add the apostrophe if it's an string; 0 or 1 if it's a number; NULL
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $str
          * @return string 
          */
         function escape($str)
@@ -1028,9 +1169,12 @@
         }
 
         /**
-         *
-         * @param type $str
-         * @return type 
+         * Escape the string if it's necessary
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $str
+         * @return string 
          */
         function escapeStr($str, $like = false)
         {
@@ -1048,7 +1192,10 @@
         }
 
         /**
+         * Reset variables used in write sql: aSet, aFrom, aWhere, aLike, aOrderby, aLimit, aOrder
          * 
+         * @access private
+         * @since 2.3
          */
         function _resetWrite()
         {
@@ -1064,7 +1211,11 @@
         }
 
         /**
+         * Reset variables used in select sql: aSelect, aFrom, aJoin, aWhere, aLike, aGroupby, aHaving, 
+         * aOrderby, aWherein, aLimit, aOffset, aOrder
          * 
+         * @access private
+         * @since 2.3
          */
         function _resetSelect()
         {
@@ -1085,8 +1236,11 @@
         }
 
         /**
-         *
-         * @param type $a_reset 
+         * Initializate $aReset variables
+         * 
+         * @access private
+         * @since 2.3
+         * @param array $aReset 
          */
         function _resetRun($aReset){
             foreach ($aReset as $item => $defaultValue) {
