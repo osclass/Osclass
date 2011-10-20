@@ -44,7 +44,7 @@
         public function testFindByLocation()
         {
             $widget = current($this->widgetDAO->findByLocation('header'));
-            $this->assertEquals('HTML', $widget['e_kind'], $this->widgetDAO->dao->last_query() ) ;
+            $this->assertEquals('HTML', $widget['e_kind'], $this->widgetDAO->dao->lastQuery() ) ;
         }
         
     }

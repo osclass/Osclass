@@ -45,9 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_widget') ;
-            $this->set_primary_key('pk_i_id') ;
-            $this->set_fields( array('pk_i_id','s_description','s_location','e_kind','s_content') ) ;
+            $this->setTableName('t_widget') ;
+            $this->setPrimaryKey('pk_i_id') ;
+            $this->setFields( array('pk_i_id','s_description','s_location','e_kind','s_content') ) ;
         }
 
         /**
@@ -58,7 +58,7 @@
         function findByLocation($location)
         {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_location', $location) ;
             $result = $this->dao->get() ;
             return $result->result();
