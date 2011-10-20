@@ -17,9 +17,9 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    require_once '../osclass/classes/data/DBConnectionClass.php' ;
-    require_once '../osclass/classes/data/DBCommandClass.php' ;
-    require_once '../osclass/classes/data/DBRecordsetClass.php' ;
+    require_once '../osclass/classes/database/DBConnectionClass.php' ;
+    require_once '../osclass/classes/database/DBCommandClass.php' ;
+    require_once '../osclass/classes/database/DBRecordsetClass.php' ;
 
     /**
      * Run: $> phpunit DBConnectionClassTest.php

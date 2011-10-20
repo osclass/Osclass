@@ -21,10 +21,10 @@
 
     require_once '../osclass/Logger/LogDatabase.php' ;
     require_once '../osclass/helpers/hDatabaseInfo.php' ;
-    require_once '../osclass/classes/data/DBConnectionClass.php' ;
-    require_once '../osclass/classes/data/DBCommandClass.php' ;
-    require_once '../osclass/classes/data/DBRecordsetClass.php' ;
-    require_once '../osclass/classes/data/DAO.php' ;
+    require_once '../osclass/classes/database/DBConnectionClass.php' ;
+    require_once '../osclass/classes/database/DBCommandClass.php' ;
+    require_once '../osclass/classes/database/DBRecordsetClass.php' ;
+    require_once '../osclass/classes/database/DAO.php' ;
 
     require_once '../osclass/model/new_model/Alerts.php' ;
     require_once '../osclass/helpers/hSecurity.php' ;
