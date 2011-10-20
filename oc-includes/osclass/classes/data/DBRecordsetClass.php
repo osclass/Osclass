@@ -18,45 +18,68 @@
      */
 
     /**
+     * Database recordset object
      * 
+     * @package OSClass
+     * @subpackage Database
+     * @since 2.3
      */
 	class DBRecordsetClass
     {
         /**
-         *
-         * @var type 
+         * Database connection object to OSClass database
+         * 
+         * @access public
+         * @since 2.3
+         * @var mysqli 
          */
 		public $connId ;
         /**
-         *
-         * @var type 
+         * Database result object
+         * 
+         * @access public
+         * @since 2.3
+         * @var MySQLi_Result 
          */
         public $resultId ;
         /**
-         *
-         * @var type 
+         * Result array
+         * 
+         * @access private
+         * @since 2.3
+         * @var array
          */
         public $resultArray ;
         /**
-         *
-         * @var type 
+         * Result object
+         * 
+         * @access private
+         * @since 2.3
+         * @var object
          */
         public $resultObject ;
         /**
-         *
-         * @var type 
+         * Current row
+         * 
+         * @access private
+         * @since 2.3
+         * @var int
          */
-        public $currentRow ;
+        protected $currentRow ;
         /**
-         *
-         * @var type 
+         * Number of rows
+         * 
+         * @access public
+         * @since 2.3
+         * @var int
          */
         public $numRows ;
 
         /**
-         *
-         * @param type $conn_id
-         * @param type $result_id 
+         * Initializate Recordset Class
+         * 
+         * @param mysqli $connId
+         * @param MySQLi_Result $resultId 
          */
         function __construct($connId = null, $resultId = null)
         {
@@ -69,9 +92,12 @@
         }
 
         /**
-         *
-         * @param type $type
-         * @return type 
+         * Get the results of MySQLi_Result object
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $type 
+         * @return mixed It can be an array or an object 
          */
         function result($type = 'array')
         {
@@ -83,8 +109,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get the results of MySQLi_Result object in array format
+         * 
+         * @access public
+         * @since 2.3
+         * @return array 
          */
         function resultArray()
         {
@@ -101,8 +130,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get the results of MySQLi_Result object in object format
+         * 
+         * @access public
+         * @since 2.3
+         * @return object 
          */
         function resultObject()
         {
@@ -119,9 +151,12 @@
         }
 
         /**
-         *
-         * @param type $offset
-         * @return type 
+         * Adjust resultId pointer to the selected row
+         * 
+         * @access private
+         * @since 2.3
+         * @param int $offset Must be between zero and the total number of rows minus one
+         * @return bool true on success or false on failure
          */
         function _dataSeek($offset = 0)
         {
@@ -129,8 +164,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Returns the current row of a result set as an object
+         * 
+         * @access private
+         * @since 2.3
+         * @return object 
          */
         function _fetchObject()
         {
@@ -138,8 +176,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Returns the current row of a result set as an array
+         * 
+         * @access private
+         * @since 2.3
+         * @return array 
          */
         function _fetchArray()
         {
@@ -147,10 +188,11 @@
         }
 
         /**
+         * Get a result row as an array or object
          *
          * @param int $n
-         * @param type $type
-         * @return type 
+         * @param string $type
+         * @return mixed 
          */
         function row($n = 0, $type = 'array')
         {
@@ -166,9 +208,12 @@
         }
 
         /**
-         *
-         * @param type $n
-         * @return type 
+         * Get a result row as an object
+         * 
+         * @access public
+         * @since 2.3
+         * @param int $n
+         * @return object 
          */
         function rowObject($n = 0)
         {
@@ -186,9 +231,12 @@
         }
 
         /**
-         *
-         * @param type $n
-         * @return type 
+         * Get a result row as an array
+         * 
+         * @access public
+         * @since 2.3
+         * @param int $n
+         * @return array
          */
         function rowArray($n = 0)
         {
@@ -206,9 +254,12 @@
         }
 
         /**
-         *
-         * @param type $type
-         * @return type 
+         * Get the first row as an array or object
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $type
+         * @return mixed 
          */
         function firstRow($type = 'array')
         {
@@ -222,9 +273,12 @@
         }
 
         /**
-         *
-         * @param type $type
-         * @return type 
+         * Get the last row as an array or object
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $type
+         * @return mixed 
          */
         function lastRow($type = 'array')
         {
@@ -238,9 +292,12 @@
         }
 
         /**
-         *
-         * @param type $type
-         * @return type 
+         * Get next row as an array or object
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $type
+         * @return mixed 
          */
         function nextRow($type = 'array')
         {
@@ -258,9 +315,12 @@
         }
 
         /**
-         *
-         * @param type $type
-         * @return type 
+         * Get previous row as an array or object
+         * 
+         * @access public
+         * @since 2.3
+         * @param string $type
+         * @return mixed 
          */
         function previousRow($type = 'array')
         {
@@ -278,8 +338,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get number of rows
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
          */
         function numRows()
         {
@@ -287,8 +350,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get the number of fields in a result
+         * 
+         * @access public
+         * @since 2.3
+         * @return int 
          */
         function numFields()
         {
@@ -296,8 +362,11 @@
         }
 
         /**
-         *
-         * @return type 
+         * Get the name of the fields in an array
+         * 
+         * @access public
+         * @since 2.3
+         * @return array 
          */
         function listFields()
         {

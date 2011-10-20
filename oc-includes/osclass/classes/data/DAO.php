@@ -82,14 +82,14 @@
          * 
          * @access public
          * @since unknown
-         * @param string $key
-         * @return boolean|array 
+         * @param string $value
+         * @return mixed If the result has been found, it return the array row. If not, it returns false
          */
-        function findByPrimaryKey($key)
+        function findByPrimaryKey($value)
         {
             $this->dao->select($this->fields) ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->where($this->getPrimaryKey(), $key) ;
+            $this->dao->where($this->getPrimaryKey(), $value) ;
             $result = $this->dao->get() ;
 
             if( $result === false ) {
@@ -110,7 +110,7 @@
          * @since unknown
          * @param array $values Array with keys (database field) and values
          * @param string $key Primary key to be updated
-         * @return boolean|int It return the number of affected rows if the update has been 
+         * @return mixed It return the number of affected rows if the update has been 
          * correct or false if nothing has been modified
          */
         function updateByPrimaryKey($values, $key)
@@ -128,12 +128,13 @@
          * @access public
          * @since unknown
          * @param string $value
-         * @return boolean 
+         * @return mixed It return the number of affected rows if the delete has been 
+         * correct or false if nothing has been modified
          */
-        function deleteByPrimaryKey($key)
+        function deleteByPrimaryKey($value)
         {
             $cond = array(
-                $this->getPrimaryKey() => $key
+                $this->getPrimaryKey() => $value
             ) ;
 
             return $this->delete($cond) ;
@@ -186,7 +187,7 @@
          * @since unknown
          * @param array $values Array with keys (database field) and values
          * @param array $where
-         * @return boolean|int It return the number of affected rows if the update has been 
+         * @return mixed It return the number of affected rows if the update has been 
          * correct or false if nothing has been modified
          */
         function update($values, $where)
@@ -212,7 +213,7 @@
          * @access public
          * @since unknown
          * @param array $where
-         * @return boolean|int  It return the number of affected rows if the delete has been 
+         * @return mixed It return the number of affected rows if the delete has been 
          * correct or false if nothing has been modified
          */
         function delete($where)
