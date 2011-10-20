@@ -52,24 +52,24 @@
             $type        = 'DAILY';
             
             $res = $this->model->createAlert( 0, $s_email, $s_search, $s_secret, $type) ;
-            $this->assertTrue($res, $this->model->dao->error_level ) ;
+            $this->assertTrue($res, true ) ;
             // same s_search return FALSE
             $res = $this->model->createAlert( 0, $s_email, $s_search, $s_secret, $type) ;
-            $this->assertFalse($res, $this->model->dao->error_level ) ;
+            $this->assertFalse($res, true ) ;
             
             for($i=0; $i<10;$i++){
                 $s_secret    = osc_genRandomPassword();
                 array_push(self::$aSecret, $s_secret) ;
                 $s_search = base64_encode($i) ;
                 $res = $this->model->createAlert( 0, $s_email, $s_search, $s_secret, $type) ;
-                $this->assertTrue($res, $this->model->dao->error_level ) ;
+                $this->assertTrue($res, $this->model->dao->getErrorLevel() ) ;
             }
             
             for($i=1; $i<11;$i++){
                 $s_secret    = osc_genRandomPassword();
                 $s_search = base64_encode($i-1) ;
                 $res = $this->model->createAlert( $i, $s_email, $s_search, $s_secret, $type) ;
-                $this->assertTrue($res, $this->model->dao->error_level ) ;
+                $this->assertTrue($res, $this->model->dao->getErrorLevel() ) ;
             }
             
             $s_email = "new@email.com" ;
@@ -78,7 +78,7 @@
                 $s_secret    = osc_genRandomPassword();
                 $s_search = base64_encode($i-2) ;
                 $res = $this->model->createAlert( $i, $s_email, $s_search, $s_secret, $type) ;
-                $this->assertTrue($res, $this->model->dao->error_level ) ;
+                $this->assertTrue($res, $this->model->dao->getErrorLevel() ) ;
             }
         }
         
@@ -204,9 +204,9 @@
         public function testDelete()
         {
             $conditions = array('s_email' => 'test@email.com') ;
-            $res = $this->model->dao->delete( $this->model->table_name, $conditions ) ;
+            $res = $this->model->dao->delete( $this->model->getTableName(), $conditions ) ;
             $this->assertTrue($res, $this->model->dao->lastQuery()) ;
-            $res = $this->model->dao->delete( $this->model->table_name, array('s_email' => 'new@email.com' ) ) ;
+            $res = $this->model->dao->delete( $this->model->getTableName(), array('s_email' => 'new@email.com' ) ) ;
             $this->assertTrue($res, $this->model->dao->lastQuery()) ;
         }
     }
