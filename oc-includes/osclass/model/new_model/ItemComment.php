@@ -232,7 +232,8 @@
          * @param integer $num
          * @return array
          */
-        function getLastComments($num) {
+        function getLastComments($num) 
+        {
             if(!intval($num)) return false;
 
             $lang = osc_current_user_locale() ;

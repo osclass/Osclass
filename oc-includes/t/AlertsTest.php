@@ -205,9 +205,9 @@
         {
             $conditions = array('s_email' => 'test@email.com') ;
             $res = $this->model->dao->delete( $this->model->getTableName(), $conditions ) ;
-            $this->assertTrue($res, $this->model->dao->lastQuery()) ;
+            $this->assertGreaterThan(0,$res, $this->model->dao->lastQuery()) ;
             $res = $this->model->dao->delete( $this->model->getTableName(), array('s_email' => 'new@email.com' ) ) ;
-            $this->assertTrue($res, $this->model->dao->lastQuery()) ;
+            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery()) ;
         }
     }
     

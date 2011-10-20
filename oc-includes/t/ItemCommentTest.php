@@ -73,7 +73,7 @@
     require_once '../osclass/plugins.php' ;
     
     /**
-     * Run: $> phpunit ItemTest.php
+     * Run: $> phpunit ItemCommentTest.php
      */
     class ItemCommentTest extends PHPUnit_Framework_TestCase
     {
@@ -217,15 +217,15 @@
         
         function testDeteteAll()
         {
-//            $res = $this->model->delete(array('s_title' => 'title 9'));
-//            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
-//            
-//            $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
-//            $this->assertGreaterThan(0, $res, User::newInstance()->dao->lastQuery());
-//            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID1']['id']);
-//            $this->assertGreaterThan(0, $res, Item::newInstance()->dao->lastQuery());
-//            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID2']['id']);
-//            $this->assertGreaterThan(0, $res, Item::newInstance()->dao->lastQuery());
+            $res = $this->model->delete(array('s_title' => 'title 9'));
+            $this->assertGreaterThan(0, $res, $this->model->dao->lastQuery());
+            
+            $res = User::newInstance()->deleteUser(self::$aInfo['userID']) ;
+            $this->assertGreaterThan(0, $res, User::newInstance()->dao->lastQuery());
+            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID1']['id']);
+            $this->assertGreaterThan(0, $res, Item::newInstance()->dao->lastQuery());
+            $res = Item::newInstance()->deleteByPrimaryKey(self::$aInfo['itemID2']['id']);
+            $this->assertGreaterThan(0, $res, Item::newInstance()->dao->lastQuery());
         }
     }
 ?>
