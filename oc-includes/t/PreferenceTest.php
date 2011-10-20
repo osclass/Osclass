@@ -46,7 +46,7 @@
         public function testFindByValue()
         {
             $purge_latest_searches = $this->preference->findValueByName('purge_latest_searches') ;
-            $this->assertEquals(1000, $purge_latest_searches, $this->preference->dao->last_query() ) ;
+            $this->assertEquals(1000, $purge_latest_searches, $this->preference->dao->lastQuery() ) ;
         }
     }
     

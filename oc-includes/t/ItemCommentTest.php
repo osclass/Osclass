@@ -70,7 +70,7 @@
     require_once '../osclass/core/Cookie.php';
     require_once '../osclass/core/Session.php';
     require_once '../osclass/core/Translation.php' ;
-    require_once '../osclass/Plugins.php' ;
+    require_once '../osclass/plugins.php' ;
     
     /**
      * Run: $> phpunit ItemTest.php

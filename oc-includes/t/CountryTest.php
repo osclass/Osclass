@@ -43,59 +43,59 @@
 
         public function testFindByPrimaryKey()
         {
-            $country = $this->countryDAO->find_by_primary_key('ES') ;
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
+            $country = $this->countryDAO->findByPrimaryKey('ES') ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
             
-            $country = $this->countryDAO->find_by_primary_key('AZ') ;
-            $this->assertEquals(false, $country, $this->countryDAO->dao->last_query() ) ;
+            $country = $this->countryDAO->findByPrimaryKey('AZ') ;
+            $this->assertEquals(false, $country, $this->countryDAO->dao->lastQuery() ) ;
         }
         
         public function testFindByCode()
         {
             $country = $this->countryDAO->findByCode('ES') ;
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
             
             $country = $this->countryDAO->findbyCode('AZ') ;
-            $this->assertEquals(false, isset($country['s_name']), $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals(false, isset($country['s_name']), $this->countryDAO->dao->lastQuery() ) ;
         }
      
         public function testFindByName()
         {
             $country = $this->countryDAO->findByName('Spain') ;
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
             
             $country = $this->countryDAO->findbyName('España') ;
-            $this->assertEquals(false, isset($country['s_name']), $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals(false, isset($country['s_name']), $this->countryDAO->dao->lastQuery() ) ;
         }
      
         public function testListAll()
         {
             $country = end($this->countryDAO->listAll('en_US'));
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
             
             $country = end($this->countryDAO->listAll('xx_XX'));
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
         }
      
         public function testListAllAdmin()
         {
             $country = end($this->countryDAO->listAllAdmin('en_US'));
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
-            $this->assertEquals('Spain', $country['locales']['en_US'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
+            $this->assertEquals('Spain', $country['locales']['en_US'], $this->countryDAO->dao->lastQuery() ) ;
             
             $country = end($this->countryDAO->listAllAdmin('xx_XX'));
-            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->last_query() ) ;
-            $this->assertEquals('Spain', $country['locales']['en_US'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['s_name'], $this->countryDAO->dao->lastQuery() ) ;
+            $this->assertEquals('Spain', $country['locales']['en_US'], $this->countryDAO->dao->lastQuery() ) ;
         }
      
         
         public function testAjax()
         {
             $country = current($this->countryDAO->ajax('s'));
-            $this->assertEquals('Spain', $country['label'], $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals('Spain', $country['label'], $this->countryDAO->dao->lastQuery() ) ;
             
             $country = current($this->countryDAO->ajax('x'));
-            $this->assertEquals(false, isset($country['label']), $this->countryDAO->dao->last_query() ) ;
+            $this->assertEquals(false, isset($country['label']), $this->countryDAO->dao->lastQuery() ) ;
         }
      
         

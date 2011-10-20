@@ -41,7 +41,7 @@
         private $regions;
         private $countries;
         private $categories;
-        private $fields;
+        private $search_fields;
         private $total_results;
         private static $instance ;
 
@@ -63,7 +63,7 @@
             $this->countries = array();
             $this->categories = array();
             $this->conditions = array();
-            $this->fields = array();
+            $this->search_fields = array();
             $this->tables[] = sprintf('%st_item_description as d, %st_category_description as cd', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             $this->order();
             $this->limit();
@@ -120,7 +120,7 @@
                     $field = trim($field);
                     if($field!='') {
                         if(!in_array($field, $this->fields)) {
-                            $this->fields[] = $field;
+                            $this->search_fields[] = $field;
                         }
                     }
                 }
@@ -130,7 +130,7 @@
                 if($fields!='') {
                     if(!in_array($fields, $this->fields)) {
                         
-                        $this->fields[] = $fields;
+                        $this->search_fields[] = $fields;
                     }
                 }
             }
@@ -387,9 +387,9 @@
             }
 
             $extraFields = "";
-            if( count($this->fields) > 0 ) {
+            if( count($this->search_fields) > 0 ) {
                 $extraFields = ",";
-                $extraFields .= implode(' ,', $this->fields);
+                $extraFields .= implode(' ,', $this->search_fields);
             }
             
 

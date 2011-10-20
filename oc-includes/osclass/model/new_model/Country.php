@@ -45,9 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_country') ;
-            $this->set_primary_key('pk_c_code') ;
-            $this->set_fields( array('pk_c_code', 'fk_c_locale_code', 's_name') ) ;
+            $this->setTableName('t_country') ;
+            $this->setPrimaryKey('pk_c_code') ;
+            $this->setFields( array('pk_c_code', 'fk_c_locale_code', 's_name') ) ;
         }
 
         /**
@@ -57,7 +57,7 @@
          */
         public function findByCode($code) {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', $code) ;
             $this->dao->where('fk_c_locale_code', osc_current_user_locale()) ;
             $result = $this->dao->get() ;
@@ -71,7 +71,7 @@
          */
         public function findByName($name) {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', addslashes($name)) ;
             $result = $this->dao->get() ;
             return $result->row();
@@ -85,7 +85,7 @@
         public function listAll($language = '') {
             if($language=='') { $language = osc_current_user_locale(); }
             $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
-            return $result->result_array();
+            return $result->result();
         }
 
         /**
@@ -96,11 +96,11 @@
         public function listAllAdmin($language = "") {
             if($language=='') { $language = osc_current_user_locale(); }
             $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
-            $countries_temp = $result->result_array();
+            $countries_temp = $result->result();
             $countries = array();
             foreach($countries_temp as $country) {
                 $locales = $this->dao->query(sprintf("SELECT * FROM %st_country WHERE pk_c_code = '%s'", DB_TABLE_PREFIX, $country['pk_c_code']));
-                $locales = $locales->result_array();
+                $locales = $locales->result();
                 foreach($locales as $locale) {
                     $country['locales'][$locale['fk_c_locale_code']] = $locale['s_name'];
                 }
@@ -118,14 +118,14 @@
          */
         public function updateLocale($code, $locale, $name) {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', addslashes($code)) ;
             $this->dao->where('fk_c_locale_code', addslashes($locale)) ;
             $this->dao->limit(1);
             $result = $this->dao->get() ;
-            $country = $result->result_array();
+            $country = $result->result();
             if($country) {
-                return $this->dao->update($this->table_name, array('s_name' => $name), array('pk_c_code' => $code, 'fk_c_locale_code' => $locale));
+                return $this->dao->update($this->getTableName(), array('s_name' => $name), array('pk_c_code' => $code, 'fk_c_locale_code' => $locale));
             } else {
                 return $this->conn->osc_dbExec("INSERT INTO %s (pk_c_code, fk_c_locale_code, s_name) VALUES ('%s', '%s', '%s')", $this->getTableName(), addslashes($code), addslashes($locale), addslashes($name) );
             }
@@ -139,11 +139,11 @@
          */
         public function ajax($query) {
             $this->dao->select('pk_c_code as id, s_name as label, s_name as value') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', addslashes($query), 'after') ;
             $this->dao->limit(5);
             $result = $this->dao->get() ;
-            return $result->result_array();
+            return $result->result();
         }
         
         
