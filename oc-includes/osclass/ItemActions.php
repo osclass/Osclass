@@ -863,7 +863,7 @@
                 $regionId = null;
                 $regionName = $aItem['region'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxRegion  = Region::newInstance()->findByNameOnCountry($aItem['region'], $aItem['countryId'] );
+                    $auxRegion  = Region::newInstance()->findByNameAndCountry($aItem['region'], $aItem['countryId'] );
                     if($auxRegion){
                         $regionId   = $auxRegion['pk_i_id'];
                         $regionName = $auxRegion['s_name'];

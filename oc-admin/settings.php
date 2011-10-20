@@ -198,7 +198,7 @@
                                                                         $regionName  = Params::getParam('region');
                                                                         $countryCode = Params::getParam('country_c_parent');
 
-                                                                        $exists = $mRegions->findByNameAndCode($regionName, $countryCode);
+                                                                        $exists = $mRegions->findByNameAndCountry($regionName, $countryCode);
                                                                         if(!isset($exists['s_name'])) {
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
@@ -893,7 +893,7 @@
             }
 
             foreach($regions as $r) {
-                $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
+                $exists = $manager_region->findByNameAndCountry($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
                     osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;

@@ -34,19 +34,19 @@
 
         public function getTableName() { return DB_TABLE_PREFIX . 't_alerts'; }
 
-        public function getAlertsFromUser($user) {
+        public function findByUser($user) {
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE fk_i_user_id = %d', DB_TABLE_PREFIX, $user);
         }
 
-        public function getAlertsFromEmail($email) {
+        public function findByEmail($email) {
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE s_email LIKE \'%s\'', DB_TABLE_PREFIX, $email);
         }
 
-        public function getAlertsByType($type) {
+        public function findByType($type) {
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type =\'%s\'', DB_TABLE_PREFIX, $type);
         }
 
-        public function getAlertsByTypeGroup($type, $active = FALSE) {
+        public function findByTypeGroup($type, $active = FALSE) {
             if($active) {
                 return $this->conn->osc_dbFetchResults('SELECT s_search,s_secret FROM %st_alerts WHERE e_type =\'%s\' AND b_active = 1 GROUP BY s_search', DB_TABLE_PREFIX, $type);
             }else{
@@ -54,12 +54,12 @@
             }
         }
 
-        public function getAlertsBySearchAndType($search, $type) {
+        public function findBySearchAndType($search, $type) {
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type =\'%s\' AND s_search LIKE \'%s\'', DB_TABLE_PREFIX, $type, addslashes($search));
         }
 
 
-        public function getUsersBySearchAndType($search, $type, $active = FALSE) {
+        public function findUsersBySearchAndType($search, $type, $active = FALSE) {
             if($active) {
                 return $this->conn->osc_dbFetchResults('SELECT a.s_email, a.fk_i_user_id FROM %st_alerts as a WHERE a.e_type =\'%s\' AND b_active = 1 AND a.s_search LIKE \'%s\' ', DB_TABLE_PREFIX, $type, addslashes($search));
             }else{
@@ -67,11 +67,11 @@
             }
         }
 
-        public function getAlertsFromUserByType($user, $type) {
+        public function findByUserByType($user, $type) {
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND fk_i_user_id = %d', DB_TABLE_PREFIX, $type, $user);
         }
 
-        public function getAlertsFromEmailByType($email, $type) {
+        public function findByEmailByType($email, $type) {
             return $this->conn->osc_dbFetchResults('SELECT * FROM %st_alerts WHERE e_type = \'%s\' AND s_email LIKE \'%s\'', DB_TABLE_PREFIX, $type, $email);
         }
 

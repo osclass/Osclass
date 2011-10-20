@@ -45,9 +45,9 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_region') ;
-            $this->set_primary_key('pk_i_id') ;
-            $this->set_fields( array('pk_i_id', 'fk_c_country_code', 's_name', 'b_active') ) ;
+            $this->setTableName('t_region') ;
+            $this->setPrimaryKey('pk_i_id') ;
+            $this->setFields( array('pk_i_id', 'fk_c_country_code', 's_name', 'b_active') ) ;
         }
 
         /**
@@ -57,9 +57,9 @@
          */
         public function getByCountry($country_id) {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('fk_c_country_code', addslashes($country_id)) ;
-            $this->dao->order_by('s_name', 'ASC');
+            $this->dao->orderBy('s_name', 'ASC');
             $result = $this->dao->get() ;
             return $result->result();
         }
@@ -71,24 +71,8 @@
          */
         public function findByName($name) {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
-            $this->dao->limit(1);
-            $result = $this->dao->get() ;
-            return $result->row();
-        }
-
-        /**
-         *
-         * @param type $name
-         * @param type $code
-         * @return array
-         */
-        public function findByNameAndCode($name, $code) {
-            $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
-            $this->dao->where('s_name', $name) ;
-            $this->dao->where('fk_c_country_code', $code) ;
             $this->dao->limit(1);
             $result = $this->dao->get() ;
             return $result->row();
@@ -100,9 +84,9 @@
          * @param type $country
          * @return array
          */
-        public function findByNameOnCountry($name, $country = null) {
+        public function findByNameAndCountry($name, $country = null) {
             $this->dao->select('*') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
             if($country!=null) {
                 $this->dao->where('fk_c_country_code', $country) ;
@@ -119,7 +103,7 @@
          */
         public function ajax($query, $country = null) {
             $this->dao->select('pk_i_id, s_name, s_name') ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
             if($country!=null) {
                 $this->dao->where('fk_c_country_code', strtolower($country)) ;
