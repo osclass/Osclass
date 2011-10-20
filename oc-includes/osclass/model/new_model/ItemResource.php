@@ -69,6 +69,8 @@
         /**
          * Get all resources belong to an item given its id
          *
+         * @access public
+         * @since unknown
          * @param int $itemId Item id
          * @return array of resources 
          */
@@ -93,6 +95,8 @@
         /**
          * Get first resource belong to an item given it id
          *
+         * @access public
+         * @since unknown
          * @param int $itemId Item id
          * @return array resource
          */
@@ -132,6 +136,8 @@
         /**
          * Check if resource id and name exist
          *
+         * @access public
+         * @since unknown
          * @param int $resourceId
          * @param string $code
          * @return bool 
@@ -160,6 +166,8 @@
         /**
          * Count resouces belong to item given its id
          *
+         * @access public
+         * @since unknown
          * @param int $itemId Item id
          * @return int 
          */
@@ -189,6 +197,8 @@
          * Get resources, if $itemId is set return resources belong to an item given its id,
          * can be filtered by $start/$end and ordered by column.
          *
+         * @access public
+         * @since unknown
          * @param int $itemId Item id
          * @param int $start beginig
          * @param int $length ending
@@ -230,6 +240,8 @@
         /**
          * Return table item name
          *
+         * @access public
+         * @since unknown
          * @return string table name
          */
         function getTableItemName()
@@ -240,6 +252,8 @@
         /**
          * Return table description name
          *
+         * @access public
+         * @since unknown
          * @return string table description name
          */
         function getTableItemDescription()

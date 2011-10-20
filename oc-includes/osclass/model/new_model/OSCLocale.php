@@ -70,8 +70,10 @@
         /**
          * Return all locales enabled.
          *
-         * @param boolean $isBo
-         * @param boolean $indexedByKk
+         * @access public
+         * @since unknown
+         * @param boole $isBo
+         * @param boole $indexedByKk
          * @return array
          */
         function listAllEnabled($isBo = false, $indexedByPk = false) 
@@ -101,8 +103,10 @@
         /**
          * Delete all related to locale code.
          *
+         * @access public
+         * @since unknown
          * @param string $locale
-         * @return boolean
+         * @return bool
          */
         public function deleteLocale($locale) {
             osc_run_hook('delete_locale', $locale);

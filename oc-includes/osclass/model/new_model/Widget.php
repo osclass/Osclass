@@ -52,6 +52,8 @@
 
         /**
          *
+         * @access public
+         * @since unknown
          * @param type $location
          * @return array
          */

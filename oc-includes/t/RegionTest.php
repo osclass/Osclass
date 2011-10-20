@@ -70,22 +70,22 @@
         }
 
         public function testFindByNameAndCountry() {
-            $region = $this->regionDAO->findByNameAndCountry('Barcelona', 'es');
+            $region = $this->regionDAO->findByName('Barcelona', 'es');
             $this->assertEquals('Barcelona', $region['s_name'], $this->regionDAO->dao->lastQuery() ) ;
             
-            $region = $this->regionDAO->findByNameAndCountry('barCElona', 'es');
+            $region = $this->regionDAO->findByName('barCElona', 'es');
             $this->assertEquals('Barcelona', $region['s_name'], $this->regionDAO->dao->lastQuery() ) ;
             
-            $region = $this->regionDAO->findByNameAndCountry('false name', 'es');
+            $region = $this->regionDAO->findByName('false name', 'es');
             $this->assertEquals(false, isset($region['s_name']), $this->regionDAO->dao->lastQuery() ) ;
 
-            $region = $this->regionDAO->findByNameAndCountry('Barcelona');
+            $region = $this->regionDAO->findByName('Barcelona');
             $this->assertEquals('Barcelona', $region['s_name'], $this->regionDAO->dao->lastQuery() ) ;
             
-            $region = $this->regionDAO->findByNameAndCountry('barCElona');
+            $region = $this->regionDAO->findByName('barCElona');
             $this->assertEquals('Barcelona', $region['s_name'], $this->regionDAO->dao->lastQuery() ) ;
             
-            $region = $this->regionDAO->findByNameAndCountry('false name');
+            $region = $this->regionDAO->findByName('false name');
             $this->assertEquals(false, isset($region['s_name']), $this->regionDAO->dao->lastQuery() ) ;
         }
         

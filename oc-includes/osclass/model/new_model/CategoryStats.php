@@ -174,7 +174,7 @@
          * @param array $cat category array
          * @return int
          */
-        function getNumItems($cat) 
+        public function getNumItems($cat) 
         {
             static $numItemsMap = null;
             if(is_null($numItemsMap)) {

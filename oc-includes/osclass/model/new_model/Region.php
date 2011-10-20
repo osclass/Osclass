@@ -51,7 +51,9 @@
         }
 
         /**
-         *
+         * Gets all regions from a country
+         * @access public
+         * @since unknown
          * @param type $country_id
          * @return array
          */
@@ -65,26 +67,15 @@
         }
 
         /**
-         *
-         * @param type $name
+         * Find a region by its name and country
+         * 
+         * @access public
+         * @since unknown
+         * @param string $name
+         * @param string $country
          * @return array
          */
-        public function findByName($name) {
-            $this->dao->select('*') ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $name) ;
-            $this->dao->limit(1);
-            $result = $this->dao->get() ;
-            return $result->row();
-        }
-
-        /**
-         *
-         * @param type $name
-         * @param type $country
-         * @return array
-         */
-        public function findByNameAndCountry($name, $country = null) {
+        public function findByName($name, $country = null) {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
@@ -97,7 +88,10 @@
         }
         
         /**
-         *
+         * Function to deal with ajax queries
+         * 
+         * @access public
+         * @since unknown
          * @param type $query
          * @return array
          */

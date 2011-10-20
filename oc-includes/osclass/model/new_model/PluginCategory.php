@@ -55,7 +55,10 @@
         }
 
         /**
-         *
+         * Return all information given a category id
+         * 
+         * @access public
+         * @since unknown
          * @param type $categoryId
          * @return type 
          */
@@ -75,9 +78,12 @@
         }
 
         /**
-         *
-         * @param type $plugin
-         * @return type 
+         * Return list of categories asociated with a plugin
+         * 
+         * @access public
+         * @since unknown
+         * @param string $plugin
+         * @return array
          */
         function listSelected($plugin)
         {
@@ -100,17 +106,20 @@
         }
 
         /**
-         *
-         * @param type $categoryName
-         * @param type $categoryId
-         * @return type 
+         * Check if a category is asociated with a plugin
+         * 
+         * @access public
+         * @since unknown
+         * @param string $pluginName
+         * @param int $categoryId
+         * @return bool 
          */
-        function isThisCategory($categoryName, $categoryId)
+        function isThisCategory($pluginName, $categoryId)
         {
             $this->dao->select('COUNT(*) AS numrows') ;
             $this->dao->from( $this->getTableName() ) ;
             $this->dao->where('fk_i_category_id', $categoryId) ;
-            $this->dao->where('s_plugin_name', $categoryName) ;
+            $this->dao->where('s_plugin_name', $pluginName) ;
 
             $result = $this->dao->get() ;
 

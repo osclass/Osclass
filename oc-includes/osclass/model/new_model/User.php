@@ -86,9 +86,11 @@
         }
         
         /**
-         * 
+         * Find an user by its primary key
          *
-         * @param integer $id
+         * @access public
+         * @since unknown
+         * @param int $id
          * @param string $locale
          * @return array
          */
@@ -122,7 +124,10 @@
         }
         
         /**
+         * Find an user by its email
          *
+         * @access public
+         * @since unknown
          * @param string $email
          * @return array
          */
@@ -143,8 +148,10 @@
         }
         
         /**
-         * 
+         * Find an user by its id and password
          *
+         * @access public
+         * @since unknown
          * @param string $key
          * @param string $password
          * @return array
@@ -170,8 +177,10 @@
         }
         
         /**
-         * 
+         * Find an user by its id and secret
          *
+         * @access public
+         * @since unknown
          * @param string $id
          * @param string $secret 
          */
@@ -198,6 +207,8 @@
         /**
          * 
          *
+         * @access public
+         * @since unknown
          * @param string $id
          * @param string $secret
          * @return array
@@ -226,10 +237,12 @@
         }
         
         /**
-         * 
+         * Delete an user given its id
          *
-         * @param integer $id
-         * @return boolean
+         * @access public
+         * @since unknown
+         * @param int $id
+         * @return bool
          */
         public function deleteUser($id = null)
         {
@@ -258,8 +271,11 @@
         }
         
         /**
-         *
-         * @param integer $id
+         * Insert users' description
+         * 
+         * @access private
+         * @since unknown
+         * @param int $id
          * @param string $locale
          * @param string $info
          * @return array
@@ -282,11 +298,14 @@
         }
         
         /**
-         *
-         * @param integer $id
+         * Update users' description
+         * 
+         * @access public
+         * @since unknown
+         * @param int $id
          * @param string $locale
          * @param string $info
-         * @return boolean
+         * @return bool
          */
         public function updateDescription($id, $locale, $info)
         {
@@ -307,9 +326,12 @@
         }
         
         /**
-         *
+         * Check if a description exists
+         * 
+         * @access public
+         * @since unknown
          * @param array $conditions
-         * @return boolean
+         * @return bool
          */
         private function existDescription($conditions)
         {

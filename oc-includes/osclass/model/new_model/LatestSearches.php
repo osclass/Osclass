@@ -56,7 +56,9 @@
         /**
          * Get last searches, given a limit.
          * 
-         * @param integer $limit
+         * @access public
+         * @since unknown
+         * @param int $limit
          * @return array
          */
         function getSearches($limit = 20)
@@ -78,7 +80,9 @@
         /**
          * Get last searches, given since time.
          * 
-         * @param integer $time
+         * @access public
+         * @since unknown
+         * @param int $time
          * @return array
          */
         function getSearchesByDate($time = null) 
@@ -103,8 +107,10 @@
         /**
          * Purge all searches by date.
          * 
+         * @access public
+         * @since unknown
          * @param string $date
-         * @return boolean
+         * @return bool
          */
         function purgeDate($date = null) 
         {
@@ -118,8 +124,10 @@
         /**
          * Purge n last searches.
          *
-         * @param integer $number
-         * @return boolean
+         * @access public
+         * @since unknown
+         * @param int $number
+         * @return bool
          */
         public function purgeNumber($number = null) {
             if($number!=null) {

@@ -52,6 +52,8 @@
 
         /**
          *
+         * @access public
+         * @since unknown
          * @param type $id
          * @return array
          */
@@ -61,6 +63,8 @@
         
         /**
          *
+         * @access public
+         * @since unknown
          * @param type $userEmailTmp
          * @return array
          */

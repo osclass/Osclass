@@ -94,6 +94,13 @@
          //   $this->conn = getConnection();
         }
 
+        /**
+         * Add conditions to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $conditions
+         */
         public function addConditions($conditions) {
             if(is_array($conditions)) {
                 foreach($conditions as $condition) {
@@ -114,6 +121,13 @@
             }
         }
 
+        /**
+         * Add new fields to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $fields
+         */
         public function addField($fields) {
             if(is_array($fields)) {
                 foreach($fields as $field) {
@@ -136,6 +150,13 @@
             }
         }
 
+        /**
+         * Add extra table to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $tables
+         */
         public function addTable($tables) {
 
             if(is_array($tables)) {
@@ -157,6 +178,15 @@
             }
         }
 
+        /**
+         * Establish the order of the search
+         *
+         * @access public
+         * @since unknown
+         * @param string $o_c column
+         * @param string $o_d direction
+         * @param string $table
+         */
         public function order($o_c = 'dt_pub_date', $o_d = 'DESC',$table = NULL) {
             if($table == '') {
                 $this->order_column = $o_c;
@@ -173,21 +203,51 @@
             $this->order_direction = $o_d;
         }
 
+        /**
+         * Limit the results of the search
+         *
+         * @access public
+         * @since unknown
+         * @param int $l_i
+         * @param int $t_p_p results per page
+         */
         public function limit($l_i = 0, $r_p_p = 10) {
             $this->limit_init = $l_i;
             $this->results_per_page = $r_p_p;
         }
 
-        public function set_rpp($rpp) {
-            $this->results_per_page = $rpp;
+        /**
+         * Limit the results of the search
+         *
+         * @access public
+         * @since unknown
+         * @param int $t_p_p results per page
+         */
+        public function set_rpp($r_p_p) {
+            $this->results_per_page = $r_p_p;
         }
 
+        /**
+         * Select the page of the search
+         *
+         * @access public
+         * @since unknown
+         * @param int $p page
+         * @param int $t_p_p results per page
+         */
         public function page($p = 0, $r_p_p = null) {
             if($r_p_p!=null) { $this->results_per_page = $r_p_p; };
             $this->limit_init = $this->results_per_page*$p;
             $this->results_per_page = $this->results_per_page;
         }
 
+        /**
+         * Add city areas to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $city_area
+         */
         public function addCityArea($city_area = array()) {
             if(is_array($city_area)) {
                 foreach($city_area as $c) {
@@ -212,6 +272,13 @@
             }
         }
 
+        /**
+         * Add cities to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $city
+         */
         public function addCity($city = array()) {
             if(is_array($city)) {
                 foreach($city as $c) {
@@ -236,6 +303,13 @@
             }
         }
 
+        /**
+         * Add regions to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $region
+         */
         public function addRegion($region = array()) {
             if(is_array($region)) {
                 foreach($region as $r) {
@@ -260,6 +334,13 @@
             }
         }
 
+        /**
+         * Add countries to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $country
+         */
         public function addCountry($country = array()) {
             if(is_array($country)) {
                 foreach($country as $c) {
@@ -284,6 +365,14 @@
             }
         }
 
+        /**
+         * Establish price range
+         *
+         * @access public
+         * @since unknown
+         * @param int $price_min
+         * @param int $price_max
+         */
         public function priceRange( $price_min = 0, $price_max = 0) {
             $price_min = 1000000*$price_min;
             $price_max = 1000000*$price_max;
@@ -295,14 +384,35 @@
             }
         }
 
+        /**
+         * Establish max price
+         *
+         * @access public
+         * @since unknown
+         * @param int $price
+         */
         public function priceMax($price) {
             $this->priceRange(null, $price);
         }
 
+        /**
+         * Establish min price
+         *
+         * @access public
+         * @since unknown
+         * @param int $price
+         */
         public function priceMin($price) {
             $this->priceRange($price, null);
         }
 
+        /**
+         * Filter by ad with picture or not
+         *
+         * @access public
+         * @since unknown
+         * @param bool $pic
+         */
         public function withPicture($pic = false) {
             if($pic) {
                 $this->addTable(sprintf('%st_item_resource', DB_TABLE_PREFIX));
@@ -312,6 +422,13 @@
             }
         }
 
+        /**
+         * Return ads from specified users
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $id
+         */
         public function fromUser($id = NULL) {
             if(is_array($id)) {
                 $ids = array();
@@ -324,6 +441,13 @@
             }
         }
 
+        /**
+         * Clear the categories
+         *
+         * @access private
+         * @since unknown
+         * @param array $branches
+         */
         private function pruneBranches($branches = null) {
             if($branches!=null) {
                 foreach($branches as $branch) {
@@ -337,6 +461,13 @@
             }
         }
 
+        /**
+         * Add categories to the search
+         *
+         * @access public
+         * @since unknown
+         * @param mixed $category
+         */
         public function addCategory($category = null)
         {
             if($category == null) return '' ;
@@ -355,6 +486,13 @@
         }
         
 
+        /**
+         * Make the SQL for the search with all the conditions and filters specified
+         *
+         * @access public
+         * @since unknown
+         * @param bool $count
+         */
         public function makeSQL($count = false) {
 
             if(count($this->city_areas)>0) {
@@ -404,6 +542,14 @@
         }
 
 
+        /**
+         * Make the SQL for the location search (returns number of ads from each location)
+         *
+         * @access public
+         * @since unknown
+         * @deprecated it's not used anymore by OSClass' core
+         * @param string $location
+         */
         public function makeSQLLocation($location = 's_city') {
             
             $this->addTable(sprintf("%st_item_location", DB_TABLE_PREFIX));
@@ -419,6 +565,12 @@
             return $this->sql;
         }
 
+        /**
+         * Return number of ads selected
+         *
+         * @access public
+         * @since unknown
+         */
         public function count() {
             if( is_null($this->total_results) ) {
                 $this->doSearch();
@@ -427,6 +579,13 @@
             return $this->total_results;
         }
 
+        /**
+         * Perform the search
+         *
+         * @access public
+         * @since unknown
+         * @param bool $extended if you want to extend ad's data
+         */
         public function doSearch($extended = true) {
             $result = $this->dao->query($this->makeSQL(false));
             // get total items
@@ -446,6 +605,13 @@
             }
         }
 
+        /**
+         * Return premium ads related to the search
+         *
+         * @access public
+         * @since unknown
+         * @param int $max
+         */
         public function getPremiums($max = 2) {
             $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC') ;
             $this->page(0, $max);
@@ -464,6 +630,14 @@
             return Item::newInstance()->extendData($items);
         }
         
+        /**
+         * Returns number of ads from each country
+         *
+         * @access public
+         * @since unknown
+         * @param string $zero if you want to include locations with zero results
+         * @param string $order
+         */
         public function listCountries($zero = ">", $order = "items DESC") {
 
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
@@ -476,6 +650,15 @@
             return $result->resultArray();
         }
 
+        /**
+         * Returns number of ads from each region
+         *
+         * @access public
+         * @since unknown
+         * @param string $country
+         * @param string $zero if you want to include locations with zero results
+         * @param string $order
+         */
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") {
 
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
@@ -489,6 +672,15 @@
 
         }
 
+        /**
+         * Returns number of ads from each city
+         *
+         * @access public
+         * @since unknown
+         * @param string $region
+         * @param string $zero if you want to include locations with zero results
+         * @param string $order
+         */
         public function listCities($region = null, $zero = ">", $order = "items DESC") {
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
@@ -512,6 +704,15 @@
             }
         }
 
+        /**
+         * Returns number of ads from each city area
+         *
+         * @access public
+         * @since unknown
+         * @param string $city
+         * @param string $zero if you want to include locations with zero results
+         * @param string $order
+         */
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC") {
             $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));

@@ -133,54 +133,7 @@
         }
 
         /**
-         * 
-         * 
-         * @access public
-         * @since unknown
-         * @param string $cityName
-         * @param int $regionId
-         * @return array If there's an error or 0 results, it returns an empty array
-         */
-        function findByNameAndRegion($cityName, $regionId)
-        {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_i_region_id', $regionId) ;
-            $this->dao->where('s_name', $cityName) ;
-            $this->dao->limit(1) ;
-
-            $result = $this->dao->get() ;
-
-            if( $result == false ) {
-                return array() ;
-            }
-
-            return $result->row() ;
-        }
-
-        /**
-         *
-         * @param string $cityName
-         * @return If there's an error or 0 results, it returns an empty array 
-         */
-        function findByName($cityName)
-        {
-            $this->dao->select($this->getFields()) ;
-            $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', $cityName) ;
-            $this->dao->limit(1) ;
-
-            $result = $this->dao->get() ;
-
-            if( $result == false ) {
-                return array() ;
-            }
-
-            return $result->row() ;
-        }
-
-        /**
-         * 
+         * Get the citiy by its name and region
          * 
          * @access public
          * @since unknown
@@ -188,15 +141,15 @@
          * @param int $regionId
          * @return array 
          */
-        function findByNameOnRegion($cityName, $regionId)
+        function findByName($cityName, $regionId = null)
         {
             $this->dao->select($this->getFields()) ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $cityName) ;
+            $this->dao->limit(1) ;
             if( $regionId != null ) {
                 $this->dao->where('fk_i_region_id', $regionId) ;
             }
-            $this->dao->limit(1) ;
 
             $result = $this->dao->get() ;
 
@@ -206,6 +159,7 @@
 
             return $result->row() ;
         }
+
 
     }
 

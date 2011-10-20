@@ -56,7 +56,10 @@
         }
 
         /**
-         *
+         * Find a value by its name
+         * 
+         * @access public
+         * @since unknown
          * @param type $name
          * @return type 
          */
@@ -78,6 +81,8 @@
         /**
          * Find array preference for a given section
          *
+         * @access public
+         * @since unknown
          * @param string $name
          * @return array 
          */
@@ -97,6 +102,9 @@
         
         /**
          * Modify the structure of table.
+         *
+         * @access public
+         * @since unknown
          */
         public function toArray() 
         {
@@ -113,6 +121,8 @@
         /**
          * Get value, given a preference name and a section name.
          * 
+         * @access public
+         * @since unknown
          * @param string $key
          * @param string $section
          * @return string
@@ -128,6 +138,8 @@
         /**
          * Set preference value, given a preference name and a section name.
          *
+         * @access public
+         * @since unknown
          * @param string $key
          * @param string$value
          * @param string $section 
@@ -140,6 +152,8 @@
         /**
          * Replace preference value, given preference name, preference section and type value.
          *
+         * @access public
+         * @since unknown
          * @param string $key
          * @param string $value
          * @param string $section

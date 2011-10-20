@@ -42,7 +42,7 @@
             return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_i_region_id = %d ORDER BY s_name ASC", $this->getTableName(), $region_id);
         }
 
-        public function findByNameAndRegion($name, $region_id) {
+        public function findByName($name, $region_id) {
             return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' AND fk_i_region_id = %d LIMIT 1", $this->getTableName(), addslashes($name), $region_id);
         }
 
@@ -50,7 +50,7 @@
             return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' LIMIT 1", $this->getTableName(), addslashes($name));
         }
 
-        public function findByNameOnRegion($query, $region) {
+        public function findUsersBySearchAndType($query, $region) {
             $region_sql = ($region != null) ? ' AND fk_i_region_id = ' . addslashes($region) . ' ' : '';
             return $this->conn->osc_dbFetchResult("SELECT pk_i_id, s_name, s_name FROM %s WHERE s_name LIKE '%s' %s LIMIT 1", $this->getTableName(), addslashes($query), $region_sql);
         }

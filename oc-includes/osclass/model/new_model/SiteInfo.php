@@ -82,6 +82,8 @@
 
         /**
          *
+         * @access public
+         * @since unknown
          * @param type $key
          * @return type 
          */
@@ -96,6 +98,8 @@
 
         /**
          *
+         * @access public
+         * @since unknown
          * @param type $value
          * @return type 
          */
@@ -115,6 +119,8 @@
 
         /**
          * 
+         * @access public
+         * @since unknown
          * @param type $table
          * @return type 
          */

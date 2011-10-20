@@ -51,7 +51,10 @@
         }
 
         /**
-         *
+         * Find a country by its ISO code
+         * 
+         * @access public
+         * @since unknown
          * @param type $code
          * @return array
          */
@@ -65,7 +68,10 @@
         }
 
         /**
-         *
+         * Find a country by its name
+         * 
+         * @access public
+         * @since unknown
          * @param type $name
          * @return array
          */
@@ -78,7 +84,10 @@
         }
 
         /**
-         *
+         * List all the countries
+         * 
+         * @access public
+         * @since unknown
          * @param type $language
          * @return array
          */
@@ -89,7 +98,10 @@
         }
 
         /**
-         *
+         * List all countries for admin panel
+         * 
+         * @access public
+         * @since unknown
          * @param type $language
          * @return array
          */
@@ -110,7 +122,10 @@
         }
 
         /**
-         *
+         * Update a country by its locale
+         * 
+         * @access public
+         * @since unknown
          * @param type $code
          * @param type $locale
          * @param type $name
@@ -133,7 +148,10 @@
 
         
         /**
-         *
+         * Function that work with the ajax file
+         * 
+         * @access public
+         * @since unknown
          * @param type $query
          * @return array
          */

@@ -70,6 +70,8 @@
         /**
          * Increase the stat column given column name and item id
          *
+         * @access public
+         * @since unknown
          * @param string $column
          * @param int $itemId
          * @return bool 
@@ -101,6 +103,8 @@
         /**
          * Insert an empty row into table item stats
          *
+         * @access public
+         * @since unknown
          * @param int $itemId Item id
          * @return bool 
          */

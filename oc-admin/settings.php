@@ -198,7 +198,7 @@
                                                                         $regionName  = Params::getParam('region');
                                                                         $countryCode = Params::getParam('country_c_parent');
 
-                                                                        $exists = $mRegions->findByNameAndCountry($regionName, $countryCode);
+                                                                        $exists = $mRegions->findByName($regionName, $countryCode);
                                                                         if(!isset($exists['s_name'])) {
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
@@ -253,7 +253,7 @@
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
-                                                                    $exists = $mCities->findByNameAndRegion($newCity, $regionId);
+                                                                    $exists = $mCities->findByName($newCity, $regionId);
                                                                     if(!isset($exists['s_name'])) {
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
@@ -893,7 +893,7 @@
             }
 
             foreach($regions as $r) {
-                $exists = $manager_region->findByNameAndCountry($r->name, $r->country_code);
+                $exists = $manager_region->findByName($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
                     osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;

@@ -863,7 +863,7 @@
                 $regionId = null;
                 $regionName = $aItem['region'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxRegion  = Region::newInstance()->findByNameAndCountry($aItem['region'], $aItem['countryId'] );
+                    $auxRegion  = Region::newInstance()->findByName($aItem['region'], $aItem['countryId'] );
                     if($auxRegion){
                         $regionId   = $auxRegion['pk_i_id'];
                         $regionName = $auxRegion['s_name'];
@@ -886,7 +886,7 @@
                 $cityId = null;
                 $cityName = $aItem['city'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxCity = city::newInstance()->findByNameOnRegion($aItem['city'], $aItem['regionId'] );
+                    $auxCity = city::newInstance()->findUsersBySearchAndType($aItem['city'], $aItem['regionId'] );
                     if($auxCity){
                         $cityId   = $auxCity['pk_i_id'];
                         $cityName = $auxCity['s_name'];
