@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,83 +20,69 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+     * Page DAO
+     */
     class Page extends DAO
     {
         /**
-         * The columns defined in page table.
          *
-         * @access private
-         * @var array
+         * @var type 
          */
-        private $columns;
-
-        /**
-         * The columns defined in page description table.
-         *
-         * @access private
-         * @var array
-         */
-        private $columns_desc;
-
         private static $instance ;
 
-        public function __construct() {
-            parent::__construct();
-
-            $this->columns      = array('pk_i_id', 's_internal_name', 'b_indelible', 'dt_pub_date, dt_mod_date', 'i_order');
-            $this->columns_desc = array('fk_i_pages_id', 'fk_c_locale_code', 's_title', 's_text');
-        }
-
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
         /**
-         * Return's the name of the table.
-         *
-         * @return string table name.
+         * 
          */
-        public function getTableName()
+        function __construct()
         {
-            return DB_TABLE_PREFIX . 't_pages';
+            parent::__construct();
+            $this->set_table_name('t_pages') ;
+            $this->set_primary_key('pk_i_id') ;
+            $array_fields = array(
+                's_internal_name',
+                'b_indelible',
+                'dt_pub_date', 
+                'dt_mod_date', 
+                'i_order');
+            $this->set_fields($array_fields) ;
         }
-
-        /**
-         * Return's the name of the description table.
-         *
-         * @return string description table name.
-         */
-        public function getDescriptionTableName()
-        {
-            return DB_TABLE_PREFIX . 't_pages_description';
-        }
-
+        
         /**
          * Find a page by page id.
          *
+         * @access public
+         * @since unknown
          * @param int $id Page id.
          * @param string $locale By default is null but you can specify locale code.
          * @return array Page information. If there's no information, return an empty array.
          */
-        public function findByPrimaryKey($id, $locale = null)
+        function findByPrimaryKey($id, $locale = null)
         {
-            $sql = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->getTableName();
-            $sql .= ' WHERE ' . $this->getPrimaryKey() . ' = ' . $id;
-            $row = $this->conn->osc_dbFetchResult($sql);
+            $result = $this->dao->findbyPrimaryKey($id) ;
+            $row = $result->row() ;
 
             if(is_null($row)) {
                 return array();
             }
 
-            $sql_desc = 'SELECT ' . implode(', ', $this->columns_desc) . ' FROM ';
-            $sql_desc .= $this->getDescriptionTableName() . ' WHERE fk_i_pages_id = ' . $id;
+            // page_description
+            $this->dao->select() ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_pages_description') ;
+            $this->dao->where('fk_i_pages_id', $id) ;
             if(!is_null($locale)) {
-                $sql_desc .= ' AND fk_c_locale_code  = \'' . $locale . '\' ';
+                $this->dao->where('fk_c_locale_code', $locale) ;
             }
-            $sub_rows = $this->conn->osc_dbFetchResults($sql_desc);
+            $result = $this->dao->get() ;
+            $sub_rows = $result->result() ;
 
             $row['locale'] = array();
             foreach($sub_rows as $sub_row) {
@@ -105,51 +91,74 @@
 
             return $row;
         }
-
+        
         /**
          * Find a page by internal name.
          *
+         * @access public
+         * @since unknown
          * @param string $intName Internal name of the page to find.
          * @param string $locale Locale string.
          * @return array It returns page fields. If it has no results, it returns an empty array.
          */
-        public function findByInternalName($intName, $locale = null)
+        function findByInternalName($intName, $locale = null)
         {
-            $sql = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->getTableName();
-            $sql .= ' WHERE s_internal_name = \'' . $intName . '\'';
-            $row = $this->conn->osc_dbFetchResult($sql);
-
-            if(count($row) == 0) {
-                return array();
+            $this->dao->select() ;
+            $this->dao->from($this->table_name) ;
+            $this->dao->where('s_internal_name', $intName) ;
+            $result = $this->dao->get() ;
+            
+            $row = array() ;
+            if( $result == false ) {
+                return false ;
+            } else {
+                if($result->num_rows == 0){
+                    return array() ;
+                }else{
+                    $row = $result->row() ;
+                    $result = $this->extendDescription($row, $locale) ;
+                    return $result ;
+                }
             }
-
-            $result = $this->extendDescription($row, $locale);
-            return $result;
         }
-
+        
         /**
          * Find a page by order.
          *
+         * @access public
+         * @since unknown
          * @param int order
          * @return array It returns page fields. If it has no results, it returns an empty array.
          */
-        public function findByOrder($order, $locale = null)
+        function findByOrder($order, $locale = null)
         {
-            $sql = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->getTableName();
-            $sql .= ' WHERE i_order = ' . $order . ' AND b_indelible = 0';
-            $row = $this->conn->osc_dbFetchResult($sql);
-
-            if(count($row) == 0) {
+            $this->dao->select() ;
+            $this->dao->from($this->table_name) ;
+            $array_where = array(
+                'i_order'       => $order,
+                'b_indelible'   => 0
+            );
+            $this->dao->where($array_where) ;
+            $result = $this->dao->get() ;
+            
+            if($result == false){
                 return array();
+            } else {
+                if($result->num_rows == 0) {
+                    return array();
+                }
+                $row = $result->row() ;
+                $result = $this->extendDescription($row, $locale);
+                return $result;
             }
-
-            $result = $this->extendDescription($row, $locale);
-            return $result;
         }
-
+        
+        
         /**
          * Get all the pages with the parameters you choose.
          *
+         * @access public
+         * @since unknown
          * @param bool $indelible It's true if the page is indelible and false if not.
          * @param string $locale It's
          * @param int $start
@@ -159,30 +168,18 @@
          */
         public function listAll($indelible = null, $locale = null, $start = null, $limit = null)
         {
-            $sql = 'SELECT ' . implode(', ', $this->columns) . ' FROM ' . $this->getTableName();
-            $aConditions = array();
+
+            $this->dao->select() ;
+            $this->dao->from($this->table_name) ;
             if(!is_null($indelible)) {
-                $aConditions['b_indelible'] = ($indelible) ? '1' : '0';
+                $this->dao->where('b_indelible', $indelible?1:0);
             }
-
-            if(count($aConditions) > 0) {
-                $sql .= ' WHERE ';
-                $aResultConditions = array();
-                foreach($aConditions as $k => $v) {
-                    $aResultConditions[] = $k . ' = \'' . $v . '\'';
-                }
-                $sql .= implode(' AND ', $aResultConditions);
-            }
-
-            $sql .= " ORDER BY i_order ASC ";
-
+            $this->dao->orderBy('i_order', 'ASC');
             if(!is_null($limit)) {
-                $sql .= ' LIMIT ';
-                if(!is_null($start)) {
-                    $sql .= $start . ',';
-                }
-                $sql .= $limit;
+                $this->dao->limit($limit, $start);
             }
+            $result = $this->dao->get() ;
+            $aPages = $result->results();
 
             $aPages = $this->conn->osc_dbFetchResults($sql);
 
@@ -205,18 +202,22 @@
         /**
          * An array with data of some page, returns the title and description in every language available
          *
+         * @access public
+         * @since unknown
          * @param array $aPage
          * @return array Page information, title and description in every language available
          */
         public function extendDescription($aPage, $locale = null)
         {
+            $this->dao->select();
+            $this->dao->from(sprintf("%st_page_description", DB_ABLE_PREIX));
             $sql = sprintf('SELECT * FROM %s ', $this->getDescriptionTableName());
-            $sql .= sprintf('WHERE fk_i_pages_id = %d', $aPage['pk_i_id']);
+            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']);
             if(!is_null($locale)) {
-                $sql .= ' AND fk_c_locale_code = \'' . $locale . '\'';
+                $this->dao->where('fk_c_locale_code', $locale);
             }
-
-            $descriptions = $this->conn->osc_dbFetchResults($sql);
+            $results = $this->dao->get();
+            $descriptions = $results->results();
 
             if(count($descriptions) == 0) {
                 return array();
@@ -235,6 +236,8 @@
         /**
          * Delete a page by id number.
          *
+         * @access public
+         * @since unknown
          * @param int $id Page id which is going to be deleted
          * @return bool True on successful removal, false on failure
          */
@@ -245,8 +248,8 @@
             
             $this->reOrderPages($order);
 
-            $this->conn->osc_dbExec('DELETE FROM %s WHERE fk_i_pages_id = %d', $this->getDescriptionTableName(), $id);
-            $result = $this->delete(array('pk_i_id' => $id));
+            $result = $this->dao->delete(sprintf('%st_page_description', DB_TABLE_PREFIX), array('pk_i_id' => $id));
+            $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
             if($result > 0) {
                 return true;
             }
@@ -256,6 +259,8 @@
         /**
          * Delete a page by internal name.
          *
+         * @access public
+         * @since unknown
          * @param string $intName Page internal name which is going to be deleted
          * @return bool True on successful removal, false on failure
          */
@@ -276,6 +281,8 @@
         /**
          * Order pages from $order
          *
+         * @access private
+         * @since unknown
          * @param int $order
          */
         private function reOrderPages($order)
@@ -284,7 +291,7 @@
             foreach($aPages as $page){
                 if($page['i_order'] > $order){
                     $new_order = $page['i_order']-1;
-                    $this->update(array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
+                    $this->dao->update($this->tableName, array('i_order' => $new_order), array('pk_i_id' => $page['pk_i_id']) );
                 }
             }
         }
@@ -292,29 +299,36 @@
         /**
          * Insert a new page. You have to pass all the parameters
          *
+         * @access public
+         * @since unknown
          * @param array $aFields Fields to be inserted in pages table
          * @param array $aFieldsDescription An array with the titles and descriptions in every language.
-         * @return boolean True if the insert has been done well and false if not.
+         * @return bool True if the insert has been done well and false if not.
          */
         public function insert($aFields, $aFieldsDescription = null)
         {
-            $sql = "SELECT MAX(i_order) as o FROM ". $this->getTableName() ." WHERE b_indelible = 0";
-            $lastPage = $this->conn->osc_dbFetchResult($sql);
+            $this->dao->select("MAX(i_order) as o");
+            $this->dao->from($this->tableName);
+            $results = $this->dao->get();
+            $lastPage = $results->row();
 
             $order = $lastPage['o'];
             if( is_null($order) ){
                 $order = -1;
             }
+            
+            $this->dao->insert($this->tableName, array(
+                's_internal_name' => $aFields['s_internal_name']
+                ,'b_indelible' => $aFields['b_indelible']
+                ,'dt_pub_date' => date('Y-m-d H:i:s')
+                ,'dt_mod_date' => date('Y-m-d H:i:s')
+                ,'i_order' => ($order+1)
+            ));
 
-            $sql = 'INSERT INTO ' . $this->getTableName() . ' (s_internal_name, b_indelible, dt_pub_date, dt_mod_date, i_order)';
-            $sql .= ' VALUES (\'' . $aFields['s_internal_name'] . '\', ' . '\'' . $aFields['b_indelible'] . '\'';
-            $sql .= ', \''.date('Y-m-d H:i:s').'\', \''.date('Y-m-d H:i:s').'\', '.($order+1).')';
 
-            $this->conn->osc_dBExec($sql);
+            $id = $this->dao->insertedId();
 
-            $id = $this->conn->get_last_id();
-
-            if($this->conn->get_affected_rows() == 0) {
+            if($this->dao->affectedRows() == 0) {
                 return false;
             }
 
@@ -331,6 +345,8 @@
         /**
          * Insert the content (title and description) of a page.
          *
+         * @access private
+         * @since unknown
          * @param int $id Id of the page, it would be the foreign key
          * @param string $locale Locale code of the language
          * @param string $title Text to be inserted in s_title
@@ -342,12 +358,15 @@
             $title = addslashes($title);
             $text  = addslashes($text);
 
-            $sql = 'INSERT INTO ' . $this->getDescriptionTableName() . ' (fk_i_pages_id, fk_c_locale_code, s_title, ';
-            $sql .= 's_text) VALUES (' . sprintf('%d, \'%s\', \'%s\', \'%s\')', $id, $locale, $title, $text);
+            $this->dao->insert(sprintf("%st_page_description", DB_TABLE_PREFIX),array(
+                'fk_i_pages_id' => $id
+                ,'fk_c_locale_code' => $locale
+                ,'s_title' => $title
+                ,'s_text' => $text
+            ));
 
-            $this->conn->osc_dBExec($sql);
-
-            if($this->conn->get_affected_rows() == 0) {
+            
+            if($this->dao->affectedRows() == 0) {
                 return false;
             }
 
@@ -357,6 +376,8 @@
         /**
          * Update the content (title and description) of a page
          *
+         * @access public
+         * @since unknown
          * @param int $id Id of the page id is going to be modified
          * @param string $locale Locale code of the language
          * @param string $title Text to be updated in s_title
@@ -373,42 +394,41 @@
                 return $result;
             }
 
-            $sql = 'UPDATE ' . $this->getDescriptionTableName() . ' SET ';
-            $sql .= ' s_title = \'' . addslashes($title) . '\', s_text = \'' . addslashes($text) . '\'';
-            $sql .= ' WHERE fk_c_locale_code = \'' . $locale . '\' AND fk_i_pages_id = ' . $id;
-
-            $this->conn->osc_dbExec($sql);
-
-            $result = $this->conn->get_affected_rows();
-
-            return $result;
+            return $this->dao->update(sprintf("%st_page_description", DB_TABLE_PREFIX),
+                    array(
+                        's_title' => $title
+                        ,'s_text' => $text
+                    ), array(
+                        'fk_c_locale_code' => $locale
+                        ,'fk_i_pages_id' => $id
+                    ));
         }
 
         /**
          * Check if depending the conditions, the row exists in de DB.
          *
+         * @access public
+         * @since unknown
          * @param array $conditions
          * @return bool Return true if exists and false if not.
          */
         public function existDescription($conditions) {
-            $where = array();
+            $this->dao->select("COUNT(*)");
+            $this->dao->from(sprintf("%st_page_description", DB_TABLE_PREFIX));
             foreach($conditions as $key => $value) {
-                if($key == DB_CUSTOM_COND)
-                    $where[] = $value;
-                else
-                    $where[] = $key . ' = ' . $this->formatValue($value);
+                $this->dao->where($key, $this->formatValue($value));
             }
-            $where = implode(' AND ', $where);
-            $sql  = sprintf("SELECT COUNT(*) FROM %s WHERE " . $where, $this->getDescriptionTableName());
 
-            $result = $this->conn->osc_dbFetchValue($sql);
+            $result = $this->dao->get();
 
-            return (bool) $result;
+            return (bool) $result->row();
         }
 
         /**
          * It change the internal name of a page. Here you don't check if in indelible or not the page.
          *
+         * @access public
+         * @since unknown
          * @param int $id The id of the page to be changed.
          * @param string $intName The new internal name.
          * @return int Number of affected rows.
@@ -419,7 +439,7 @@
                              'dt_mod_date'    => date('Y-m-d H:i:s'));
             $where  = array('pk_i_id' => $id);
 
-            $result = $this->update($fields, $where);
+            $result = $this->dao->update($this->tableName, $fields, $where);
 
             return $result;
         }
@@ -427,6 +447,8 @@
         /**
          * Check if a page id is indelible
          *
+         * @access public
+         * @since unknown
          * @param int $id Page id
          * @return true if it's indelible, false in case not
          */
@@ -442,19 +464,25 @@
         /**
          * Check if Internal Name exists with another id
          *
+         * @access public
+         * @since unknown
          * @param int $id page id
          * @param string $internalName page internal name
          * @return true if internal name exists, false if not
          */
         function internalNameExists($id, $internalName)
         {
-            $result = $this->listWhere('s_internal_name = \'' . $internalName . '\' AND pk_i_id <> ' . $id );
+            $this->dao->select();
+            $this->dao->from($this->tableName);
+            $this->dao->where('s_internal_name', $internalName);
+            $this->dao->where('pk_i_id <> '.$id);
+            $result = $this->dao->get();
             if(count($result) > 0) {
                 return true;
             }
             return false;
         }
-
+        
+        
     }
-
 ?>

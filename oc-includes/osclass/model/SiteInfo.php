@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,38 +20,116 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+     * 
+     */
     class SiteInfo extends DAO
     {
+        /**
+         *
+         * @var type 
+         */
         private static $instance ;
-        private $site_info ;
+        /**
+         *
+         * @var type 
+         */
+        private $daoMetadata ;
+        /**
+         *
+         * @var type 
+         */
+        private $siteInfo ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        /**
+         *
+         * @return type 
+         */
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
+
             return self::$instance ;
         }
 
-        public function __construct() {
-            $this->createMetadataConnection() ;
+        /**
+         * 
+         */
+        public function __construct()
+        {
+            parent::__construct() ;
+
+            $this->setTableName('tbl_sites') ;
+            $this->setPrimaryKey('s_site') ; 
+            $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password') ) ;
+
+            $conn = DBConnectionClass::newInstance() ;
+            $this->daoMetadata = new DBCommandClass($conn->getMetadataDb()) ;
+
             $this->toArray() ;
         }
 
-        public function getTableName() {
-            return 'tbl_sites' ;
-        }
-
-        public function toArray() {
+        /**
+         * 
+         */
+        public function toArray()
+        {
             $domain = $_SERVER['HTTP_HOST'] ;
-            $this->site_info = $this->findByPrimaryKeyInMetadataDB($domain) ;
+            $this->siteInfo = $this->findByPrimaryKey($domain) ;
         }
 
-        public function get($key) {
-            if (!isset($this->site_info[$key])) {
+        /**
+         *
+         * @access public
+         * @since unknown
+         * @param type $key
+         * @return type 
+         */
+        public function get($key)
+        {
+            if (!isset($this->siteInfo[$key])) {
                 return '' ;
             }
-            return ($this->site_info[$key]) ;
+
+            return ($this->siteInfo[$key]) ;
         }
+
+        /**
+         *
+         * @access public
+         * @since unknown
+         * @param type $value
+         * @return type 
+         */
+        public function findByPrimaryKey($value)
+        {
+            $this->daoMetadata->select($this->getFields()) ;
+            $this->daoMetadata->from($this->getTableName()) ;
+            $this->daoMetadata->like('s_site', $value, 'both') ;
+            $result = $this->daoMetadata->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            return $result->row() ;
+        }
+
+        /**
+         * 
+         * @access public
+         * @since unknown
+         * @param type $table
+         * @return type 
+         */
+        public function setTableName($table)
+        {
+            return $this->tableName = $table ;
+        }
+
     }
 
+    /* file end: ./oc-includes/osclass/model/new_model/SiteInfo.php */
 ?>

@@ -320,7 +320,7 @@
                     if (!$error) {
                         try {
                             $categoryManager = Category::newInstance();
-                            $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                            $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
                         } catch (Exception $e) {
                             $error = 1;
                             $message = __("Error while updating.");

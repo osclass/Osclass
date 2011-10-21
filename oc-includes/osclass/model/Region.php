@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,40 +20,98 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class Region extends DAO {
-
+    /**
+     * 
+     */
+    class Region extends DAO
+    {
+        /**
+         *
+         * @var type 
+         */
         private static $instance ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function getTableName() { return DB_TABLE_PREFIX . 't_region'; }
+        /**
+         * 
+         */
+        function __construct()
+        {
+            parent::__construct();
+            $this->setTableName('t_region') ;
+            $this->setPrimaryKey('pk_i_id') ;
+            $this->setFields( array('pk_i_id', 'fk_c_country_code', 's_name', 'b_active') ) ;
+        }
 
+        /**
+         * Gets all regions from a country
+         * @access public
+         * @since unknown
+         * @param type $country_id
+         * @return array
+         */
         public function getByCountry($country_id) {
-            return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE fk_c_country_code = '%s' ORDER BY s_name ASC", $this->getTableName(), addslashes($country_id));
+            $this->dao->select('*') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('fk_c_country_code', addslashes($country_id)) ;
+            $this->dao->orderBy('s_name', 'ASC');
+            $result = $this->dao->get() ;
+            return $result->result();
         }
 
-        public function findByName($name, $code) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' AND fk_c_country_code = '%s' LIMIT 1", $this->getTableName(), addslashes($name), addslashes($code));
+        /**
+         * Find a region by its name and country
+         * 
+         * @access public
+         * @since unknown
+         * @param string $name
+         * @param string $country
+         * @return array
+         */
+        public function findByName($name, $country = null) {
+            $this->dao->select('*') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('s_name', $name) ;
+            if($country!=null) {
+                $this->dao->where('fk_c_country_code', $country) ;
+            }
+            $this->dao->limit(1);
+            $result = $this->dao->get() ;
+            return $result->row();
         }
-
-        public function findByName($name) {
-            return $this->conn->osc_dbFetchResult("SELECT * FROM %s WHERE s_name = '%s' LIMIT 1", $this->getTableName(), addslashes($name));
-        }
-
+        
+        /**
+         * Function to deal with ajax queries
+         * 
+         * @access public
+         * @since unknown
+         * @param type $query
+         * @return array
+         */
         public function ajax($query, $country = null) {
-            $country_sql = ($country != null) ? ' AND fk_c_country_code LIKE \'' . addslashes(strtolower($country)) . '\' ' : '';
-            return $this->conn->osc_dbFetchResults("SELECT pk_i_id as id, s_name as label, s_name as value FROM %s WHERE s_name LIKE '%s%%' %s LIMIT 5", $this->getTableName(), addslashes($query), $country_sql);
+            $this->dao->select('pk_i_id, s_name, s_name') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->like('s_name', $query, 'after') ;
+            if($country!=null) {
+                $this->dao->where('fk_c_country_code', strtolower($country)) ;
+            }
+            $this->dao->limit(5);
+            $result = $this->dao->get() ;
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
-
-        public function findByName($query, $country) {
-            $country_sql = ($country != null) ? ' AND fk_c_country_code LIKE \'' . addslashes(strtolower($country)) . '\' ' : '';
-            return $this->conn->osc_dbFetchResult("SELECT pk_i_id, s_name, s_name FROM %s WHERE `s_name` LIKE '%s' %s LIMIT 1", $this->getTableName(), addslashes($query), $country_sql);
-        }
+        
+        
     }
 
 ?>

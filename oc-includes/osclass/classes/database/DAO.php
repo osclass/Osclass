@@ -73,7 +73,8 @@
         function __construct()
         {
             $conn              = DBConnectionClass::newInstance() ;
-            $this->dao         = new DBCommandClass($conn->getOsclassDb()) ;
+            $data              = $conn->getOsclassDb();
+            $this->dao         = new DBCommandClass($data) ;
             $this->tablePrefix = DB_TABLE_PREFIX ;
         }
 
