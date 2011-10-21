@@ -37,7 +37,7 @@
                 break;
                 
                 case 'regions': //Return regions given a countryId
-                    $regions = Region::newInstance()->getByCountry(Params::getParam("countryId"));
+                    $regions = Region::newInstance()->findByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
                     break;
                 

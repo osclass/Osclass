@@ -81,9 +81,9 @@
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             if($isBo) {
-                $this->dao->where('b_enabled_bo');
+                $this->dao->where('b_enabled_bo', 1);
             } else {
-                $this->dao->where('b_enabled');
+                $this->dao->where('b_enabled', 1);
             }
             $this->dao->orderBy('s_name', 'ASC') ;
             $result = $this->dao->get();

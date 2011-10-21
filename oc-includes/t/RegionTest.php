@@ -51,10 +51,10 @@
         }
         
         public function testGetByCountry() {
-            $region = current($this->regionDAO->getByCountry('es'));
+            $region = current($this->regionDAO->findByCountry('es'));
             $this->assertEquals('A Coruña', $region['s_name'], $this->regionDAO->dao->lastQuery() ) ;
             
-            $region = current($this->regionDAO->getByCountry('xx'));
+            $region = current($this->regionDAO->findByCountry('xx'));
             $this->assertEquals(false, $region, $this->regionDAO->dao->lastQuery() ) ;
         }
 

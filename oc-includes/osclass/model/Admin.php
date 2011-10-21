@@ -155,6 +155,32 @@
 
             return $result->row() ;
         }
+        
+        /**
+         * Searches for admin information, given a admin id and password.
+         * If credential don't match return false.
+         * 
+         * @access public
+         * @since unknown
+         * @param integer $id
+         * @param string $password
+         * @return array
+         */
+        function findByIdPassword($id, $password) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array( 'pk_i_id'  => $id,
+                                 's_password' => $secret);
+            $this->dao->where($conditions);
+            $result = $this->dao->get();
+
+            if( $result->numRows == 0 ) {
+                return false ;
+            }
+
+            return $result->row() ;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/new_model/Admin.php */

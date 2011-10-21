@@ -57,7 +57,7 @@
          * @param type $country_id
          * @return array
          */
-        public function getByCountry($country_id) {
+        public function findByCountry($country_id) {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('fk_c_country_code', addslashes($country_id)) ;

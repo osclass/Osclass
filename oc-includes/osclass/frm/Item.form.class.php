@@ -183,7 +183,7 @@
             }
             if(count($currencies) > 1 ) {
                 $default_key = null;
-                $currency = Preference::newInstance()->findByConditions(array('s_section' => 'osclass', 's_name' => 'currency')) ;
+                $currency = osc_get_preference('currency');
                 if ( isset($item['fk_c_currency_code']) ) {
                     $default_key = $item['fk_c_currency_code'];
                 } elseif ( is_array($currency) ) {
@@ -257,7 +257,7 @@
                 if( Session::newInstance()->_getForm('regionId') != "" ) {
                     $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
-                        $regions = Region::newInstance()->getByCountry(Session::newInstance()->_getForm('countryId')) ;
+                        $regions = Region::newInstance()->findByCountry(Session::newInstance()->_getForm('countryId')) ;
                     }
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
@@ -290,7 +290,7 @@
                 if( Session::newInstance()->_getForm('cityId') != "" ) {
                     $item['fk_i_city_id'] = Session::newInstance()->_getForm('cityId');
                     if( Session::newInstance()->_getForm('regionId') != "" ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d", Session::newInstance()->_getForm('regionId') ) ;
+                        $cities = City::newInstance()->findByRegion( Session::newInstance()->_getForm('regionId') ) ;
                     }
                 }
                 parent::generic_select('cityId', $cities, 'pk_i_id', 's_name', __('Select a city...'), (isset($item['fk_i_city_id'])) ? $item['fk_i_city_id'] : null) ;

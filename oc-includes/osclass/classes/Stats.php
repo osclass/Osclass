@@ -46,7 +46,8 @@
         function __construct()
         {
             $conn = DBConnectionClass::newInstance() ;
-            $this->conn = new DBCommandClass($conn->getOsclassDb()) ;
+            $data = $conn->getOsclassDb();
+            $this->conn = new DBCommandClass($data) ;
         }
         
         public function new_users_count($from_date, $date = 'day') 
@@ -121,7 +122,7 @@
             
             $this->conn->from(DB_TABLE_PREFIX."t_item") ;
             $this->conn->where("dt_pub_date > '$from_date'") ;
-            $this->conn->orderBy('dt_reg_date', 'DESC') ;
+            $this->conn->orderBy('dt_pub_date', 'DESC') ;
             
             $result = $this->conn->get() ;
             return $result->result() ;
@@ -181,7 +182,7 @@
                 $this->conn->select('MONTHNAME(dt_date) as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired') ;
                 $this->conn->groupBy('MONTH(dt_date)') ;
             } else {
-                $this->conn->select('dt_date as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired FROM %st_item_stats') ;
+                $this->conn->select('dt_date as d_date, SUM(i_num_views) as views, SUM(i_num_spam) as spam, SUM(i_num_repeated) as repeated, SUM(i_num_bad_classified) as bad_classified, SUM(i_num_offensive) as offensive, SUM(i_num_expired) as expired') ;
                 $this->conn->groupBy('DAY(dt_date)') ;
             }
             

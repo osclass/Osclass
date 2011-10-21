@@ -45,15 +45,15 @@
         function __construct()
         {
             parent::__construct();
-            $this->set_table_name('t_pages') ;
-            $this->set_primary_key('pk_i_id') ;
+            $this->setTableName('t_pages') ;
+            $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
                 's_internal_name',
                 'b_indelible',
                 'dt_pub_date', 
                 'dt_mod_date', 
                 'i_order');
-            $this->set_fields($array_fields) ;
+            $this->setFields($array_fields) ;
         }
         
         /**
@@ -67,7 +67,10 @@
          */
         function findByPrimaryKey($id, $locale = null)
         {
-            $result = $this->dao->findbyPrimaryKey($id) ;
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('pk_i_id', $id) ;
+            $result = $this->dao->get() ;
             $row = $result->row() ;
 
             if(is_null($row)) {
@@ -104,7 +107,7 @@
         function findByInternalName($intName, $locale = null)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_internal_name', $intName) ;
             $result = $this->dao->get() ;
             
@@ -133,7 +136,7 @@
         function findByOrder($order, $locale = null)
         {
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             $array_where = array(
                 'i_order'       => $order,
                 'b_indelible'   => 0
@@ -170,7 +173,7 @@
         {
 
             $this->dao->select() ;
-            $this->dao->from($this->table_name) ;
+            $this->dao->from($this->getTableName()) ;
             if(!is_null($indelible)) {
                 $this->dao->where('b_indelible', $indelible?1:0);
             }
@@ -179,9 +182,7 @@
                 $this->dao->limit($limit, $start);
             }
             $result = $this->dao->get() ;
-            $aPages = $result->results();
-
-            $aPages = $this->conn->osc_dbFetchResults($sql);
+            $aPages = $result->result();
 
             if(count($aPages) == 0) {
                 return array();
@@ -210,14 +211,13 @@
         public function extendDescription($aPage, $locale = null)
         {
             $this->dao->select();
-            $this->dao->from(sprintf("%st_page_description", DB_ABLE_PREIX));
-            $sql = sprintf('SELECT * FROM %s ', $this->getDescriptionTableName());
+            $this->dao->from(sprintf("%st_pages_description", DB_TABLE_PREFIX));
             $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']);
             if(!is_null($locale)) {
                 $this->dao->where('fk_c_locale_code', $locale);
             }
             $results = $this->dao->get();
-            $descriptions = $results->results();
+            $descriptions = $results->result();
 
             if(count($descriptions) == 0) {
                 return array();
