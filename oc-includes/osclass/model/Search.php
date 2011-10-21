@@ -589,14 +589,15 @@
         public function doSearch($extended = true) {
             $result = $this->dao->query($this->makeSQL(false));
             // get total items
-            $data  = $this->conn->osc_dbFetchResult('SELECT FOUND_ROWS() as totalItems');
+            $datatmp  = $this->dao->query('SELECT FOUND_ROWS() as totalItems');
+            $data = $datatmp->row();
             if(isset($data['totalItems'])) {
                 $this->total_results = $data['totalItems'];
             } else {
                 $this->total_results = 0;
             }
 
-            $items = $result->resultArray();
+            $items = $result->result();
 
             if($extended) {
                 return Item::newInstance()->extendData($items);

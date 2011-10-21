@@ -841,7 +841,7 @@
 
             $manager_city = new City();
             foreach($countries as $c) {
-                $regions = $manager_region->finbByCountry( $c->id );//listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                $regions = $manager_region->finbByCountry( $c->id );
                 foreach($regions as $region) {
                     $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
                                                          urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;

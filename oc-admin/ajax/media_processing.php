@@ -17,7 +17,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
      
-     class media_processing_ajax extends Item
+     class MediaProcessingAjax
      {
         private $items;
         private $result;

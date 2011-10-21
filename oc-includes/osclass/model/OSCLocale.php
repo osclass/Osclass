@@ -98,7 +98,36 @@
             }
 
             return($aResults) ;
-	}
+        }
+
+        /**
+         * Return all locales by code
+         *
+         * @access public
+         * @since 2.3
+         * @param string $code
+         * @return array
+         */
+        function findByCode($code) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('pk_c_code', $code);
+            $result = $this->dao->get();
+            return $result->result();
+            
+            // TODO : DELETE THIS IS NOT NEEDED
+            /*$aResults = $result->result();
+            if ($indexedByPk) {
+                $aTmp = array() ;
+                for ($i = 0 ; $i < count($aResults) ; $i++) {
+                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
+                }
+                $aResults = $aTmp ;
+            }
+
+            return($aResults) ;*/
+        }
 
         /**
          * Delete all related to locale code.
