@@ -163,5 +163,5 @@
 
     }
 
-    /* file end: ./oc-includes/osclass/model/new_model/City.php */
+    /* file end: ./oc-includes/osclass/model/City.php */
 ?>

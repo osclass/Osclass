@@ -21,7 +21,11 @@
      */
 
     /**
+     * Model database for Region table
      * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class Region extends DAO
     {
@@ -52,16 +56,33 @@
 
         /**
          * Gets all regions from a country
+         * 
          * @access public
          * @since unknown
-         * @param type $country_id
+         * @deprecated since 2.3
+         * @see Region::findByCountry
+         * @param type $countryId
          * @return array
          */
-        public function findByCountry($country_id) {
+        public function getByCountry($countryId)
+        {
+            $this->findByCountry($countryId) ;
+        }
+
+        /**
+         * Gets all regions from a country
+         * 
+         * @access public
+         * @since unknown
+         * @param type $countryId
+         * @return array
+         */
+        public function findByCountry($countryId)
+        {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->where('fk_c_country_code', addslashes($country_id)) ;
-            $this->dao->orderBy('s_name', 'ASC');
+            $this->dao->where('fk_c_country_code', addslashes($countryId)) ;
+            $this->dao->orderBy('s_name', 'ASC') ;
             $result = $this->dao->get() ;
             return $result->result();
         }
@@ -75,7 +96,8 @@
          * @param string $country
          * @return array
          */
-        public function findByName($name, $country = null) {
+        public function findByName($name, $country = null)
+        {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_name', $name) ;
@@ -95,23 +117,23 @@
          * @param type $query
          * @return array
          */
-        public function ajax($query, $country = null) {
+        public function ajax($query, $country = null)
+        {
             $this->dao->select('pk_i_id, s_name, s_name') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
-            if($country!=null) {
+            if($country != null) {
                 $this->dao->where('fk_c_country_code', strtolower($country)) ;
             }
             $this->dao->limit(5);
             $result = $this->dao->get() ;
             if($result) {
                 return $result->result();
-            } else {
-                return array();
             }
+
+            return array() ;
         }
-        
-        
     }
 
+    /* file end: ./oc-includes/osclass/model/Region.php */
 ?>

@@ -208,13 +208,6 @@
                 }
                 parent::generic_select('countryId', $countries, 'pk_c_code', 's_name', __('Select a country...'), (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : null) ;
                 return true ;
-//            } else if ( count($countries) == 1 ) {
-//                if( Session::newInstance()->_getForm('countryId') != "" ) {
-//                    $item['fk_c_country_code'] = Session::newInstance()->_getForm('countryId');
-//                }
-//                parent::generic_input_hidden('countryId', (isset($item['fk_c_country_code'])) ? $item['fk_c_country_code'] : $countries[0]['pk_c_code']) ;
-//                echo '<span>' .$countries[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('country') != "" ) {
                     $item['s_country'] = Session::newInstance()->_getForm('country');
@@ -262,13 +255,6 @@
                 }
                 parent::generic_select('regionId', $regions, 'pk_i_id', 's_name', __('Select a region...'), (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : null) ;
                 return true ;
-//            } else if ( count($regions) == 1 ) {
-//                if( Session::newInstance()->_getForm('regionId') != "" ) {
-//                    $item['fk_i_region_id'] = Session::newInstance()->_getForm('regionId');
-//                }
-//                parent::generic_input_hidden('regionId', (isset($item['fk_i_region_id'])) ? $item['fk_i_region_id'] : $regions[0]['pk_i_id']) ;
-//                echo '<span>' .$regions[0]['s_name'] . '</span>';
-//                return false ;
             } else {
                 if( Session::newInstance()->_getForm('region') != "" ) {
                     $item['s_region'] = Session::newInstance()->_getForm('region');
