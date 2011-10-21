@@ -21,13 +21,17 @@
      */
 
     /**
+     * Model database for Country table
      * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
      */
     class Country extends DAO
     {
         /**
          *
-         * @var type 
+         * @var Country 
          */
         private static $instance ;
 
@@ -58,7 +62,8 @@
          * @param type $code
          * @return array
          */
-        public function findByCode($code) {
+        public function findByCode($code)
+        {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', $code) ;
@@ -75,10 +80,11 @@
          * @param type $name
          * @return array
          */
-        public function findByName($name) {
+        public function findByName($name)
+        {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->where('s_name', addslashes($name)) ;
+            $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
             return $result->row();
         }
@@ -105,7 +111,8 @@
          * @param type $language
          * @return array
          */
-        public function listAllAdmin($language = "") {
+        public function listAllAdmin($language = "")
+        {
             if($language=='') { $language = osc_current_user_locale(); }
             $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %st_country WHERE s_name != \'\' ORDER BY sorter DESC) dummytable GROUP BY pk_c_code ORDER BY s_name ASC',osc_current_user_locale(), $language, DB_TABLE_PREFIX));
             $countries_temp = $result->result();
@@ -131,7 +138,8 @@
          * @param type $name
          * @return array
          */
-        public function updateLocale($code, $locale, $name) {
+        public function updateLocale($code, $locale, $name)
+        {
             $this->dao->select('*') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_c_code', addslashes($code)) ;
@@ -146,7 +154,6 @@
             }
         }
 
-        
         /**
          * Function that work with the ajax file
          * 
@@ -155,16 +162,17 @@
          * @param type $query
          * @return array
          */
-        public function ajax($query) {
+        public function ajax($query)
+        {
             $this->dao->select('pk_c_code as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->like('s_name', addslashes($query), 'after') ;
+            $this->dao->like('s_name', $query, 'after') ;
             $this->dao->limit(5);
             $result = $this->dao->get() ;
             return $result->result();
         }
-        
-        
+
     }
 
+    /* file end: ./oc-includes/osclass/model/Country.php */
 ?>
