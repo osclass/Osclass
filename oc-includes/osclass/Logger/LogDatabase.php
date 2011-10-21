@@ -78,8 +78,17 @@
          */
         public function printMessages()
         {
-            var_dump($this->messages) ;
-            var_dump($this->totalTime()) ;
+//            var_dump($this->messages) ;
+//            var_dump($this->totalTime()) ;
+            foreach($this->messages as $msg){
+                if($msg['errno'] > 0){
+                    echo "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] ";
+                }else{
+                    echo "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] ";
+                }
+                echo $msg['query'];
+                echo '</span><br />';
+            }
         }
 
         public function totalTime()

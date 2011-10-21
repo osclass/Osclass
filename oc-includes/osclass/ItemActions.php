@@ -167,7 +167,7 @@
                     Cookie::newInstance()->set() ;
                 }
 
-                $itemId = $this->manager->getConnection()->get_last_id();
+                $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
                 Params::setParam('itemId', $itemId);
@@ -1021,7 +1021,7 @@
                             $itemResourceManager->insert(array(
                                 'fk_i_item_id' => $itemId
                             )) ;
-                            $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
+                            $resourceId = $itemResourceManager->dao->insertedId();
 
                             // Create normal size
                             $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;

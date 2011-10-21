@@ -115,7 +115,7 @@
             if( $result == false ) {
                 return false ;
             } else {
-                if($result->num_rows == 0){
+                if($result->numRows == 0){
                     return array() ;
                 }else{
                     $row = $result->row() ;
