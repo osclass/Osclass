@@ -116,7 +116,7 @@
             $descriptions = $result->result() ;
 
             $row['locale'] = array();
-            foreach($sub_rows as $sub_row) {
+            foreach($descriptions as $sub_row) {
                 $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
             }
 

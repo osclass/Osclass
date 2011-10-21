@@ -940,7 +940,7 @@
      */    
     function osc_count_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_count('metafields') ;
     }
@@ -952,7 +952,7 @@
      */
     function osc_has_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_next('metafields') ;
     }
@@ -964,7 +964,7 @@
      */
     function osc_get_item_meta() {
         if ( !View::newInstance()->_exists('metafields') ) {
-            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->meta_fields(osc_item_id()) ) ;
+            View::newInstance()->_exportVariableToView('metafields', Item::newInstance()->metaFields(osc_item_id()) ) ;
         }
         return View::newInstance()->_get('metafields') ;
     }
