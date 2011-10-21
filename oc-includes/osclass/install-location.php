@@ -8,7 +8,11 @@ define( 'LIB_PATH', ABS_PATH . 'oc-includes/');
 
 require_once ABS_PATH . 'config.php';
 require_once LIB_PATH . 'osclass/db.php';
-require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DAO.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/formatting.php';

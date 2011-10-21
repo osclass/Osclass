@@ -28,7 +28,11 @@ define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
 define( 'OSC_INSTALLING', 1 );
 
 require_once LIB_PATH . 'osclass/db.php';
-require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DAO.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
