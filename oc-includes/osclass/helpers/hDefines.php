@@ -792,7 +792,7 @@
             if($region=='') {
                 return City::newInstance()->listAll() ;
             } else {
-                return City::newInstance()->listWhere("fk_i_region_id = %d", $region);
+                return City::newInstance()->findByRegion($region) ;
             }
         }
     }

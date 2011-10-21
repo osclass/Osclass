@@ -50,9 +50,9 @@
                                         }
                                         $aCities = array() ;
                                         if( $user['fk_i_region_id'] != '' ) {
-                                            $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$user['fk_i_region_id']) ;
+                                            $aCities = City::newInstance()->findByRegion($user['fk_i_region_id']) ;
                                         } else if( count($aRegions) > 0 ) {
-                                            $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                            $aCities = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']) ;
                                         }
 
                                         //calling the view...

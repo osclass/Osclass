@@ -49,7 +49,7 @@
                                             $aRegions = Region::newInstance()->getByCountry($aCountries[0]['pk_c_code']);
                                         }
                                         if(isset($aRegions[0]['pk_i_id'])) {
-                                            $aCities  = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                            $aCities  = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']) ;
                                         }
 
                                         $this->_exportVariableToView("user", null);
@@ -91,9 +91,9 @@
                                         }
                                         $aCities = array();
                                         if( $aUser['fk_i_region_id']!='' ) {
-                                            $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aUser['fk_i_region_id']) ;
+                                            $aCities = City::newInstance()->findByRegion($aUser['fk_i_region_id']) ;
                                         } else if( count($aRegions) > 0 ) {
-                                            $aCities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$aRegions[0]['pk_i_id']) ;
+                                            $aCities = City::newInstance()->findByRegion($aRegions[0]['pk_i_id']) ;
                                         }
 
                                         $this->_exportVariableToView("user", $aUser);

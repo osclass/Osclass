@@ -42,7 +42,7 @@
                     break;
                 
                 case 'cities': //Returns cities given a regionId
-                    $cities = City::newInstance()->getByRegion(Params::getParam("regionId"));
+                    $cities = City::newInstance()->findByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
                     break;
                 

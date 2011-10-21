@@ -61,9 +61,9 @@
                     }
                     $cities = array();
                     if( isset($this->user['fk_i_region_id']) && $this->user['fk_i_region_id']!='' ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$this->user['fk_i_region_id']) ;
+                        $cities = City::newInstance()->findByRegion($this->user['fk_i_region_id']) ;
                     } else if( count($regions) > 0 ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                        $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                     }
 
                     $this->_exportVariableToView('countries',$countries ) ;
@@ -83,7 +83,7 @@
                         $this->_exportVariableToView('regions', $regions) ;
                         if(Session::newInstance()->_getForm('regionId') != "" ) {
                             $regionId  = Session::newInstance()->_getForm('regionId') ;
-                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regionId ) ;
+                            $cities = City::newInstance()->findByRegion( $regionId ) ;
                             $this->_exportVariableToView('cities', $cities ) ;
                         }
                     }

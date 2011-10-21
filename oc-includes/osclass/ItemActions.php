@@ -886,7 +886,7 @@
                 $cityId = null;
                 $cityName = $aItem['city'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxCity = city::newInstance()->findUsersBySearchAndType($aItem['city'], $aItem['regionId'] );
+                    $auxCity = City::newInstance()->findByName($aItem['city'], $aItem['regionId'] );
                     if($auxCity){
                         $cityId   = $auxCity['pk_i_id'];
                         $cityName = $auxCity['s_name'];
