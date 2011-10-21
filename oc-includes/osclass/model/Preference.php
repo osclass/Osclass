@@ -53,6 +53,7 @@
             $this->setTableName('t_preference') ;
             /* $this->set_primary_key($key) ; // no primary key in preference table */
             $this->setFields( array('s_section', 's_name', 's_value', 'e_type') ) ;
+            $this->toArray();
         }
 
         /**

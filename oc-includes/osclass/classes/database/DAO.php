@@ -354,6 +354,21 @@
         {
             return $this->dao->getErrorDesc() ;
         }
+        
+        
+        /**
+         * Returns the number of rows in the table represented by this object.
+         * 
+         * @access public
+         * @since unknown
+         * @return int
+         */
+        public function count() {
+            $this->dao->select('COUNT(*) AS count');
+            $this->dao->from($this->getTableName()) ;
+            $result = $this->dao->get() ;
+            return $result->row();
+        }        
 	}
 
     /* file end: ./oc-includes/osclass/classes/data/DAO.php */

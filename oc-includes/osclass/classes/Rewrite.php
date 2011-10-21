@@ -36,7 +36,7 @@
             $this->uri = '';
             $this->location = '';
             $this->section = '';
-            parent::__construct() ;
+            //parent::__construct() ;
         }
 
         public static function newInstance()
