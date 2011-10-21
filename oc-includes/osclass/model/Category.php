@@ -496,7 +496,7 @@
             $sql = 'INSERT INTO ' . $this->tableName . ' (' . $columns . ') VALUES (' . $set . ')';
 
             $this->dao->query($sql);
-            $category_id = $this->conn->get_last_id() ;
+            $category_id = $this->dao->insertedId() ;
 
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;

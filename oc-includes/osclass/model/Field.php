@@ -220,7 +220,7 @@
          */
         public function insertField($name, $type, $slug, $required, $options, $categories = null) {
             $this->dao->insert($this->getTableName(), array("s_name" => $name, "e_type" =>$type, "b_required" => $required, "s_slug" => $slug, 's_options' => $options));
-            $id = $this->conn->get_last_id();
+            $id = $this->dao->insertedId();
             if($slug=='') {
                 $this->dao->update($this->getTableName(), array('s_slug' => $id), array('pk_i_id' => $id));
             }
