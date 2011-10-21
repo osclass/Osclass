@@ -87,6 +87,11 @@
         public static function getAllowedColumnsForSorting() {
             return( array('i_price', 'dt_pub_date') ) ;
         }
+        
+        public static function getAllowedTypesForSorting() {
+            return( array('ASC', 'DESC') ) ;
+        }
+        
 
         // juanramon: little hack to get alerts work in search layout
         public function reconnect()
