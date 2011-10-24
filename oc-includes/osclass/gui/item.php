@@ -184,7 +184,11 @@
                     <?php     if(osc_reg_user_can_contact() && osc_is_web_user_logged_in() || !osc_reg_user_can_contact() ) { ?>
                     <div id="contact">
                         <h2><?php _e("Contact publisher", 'modern') ; ?></h2>
-                        <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_item_contact_name(); ?></p>
+                        <?php if(osc_item_user_id()!=null) { ?>
+                            <p class="name"><?php _e('Name', 'modern') ?>: <a href="<?php echo osc_user_public_profile_url(osc_item_user_id())?>" ><?php echo osc_item_contact_name(); ?></a></p>
+                        <?php } else { ?>
+                            <p class="name"><?php _e('Name', 'modern') ?>: <?php echo osc_item_contact_name(); ?></p>
+                        <?php }; ?>
                         <?php if(osc_item_show_email()) { ?>
                         <p class="email"><?php _e('E-mail', 'modern'); ?>: <?php echo osc_item_contact_email(); ?></p>
                         <?php } ?>

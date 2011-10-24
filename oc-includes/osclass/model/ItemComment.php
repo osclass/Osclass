@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,92 +20,273 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-    class ItemComment extends DAO {
-
+    /**
+     * Model database for ItemComment table
+     * 
+     * @package OSClass
+     * @subpackage Model
+     * @since unknown
+     */
+    class ItemComment extends DAO
+    {
+        /**
+         * It references to self object: ItemComment.
+         * It is used as a singleton
+         * 
+         * @access private
+         * @since unknown
+         * @var Item 
+         */
         private static $instance ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        /**
+         * It creates a new ItemComment object class ir if it has been created
+         * before, it return the previous object
+         * 
+         * @access public
+         * @since unknown
+         * @return ItemComment 
+         */
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function getTableName() { return DB_TABLE_PREFIX . 't_item_comment'; }
-
-        public function findByItemIDAll($id) {
-            return $this->listWhere('fk_i_item_id = ' . $id);
+        /**
+         * Set data related to t_item_comment table
+         */
+        function __construct()
+        {
+            parent::__construct() ;
+            $this->setTableName('t_item_comment') ;
+            $this->setPrimaryKey('pk_i_id') ;
+            $array_fields = array(
+                'pk_i_id',
+                'fk_i_item_id',
+                'dt_pub_date',
+                's_title',
+                's_author_name',
+                's_author_email',
+                's_body',
+                'b_enabled',
+                'b_active',
+                'b_spam',
+                'fk_i_user_id'
+            );
+            $this->setFields($array_fields) ;
         }
-
-        public function findByItemID($id, $page = null, $comments_per_page = null) {
-            if( $page == null ) { $page = osc_item_comments_page(); }
-            if( $page == '' ) { $page = 0; }
-            if( $comments_per_page == null ) { $comments_per_page = osc_comments_per_page(); }
-            if( ($page === 'all') || ($comments_per_page == 0) ) {
-                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND b_active = 1 AND b_enabled = 1", DB_TABLE_PREFIX, $id);
+        
+        /**
+         * Searches for comments information, given an item id.
+         * 
+         * @access public
+         * @since unknown
+         * @param integer $id
+         * @return array 
+         */
+        function findByItemIDAll($id)
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('fk_i_item_id', $id) ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) { 
+                return false;
             } else {
-                return $this->conn->osc_dbFetchResults("SELECT c.* FROM %st_item_comment c WHERE fk_i_item_id = %d AND b_active = 1 AND b_enabled = 1 LIMIT %d, %d", DB_TABLE_PREFIX, $id, ($page*$comments_per_page), $comments_per_page);
+                return $result->result() ;
             }
         }
         
-        public function total_comments($id) {
-            $total = $this->conn->osc_dbFetchResult("SELECT count(pk_i_id) as total FROM %st_item_comment WHERE fk_i_item_id = %d AND b_active = 1 AND b_enabled = 1 GROUP BY fk_i_item_id", DB_TABLE_PREFIX, $id);
-            return $total['total'];
+        /**
+         * Searches for comments information, given an item id, page and comments per page.
+         * 
+         * @access public
+         * @since unknown
+         * @param integer $id
+         * @param integer $page
+         * @param integer $comments_per_page
+         * @return array
+         */
+        function findByItemID($id, $page = null, $commentsPerPage = null) 
+        {
+            $result = array();
+            if( $page == null ) { $page = osc_item_comments_page(); }
+            if( $page == '' ) { $page = 0; }
+            if( $commentsPerPage == null ) { $commentsPerPage = osc_comments_per_page(); }
+            
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array('fk_i_item_id'  => $id,
+                                'b_active'      => 1,
+                                'b_enabled'     => 1);
+            $this->dao->where($conditions) ;
+            
+            if( ($page !== 'all') || ($commentsPerPage > 0) ) {
+                $this->dao->limit(($page*$commentsPerPage), $commentsPerPage);
+            }
+            
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) { 
+                return false;
+            } else {
+                return $result->result();
+            }
         }
-
-        public function findByAuthorID($id) {
-            return $this->listWhere('fk_i_user_id = ' . $id . " AND b_active = 1 AND b_enabled = 1");
+        
+        /**
+         * Return total of comments, given an item id. (active & enabled)
+         * 
+         * @access public
+         * @since unknown
+         * @param integer $id
+         * @return integer
+         */
+        function totalComments($id)
+        {
+            $this->dao->select('count(pk_i_id) as total') ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array('fk_i_item_id'  => $id,
+                                'b_active'      => 1,
+                                'b_enabled'     => 1);
+            $this->dao->where($conditions) ;
+            $this->dao->groupBy('fk_i_item_id') ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) { 
+                return false;
+            } else if($result->numRows() === 0) {
+                return 0;
+            } else {
+                $total = $result->row();
+                return $total['total'];
+            }
         }
+        
+        /**
+         * Searches for comments information, given an user id.
+         * 
+         * @access public
+         * @since unknown
+         * @param integer $id
+         * @return array
+         */
+        function findByAuthorID($id)
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $conditions = array('fk_i_user_id'  => $id,
+                                'b_active'      => 1,
+                                'b_enabled'     => 1);
+            $this->dao->where($conditions) ;
+            $result = $this->dao->get() ;
+            
+            if( $result == false ) { 
+                return false;
+            } else {
+                return $result->result();
+            }
+        }
+        
+        /**
+         * Searches for comments information, given an user id.
+         *
+         * @access public
+         * @since unknown
+         * @param integer $itemId
+         * @return array
+         */
+        function getAllComments($itemId = null) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
+            
+            $conditions = array() ;
+            if(is_null($itemId)) {
+                $conditions = 'c.fk_i_item_id = i.pk_i_id';
+            } else {
+                $conditions = array(
+                    'i.pk_i_id'      => $itemId,
+                    'c.fk_i_item_id' => $itemId
+                );
+            }
+            
+            $this->dao->where($conditions) ;
+            $this->dao->orderBy('c.dt_pub_date','DESC') ;            
+            $aux = $this->dao->get() ;
+            $comments = $aux->result() ;
+            
+            return $this->extendData($comments) ;
+        }
+        
+        /**
+         * Searches for last comments information, given a limit of comments.
+         *
+         * @access public
+         * @since unknown
+         * @param integer $num
+         * @return array
+         */
+        function getLastComments($num) 
+        {
+            if(!intval($num)) return false;
 
+            $lang = osc_current_user_locale() ;
 
-        public function extendData($items) {
+            $this->dao->select('c.*,c.s_title as comment_title, d.s_title') ;
+            $this->dao->from($this->getTableName().' c') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item i', 'i.pk_i_id = c.fk_i_item_id') ;
+            $this->dao->join(DB_TABLE_PREFIX.'t_item_description d', 'd.fk_i_item_id = c.fk_i_item_id');
+            $this->dao->orderBy('c.pk_i_id', 'DESC');
+            $this->dao->limit(0,$num);
+
+            $result = $this->dao->get();
+            return $result->result();
+        }
+        
+        /**
+         * Extends an array of comments with title / description / what
+         * 
+         * @access private
+         * @since unknown
+         * @param array $items
+         * @return array
+         */
+        private function extendData($items) 
+        {
             $prefLocale = osc_current_user_locale();
 
             $results = array();
             foreach($items as $item) {
-                $descriptions = $this->conn->osc_dbFetchResults('SELECT * FROM %st_item_description WHERE fk_i_item_id = %d', DB_TABLE_PREFIX, $item['fk_i_item_id']);
+                $this->dao->select() ;
+                $this->dao->from(DB_TABLE_PREFIX.'t_item_description') ;
+                $this->dao->where('fk_i_item_id', $item['fk_i_item_id']) ;
+                $aux = $this->dao->get();
+                $descriptions = $aux->result();
+                
                 $item['locale'] = array();
                 foreach($descriptions as $desc) {
                     $item['locale'][$desc['fk_c_locale_code']] = $desc;
                 }
                 if(isset($item['locale'][$prefLocale])) {
-                    $item['s_title'] = $item['locale'][$prefLocale]['s_title'];
-                    $item['s_description'] = $item['locale'][$prefLocale]['s_description'];
-                    $item['s_what'] = $item['locale'][$prefLocale]['s_what'];
+                    $item['s_title']        = $item['locale'][$prefLocale]['s_title'];
+                    $item['s_description']  = $item['locale'][$prefLocale]['s_description'];
+                    $item['s_what']         = $item['locale'][$prefLocale]['s_what'];
                 } else {
                     $data = current($item['locale']);
-                    $item['s_title'] = $data['s_title'];
-                    $item['s_description'] = $data['s_description'];
-                    $item['s_what'] = $data['s_what'];
+                    $item['s_title']        = $data['s_title'];
+                    $item['s_description']  = $data['s_description'];
+                    $item['s_what']         = $data['s_what'];
                     unset($data);
                 }
                 $results[] = $item;
             }
             return $results;
         }
-
-
-
-        public function getAllComments($itemId = null) {
-            if(is_null($itemId)) {
-                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE c.fk_i_item_id = i.pk_i_id ORDER BY dt_pub_date DESC', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
-            } else {
-                $comments = $this->conn->osc_dbFetchResults('SELECT c.* FROM %st_item_comment c, %st_item i WHERE i.pk_i_id = '.$itemId.' AND fk_i_item_id = ' . $itemId .' ORDER BY dt_pub_date DESC', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
-            }
-            return $this->extendData($comments);
-        }
-
-        public function getLastComments($num) {
-                if(!intval($num)) return false;
-
-                $lang = osc_current_user_locale() ;
-                return $this->conn->osc_dbFetchResults('SELECT i.*, d.s_title
-                    FROM %st_item_comment i
-                    JOIN %st_item c ON c.pk_i_id = i.fk_i_item_id
-                    JOIN %st_item_description d ON d.fk_i_item_id = i.fk_i_item_id
-                    GROUP BY d.fk_i_item_id
-                    ORDER BY pk_i_id DESC LIMIT 0, ' . $num . '', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX) ;
-        }
     }
-
 ?>

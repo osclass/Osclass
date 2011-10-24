@@ -1,69 +1,155 @@
 <?php
-/*
- *      OSCLass – software for creating and publishing online classified
- *                           advertising platforms
- *
- *                        Copyright (C) 2010 OSCLASS
- *
- *       This program is free software: you can redistribute it and/or
- *     modify it under the terms of the GNU Affero General Public License
- *     as published by the Free Software Foundation, either version 3 of
- *            the License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful, but
- *         WITHOUT ANY WARRANTY; without even the implied warranty of
- *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *             GNU Affero General Public License for more details.
- *
- *      You should have received a copy of the GNU Affero General Public
- * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
+    /*
+     *      OSCLass – software for creating and publishing online classified
+     *                           advertising platforms
+     *
+     *                        Copyright (C) 2010 OSCLASS
+     *
+     *       This program is free software: you can redistribute it and/or
+     *     modify it under the terms of the GNU Affero General Public License
+     *     as published by the Free Software Foundation, either version 3 of
+     *            the License, or (at your option) any later version.
+     *
+     *     This program is distributed in the hope that it will be useful, but
+     *         WITHOUT ANY WARRANTY; without even the implied warranty of
+     *        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *             GNU Affero General Public License for more details.
+     *
+     *      You should have received a copy of the GNU Affero General Public
+     * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     */
 
-class OSCLocale extends DAO {
+    /**
+     * OSCLocale DAO
+     */
+    class OSCLocale extends DAO
+    {
+        /**
+         *
+         * @var type 
+         */
+        private static $instance ;
 
-	private static $instance ;
-
-	public static function newInstance() {
-        if(!self::$instance instanceof self) {
-            self::$instance = new self ;
-        }
-        return self::$instance ;
-    }
-    
-	public function getTableName() { return DB_TABLE_PREFIX . 't_locale' ; }
-
-	public function getPrimaryKey() { return 'pk_c_code' ; }
-
-	public function listAllEnabled($is_bo = false, $indexed_by_pk = false) {
-        if($is_bo) {
-            $aResults = $this->listWhere('b_enabled_bo ORDER BY `s_name` ASC') ;
-        } else {
-            $aResults = $this->listWhere('b_enabled ORDER BY `s_name` ASC') ;
-        }
-
-        if ($indexed_by_pk) {
-            $aTmp = array() ;
-            for ($i = 0 ; $i < count($aResults) ; $i++) {
-                $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
+                self::$instance = new self ;
             }
-            $aResults = $aTmp ;
+            return self::$instance ;
         }
 
-        return($aResults) ;
-	}
+        /**
+         * 
+         */
+        function __construct()
+        {
+            parent::__construct();
+            $this->setTableName('t_locale') ;
+            $this->setPrimaryKey('pk_c_code') ;
+            $array_fields = array(
+                'pk_c_code',
+                's_name',
+                's_short_name',
+                's_description',
+                's_version',
+                's_author_name',
+                's_author_url',
+                's_currency_format',
+                's_dec_point',
+                's_thousands_sep',
+                'i_num_dec',
+                's_date_format',
+                's_stop_words',
+                'b_enabled',
+                'b_enabled_bo'
+            );
+            $this->setFields($array_fields) ;
+        }
+        
+        /**
+         * Return all locales enabled.
+         *
+         * @access public
+         * @since unknown
+         * @param boole $isBo
+         * @param boole $indexedByKk
+         * @return array
+         */
+        function listAllEnabled($isBo = false, $indexedByPk = false) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            if($isBo) {
+                $this->dao->where('b_enabled_bo', 1);
+            } else {
+                $this->dao->where('b_enabled', 1);
+            }
+            $this->dao->orderBy('s_name', 'ASC') ;
+            $result = $this->dao->get();
+            $aResults = $result->result();
+            
+            if ($indexedByPk) {
+                $aTmp = array() ;
+                for ($i = 0 ; $i < count($aResults) ; $i++) {
+                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
+                }
+                $aResults = $aTmp ;
+            }
 
-    public function deleteLocale($locale) {
-        osc_run_hook('delete_locale', $locale);
-        $this->conn->osc_dbExec("DELETE FROM %st_category_description WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
-        $this->conn->osc_dbExec("DELETE FROM %st_item_description WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
-        $this->conn->osc_dbExec("DELETE FROM %st_keywords WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
-        $this->conn->osc_dbExec("DELETE FROM %st_user_description WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
-        $this->conn->osc_dbExec("DELETE FROM %st_pages_description WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
-        $this->conn->osc_dbExec("DELETE FROM %st_country WHERE fk_c_locale_code = '" . $locale . "'", DB_TABLE_PREFIX);
-        $this->conn->osc_dbExec("DELETE FROM %st_locale WHERE pk_c_code = '" . $locale . "'", DB_TABLE_PREFIX);
+            return($aResults) ;
+        }
+
+        /**
+         * Return all locales by code
+         *
+         * @access public
+         * @since 2.3
+         * @param string $code
+         * @return array
+         */
+        function findByCode($code) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('pk_c_code', $code);
+            $result = $this->dao->get();
+            return $result->result();
+            
+            // TODO : DELETE THIS IS NOT NEEDED
+            /*$aResults = $result->result();
+            if ($indexedByPk) {
+                $aTmp = array() ;
+                for ($i = 0 ; $i < count($aResults) ; $i++) {
+                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
+                }
+                $aResults = $aTmp ;
+            }
+
+            return($aResults) ;*/
+        }
+
+        /**
+         * Delete all related to locale code.
+         *
+         * @access public
+         * @since unknown
+         * @param string $locale
+         * @return bool
+         */
+        public function deleteLocale($locale) {
+            osc_run_hook('delete_locale', $locale);
+
+            $array_where = array('fk_c_locale_code' => $locale );
+            $this->dao->delete(DB_TABLE_PREFIX.'t_category_description',  $array_where) ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_item_description', $array_where) ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_keywords', $array_where) ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', $array_where) ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_pages_description', $array_where) ;
+            $this->dao->delete(DB_TABLE_PREFIX.'t_country', $array_where) ;
+            $result = $this->dao->delete($this->getTableName(), array('pk_c_code' => $locale )) ;
+            
+            return $result;
+        }
     }
-
-
-}
-
+?>

@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,58 +20,158 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
+    /**
+     * 
+     */
     class Preference extends DAO
     {
+        /**
+         *
+         * @var type 
+         */
         private static $instance ;
+        /**
+         * array for save preferences
+         * @var array
+         */
         private $pref ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function __construct() {
+        /**
+         * 
+         */
+        function __construct()
+        {
             parent::__construct();
-            $this->toArray() ;
+            $this->setTableName('t_preference') ;
+            /* $this->set_primary_key($key) ; // no primary key in preference table */
+            $this->setFields( array('s_section', 's_name', 's_value', 'e_type') ) ;
+            $this->toArray();
         }
 
-        public function getTableName() {
-            return DB_TABLE_PREFIX . 't_preference';
+        /**
+         * Find a value by its name
+         * 
+         * @access public
+         * @since unknown
+         * @param type $name
+         * @return type 
+         */
+        function findValueByName($name)
+        {
+            $this->dao->select('s_value') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('s_name', $name) ;
+            $result = $this->dao->get() ;
+
+            if( $result->numRows() == 0 ) {
+                return false ;
+            } else {
+                $row = $result->row() ;
+                return $row['s_value'] ;
+            }
         }
 
-        public function findValueByName($name) {
-            return $this->conn->osc_dbFetchValue("SELECT s_value FROM %s WHERE s_name = '%s'", $this->getTableName(), $name);
-        }
+        /**
+         * Find array preference for a given section
+         *
+         * @access public
+         * @since unknown
+         * @param string $name
+         * @return array 
+         */
+        public function findBySection($name) 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->where('s_section', $name) ;
+            $result = $this->dao->get() ;
 
-        public function findBySection($name) {
-            return $this->conn->osc_dbFetchResults("SELECT * FROM %s WHERE s_section = '%s'", $this->getTableName(), $name);
+            if( $result->numRows() == 0 ) {
+                return false ;
+            } else {
+                return $result->result() ;
+            }
         }
-
-        public function toArray() {
-            $aTmpPref = $this->listAll() ;
+        
+        /**
+         * Modify the structure of table.
+         *
+         * @access public
+         * @since unknown
+         */
+        public function toArray() 
+        {
+            $this->dao->select() ;
+            $this->dao->from($this->getTableName()) ;
+            $result = $this->dao->get() ;
+            $aTmpPref = $result->result() ;
 
             foreach($aTmpPref as $tmpPref) {
                 $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'] ;
             }
         }
-
-        public function get($key, $section = "osclass") {
+        
+        /**
+         * Get value, given a preference name and a section name.
+         * 
+         * @access public
+         * @since unknown
+         * @param string $key
+         * @param string $section
+         * @return string
+         */
+        public function get($key, $section = "osclass") 
+        {
             if (!isset($this->pref[$section][$key])) {
                 return '' ;
             }
             return ($this->pref[$section][$key]) ;
         }
-
-        public function set($key, $value, $section = "osclass") {
+        
+        /**
+         * Set preference value, given a preference name and a section name.
+         *
+         * @access public
+         * @since unknown
+         * @param string $key
+         * @param string$value
+         * @param string $section 
+         */
+        public function set($key, $value, $section = "osclass") 
+        {
             $this->pref[$section][$key] = $value ;
         }
-
-        public function replace($key, $value, $section = "osclass", $type = 'STRING') {
-            $this->conn->osc_dbExec("REPLACE INTO %s (s_name, s_value, s_section, e_type) VALUES ('%s', '%s', '%s', '%s')", $this->getTableName(), $key, $value, $section, $type );
+        
+        /**
+         * Replace preference value, given preference name, preference section and type value.
+         *
+         * @access public
+         * @since unknown
+         * @param string $key
+         * @param string $value
+         * @param string $section
+         * @param string $type 
+         * @return boolean
+         */
+        public function replace($key, $value, $section = "osclass", $type = 'STRING') 
+        {
+            $array_replace = array(
+                's_name'    => $key,
+                's_value'   => $value,
+                's_section' => $section,
+                'e_type'    => $type
+            );
+            return $this->dao->replace($this->getTableName(), $array_replace) ;
         }
-
     }
 
+    /* file end: ./oc-includes/osclass/model/new_model/Preference.php */
 ?>

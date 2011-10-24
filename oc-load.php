@@ -19,7 +19,7 @@
  * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('OSCLASS_VERSION', '2.2.2') ;
+define('OSCLASS_VERSION', '2.2.3') ;
 
 if( !defined('ABS_PATH') ) {
     define( 'ABS_PATH', dirname(__FILE__) . '/' );
@@ -46,8 +46,13 @@ require_once ABS_PATH . 'config.php';
 if( !defined('MULTISITE') ) {
     define('MULTISITE', 0);
 }
+
 require_once LIB_PATH . 'osclass/db.php';
-require_once LIB_PATH . 'osclass/classes/DAO.php';
+require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
+require_once LIB_PATH . 'osclass/classes/database/DAO.php';
 require_once LIB_PATH . 'osclass/model/Preference.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php';
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
@@ -104,7 +109,6 @@ require_once LIB_PATH . 'osclass/model/ItemStats.php';
 require_once LIB_PATH . 'osclass/model/Page.php';
 require_once LIB_PATH . 'osclass/model/PluginCategory.php';
 require_once LIB_PATH . 'osclass/model/Region.php';
-require_once LIB_PATH . 'osclass/model/Rewrite.php';
 require_once LIB_PATH . 'osclass/model/User.php';
 require_once LIB_PATH . 'osclass/model/UserEmailTmp.php';
 require_once LIB_PATH . 'osclass/model/ItemLocation.php';
@@ -112,7 +116,6 @@ require_once LIB_PATH . 'osclass/model/Widget.php';
 require_once LIB_PATH . 'osclass/model/Search.php';
 require_once LIB_PATH . 'osclass/model/LatestSearches.php';
 require_once LIB_PATH . 'osclass/model/SiteInfo.php';
-require_once LIB_PATH . 'osclass/model/Stats.php';
 require_once LIB_PATH . 'osclass/model/Field.php';
 require_once LIB_PATH . 'osclass/model/Log.php';
 require_once LIB_PATH . 'osclass/classes/Cache.php';
@@ -121,6 +124,8 @@ require_once LIB_PATH . 'osclass/classes/RSSFeed.php';
 require_once LIB_PATH . 'osclass/classes/Sitemap.php';
 require_once LIB_PATH . 'osclass/classes/Pagination.php';
 require_once LIB_PATH . 'osclass/classes/Watermark.php';
+require_once LIB_PATH . 'osclass/classes/Rewrite.php';
+require_once LIB_PATH . 'osclass/classes/Stats.php';
 require_once LIB_PATH . 'osclass/alerts.php';
 
 require_once LIB_PATH . 'osclass/frm/Form.form.class.php';

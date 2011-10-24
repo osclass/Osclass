@@ -26,7 +26,7 @@
     function count_items_subcategories($category = null) {
         $manager = CategoryStats::newInstance();
         $total = $manager->countItemsFromCategory($category['pk_i_id']);
-        $categories = Category::newInstance()->isParentOf($category['pk_i_id']);
+        $categories = Category::newInstance()->findSubCategories($category['pk_i_id']);
         if($categories!=null) {
             foreach($categories as $c) {
                 if($c['b_enabled']==1) {

@@ -167,7 +167,7 @@
                     Cookie::newInstance()->set() ;
                 }
 
-                $itemId = $this->manager->getConnection()->get_last_id();
+                $itemId = $this->manager->dao->insertedId();
                 Log::newInstance()->insertLog('item', 'add', $itemId, current(array_values($aItem['title'])), $this->is_admin?'admin':'user', $this->is_admin?osc_logged_admin_id():osc_logged_user_id());
 
                 Params::setParam('itemId', $itemId);
@@ -410,7 +410,7 @@
                     }
                 }
 
-                osc_run_hook( 'activate_item', $this->manager->findByPrimaryKey($id) );
+                osc_run_hook( 'activate_item', $id );
                 CategoryStats::newInstance()->increaseNumItems($item[0]['fk_i_category_id']);
                 return $result;
             } else {
@@ -425,6 +425,7 @@
                     array('b_active' => 0),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'deactivate_item', $id );
                 if($item['b_enabled']==1) {
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
@@ -440,6 +441,7 @@
                     array('b_enabled' => 1),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'enable_item', $id );
                 if($item['b_active']==1) {
                     CategoryStats::newInstance()->increaseNumItems($item['fk_i_category_id']);
                 }
@@ -455,6 +457,7 @@
                     array('b_enabled' => 0),
                     array('pk_i_id' => $id)
                 );
+                osc_run_hook( 'disable_item', $id );
                 if($item['b_active']==1) {
                     CategoryStats::newInstance()->decreaseNumItems($item['fk_i_category_id']);
                 }
@@ -666,10 +669,12 @@
                 $notify      = osc_notify_new_comment() ;
 
                 //Notify admin
+                $conn = getConnection();
+                $id = $conn->osc_dbFetchResult("SELECT pk_i_id FROM %st_item_comment ORDER BY pk_i_id DESC LIMIT 1", DB_TABLE_PREFIX);
                 if ($notify) {
                     osc_run_hook('hook_email_new_comment_admin', $aItem);
                 }
-                osc_run_hook('add_comment', $item);
+                osc_run_hook('add_comment', $id['pk_i_id']);
                 return $status_num;
             }
 
@@ -858,7 +863,7 @@
                 $regionId = null;
                 $regionName = $aItem['region'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxRegion  = Region::newInstance()->findByNameOnCountry($aItem['region'], $aItem['countryId'] );
+                    $auxRegion  = Region::newInstance()->findByName($aItem['region'], $aItem['countryId'] );
                     if($auxRegion){
                         $regionId   = $auxRegion['pk_i_id'];
                         $regionName = $auxRegion['s_name'];
@@ -881,7 +886,7 @@
                 $cityId = null;
                 $cityName = $aItem['city'];
                 if( $aItem['countryId'] != '' ) {
-                    $auxCity = city::newInstance()->findByNameOnRegion($aItem['city'], $aItem['regionId'] );
+                    $auxCity = City::newInstance()->findByName($aItem['city'], $aItem['regionId'] );
                     if($auxCity){
                         $cityId   = $auxCity['pk_i_id'];
                         $cityName = $auxCity['s_name'];
@@ -1016,7 +1021,7 @@
                             $itemResourceManager->insert(array(
                                 'fk_i_item_id' => $itemId
                             )) ;
-                            $resourceId = $itemResourceManager->getConnection()->get_last_id() ;
+                            $resourceId = $itemResourceManager->dao->insertedId();
 
                             // Create normal size
                             $normal_path = $path = osc_content_path() . 'uploads/' . $resourceId . '.jpg' ;

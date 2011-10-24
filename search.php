@@ -31,8 +31,6 @@
         function doModel() {
             osc_run_hook('before_search');
             $mCategories = new Category() ;
-            //$aCategories = $mCategories->findRootCategories() ;
-            $mCategoryStats = new CategoryStats() ;
 
             ////////////////////////////////
             //GETTING AND FIXING SENT DATA//

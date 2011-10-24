@@ -1,3 +1,16 @@
+OSClass 2.2.3 2011-09-26
+------------------------
+- Bug fix: with plugins in Windows environments
+- Fixed an error when installing a new plugin if some plugin has been removed from the plugin directory
+- Bug fix: when user modifies the location in edit item
+- Bug fix: we're not using filter_var function any more
+- Bug fix: manage item doesn't crack if category name is not set
+- Bug fix: notify admin of new items works in all the cases now
+- Bug fix: check blank parameters in forgot-password-post, user-change-password and contact form
+- Bug fix: mailserver setting in oc-admin works fine in different environments
+- Pagination Class: now can be inherited
+- Fixed some minor Notice errors
+
 OSClass 2.2.2 2011-08-25
 ------------------------
 - Now attr [type|src|charset|defer] of script html tag are not removed in widgets

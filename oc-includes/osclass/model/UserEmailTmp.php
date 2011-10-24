@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -21,49 +21,62 @@
      */
 
     /**
-     * Description of UserEmailTmp
-     *
-     * @author danielo
+     * 
      */
-    class UserEmailTmp extends DAO {
-
+    class UserEmailTmp extends DAO
+    {
+        /**
+         *
+         * @var type 
+         */
         private static $instance ;
 
-        public static function newInstance() {
-            if(!self::$instance instanceof self) {
+        public static function newInstance()
+        {
+            if( !self::$instance instanceof self ) {
                 self::$instance = new self ;
             }
             return self::$instance ;
         }
 
-        public function getTableName() { return DB_TABLE_PREFIX . 't_user_email_tmp' ; }
-
-        public function findByPk($id) {
-            $results = $this->listWhere("fk_i_user_id = '%s'", $id) ;
-            return count($results) == 1 ? $results[0] : null ;
+        /**
+         * 
+         */
+        function __construct()
+        {
+            parent::__construct();
+            $this->set_table_name('t_user_email_tmp') ;
+            $this->set_primary_key('fk_i_user_id') ;
+            $this->set_fields( array('fk_i_user_id','s_new_email','dt_date') ) ;
         }
 
+        /**
+         *
+         * @access public
+         * @since unknown
+         * @param type $id
+         * @return array
+         */
+        function findByPk($id) {
+            return $this->dao->find_by_primary_key($id) ;
+        }
+        
+        /**
+         *
+         * @access public
+         * @since unknown
+         * @param type $userEmailTmp
+         * @return array
+         */
         public function insertOrUpdate($userEmailTmp) {
 
-            $status = $this->conn->osc_dbExec(
-                                'INSERT INTO %s (fk_i_user_id, s_new_email, dt_date) VALUES (%d, \'%s\', \'%s\')'
-                                ,$this->getTableName()
-                                ,$userEmailTmp['fk_i_user_id']
-                                ,  addslashes($userEmailTmp['s_new_email'])
-                                , date('Y-m-d H:i:s')
-                        ) ;
-
+            $status = $this->dao->insert($this->table_name, array('fk_i_user_id' => $userEmailTmp['fk_i_user_id'], 's_new_email' => $userEmailTmp['s_new_email'], 'dt_date' => date('Y-m-d H:i:s')));
             if (!$status) {
-                $this->conn->osc_dbExec(
-                                'UPDATE %s SET s_new_email = \'%s\', dt_date = \'%s\' WHERE fk_i_user_id = %d'
-                                , $this->getTableName()
-                                , addslashes($userEmailTmp['s_new_email'])
-                                , date('Y-m-d H:i:s')
-                                , $userEmailTmp['fk_i_user_id']
-                        ) ;
-
+                $this->dao->update($this->table_name, array('s_new_email' => $userEmailTmp['s_new_email'], 'dt_date' => date('Y-m-d H:i:s')), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
             }
         }
+        
+
     }
 
 ?>

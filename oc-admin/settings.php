@@ -117,7 +117,7 @@
                                                                                 $manager_city = new City();
                                                                                 if(count($countries) > 0) {
                                                                                     foreach($countries as $c) {
-                                                                                        $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                                                                                        $regions = $manager_region->findByCountry( $c->id ) ;
                                                                                         if(!isset($regions->error)) {
                                                                                             if(count($regions) > 0) {
                                                                                                 foreach($regions as $region) {
@@ -177,7 +177,7 @@
                                                                         $mCities = new City();
 
                                                                         $aCountries = $mCountries->findByCode($countryId);
-                                                                        $aRegions = $mRegions->listWhere('fk_c_country_code =  \'' . $aCountries['pk_c_code'] . '\'');
+                                                                        $aRegions = $mRegions->findByCountry($aCountries['pk_c_code']);
                                                                         foreach($aRegions as $region) {
                                                                             $mCities->delete(array('fk_i_region_id' => $region['pk_i_id']));
                                                                             $mRegions->delete(array('pk_i_id' => $region['pk_i_id']));
@@ -198,7 +198,7 @@
                                                                         $regionName  = Params::getParam('region');
                                                                         $countryCode = Params::getParam('country_c_parent');
 
-                                                                        $exists = $mRegions->findByNameAndCode($regionName, $countryCode);
+                                                                        $exists = $mRegions->findByName($regionName, $countryCode);
                                                                         if(!isset($exists['s_name'])) {
                                                                             $data = array('fk_c_country_code' => $countryCode
                                                                                          ,'s_name' => $regionName);
@@ -253,7 +253,7 @@
                                                                     $countryCode = Params::getParam('country_c_parent');
                                                                     $newCity     = Params::getParam('city');
 
-                                                                    $exists = $mCities->findByNameAndRegion($newCity, $regionId);
+                                                                    $exists = $mCities->findByName($newCity, $regionId);
                                                                     if(!isset($exists['s_name'])) {
                                                                         $mCities->insert(array('fk_i_region_id'    => $regionId
                                                                                               ,'s_name'            => $newCity
@@ -841,7 +841,7 @@
 
             $manager_city = new City();
             foreach($countries as $c) {
-                $regions = $manager_region->listWhere('fk_c_country_code = \'' . $c->id . '\'') ;
+                $regions = $manager_region->finbByCountry( $c->id );
                 foreach($regions as $region) {
                     $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
                                                          urlencode($c->name) . '&region=' . urlencode($region['s_name']) . '&term=all') ;
@@ -893,7 +893,7 @@
             }
 
             foreach($regions as $r) {
-                $exists = $manager_region->findByNameAndCode($r->name, $r->country_code);
+                $exists = $manager_region->findByName($r->name, $r->country_code);
                 if(isset($exists['s_name'])) {
                     osc_add_flash_error_message(sprintf(_m('%s already was in the database'), $c_exists['s_name']), 'admin');
                     return false;
@@ -908,8 +908,7 @@
 
             $manager_city = new City();
             foreach($country as $c) {
-                $regions = $manager_region->findByConditions(array('fk_c_country_code' => $country['pk_c_code']
-                                                                  ,'s_name' => $region));
+                $regions = $manager_region->findByName($region, $country['pk_c_code']);
                 $cities_json = osc_file_get_contents('http://geo.osclass.org/geo.download.php?action=city&country=' .
                                                      urlencode($c) . '&region=' . urlencode($regions['s_name']) . '&term=all');
                 $cities = json_decode($cities_json);

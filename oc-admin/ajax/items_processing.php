@@ -17,7 +17,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-     class items_processing_ajax extends Item
+     class ItemsProcessingAjax 
      {
         private $items;
         private $result;
@@ -77,8 +77,6 @@
         private $_get;
 
         function __construct($params) {
-
-            parent::__construct() ;
 
             $this->_get = $params;
             $this->getDBParams();
@@ -154,7 +152,7 @@
 
             $this->result = Item::newInstance()->extendCategoryName(Item::newInstance()->extendData($list_items));
             $this->filtered_total = $mSearch->count();
-            $this->total = $this->total_items();
+            $this->total = count($list_items); //TEMPORARY FIX
 
             $this->toDatatablesFormat();
             $this->dumpToDatatables();

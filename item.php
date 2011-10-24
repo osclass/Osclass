@@ -55,15 +55,15 @@
                     $countries = Country::newInstance()->listAll();
                     $regions = array();
                     if( isset($this->user['fk_c_country_code']) && $this->user['fk_c_country_code']!='' ) {
-                        $regions = Region::newInstance()->getByCountry($this->user['fk_c_country_code']);
+                        $regions = Region::newInstance()->findByCountry($this->user['fk_c_country_code']);
                     } else if( count($countries) > 0 ) {
-                        $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']);
+                        $regions = Region::newInstance()->findByCountry($countries[0]['pk_c_code']);
                     }
                     $cities = array();
                     if( isset($this->user['fk_i_region_id']) && $this->user['fk_i_region_id']!='' ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$this->user['fk_i_region_id']) ;
+                        $cities = City::newInstance()->findByRegion($this->user['fk_i_region_id']) ;
                     } else if( count($regions) > 0 ) {
-                        $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                        $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                     }
 
                     $this->_exportVariableToView('countries',$countries ) ;
@@ -79,11 +79,11 @@
                     
                     if( Session::newInstance()->_getForm('countryId') != "" ) {
                         $countryId  = Session::newInstance()->_getForm('countryId') ;
-                        $regions    = Region::newInstance()->getByCountry($countryId) ; 
+                        $regions    = Region::newInstance()->findByCountry($countryId) ; 
                         $this->_exportVariableToView('regions', $regions) ;
                         if(Session::newInstance()->_getForm('regionId') != "" ) {
                             $regionId  = Session::newInstance()->_getForm('regionId') ;
-                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regionId ) ;
+                            $cities = City::newInstance()->findByRegion($regionId ) ;
                             $this->_exportVariableToView('cities', $cities ) ;
                         }
                     }
