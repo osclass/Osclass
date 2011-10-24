@@ -379,5 +379,5 @@
         }
 	}
 
-    /* file end: ./oc-includes/osclass/classes/data/DBRecordsetClass.php */
+    /* file end: ./oc-includes/osclass/classes/database/DBRecordsetClass.php */
 ?>

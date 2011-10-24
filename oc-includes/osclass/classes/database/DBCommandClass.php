@@ -1286,5 +1286,5 @@
 
     }
 
-    /* file end: ./oc-includes/osclass/classes/data/DBCommandClass.php */
+    /* file end: ./oc-includes/osclass/classes/database/DBCommandClass.php */
 ?>
