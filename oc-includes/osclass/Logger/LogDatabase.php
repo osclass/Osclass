@@ -78,20 +78,36 @@
          */
         public function printMessages()
         {
-//            var_dump($this->messages) ;
-//            var_dump($this->totalTime()) ;
-            foreach($this->messages as $msg){
-                if($msg['errno'] > 0){
-                    echo "<span style='background-color: #F5A9A9;' >[ OPERATION FAILED ] ";
-                }else{
-                    echo "<span style='background-color: #D0F5A9;' >[ OPERATION OK ] ";
+            echo '<fieldset style="border:1px solid black; padding:6px 10px 10px 10px; margin: 20px;" >' . PHP_EOL ;
+            echo '<legend style="font-size: 16px;">&nbsp;&nbsp;Database queries (Total queries: ' . $this->getTotalNumberQueries() .' - Total queries time: ' . $this->getTotalQueriesTime() . ')&nbsp;&nbsp;</legend>' . PHP_EOL ;
+            echo '<table style="border-collapse: separate; *border-collapse: collapse; width: 100%; font-size: 13px; padding: 15px;">' . PHP_EOL ;
+            if( count($this->messages) == 0 ) {
+                echo '<tr><td>No queries</td></tr>' . PHP_EOL ;
+            } else {
+                foreach($this->messages as $msg) {
+                    $row_style = '';
+                    if( $msg['errno'] != 0 ) {
+                        $row_style = 'style=" background-color: #FFC2C2;"' ;
+                    }
+                    echo '<tr ' . $row_style . '>' . PHP_EOL ;
+                    echo '<td style="padding: 10px 10px 9px; text-align: left; vertical-align: top; border: 1px solid #ddd;">' . $msg['query_time'] . '</td>' . PHP_EOL ;
+                    echo '<td style="padding: 10px 10px 9px; text-align: left; vertical-align: top; border: 1px solid #ddd;">' ;
+                    if( $msg['errno'] == 0 ) {
+                        echo $msg['query'] ;
+                    } else {
+                        echo '<strong>Error number:</strong> ' . $msg['errno'] . '<br/>' ;
+                        echo '<strong>Error description:</strong> ' . $msg['error'] . '<br/><br/>' ;
+                        echo $msg['query'] ;
+                    }
+                    echo '</td>' . PHP_EOL ;
+                    echo '</tr>' . PHP_EOL ;
                 }
-                echo $msg['query'];
-                echo '</span><br />';
             }
+            echo '</table>' . PHP_EOL ;
+            echo '</fieldset>' . PHP_EOL ;
         }
 
-        public function totalTime()
+        public function getTotalQueriesTime()
         {
             $time = 0 ;
             foreach($this->messages as $m) {
@@ -99,6 +115,11 @@
             }
 
             return $time ;
+        }
+
+        public function getTotalNumberQueries()
+        {
+            return count($this->messages) ;
         }
     }
 
