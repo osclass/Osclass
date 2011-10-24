@@ -399,7 +399,7 @@
                 break ;
                 case 2:     $log = LogDatabase::newInstance() ;
                             echo '<!--' ;
-                            $this->printMessages() ;
+                            $log->printMessages() ;
                             echo '-->' ;
                 break ;
             }
