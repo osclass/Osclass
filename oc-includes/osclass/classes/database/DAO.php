@@ -354,8 +354,7 @@
         {
             return $this->dao->getErrorDesc() ;
         }
-        
-        
+
         /**
          * Returns the number of rows in the table represented by this object.
          * 
@@ -363,13 +362,24 @@
          * @since unknown
          * @return int
          */
-        public function count() {
-            $this->dao->select('COUNT(*) AS count');
+        public function count()
+        {
+            $this->dao->select('COUNT(*) AS count') ;
             $this->dao->from($this->getTableName()) ;
             $result = $this->dao->get() ;
-            return $result->row();
-        }        
-	}
 
-    /* file end: ./oc-includes/osclass/classes/data/DAO.php */
+            if( $result == false ) {
+                return 0 ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return 0 ;
+            }
+
+            $row = $result->row() ;
+            return $row['count'] ;
+        }
+    }
+
+    /* file end: ./oc-includes/osclass/classes/database/DAO.php */
 ?>
