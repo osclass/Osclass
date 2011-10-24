@@ -46,10 +46,9 @@
 
             switch( $this->action ){
                 case 'item_add': // post
-                    if( osc_reg_user_post() && $this->user==null ) {
-                        // CHANGEME: This text
-                        osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
-                        $this->redirectTo(osc_user_login_url());
+                    if( osc_reg_user_post() && $this->user == null ) {
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
+                        $this->redirectTo(osc_user_login_url()) ;
                     }
 
                     $countries = Country::newInstance()->listAll();
@@ -96,9 +95,9 @@
                     break;
 
                 case 'item_add_post': //post_item
-                    if( osc_reg_user_post() && $this->user==null) {
-                        osc_add_flash_error_message( _m('Only registered users are allowed to post items')) ;
-                        $this->redirectTo(osc_base_url(true));
+                    if( osc_reg_user_post() && $this->user == null ) {
+                        osc_add_flash_warning_message( _m('Only registered users are allowed to post items') ) ;
+                        $this->redirectTo( osc_base_url(true) ) ;
                     }
                     
                     $mItems = new ItemActions(false);
