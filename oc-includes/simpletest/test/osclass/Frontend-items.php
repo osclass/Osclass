@@ -11,56 +11,53 @@ class Frontend_items extends FrontendTest {
      *  - With validation.
      *  - Can't post items
      */
-    function testItems_noUser()
-    {
-        include 'itemData.php';
-        $item = $aData[0];
-        $uSettings = new utilSettings();
-        $items_wait_time                  = $uSettings->set_items_wait_time(0);
-        $set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
-        $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
-        $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
-        
-        $this->insertItem($item['catId'], $item['title'], 
-                                $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
-                                $item['photo'], $item['contactName'], 
-                                $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
-        
-        $uSettings->set_moderate_items(111);
-        $this->insertItem($item['catId'], $item['title'], 
-                                $item['description'], $item['price'],
-                                $item['regionId'], $item['cityId'], 
-                                $item['photo'], $item['contactName'], 
-                                $this->_email);
-        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
-        
-        $uSettings->set_reg_user_post(1);
-        $this->selenium->open( osc_base_url(true) );
-        $this->selenium->click("link=Publish your ad for free");
-        $this->selenium->waitForPageToLoad("30000");
-        $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Items, insert item, no user, can't publish");
-        
-        $uSettings->set_items_wait_time($items_wait_time);
-        $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
-        $uSettings->set_reg_user_post($bool_reg_user_post);
-        $uSettings->set_moderate_items($bool_enabled_user_validation);
-        
-        unset($uSettings);
-        /*
-         * Remove all items inserted previously
-         */
-//        $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
-        $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
-//        while( $item ) {
-        foreach($aItem as $item){
-            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
-            $this->selenium->open( $url );
-            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
-//            $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email, 'fk_i_user_id' => DB_CONST_NULL) ) ;
-        }
-    }
+//    function testItems_noUser()
+//    {
+//        include 'itemData.php';
+//        $item = $aData[0];
+//        $uSettings = new utilSettings();
+//        $items_wait_time                  = $uSettings->set_items_wait_time(0);
+//        $set_selectable_parent_categories = $uSettings->set_selectable_parent_categories(1);
+//        $bool_reg_user_post               = $uSettings->set_reg_user_post(0);
+//        $bool_enabled_user_validation     = $uSettings->set_moderate_items(-1);
+//        
+//        $this->insertItem($item['catId'], $item['title'], 
+//                                $item['description'], $item['price'],
+//                                $item['regionId'], $item['cityId'], 
+//                                $item['photo'], $item['contactName'], 
+//                                $this->_email);
+//        $this->assertTrue($this->selenium->isTextPresent("Your item has been published"),"Items, insert item, no user, no validation.") ;
+//        
+//        $uSettings->set_moderate_items(111);
+//        $this->insertItem($item['catId'], $item['title'], 
+//                                $item['description'], $item['price'],
+//                                $item['regionId'], $item['cityId'], 
+//                                $item['photo'], $item['contactName'], 
+//                                $this->_email);
+//        $this->assertTrue($this->selenium->isTextPresent("Check your inbox to verify your email address"),"Items, insert item, no user, with validation.") ;
+//        
+//        $uSettings->set_reg_user_post(1);
+//        $this->selenium->open( osc_base_url(true) );
+//        $this->selenium->click("link=Publish your ad for free");
+//        $this->selenium->waitForPageToLoad("30000");
+//        $this->assertTrue($this->selenium->isTextPresent("Only registered users are allowed to post items"), "Items, insert item, no user, can't publish");
+//        
+//        $uSettings->set_items_wait_time($items_wait_time);
+//        $uSettings->set_selectable_parent_categories($set_selectable_parent_categories);
+//        $uSettings->set_reg_user_post($bool_reg_user_post);
+//        $uSettings->set_moderate_items($bool_enabled_user_validation);
+//        
+//        unset($uSettings);
+//        /*
+//         * Remove all items inserted previously
+//         */
+//        $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
+//        foreach($aItem as $item){
+//            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
+//            $this->selenium->open( $url );
+//            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
+//        }
+//    }
     
     /*
      * Insert items, user.
