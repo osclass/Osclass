@@ -22,7 +22,6 @@
 
     class LogOsclassInstaller extends Log
     {
-
         private static $_instance;
 
         private $os;
@@ -105,4 +104,5 @@
         }
     }
 
+    /* file end: ./oc-includes/osclass/Logger/LogOsclass.php */
 ?>

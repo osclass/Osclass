@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -112,21 +112,9 @@
         {
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
-            $this->dao->where('pk_c_code', $code);
-            $result = $this->dao->get();
-            return $result->result();
-            
-            // TODO : DELETE THIS IS NOT NEEDED
-            /*$aResults = $result->result();
-            if ($indexedByPk) {
-                $aTmp = array() ;
-                for ($i = 0 ; $i < count($aResults) ; $i++) {
-                    $aTmp[(string)$aResults[$i][$this->getPrimaryKey()]] = $aResults[$i] ;
-                }
-                $aResults = $aTmp ;
-            }
-
-            return($aResults) ;*/
+            $this->dao->where('pk_c_code', $code) ;
+            $result = $this->dao->get() ;
+            return $result->result() ;
         }
 
         /**
@@ -152,4 +140,6 @@
             return $result;
         }
     }
+
+    /* file end: ./oc-includes/osclass/model/OSCLocale.php */
 ?>

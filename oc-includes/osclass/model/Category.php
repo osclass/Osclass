@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -173,8 +173,7 @@
             }
             return $tree;
         }
-        
-        
+
         /**
          * Find root categories
          * 
@@ -186,7 +185,6 @@
             return $this->listWhere("a.fk_i_parent_id IS NULL") ;
         }
 
-        
         /**
          * Find root enabled categories
          * 
@@ -332,7 +330,6 @@
             return array_reverse($this->toRootTree($category_id));
         }
 
-        
         /**
          * Check if it's a root category
          * 
@@ -383,7 +380,6 @@
             }
         }
 
-
         /**
          * delete a category and all information linked to it
          * 
@@ -392,8 +388,6 @@
          * @param integer$pk primary key
          */
         public function deleteByPrimaryKey($pk) {
-
-
             $items = Item::newInstance()->findByCategoryID($pk);
             $subcats = $this->findSubcategories($pk);
             if (count($subcats) > 0) {
@@ -583,11 +577,7 @@
             );
             return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set);
         }
-
-        
-        
-        
-        
-        
     }
+
+    /* file end: ./oc-includes/osclass/model/Category.php */
 ?>
