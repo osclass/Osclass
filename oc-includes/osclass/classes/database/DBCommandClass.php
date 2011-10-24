@@ -743,7 +743,7 @@
          * @param array $values
          * @return string 
          */
-        function _replace($table, $key, $values)
+        function _replace($table, $keys, $values)
         {
             return 'REPLACE INTO ' . $table . ' (' . implode(', ', $keys) . ') VALUES (' . implode(', ', $values) . ')';
         }
