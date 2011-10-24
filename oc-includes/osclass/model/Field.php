@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -291,7 +291,7 @@
             $this->dao->delete(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
             return $this->dao->delete($this->getTableName(), array('pk_i_id' =>$id));
         }
-
     }
 
+    /* file end: ./oc-includes/osclass/model/Field.php */
 ?>

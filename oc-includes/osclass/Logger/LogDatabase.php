@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -20,9 +20,9 @@
      * License along with this program.  If not, see <http://www.gnu.org/licenses/>.
      */
 
-     /**
-      * 
-      */
+    /**
+     * 
+     */
     class LogDatabase
     {
         /**
@@ -123,5 +123,5 @@
         }
     }
 
-    /* file end: ./oc-includes/osclass/classes/Logger/LogDatabase.php */
+    /* file end: ./oc-includes/osclass/Logger/LogDatabase.php */
 ?>

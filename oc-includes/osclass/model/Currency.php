@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -65,6 +65,7 @@
             $this->setPrimaryKey('pk_c_code') ;
             $this->setFields(array('pk_c_code', 's_name', 's_description', 'b_enabled')) ;
         }
-        
     }
+
+    /* file end: ./oc-includes/osclass/model/Currency.php */
 ?>

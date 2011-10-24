@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -75,8 +75,7 @@
                 $this->dao->update($this->table_name, array('s_new_email' => $userEmailTmp['s_new_email'], 'dt_date' => date('Y-m-d H:i:s')), array('fk_i_user_id' => $userEmailTmp['fk_i_user_id']));
             }
         }
-        
-
     }
 
+    /* file end: ./oc-includes/osclass/model/UserEmailTmp.php */
 ?>

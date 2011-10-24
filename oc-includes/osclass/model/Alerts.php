@@ -1,4 +1,4 @@
-<?php
+<?php if ( !defined('ABS_PATH') ) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
 
     /*
      *      OSCLass – software for creating and publishing online classified
@@ -46,7 +46,7 @@
         {
             parent::__construct();
             $this->setTableName('t_alerts') ;
-//            $this->setPrimaryKey('') ; // no primary key in preference table 
+            // $this->setPrimaryKey('') ; // no primary key in preference table 
             $array_fields = array(
                 's_email',
                 'fk_i_user_id',
@@ -184,7 +184,6 @@
             }
         }
         
-        
         // a.s_email, a.fk_i_user_id @TODO
         /**
          * Searches for users, given a type group and a s_search.
@@ -215,8 +214,7 @@
                 return $result->result();
             }
         }
-        
-        
+
         /**
          * Searches for alerts, given a type group and an user id
          * If type don't match return empty array.
@@ -315,5 +313,6 @@
             return $this->dao->update($this->getTableName(), array('b_active' => 1), array('s_email' => $email, 's_secret' => $secret));
         }
     }
-    
+
+    /* file end: ./oc-includes/osclass/model/Alerts.php */
 ?>
