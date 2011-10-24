@@ -89,7 +89,7 @@
         }
         
         public static function getAllowedTypesForSorting() {
-            return( array('ASC', 'DESC') ) ;
+            return ( array (0 => 'asc', 1 => 'desc') ) ;
         }
         
 
