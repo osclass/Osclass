@@ -229,6 +229,19 @@
         }
         
         /**
+         * Find items belong to an email
+         * 
+         * @access public
+         * @since unknown*
+         * @param type $email
+         * @return type 
+         */
+        public function findByEmail($email)
+        {
+            return $this->listWhere('s_contact_email = %s', $email);
+        }
+        
+        /**
          * Count all items, or all items belong to a category id, can be filtered
          * by $active  ['ACTIVE'|'INACTIVE'|'SPAM']
          *
