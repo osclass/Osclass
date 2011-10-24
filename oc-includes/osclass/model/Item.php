@@ -475,7 +475,7 @@
         {
             $array_replace = array(
                 's_title'           => $title,
-                's_description'     => $tex,
+                's_description'     => $text,
                 'fk_c_locale_code'  => $locale,
                 'fk_i_item_id'      => $id,
                 's_what'            => $title . " " . $text
