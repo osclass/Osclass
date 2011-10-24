@@ -63,6 +63,11 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_location', $location) ;
             $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
             return $result->result();
         }
 
