@@ -382,10 +382,10 @@
             $price_min = 1000000*$price_min;
             $price_max = 1000000*$price_max;
             if(is_numeric($price_min) && $price_min!=0) {
-                $this->addConditions(sprintf("i_price >= %d", $price_min));
+                $this->addConditions(sprintf("i_price >= %0.0f", $price_min));
             }
             if(is_numeric($price_max) && $price_max>0) {
-                $this->addConditions(sprintf("i_price <= %d", $price_max));
+                $this->addConditions(sprintf("i_price <= %0.0f", $price_max));
             }
         }
 
