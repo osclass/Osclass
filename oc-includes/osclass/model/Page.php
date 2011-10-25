@@ -44,7 +44,7 @@
          */
         function __construct()
         {
-            parent::__construct();
+            parent::__construct() ;
             $this->setTableName('t_pages') ;
             $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
@@ -52,7 +52,7 @@
                 'b_indelible',
                 'dt_pub_date', 
                 'dt_mod_date', 
-                'i_order');
+                'i_order') ;
             $this->setFields($array_fields) ;
         }
         
@@ -71,28 +71,33 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_i_id', $id) ;
             $result = $this->dao->get() ;
-            $row = $result->row() ;
 
-            if(is_null($row)) {
-                return array();
+            if( $result == false ) {
+                return false ;
             }
+
+            if( $result->numRows() == 0 ) {
+                return false ;
+            }
+            
+            $row = $result->row() ;
 
             // page_description
             $this->dao->select() ;
-            $this->dao->from(DB_TABLE_PREFIX.'t_pages_description') ;
+            $this->dao->from($this->getDescriptionTableName()) ;
             $this->dao->where('fk_i_pages_id', $id) ;
-            if(!is_null($locale)) {
+            if( !is_null($locale) ) {
                 $this->dao->where('fk_c_locale_code', $locale) ;
             }
-            $result = $this->dao->get() ;
-            $sub_rows = $result->result() ;
+            $result   = $this->dao->get() ;
+            $aRows = $result->result() ;
 
-            $row['locale'] = array();
-            foreach($sub_rows as $sub_row) {
-                $row['locale'][$sub_row['fk_c_locale_code']] = $sub_row;
+            $row['locale'] = array() ;
+            foreach($aRows as $r) {
+                $row['locale'][$r['fk_c_locale_code']] = $r ;
             }
 
-            return $row;
+            return $row ;
         }
         
         /**
@@ -155,8 +160,7 @@
                 return $result;
             }
         }
-        
-        
+
         /**
          * Get all the pages with the parameters you choose.
          *
@@ -171,33 +175,32 @@
          */
         public function listAll($indelible = null, $locale = null, $start = null, $limit = null)
         {
-
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
-            if(!is_null($indelible)) {
-                $this->dao->where('b_indelible', $indelible?1:0);
+            if( !is_null($indelible) ) {
+                $this->dao->where('b_indelible', $indelible) ;
             }
-            $this->dao->orderBy('i_order', 'ASC');
-            if(!is_null($limit)) {
-                $this->dao->limit($limit, $start);
+            $this->dao->orderBy('i_order', 'ASC') ;
+            if( !is_null($limit) ) {
+                $this->dao->limit($limit, $start) ;
             }
             $result = $this->dao->get() ;
-            $aPages = $result->result();
+            $aPages = $result->result() ;
 
-            if(count($aPages) == 0) {
-                return array();
+            if( count($aPages) == 0 ) {
+                return array() ;
             }
 
-            $result = array();
+            $resultPages = array() ;
             foreach($aPages as $aPage) {
-                $data = $this->extendDescription($aPage, $locale);
+                $data = $this->extendDescription($aPage, $locale) ;
                 if(count($data) > 0) {
-                    $result[] = $data;
+                    $resultPages[] = $data ;
                 }
-                unset($data);
+                unset($data) ;
             }
 
-            return $result;
+            return $resultPages ;
         }
 
         /**
@@ -210,27 +213,27 @@
          */
         public function extendDescription($aPage, $locale = null)
         {
-            $this->dao->select();
-            $this->dao->from(sprintf("%st_pages_description", DB_TABLE_PREFIX));
-            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']);
-            if(!is_null($locale)) {
-                $this->dao->where('fk_c_locale_code', $locale);
+            $this->dao->select() ;
+            $this->dao->from($this->getDescriptionTableName()) ;
+            $this->dao->where("fk_i_pages_id", $aPage['pk_i_id']) ;
+            if( !is_null($locale) ) {
+                $this->dao->where('fk_c_locale_code', $locale) ;
             }
-            $results = $this->dao->get();
-            $descriptions = $results->result();
+            $results       = $this->dao->get() ;
+            $aDescriptions = $results->result() ;
 
-            if(count($descriptions) == 0) {
-                return array();
+            if( count($aDescriptions) == 0 ) {
+                return array() ;
             }
 
-            $aPage['locale'] = array();
-            foreach($descriptions as $desc) {
-                if( !empty($desc['s_title']) || !empty($desc['s_text']) ) {
-                    $aPage['locale'][$desc['fk_c_locale_code']] = $desc;
+            $aPage['locale'] = array() ;
+            foreach($aDescriptions as $description) {
+                if( !empty($description['s_title']) || !empty($description['s_text']) ) {
+                    $aPage['locale'][$description['fk_c_locale_code']] = $description ;
                 }
             }
 
-            return $aPage;
+            return $aPage ;
         }
 
         /**
@@ -248,7 +251,7 @@
             
             $this->reOrderPages($order);
 
-            $result = $this->dao->delete(sprintf('%st_page_description', DB_TABLE_PREFIX), array('pk_i_id' => $id));
+            $result = $this->dao->delete($this->getDescriptionTableName(), array('pk_i_id' => $id));
             $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
             if($result > 0) {
                 return true;
@@ -358,14 +361,13 @@
             $title = addslashes($title);
             $text  = addslashes($text);
 
-            $this->dao->insert(sprintf("%st_page_description", DB_TABLE_PREFIX),array(
+            $this->dao->insert($this->getDescriptionTableName() ,array(
                 'fk_i_pages_id' => $id
                 ,'fk_c_locale_code' => $locale
                 ,'s_title' => $title
                 ,'s_text' => $text
             ));
 
-            
             if($this->dao->affectedRows() == 0) {
                 return false;
             }
@@ -394,7 +396,7 @@
                 return $result;
             }
 
-            return $this->dao->update(sprintf("%st_page_description", DB_TABLE_PREFIX),
+            return $this->dao->update($this->getDescriptionTableName(),
                     array(
                         's_title' => $title
                         ,'s_text' => $text
@@ -412,9 +414,9 @@
          * @param array $conditions
          * @return bool Return true if exists and false if not.
          */
-        public function existDescription($conditions) {
+        public function existDescription($conditions){
             $this->dao->select("COUNT(*)");
-            $this->dao->from(sprintf("%st_page_description", DB_TABLE_PREFIX));
+            $this->dao->from($this->getDescriptionTableName());
             foreach($conditions as $key => $value) {
                 $this->dao->where($key, $this->formatValue($value));
             }
@@ -481,6 +483,11 @@
                 return true;
             }
             return false;
+        }
+
+        function getDescriptionTableName()
+        {
+            return $this->getTablePrefix() . 't_pages_description' ;
         }
     }
 
