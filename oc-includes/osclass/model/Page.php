@@ -118,6 +118,7 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_internal_name', $intName) ;
             $result = $this->dao->get() ;
+            $result = $result->result();
             
             if( $result == false ) {
                 return array() ;
