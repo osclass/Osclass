@@ -118,7 +118,7 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_internal_name', $intName) ;
             $result = $this->dao->get() ;
-            $result = $result->result();
+            
             
             if( $result == false ) {
                 return array() ;
@@ -127,7 +127,7 @@
             if( $result->numRows() == 0 ){
                 return array() ;
             }
-
+            
             $row = $result->row() ;
             return $this->extendDescription($row, $locale) ;
         }
@@ -245,7 +245,8 @@
          * @access public
          * @since unknown
          * @param int $id Page id which is going to be deleted
-         * @return bool True on successful removal, false on failure
+         * @return@return mixed It return the number of affected rows if the delete has been 
+         * correct or false if nothing has been modified
          */
         public function deleteByPrimaryKey($id)
         {
@@ -254,12 +255,10 @@
             
             $this->reOrderPages($order);
 
-            $result = $this->dao->delete($this->getDescriptionTableName(), array('pk_i_id' => $id));
+            $result = $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
             $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
-            if($result > 0) {
-                return true;
-            }
-            return false;
+            
+            return $result;
         }
 
         /**
@@ -418,15 +417,17 @@
          * @return bool Return true if exists and false if not.
          */
         public function existDescription($conditions){
-            $this->dao->select("COUNT(*)");
+            $this->dao->select("COUNT(*) as total");
             $this->dao->from($this->getDescriptionTableName());
             foreach($conditions as $key => $value) {
-                $this->dao->where($key, $this->formatValue($value));
+                $this->dao->where($key, $value);
             }
 
             $result = $this->dao->get();
-
-            return (bool) $result->row();
+            $count = $result->row();
+            
+            if($count['total'] > 0) return true;
+            else return false;
         }
 
         /**

@@ -49,7 +49,8 @@
             $res = $this->model->insert($aFields, $aFieldsDescription) ;
             $this->assertTrue($res, 'Cannot insert page');
             
-            self::$aSecret['pageID'] = $this->model->dao->insertedId();
+            $page = $this->model->findByInternalName('test_page_one') ;
+            self::$aSecret['pageID'] = $page['pk_i_id'];
         }
         
         public function testExistDescription()
@@ -58,16 +59,49 @@
                 'fk_i_pages_id' => self::$aSecret['pageID']
             );
             $results = $this->model->existDescription($conditions) ;
-            $this->assertEquals(1, count($results), 'No exist description');
+            $this->assertTrue($results, 'No exist description');
             
-            $conditions['fk_i_pages_id'] = 9999;
-            $results = $this->model->existDescription($conditions) ;
-            $this->assertEquals(0, count($results), 'Exist description');
+            $conditions_['fk_i_pages_id'] = 9999;
+            $results = $this->model->existDescription($conditions_) ;
+            $this->assertFalse($results, 'Exist description');
             
             $conditions['fk_i_pages_id']    = self::$aSecret['pageID'] ;
             $conditions['fk_c_locale_code'] = 'en_US' ;
             $results = $this->model->existDescription($conditions) ;
-            $this->assertEquals(1, count($results), 'No exist description');
+            $this->assertTrue($results, 'No exist description');
+        }
+        
+        public function testUpdateInternalName()
+        {
+            $res = $this->model->updateInternalName(self::$aSecret['pageID'], 'new_test_page_one');
+            $this->assertGreaterThan(0, $res);
+            $result = $this->model->findByInternalName('new_test_page_one');
+            foreach($this->model->getFields() as $field){
+                $this->assertArrayHasKey($field, $result);
+            }
+        }
+        
+        public function testIsIndelible()
+        {
+            $res = $this->model->isIndelible(self::$aSecret['pageID']);
+            $this->assertFalse($res);
+        }
+        
+        
+        public function testInternalNameExist()
+        {
+            $res = $this->model->internalNameExists(self::$aSecret['pageID'], 'new_test_page_one');
+            $this->assertTrue($res);
+        }
+        
+        public function testUpdateDescription()
+        {
+            $en_US = array(
+                's_title'   => 'new Page test one',
+                's_text'    => 'new Page test description one'
+            );
+            $res = $this->model->updateDescription(self::$aSecret['pageID'], 'en_US', $en_US['s_title'], $en_US['s_text']) ;
+            $this->assertEquals(1, $res);
         }
         
         public function testDeletePage()
