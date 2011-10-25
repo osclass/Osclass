@@ -3,7 +3,7 @@ require_once '../../../../oc-load.php';
 
 //require_once('FrontendTest.php');
 
-class OCadmin_generalSettings extends OCadminTest {
+class OCadmin_languages extends OCadminTest {
     
     private $canUpload = TRUE;
     private $canUpload_;
