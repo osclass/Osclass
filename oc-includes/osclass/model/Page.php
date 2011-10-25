@@ -48,6 +48,7 @@
             $this->setTableName('t_pages') ;
             $this->setPrimaryKey('pk_i_id') ;
             $array_fields = array(
+                'pk_i_id',
                 's_internal_name',
                 'b_indelible',
                 'dt_pub_date', 
@@ -71,6 +72,7 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_i_id', $id) ;
             $result = $this->dao->get() ;
+            
             $row = $result->row() ;
 
             if(is_null($row)) {
