@@ -12,8 +12,8 @@ class AllFrontEndTests extends TestSuite {
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-register.php');
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-search.php');
 //        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-items.php');
-        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');        
-//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');        
+//        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-page.php');        
+        $this->addFile(ABS_PATH . 'oc-includes/simpletest/test/osclass/Frontend-users.php');        
     }
     
 }
