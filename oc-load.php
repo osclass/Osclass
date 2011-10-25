@@ -42,9 +42,20 @@ if( !file_exists(ABS_PATH . 'config.php') ) {
 }
 
 require_once ABS_PATH . 'config.php';
+require_once LIB_PATH . 'osclass/default-constants.php' ;
 
-if( !defined('MULTISITE') ) {
-    define('MULTISITE', 0);
+// Sets PHP error handling
+if( OSC_DEBUG ) {
+    ini_set( 'display_errors', 1 ) ;
+    error_reporting( E_ALL | E_STRICT ) ;
+
+    if( OSC_DEBUG_LOG ) {
+        ini_set( 'display_errors', 0 ) ;
+        ini_set( 'log_errors', 1 ) ;
+        ini_set( 'error_log', CONTENT_PATH . 'debug.log' ) ;
+    }
+} else {
+    error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING ) ;
 }
 
 require_once LIB_PATH . 'osclass/db.php';
@@ -135,7 +146,7 @@ require_once LIB_PATH . 'osclass/frm/Item.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Contact.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Comment.form.class.php';
 require_once LIB_PATH . 'osclass/frm/User.form.class.php';
-require_once LIB_PATH . 'osclass/frm/Language.form.class.php'; // CARLOS
+require_once LIB_PATH . 'osclass/frm/Language.form.class.php';
 require_once LIB_PATH . 'osclass/frm/SendFriend.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Alert.form.class.php';
 require_once LIB_PATH . 'osclass/frm/Field.form.class.php';
