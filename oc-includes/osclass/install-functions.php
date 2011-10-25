@@ -137,6 +137,10 @@ function reportToOsclass() {
 function set_allow_report_osclass($bool) {
     require_once ABS_PATH . 'config.php' ;
 
+    if( !defined('OSC_DEBUG_DB') ) {
+        define('OSC_DEBUG_DB', false) ;
+    }
+
     $value = 0;
     if($bool) {$value = 1;}
 
@@ -164,7 +168,7 @@ function oc_install( ) {
         $adminuser = trim($_POST['admin_username']);
         $adminpwd = trim($_POST['admin_password']);
 
-        $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql', DEBUG_LEVEL) ;
+        $master_conn = getConnection($dbhost, $adminuser, $adminpwd, 'mysql') ;
 
         if($error_num > 0) {
             if( reportToOsclass() ) {
@@ -194,7 +198,7 @@ function oc_install( ) {
         }
     }
 
-    $conn = getConnection($dbhost, $username, $password, $dbname, DEBUG_LEVEL) ;
+    $conn = getConnection($dbhost, $username, $password, $dbname) ;
     $error_num = $conn->get_errno();
 
     if($error_num > 0) {

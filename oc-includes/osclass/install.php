@@ -27,6 +27,10 @@ define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
 define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
 define( 'OSC_INSTALLING', 1 );
 
+if( !defined('OSC_DEBUG_DB') ) {
+    define('OSC_DEBUG_DB', false) ;
+}
+
 require_once LIB_PATH . 'osclass/db.php';
 require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';

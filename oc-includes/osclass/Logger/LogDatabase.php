@@ -87,18 +87,16 @@
                 foreach($this->messages as $msg) {
                     $row_style = '';
                     if( $msg['errno'] != 0 ) {
-                        $row_style = 'style=" background-color: #FFC2C2;"' ;
+                        $row_style = 'style="background-color: #FFC2C2;"' ;
                     }
                     echo '<tr ' . $row_style . '>' . PHP_EOL ;
                     echo '<td style="padding: 10px 10px 9px; text-align: left; vertical-align: top; border: 1px solid #ddd;">' . $msg['query_time'] . '</td>' . PHP_EOL ;
                     echo '<td style="padding: 10px 10px 9px; text-align: left; vertical-align: top; border: 1px solid #ddd;">' ;
-                    if( $msg['errno'] == 0 ) {
-                        echo $msg['query'] ;
-                    } else {
+                    if( $msg['errno'] != 0 ) {
                         echo '<strong>Error number:</strong> ' . $msg['errno'] . '<br/>' ;
                         echo '<strong>Error description:</strong> ' . $msg['error'] . '<br/><br/>' ;
-                        echo $msg['query'] ;
                     }
+                    echo nl2br($msg['query']) ;
                     echo '</td>' . PHP_EOL ;
                     echo '</tr>' . PHP_EOL ;
                 }
