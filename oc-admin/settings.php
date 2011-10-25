@@ -432,7 +432,7 @@
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=currencies');
                                                                 }
 
-                                                                $aCurrency = Currency::newInstance()->findByCode($currencyCode);
+                                                                $aCurrency = Currency::newInstance()->findByPrimaryKey($currencyCode);
 
                                                                 if(count($aCurrency) == 0) {
                                                                     osc_add_flash_error_message( _m('Error: the currency doesn\'t exist'), 'admin');
