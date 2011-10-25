@@ -67,17 +67,6 @@
          * @var string 
          */
         private $dbPassword ;
-        /**
-         * Debug level:
-         *  - 0: No debug
-         *  - 1: Debug in html
-         *  - 2: Debug with comments
-         * 
-         * @access private
-         * @since 2.3
-         * @var int 
-         */
-        private $dbDebugLevel ;
 
         /**
          * Database connection object to OSClass database
@@ -138,19 +127,17 @@
          * @param string $database Default database to be used when performing queries
          * @param string $user MySQL user name
          * @param string $password MySQL password
-         * @param int $debugLevel Debug level
          * @return DBConnectionClass 
          */
-        public static function newInstance($server = '', $user = '', $password = '', $database = '', $debugLevel = '')
+        public static function newInstance($server = '', $user = '', $password = '', $database = '')
         {
             $server      = ($server == '') ? osc_db_host() : $server ;
             $user        = ($user == '') ? osc_db_user() : $user ;
             $password    = ($password == '') ? osc_db_password() : $password ;
             $database    = ($database == '') ? osc_db_name() : $database ;
-            $debugLevel = ($debugLevel == '') ? DEBUG_LEVEL : $debugLevel ;
 
             if(!self::$instance instanceof self) {
-                self::$instance = new self ($server, $user, $password, $database, $debugLevel);
+                self::$instance = new self ($server, $user, $password, $database);
             }
             return self::$instance ;
         }
@@ -162,15 +149,13 @@
          * @param string $database Default database to be used when performing queries
          * @param string $user MySQL user name
          * @param string $password MySQL password
-         * @param int $debugLevel Debug level
          */
-        public function __construct($server, $user, $password, $database, $debugLevel)
+        public function __construct($server, $user, $password, $database)
         {
             $this->dbHost       = $server ;
             $this->dbName       = $database ;
             $this->dbUser       = $user ;
             $this->dbPassword   = $password ;
-            $this->dbDebugLevel = $debugLevel ;
 
             $this->connectToOsclassDb() ;
         }
@@ -182,7 +167,9 @@
         {
             $this->releaseOsclassDb() ;
             $this->releaseMetadataDb() ;
-            $this->debug() ;
+            if( !defined('IS_AJAX') ) {
+                $this->debug() ;
+            }
         }
 
 		/**
@@ -393,15 +380,9 @@
          */
         function debug()
         {
-            switch ($this->dbDebugLevel) {
-                case 1:     $log = LogDatabase::newInstance() ;
-                            $log->printMessages() ;
-                break ;
-                case 2:     $log = LogDatabase::newInstance() ;
-                            echo '<!--' ;
-                            $log->printMessages() ;
-                            echo '-->' ;
-                break ;
+            if( OSC_DEBUG_DB && !defined('IS_AJAX') ) {
+                $log = LogDatabase::newInstance() ;
+                $log->printMessages() ;
             }
         }
 
