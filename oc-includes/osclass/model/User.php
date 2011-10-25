@@ -263,8 +263,8 @@
                 ItemComment::newInstance()->delete(array('fk_i_user_id' => $id));
                 
                 $this->dao->delete(DB_TABLE_PREFIX.'t_user_email_tmp', array('fk_i_user_id' => $id)) ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id', $id)) ;
-                $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id', $id)) ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_user_description', array('fk_i_user_id' => $id)) ;
+                $this->dao->delete(DB_TABLE_PREFIX.'t_alerts', array('fk_i_user_id' => $id)) ;
                 return $this->dao->delete($this->getTableName(), array('pk_i_id' => $id)) ;
             }
             return false;
