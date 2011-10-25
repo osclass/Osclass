@@ -110,19 +110,18 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('s_internal_name', $intName) ;
             $result = $this->dao->get() ;
+            $row    = array() ;
             
-            $row = array() ;
             if( $result == false ) {
-                return false ;
-            } else {
-                if($result->numRows == 0){
-                    return array() ;
-                }else{
-                    $row = $result->row() ;
-                    $result = $this->extendDescription($row, $locale) ;
-                    return $result ;
-                }
+                return array() ;
             }
+
+            if( $result->numRows() == 0 ){
+                return array() ;
+            }
+
+            $row = $result->row() ;
+            return $this->extendDescription($row, $locale) ;
         }
         
         /**
