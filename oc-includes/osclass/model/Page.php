@@ -145,22 +145,23 @@
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $array_where = array(
-                'i_order'       => $order,
-                'b_indelible'   => 0
+                'i_order'     => $order,
+                'b_indelible' => 0
             );
             $this->dao->where($array_where) ;
             $result = $this->dao->get() ;
-            
-            if($result == false){
-                return array();
-            } else {
-                if($result->num_rows == 0) {
-                    return array();
-                }
-                $row = $result->row() ;
-                $result = $this->extendDescription($row, $locale);
-                return $result;
+
+            if( $result == false ) {
+                return array() ;
             }
+
+            if( $result->numRows() == 0 ) {
+                return array() ;
+            }
+
+            $row    = $result->row() ;
+            $result = $this->extendDescription($row, $locale) ;
+            return $result ;
         }
 
         /**
