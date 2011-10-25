@@ -255,7 +255,7 @@
             
             $this->reOrderPages($order);
 
-            $result = $this->dao->delete($this->getDescriptionTableName(), array('pk_i_id' => $id));
+            $result = $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
             $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
             
             return $result;
