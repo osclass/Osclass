@@ -50,7 +50,7 @@
 
         function __construct($params) {
 
-            parent::__construct() ;
+//            parent::__construct() ;
 
             $this->_get = $params;
             $this->getDBParams();
