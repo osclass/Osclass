@@ -255,7 +255,7 @@
             
             $this->reOrderPages($order);
 
-            $result = $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
+            $result = $this->dao->delete($this->getDescriptionTableName(), array('pk_i_id' => $id));
             $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
             
             return $result;
@@ -425,7 +425,7 @@
 
             $result = $this->dao->get();
             $count = $result->row();
-            
+            print_r($count);
             if($count['total'] > 0) return true;
             else return false;
         }
@@ -483,7 +483,8 @@
             $this->dao->where('s_internal_name', $internalName);
             $this->dao->where('pk_i_id <> '.$id);
             $result = $this->dao->get();
-            if(count($result) > 0) {
+            
+            if($result->numRows() > 0) {
                 return true;
             }
             return false;
