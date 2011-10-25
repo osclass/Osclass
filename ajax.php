@@ -26,6 +26,7 @@
     {
         function __construct() {
             parent::__construct() ;
+            $this->ajax = true ;
         }
 
         //Business Layer...
