@@ -23,7 +23,7 @@
     /**
      * LastestSearches DAO
      */
-    class LastestSearches extends DAO
+    class LatestSearches extends DAO
     {
         /**
          *
@@ -130,19 +130,27 @@
          * @return bool
          */
         public function purgeNumber($number = null) {
-            if($number!=null) {
-                $this->dao->select('d_date') ;
-                $this->dao->from($this->getTableName()) ; 
-                $this->dao->groupBy('s_search') ;
-                $this->dao->orderBy('d_date', 'DESC') ;
-                $this->dao->limit($number, 1) ;
-                $result = $this->dao->get() ;
-                $last= $result->row();
-                
-                return $this->dao->delete($this->getTableName(), array('d_date <= '.$last['d_date']));
-            } else {
-                return false;
+            if( $number == null ) {
+                return false ;
             }
+
+            $this->dao->select('d_date') ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->groupBy('s_search') ;
+            $this->dao->orderBy('d_date', 'DESC') ;
+            $this->dao->limit($number, 1) ;
+            $result = $this->dao->get() ;
+            $last   = $result->row() ;
+
+            if( $result == false ) {
+                return false ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return false ;
+            }
+
+            return $this->dao->delete($this->getTableName(), array('d_date <= ' . $last['d_date'])) ;
         }
     }
 
