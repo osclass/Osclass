@@ -658,24 +658,24 @@
                               ,'b_enabled'      => 1
                               ,'fk_i_user_id'   => $userId);
 
-            if( $mComments->insert($aComment) ){
-                if($status_num==2 && $userId!=null) { // COMMENT IS ACTIVE
+            if( $mComments->insert($aComment) ) {
+                $commentID = $mComments->dao->insertedId() ;
+                if($status_num == 2 && $userId != null) { // COMMENT IS ACTIVE
                     $user = User::newInstance()->findByPrimaryKey($userId);
-                    if($user) {
-                        User::newInstance()->update(array( 'i_comments' => $user['i_comments'] + 1)
-                                                   ,array( 'pk_i_id'    => $user['pk_i_id'] ) );
+                    if( $user ) {
+                        User::newInstance()->update( array( 'i_comments' => $user['i_comments'] + 1)
+                                                    ,array( 'pk_i_id'    => $user['pk_i_id'] ) ) ;
                     }
                 }
-                $notify      = osc_notify_new_comment() ;
 
                 //Notify admin
-                $conn = getConnection();
-                $id = $conn->osc_dbFetchResult("SELECT pk_i_id FROM %st_item_comment ORDER BY pk_i_id DESC LIMIT 1", DB_TABLE_PREFIX);
-                if ($notify) {
-                    osc_run_hook('hook_email_new_comment_admin', $aItem);
+                if ( osc_notify_new_comment() ) {
+                    osc_run_hook('hook_email_new_comment_admin', $aItem) ;
                 }
-                osc_run_hook('add_comment', $id['pk_i_id']);
-                return $status_num;
+
+                osc_run_hook( 'add_comment', $commentID ) ;
+
+                return $status_num ;
             }
 
             return -1;
