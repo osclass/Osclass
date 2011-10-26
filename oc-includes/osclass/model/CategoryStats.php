@@ -133,7 +133,18 @@
             }
             return $return;
         }
-        
+
+        public function setNumItems($categoryID, $numItems)
+        {
+            $result = $this->insert( array('fk_i_category_id' => $categoryID, 'i_num_items' => $numItems) ) ;
+
+            if( $this->dao->getErrorLevel() == '1062' ) {
+                $result = $this->update( array('i_num_items' => $numItems), array('fk_i_category_id' => $categoryID) ) ;
+            }
+
+            return $result ;
+        }
+
         /**
          * Find stats by category id
          * 
