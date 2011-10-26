@@ -1,4 +1,5 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
+
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -20,63 +21,60 @@
      */
 
     if( !defined('__FROM_CRON__') ) {
-        define('__FROM_CRON__', true);
-    }
-
-    function count_items_subcategories($category = null) {
-        $manager = CategoryStats::newInstance();
-        $total = $manager->countItemsFromCategory($category['pk_i_id']);
-        $categories = Category::newInstance()->findSubCategories($category['pk_i_id']);
-        if($categories!=null) {
-            foreach($categories as $c) {
-                if($c['b_enabled']==1) {
-                    $total += count_items_subcategories($c);
-                }
-            }
-        }
-        $conn = getConnection();
-        $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $category['pk_i_id'], $total, $total);
-        return $total;
+        define('__FROM_CRON__', true) ;
     }
 
     function update_cat_stats() {
-        $conn = getConnection() ;
-        $sql_cats = "SELECT pk_i_id, i_expiration_days FROM ".DB_TABLE_PREFIX."t_category";
-        $cats = $conn->osc_dbFetchResults($sql_cats);
+        $categoryTotal = array() ;
+        $categoryTree  = array() ;
+        $aCategories   = Category::newInstance()->listAll(false) ;
 
-        foreach($cats as $c) {
-            if($c['i_expiration_days']==0) {
-                $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id']);
-            } else {
-                $sql = sprintf("SELECT COUNT(pk_i_id) as total, fk_i_category_id as category FROM `%st_item` WHERE fk_i_category_id = %d AND b_enabled = 1 AND b_active = 1 AND (b_premium = 1 || TIMESTAMPDIFF(DAY,dt_pub_date,'%s') < %d) GROUP BY fk_i_category_id", DB_TABLE_PREFIX, $c['pk_i_id'], date('Y-m-d H:i:s'),$c['i_expiration_days']);
+        // append root categories and get the number of items of each category
+        foreach($aCategories as $category) {
+            $total     = Item::newInstance()->numItems($category, true, true) ;
+            $category += array('category' => array()) ;
+            if( is_null($category['fk_i_parent_id']) ) {
+                $categoryTree += array($category['pk_i_id'] => $category) ;
             }
 
-            $total = $conn->osc_dbFetchResult($sql);
-            $total = $total['total'];
-
-            $conn->osc_dbExec("INSERT INTO %st_category_stats (fk_i_category_id, i_num_items) VALUES (%d, %d) ON DUPLICATE KEY UPDATE i_num_items = %d", DB_TABLE_PREFIX, $c['pk_i_id'], $total, $total);
+            $categoryTotal += array($category['pk_i_id'] => $total) ;
+        }
+        
+        // append childs to root categories
+        foreach($aCategories as $category) {
+            if( !is_null($category['fk_i_parent_id']) ) {
+                $categoryTree[$category['fk_i_parent_id']]['category'][] = $category ;
+            }
         }
 
-        $categories = Category::newInstance()->findRootCategories();
-        foreach($categories as $c) {
-            $total = count_items_subcategories($c);
+        // sum the result of the subcategories and set in the parent category
+        foreach($categoryTree as $category) {
+            if( count( $category['category'] ) > 0 ) {
+                foreach($category['category'] as $subcategory) {
+                    $categoryTotal[$category['pk_i_id']] += $categoryTotal[$subcategory['pk_i_id']] ;
+                }
+            }
+        }
+
+        foreach($categoryTotal as $k => $v) {
+            CategoryStats::newInstance()->setNumItems($k, $v) ;
         }
     }
-
 
     function purge_latest_searches_hourly() {
-        $purge = osc_purge_latest_searches();
-        if($purge == 'day') {
-            LatestSearches::newInstance()->purgeDate(date('Y-m-d H:i:s', (time()-3600)));
-        } else if($purge!='forever' && $purge!='day' && $purge!='week') {
-            LatestSearches::newInstance()->purgeNumber($purge);
+        $purge = osc_purge_latest_searches() ;
+        if( $purge == 'hour' ) {
+            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - 3600) ) ) ;
+        } else if( !in_array($purge, array('forever', 'day', 'week')) ) {
+            LatestSearches::newInstance()->purgeNumber($purge) ;
         }
     }
 
-    osc_add_hook('cron_hourly', 'update_cat_stats');
-    osc_add_hook('cron_hourly', 'purge_latest_searches_hourly');
-    osc_runAlert('HOURLY');
+    osc_add_hook('cron_hourly', 'update_cat_stats') ;
+    osc_add_hook('cron_hourly', 'purge_latest_searches_hourly') ;
 
-    osc_run_hook('cron_hourly');
+    osc_runAlert('HOURLY') ;
+
+    osc_run_hook('cron_hourly') ;
 
 ?>
