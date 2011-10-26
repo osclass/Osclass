@@ -38,30 +38,35 @@
             //specific things for this class
             switch ($this->action)
             {
+                case 'bulk_actions':
+                                        switch ( Params::getParam('bulk_actions') )
+                                        {
+                                            case 'delete_all':
+                                                $ids = Params::getParam("id");
+                                                if($ids!='') {
+                                                    foreach($ids as $id) {
+                                                        osc_deleteResource( $id );
+                                                    }
+                                                    $this->resourcesManager->deleteResourcesIds($ids);
+                                                }
+                                                osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
+                                            break;
+                                            default:
+                                            break;
+                                        }
+                                        $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;
+                break;
                 case 'delete':          $ids = Params::getParam("id");
                                         if($ids!='') {
                                             foreach($ids as $id) {
                                                 osc_deleteResource( $id );
                                             }
-                                            $this->resourcesManager->delete(array(
-                                                DB_CUSTOM_COND => 'pk_i_id IN (' . implode(', ', $ids). ')'
-                                            ));
+                                            $this->resourcesManager->deleteResourcesIds($ids);
                                         }
                                         osc_add_flash_ok_message( _m('Resource deleted'), 'admin') ;
                                         $this->redirectTo( osc_admin_base_url(true) . "?page=media" ) ;
                 break;
-                default:                /*$resourceId = Params::getParam("id");
-
-
-                                        if( $resourceId != '' ) {
-                                            $resources = $this->resourcesManager->getAllResources($resourceId);
-                                        } else {
-                                            $resources = $this->resourcesManager->getAllResources(NULL);
-                                        }
-
-                                        //calling the view...
-                                        $this->_exportVariableToView("resources", $resources) ;
-                                        $this->_exportVariableToView("resourceId", $resourceId) ;*/
+                default:                
                                         $this->doView('media/index.php');
 
             }
