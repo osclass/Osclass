@@ -10,47 +10,47 @@ class OCadmin_items extends OCadminTest {
      * Insert item
      * 
      */
-//    function testInsertItem()
-//    {
-//        $this->loginWith();
-//        $this->insertItem() ;
-//        $this->viewMedia_NoMedia();
-//        $this->viewComments_NoComments();
-//        $this->deactivate();
-//        $this->activate();
-//        $this->markAsPremium();
-//        $this->unmarkAsPremium();
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Edit item
-//     */
-//    function testEditItem()
-//    {
-//        $this->loginWith() ;
-//        $this->editItem() ;
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Delete item
-//     */
-//    function testDeleteItem()
-//    {
-//        $this->loginWith() ;
-//        $this->deleteItem() ;
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Insert item, add comments to item
-//     */
-//    function testComments()
-//    {
-//        $this->loginWith() ;
-//        $this->insertItemAndComments() ;
-//    }
+    function testInsertItem()
+    {
+        $this->loginWith();
+        $this->insertItem() ;
+        $this->viewMedia_NoMedia();
+        $this->viewComments_NoComments();
+        $this->deactivate();
+        $this->activate();
+        $this->markAsPremium();
+        $this->unmarkAsPremium();
+    }
+
+    /*
+     * Login oc-admin
+     * Edit item
+     */
+    function testEditItem()
+    {
+        $this->loginWith() ;
+        $this->editItem() ;
+    }
+
+    /*
+     * Login oc-admin
+     * Delete item
+     */
+    function testDeleteItem()
+    {
+        $this->loginWith() ;
+        $this->deleteItem() ;
+    }
+
+    /*
+     * Login oc-admin
+     * Insert item, add comments to item
+     */
+    function testComments()
+    {
+        $this->loginWith() ;
+        $this->insertItemAndComments() ;
+    }
 
     /*
      * Login oc-admin
@@ -66,11 +66,11 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Check all item settings (values & behaviour into website)
      */
-//    function testSettings()
-//    {
-//        $this->loginWith() ;
-//        $this->settings() ;
-//    }
+    function testSettings()
+    {
+        $this->loginWith() ;
+        $this->settings() ;
+    }
     
      /*      PRIVATE FUNCTIONS       */
     private function addUserForTesting()
@@ -168,7 +168,6 @@ class OCadmin_items extends OCadminTest {
 
         if( $bPhotos ){
             $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
-            $this->selenium->click("link=Add new photo");
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
         
@@ -426,20 +425,20 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("link=Items");
         $this->selenium->click("link=» Manage media");
         $this->selenium->waitForPageToLoad("10000");
-            sleep(10);
+        
         $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
-//        // only can delete resources
-//        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
-//        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
-//
-//        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
-//        $this->assertTrue($this->selenium->isTextPresent("Showing 0 to 0 of 0 entries"), "Can't delete media. ERROR" );
+        // only can delete resources
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
+        $this->selenium->waitForPageToLoad("10000");
+        
+        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
+
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("Showing 0 to 0 of 0 entries"), "Can't delete media. ERROR" );
 
         // DELETE ITEM
         $this->selenium->open( osc_admin_base_url(true) );
@@ -511,6 +510,13 @@ class OCadmin_items extends OCadminTest {
         Preference::newInstance()->replace('numImages@items', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_enableField_images_items('1','1');
         Preference::newInstance()->replace('numImages@items', '4',"osclass", 'INTEGER') ;
+        
+        $mItem = new Item();
+        $item = $mItem->findByEmail( 'foobar@mail.com' );
+        // AQUI!
+        $item = $item[0];
+        $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
+        $this->assertTrue($res);
     }
 
     private function post_item_website(){
