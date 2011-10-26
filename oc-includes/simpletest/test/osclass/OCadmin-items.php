@@ -10,37 +10,37 @@ class OCadmin_items extends OCadminTest {
      * Insert item
      * 
      */
-//    function testInsertItem()
-//    {
-//        $this->loginWith();
-//        $this->insertItem() ;
-//        $this->viewMedia_NoMedia();
-//        $this->viewComments_NoComments();
-//        $this->deactivate();
-//        $this->activate();
-//        $this->markAsPremium();
-//        $this->unmarkAsPremium();
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Edit item
-//     */
-//    function testEditItem()
-//    {
-//        $this->loginWith() ;
-//        $this->editItem() ;
-//    }
-//
-//    /*
-//     * Login oc-admin
-//     * Delete item
-//     */
-//    function testDeleteItem()
-//    {
-//        $this->loginWith() ;
-//        $this->deleteItem() ;
-//    }
+    function testInsertItem()
+    {
+        $this->loginWith();
+        $this->insertItem() ;
+        $this->viewMedia_NoMedia();
+        $this->viewComments_NoComments();
+        $this->deactivate();
+        $this->activate();
+        $this->markAsPremium();
+        $this->unmarkAsPremium();
+    }
+
+    /*
+     * Login oc-admin
+     * Edit item
+     */
+    function testEditItem()
+    {
+        $this->loginWith() ;
+        $this->editItem() ;
+    }
+
+    /*
+     * Login oc-admin
+     * Delete item
+     */
+    function testDeleteItem()
+    {
+        $this->loginWith() ;
+        $this->deleteItem() ;
+    }
 
     /*
      * Login oc-admin
@@ -56,16 +56,16 @@ class OCadmin_items extends OCadminTest {
      * Login oc-admin
      * Insert item, add media to item
      */
-    function testMedia()
-    {
-        $this->loginWith() ;
-        $this->insertItemAndMedia() ;
-    }
-
-    /*
-     * Login oc-admin
-     * Check all item settings (values & behaviour into website)
-     */
+//    function testMedia()
+//    {
+//        $this->loginWith() ;
+//        $this->insertItemAndMedia() ;
+//    }
+//
+//    /*
+//     * Login oc-admin
+//     * Check all item settings (values & behaviour into website)
+//     */
 //    function testSettings()
 //    {
 //        $this->loginWith() ;
@@ -327,7 +327,7 @@ class OCadmin_items extends OCadminTest {
         $this->insertItem() ;
 
         $mItem = new Item();
-        $item = $mItem->findByConditions( array('s_contact_email' => 'test@mail.com') );
+        $item = $mItem->findByEmail( array('s_contact_email' => 'test@mail.com') );
         
         // force moderation comments
         $enabled_comments = Preference::newInstance()->findValueByName('enabled_comments');
