@@ -130,6 +130,10 @@
                 return false;
             }
             
+            if( $result->numRows() == 0 ) {
+                return array();
+            }
+            
             $item   = $result->row() ; 
 
             if(!is_null($item) ) {
