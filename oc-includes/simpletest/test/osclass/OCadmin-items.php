@@ -513,10 +513,10 @@ class OCadmin_items extends OCadminTest {
         
         $mItem = new Item();
         $item = $mItem->findByEmail( 'foobar@mail.com' );
-        // AQUI!
-        $item = $item[0];
-        $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
-        $this->assertTrue($res);
+        foreach($aItems as $item) {
+            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
+            $this->assertTrue($res);
+        }
     }
 
     private function post_item_website(){
