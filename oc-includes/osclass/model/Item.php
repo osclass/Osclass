@@ -232,7 +232,7 @@
          * Find items belong to an email
          * 
          * @access public
-         * @since unknown*
+         * @since unknown
          * @param type $email
          * @return type 
          */
