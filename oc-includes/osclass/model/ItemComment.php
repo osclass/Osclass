@@ -202,7 +202,7 @@
          */
         function getAllComments($itemId = null) 
         {
-            $this->dao->select() ;
+            $this->dao->select('c.*') ;
             $this->dao->from($this->getTableName().' c') ;
             $this->dao->from(DB_TABLE_PREFIX.'t_item i') ;
             
