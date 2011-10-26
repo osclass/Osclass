@@ -137,12 +137,27 @@
                 return $result->result();
             }
         }
-        
+
         /**
          * Return total of comments, given an item id. (active & enabled)
          * 
          * @access public
          * @since unknown
+         * @deprecated since 2.3
+         * @see ItemComment::totalComments
+         * @param integer $id
+         * @return integer
+         */
+        function total_comments($id)
+        {
+            return $this->totalComments($id) ;
+        }
+
+        /**
+         * Return total of comments, given an item id. (active & enabled)
+         * 
+         * @access public
+         * @since 2.3
          * @param integer $id
          * @return integer
          */
