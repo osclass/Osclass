@@ -1,4 +1,4 @@
-<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.');
+<?php if ( ! defined('ABS_PATH')) exit('ABS_PATH is not loaded. Direct access is not allowed.') ;
     /*
      *      OSCLass – software for creating and publishing online classified
      *                           advertising platforms
@@ -20,11 +20,20 @@
      */
 
     if( !defined('__FROM_CRON__') ) {
-        define('__FROM_CRON__', true);
+        define('__FROM_CRON__', true) ;
     }
 
-    osc_runAlert('WEEKLY');
+    function purge_latest_searches_weekly() {
+        $purge = osc_purge_latest_searches() ;
+        if( $purge == 'week' ) {
+            LatestSearches::newInstance()->purgeDate( date('Y-m-d H:i:s', ( time() - (7 * 24 * 3600) ) ) ) ;
+        }
+    }
 
-    osc_run_hook('cron_weekly');
+    osc_add_hook('cron_weekly', 'purge_latest_searches_weekly') ;
+    
+    osc_runAlert('WEEKLY') ;
+
+    osc_run_hook('cron_weekly') ;
 
 ?>

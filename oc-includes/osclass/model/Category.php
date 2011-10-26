@@ -225,8 +225,24 @@
          * @since unknown
          * @return array 
          */
-        public function listAll() {
-            return $this->listWhere('1 = 1');
+        public function listAll($description = true) {
+            if( $description ) {
+                return $this->listWhere('1 = 1');
+            }
+
+            $this->dao->select( $this->getFields() ) ;
+            $this->dao->from( $this->getTableName() ) ;
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return array() ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return array() ;
+            }
+
+            return $result->result() ;
         }
 
         /**

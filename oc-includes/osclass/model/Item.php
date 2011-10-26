@@ -286,6 +286,30 @@
             return $total_ads['total'];
         }
 
+        public function numItems($category, $enabled = true, $active = true)
+        {
+            $this->dao->select( 'COUNT(*) AS total' ) ;
+            $this->dao->from( $this->getTableName() ) ;
+            $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] ) ;
+            $this->dao->where( 'b_enabled', $enabled ) ;
+            $this->dao->where( 'b_active', $active ) ;
+            if( $category['i_expiration_days'] != 0 ) {
+                $this->dao->where( '( b_premium = 1 OR ( DATEDIFF(\'' . date('Y-m-d H:i:s') .'\', dt_pub_date) < ' . $category['i_expiration_days'] . ' ) )' ) ;
+            }
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return 0 ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return 0 ;
+            }
+
+            $row = $result->row() ;
+            return $row['total'] ;
+        }
+
         // LEAVE THIS FOR COMPATIBILITIES ISSUES (ONLY SITEMAP GENERATOR)
         // BUT REMEMBER TO DELETE IN ANYTHING > 2.1.x THANKS
         public function listLatest($limit = 10)
