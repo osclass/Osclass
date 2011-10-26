@@ -221,7 +221,7 @@
             $this->dao->select('r.*, c.dt_pub_date') ;
             $this->dao->from($this->getTableName() . ' r') ;
             $this->dao->join($this->getTableItemName() . ' c', 'c.pk_i_id = r.fk_i_item_id') ;
-            if( !is_null($itemId) ) {
+            if( !is_null($itemId) && is_numeric($itemId) ) {
                 $this->dao->where('r.fk_i_item_id', $itemId) ;
             }
             $this->dao->orderBy($order, $type) ;
