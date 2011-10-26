@@ -175,7 +175,7 @@
         {
             $this->dao->select('COUNT(*) AS numrows') ;
             $this->dao->from( $this->getTableName() ) ;
-            if( !is_null($itemId) ) {
+            if( !is_null($itemId) && is_numeric($itemId)) {
                 $this->dao->where('fk_i_item_id', $itemId) ;
             }
 
