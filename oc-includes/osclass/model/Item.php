@@ -125,6 +125,11 @@
             $this->dao->where('i.pk_i_id', $id) ;
             $this->dao->groupBy('s.fk_i_item_id') ;
             $result = $this->dao->get() ;
+            
+            if($result === false) {
+                return false;
+            }
+            
             $item   = $result->row() ; 
 
             if(!is_null($item) ) {

@@ -225,7 +225,7 @@
                 $this->dao->update($this->getTableName(), array('s_slug' => $id), array('pk_i_id' => $id));
             }
             foreach($categories as $c) {
-                $this->dao->insert(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
             }
         }
         
