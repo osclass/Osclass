@@ -387,7 +387,22 @@
         public function findByPrimaryKey($pk) {
             if($pk!=null) {
                 if(array_key_exists($pk, $this->categories)){
-                    return $this->categories[$pk];
+                    $data = $this->categories[$pk];
+                    if(isset($data)) {
+                        $this->dao->select();
+                        $this->dao->from(DB_TABLE_PREFIX.'t_category_description');
+                        $this->dao->where('fk_i_category_id', $data['pk_i_id']);
+                        $this->dao->orderBy('fk_c_locale_code');
+                        $result = $this->dao->get();
+                        
+                        $sub_rows = $result->result();
+                        $row = array();
+                        foreach ($sub_rows as $sub_row) {
+                            $row[$sub_row['fk_c_locale_code']] = $sub_row;
+                        }
+                        $data['locale'] = $row;
+                        return $data;
+                    }
                 } else {
                     return null;
                 }
