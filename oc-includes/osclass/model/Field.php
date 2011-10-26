@@ -129,7 +129,7 @@
                 return array() ;
             }
 
-            return $result->row() ;
+            return $result->result() ;
         }
 
         /**
@@ -241,7 +241,7 @@
         public function insertCategories($id, $categories = null) {
             if($categories!=null) {
                 foreach($categories as $c) {
-                    $this->dao->insert(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
+                    $this->dao->insert(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_category_id' => $c, 'fk_i_field_id' =>$id));
                     $subcategories = Category::newInstance()->findSubcategories($c);
                     if(count($subcategories)>0) {
                         foreach($subcategories as $k => $v) {
@@ -261,7 +261,7 @@
          * @return bool on success
          */
         public function cleanCategoriesFromField($id) {
-            return $this->dao->delete(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
+            return $this->dao->delete(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
         }
         
         /**
@@ -287,8 +287,8 @@
          * @return bool on success
          */
         public function deleteByPrimaryKey($id) {
-            $this->dao->delete(sprint('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
-            $this->dao->delete(sprint('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
+            $this->dao->delete(sprintf('%st_item_meta', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
+            $this->dao->delete(sprintf('%st_meta_categories', DB_TABLE_PREFIX), array('fk_i_field_id' =>$id));
             return $this->dao->delete($this->getTableName(), array('pk_i_id' =>$id));
         }
     }
