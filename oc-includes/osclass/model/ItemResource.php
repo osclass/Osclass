@@ -238,6 +238,17 @@
         }
 
         /**
+         * Delete all resources where id is in $ids
+         * 
+         * @param array $ids 
+         */
+        public function deleteResourcesIds($ids)
+        {
+            $this->dao->whereIn('pk_i_id', $ids) ;
+            return $this->dao->delete( $this->getTableName() );
+        }
+        
+        /**
          * Return table item name
          *
          * @access public
