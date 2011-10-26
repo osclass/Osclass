@@ -72,6 +72,8 @@
             $this->dao->from($this->getTableName()) ;
             $this->dao->where('pk_i_id', $id) ;
             $result = $this->dao->get() ;
+            
+            $row = $result->row() ;
 
             if( $result == false ) {
                 return false ;
@@ -253,11 +255,7 @@
             
             $this->reOrderPages($order);
 
-<<<<<<< HEAD
             $result = $this->dao->delete($this->getDescriptionTableName(), array('fk_i_pages_id' => $id));
-=======
-            $result = $this->dao->delete($this->getDescriptionTableName(), array('pk_i_id' => $id));
->>>>>>> d618060ca099ed8fb8516050664dc23fa69a3f3e
             $result = $this->dao->delete($this->tableName, array('pk_i_id' => $id));
             
             return $result;
@@ -419,11 +417,7 @@
          * @return bool Return true if exists and false if not.
          */
         public function existDescription($conditions){
-<<<<<<< HEAD
             $this->dao->select("COUNT(*) as total");
-=======
-            $this->dao->select("COUNT(*)");
->>>>>>> d618060ca099ed8fb8516050664dc23fa69a3f3e
             $this->dao->from($this->getDescriptionTableName());
             foreach($conditions as $key => $value) {
                 $this->dao->where($key, $value);
