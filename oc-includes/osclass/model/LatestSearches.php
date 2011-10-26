@@ -114,11 +114,13 @@
          */
         function purgeDate($date = null) 
         {
-            if($date!=null) {
-                return $this->dao->delete($this->getTableName(), array('d_date <= '.$date));
-            } else {
-                return false;
+            if($date == null) {
+                return false ;
             }
+
+            $this->dao->from( $this->getTableName() ) ;
+            $this->dao->where( 'd_date <= ' . $this->dao->escape($date) ) ;
+            return $this->dao->delete() ;
         }
         
         /**
@@ -150,7 +152,7 @@
                 return false ;
             }
 
-            return $this->dao->delete($this->getTableName(), array('d_date <= ' . $last['d_date'])) ;
+            return $this->purgeDate( $last['d_date'] ) ;
         }
     }
 
