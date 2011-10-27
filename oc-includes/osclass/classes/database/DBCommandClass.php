@@ -925,6 +925,10 @@
                 return false ;
             }
 
+            if( OSC_DEBUG_DB_EXPLAIN && $this->isSelectType($sql) ) {
+                $this->query_debug($sql) ;
+            }
+
             $this->queries[] = $sql ;
             $timeStart = list($sm, $ss) = explode(' ', microtime()) ;
 
@@ -953,6 +957,33 @@
             $rs->numRows  = $rs->numRows() ;
             
             return $rs ;
+        }
+
+        function query_debug($sql)
+        {
+            if($sql == '') {
+                return false ;
+            }
+
+            $sql  = 'EXPLAIN ' . $sql ;
+            $rsID = $this->_execute($sql) ;
+
+            if( false === $rsID ) {
+                return false ;
+            }
+
+            $rs           = new DBRecordsetClass() ;
+            $rs->connId   = $this->connId ;
+            $rs->resultId = $rsID ;
+            $rs->numRows  = $rs->numRows() ;
+
+            if( $rs->numRows() == 0 ) {
+                return false ;
+            }
+
+            $this->log->addExplainMessage($sql, $rs->result()) ;
+
+            return true ;
         }
 
         /**
@@ -1159,6 +1190,23 @@
 
             return true;
         }
+
+        /**
+         * Check if the sql is a select
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $sql
+         * @return bool 
+         */
+        function isSelectType($sql)
+        {
+            if ( ! preg_match('/^\s*"?(SELECT)\s+/i', $sql)) {
+                return false;
+            }
+
+            return true;
+	    }
 
         /**
          * Check if the sql is a write type such as INSERT, UPDATE, UPDATE...
