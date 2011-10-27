@@ -105,6 +105,41 @@
             echo '</fieldset>' . PHP_EOL ;
         }
 
+        function writeMessages()
+        {
+            $filename = CONTENT_PATH . 'queries.log' ;
+
+            if( !file_exists($filename) || !is_writable($filename) ) {
+                return false ;
+            }
+
+            $fp = fopen($filename, 'a') ;
+
+            if( $fp == false ) {
+                return false ;
+            }
+
+            fwrite($fp, '==================================================' . PHP_EOL) ;
+            fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL) ;
+            fwrite($fp, '=' . str_pad('Total queries: ' . $this->getTotalNumberQueries(), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL) ;
+            fwrite($fp, '=' . str_pad('Total queries time: ' . $this->getTotalQueriesTime(), 48, " ", STR_PAD_BOTH) . '='  . PHP_EOL) ;
+            fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL) ;
+
+            foreach($this->messages as $msg) {
+                fwrite($fp, $msg['query_time'] . PHP_EOL) ;
+                if( $msg['errno'] != 0 ) {
+                    fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL) ;
+                    fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL) ;
+                }
+                fwrite($fp, 'Error description: ' . $msg['query'] . PHP_EOL) ;
+                fwrite($fp, '--------------------------------------------------' . PHP_EOL) ;
+            }
+
+            fwrite($fp, PHP_EOL . PHP_EOL) ;
+            fclose($fp) ;
+            return true ;
+        }
+
         public function getTotalQueriesTime()
         {
             $time = 0 ;
