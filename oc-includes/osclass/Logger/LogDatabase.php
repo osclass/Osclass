@@ -35,6 +35,11 @@
          * @var type 
          */
         var $messages ;
+        /**
+         *
+         * @var type 
+         */
+        var $explain_messages ;
 
         /**
          *
@@ -53,7 +58,8 @@
          */
         public function _construct()
         {
-            $this->messages = array() ;
+            $this->messages         = array() ;
+            $this->explain_messages = array() ;
         }
 
         /**
@@ -70,6 +76,21 @@
                 'query_time' => $time,
                 'errno'      => $errorLevel,
                 'error'      => $errorDescription
+            ) ;
+        }
+
+        /**
+         *
+         * @param type $sql
+         * @param type $time
+         * @param type $errorLevel
+         * @param type $errorDescription 
+         */
+        public function addExplainMessage($sql, $results)
+        {
+            $this->explain_messages[] = array(
+                'query'   => $sql,
+                'explain' => $results
             ) ;
         }
 
@@ -131,8 +152,67 @@
                     fwrite($fp, 'Error number: ' . $msg['errno'] . PHP_EOL) ;
                     fwrite($fp, 'Error description: ' . $msg['error'] . PHP_EOL) ;
                 }
-                fwrite($fp, 'Error description: ' . $msg['query'] . PHP_EOL) ;
+                fwrite($fp, '**************************************************' . PHP_EOL) ;
+                fwrite($fp, $msg['query'] . PHP_EOL) ;
                 fwrite($fp, '--------------------------------------------------' . PHP_EOL) ;
+            }
+
+            fwrite($fp, PHP_EOL . PHP_EOL. PHP_EOL) ;
+            fclose($fp) ;
+            return true ;
+        }
+
+        function writeExplainMessages()
+        {
+            $filename = CONTENT_PATH . 'explain_queries.log' ;
+
+            if( !file_exists($filename) || !is_writable($filename) ) {
+                return false ;
+            }
+
+            $fp = fopen($filename, 'a') ;
+
+            if( $fp == false ) {
+                return false ;
+            }
+
+            fwrite($fp, '==================================================' . PHP_EOL) ;
+            fwrite($fp, '=' . str_pad('Date: ' . date('Y-m-d H:i:s'), 48, " ", STR_PAD_BOTH) . '=' . PHP_EOL) ;
+            fwrite($fp, '==================================================' . PHP_EOL . PHP_EOL) ;
+
+            $title  = '|' . str_pad('id', 3, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('select_type', 20, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('table', 20, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('type', 8, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('possible_keys', 28, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('key', 18, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('key_len', 9, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('ref', 48, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('rows', 8, " ", STR_PAD_BOTH) . '|' ;
+            $title .= str_pad('Extra', 38, " ", STR_PAD_BOTH) . '|' ;
+
+            for($i = 0; $i < count($this->explain_messages); $i++) {
+                fwrite($fp, $this->explain_messages[$i]['query'] . PHP_EOL) ;
+                fwrite($fp, str_pad('', 211, "-", STR_PAD_BOTH) . PHP_EOL) ;
+                fwrite($fp, $title . PHP_EOL) ;
+                fwrite($fp, str_pad('', 211, "-", STR_PAD_BOTH) . PHP_EOL) ;
+                foreach($this->explain_messages[$i]['explain'] as $explain) {
+                    $row  = '|' . str_pad($explain['id'], 3, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['select_type'], 20, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['table'], 20, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['type'], 8, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['possible_keys'], 28, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['key'], 18, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['key_len'], 9, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['ref'], 48, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['rows'], 8, " ", STR_PAD_BOTH) . '|' ;
+                    $row .= str_pad($explain['Extra'], 38, " ", STR_PAD_BOTH) . '|' ;
+                    fwrite($fp, $row . PHP_EOL) ;
+                    fwrite($fp, str_pad('', 211, "-", STR_PAD_BOTH) . PHP_EOL) ;
+                }
+                if( $i != ( count($this->explain_messages) - 1 ) ) {
+                    fwrite($fp, PHP_EOL . PHP_EOL) ;
+                }
             }
 
             fwrite($fp, PHP_EOL . PHP_EOL) ;
