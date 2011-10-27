@@ -64,7 +64,7 @@
             $this->categories = array();
             $this->conditions = array();
             $this->search_fields = array();
-            $this->tables[] = sprintf('%st_item_description as d, %st_category_description as cd', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
+            $this->tables[] = sprintf('%st_item_description as d USE INDEX (fk_i_item_id), %st_category_description as cd ', DB_TABLE_PREFIX, DB_TABLE_PREFIX);
             $this->order();
             $this->limit();
             $this->results_per_page = 10;
@@ -646,19 +646,36 @@
          */
         public function listCountries($zero = ">", $order = "items DESC") {
 
-            $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item_location.fk_c_country_code = cc.pk_c_code', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-            $sql = sprintf("SELECT cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_country as cc GROUP BY cc.pk_c_code HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, $zero, $order);
-
-            $result = $this->dao->query($sql);
-            return $result->resultArray();
+            $aOrder = split(' ', $order);
+            $nOrder = count($aOrder);
+            
+            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
+            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
+            else $this->dao->orderBy('item', 'DESC');
+            
+            $this->dao->select('pk_c_code, fk_c_locale_code, s_name as country_name, count(*) as items');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('fk_c_country_code IS NOT NULL');
+            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
+            $this->dao->groupBy('fk_c_country_code');
+            $this->dao->having("items $zero 0");
+            
+            $result = $this->dao->get();
+            return $result->result();
         }
 
         /**
          * Returns number of ads from each region
-         *
+         * <code>
+         *  Search::newInstance()->listRegions($country, ">=", "country_name ASC" )
+         * </code>
          * @access public
          * @since unknown
          * @param string $country
@@ -667,20 +684,43 @@
          */
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") {
 
-            $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item_location.fk_i_region_id = rr.pk_i_id', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-            $sql = sprintf("SELECT rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc WHERE rr.fk_c_country_code LIKE '%s' GROUP BY rr.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, strtolower($country), $zero, $order);
-
-            $result = $this->dao->query($sql);
-            return $result->resultArray();
-
+            $aOrder = split(' ', $order);
+            $nOrder = count($aOrder);
+            
+            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
+            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
+            else $this->dao->orderBy('item', 'DESC');
+            
+            $this->dao->select('fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country  as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('fk_i_city_id IS NOT NULL');
+            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
+            $this->dao->groupBy('fk_i_city_id');
+            $this->dao->having("items $zero 0");
+            
+            $region_int = (int)$region;
+            if(is_numeric($region_int) && $region_int!=0) {
+                $this->dao->where("fk_i_region_id = $region_int");
+            } 
+            
+            $result = $this->dao->get();
+            return $result->result();
         }
 
         /**
          * Returns number of ads from each city
          *
+         * <code>
+         *  Search::newInstance()->listCities($region, ">=", "city_name ASC" )
+         * </code>
+         * 
          * @access public
          * @since unknown
          * @param string $region
@@ -688,26 +728,34 @@
          * @param string $order
          */
         public function listCities($region = null, $zero = ">", $order = "items DESC") {
-            $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
+            $aOrder = split(' ', $order);
+            $nOrder = count($aOrder);
+            
+            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
+            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
+            else $this->dao->orderBy('item', 'DESC');
+            
+            $this->dao->select('fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country  as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('fk_i_city_id IS NOT NULL');
+            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
+            $this->dao->groupBy('fk_i_city_id');
+            $this->dao->having("items $zero 0");
+            
             $region_int = (int)$region;
             if(is_numeric($region_int) && $region_int!=0) {
-
-                $this->addConditions(sprintf('%st_item_location.fk_i_city_id = ct.pk_i_id', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-                $sql = sprintf("SELECT ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct WHERE ct.fk_i_region_id = %d GROUP BY ct.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $region_int, $zero, $order);
-
-                $result = $this->dao->query($sql);
-                return $result->resultArray();
-            } else {
-
-                $this->addConditions(sprintf('%st_item_location.fk_i_city_id = ct.pk_i_id', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-                $sql = sprintf("SELECT ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct WHERE rr.s_name LIKE '%s' AND ct.fk_i_region_id = rr.pk_i_id GROUP BY ct.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $region, $zero, $order);
-
-                $result = $this->dao->query($sql);
-                return $result->resultArray();
-            }
+                $this->dao->where("fk_i_region_id = $region_int");
+            } 
+            
+            $result = $this->dao->get();
+            return $result->result();
         }
 
         /**
@@ -720,26 +768,35 @@
          * @param string $order
          */
         public function listCityAreas($city = null, $zero = ">", $order = "items DESC") {
-            $this->addConditions(sprintf('%st_item.b_enabled = 1', DB_TABLE_PREFIX));
-            $this->addConditions(sprintf('%st_item.b_active = 1', DB_TABLE_PREFIX));
+            
+            $aOrder = split(' ', $order);
+            $nOrder = count($aOrder);
+            
+            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
+            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
+            else $this->dao->orderBy('item', 'DESC');
+            
+            $this->dao->select('fk_i_city_area_id as city_area_id, s_city_area as city_area_name, fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country  as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
+            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
+            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('fk_i_city_area_id IS NOT NULL');
+            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
+            $this->dao->groupBy('fk_i_city_area_id');
+            $this->dao->having("items $zero 0");
+            
             $city_int = (int)$city;
             if(is_numeric($city_int) && $city_int!=0) {
-
-                $this->addConditions(sprintf('%st_item_location.fk_i_city_area_id = cta.pk_i_id', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-                $sql = sprintf("SELECT cta.pk_i_id as city_area_id, cta.s_name as city_area_name, ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct, %stcity_area WHERE cta.fk_i_city_id = %d GROUP BY cta.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $city_int, $zero, $order);
-
-                $result = $this->dao->query($sql);
-                return $result->resultArray();
-            } else {
-
-                $this->addConditions(sprintf('%st_item_location.fk_i_city_area_id = cta.pk_i_id', DB_TABLE_PREFIX));
-                $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-                $sql = sprintf("SELECT cta.pk_i_id as city_area_id, cta.s_name as city_area_name, ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct, %st_city_area as cta WHERE ct.s_name LIKE '%s' AND cta.fk_i_city_id = ct.pk_i_id GROUP BY cta.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $city, $zero, $order);
-
-                $result = $this->dao->query($sql);
-                return $result->resultArray();
+                $this->dao->where("fk_i_city_id = $city_int");
             }
+            
+            $result = $this->dao->get();
+            return $result->result();
         }
     }
 

@@ -362,7 +362,7 @@
      */
     function osc_has_list_cities($region = '%%%%') {
         if ( !View::newInstance()->_exists('list_cities') ) {
-            View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region) ) ;
+            View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region,'>=') ) ;
         }
         $result = View::newInstance()->_next('list_cities');
 
