@@ -969,6 +969,36 @@
         }
 
         /**
+         * Execute queries sql. We replace TABLE_PREFIX for the real prefix: DB_TABLE_PREFIX
+         * The executions is stopped if some query throws an error.
+         *
+         * @access public
+         * @since 2.3
+         * @param string $sql
+         * @return boolean true if it's succesful, false if not
+         */
+        function importSQL($sql)
+        {
+            $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ;
+            $queries = explode( ';', $sql ) ;
+
+            if( count($queries) == 0 ) {
+                return false ;
+            }
+
+            foreach($queries as $q) {
+                $q = trim($q) ;
+                if( !empty($q) ) {
+                    if( !$this->query($q) ) {
+                        return false ;
+                    }
+                }
+            }
+
+            return true ;
+        }
+
+        /**
          * Set aSet array
          * 
          * @access public
@@ -1283,7 +1313,6 @@
         {
             return $this->errorDesc ;
         }
-
     }
 
     /* file end: ./oc-includes/osclass/classes/database/DBCommandClass.php */

@@ -197,6 +197,54 @@
         }
 
         /**
+         * Return the mysqli connection error number
+         *
+         * @access public
+         * @since 2.3
+         * @return type 
+         */
+        function getErrorConnectionLevel()
+        {
+            return $this->connErrorLevel ;
+        }
+
+        /**
+         * Return the mysqli connection error description
+         *
+         * @access public
+         * @since 2.3
+         * @return type 
+         */
+        function getErrorConnectionDesc()
+        {
+            return $this->connErrorDesc ;
+        }
+
+        /**
+         * Return the mysqli error number
+         *
+         * @access public
+         * @since 2.3
+         * @return type 
+         */
+        function getErrorLevel()
+        {
+            return $this->errorLevel ;
+        }
+
+        /**
+         * Return the mysqli error description
+         *
+         * @access public
+         * @since 2.3
+         * @return string
+         */
+        function getErrorDesc()
+        {
+            return $this->errorDesc ;
+        }
+
+        /**
          * Connect to OSClass database
          * 
          * @access public
@@ -215,8 +263,12 @@
 
             $this->_setCharset('utf8', $this->db) ;
 
+            if( $this->dbName == '' ) {
+                return true ;
+            }
+
             $selectDb = $this->selectOsclassDb() ;
-            if ( $selectDb == false) {
+            if ( $selectDb == false ) {
                 $this->errorReport() ;
                 $this->releaseOsclassDb() ;
                 return false ;
@@ -242,6 +294,10 @@
 			}
 
             $this->_setCharset('utf8', $this->metadataDb) ;
+
+            if( DB_NAME == '' ) {
+                return true ;
+            }
 
             $selectDb = $this->selectMetadataDb() ;
             if ( $selectDb == false ) {
