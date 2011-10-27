@@ -436,9 +436,13 @@
          */
         function debug()
         {
-            if( OSC_DEBUG_DB && !defined('IS_AJAX') ) {
+            if( OSC_DEBUG_DB ) {
                 $log = LogDatabase::newInstance() ;
-                $log->printMessages() ;
+                if( OSC_DEBUG_DB_LOG ) {
+                    $log->writeMessages() ;
+                } else {
+                    $log->printMessages() ;
+                }
             }
         }
 

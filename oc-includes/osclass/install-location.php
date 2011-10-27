@@ -7,10 +7,6 @@ define( 'LIB_PATH', ABS_PATH . 'oc-includes/');
 
 require_once ABS_PATH . 'config.php';
 
-if( !defined('OSC_DEBUG_DB') ) {
-    define('OSC_DEBUG_DB', false) ;
-}
-
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
@@ -23,6 +19,7 @@ require_once LIB_PATH . 'osclass/model/Preference.php' ;
 require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
 require_once LIB_PATH . 'osclass/helpers/hPreference.php' ;
 require_once LIB_PATH . 'osclass/compatibility.php';
+require_once LIB_PATH . 'osclass/default-constants.php';
 require_once LIB_PATH . 'osclass/formatting.php';
 require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
