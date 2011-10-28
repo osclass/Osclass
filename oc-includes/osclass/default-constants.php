@@ -23,9 +23,37 @@
     if( !defined('MULTISITE') ) {
         define('MULTISITE', 0);
     }
-    
+
+    if( !defined('LIB_PATH') ) {
+        define('LIB_PATH', ABS_PATH . 'oc-includes/') ;
+    }
+
+    if( !defined('CONTENT_PATH') ) {
+        define('CONTENT_PATH', ABS_PATH . 'oc-content/') ;
+    }
+
+    if( !defined('THEMES_PATH') ) {
+        define('THEMES_PATH', CONTENT_PATH . 'themes/') ;
+    }
+
+    if( !defined('PLUGINS_PATH') ) {
+        define('PLUGINS_PATH', CONTENT_PATH . 'plugins/') ;
+    }
+
+    if( !defined('TRANSLATIONS_PATH') ) {
+        define('TRANSLATIONS_PATH', CONTENT_PATH . 'languages/') ;
+    }
+
     if( !defined('OSC_DEBUG_DB') ) {
         define('OSC_DEBUG_DB', false) ;
+    }
+
+    if( !defined('OSC_DEBUG_DB_LOG') ) {
+        define('OSC_DEBUG_DB_LOG', false) ;
+    }
+
+    if( !defined('OSC_DEBUG_DB_EXPLAIN') ) {
+        define('OSC_DEBUG_DB_EXPLAIN', false) ;
     }
 
     if( !defined('OSC_DEBUG') ) {

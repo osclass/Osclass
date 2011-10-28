@@ -167,9 +167,7 @@
         {
             $this->releaseOsclassDb() ;
             $this->releaseMetadataDb() ;
-            if( !defined('IS_AJAX') ) {
-                $this->debug() ;
-            }
+            $this->debug() ;
         }
 
 		/**
@@ -436,10 +434,28 @@
          */
         function debug()
         {
-            if( OSC_DEBUG_DB && !defined('IS_AJAX') ) {
-                $log = LogDatabase::newInstance() ;
+            $log = LogDatabase::newInstance() ;
+
+            if( OSC_DEBUG_DB_EXPLAIN ) {
+                $log->writeExplainMessages() ;
+            }
+
+            if( !OSC_DEBUG_DB ) {
+                return false ;
+            }
+
+            if( defined('IS_AJAX') ) {
+                return false ;
+            }
+
+            if( OSC_DEBUG_DB_LOG ) {
+                $log->writeMessages() ;
+            } else {
                 $log->printMessages() ;
             }
+
+            unset($log) ;
+            return true ;
         }
 
         /**
