@@ -602,7 +602,11 @@
                 $this->total_results = 0;
             }
 
-            $items = $result->result();
+            if($result) {
+                $items = $result->result();
+            } else { 
+                $items = array();
+            }
 
             if($extended) {
                 return Item::newInstance()->extendData($items);
