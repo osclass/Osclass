@@ -79,6 +79,8 @@
          */
         function increase($column, $itemId)
         {
+            
+            //('INSERT INTO %s (fk_i_item_id, dt_date, %3$s) VALUES (%d, \'%4$s\',1) ON DUPLICATE KEY UPDATE %3$s = %3$s + 1', $this->getTableName(), $id, $column, date('Y-m-d H:i:s')) ;
             $increaseColumns = array('i_num_views', 'i_num_spam', 'i_num_repeated', 'i_num_bad_classified', 'i_num_offensive',
                                      'i_num_expired', 'i_num_expired', 'i_num_premium_views') ;
 
@@ -86,18 +88,9 @@
                 return false ;
             }
 
-            $result = $this->insert( array(
-                'fk_i_item_id' => $itemId,
-                'dt_date'      => date('Y-m-d H:i:s'),
-                $column        => 1
-            ) ) ;
-
-            // duplicated key
-            if( $this->dao->getErrorLevel() == 1062 ) {
-                $result = $this->dao->query('UPDATE '.$this->getTableName().' SET '.$column.' = '.$column.' + 1 WHERE fk_i_item_id = '.$itemId) ;
-            }
-
-            return $result ;
+            $sql = 'INSERT INTO '.$this->getTableName().' (fk_i_item_id, dt_date, '.$column.') VALUES ('.$itemId.', \''.date('Y-m-d H:i:s').'\',1) ON DUPLICATE KEY UPDATE  '.$column.' = '.$column.' + 1 ';
+            return $this->dao->query($sql);
+            
         }
 
         /**
