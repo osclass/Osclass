@@ -644,30 +644,27 @@
          * @param string $zero if you want to include locations with zero results
          * @param string $order
          */
-        public function listCountries($zero = ">", $order = "items DESC") {
-
-            $aOrder = split(' ', $order);
-            $nOrder = count($aOrder);
+        public function listCountries($zero = ">", $order = "items DESC")
+        {
+            $sql  = '' ;
+            $sql .= 'SELECT '.DB_TABLE_PREFIX.'t_country.pk_c_code, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code, '.DB_TABLE_PREFIX.'t_country.s_name as country_name, IFNULL(b.items,0) as items ';
+            $sql .= 'FROM (SELECT  '.DB_TABLE_PREFIX.'t_country.pk_c_code, count(*) as items ' ;
+            $sql .= 'FROM ('.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category) ' ;
+            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_item ON '.DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id ' ;
+            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_country ON '.DB_TABLE_PREFIX.'t_country.pk_c_code = '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code ';
+            $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
+            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
+            $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_country.pk_c_code ) b ' ;
+            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_country ON '.DB_TABLE_PREFIX.'t_country.pk_c_code = b.pk_c_code ';
+            $sql .= 'HAVING items '.$zero.' 0 ';
+            $sql .= 'ORDER BY '.$order;
             
-            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
-            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
-            else $this->dao->orderBy('item', 'DESC');
-            
-            $this->dao->select('pk_c_code, fk_c_locale_code, s_name as country_name, count(*) as items');
-            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
-            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
-            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
-            $this->dao->where('fk_c_country_code IS NOT NULL');
-            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
-            $this->dao->groupBy('fk_c_country_code');
-            $this->dao->having("items $zero 0");
-            
-            $result = $this->dao->get();
+            $result = $this->dao->query($sql);
+            echo $this->dao->lastQuery();
             return $result->result();
         }
 
@@ -682,35 +679,53 @@
          * @param string $zero if you want to include locations with zero results
          * @param string $order
          */
-        public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") {
-
-            $aOrder = split(' ', $order);
-            $nOrder = count($aOrder);
-            
-            if($nOrder == 2) $this->dao->orderBy($aOrder[0], $aOrder[1]);
-            else if($nOrder == 1) $this->dao->orderBy($aOrder[0], 'DESC');
-            else $this->dao->orderBy('item', 'DESC');
-            
-            $this->dao->select('fk_i_city_id , s_city as city_name, fk_i_region_id as region_id, s_region as region_name, fk_c_country_code as pk_c_code, s_country  as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code');
-            $this->dao->from(DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_enabled = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_active = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
-            $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
-            $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
-            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
-            $this->dao->where('fk_i_city_id IS NOT NULL');
-            $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
-            $this->dao->groupBy('fk_i_city_id');
-            $this->dao->having("items $zero 0");
-            
+        public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") 
+        {    
             $region_int = (int)$region;
-            if(is_numeric($region_int) && $region_int!=0) {
-                $this->dao->where("fk_i_region_id = $region_int");
-            } 
+     
+            $sql  = '' ;
+            $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
+            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, oc_t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, oc_t_country.fk_c_locale_code ' ;
+            $sql  .= 'FROM (oc_t_item, oc_t_item_location, oc_t_category, oc_t_country) ' ;
+            $sql  .= 'WHERE oc_t_item.pk_i_id = oc_t_item_location.fk_i_item_id ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
+            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
+            $sql .= 'AND '.DB_TABLE_PREFIX.'t_country.pk_c_code = '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code ';
+            $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id ' ;
+            $sql .= 'HAVING items ' ;
+            $sql .= 'ORDER BY '.$order.' ) as b ' ;
+            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
+            if( $country != '%%%%') {
+                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_region.fk_c_country_code = \'PT\' ' ;
+            }
+            $sql .= 'HAVING items '.$zero.' 0 ' ;
+            $sql .= 'ORDER BY '.$order ;
             
-            $result = $this->dao->get();
+//              SELECT oc_t_region.pk_i_id as region_id, oc_t_region.s_name as region_name, oc_t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM (
+//              SELECT fk_i_region_id as region_id, s_region as region_name, oc_t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, oc_t_country.fk_c_locale_code
+//              FROM (oc_t_item, oc_t_item_location, oc_t_category, oc_t_country)
+//              WHERE oc_t_item.pk_i_id = oc_t_item_location.fk_i_item_id
+//              AND oc_t_item.b_enabled = 1
+//              AND oc_t_item.b_active = 1
+//              AND oc_t_item.b_spam = 0
+//              AND oc_t_category.b_enabled = 1
+//              AND oc_t_category.pk_i_id = oc_t_item.fk_i_category_id
+//              AND (oc_t_item.b_premium = 1 || oc_t_category.i_expiration_days = 0 ||DATEDIFF('2011-11-02 15:23:16',oc_t_item.dt_pub_date) < oc_t_category.i_expiration_days)
+//            -AND oc_t_country.pk_c_code = oc_t_item_location.fk_c_country_code
+//              GROUP BY fk_i_region_id
+//              HAVING items
+//              ORDER BY items DESC ) as b
+//              RIGHT JOIN oc_t_region ON oc_t_region.pk_i_id = b.region_id
+//            -- WHERE oc_t_region.fk_c_country_code = 'PT'
+//            HAVING items >= 0
+            
+            
+            $result = $this->dao->query($sql);
+//            echo $this->dao->lastQuery();
             return $result->result();
         }
 
