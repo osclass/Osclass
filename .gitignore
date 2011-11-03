@@ -14,6 +14,8 @@ dist
 
 # oc-content
 oc-content/debug.log
+oc-content/queries.log
+oc-content/explain_queries.log
 oc-content/uploads/admin-blog_news.cache
 
 oc-includes/osclass/t/config.php

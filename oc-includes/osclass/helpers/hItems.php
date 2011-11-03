@@ -1011,7 +1011,7 @@
      * @return string
      */    
     function osc_item_meta_slug() {
-        return osc_field(osc_item_meta(), 'slug', '') ;
+        return osc_field(osc_item_meta(), 's_slug', '') ;
     }
    
     /**

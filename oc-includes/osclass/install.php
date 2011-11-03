@@ -27,30 +27,25 @@ define( 'CONTENT_PATH', ABS_PATH . 'oc-content/' ) ;
 define( 'TRANSLATIONS_PATH', CONTENT_PATH . 'languages/' ) ;
 define( 'OSC_INSTALLING', 1 );
 
-if( !defined('OSC_DEBUG_DB') ) {
-    define('OSC_DEBUG_DB', false) ;
-}
-
-require_once LIB_PATH . 'osclass/db.php';
+require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
 require_once LIB_PATH . 'osclass/Logger/LogDatabase.php' ;
+require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
 require_once LIB_PATH . 'osclass/classes/database/DBConnectionClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBCommandClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DBRecordsetClass.php';
 require_once LIB_PATH . 'osclass/classes/database/DAO.php';
-require_once LIB_PATH . 'osclass/model/Preference.php';
-require_once LIB_PATH . 'osclass/helpers/hPreference.php';
-require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
-require_once LIB_PATH . 'osclass/helpers/hErrors.php';
 require_once LIB_PATH . 'osclass/core/Session.php';
-require_once LIB_PATH . 'osclass/helpers/hDefines.php';
-require_once LIB_PATH . 'osclass/helpers/hSearch.php';
-require_once LIB_PATH . 'osclass/helpers/hLocale.php';
-require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/core/Params.php';
+require_once LIB_PATH . 'osclass/model/Preference.php';
+require_once LIB_PATH . 'osclass/helpers/hDatabaseInfo.php';
+require_once LIB_PATH . 'osclass/helpers/hDefines.php';
+require_once LIB_PATH . 'osclass/helpers/hErrors.php';
+require_once LIB_PATH . 'osclass/helpers/hLocale.php';
+require_once LIB_PATH . 'osclass/helpers/hPreference.php';
+require_once LIB_PATH . 'osclass/helpers/hSearch.php';
+require_once LIB_PATH . 'osclass/default-constants.php';
+require_once LIB_PATH . 'osclass/install-functions.php';
 require_once LIB_PATH . 'osclass/utils.php';
-
-require_once LIB_PATH . 'osclass/Logger/Logger.php' ;
-require_once LIB_PATH . 'osclass/Logger/LogOsclass.php' ;
 
 $step = Params::getParam('step');
 if( !is_numeric($step) ) {

@@ -925,6 +925,10 @@
                 return false ;
             }
 
+            if( OSC_DEBUG_DB_EXPLAIN && $this->isSelectType($sql) ) {
+                $this->query_debug($sql) ;
+            }
+
             $this->queries[] = $sql ;
             $timeStart = list($sm, $ss) = explode(' ', microtime()) ;
 
@@ -955,6 +959,33 @@
             return $rs ;
         }
 
+        function query_debug($sql)
+        {
+            if($sql == '') {
+                return false ;
+            }
+
+            $sql  = 'EXPLAIN ' . $sql ;
+            $rsID = $this->_execute($sql) ;
+
+            if( false === $rsID ) {
+                return false ;
+            }
+
+            $rs           = new DBRecordsetClass() ;
+            $rs->connId   = $this->connId ;
+            $rs->resultId = $rsID ;
+            $rs->numRows  = $rs->numRows() ;
+
+            if( $rs->numRows() == 0 ) {
+                return false ;
+            }
+
+            $this->log->addExplainMessage($sql, $rs->result()) ;
+
+            return true ;
+        }
+
         /**
          * Performs a query on the database
          *
@@ -966,6 +997,36 @@
         function _execute($sql)
         {
             return $this->connId->query($sql) ;
+        }
+
+        /**
+         * Execute queries sql. We replace TABLE_PREFIX for the real prefix: DB_TABLE_PREFIX
+         * The executions is stopped if some query throws an error.
+         *
+         * @access public
+         * @since 2.3
+         * @param string $sql
+         * @return boolean true if it's succesful, false if not
+         */
+        function importSQL($sql)
+        {
+            $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ;
+            $queries = explode( ';', $sql ) ;
+
+            if( count($queries) == 0 ) {
+                return false ;
+            }
+
+            foreach($queries as $q) {
+                $q = trim($q) ;
+                if( !empty($q) ) {
+                    if( !$this->query($q) ) {
+                        return false ;
+                    }
+                }
+            }
+
+            return true ;
         }
 
         /**
@@ -1131,6 +1192,23 @@
         }
 
         /**
+         * Check if the sql is a select
+         * 
+         * @access private
+         * @since 2.3
+         * @param string $sql
+         * @return bool 
+         */
+        function isSelectType($sql)
+        {
+            if ( ! preg_match('/^\s*"?(SELECT)\s+/i', $sql)) {
+                return false;
+            }
+
+            return true;
+	    }
+
+        /**
          * Check if the sql is a write type such as INSERT, UPDATE, UPDATE...
          * 
          * @access private
@@ -1283,7 +1361,6 @@
         {
             return $this->errorDesc ;
         }
-
     }
 
     /* file end: ./oc-includes/osclass/classes/database/DBCommandClass.php */

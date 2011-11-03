@@ -71,12 +71,16 @@
             $this->dao->where('s_name', $name) ;
             $result = $this->dao->get() ;
 
+            if( $result == false ) {
+                return false ;
+            }
+
             if( $result->numRows() == 0 ) {
                 return false ;
-            } else {
-                $row = $result->row() ;
-                return $row['s_value'] ;
             }
+
+            $row = $result->row() ;
+            return $row['s_value'] ;
         }
 
         /**
@@ -94,11 +98,15 @@
             $this->dao->where('s_section', $name) ;
             $result = $this->dao->get() ;
 
+            if( $result == false ) {
+                return array() ;
+            }
+
             if( $result->numRows() == 0 ) {
                 return false ;
-            } else {
-                return $result->result() ;
             }
+
+            return $result->result() ;
         }
         
         /**
@@ -112,13 +120,23 @@
             $this->dao->select() ;
             $this->dao->from($this->getTableName()) ;
             $result = $this->dao->get() ;
-            $aTmpPref = $result->result() ;
 
+            if( $result == false ) {
+                return false ;
+            }
+
+            if( $result->numRows() == 0 ) {
+                return false ;
+            }
+
+            $aTmpPref = $result->result() ;
             foreach($aTmpPref as $tmpPref) {
                 $this->pref[$tmpPref['s_section']][$tmpPref['s_name']] = $tmpPref['s_value'] ;
             }
+
+            return true ;
         }
-        
+
         /**
          * Get value, given a preference name and a section name.
          * 
@@ -130,10 +148,10 @@
          */
         public function get($key, $section = "osclass") 
         {
-            if (!isset($this->pref[$section][$key])) {
+            if ( !isset($this->pref[$section][$key]) ) {
                 return '' ;
             }
-            return ($this->pref[$section][$key]) ;
+            return $this->pref[$section][$key] ;
         }
         
         /**
@@ -161,14 +179,14 @@
          * @param string $type 
          * @return boolean
          */
-        public function replace($key, $value, $section = "osclass", $type = 'STRING') 
+        public function replace($key, $value, $section = 'osclass', $type = 'STRING') 
         {
             $array_replace = array(
                 's_name'    => $key,
                 's_value'   => $value,
                 's_section' => $section,
                 'e_type'    => $type
-            );
+            ) ;
             return $this->dao->replace($this->getTableName(), $array_replace) ;
         }
     }

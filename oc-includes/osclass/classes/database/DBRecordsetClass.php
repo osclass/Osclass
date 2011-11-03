@@ -122,7 +122,7 @@
             }
 
             $this->_dataSeek(0) ;
-            while($row= $this->_fetchArray()) {
+            while($row = $this->_fetchArray()) {
                 $this->resultArray[] = $row ;
             }
 
@@ -143,7 +143,7 @@
             }
 
             $this->_dataSeek(0) ;
-            while($row = $this->_fetchObject()) {
+            while( $row = $this->_fetchObject() ) {
                 $this->resultObject[] = $row ;
             }
 
@@ -200,7 +200,7 @@
                 $n = 0 ;
             }
 
-            if($type == 'array') {
+            if( $type == 'array' ) {
                 return $this->rowArray($n) ;
             }
 
@@ -223,7 +223,7 @@
                 return $result ;
             }
 
-            if($n != $this->currentRow && isset($result[$n]) ) {
+            if( $n != $this->currentRow && isset($result[$n]) ) {
                 $this->currentRow = $n;
             }
 
@@ -246,7 +246,7 @@
                 return $result ;
             }
 
-            if($n != $this->currentRow && isset($result[$n]) ) {
+            if( $n != $this->currentRow && isset($result[$n]) ) {
                 $this->currentRow = $n;
             }
 
