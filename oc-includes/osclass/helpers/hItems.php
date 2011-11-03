@@ -868,7 +868,7 @@
         if ( !View::newInstance()->_exists('items') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));
+            View::newInstance()->_exportVariableToView('items', $search->getLastestItems());
         }
         return osc_has_items() ;
     }
@@ -882,7 +882,7 @@
         if ( !View::newInstance()->_exists('items') ) {
             $search = new Search();
             $search->limit(0, osc_max_latest_items());
-            View::newInstance()->_exportVariableToView('items', $search->doSearch(true));
+            View::newInstance()->_exportVariableToView('items', $search->getLastestItems());
         }
         return osc_priv_count_items() ;
     }
