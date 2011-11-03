@@ -390,7 +390,7 @@
             if($pk!=null) {
                 if(array_key_exists($pk, $this->categories)){
                     $data = $this->categories[$pk];
-                    if(isset($data)) {
+                    if(!isset($data) || !isset($data['locale'])) {
                         $this->dao->select();
                         $this->dao->from(DB_TABLE_PREFIX.'t_category_description');
                         $this->dao->where('fk_i_category_id', $data['pk_i_id']);
@@ -403,6 +403,9 @@
                             $row[$sub_row['fk_c_locale_code']] = $sub_row;
                         }
                         $data['locale'] = $row;
+                        $this->categories[$pk] = $data;
+                        return $data;
+                    } else {
                         return $data;
                     }
                 } else {
