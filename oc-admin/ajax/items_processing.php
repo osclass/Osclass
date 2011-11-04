@@ -292,7 +292,7 @@
                         $this->sOutput .= '</div></div>",';
                     }
                     
-                    $this->sOutput .= '"'.$aRow['s_user_name'].'",';
+                    $this->sOutput .= '"'.addslashes($aRow['s_user_name']).'",';
                     $this->sOutput .= '"'.addslashes($aRow['s_category_name']).'",';
                     $this->sOutput .= '"'.$aRow['s_country'].'",';
                     $this->sOutput .= '"'.$aRow['s_region'].'",';
