@@ -494,7 +494,7 @@
                 $rs = $this->dao->update($this->getTableName(), $set, $array_where) ;
 
                 if($rs->numRows == 0) {
-                    $rows = $this->dao->query("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k);
+                    $rows = $this->dao->query(sprintf("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k));
                     if($rows->numRows == 0) {
                         $this->insertDescription($fieldsDescription);
                     }
@@ -512,19 +512,8 @@
          */
         public function insert($fields, $aFieldsDescription = null )
         {
-            $columns = implode(', ', array_keys($fields));
-
-            $set = "";
-            foreach ($fields as $value) {
-                if ($set != "")
-                    $set .= ", ";
-                $set .= $this->formatValue($value);
-            }
-            $sql = 'INSERT INTO ' . $this->tableName . ' (' . $columns . ') VALUES (' . $set . ')';
-
-            $this->dao->query($sql);
+            $this->dao->insert($this->getTableName(),$fields);
             $category_id = $this->dao->insertedId() ;
-
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;
                 $fieldsDescription['fk_c_locale_code'] = $k;
@@ -539,16 +528,7 @@
                     }
                 }
                 $fieldsDescription['s_slug'] = $slug;
-                $columns = implode(', ', array_keys($fieldsDescription));
-
-                $set = "";
-                foreach ($fieldsDescription as $value) {
-                    if ($set != "")
-                        $set .= ", ";
-                    $set .= $this->formatValue($value);
-                }
-                $sql = 'INSERT INTO ' . DB_TABLE_PREFIX . 't_category_description (' . $columns . ') VALUES (' . $set . ')';
-                $this->dao->query($sql);
+                $this->dao->insert(DB_TABLE_PREFIX . 't_category_description',$fieldsDescription);
             }
 
             return $category_id;
@@ -609,6 +589,26 @@
                 'fk_c_locale_code'  => $locale
             );
             return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set);
+        }
+        
+         /**
+        * Formats a value before being inserted in DB.
+        */
+        public function formatValue($value) {
+            if(is_null($value)) return DB_CONST_NULL;
+            else $value = trim($value);
+            switch($value) {
+                case DB_FUNC_NOW:
+                case DB_CONST_TRUE:
+                case DB_CONST_FALSE:
+                case DB_CONST_NULL:
+                    break;
+                default:
+                    $value = '\'' . addslashes($value) . '\'' ;
+                    break;
+            }
+
+            return $value;
         }
     }
 

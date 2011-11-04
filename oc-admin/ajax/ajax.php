@@ -17,7 +17,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
-    define('IS_AJAX', true) ;
+//    define('IS_AJAX', true) ;
 
     class CAdminAjax extends AdminSecBaseModel {
 
@@ -105,7 +105,7 @@
                             }
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            $array['fk_i_parent_id'] = NULL;
                             if (!$catManager->update($array, $conditions) > 0) {
                                 $error = 1;
                             }
