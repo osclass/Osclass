@@ -110,8 +110,13 @@
          * @since unknown
          * @return array 
          */
-        public function listEnabled() {
-            return $this->listWhere('a.b_enabled = 1');
+        public function listEnabled() 
+        {
+            $sql  = 'SELECT * FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
+            $sql .= 'LEFT JOIN '.DB_TABLE_PREFIX.'t_category_stats as c ON a.pk_i_id = c.fk_i_category_id ';
+            $sql .= 'WHERE b.s_name != \'\' AND a.b_enabled = 1 ORDER BY a.i_position ASC';
+            $result = $this->dao->query($sql);
+            return $result->result();
         }
         
         /**
