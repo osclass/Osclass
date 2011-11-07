@@ -768,8 +768,8 @@
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
             $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
             $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id ' ;
-            $sql .= 'HAVING items ' ;
-            $sql .= 'ORDER BY '.$order.' ) as b ' ;
+//            $sql .= 'HAVING items ' ;
+            $sql .= ' ) as b ' ;
             // $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_city ON '.DB_TABLE_PREFIX.'t_city.pk_i_id = b.city_id ' ;
             // $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
 
