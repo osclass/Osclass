@@ -59,7 +59,6 @@
                     var div_plugin_hook = $('#plugin-hook');
                     var num_uniform = $("div[id*='uniform-']", div_plugin_hook ).size();
                     if( num_uniform == 0 ){
-                        console.log('uniform...');
                         if( $('#plugin-hook input:text').size() > 0 ){
                             $('#plugin-hook input:text').uniform();
                         }
