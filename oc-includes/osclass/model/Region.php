@@ -119,7 +119,7 @@
          */
         public function ajax($query, $country = null)
         {
-            $this->dao->select('pk_i_id, s_name, s_name') ;
+            $this->dao->select('pk_i_id as id, s_name as label, s_name as value') ;
             $this->dao->from($this->getTableName()) ;
             $this->dao->like('s_name', $query, 'after') ;
             if($country != null) {
