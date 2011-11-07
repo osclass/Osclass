@@ -756,7 +756,7 @@
         public function listCities($region = null, $zero = ">", $order = "items DESC") {
             $sql  = '' ;
             $sql .= 'SELECT ';
-            $sql .= DB_TABLE_PREFIX.'t_city.pk_i_id as city_id, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.fk_i_region_id as region_id, b.region_name as region_name, '.DB_TABLE_PREFIX.'t_city.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
+            $sql .= DB_TABLE_PREFIX.'t_city.pk_i_id as city_id, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.fk_i_region_id as region_id, b.region_name as region_name, '.DB_TABLE_PREFIX.'t_city.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM '.DB_TABLE_PREFIX.'t_city, ( ' ;
             //$sql .= DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
             $sql .= 'SELECT fk_i_city_id as city_id, s_city as city_name, fk_i_region_id as region_id, s_region as region_name, oc_t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, oc_t_country.fk_c_locale_code ' ;
             $sql .= 'FROM (oc_t_item, oc_t_item_location, oc_t_category, oc_t_country) ' ;
@@ -771,12 +771,13 @@
             $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_item_location.fk_i_city_id ' ;
             $sql .= 'HAVING items ' ;
             $sql .= 'ORDER BY '.$order.' ) as b ' ;
-            $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_city ON '.DB_TABLE_PREFIX.'t_city.pk_i_id = b.city_id ' ;
-            //$sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
+            // $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_city ON '.DB_TABLE_PREFIX.'t_city.pk_i_id = b.city_id ' ;
+            // $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_region ON '.DB_TABLE_PREFIX.'t_region.pk_i_id = b.region_id ' ;
 
             $region_int = (int)$region;
+            $sql .= 'WHERE oc_t_city.pk_i_id = b.city_id ' ;
             if(is_numeric($region_int) && $region_int!=0) {
-                $sql .= 'WHERE '.DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region_int.' ' ;
+                $sql .= 'AND '.DB_TABLE_PREFIX.'t_city.fk_i_region_id = '.$region_int.' ' ;
             } 
 
             $sql .= 'HAVING items '.$zero.' 0 ' ;
