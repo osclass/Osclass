@@ -116,9 +116,9 @@
                 </div>
                 <div id="sidebar">
                     <div class="navigation">
-                        <?php //if(osc_count_list_cities()>0) {?>
+                        <?php if(osc_count_list_cities()>0) {?>
                         <?php // if(osc_count_list_countries()>0) {?>
-                        <?php if(osc_count_list_regions()>0) {?>
+                        <?php // if(osc_count_list_regions()>0) {?>
                         <div class="box location">
                             <h3><strong><?php _e("Location", 'modern'); ?></strong></h3>
                             <ul>
