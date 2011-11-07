@@ -385,8 +385,8 @@
             if(!empty($categories)) {
                 foreach($categories as $catId)
                 {
-                    $result = $dao_pluginCategory->listWhere('s_plugin_name LIKE \'' . $plugin . '\' AND fk_i_category_id = ' . $catId) ;
-                    if(count($result)==0) {
+                    $result = $dao_pluginCategory->isThisCategory($plugin, $catId);
+                    if($result==0) {
                         $fields = array() ;
                         $fields['s_plugin_name'] = $plugin ;
                         $fields['fk_i_category_id'] = $catId ;

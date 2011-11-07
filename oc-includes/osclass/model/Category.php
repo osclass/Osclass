@@ -470,7 +470,6 @@
             $aFieldsDescription = $data['aFieldsDescription'];
             //UPDATE for category
             $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
-
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 //UPDATE for description of categories
                 $fieldsDescription['fk_i_category_id'] = $pk;
@@ -491,8 +490,8 @@
                     'fk_c_locale_code'  => $fieldsDescription["fk_c_locale_code"]
                 );
                 
-                $rs = $this->dao->update($this->getTableName(), $set, $array_where) ;
-
+                $rs = $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $fieldsDescription, $array_where) ;
+                
                 if($rs->numRows == 0) {
                     $rows = $this->dao->query(sprintf("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k));
                     if($rows->numRows == 0) {
