@@ -756,7 +756,7 @@
         public function listCities($region = null, $zero = ">", $order = "items DESC") {
             $sql  = '' ;
             $sql .= 'SELECT ';
-            $sql .= DB_TABLE_PREFIX.'t_city.pk_i_id as city_id, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.fk_i_region_id as region_id, b.s_region as region_name, '.DB_TABLE_PREFIX.'t_city.fk_c_country_code as pk_c_code, b.items as items FROM '.DB_TABLE_PREFIX.'t_city, ( ' ;
+            $sql .= DB_TABLE_PREFIX.'t_city.pk_i_id as city_id, '.DB_TABLE_PREFIX.'t_city.s_name as city_name, '.DB_TABLE_PREFIX.'t_city.fk_i_region_id as region_id, b.s_region as region_name, '.DB_TABLE_PREFIX.'t_city.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM '.DB_TABLE_PREFIX.'t_city, ( ' ;
             //$sql .= DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
             $sql .= 'SELECT fk_i_city_id, s_region, count(*) as items ' ;
             $sql .= 'FROM (oc_t_item, oc_t_item_location, oc_t_category) ' ;
