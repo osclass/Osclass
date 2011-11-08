@@ -17,6 +17,11 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
 
+    define('DB_FUNC_NOW', 'NOW()');
+    define('DB_CONST_TRUE', 'TRUE');
+    define('DB_CONST_FALSE', 'FALSE');
+    define('DB_CONST_NULL', 'NULL');
+    define('DB_CUSTOM_COND', 'DB_CUSTOM_COND');
     /**
      * DAO base model
      * 

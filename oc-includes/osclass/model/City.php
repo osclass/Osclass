@@ -159,6 +159,27 @@
 
             return $result->row() ;
         }
+
+        /**
+         * Get all the rows from the table t_city
+         * 
+         * @access public
+         * @since unknown
+         * @return array 
+         */
+        function listAll()
+        {
+            $this->dao->select($this->getFields()) ;
+            $this->dao->from($this->getTableName()) ;
+            $this->dao->orderBy('s_name', 'ASC') ;
+            $result = $this->dao->get() ;
+
+            if($result == false) {
+                return array() ;
+            }
+
+            return $result->result() ;
+        }
     }
 
     /* file end: ./oc-includes/osclass/model/City.php */
