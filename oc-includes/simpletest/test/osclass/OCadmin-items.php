@@ -169,12 +169,9 @@ class OCadmin_items extends OCadminTest {
 
         if( $bPhotos ){
             $this->selenium->type("photos[]", LIB_PATH."simpletest/test/osclass/img_test1.gif");
-            $this->selenium->click("link=Add new photo");
             sleep(0.5);
             $this->selenium->type("//div[@id='p-0']/input", LIB_PATH."simpletest/test/osclass/img_test2.gif");
         }
-        
-        sleep(4);
         
         $this->selenium->click("//button[@type='submit']");
         $this->selenium->waitForPageToLoad("10000");

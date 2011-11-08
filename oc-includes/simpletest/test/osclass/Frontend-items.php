@@ -227,13 +227,9 @@ class Frontend_items extends FrontendTest {
             $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
             $this->selenium->waitForPageToLoad("30000");
         }
-<<<<<<< HEAD
+
         $this->removeUserByMail();
-=======
-    
-        $this->removeUserByMail($this->_email);
-    
->>>>>>> d2306c6e9b68d7f0a4d492e5adc2ddf0dd1bf559
+
     }
 
 }
