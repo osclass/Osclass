@@ -713,9 +713,9 @@
         {    
             $sql  = '' ;
             $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
-            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, oc_t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, oc_t_country.fk_c_locale_code ' ;
-            $sql  .= 'FROM (oc_t_item, oc_t_item_location, oc_t_category, oc_t_country) ' ;
-            $sql  .= 'WHERE oc_t_item.pk_i_id = oc_t_item_location.fk_i_item_id ' ;
+            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, '.DB_TABLE_PREFIX.'t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code ' ;
+            $sql  .= 'FROM ('.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country) ' ;
+            $sql  .= 'WHERE '.DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
