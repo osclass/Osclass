@@ -620,7 +620,7 @@
 
         if (isset($item['locale'])) {
             foreach ($item['locale'] as $locale => $data) {
-                $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                $locale_name = OSCLocale::newInstance()->findByCode($locale);
                 $all .= '<br/>';
                 if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                     $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -686,7 +686,7 @@
 
         if (isset($item['locale'])) {
             foreach ($item['locale'] as $locale => $data) {
-                $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'") ;
+                $locale_name = OSCLocale::newInstance()->findByCode($locale);
                 $all .= '<br/>';
                 if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                     $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -756,7 +756,7 @@
 
         if (isset($item['locale'])) {
             foreach ($item['locale'] as $locale => $data) {
-                $locale_name = OSCLocale::newInstance()->listWhere("pk_c_code = '" . $locale . "'");
+                $locale_name = OSCLocale::newInstance()->findByCode($locale);
                 $all .= '<br/>';
                 if (isset($locale_name[0]) && isset($locale_name[0]['s_name'])) {
                     $all .= __('Language') . ': ' . $locale_name[0]['s_name'] . '<br/>';
@@ -832,6 +832,54 @@
     }
     osc_add_hook('hook_email_admin_new_user', 'fn_email_admin_new_user');
 
+    function fn_email_contact_user($id, $yourEmail, $yourName, $phoneNumber, $message) {
+        $mPages = new Page();
+        $aPage = $mPages->findByInternalName('email_contact_user');
+        $locale = osc_current_user_locale() ;
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array('{CONTACT_NAME}', '{USER_NAME}', '{USER_EMAIL}', '{USER_PHONE}',
+                             '{WEB_URL}', '{COMMENT}');
+
+        $words[] = array(osc_user_name(), $yourName, $yourEmail,
+                         $phoneNumber, '<a href="'.osc_base_url().'" >'.osc_base_url().'</a>', $message );
+
+        $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_item_inquiry_title', $content['s_title'])), $words);
+        $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_item_inquiry_description', $content['s_text'])), $words);
+
+        $from = osc_contact_email() ;
+        $from_name = osc_page_title() ;
+
+        $add_bbc = '';
+        if (osc_notify_contact_item()) {
+            $add_bbc = osc_contact_email() ;
+        }
+
+        $emailParams = array (
+                            'add_bcc'   => $add_bbc
+                            ,'from'      => $from
+                            ,'from_name' => $from_name
+                            ,'subject'   => $title
+                            ,'to'        => osc_user_email()
+                            ,'to_name'   => osc_user_name()
+                            ,'body'      => $body
+                            ,'alt_body'  => $body
+                            ,'reply_to'  => $yourEmail
+                        ) ;
+
+        osc_sendMail($emailParams);
+
+        @unlink($path) ;
+    }
+    osc_add_hook('hook_email_contact_user', 'fn_email_contact_user');
+    
 
     
 ?>

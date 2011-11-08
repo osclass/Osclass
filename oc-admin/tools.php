@@ -39,18 +39,18 @@
                                         }
                                         // calling
                                         $sql = Params::getFiles('sql') ;
-                                        if(isset($sql['size']) && $sql['size']!=0) {
-                                            //dev.conquer: if the file es too big, we can have problems with the upload or with memory
+                                        if( isset($sql['size']) && $sql['size'] != 0 ) {
                                             $content_file = file_get_contents($sql['tmp_name']) ;
 
-                                            $conn = getConnection() ;
-                                            if ( $conn->osc_dbImportSQL($content_file) ) {
+                                            $conn = DBConnectionClass::newInstance() ;
+                                            $comm = new DBCommandClass( $conn->getOsclassDb() ) ;
+                                            if ( $comm->importSQL($content_file) ) {
                                                 osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
                                             } else {
                                                 osc_add_flash_error_message( _m('There was a problem importing data to the database'), 'admin') ;
                                             }
                                         } else {
-                                                osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
+                                            osc_add_flash_error_message( _m('No file was uploaded'), 'admin') ;
                                         }
                                         $this->redirectTo(osc_admin_base_url(true) . '?page=tools&action=import') ;
                 break;

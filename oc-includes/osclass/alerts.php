@@ -42,7 +42,7 @@
         }
 
         $active = TRUE;
-        $searches = Alerts::newInstance()->getAlertsByTypeGroup($type,$active) ;
+        $searches = Alerts::newInstance()->findByTypeGroup($type,$active) ;
         foreach ($searches as $s_search) {
             $a_search = Search::newInstance();
 
@@ -63,7 +63,7 @@
             if (count($items) > 0) {
                 //If we have new items from last check
                 //Catch the user subscribed to this search
-                $users = Alerts::newInstance()->getUsersBySearchAndType($s_search['s_search'], $type, $active) ;
+                $users = Alerts::newInstance()->findUsersBySearchAndType($s_search['s_search'], $type, $active) ;
 
                 if (count($users) > 0 ) {
 

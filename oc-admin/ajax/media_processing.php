@@ -17,7 +17,7 @@
      * License along with this program. If not, see <http://www.gnu.org/licenses/>.
      */
      
-     class media_processing_ajax extends Item
+     class MediaProcessingAjax
      {
         private $items;
         private $result;
@@ -50,14 +50,8 @@
 
         function __construct($params) {
 
-            parent::__construct() ;
-
             $this->_get = $params;
             $this->getDBParams();
-
-
-            //print_r($this->_get);
-            //print_r($this->order_by);
             
             $this->result = ItemResource::newInstance()->getResources(Params::getParam('resourceId'), $this->_get['iDisplayStart'], $this->_get['iDisplayLength'], isset($this->order_by['column_name'])?$this->order_by['column_name']:'pk_i_id', isset($this->order_by['type'])?$this->order_by['type']:'desc');
             

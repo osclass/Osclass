@@ -89,6 +89,42 @@
                     $this->redirectTo(osc_base_url());
 
                 break;
+                case 'pub_profile':
+                    $id = Params::getParam('id');
+                    if($id!='') {
+                        $user = User::newInstance()->findByPrimaryKey($id);
+                        if($user) {
+                            View::newInstance()->_exportVariableToView('user', $user) ;
+                            $items = Item::newInstance()->findByUserIDEnabled($user['pk_i_id'], 0, 3);
+                            View::newInstance()->_exportVariableToView('items', $items) ;
+                            $this->doView('user-public-profile.php') ;
+                        } else {
+                            $this->redirectTo(osc_base_url());
+                        }
+                    } else {
+                        $this->redirectTo(osc_base_url());
+                    }
+
+                break;
+                case 'contact_post':
+                    $user = User::newInstance()->findByPrimaryKey( Params::getParam('id') ) ;
+                    View::newInstance()->_exportVariableToView('user', $user) ;
+                    if ((osc_recaptcha_private_key() != '') && Params::existParam("recaptcha_challenge_field")) {
+                        if(!osc_check_recaptcha()) {
+                            osc_add_flash_error_message( _m('The Recaptcha code is wrong')) ;                    
+                            Session::newInstance()->_setForm("yourEmail",   Params::getParam('yourEmail'));
+                            Session::newInstance()->_setForm("yourName",    Params::getParam('yourName'));
+                            Session::newInstance()->_setForm("phoneNumber", Params::getParam('phoneNumber'));
+                            Session::newInstance()->_setForm("message_body",Params::getParam('message'));
+                            $this->redirectTo( osc_user_public_profile_url( ) );
+                            return false; // BREAK THE PROCESS, THE RECAPTCHA IS WRONG
+                        }
+                    }
+                    
+                    osc_run_hook('hook_email_contact_user', Params::getParam('id'), Params::getParam('yourEmail'), Params::getParam('yourName'), Params::getParam('phoneNumber'), Params::getParam('message'));
+
+                    $this->redirectTo( osc_user_public_profile_url( ) );
+                    break;
 
                 default:
                     $this->redirectTo( osc_user_login_url() );
