@@ -30,6 +30,7 @@
     </head>
     <body>
         <div class="container">
+            <?php UserForm::js_validation() ; ?>
             <?php osc_current_web_theme_path('header.php') ; ?>
             <div class="content user_forms">
                 <div class="inner">
@@ -47,14 +48,13 @@
                                 <?php _e('Passwords don\'t match', 'modern') ; ?>.
                             </p>
                             <label for="email"><?php _e('E-mail', 'modern') ; ?></label> <?php UserForm::email_text() ; ?><br />
+                            <?php osc_run_hook('user_register_form') ; ?>
                             <?php osc_show_recaptcha('register'); ?>
                             <button type="submit"><?php _e('Create', 'modern') ; ?></button>
-                            <?php osc_run_hook('user_register_form') ; ?>
                         </fieldset>
                     </form>
                 </div>
             </div>
-            <?php UserForm::js_validation() ; ?>
             <?php osc_current_web_theme_path('footer.php') ; ?>
         </div>
         <?php osc_show_flash_message() ; ?>

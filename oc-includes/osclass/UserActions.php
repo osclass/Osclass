@@ -45,7 +45,7 @@
             $email_taken = $this->manager->findByEmail($input['s_email']) ;
             if($email_taken == null) {
                 $this->manager->insert($input) ;
-                $userId = $this->manager->getConnection()->get_last_id() ;
+                $userId = $this->manager->dao->insertedId();
 
                 if ( is_array( Params::getParam('s_info') ) ) {
                     foreach (Params::getParam('s_info') as $key => $value) {

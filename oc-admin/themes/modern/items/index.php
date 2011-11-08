@@ -211,11 +211,11 @@
                                 </div>
                                 <div class="row">
                                     <label><?php _e('Region'); ?></label>
-                                    <?php ItemForm::region_select($regions, "NULL") ; ?>
+                                    <?php ItemForm::region_select($regions, null) ; ?>
                                 </div>
                                 <div class="row">
                                     <label><?php _e('City'); ?></label>
-                                    <?php ItemForm::city_select($cities, "NULL") ; ?>
+                                    <?php ItemForm::city_select($cities, null) ; ?>
                                 </div>
 
                                 <div class="row">

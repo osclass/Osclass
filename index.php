@@ -46,9 +46,7 @@
         Cookie::newInstance()->pop('oc_userSecret') ;
         Cookie::newInstance()->set() ;
     }
-                    
 
-    
     switch( Params::getParam('page') )
     {
         case ('cron'):      // cron system

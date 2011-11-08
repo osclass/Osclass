@@ -591,11 +591,11 @@
                                         $countries = Country::newInstance()->listAll() ;
                                         $regions = array() ;
                                         if( count($countries) > 0 ) {
-                                            $regions = Region::newInstance()->getByCountry($countries[0]['pk_c_code']) ;
+                                            $regions = Region::newInstance()->findByCountry($countries[0]['pk_c_code']) ;
                                         }
                                         $cities = array() ;
                                         if( count($regions) > 0 ) {
-                                            $cities = City::newInstance()->listWhere("fk_i_region_id = %d" ,$regions[0]['pk_i_id']) ;
+                                            $cities = City::newInstance()->findByRegion($regions[0]['pk_i_id']) ;
                                         }
                                         //preparing variables for the view
                                         $this->_exportVariableToView("users", User::newInstance()->listAll());

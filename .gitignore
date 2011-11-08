@@ -1,10 +1,21 @@
+# MAC
 .DS_Store
+
 *.diff
 *.patch
+
 .htaccess
+
+# CONFIG OSClass
 config.php
+
 .gitignore
 dist
+
+# oc-content
+oc-content/debug.log
+oc-content/queries.log
+oc-content/explain_queries.log
 oc-content/uploads/admin-blog_news.cache
-oc-content/plugins/shop/demo_table.css
-oc-content/plugins/shop/jquery.dataTables.min.js
+
+oc-includes/osclass/t/config.php

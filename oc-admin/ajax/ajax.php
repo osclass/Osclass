@@ -24,6 +24,7 @@
         function __construct()
         {
             parent::__construct();
+            $this->ajax = true ;
         }
 
         //Business Layer...
@@ -34,11 +35,11 @@
                 case 'bulk_actions':
                     break;
                 case 'regions': //Return regions given a countryId
-                    $regions = Region::newInstance()->getByCountry(Params::getParam("countryId"));
+                    $regions = Region::newInstance()->findByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
                     break;
                 case 'cities': //Returns cities given a regionId
-                    $cities = City::newInstance()->getByRegion(Params::getParam("regionId"));
+                    $cities = City::newInstance()->findByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
                     break;
                 case 'location': // This is the autocomplete AJAX
@@ -83,11 +84,11 @@
                     break;
                 case 'items': // Return items (use external file oc-admin/ajax/item_processing.php)
                     require_once osc_admin_base_path() . 'ajax/items_processing.php';
-                    $items_processing = new items_processing_ajax(Params::getParamsAsArray("get"));
+                    $items_processing = new ItemsProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'media': // Return items (use external file oc-admin/ajax/media_processing.php)
                     require_once osc_admin_base_path() . 'ajax/media_processing.php';
-                    $media_processing = new media_processing_ajax(Params::getParamsAsArray("get"));
+                    $media_processing = new MediaProcessingAjax(Params::getParamsAsArray("get"));
                     break;
                 case 'categories_order': // Save the order of the categories
                     $aIds = Params::getParam('list');
@@ -99,12 +100,12 @@
 
                     foreach ($aIds as $id => $parent) {
                         if ($parent == 'root') {
-                            if (!$catManager->update_order($id, $orderParent)) {
+                            if (!$catManager->updateOrder($id, $orderParent)) {
                                 $error = 1;
                             }
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            $array['fk_i_parent_id'] = NULL;
                             if (!$catManager->update($array, $conditions) > 0) {
                                 $error = 1;
                             }
@@ -114,7 +115,7 @@
                                 $catParent = $parent;
                                 $orderSub = 0;
                             }
-                            if (!$catManager->update_order($id, $orderSub)) {
+                            if (!$catManager->updateOrder($id, $orderSub)) {
                                 $error = 1;
                             }
 
@@ -218,20 +219,24 @@
                     $id = Params::getParam("id");
                     $enabled = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0;
                     $error = 0;
-                    $aUpdated = "";
+                    $aUpdated = array();
                     try {
                         if ($id != '') {
                             $categoryManager = Category::newInstance();
-                            $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
-                            if ($enabled == 1) {
+                            $res = $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
+                            if ($res == 1) {
+                                $a['pk_i_id'] = $id;
+                                array_push($aUpdated, $a);
                                 $msg = __('The category has been enabled');
                             } else {
                                 $msg = __('The category has been disabled');
                             }
 
-                            $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
-                            $aUpdated = $categoryManager->listWhere("fk_i_parent_id = $id");
-                            if ($enabled == 1) {
+                            $res = $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
+                            
+                            if ($res >= 1) {
+                                $aAux = $categoryManager->listWhere("fk_i_parent_id = $id");
+                                $aUpdated = array_merge($aUpdated, $aAux);
                                 $msg .= "<br>" . __('The subcategories has been enabled');
                             } else {
                                 $msg .= "<br>" . __('The subcategories has been disabled');
@@ -320,7 +325,7 @@
                     if (!$error) {
                         try {
                             $categoryManager = Category::newInstance();
-                            $categoryManager->updateByPrimaryKey($fields, $aFieldsDescription, $id);
+                            $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
                         } catch (Exception $e) {
                             $error = 1;
                             $message = __("Error while updating.");

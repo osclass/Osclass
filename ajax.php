@@ -26,6 +26,7 @@
     {
         function __construct() {
             parent::__construct() ;
+            $this->ajax = true ;
         }
 
         //Business Layer...
@@ -37,12 +38,12 @@
                 break;
                 
                 case 'regions': //Return regions given a countryId
-                    $regions = Region::newInstance()->getByCountry(Params::getParam("countryId"));
+                    $regions = Region::newInstance()->findByCountry(Params::getParam("countryId"));
                     echo json_encode($regions);
                     break;
                 
                 case 'cities': //Returns cities given a regionId
-                    $cities = City::newInstance()->getByRegion(Params::getParam("regionId"));
+                    $cities = City::newInstance()->findByRegion(Params::getParam("regionId"));
                     echo json_encode($cities);
                     break;
                 
@@ -116,7 +117,7 @@
                     }
 
                     // Does id & code combination exist?
-                    $result = ItemResource::newInstance()->getResourceSecure($id, $code) ;
+                    $result = ItemResource::newInstance()->existResource($id, $code) ;
 
                     if ($result > 0) {
                         // Delete: file, db table entry
