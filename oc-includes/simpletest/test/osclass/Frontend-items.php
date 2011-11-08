@@ -230,6 +230,7 @@ class Frontend_items extends FrontendTest {
             $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
             $this->selenium->waitForPageToLoad("30000");
         }
+        $this->removeUserByMail();
     }
 
 }
