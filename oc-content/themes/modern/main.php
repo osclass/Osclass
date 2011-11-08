@@ -116,18 +116,12 @@
                 </div>
                 <div id="sidebar">
                     <div class="navigation">
-                        <?php if(osc_count_list_cities()>0) {?>
-                        <?php // if(osc_count_list_countries()>0) {?>
-                        <?php // if(osc_count_list_regions()>0) {?>
+                        <?php if( osc_count_list_regions() > 0 ) { ?>
                         <div class="box location">
-                            <h3><strong><?php _e("Location", 'modern'); ?></strong></h3>
+                            <h3><strong><?php _e("Location", 'modern') ; ?></strong></h3>
                             <ul>
-                            <?php while(osc_has_list_cities()) { ?>
-                            <?php // View::newInstance()->_erase('list_countries'); while(osc_has_list_countries()){ ?>
-                            <?php // while(osc_has_list_regions()){ ?>
-                                <li><a href="<?php echo osc_search_url(array('sCity' => osc_list_city_name()));?>"><?php echo osc_list_city_name();?></a> <em>(<?php echo osc_list_city_items();?>)</em></li>
-<!--                                <li><a> <?php echo osc_field(osc_list_country(), 'country_name', '') ;?></a><em><?php echo osc_field(osc_list_country(), 'items', '') ;?></em></li>-->
-<!--                                <li><a href="<?php echo osc_search_url(array('sRegion' => osc_field(osc_list_region(), 'region_name', '')));?>"> <?php echo osc_field(osc_list_region(), 'region_name', '') ;?></a><em><?php echo osc_field(osc_list_region(), 'items', '') ;?></em></li>-->
+                            <?php while( osc_has_list_regions() ) { ?>
+                                <li><a href="<?php echo osc_search_url( array( 'sRegion' => osc_list_region_name() ) ) ; ?>"><?php echo osc_list_region_name() ; ?></a> <em>(<?php echo osc_list_region_items() ; ?>)</em></li>
                             <?php } ?>
                             </ul>
                         </div>
