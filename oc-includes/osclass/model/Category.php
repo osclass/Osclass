@@ -97,7 +97,9 @@
                     break;
             }
 
-            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', osc_current_user_locale(), $this->language, $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
+//            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', osc_current_user_locale(), $this->language, $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
+            
+            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
             return $result->result();
         }
         
@@ -108,8 +110,13 @@
          * @since unknown
          * @return array 
          */
-        public function listEnabled() {
-            return $this->listWhere('a.b_enabled = 1');
+        public function listEnabled() 
+        {
+            $sql  = 'SELECT * FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
+            $sql .= 'LEFT JOIN '.DB_TABLE_PREFIX.'t_category_stats as c ON a.pk_i_id = c.fk_i_category_id ';
+            $sql .= 'WHERE b.s_name != \'\' AND a.b_enabled = 1 ORDER BY a.i_position ASC';
+            $result = $this->dao->query($sql);
+            return $result->result();
         }
         
         /**
@@ -388,7 +395,7 @@
             if($pk!=null) {
                 if(array_key_exists($pk, $this->categories)){
                     $data = $this->categories[$pk];
-                    if(isset($data)) {
+                    if(!isset($data) || !isset($data['locale'])) {
                         $this->dao->select();
                         $this->dao->from(DB_TABLE_PREFIX.'t_category_description');
                         $this->dao->where('fk_i_category_id', $data['pk_i_id']);
@@ -401,6 +408,9 @@
                             $row[$sub_row['fk_c_locale_code']] = $sub_row;
                         }
                         $data['locale'] = $row;
+                        $this->categories[$pk] = $data;
+                        return $data;
+                    } else {
                         return $data;
                     }
                 } else {
@@ -460,7 +470,6 @@
             $aFieldsDescription = $data['aFieldsDescription'];
             //UPDATE for category
             $this->dao->update($this->getTableName(), $fields, array('pk_i_id' => $pk)) ;
-
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 //UPDATE for description of categories
                 $fieldsDescription['fk_i_category_id'] = $pk;
@@ -481,10 +490,10 @@
                     'fk_c_locale_code'  => $fieldsDescription["fk_c_locale_code"]
                 );
                 
-                $rs = $this->dao->update($this->getTableName(), $set, $array_where) ;
-
+                $rs = $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $fieldsDescription, $array_where) ;
+                
                 if($rs->numRows == 0) {
-                    $rows = $this->dao->query("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k);
+                    $rows = $this->dao->query(sprintf("SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE a.pk_i_id = '%s' AND b.fk_c_locale_code = '%s'", $this->tableName, DB_TABLE_PREFIX, $pk, $k));
                     if($rows->numRows == 0) {
                         $this->insertDescription($fieldsDescription);
                     }
@@ -502,19 +511,8 @@
          */
         public function insert($fields, $aFieldsDescription = null )
         {
-            $columns = implode(', ', array_keys($fields));
-
-            $set = "";
-            foreach ($fields as $value) {
-                if ($set != "")
-                    $set .= ", ";
-                $set .= $this->formatValue($value);
-            }
-            $sql = 'INSERT INTO ' . $this->tableName . ' (' . $columns . ') VALUES (' . $set . ')';
-
-            $this->dao->query($sql);
+            $this->dao->insert($this->getTableName(),$fields);
             $category_id = $this->dao->insertedId() ;
-
             foreach ($aFieldsDescription as $k => $fieldsDescription) {
                 $fieldsDescription['fk_i_category_id'] = $category_id;
                 $fieldsDescription['fk_c_locale_code'] = $k;
@@ -529,16 +527,7 @@
                     }
                 }
                 $fieldsDescription['s_slug'] = $slug;
-                $columns = implode(', ', array_keys($fieldsDescription));
-
-                $set = "";
-                foreach ($fieldsDescription as $value) {
-                    if ($set != "")
-                        $set .= ", ";
-                    $set .= $this->formatValue($value);
-                }
-                $sql = 'INSERT INTO ' . DB_TABLE_PREFIX . 't_category_description (' . $columns . ') VALUES (' . $set . ')';
-                $this->dao->query($sql);
+                $this->dao->insert(DB_TABLE_PREFIX . 't_category_description',$fieldsDescription);
             }
 
             return $category_id;
@@ -599,6 +588,26 @@
                 'fk_c_locale_code'  => $locale
             );
             return $this->dao->update(DB_TABLE_PREFIX.'t_category_description', $array_set);
+        }
+        
+         /**
+        * Formats a value before being inserted in DB.
+        */
+        public function formatValue($value) {
+            if(is_null($value)) return DB_CONST_NULL;
+            else $value = trim($value);
+            switch($value) {
+                case DB_FUNC_NOW:
+                case DB_CONST_TRUE:
+                case DB_CONST_FALSE:
+                case DB_CONST_NULL:
+                    break;
+                default:
+                    $value = '\'' . addslashes($value) . '\'' ;
+                    break;
+            }
+
+            return $value;
         }
     }
 

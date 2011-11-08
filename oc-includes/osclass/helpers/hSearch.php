@@ -336,7 +336,7 @@
      */
     function osc_has_list_countries() {
         if ( !View::newInstance()->_exists('list_countries') ) {
-            View::newInstance()->_exportVariableToView('list_countries', Search::newInstance()->listCountries() ) ;
+            View::newInstance()->_exportVariableToView('list_countries', Search::newInstance()->listCountries('>=') ) ;
         }
         return View::newInstance()->_next('list_countries') ;
     }
@@ -349,7 +349,7 @@
      */
     function osc_has_list_regions($country = '%%%%') {
         if ( !View::newInstance()->_exists('list_regions') ) {
-            View::newInstance()->_exportVariableToView('list_regions', Search::newInstance()->listRegions($country) ) ;
+            View::newInstance()->_exportVariableToView('list_regions', Search::newInstance()->listRegions($country, '>') ) ;
         }
         return View::newInstance()->_next('list_regions') ;
     }
@@ -362,7 +362,7 @@
      */
     function osc_has_list_cities($region = '%%%%') {
         if ( !View::newInstance()->_exists('list_cities') ) {
-            View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region) ) ;
+            View::newInstance()->_exportVariableToView('list_cities', Search::newInstance()->listCities($region,'>=') ) ;
         }
         $result = View::newInstance()->_next('list_cities');
 

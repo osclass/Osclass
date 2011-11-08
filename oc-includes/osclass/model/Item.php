@@ -550,7 +550,7 @@
          */
         public function deleteByPrimaryKey($id)
         {
-//            osc_run_hook('delete_item', $id);
+            osc_run_hook('delete_item', $id);
             $item = $this->findByPrimaryKey($id);
             if (!is_null($item)) {
                 if($item['b_active']==1) {

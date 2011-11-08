@@ -265,7 +265,7 @@
      *
      * @return string
      */
-    function osc_user_phone_moble() {
+    function osc_user_phone_mobile() {
         return (string) osc_user_field("s_phone_mobile");
     }
 

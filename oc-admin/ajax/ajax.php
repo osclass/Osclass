@@ -105,7 +105,7 @@
                             }
                             // set parent category 
                             $conditions = array('pk_i_id' => $id);
-                            $array['fk_i_parent_id'] = DB_CONST_NULL;
+                            $array['fk_i_parent_id'] = NULL;
                             if (!$catManager->update($array, $conditions) > 0) {
                                 $error = 1;
                             }
@@ -219,20 +219,24 @@
                     $id = Params::getParam("id");
                     $enabled = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0;
                     $error = 0;
-                    $aUpdated = "";
+                    $aUpdated = array();
                     try {
                         if ($id != '') {
                             $categoryManager = Category::newInstance();
-                            $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
-                            if ($enabled == 1) {
+                            $res = $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
+                            if ($res == 1) {
+                                $a['pk_i_id'] = $id;
+                                array_push($aUpdated, $a);
                                 $msg = __('The category has been enabled');
                             } else {
                                 $msg = __('The category has been disabled');
                             }
 
-                            $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
-                            $aUpdated = $categoryManager->listWhere("fk_i_parent_id = $id");
-                            if ($enabled == 1) {
+                            $res = $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
+                            
+                            if ($res >= 1) {
+                                $aAux = $categoryManager->listWhere("fk_i_parent_id = $id");
+                                $aUpdated = array_merge($aUpdated, $aAux);
                                 $msg .= "<br>" . __('The subcategories has been enabled');
                             } else {
                                 $msg .= "<br>" . __('The subcategories has been disabled');

@@ -40,7 +40,7 @@
             switch ($this->action)
             {
                 case 'add_post_default': // add default category and reorder parent categories
-                                        $fields['fk_i_parent_id'] = DB_CONST_NULL;
+                                        $fields['fk_i_parent_id'] = NULL;
                                         $fields['i_expiration_days'] = 0;
                                         $fields['i_position'] = 0;
                                         $fields['b_enabled'] = 1;
