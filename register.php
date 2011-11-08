@@ -44,7 +44,7 @@
                                             osc_add_flash_error_message(_m('Users are not enabled'));
                                             $this->redirectTo(osc_base_url());
                                         }
-                    
+                                        osc_run_hook('before_user_register');
                                         require_once LIB_PATH . 'osclass/UserActions.php' ;
                                         $userActions = new UserActions(false) ;
                                         $success = $userActions->add() ;
