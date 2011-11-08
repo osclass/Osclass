@@ -151,7 +151,15 @@ class OCadmin_customfields extends OCadminTest
         
         if($this->selenium->getXpathCount("//form[@id='field_form']") > 0) {
             $this->assertTrue(TRUE,"Delete all field");
-        } 
+        }
+        
+        $mItem = new Item();
+        $aItems = $mItem->findByEmail( 'foobar@mail.com' );
+        foreach($aItems as $item) {
+            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
+            $this->assertTrue($res);
+        }
+        
     }
 
 

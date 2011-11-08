@@ -6,7 +6,7 @@ $browser = "*firefox";
 $speed = '150';
 
 // test config
-$email      = "carlos+tests@gmail.com";
+$email      = "carlos+tests@osclass.org";
 $password   = "12345678";
 // test admin config
 $email_admin    = $email;

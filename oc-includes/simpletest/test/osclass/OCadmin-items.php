@@ -76,13 +76,14 @@ class OCadmin_items extends OCadminTest {
     private function addUserForTesting()
     {
         $user = User::newInstance()->findByEmail($this->_email);
-        if($user){
+
+        if(isset($user['pk_i_id']) ) {
             User::newInstance()->deleteUser($user['pk_i_id']);
         }
 
         echo "insert new user for testing<br>";
         $input['s_secret']          = osc_genRandomPassword() ;
-        $input['dt_reg_date']       = DB_FUNC_NOW ;
+        $input['dt_reg_date']       = date('Y-m-d H:i:s');
         $input['s_name']            = "Carlos";
         $input['s_website']         = "www.osclass.org";
         $input['s_phone_land']      = "931234567";
@@ -328,9 +329,11 @@ class OCadmin_items extends OCadminTest {
     {
         // insert item
         $this->insertItem() ;
-
+        
         $mItem = new Item();
-        $item = $mItem->findByEmail('test@mail.com') ;
+
+        $item = $mItem->findByEmail( 'test@mail.com' );
+        $item = $item[0];
         
         // force moderation comments
         $enabled_comments = Preference::newInstance()->findValueByName('enabled_comments');
@@ -344,9 +347,8 @@ class OCadmin_items extends OCadminTest {
                                              ,array('s_name'  => 'moderate_comments'));
         }
         // insert comment from frontend
-//        echo "<".osc_item_url_ns( $item['pk_i_id'] )."><br>";
 
-        $this->selenium->open(osc_item_url_ns( $item[0]['pk_i_id'] ));
+        $this->selenium->open(osc_item_url_ns( $item['pk_i_id'] ));
 
         $this->selenium->type("authorName"      , "carlos");
         $this->selenium->type("authorEmail"     , "carlos@osclass.org");
@@ -418,6 +420,7 @@ class OCadmin_items extends OCadminTest {
     {
         // insert item
         $this->insertItem( TRUE ) ;
+
         // test oc-admin
         $this->loginWith();
 
@@ -425,32 +428,32 @@ class OCadmin_items extends OCadminTest {
         $this->selenium->click("link=Items");
         $this->selenium->click("link=» Manage media");
         $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
+        // only can delete resources
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
+        $this->selenium->waitForPageToLoad("10000");
         
-//        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 2 of 2 entries"), "Inconsistent . ERROR" );
-//        // only can delete resources
-//        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
-//        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
-//
-//        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
-//        $this->assertTrue($this->selenium->isTextPresent("Showing 0 to 0 of 0 entries"), "Can't delete media. ERROR" );
-//
-//        // DELETE ITEM
-//        $this->selenium->open( osc_admin_base_url(true) );
-//        $this->selenium->click("link=Items");
-//        $this->selenium->click("link=» Manage items");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
-//        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Delete']");
-//        $this->selenium->waitForPageToLoad("10000");
-//
-//        $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
+        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("Showing 1 to 1 of 1 entries"), "Can't delete media. ERROR" );
+
+        $this->selenium->click("//table[@id='datatables_list']/tbody/tr[1]/td[3]/a[@id='dt_link_delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("Resource deleted"), "Can't delete media. ERROR" );
+        $this->assertTrue($this->selenium->isTextPresent("Showing 0 to 0 of 0 entries"), "Can't delete media. ERROR" );
+
+        // DELETE ITEM
+        $this->selenium->open( osc_admin_base_url(true) );
+        $this->selenium->click("link=Items");
+        $this->selenium->click("link=» Manage items");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->selenium->mouseOver("//table/tbody/tr[contains(.,'title item')]");
+        $this->selenium->click("//table/tbody/tr[contains(.,'title item')]/td/div/div/a[text()='Delete']");
+        $this->selenium->waitForPageToLoad("10000");
+
+        $this->assertTrue($this->selenium->isTextPresent("The item has been deleted"), "Can't delete item. ERROR");
     }
 
     private function settings()
@@ -510,6 +513,13 @@ class OCadmin_items extends OCadminTest {
         Preference::newInstance()->replace('numImages@items', '1',"osclass", 'INTEGER') ;
         $this->checkWebsite_enableField_images_items('1','1');
         Preference::newInstance()->replace('numImages@items', '4',"osclass", 'INTEGER') ;
+        
+        $mItem = new Item();
+        $item = $mItem->findByEmail( 'foobar@mail.com' );
+        foreach($aItems as $item) {
+            $res = $mItem->deleteByPrimaryKey($item['pk_i_id']);
+            $this->assertTrue($res);
+        }
     }
 
     private function post_item_website(){

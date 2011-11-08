@@ -216,17 +216,16 @@ class Frontend_search extends FrontendTest {
     /*
      * Remove all items inserted previously
      */
-//    function testRemoveLoadedItems()
-//    {
-//        $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
-//        while( $item ) {
-//            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
-//            echo $url."<br>";
-//            $this->selenium->open( $url );
-//            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
-//            $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
-//        }
-//        
-//    }
+    function testRemoveLoadedItems()
+    {
+        $aItems = Item::newInstance()->findByEmail($this->_email) ;
+        foreach( $aItems as $item ) {
+            $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
+            echo $url."<br>";
+            $this->selenium->open( $url );
+            $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
+        }
+        
+    }
 }
 ?>

@@ -51,14 +51,11 @@ class Frontend_items extends FrontendTest {
         /*
          * Remove all items inserted previously
          */
-//        $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email) ) ;
         $aItem = Item::newInstance()->listAll('s_contact_email = '.$this->_email." AND fk_i_user IS NULL");
-//        while( $item ) {
         foreach($aItem as $item){
             $url = osc_item_delete_url( $item['s_secret'] , $item['pk_i_id'] );
             $this->selenium->open( $url );
             $this->assertTrue($this->selenium->isTextPresent("Your item has been deleted"), "Delete item.");
-//            $item = Item::newInstance()->findByConditions( array('s_contact_email' => $this->_email, 'fk_i_user_id' => DB_CONST_NULL) ) ;
         }
     }
     
@@ -230,7 +227,13 @@ class Frontend_items extends FrontendTest {
             $this->selenium->click("xpath=//ul/li/a[text()='Manage your items']");
             $this->selenium->waitForPageToLoad("30000");
         }
+<<<<<<< HEAD
         $this->removeUserByMail();
+=======
+    
+        $this->removeUserByMail($this->_email);
+    
+>>>>>>> d2306c6e9b68d7f0a4d492e5adc2ddf0dd1bf559
     }
 
 }
