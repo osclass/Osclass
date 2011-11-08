@@ -170,14 +170,12 @@
         $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Someone has a question for you', '<p>Hi {CONTACT_NAME}!</p>\n<p>{USER_NAME} ({USER_EMAIL}, {USER_PHONE}) left you a message:</p>\n<p>{COMMENT}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $conn->get_last_id()));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'notify_new_user', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
 
-
         $conn->osc_dbExec(sprintf("UPDATE %st_locale SET s_currency_format = '{NUMBER} {CURRENCY}'", DB_TABLE_PREFIX) );
         $items = $conn->osc_dbFetchResults("SELECT pk_i_id, f_price FROM %st_item", DB_TABLE_PREFIX);
         foreach($items as $item) {
             $conn->osc_dbExec("UPDATE %st_item SET i_price = %d WHERE pk_i_id = %d", DB_TABLE_PREFIX, (1000000*$item['f_price']), $item['pk_i_id']);
         }
 
-        
         osc_changeVersionTo(230) ;
     }
 
