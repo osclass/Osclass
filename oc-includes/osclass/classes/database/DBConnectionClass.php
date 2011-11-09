@@ -444,7 +444,7 @@
                 return false ;
             }
 
-            if( defined('IS_AJAX') ) {
+            if( defined('IS_AJAX') && !OSC_DEBUG_DB_LOG ) {
                 return false ;
             }
 
