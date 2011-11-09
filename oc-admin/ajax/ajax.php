@@ -221,8 +221,16 @@
                     $error = 0;
                     $aUpdated = array();
                     try {
+                        $categoryManager = Category::newInstance();
+                        $cat = $categoryManager->listWhere("pk_i_id = %d", $id);
+                        if($cat[0]['fk_i_parent_id']!=null) {
+                            $parent = $categoryManager->listWhere("pk_i_id = %d", $cat[0]['fk_i_parent_id']);
+                            if($parent[0]['b_enabled']==0 && $enabled==1) {
+                                echo '{"error": "'.__('Parent category is disabled, you can not enabled that category').'"}';
+                                break;
+                            }
+                        }
                         if ($id != '') {
-                            $categoryManager = Category::newInstance();
                             $res = $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
                             if ($res == 1) {
                                 $a['pk_i_id'] = $id;
