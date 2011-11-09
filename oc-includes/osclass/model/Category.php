@@ -294,7 +294,7 @@
          * @return array 
          */
         public function toRootTree($cat = null) {
-            $tree = null;
+            $tree = array();
             if($cat!=null) {
                 $tree_b = array();
                 if(is_numeric($cat)) {
