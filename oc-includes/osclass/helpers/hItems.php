@@ -984,7 +984,7 @@
      * @return string
      */    
     function osc_item_meta_value() {
-        return htmlentities(osc_field(osc_item_meta(), 's_value', '')) ;
+        return htmlentities(osc_field(osc_item_meta(), 's_value', ''), ENT_COMPAT, "UTF-8") ; 
     }
    
     /**
