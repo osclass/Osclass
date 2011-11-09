@@ -477,7 +477,8 @@
                 $slug_tmp = $slug = osc_sanitizeString(osc_apply_filter('slug', $fieldsDescription['s_name']));
                 $slug_unique = 1;
                 while(true) {
-                    if(!$this->findBySlug($slug)) {
+                    $cat_slug = $this->findBySlug($slug);
+                    if(!isset($cat_slug['pk_i_id']) || $cat_slug['pk_i_id']==$pk) {
                         break;
                     } else {
                         $slug = $slug_tmp . "_" . $slug_unique;
