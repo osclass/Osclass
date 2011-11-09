@@ -73,7 +73,7 @@
                 $this->addConditions(sprintf("%st_item.b_active = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_enabled = 1 ", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_item.b_spam = 0", DB_TABLE_PREFIX));
-                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 ||TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,'%s') < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
+                $this->addConditions(sprintf(" (%st_item.b_premium = 1 || %st_category.i_expiration_days = 0 || DATEDIFF('%s', %st_item.dt_pub_date) < %st_category.i_expiration_days) ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX, DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.b_enabled = 1", DB_TABLE_PREFIX));
                 $this->addConditions(sprintf("%st_category.pk_i_id = %st_item.fk_i_category_id", DB_TABLE_PREFIX, DB_TABLE_PREFIX));
 
@@ -639,7 +639,7 @@
             $this->order(sprintf('order_premium_views', DB_TABLE_PREFIX), 'ASC') ;
             $this->page(0, $max);
             $this->addField(sprintf('sum(%st_item_stats.i_num_premium_views) as total_premium_views', DB_TABLE_PREFIX));
-            $this->addField(sprintf('(sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views)*RAND()*0.7 + TIMESTAMPDIFF(DAY,%st_item.dt_pub_date,\'%s\')*0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+            $this->addField(sprintf('( sum(%st_item_stats.i_num_premium_views) + sum(%st_item_stats.i_num_premium_views) * RAND() * 0.7 + DATEDIFF(\'%s\', %st_item.dt_pub_date) * 0.3) as order_premium_views', DB_TABLE_PREFIX, DB_TABLE_PREFIX, date('Y-m-d H:i:s'), DB_TABLE_PREFIX));
             $this->addTable(sprintf('%st_item_stats', DB_TABLE_PREFIX));
             $this->addConditions(sprintf('%st_item_stats.fk_i_item_id = %st_item.pk_i_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
             $this->addConditions(sprintf("%st_item.b_premium = 1", DB_TABLE_PREFIX));
@@ -689,7 +689,7 @@
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_spam = 0 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
-            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
+            $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
             $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_country.pk_c_code ) b ' ;
             $sql .= 'RIGHT JOIN '.DB_TABLE_PREFIX.'t_country ON '.DB_TABLE_PREFIX.'t_country.pk_c_code = b.pk_c_code ';
             $sql .= 'HAVING items '.$zero.' 0 ';
@@ -838,7 +838,7 @@
             $this->dao->where(DB_TABLE_PREFIX.'t_item.b_spam = 0');
             $this->dao->where(DB_TABLE_PREFIX.'t_category.b_enabled = 1');
             $this->dao->where(DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id');
-            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 ||DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
+            $this->dao->where('('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days)');
             $this->dao->where('fk_i_city_area_id IS NOT NULL');
             $this->dao->where(DB_TABLE_PREFIX.'t_country.pk_c_code = fk_c_country_code');
             $this->dao->groupBy('fk_i_city_area_id');
