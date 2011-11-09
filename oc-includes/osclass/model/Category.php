@@ -100,7 +100,11 @@
 //            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', osc_current_user_locale(), $this->language, $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
             
             $result = $this->dao->query(sprintf('SELECT * FROM (SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
-            return $result->result();
+            if($result) {
+                return $result->result();
+            } else {
+                return array();
+            }
         }
         
         /**
