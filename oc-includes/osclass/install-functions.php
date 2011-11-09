@@ -194,7 +194,8 @@ function oc_install( ) {
             }
         }
 
-        $comm = new DBCommandClass( $master_conn->getOsclassDb() ) ;
+        $m_db = $master_conn->getOsclassDb() ;
+        $comm = new DBCommandClass( $m_db ) ;
         $comm->query( sprintf("CREATE DATABASE IF NOT EXISTS %s DEFAULT CHARACTER SET 'UTF8' COLLATE 'UTF8_GENERAL_CI'", $dbname) ) ;
 
         $error_num = $comm->getErrorLevel() ;
@@ -211,6 +212,7 @@ function oc_install( ) {
             return array('error' => 'Cannot create the database. Error number: ' . $error_num . '.') ;
         }
 
+        unset($conn) ;
         unset($comm) ;
         unset($master_conn) ;
     }
@@ -267,7 +269,8 @@ function oc_install( ) {
 
     $sql = file_get_contents( ABS_PATH . 'oc-includes/osclass/installer/struct.sql' ) ;
 
-    $comm = new DBCommandClass( $conn->getOsclassDb() ) ;
+    $c_db = $conn->getOsclassDb() ;
+    $comm = new DBCommandClass( $c_db ) ;
     $comm->importSQL($sql) ;
 
     $error_num = $comm->getErrorLevel() ;

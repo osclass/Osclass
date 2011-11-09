@@ -43,7 +43,8 @@
                                             $content_file = file_get_contents($sql['tmp_name']) ;
 
                                             $conn = DBConnectionClass::newInstance() ;
-                                            $comm = new DBCommandClass( $conn->getOsclassDb() ) ;
+                                            $c_db = $conn->getOsclassDb() ;
+                                            $comm = new DBCommandClass($c_db) ;
                                             if ( $comm->importSQL($content_file) ) {
                                                 osc_add_flash_ok_message( _m('Import complete'), 'admin') ;
                                             } else {

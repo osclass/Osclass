@@ -66,7 +66,8 @@
             $this->setFields( array('s_site', 'dt_date', 'fk_i_user_id', 's_db_name', 's_db_host', 's_db_user', 's_db_password') ) ;
 
             $conn = DBConnectionClass::newInstance() ;
-            $this->daoMetadata = new DBCommandClass($conn->getMetadataDb()) ;
+            $m_db = $conn->getMetadataDb() ;
+            $this->daoMetadata = new DBCommandClass($m_db) ;
 
             $this->toArray() ;
         }
