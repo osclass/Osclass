@@ -936,7 +936,9 @@
 
             $this->errorReport() ;
             if( false === $this->resultId ) {
-                $this->log->addMessage($sql, 0, $this->errorLevel, $this->errorDesc) ;
+                if( OSC_DEBUG_DB ) {
+                    $this->log->addMessage($sql, 0, $this->errorLevel, $this->errorDesc) ;
+                }
                 return false ;
             }
 
@@ -944,9 +946,11 @@
             $this->queryTimes[] = ($em + $es) - ($sm + $ss) ;
 
             $this->queryCount++ ;
-            
-            $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc) ;
-            
+
+            if( OSC_DEBUG_DB ) {
+                $this->log->addMessage($sql, ($em + $es) - ($sm + $ss), $this->errorLevel, $this->errorDesc) ;
+            }
+
             if( $this->isWriteType($sql) === true ) {
                 return true ;
             }
