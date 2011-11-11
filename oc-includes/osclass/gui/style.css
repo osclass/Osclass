@@ -10,9 +10,7 @@ table {border-collapse: collapse;border-spacing: 0;}
 input:focus { outline:none; }
 
 /* -- ERROR PAGES --------------------------------------- */
-
-#comment_error_list .error,
-#error_list .error { margin: 10px 0; padding: 20px 0; clear: both; }
+#comment_error_list .error, #error_list .error { padding: 2px 0; clear: both; }
 .error h1 { font-size: 2.5em; text-align: center; }
 
 /* -- GLOBAL STYLES --------------------------------------- */
