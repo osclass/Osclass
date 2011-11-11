@@ -880,6 +880,60 @@
     }
     osc_add_hook('hook_email_contact_user', 'fn_email_contact_user');
     
+    function fn_email_new_comment_user($aItem) {
+        $authorName     = trim($aItem['authorName']);
+        $authorName     = strip_tags($authorName);
+        $authorEmail    = trim($aItem['authorEmail']);
+        $authorEmail    = strip_tags($authorEmail);
+        $body           = trim($aItem['body']);
+        $body           = strip_tags($body);
+        $title          = $aItem['title'] ;
+        $itemId         = $aItem['id'] ;
+        $userId         = $aItem['userId'] ;
+        $admin_email = osc_contact_email() ;
+        $prefLocale  = osc_language() ;
+
+        $item = Item::newInstance()->findByPrimaryKey($itemId) ;
+        View::newInstance()->_exportVariableToView('item', $item);
+        $itemURL = osc_item_url() ;
+        $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
+        
+        $mPages = new Page() ;
+        $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
+        $locale = osc_current_user_locale() ;
+
+        $content = array();
+        if(isset($aPage['locale'][$locale]['s_title'])) {
+            $content = $aPage['locale'][$locale];
+        } else {
+            $content = current($aPage['locale']);
+        }
+
+        $words   = array();
+        $words[] = array('{COMMENT_AUTHOR}', '{COMMENT_EMAIL}', '{COMMENT_TITLE}',
+                         '{COMMENT_TEXT}', '{ITEM_TITLE}', '{ITEM_ID}', '{ITEM_URL}', '{SELLER_NAME}', '{SELLER_EMAIL}');
+        $words[] = array($authorName, $authorEmail, $title, $body, $item['s_title'], $itemId, $itemURL, $item['s_contact_name'], $item['s_contact_email']);
+        $title_email = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_new_comment_admin_title', $content['s_title'])), $words);
+        $body_email = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_new_comment_admin_description', $content['s_text'])), $words);
+
+        $from = osc_contact_email() ;
+        $from_name = osc_page_title() ;
+        if (osc_notify_contact_item()) {
+            $add_bbc = osc_contact_email() ;
+        }
+
+        $emailParams = array(
+                        'from'      => $admin_email
+                        ,'from_name' => __('Admin mail system')
+                        ,'subject'   => $title_email
+                        ,'to'        => $item['s_contact_email']
+                        ,'to_name'   => $item['s_contact_name']
+                        ,'body'      => $body_email
+                        ,'alt_body'  => $body_email
+                        );
+        osc_sendMail($emailParams) ;
+    }
+    osc_add_hook('hook_email_new_comment_user', 'fn_email_new_comment_user');
 
     
 ?>

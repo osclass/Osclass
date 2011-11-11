@@ -168,7 +168,10 @@
         $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - New user', '<div><p>Dear {WEB_TITLE} admin,</p>\n<p>You\'re receiving this email because a new user has been created at {WEB_TITLE}.</p>\n<p>User details:</p>\n<p>Name: {USER_NAME}<br />E-mail: {USER_EMAIL}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p></div>')", DB_TABLE_PREFIX, $conn->get_last_id()));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_contact_user', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - Someone has a question for you', '<p>Hi {CONTACT_NAME}!</p>\n<p>{USER_NAME} ({USER_EMAIL}, {USER_PHONE}) left you a message:</p>\n<p>{COMMENT}</p>\n<p>Regards,</p>\n<p>{WEB_TITLE}</p>')", DB_TABLE_PREFIX, $conn->get_last_id()));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_pages (s_internal_name, b_indelible, dt_pub_date) VALUES ('email_new_comment_user', 1, '%s' )", DB_TABLE_PREFIX, date('Y-m-d H:i:s')));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_pages_description (fk_i_pages_id, fk_c_locale_code, s_title, s_text) VALUES (%d, 'en_US', '{WEB_TITLE} - New comment on the ad with id {ITEM_ID}', '<p>There\'s a new comment on the ad with id {ITEM_ID} <br />URL: {ITEM_URL}</p>\n<p>Title: {COMMENT_TITLE}<br />Comment: {COMMENT_TEXT}<br />Author: {COMMENT_AUTHOR}<br />Author\'s email: {COMMENT_EMAIL}</p>')", DB_TABLE_PREFIX, $conn->get_last_id()));
         $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'notify_new_user', '1', 'BOOLEAN')", DB_TABLE_PREFIX));
+        $conn->osc_dbExec(sprintf("INSERT INTO %st_preference VALUES ('osclass', 'notify_new_comment_user', '0', 'BOOLEAN')", DB_TABLE_PREFIX));
 
         $conn->osc_dbExec(sprintf("UPDATE %st_locale SET s_currency_format = '{NUMBER} {CURRENCY}'", DB_TABLE_PREFIX) );
         $items = $conn->osc_dbFetchResults("SELECT pk_i_id, f_price FROM %st_item", DB_TABLE_PREFIX);
