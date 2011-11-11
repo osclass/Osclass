@@ -899,7 +899,7 @@
         $itemURL = '<a href="'.$itemURL.'" >'.$itemURL.'</a>';
         
         $mPages = new Page() ;
-        $aPage = $mPages->findByInternalName('email_new_comment_admin') ;
+        $aPage = $mPages->findByInternalName('email_new_comment_user') ;
         $locale = osc_current_user_locale() ;
 
         $content = array();
