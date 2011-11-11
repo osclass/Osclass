@@ -43,6 +43,8 @@
                                         $commentsPerPage  = Params::getParam('comments_per_page');
                                         $notifyNewComment = Params::getParam('notify_new_comment');
                                         $notifyNewComment = (($notifyNewComment != '') ? true : false);
+                                        $notifyNewCommentUser = Params::getParam('notify_new_comment_user');
+                                        $notifyNewCommentUser = (($notifyNewCommentUser != '') ? true : false);
                                         $regUserPostComments  = Params::getParam('reg_user_post_comments');
                                         $regUserPostComments  = (($regUserPostComments != '') ? true : false);
 
@@ -57,6 +59,8 @@
                                         }
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewComment)
                                                                                       ,array('s_name' => 'notify_new_comment'));
+                                        $iUpdated += Preference::newInstance()->update(array('s_value' => $notifyNewCommentUser)
+                                                                                      ,array('s_name' => 'notify_new_comment_user'));
                                         $iUpdated += Preference::newInstance()->update(array('s_value' => $commentsPerPage)
                                                                                       ,array('s_name' => 'comments_per_page'));
 

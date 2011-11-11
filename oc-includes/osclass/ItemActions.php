@@ -673,6 +673,11 @@
                     osc_run_hook('hook_email_new_comment_admin', $aItem) ;
                 }
 
+                //Notify user
+                if ( osc_notify_new_comment_user() ) {
+                    osc_run_hook('hook_email_new_comment_user', $aItem) ;
+                }
+
                 osc_run_hook( 'add_comment', $commentID ) ;
 
                 return $status_num ;
