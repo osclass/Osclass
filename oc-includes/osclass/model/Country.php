@@ -150,7 +150,11 @@
             if($country) {
                 return $this->dao->update($this->getTableName(), array('s_name' => $name), array('pk_c_code' => $code, 'fk_c_locale_code' => $locale));
             } else {
-                return $this->conn->osc_dbExec("INSERT INTO %s (pk_c_code, fk_c_locale_code, s_name) VALUES ('%s', '%s', '%s')", $this->getTableName(), addslashes($code), addslashes($locale), addslashes($name) );
+                return $this->insert( array(
+                    'pk_c_code'        => $code,
+                    'fk_c_locale_code' => $locale,
+                    's_name'           => $name,
+                ) ) ;
             }
         }
 

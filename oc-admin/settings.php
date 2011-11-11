@@ -156,19 +156,20 @@
                                             break;
                                             case('edit_country'):   // edit country
                                                                     $countryCode = Params::getParam('country_code');
-                                                                    $request = Params::getParam('e_country');
-                                                                    $ok = true;
+                                                                    $request     = Params::getParam('e_country');
+                                                                    $ok          = true;
+
                                                                     foreach($request as $k => $v) {
-                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v);
-                                                                        if(!$result) {
-                                                                            $ok = false;
+                                                                        $result = $mCountries->updateLocale($countryCode, $k, $v) ;
+                                                                        if( $result === false ) {
+                                                                            $ok = false ;
                                                                         }
                                                                     }
 
-                                                                    if($ok) {
+                                                                    if( $ok ) {
                                                                         osc_add_flash_ok_message(_m('Country has been edited'), 'admin');
                                                                     } else {
-                                                                        osc_add_flash_ok_message(_m('There were some problems editing the country'), 'admin');
+                                                                        osc_add_flash_error_message(_m('There were some problems editing the country'), 'admin');
                                                                     }
                                                                     $this->redirectTo(osc_admin_base_url(true) . '?page=settings&action=locations');
                                             break;
