@@ -802,35 +802,45 @@
     osc_add_hook('hook_email_item_validation_non_register_user', 'fn_email_item_validation_non_register_user');
         
     function fn_email_admin_new_user($user) {
-    
         $pageManager = new Page() ;
-        $locale = osc_current_user_locale() ;
-        $aPage = $pageManager->findByInternalName('email_admin_new_user') ;
-        $content = array() ;
-        if(isset($aPage['locale'][$locale]['s_title'])) {
+        $locale      = osc_current_user_locale() ;
+        $aPage       = $pageManager->findByInternalName('email_admin_new_user') ;
+        $content     = array() ;
+
+        if( isset($aPage['locale'][$locale]['s_title']) ) {
             $content = $aPage['locale'][$locale] ;
         } else {
             $content = current($aPage['locale']) ;
         }
 
-        if (!is_null($content)) {
+        if( !is_null($content) ) {
             $words   = array();
-            $words[] = array('{USER_NAME}', '{USER_EMAIL}', '{WEB_TITLE}', '{WEB_URL}') ;
-            $words[] = array($user['s_name'], $user['s_email'], osc_page_title(), '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>' ) ;
+            $words[] = array(
+                '{USER_NAME}',
+                '{USER_EMAIL}',
+                '{WEB_TITLE}',
+                '{WEB_URL}',
+            ) ;
+            $words[] = array(
+                $user['s_name'],
+                $user['s_email'],
+                osc_page_title(),
+                '<a href="' . osc_base_url() . '" >' . osc_base_url() . '</a>'
+            ) ;
             $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_user_registration_title', $content['s_title'])), $words) ;
-            $body = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words) ;
+            $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_user_regsitration_description', $content['s_text'])), $words) ;
 
             $emailParams = array(
-                        'subject'  => $title
-                        ,'to'       => $user['s_email']
-                        ,'to_name'  => $user['s_name']
-                        ,'body'     => $body
-                        ,'alt_body' => $body
-            );
+                'subject'  => $title,
+                'to'       => osc_contact_email(),
+                'to_name'  => osc_page_title(),
+                'body'     => $body,
+                'alt_body' => $body,
+            ) ;
             osc_sendMail($emailParams) ;
         }
     }
-    osc_add_hook('hook_email_admin_new_user', 'fn_email_admin_new_user');
+    osc_add_hook('hook_email_admin_new_user', 'fn_email_admin_new_user') ;
 
     function fn_email_contact_user($id, $yourEmail, $yourName, $phoneNumber, $message) {
         $mPages = new Page();

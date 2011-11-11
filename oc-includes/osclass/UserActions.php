@@ -72,12 +72,14 @@
 
             $user = $this->manager->findByPrimaryKey($userId) ;
 
+            if( osc_notify_new_user() ) {
+                osc_run_hook('hook_email_admin_new_user', $user) ;
+            }
+
             if( osc_user_validation_enabled() && !$this->is_admin ) {
                 osc_run_hook('hook_email_user_validation', $user, $input) ;
                 return 1 ;
             }
-
-            osc_run_hook('hook_email_admin_new_user', $user) ;
 
             User::newInstance()->update(
                              array('b_active' => '1')
