@@ -487,7 +487,7 @@
 
                 $this->addConditions(sprintf('%st_item_location.fk_i_city_area_id = cta.pk_i_id', DB_TABLE_PREFIX));
                 $this->addConditions(sprintf('%st_item.pk_i_id = %st_item_location.fk_i_item_id', DB_TABLE_PREFIX, DB_TABLE_PREFIX));
-                $sql = sprintf("SELECT cta.pk_i_id as city_area_id, cta.s_name as city_area_name, ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct, %stcity_area WHERE cta.fk_i_city_id = %d GROUP BY cta.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $city_int, $zero, $order);
+                $sql = sprintf("SELECT cta.pk_i_id as city_area_id, cta.s_name as city_area_name, ct.pk_i_id as city_id, ct.s_name as city_name, rr.pk_i_id as region_id, rr.s_name as region_name, cc.pk_c_code, cc.fk_c_locale_code, cc.s_name as country_name, (".str_replace('%', '%%', $this->makeSQL(true)).") as items FROM %st_region as rr, %st_country as cc, %st_city as ct, %st_city_area as cta WHERE cta.fk_i_city_id = %d GROUP BY cta.s_name HAVING items %s 0 ORDER BY %s ", DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX, DB_TABLE_PREFIX,  $city_int, $zero, $order);
                 return $this->conn->osc_dbFetchResults($sql);
             } else {
 
