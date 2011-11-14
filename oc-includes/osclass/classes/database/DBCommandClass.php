@@ -1015,6 +1015,7 @@
         function importSQL($sql)
         {
             $sql     = str_replace( '/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ;
+            $sql     = preg_replace('#/\*(?:[^*]*(?:\*(?!/))*)*\*/#','',($sql));
             $queries = explode( ';', $sql ) ;
 
             if( count($queries) == 0 ) {
