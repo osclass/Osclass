@@ -233,19 +233,28 @@ function osc_doRequest($url, $_data) {
 }
 
 function osc_sendMail($params) {
-    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php';
-    if(osc_mailserver_pop()) {
-        require_once osc_lib_path() . 'phpmailer/class.pop3.php';
-        $pop = new POP3();
-        $pop->Authorise(( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
+    if( key_exists('add_bcc', $params) ) {
+        if( !is_array($params['add_bcc']) ) {
+            $params['add_bcc'] = array($params['add_bcc']) ;
+        }
+    }
+
+    require_once osc_lib_path() . 'phpmailer/class.phpmailer.php' ;
+
+    if( osc_mailserver_pop() ) {
+        require_once osc_lib_path() . 'phpmailer/class.pop3.php' ;
+        $pop = new POP3() ;
+        $pop->Authorise(
+                ( isset($params['host']) ) ? $params['host'] : osc_mailserver_host(),
                 ( isset($params['port']) ) ? $params['port'] : osc_mailserver_port(),
                 30,
                 ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
                 ( isset($params['username']) ) ? $params['username'] : osc_mailserver_username(),
-                0);
+                0
+        );
     }
 
-    $mail = new PHPMailer(true);
+    $mail = new PHPMailer(true) ;
     try {
         $mail->CharSet = "utf-8";
 
@@ -268,7 +277,13 @@ function osc_sendMail($params) {
         $mail->AltBody = ( isset($params['alt_body']) ) ? $params['alt_body'] : '' ;
         $to = ( isset($params['to']) ) ? $params['to'] : '' ;
         $to_name = ( isset($params['to_name']) ) ? $params['to_name'] : '' ;
-        if ( isset($params['add_bbc']) ) $mail->AddBCC($params['add_bbc']);
+
+        if ( key_exists('add_bcc', $params) ) {
+            foreach( $params['add_bcc'] as $bcc ) {
+                $mail->AddBCC($bcc) ;
+            }
+        }
+
         if ( isset($params['reply_to']) ) $mail->AddReplyTo($params['reply_to']);
 
         if( isset($params['attachment']) ) {
@@ -281,10 +296,10 @@ function osc_sendMail($params) {
         return true ;
 
     } catch (phpmailerException $e) {
-        error_log("OSCLAS::osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
+        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     } catch (Exception $e) {
-        error_log("OSCLAS::osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
+        error_log("osc_sendMail() cannot send email! ".$mail->ErrorInfo, 0);
         return false;
     }
     return false;

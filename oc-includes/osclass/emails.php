@@ -441,12 +441,13 @@
         $title = osc_mailBeauty(osc_apply_filter('email_title', osc_apply_filter('email_send_friend_title', $content['s_title'])), $words) ;
         $body  = osc_mailBeauty(osc_apply_filter('email_description', osc_apply_filter('email_send_friend_description', $content['s_text'])), $words) ;
 
+        $add_bcc = '' ;
         if (osc_notify_contact_friends()) {
-            $add_bbc = osc_contact_email() ;
+            $add_bcc = osc_contact_email() ;
         }
 
         $params = array(
-                    'add_bcc'    => $add_bbc
+                    'add_bcc'    => $add_bcc
                     ,'from'      => $aItem['yourEmail']
                     ,'from_name' => $aItem['yourName']
                     ,'subject'   => $title
@@ -497,13 +498,13 @@
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
 
-        $add_bbc = '';
+        $add_bcc = '';
         if (osc_notify_contact_item()) {
-            $add_bbc = osc_contact_email() ;
+            $add_bcc = osc_contact_email() ;
         }
 
         $emailParams = array (
-                            'add_bcc'   => $add_bbc
+                             'add_bcc'   => $add_bcc
                             ,'from'      => $from
                             ,'from_name' => $from_name
                             ,'subject'   => $title
@@ -579,9 +580,6 @@
 
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
-        if (osc_notify_contact_item()) {
-            $add_bbc = osc_contact_email() ;
-        }
 
         $emailParams = array(
                         'from'      => $admin_email
@@ -867,13 +865,13 @@
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
 
-        $add_bbc = '';
+        $add_bcc = '';
         if (osc_notify_contact_item()) {
-            $add_bbc = osc_contact_email() ;
+            $add_bcc = osc_contact_email() ;
         }
 
         $emailParams = array (
-                            'add_bcc'   => $add_bbc
+                            'add_bcc'   => $add_bcc
                             ,'from'      => $from
                             ,'from_name' => $from_name
                             ,'subject'   => $title
@@ -928,12 +926,9 @@
 
         $from = osc_contact_email() ;
         $from_name = osc_page_title() ;
-        if (osc_notify_contact_item()) {
-            $add_bbc = osc_contact_email() ;
-        }
 
         $emailParams = array(
-                        'from'      => $admin_email
+                         'from'      => $admin_email
                         ,'from_name' => __('Admin mail system')
                         ,'subject'   => $title_email
                         ,'to'        => $item['s_contact_email']
