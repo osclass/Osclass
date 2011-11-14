@@ -549,7 +549,7 @@
             $s_title    = $aItem['s_title'];
             View::newInstance()->_exportVariableToView('item', $item);
             
-            osc_run_hook('email_send_frined', $aItem);
+            osc_run_hook('hook_email_send_friend', $aItem);
             $item_url   = osc_item_url();
             $item_url = '<a href="'.$item_url.'" >'.$item_url.'</a>';
             Params::setParam('item_url', $item_url );
