@@ -17,6 +17,7 @@ INSERT INTO /*TABLE_PREFIX*/t_preference VALUES
     ,('osclass', 'keep_original_image', '1', 'BOOLEAN')
     ,('osclass', 'dateFormat', 'F j, Y', 'STRING')
     ,('osclass', 'timeFormat', 'g:i a', 'STRING')
+    ,('osclass', 'timezone', 'Europe/Madrid', 'STRING')
     ,('osclass', 'weekStart', '0', 'STRING')
     ,('osclass', 'moderate_comments', '0', 'INTEGER')
     ,('osclass', 'moderate_items', '0', 'INTEGER')
