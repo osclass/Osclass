@@ -51,7 +51,7 @@
         <?php osc_current_admin_theme_path('header.php') ; ?>
         <div id="update_version" style="display:none;"></div>
         <script type="text/javascript">
-            document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+            document.write('<style type="text/css">.tabber{display:none;}</style>');
             $(document).ready(function(){
                 if (typeof $.uniform != 'undefined') {
                     $('textarea, button,select, input:file').uniform();
@@ -105,7 +105,7 @@
 
                             <div style="float: left; width: 50%;">
                                 <fieldset>
-                                    <legend><?php _e('Real name'); ?> (<?php _e('required'); ?>)</legend>
+                                    <legend><?php _e('Real name'); ?></legend>
                                     <?php UserForm::name_text($user); ?>
                                 </fieldset>
                                 <fieldset>
