@@ -142,9 +142,9 @@
                     echo $result;
                     break;
                 case 'category_edit_iframe':
-                    $this->_exportVariableToView("category", Category::newInstance()->findByPrimaryKey(Params::getParam("id")));
-                    $this->_exportVariableToView("languages", OSCLocale::newInstance()->listAllEnabled());
-                    $this->doView("categories/iframe.php");
+                    $this->_exportVariableToView( 'category', Category::newInstance()->findByPrimaryKey( Params::getParam("id") ) ) ;
+                    $this->_exportVariableToView( 'languages', OSCLocale::newInstance()->listAllEnabled() ) ;
+                    $this->doView("categories/iframe.php") ;
                     break;
                 case 'field_categories_iframe':
                     $selected = Field::newInstance()->categories(Params::getParam("id"));

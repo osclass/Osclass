@@ -31,10 +31,10 @@
          */
         private static $instance ;
         private $language ;
-        private $tree;
-        private $categories;
-        private $relation;
-        private $empty_tree;
+        private $tree ;
+        private $categories ;
+        private $relation ;
+        private $empty_tree ;
 
         public static function newInstance()
         {
@@ -59,19 +59,19 @@
                 'i_position',
                 'b_enabled',
                 's_icon'
-            );
+            ) ;
             $this->setFields($array_fields) ;
 
-            if($l == "") {
+            if($l == '') {
                 $l = osc_current_user_locale() ;
             }
 
-            $this->language = $l ;
-            $this->tree = null;
-            $this->relation = null;
-            $this->categories = null;
-            $this->empty_tree = true;
-            $this->toTree();
+            $this->language   = $l ;
+            $this->tree       = null ;
+            $this->relation   = null ;
+            $this->categories = null ;
+            $this->empty_tree = true ;
+            $this->toTree() ;
         }
 
         /**
@@ -84,7 +84,7 @@
          */
         public function listWhere() {
             $argv = func_get_args();
-            $sql = null;
+            $sql  = null;
             switch (func_num_args ()) {
                 case 0: return array();
                     break;
@@ -97,8 +97,6 @@
                     break;
             }
 
-//            $result = $this->dao->query(sprintf('SELECT * FROM (SELECT *, FIELD(b.fk_c_locale_code, \'%s\', \'%s\') as sorter FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY sorter DESC, a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', osc_current_user_locale(), $this->language, $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
-            
             $result = $this->dao->query(sprintf('SELECT * FROM (SELECT * FROM %s as a INNER JOIN %st_category_description as b ON a.pk_i_id = b.fk_i_category_id WHERE b.s_name != \'\' AND %s  ORDER BY a.i_position DESC) dummytable LEFT JOIN %st_category_stats as c ON dummytable.pk_i_id = c.fk_i_category_id GROUP BY pk_i_id ORDER BY i_position ASC', $this->getTableName(), DB_TABLE_PREFIX, $sql, DB_TABLE_PREFIX));
             if($result) {
                 return $result->result();
@@ -388,41 +386,65 @@
 
         /**
          * Return a category given an id
-         * This overwrite findByPrimaryKey of DAO model because we store the categories on an array for the tree and it's faster than a SQL query
+         * This overwrite findByPrimaryKey of DAO model because we store the 
+         * categories on an array for the tree and it's faster than a SQL query
          * 
          * @access public
          * @since unknown
-         * @param integer$pk primary key
+         * @param int $categoryID primary key
          * @return array 
          */
-        public function findByPrimaryKey($pk) {
-            if($pk!=null) {
-                if(array_key_exists($pk, $this->categories)){
-                    $data = $this->categories[$pk];
-                    if(!isset($data) || !isset($data['locale'])) {
-                        $this->dao->select();
-                        $this->dao->from(DB_TABLE_PREFIX.'t_category_description');
-                        $this->dao->where('fk_i_category_id', $data['pk_i_id']);
-                        $this->dao->orderBy('fk_c_locale_code');
-                        $result = $this->dao->get();
-                        
-                        $sub_rows = $result->result();
-                        $row = array();
-                        foreach ($sub_rows as $sub_row) {
-                            $row[$sub_row['fk_c_locale_code']] = $sub_row;
-                        }
-                        $data['locale'] = $row;
-                        $this->categories[$pk] = $data;
-                        return $data;
-                    } else {
-                        return $data;
-                    }
-                } else {
-                    return null;
+        public function findByPrimaryKey($categoryID)
+        {
+            if($categoryID == null) {
+                return false ;
+            }
+
+            $category = array() ;
+
+            if( array_key_exists($categoryID, $this->categories) ) {
+                $category = $this->categories[$categoryID];
+
+                // if we already have locale data, we return the category
+                if( array_key_exists('locale', $category)) {
+                    return $category ;
                 }
             } else {
-                return null;
+                $this->dao->select( $this->getFields() ) ;
+                $this->dao->from( $this->getTableName() ) ;
+                $this->dao->where( 'pk_i_id', $categoryID ) ;
+                $result = $this->dao->get() ;
+
+                if( $result == false ) {
+                    return false ;
+                }
+
+                $category = $result->row() ;
             }
+
+            $this->dao->select() ;
+            $this->dao->from( $this->getTablePrefix() . 't_category_description' ) ;
+            $this->dao->where( 'fk_i_category_id', $category['pk_i_id'] ) ;
+            $this->dao->orderBy( 'fk_c_locale_code' ) ;
+            $result = $this->dao->get() ;
+
+            if( $result == false ) {
+                return false ;
+            }
+
+            $sub_rows = $result->result();
+            $row      = array();
+            foreach ($sub_rows as $sub_row) {
+                $row[$sub_row['fk_c_locale_code']] = $sub_row;
+            }
+            $category['locale'] = $row ;
+
+            // if it exists in the $categories array, we copy the row data
+            if( array_key_exists($categoryID, $this->categories) ) {
+                $this->categories[$categoryID] = $category ;
+            }
+
+            return $category;
         }
 
         /**
