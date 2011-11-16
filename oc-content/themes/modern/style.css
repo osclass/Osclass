@@ -548,3 +548,14 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
 #user_data {
     padding: 20px;
 }
+
+
+.home #main .latest_ads table td.photo {
+    padding-left: 2px;
+}
+
+.home #main .latest_ads table td {
+    border-bottom: 1px dotted #DDDDDD;
+    padding: 8px;
+    vertical-align: top;
+}
