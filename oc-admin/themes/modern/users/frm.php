@@ -78,8 +78,8 @@
                             <input type="hidden" name="page" value="users" />
                             <input type="hidden" name="action" value="<?php echo $action_frm;?>"/>
                             <?php UserForm::primary_input_hidden($user); ?>
-                            <input type="hidden" name="b_enabled" value="<?php echo $user['b_enabled'] ?>" />
-                            <input type="hidden" name="b_active" value="<?php echo $user['b_active'] ?>" />
+                            <input type="hidden" name="b_enabled" value="<?php echo @$user['b_enabled'] ?>" />
+                            <input type="hidden" name="b_active" value="<?php echo @$user['b_active'] ?>" />
                             <div style="float: left; width: 50%;">
                                 <fieldset>
                                     <legend><?php _e('E-mail'); ?></legend>
