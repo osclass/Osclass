@@ -550,11 +550,11 @@ div.uploader input { opacity: 0; filter: alpha(opacity:0); position: absolute; t
 }
 
 
-.home #main .latest_ads table td.photo {
+.user_public_profile #main .latest_ads table td.photo {
     padding-left: 2px;
 }
 
-.home #main .latest_ads table td {
+.user_public_profile #main .latest_ads table td {
     border-bottom: 1px dotted #DDDDDD;
     padding: 8px;
     vertical-align: top;
