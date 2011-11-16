@@ -50,7 +50,7 @@ unset($location_array);
     <body>
         <div class="container">
             <?php osc_current_web_theme_path('header.php') ; ?>
-            <div class="content item">
+            <div class="content item user_public_profile">
                 <div id="item_head">
                     <div class="inner">
                         <h1><?php echo sprintf(__('%s\'s profile', 'modern'), osc_user_name()); ?></h1>
@@ -67,7 +67,7 @@ unset($location_array);
                             <li><?php _e('Website'); ?>: <?php echo osc_user_website(); ?></li>
                         </ul>
                     </div>
-                    <div id="description">
+                    <div id="description" class="latest_ads">
                         <h2><?php _e('Latest items'); ?></h2>
                         <table border="0" cellspacing="0">
                             <tbody>
