@@ -335,16 +335,16 @@
          */
         public function insertLocale($id, $locale, $title, $description, $what)
         {
-            $title = addslashes($title);
-            $description = addslashes($description);
-            $what = addslashes($what);
-            $array_set = array(
+            $title       = $title ;
+            $description = $description ;
+            $what        = $what ;
+            $array_set   = array(
                 'fk_i_item_id'      => $id,
                 'fk_c_locale_code'  => $locale,
                 's_title'           => $title,
                 's_description'     => $description,
                 's_what'            => $what
-            );  
+            ) ;
             return $this->dao->insert(DB_TABLE_PREFIX.'t_item_description', $array_set) ;
         }
         
