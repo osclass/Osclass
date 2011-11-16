@@ -235,9 +235,9 @@
                             if ($res == 1) {
                                 $a['pk_i_id'] = $id;
                                 array_push($aUpdated, $a);
-                                $msg = __('The category has been enabled');
+                                $msg = __('The category and its subcategories have been enabled');
                             } else {
-                                $msg = __('The category has been disabled');
+                                $msg = __('The category and its subcategories have been disabled');
                             }
 
                             $res = $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
@@ -245,9 +245,7 @@
                             if ($res >= 1) {
                                 $aAux = $categoryManager->listWhere("fk_i_parent_id = $id");
                                 $aUpdated = array_merge($aUpdated, $aAux);
-                                $msg .= "<br>" . __('The subcategories has been enabled');
                             } else {
-                                $msg .= "<br>" . __('The subcategories has been disabled');
                             }
                         } else {
                             $error = 1;
