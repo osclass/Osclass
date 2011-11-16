@@ -311,15 +311,18 @@
                     $fields['i_expiration_days'] = (Params::getParam("i_expiration_days") != '') ? Params::getParam("i_expiration_days") : 0;
 
                     $error = 0;
+                    $has_one_title = 0;
                     $postParams = Params::getParamsAsArray();
                     foreach ($postParams as $k => $v) {
                         if (preg_match('|(.+?)#(.+)|', $k, $m)) {
                             if ($m[2] == 's_name') {
                                 if ($v != "") {
+                                    $has_one_title = 1;
                                     $aFieldsDescription[$m[1]][$m[2]] = $v;
+                                    $s_text = $v;
                                 } else {
+                                    $aFieldsDescription[$m[1]][$m[2]] = ' ';
                                     $error = 1;
-                                    $message = __("All titles are required");
                                 }
                             } else {
                                 $aFieldsDescription[$m[1]][$m[2]] = $v;
@@ -328,27 +331,28 @@
                     }
 
                     $l = osc_language();
-                    if (!$error) {
+                    if ($error==0 || ($error==1 && $has_one_title==1)) {
                         try {
                             $categoryManager = Category::newInstance();
                             $categoryManager->updateByPrimaryKey(array('fields' => $fields, 'aFieldsDescription' => $aFieldsDescription), $id);
                         } catch (Exception $e) {
-                            $error = 1;
-                            $message = __("Error while updating.");
+                            $error = 2;
                         }
                     }
-
-                    $result = "{";
-                    if ($error) {
-                        $result .= '"error" : "';
-                        $result .= $message;
-                        $result .= '"';
-                    } else {
-                        $result .= '"ok" : "' . __("Saved") . '", "text" : "' . $aFieldsDescription[$l]['s_name'] . '"';
+                    
+                    if($error==0) {
+                        $msg = __("Category updated correctly");
+                    } else if($error==1) {
+                        if($has_one_title==1) {
+                            $error = 4;
+                            $msg = __('Category updated correctly, but some titles were empty');
+                        } else {
+                            $msg = __('Sorry, at least a title is needed');
+                        }
+                    } else if($error==2) {
+                        $msg = __('Error while updating');
                     }
-                    $result .= "}";
-
-                    echo $result;
+                    echo json_encode(array('error' => $error, 'msg' => $msg, 'text' => $aFieldsDescription[$l]['s_name']));
                     break;
                 case 'custom': // Execute via AJAX custom file
                     $ajaxfile = Params::getParam("ajaxfile");
