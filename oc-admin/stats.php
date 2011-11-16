@@ -213,7 +213,7 @@
                                         $item = Stats::newInstance()->items_by_user();
                                         $this->_exportVariableToView("users_by_country", Stats::newInstance()->users_by_country());
                                         $this->_exportVariableToView("users_by_region", Stats::newInstance()->users_by_region());
-                                        $this->_exportVariableToView("item", !is_numeric($item['avg'])?0:$item['avg']);
+                                        $this->_exportVariableToView("item", (!isset($item['avg']) || !is_numeric($item['avg']))?0:$item['avg']);
                                         $this->_exportVariableToView("latest_users", Stats::newInstance()->latest_users());
                                         $this->_exportVariableToView("users", $users);
                                         $this->_exportVariableToView("max", $max);
