@@ -216,69 +216,68 @@
                     echo $result;
                     break;
                 case 'enable_category':
-                    $id = Params::getParam("id");
-                    $enabled = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0;
-                    $error = 0;
-                    $aUpdated = array();
-                    try {
-                        $categoryManager = Category::newInstance();
-                        $cat = $categoryManager->listWhere("pk_i_id = %d", $id);
-                        if($cat[0]['fk_i_parent_id']!=null) {
-                            $parent = $categoryManager->listWhere("pk_i_id = %d", $cat[0]['fk_i_parent_id']);
-                            if($parent[0]['b_enabled']==0 && $enabled==1) {
-                                echo '{"error": "'.__('Parent category is disabled, you can not enabled that category').'"}';
-                                break;
-                            }
-                        }
-                        if ($id != '') {
-                            $res = $categoryManager->update(array('b_enabled' => $enabled), array('pk_i_id' => $id));
-                            if ($res == 1) {
-                                $a['pk_i_id'] = $id;
-                                array_push($aUpdated, $a);
-                                $msg = __('The category and its subcategories have been enabled');
-                            } else {
-                                $msg = __('The category and its subcategories have been disabled');
-                            }
+                    $id       = Params::getParam("id") ;
+                    $enabled  = (Params::getParam("enabled") != '') ? Params::getParam("enabled") : 0 ;
+                    $error    = 0 ;
+                    $result   = array() ;
+                    $aUpdated = array() ;
 
-                            $res = $categoryManager->update(array('b_enabled' => $enabled), array('fk_i_parent_id' => $id));
-                            
-                            if ($res >= 1) {
-                                $aAux = $categoryManager->listWhere("fk_i_parent_id = $id");
-                                $aUpdated = array_merge($aUpdated, $aAux);
-                            } else {
-                            }
-                        } else {
-                            $error = 1;
-                            $msg = __('There was a problem with this page. The ID for the category hasn\'t been set');
-                        }
-                        $message = $msg;
-                    } catch (Exception $e) {
-                        $error = 1;
-                        $message = __('Error: %s') . " " . $e->getMessage();
+                    $mCategory = Category::newInstance() ;
+                    $aCategory = $mCategory->findByPrimaryKey( $id ) ;
+
+                    if( $aCategory == false ) {
+                        $result = array( 'error' => sprintf(__(''), $id) ) ;
+                        echo json_encode($result) ;
+                        break ;
                     }
 
-                    $result = "{";
-                    $error = 0;
+                    // root category
+                    if( $aCategory['fk_i_parent_id'] == '' ) {
+                        $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id'        => $id) ) ;
+                        $mCategory->update( array('b_enabled' => $enabled), array('fk_i_parent_id' => $id) ) ;
 
-                    if ($error) {
-                        $result .= '"error" : "' . $message . '"';
+                        $subCategories = $mCategory->findSubcategories( $id ) ;
+
+                        $aUpdated[] = array('id' => $id) ;
+                        foreach( $subCategories as $subcategory ) {
+                            $aUpdated[] = array( 'id' => $subcategory['pk_i_id'] ) ;
+                        }
+
+                        if( $enabled ) {
+                            $result = array(
+                                'ok' => __('The category and its subcategories have been enabled')
+                            ) ;
+                        } else {
+                            $result = array(
+                                'ok' => __('The category and its subcategories have been disabled')
+                            ) ;
+                        }
+                        $result['affectedIds'] = $aUpdated ;
+                        echo json_encode($result) ;
+                        break ;
+                    }
+
+                    // subcategory
+                    $parentCategory = $mCategory->findRootCategory( $id ) ;
+                    if( !$parentCategory['b_enabled'] ) {
+                        $result = array( 'error' => __('Parent category is disabled, you can not enable that category') ) ;
+                        echo json_encode( $result ) ;
+                        break ;
+                    }
+
+                    $mCategory->update( array('b_enabled' => $enabled), array('pk_i_id' => $id) ) ;
+                    if( $enabled ) {
+                        $result = array(
+                            'ok' => __('The subcategory has been enabled')
+                        ) ;
                     } else {
-                        $result .= '"ok" : "' . $message . '"';
-                        if (count($aUpdated) > 0) {
-                            $result .= ', "afectedIds": [';
-                            foreach ($aUpdated as $category) {
-                                $result .= '{ "id" : "' . $category['pk_i_id'] . '" },';
-                            }
-                            $result = substr($result, 0, -1);
-                            $result .= ']';
-                        } else {
-                            $result .= ', "afectedIds": []';
-                        }
+                        $result = array(
+                            'ok' => __('The subcategory has been disabled')
+                        ) ;
                     }
-                    $result .= "}";
-
-                    echo $result;
-                    break;
+                    $result['affectedIds'] = array( array('id' => $id) ) ;
+                    echo json_encode($result) ;
+                    break ;
                 case 'delete_category':
                     $id = Params::getParam("id");
                     $error = 0;
