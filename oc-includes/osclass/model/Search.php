@@ -716,9 +716,9 @@
         public function listRegions($country = '%%%%', $zero = ">", $order = "items DESC") 
         {    
             $sql  = '' ;
-            $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, '.DB_TABLE_PREFIX.'t_region.fk_c_country_code as pk_c_code, IFNULL(b.items,0) as items FROM ( ' ;
-            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, '.DB_TABLE_PREFIX.'t_country.pk_c_code as pk_c_code, s_country as country_name, count(*) as items, '.DB_TABLE_PREFIX.'t_country.fk_c_locale_code ' ;
-            $sql  .= 'FROM ('.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category, '.DB_TABLE_PREFIX.'t_country) ' ;
+            $sql  .= 'SELECT '.DB_TABLE_PREFIX.'t_region.pk_i_id as region_id, '.DB_TABLE_PREFIX.'t_region.s_name as region_name, IFNULL(b.items,0) as items FROM ( ' ;
+            $sql  .= 'SELECT fk_i_region_id as region_id, s_region as region_name, count(*) as items ' ;
+            $sql  .= 'FROM ( '.DB_TABLE_PREFIX.'t_item, '.DB_TABLE_PREFIX.'t_item_location, '.DB_TABLE_PREFIX.'t_category ) ' ;
             $sql  .= 'WHERE '.DB_TABLE_PREFIX.'t_item.pk_i_id = '.DB_TABLE_PREFIX.'t_item_location.fk_i_item_id ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_item.b_active = 1 ' ;
@@ -726,7 +726,6 @@
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.b_enabled = 1 ' ;
             $sql .= 'AND '.DB_TABLE_PREFIX.'t_category.pk_i_id = '.DB_TABLE_PREFIX.'t_item.fk_i_category_id ' ;
             $sql .= 'AND ('.DB_TABLE_PREFIX.'t_item.b_premium = 1 || '.DB_TABLE_PREFIX.'t_category.i_expiration_days = 0 || DATEDIFF(\''.date('Y-m-d H:i:s').'\','.DB_TABLE_PREFIX.'t_item.dt_pub_date) < '.DB_TABLE_PREFIX.'t_category.i_expiration_days) ' ;
-            $sql .= 'AND '.DB_TABLE_PREFIX.'t_country.pk_c_code = '.DB_TABLE_PREFIX.'t_item_location.fk_c_country_code ';
             $sql .= 'GROUP BY '.DB_TABLE_PREFIX.'t_item_location.fk_i_region_id ' ;
             $sql .= 'HAVING items ' ;
             $sql .= 'ORDER BY '.$order.' ) as b ' ;
