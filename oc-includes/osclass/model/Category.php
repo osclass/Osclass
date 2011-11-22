@@ -114,9 +114,11 @@
          */
         public function listEnabled() 
         {
-            $sql  = 'SELECT * FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
+            $sql = 'SELECT * FROM (';
+            $sql .= 'SELECT a.*, b.*, c.i_num_items, FIELD(fk_c_locale_code, \''.osc_current_user_locale().'\') as locale_order FROM '.$this->getTableName().' as a INNER JOIN '.DB_TABLE_PREFIX.'t_category_description as b ON a.pk_i_id = b.fk_i_category_id ';
             $sql .= 'LEFT JOIN '.DB_TABLE_PREFIX.'t_category_stats as c ON a.pk_i_id = c.fk_i_category_id ';
-            $sql .= 'WHERE b.s_name != \'\' AND a.b_enabled = 1 ORDER BY a.i_position ASC';
+            $sql .= 'WHERE b.s_name != \'\' AND a.b_enabled = 1 ORDER BY locale_order DESC';
+            $sql .= ') as dummytable GROUP BY pk_i_id ORDER BY i_position ASC';
             $result = $this->dao->query($sql);
             return $result->result();
         }
