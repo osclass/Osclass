@@ -187,7 +187,7 @@
                             <p>
                                 <?php _e('The item is expired. You cannot contact the publisher.', 'modern') ; ?>
                             </p>
-                        <?php } else if( osc_logged_user_id() == osc_item_user_id() ) { ?>
+                        <?php } else if( ( osc_logged_user_id() == osc_item_user_id() ) && osc_logged_user_id() != 0 ) { ?>
                             <p>
                                 <?php _e("It's your own item, you cannot contact the publisher.", 'modern') ; ?>
                             </p>
