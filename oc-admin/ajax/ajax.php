@@ -525,8 +525,12 @@
                                         $error_queries = array();
                                         if (file_exists(osc_lib_path() . 'osclass/installer/struct.sql')) {
                                             $sql = file_get_contents(osc_lib_path() . 'osclass/installer/struct.sql');
-                                            $conn = getConnection();
-                                            $error_queries = $conn->osc_updateDB(str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql));
+                                            
+                                            $conn = DBConnectionClass::newInstance();
+                                            $c_db = $conn->getOsclassDb() ;
+                                            $comm = new DBCommandClass( $c_db ) ;
+                                            $error_queries = $comm->updateDB( str_replace('/*TABLE_PREFIX*/', DB_TABLE_PREFIX, $sql) ) ;
+                                            
                                         }
                                         if ($error_queries[0]) { // Everything is OK, continue
                                             /**********************************
