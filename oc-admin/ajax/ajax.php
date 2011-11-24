@@ -226,7 +226,7 @@
                     $aCategory = $mCategory->findByPrimaryKey( $id ) ;
 
                     if( $aCategory == false ) {
-                        $result = array( 'error' => sprintf(__(''), $id) ) ;
+                        $result = array( 'error' => sprintf( __("It doesn't exist a category with this id: %d"), $id) ) ;
                         echo json_encode($result) ;
                         break ;
                     }
